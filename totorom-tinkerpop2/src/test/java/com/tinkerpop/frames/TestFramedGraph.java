@@ -51,10 +51,12 @@ public class TestFramedGraph {
         Knows knows = p1.addKnows(p2);
         knows.setYears(15);
 
-        Iterator<Person> frame = fg.V().has("name", "Bryn").frame(Person.class);
-        Person p = frame.next();
-     
-        System.out.println(p.getClass().getName());
+        Person bryn = fg.V().has("name", "Bryn").next(Person.class);
+        Person julia = fg.V().has("name", "Julia").next(Person.class);
+        
+        
+        System.out.println(bryn.getClass().getName());
+        System.out.println(julia.getClass().getName());
         
 
     }

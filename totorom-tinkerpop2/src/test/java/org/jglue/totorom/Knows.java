@@ -1,4 +1,6 @@
-package com.tinkerpop.frames;
+package org.jglue.totorom;
+
+import org.jglue.totorom.FramedEdge;
 
 /**
  * @author Bryn Cooke (http://jglue.org)

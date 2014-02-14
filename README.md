@@ -3,6 +3,6 @@ Totorom
 
 An ORM for the Tinkerpop graph stack
 
-This is work in progress.
+This project has been created to replace the Tinkerpop Frames project.
 
 Discussion welcome at https://groups.google.com/forum/#!forum/totorom

@@ -1,8 +1,5 @@
-package com.tinkerpop.frames;
+package org.jglue.totorom;
 
-import com.tinkerpop.blueprints.Vertex;
-
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -28,7 +25,7 @@ public class Person extends FramedVertex {
         return out("knows").frame(Person.class);
     }
 
-    public List<Knows> getKnowsCollection() {
+    public List<Knows> getKnowsList() {
         return outE("knows").toList(Knows.class);
     }
     

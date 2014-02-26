@@ -16,6 +16,7 @@ public class Transaction implements AutoCloseable {
 
 	private TransactionalGraph graph;
 	private boolean comitted;
+	private boolean rolledBack;
 
 	Transaction(TransactionalGraph graph) {
 		this.graph = graph;
@@ -35,6 +36,7 @@ public class Transaction implements AutoCloseable {
 	 */
 	public void rollback() {
 		graph.rollback();
+		rolledBack = true;
 	}
 
 	/* (non-Javadoc)
@@ -42,7 +44,7 @@ public class Transaction implements AutoCloseable {
 	 */
 	@Override
 	public void close() {
-		if(!comitted) {
+		if(!comitted && !rolledBack) {
 			rollback();
 		}
 		

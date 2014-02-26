@@ -12,10 +12,10 @@ import com.tinkerpop.blueprints.TransactionalGraph;
  * @author Bryn Cooke (http://jglue.org)
  *
  */
-public class Transaction implements Closeable {
+public class Transaction implements AutoCloseable {
 
 	private TransactionalGraph graph;
-	
+	private boolean comitted;
 
 	Transaction(TransactionalGraph graph) {
 		this.graph = graph;
@@ -27,6 +27,7 @@ public class Transaction implements Closeable {
 	 */
 	public void commit() {
 		graph.commit();
+		comitted = true;
 	}
 
 	/**
@@ -40,8 +41,11 @@ public class Transaction implements Closeable {
 	 * @see java.io.Closeable#close()
 	 */
 	@Override
-	public void close() throws IOException {
-		commit();
+	public void close() {
+		if(!comitted) {
+			rollback();
+		}
+		
 	}
 
 }

@@ -1,16 +1,27 @@
 package org.jglue.totorom;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 
 import com.tinkerpop.blueprints.Element;
 import com.tinkerpop.blueprints.Graph;
+import com.tinkerpop.blueprints.TransactionalGraph;
 import com.tinkerpop.blueprints.impls.tg.TinkerGraph;
 /**
  * @author Bryn Cooke (http://jglue.org)
  */
 
 public class TestFramedGraph {
+	
+	@Before
+	public void init() {
+		MockitoAnnotations.initMocks(this);
+	}
+	
     @Test
     public void testSanity() {
         Graph g = new TinkerGraph();
@@ -68,4 +79,66 @@ public class TestFramedGraph {
         Person person = fg.addVertex(Person.class);
         Assert.assertEquals(o, person);
     }
+    
+    @Mock
+    private TransactionalGraph transactionalGraph;
+    
+    @Test(expected=UnsupportedOperationException.class)
+    public void testTransactionUnsupported() {
+        Graph g = new TinkerGraph();
+        FramedGraph fg = new FramedGraph(g);
+        try(Transaction t = fg.tx()) {
+        	
+        }
+
+    }
+    
+    @Test
+    public void testTransactionCommitted() {
+        
+        FramedGraph fg = new FramedGraph(transactionalGraph);
+        try(Transaction t = fg.tx()) {
+        	t.commit();
+        }
+
+        Mockito.verify(transactionalGraph).commit();
+    }
+    
+    @Test
+    public void testTransactionRolledBack() {
+        
+        FramedGraph fg = new FramedGraph(transactionalGraph);
+        try(Transaction t = fg.tx()) {
+        	t.rollback();
+        }
+
+        Mockito.verify(transactionalGraph).rollback();
+    }
+    
+    @Test
+    public void testTransactionNotComitted() {
+        
+        FramedGraph fg = new FramedGraph(transactionalGraph);
+        try(Transaction t = fg.tx()) {
+        	
+        }
+
+        Mockito.verify(transactionalGraph).rollback();
+    }
+    
+    @Test
+    public void testTransactionException() {
+        
+        FramedGraph fg = new FramedGraph(transactionalGraph);
+        
+        try(Transaction t = fg.tx()) {
+        	throw new Exception();
+        }
+        catch(Exception e) {
+        }
+
+        Mockito.verify(transactionalGraph).rollback();
+    }
+    
+    
 }

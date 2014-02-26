@@ -15,9 +15,6 @@ import com.tinkerpop.gremlin.java.GremlinPipeline;
 
 /**
  * @author Bryn Cooke (http://jglue.org)
- */
-/**
- * @author bryn
  * 
  * @param <S>
  * @param <E>
@@ -169,8 +166,9 @@ public class FramedTraversal<S, E> extends GremlinPipeline<S, E> {
 	 * com.tinkerpop.gremlin.java.GremlinPipeline#interval(java.lang.String,
 	 * java.lang.Comparable, java.lang.Comparable)
 	 */
+	@SuppressWarnings("rawtypes")
 	public FramedTraversal<S, ? extends Element> interval(final String key,
-			final Comparable<?> startValue, final Comparable<?> endValue) {
+			final Comparable startValue, final Comparable endValue) {
 		return (FramedTraversal<S, ? extends Element>) super.interval(key,
 				startValue, endValue);
 	}

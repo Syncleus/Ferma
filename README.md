@@ -9,11 +9,11 @@ If you like Gremlin and you like Java then you will like this!
 
 http://oss.sonatype.org/content/repositories/snapshots
 
-<parent>
-<groupId>org.jglue.totorom</groupId>
-<artifactId>totorom-tinkerpop2</artifactId>
-<version>0.5.0-SNAPSHOT</version>
-</parent>
+    <parent>
+        <groupId>org.jglue.totorom</groupId>
+        <artifactId>totorom-tinkerpop2</artifactId>
+        <version>0.5.0-SNAPSHOT</version>
+    </parent>
 
 It's just a way to give typed context to your gremlin queries:
 

@@ -1,7 +1,8 @@
 Totorom
 ========
 
-An ORM for the Tinkerpop graph stack
+An ORM for the Tinkerpop graph stack.
+
 Discussion at https://groups.google.com/forum/#!forum/totorom
 
 This project has been created as an alternative to the Tinkerpop Frames project.

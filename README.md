@@ -4,7 +4,7 @@ Totorom
 An ORM for the Tinkerpop graph stack
 Discussion at https://groups.google.com/forum/#!forum/totorom
 
-This project has been created to replace the Tinkerpop Frames project.
+This project has been created as an alternative to the Tinkerpop Frames project.
 If you like Gremlin and you like Java then you will like this!
 
 It's just a way to give typed context to your gremlin queries:

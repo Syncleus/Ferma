@@ -26,15 +26,15 @@ It's just a way to give typed context to your gremlin queries:
       }
       
       public void setName(String name) {
-        setProperty("name", name);
+        setProperty("name", name); //Properties are simple method calls
       }
 
       public List<Knows> getKnowsList() {
-        return outE("knows").toList(Knows.class);
+        return outE("knows").toList(Knows.class); //Gremlin natively supported
       }
       
       public Knows addKnows(Person friend) {
-        return addEdge("knows", friend, Knows.class);
+        return addEdge("knows", friend, Knows.class); //Elements are automatically unwrapped
       }
     }
     

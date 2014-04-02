@@ -83,6 +83,7 @@ Using TypeResolver.Java will save the type of Java class the element was created
     public void testJavaTyping() {
       Graph g = new TinkerGraph();
       FramedGraph fg = new FramedGraph(g, FrameFactory.Default, TypeResolver.Java);//Java type resolver
+      //Also note FrameFactory.Default. Other options are CDI and Spring.
       
       Person p1 = fg.addVertex(Programmer.class);
       p1.setName("Bryn");

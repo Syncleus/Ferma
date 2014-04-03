@@ -134,5 +134,17 @@ public abstract class FramedVertex extends FramedElement<Vertex> {
         return vertex;
     }
 
+    protected  <K extends FramedVertex> FramedVertex setLinkIn(Class<K> kind, String ...labels){
+        K vertex = graph().addVertex(kind);
+        setLinkIn(vertex, labels);
+        return vertex;
+    }
+
+    protected  <K extends FramedVertex> FramedVertex setLinkBoth(Class<K> kind, String ...labels){
+        K vertex = graph().addVertex(kind);
+        setLinkBoth(vertex, labels);
+        return vertex;
+    }
+
 
 }

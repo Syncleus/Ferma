@@ -1,7 +1,11 @@
 package org.jglue.totorom;
 
+import com.google.common.collect.Lists;
 import com.tinkerpop.blueprints.Edge;
 import com.tinkerpop.blueprints.Vertex;
+import com.tinkerpop.gremlin.java.GremlinFluentPipeline;
+import com.tinkerpop.gremlin.java.GremlinPipeline;
+import com.tinkerpop.pipes.PipeFunction;
 
 /**
  * The base class that all vertex frames must extend.
@@ -17,9 +21,7 @@ public abstract class FramedVertex extends FramedElement<Vertex> {
         T framedEdge = graph().frameNewElement(edge, kind);
         framedEdge.init();
         return framedEdge;
-
     }
-
 
     protected FramedTraversal<Vertex, Vertex> out(final int branchFactor, final String... labels) {
         return new FramedTraversal<Vertex, Vertex>(graph(), element()).out(branchFactor, labels);
@@ -69,5 +71,21 @@ public abstract class FramedVertex extends FramedElement<Vertex> {
         return new FramedTraversal<Vertex, Edge>(graph(), element()).bothE(labels);
     }
 
+    protected void linkOut(FramedVertex vertex, String ...labels){
+        for(String label : labels){
+            traversal().linkOut(label, vertex.element()).next();
+        }
+    }
 
+    protected void linkIn(FramedVertex vertex, String ...labels){
+        for(String label : labels){
+            traversal().linkIn(label, vertex.element()).next();
+        }
+    }
+
+    protected void linkBoth(FramedVertex vertex, String ...labels){
+        for(String label : labels){
+            traversal().linkBoth(label, vertex.element()).next();
+        }
+    }
 }

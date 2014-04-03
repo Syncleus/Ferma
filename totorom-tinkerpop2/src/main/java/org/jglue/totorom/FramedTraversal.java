@@ -12,6 +12,7 @@ import com.tinkerpop.blueprints.Predicate;
 import com.tinkerpop.blueprints.Vertex;
 import com.tinkerpop.gremlin.Tokens;
 import com.tinkerpop.gremlin.java.GremlinPipeline;
+import com.tinkerpop.pipes.PipeFunction;
 
 /**
  * @author Bryn Cooke (http://jglue.org)
@@ -344,7 +345,12 @@ public class FramedTraversal<S, E> extends GremlinPipeline<S, E> {
 		return (FramedTraversal<S, Vertex>) super.bothV();
 	}
 
-	/**
+    @Override
+    public FramedTraversal filter(PipeFunction<E, Boolean> pipeFunction){
+        return new FramedTraversal<>(graph, super.filter(pipeFunction).getStarts());
+    }
+
+    /**
 	 * Get the next object emitted from the pipeline. If no such object exists,
 	 * then a NoSuchElementException is thrown.
 	 * 

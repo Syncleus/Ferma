@@ -116,6 +116,14 @@ public abstract class FramedElement<E extends Element> {
     	return graph.e(ids);
     }
 
+    /**
+     * Shortcut to get frameTraversal of current element
+     * @return
+     */
+    protected FramedTraversal<E, Vertex> traversal(){
+        return new FramedTraversal<>(graph(),element());
+    }
+
 
 	@Override
 	public int hashCode() {

@@ -1,7 +1,11 @@
 package org.jglue.totorom;
 
+import com.google.common.collect.Lists;
 import com.tinkerpop.blueprints.Edge;
 import com.tinkerpop.blueprints.Vertex;
+import com.tinkerpop.gremlin.java.GremlinFluentPipeline;
+import com.tinkerpop.gremlin.java.GremlinPipeline;
+import com.tinkerpop.pipes.PipeFunction;
 
 /**
  * The base class that all vertex frames must extend.
@@ -17,9 +21,7 @@ public abstract class FramedVertex extends FramedElement<Vertex> {
         T framedEdge = graph().frameNewElement(edge, kind);
         framedEdge.init();
         return framedEdge;
-
     }
-
 
     protected FramedTraversal<Vertex, Vertex> out(final int branchFactor, final String... labels) {
         return new FramedTraversal<Vertex, Vertex>(graph(), element()).out(branchFactor, labels);
@@ -67,6 +69,81 @@ public abstract class FramedVertex extends FramedElement<Vertex> {
 
     protected FramedTraversal<Vertex, Edge> bothE(final String... labels) {
         return new FramedTraversal<Vertex, Edge>(graph(), element()).bothE(labels);
+    }
+
+    protected void linkOut(FramedVertex vertex, String ...labels){
+        for(String label : labels){
+            traversal().linkOut(label, vertex.element()).next();
+        }
+    }
+
+    protected void linkIn(FramedVertex vertex, String ...labels){
+        for(String label : labels){
+            traversal().linkIn(label, vertex.element()).next();
+        }
+    }
+
+    protected void linkBoth(FramedVertex vertex, String ...labels){
+        for(String label : labels){
+            traversal().linkBoth(label, vertex.element()).next();
+        }
+    }
+
+    protected void unlinkOut(FramedVertex vertex, String ...labels){
+        GremlinPipeline pipeline = outE(labels).as("e");
+        if(vertex != null){
+            pipeline = pipeline.inV().retain(Lists.newArrayList(vertex.element())).back("e");
+        }
+        pipeline.remove();
+    }
+
+    protected void unlinkIn(FramedVertex vertex, String ...labels){
+        GremlinPipeline pipeline = inE(labels).as("e");
+        if(vertex != null){
+            pipeline = pipeline.outV().retain(Lists.newArrayList(vertex.element())).back("e");
+        }
+        pipeline.remove();
+    }
+
+    protected void unlinkBoth(FramedVertex vertex, String ...labels){
+        GremlinPipeline pipeline = bothE(labels).as("e");
+        if(vertex != null){
+            pipeline = pipeline.bothV().retain(Lists.newArrayList(vertex.element())).back("e");
+        }
+        pipeline.remove();
+    }
+
+    protected void setLinkIn(FramedVertex vertex, String ...labels){
+       unlinkIn(null, labels);
+       linkIn(vertex, labels);
+    }
+
+    protected void setLinkOut(FramedVertex vertex, String ...labels){
+       unlinkOut(null, labels);
+       linkOut(vertex, labels);
+    }
+
+    protected void setLinkBoth(FramedVertex vertex, String ...labels){
+        unlinkBoth(null, labels);
+        linkBoth(vertex, labels);
+    }
+
+    protected  <K extends FramedVertex> FramedVertex setLinkOut(Class<K> kind, String ...labels){
+        K vertex = graph().addVertex(kind);
+        setLinkOut(vertex, labels);
+        return vertex;
+    }
+
+    protected  <K extends FramedVertex> FramedVertex setLinkIn(Class<K> kind, String ...labels){
+        K vertex = graph().addVertex(kind);
+        setLinkIn(vertex, labels);
+        return vertex;
+    }
+
+    protected  <K extends FramedVertex> FramedVertex setLinkBoth(Class<K> kind, String ...labels){
+        K vertex = graph().addVertex(kind);
+        setLinkBoth(vertex, labels);
+        return vertex;
     }
 
 

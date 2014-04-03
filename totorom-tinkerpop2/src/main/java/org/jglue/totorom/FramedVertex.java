@@ -88,4 +88,29 @@ public abstract class FramedVertex extends FramedElement<Vertex> {
             traversal().linkBoth(label, vertex.element()).next();
         }
     }
+
+    protected void unlinkOut(FramedVertex vertex, String ...labels){
+        GremlinPipeline pipeline = outE(labels).as("e");
+        if(vertex != null){
+            pipeline = pipeline.inV().retain(Lists.newArrayList(vertex.element())).back("e");
+        }
+        pipeline.remove();
+    }
+
+    protected void unlinkIn(FramedVertex vertex, String ...labels){
+        GremlinPipeline pipeline = inE(labels).as("e");
+        if(vertex != null){
+            pipeline = pipeline.outV().retain(Lists.newArrayList(vertex.element())).back("e");
+        }
+        pipeline.remove();
+    }
+
+    protected void unlinkBoth(FramedVertex vertex, String ...labels){
+        GremlinPipeline pipeline = bothE(labels).as("e");
+        if(vertex != null){
+            pipeline = pipeline.bothV().retain(Lists.newArrayList(vertex.element())).back("e");
+        }
+        pipeline.remove();
+    }
+
 }

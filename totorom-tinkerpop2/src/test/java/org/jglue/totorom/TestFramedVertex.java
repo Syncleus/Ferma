@@ -223,5 +223,134 @@ public class TestFramedVertex {
 
     }
 
+    @Test
+    public void testUnlinkInWithNull(){
+        String label = "knows";
+        Person p3 = fg.addVertex(Person.class);
+        Person p4 = fg.addVertex(Person.class);
+        Person p5 = fg.addVertex(Person.class);
+
+        p4.addEdge(label, p3, Knows.class);
+        p5.addEdge(label, p3, Knows.class);
+
+        Assert.assertTrue("Multiple edges(in) of type "+label+" must exist for vertice", p3.in(label).count() > 1);
+
+        p3.unlinkIn(null, label);
+
+        //Make all edges were removed
+        Assert.assertEquals("All " + label + " edges(in) should have been removed", 0, p3.in(label).count());
+    }
+
+    @Test
+    public void testUnlinkOutWithNull(){
+        String label = "knows";
+        Person p3 = fg.addVertex(Person.class);
+        Person p4 = fg.addVertex(Person.class);
+        Person p5 = fg.addVertex(Person.class);
+
+        p3.addEdge(label, p4, Knows.class);
+        p3.addEdge(label, p5, Knows.class);
+
+        Assert.assertTrue("Multiple edges(out) of type "+label+" must exist for vertice", p3.out(label).count() > 1);
+
+        p3.unlinkOut(null, label);
+
+        //Make all edges were removed
+        Assert.assertEquals("All " + label + " edges(out) should have been removed", 0, p3.out(label).count());
+
+    }
+
+    @Test
+    public void testUnlinkBothWithNull(){
+        String label = "knows";
+        Person p3 = fg.addVertex(Person.class);
+        Person p4 = fg.addVertex(Person.class);
+        Person p5 = fg.addVertex(Person.class);
+
+        p3.addEdge(label, p4, Knows.class);
+        p3.addEdge(label, p5, Knows.class);
+
+        Assert.assertTrue("Multiple edges(out) of type "+label+" must exist for vertice", p3.out(label).count() > 1);
+
+        p4.addEdge(label, p3, Knows.class);
+        p5.addEdge(label, p3, Knows.class);
+
+        Assert.assertTrue("Multiple edges(in) of type "+label+" must exist for vertice", p3.in(label).count() > 1);
+
+        p3.unlinkBoth(null, label);
+
+        //Make all edges were removed
+        Assert.assertEquals("All " + label + " edges should have been removed", 0, p3.both(label).count());
+
+    }
+
+    @Test
+    public void testUnlinkIn(){
+        String label = "knows";
+        Person p3 = fg.addVertex(Person.class);
+        Person p4 = fg.addVertex(Person.class);
+        Person p5 = fg.addVertex(Person.class);
+
+        p4.addEdge(label, p3, Knows.class);
+        p5.addEdge(label, p3, Knows.class);
+        long allInEdgesCount = p3.in(label).count();
+        Long targetVertex_InEdgeCount = p3.in(label).as("e").retain(Lists.newArrayList(p4.element())).back("e").count();
+
+        Assert.assertTrue("target vertex requires an in edge for " + label, targetVertex_InEdgeCount > 0);
+        Assert.assertTrue("Multiple edges(in) of type "+label+" must exist for vertice", allInEdgesCount - targetVertex_InEdgeCount > 0);
+
+        p3.unlinkIn(p4, label);
+
+        //Make all edges were removed
+        Assert.assertEquals("All " + label + " edges(in) should have been removed from given vertex", 0, p3.in(label).retain(Lists.newArrayList(p4.element())).count());
+        Assert.assertTrue("All " + label + " edges(in) should have remained for other vertices", p3.inE(label).count() > 0);
+    }
+
+    @Test
+    public void testUnlinkOut(){
+        String label = "knows";
+        Person p3 = fg.addVertex(Person.class);
+        Person p4 = fg.addVertex(Person.class);
+        Person p5 = fg.addVertex(Person.class);
+
+        p3.addEdge(label, p4, Knows.class);
+        p3.addEdge(label, p5, Knows.class);
+        long allInEdgesCount = p3.out(label).count();
+        Long targetVertex_OutEdgeCount = p3.out(label).as("e").retain(Lists.newArrayList(p4.element())).back("e").count();
+
+        Assert.assertTrue("target vertex requires an in edge for "+label, targetVertex_OutEdgeCount > 0);
+        Assert.assertTrue("Multiple edges(out) of type "+label+" must exist for vertice", allInEdgesCount - targetVertex_OutEdgeCount > 0);
+
+        p3.unlinkOut(p4, label);
+
+        //Make all edges were removed
+        Assert.assertEquals("All " + label + " edges(in) should have been removed from given vertex", 0, p3.out(label).retain(Lists.newArrayList(p4.element())).count());
+        Assert.assertTrue("All " + label + " edges(in) should have remained for other vertices", p3.outE(label).count() > 0);
+    }
+
+    @Test
+    public void testUnlinkBoth(){
+        String label = "knows";
+        Person p3 = fg.addVertex(Person.class);
+        Person p4 = fg.addVertex(Person.class);
+        Person p5 = fg.addVertex(Person.class);
+
+        p4.addEdge(label, p3, Knows.class);
+        p5.addEdge(label, p3, Knows.class);
+        p3.addEdge(label, p4, Knows.class);
+        p3.addEdge(label, p5, Knows.class);
+
+        long allInEdgesCount = p3.both(label).count();
+        Long targetVertex_EdgeCount = p3.both(label).as("e").retain(Lists.newArrayList(p4.element())).back("e").count();
+
+        Assert.assertTrue("target vertex requires an in/out edge for "+label, targetVertex_EdgeCount > 0);
+        Assert.assertTrue("Multiple edges of type "+label+" must exist for vertice", allInEdgesCount - targetVertex_EdgeCount > 0);
+
+        p3.unlinkBoth(p4, label);
+
+        //Make all edges were removed
+        Assert.assertEquals("All " + label + " edges(in/out) should have been removed from given vertex", 0, p3.both(label).retain(Lists.newArrayList(p4.element())).count());
+        Assert.assertTrue("All " + label + " edges(in/out) should have remained for other vertices", p3.bothE(label).count() > 0);
+    }
 
 }

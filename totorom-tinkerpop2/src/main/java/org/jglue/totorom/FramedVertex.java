@@ -113,4 +113,26 @@ public abstract class FramedVertex extends FramedElement<Vertex> {
         pipeline.remove();
     }
 
+    protected void setLinkIn(FramedVertex vertex, String ...labels){
+       unlinkIn(null, labels);
+       linkIn(vertex, labels);
+    }
+
+    protected void setLinkOut(FramedVertex vertex, String ...labels){
+       unlinkOut(null, labels);
+       linkOut(vertex, labels);
+    }
+
+    protected void setLinkBoth(FramedVertex vertex, String ...labels){
+        unlinkBoth(null, labels);
+        linkBoth(vertex, labels);
+    }
+
+    protected  <K extends FramedVertex> FramedVertex setLinkOut(Class<K> kind, String ...labels){
+        K vertex = graph().addVertex(kind);
+        setLinkOut(vertex, labels);
+        return vertex;
+    }
+
+
 }

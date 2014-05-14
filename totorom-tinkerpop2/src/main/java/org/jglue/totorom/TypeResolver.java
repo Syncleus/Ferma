@@ -18,7 +18,7 @@ public interface TypeResolver {
 	 *            The kind of frame that is being requested by the client code.
 	 * @return The kind of frame
 	 */
-	public <T extends FramedElement<?>> Class<T> resolve(Element element,
+	public <T extends FramedElement> Class<T> resolve(Element element,
 			Class<T> kind);
 
 	/**
@@ -31,20 +31,20 @@ public interface TypeResolver {
 	 * @param kind
 	 *            The kind of frame that was resolved.
 	 */
-	public <T extends FramedElement<?>> void init(Element element, Class<T> kind);
+	public <T extends FramedElement> void init(Element element, Class<T> kind);
 
 	/**
 	 * This type resolver simply returns the type requested by the client.
 	 */
 	public static final TypeResolver Untyped = new TypeResolver() {
 		@Override
-		public <T extends FramedElement<?>> Class<T> resolve(Element element,
+		public <T extends FramedElement> Class<T> resolve(Element element,
 				Class<T> kind) {
 			return kind;
 		}
 
 		@Override
-		public <T extends FramedElement<?>> void init(Element element,
+		public <T extends FramedElement> void init(Element element,
 				Class<T> kind) {
 
 		}
@@ -57,7 +57,7 @@ public interface TypeResolver {
 	public static final TypeResolver Java = new TypeResolver() {
 		@SuppressWarnings("unchecked")
 		@Override
-		public <T extends FramedElement<?>> Class<T> resolve(Element element,
+		public <T extends FramedElement> Class<T> resolve(Element element,
 				Class<T> kind) {
 			String clazz = element.getProperty("java_class");
 			if (clazz != null) {
@@ -72,7 +72,7 @@ public interface TypeResolver {
 		}
 
 		@Override
-		public <T extends FramedElement<?>> void init(Element element,
+		public <T extends FramedElement> void init(Element element,
 				Class<T> kind) {
 			String clazz = element.getProperty("java_class");
 			if (clazz == null) {

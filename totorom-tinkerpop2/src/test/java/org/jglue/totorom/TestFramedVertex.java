@@ -41,41 +41,41 @@ public class TestFramedVertex {
     @Test
     public void testOut() {
         
-        Assert.assertEquals(p2, p1.out().next(Person.class));
-        Assert.assertEquals(p2, p1.out(1).next(Person.class));
+        Assert.assertEquals(p2, p1.out().nextVertex(Person.class));
+        Assert.assertEquals(p2, p1.out(1).nextVertex(Person.class));
     }
 
     
     @Test
     public void testIn() {
-        Assert.assertEquals(p1, p2.in().next(Person.class));
-        Assert.assertEquals(p1, p2.in(1).next(Person.class));
+        Assert.assertEquals(p1, p2.in().nextVertex(Person.class));
+        Assert.assertEquals(p1, p2.in(1).nextVertex(Person.class));
         
     }
     
     @Test
     public void testOutE() {
-        Assert.assertEquals(e1, p1.outE().next(Knows.class));
-        Assert.assertEquals(e1, p1.outE(1).next(Knows.class));
+        Assert.assertEquals(e1, p1.outE().nextEdge(Knows.class));
+        Assert.assertEquals(e1, p1.outE(1).nextEdge(Knows.class));
     }
     
     @Test
     public void testInE() {
-        Assert.assertEquals(e1, p2.inE().next(Knows.class));
-        Assert.assertEquals(e1, p2.inE(1).next(Knows.class));
+        Assert.assertEquals(e1, p2.inE().nextEdge(Knows.class));
+        Assert.assertEquals(e1, p2.inE(1).nextEdge(Knows.class));
     }
     
     @Test
     public void testBoth() {
-        Assert.assertEquals(p2, p1.both().next(Person.class));
-        Assert.assertEquals(p2, p1.both(1).next(Person.class));
-        Assert.assertEquals(p1, p2.both().next(Person.class));
-        Assert.assertEquals(p1, p2.both(1).next(Person.class));
+        Assert.assertEquals(p2, p1.both().nextVertex(Person.class));
+        Assert.assertEquals(p2, p1.both(1).nextVertex(Person.class));
+        Assert.assertEquals(p1, p2.both().nextVertex(Person.class));
+        Assert.assertEquals(p1, p2.both(1).nextVertex(Person.class));
     }
     
     @Test
     public void testBothE() {
-        Assert.assertEquals(e1, p2.bothE().next(Knows.class));
-        Assert.assertEquals(e1, p2.bothE(1).next(Knows.class));
+        Assert.assertEquals(e1, p2.bothE().nextEdge(Knows.class));
+        Assert.assertEquals(e1, p2.bothE(1).nextEdge(Knows.class));
     }
 }

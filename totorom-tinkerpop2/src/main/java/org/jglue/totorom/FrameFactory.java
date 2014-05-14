@@ -10,14 +10,14 @@ import com.tinkerpop.blueprints.Element;
  */
 public interface FrameFactory {
 
-	public <T extends FramedElement<?>> T create(Element e, Class<T> kind);
+	public <T extends FramedElement> T create(Element e, Class<T> kind);
 
 	/**
 	 * Creates the frame using reflection.
 	 */
 	public static FrameFactory Default = new FrameFactory() {
 		@Override
-		public <T extends FramedElement<?>> T create(Element element,
+		public <T extends FramedElement> T create(Element element,
 				Class<T> kind) {
 			try {
 				return kind.newInstance();

@@ -65,7 +65,7 @@ public class FramedGraph {
     }
 
 
-    <T extends FramedElement<?>> T frameElement(Element e, Class<T> kind) {
+    <T extends FramedElement> T frameElement(Element e, Class<T> kind) {
 
         Class<T> frameType = resolver.resolve(e, kind);
         T framedElement = builder.create(e, frameType);
@@ -73,13 +73,13 @@ public class FramedGraph {
         return framedElement;
     }
     
-    <T extends FramedElement<?>> T frameNewElement(Element e, Class<T> kind) {
+    <T extends FramedElement> T frameNewElement(Element e, Class<T> kind) {
     	T t = frameElement(e, kind);
     	resolver.init(e, kind);
         return t;
     }
 
-    <T extends FramedElement<?>> Iterator<T> frame(Iterator<? extends Element> pipeline, final Class<T> kind) {
+    <T extends FramedElement> Iterator<T> frame(Iterator<? extends Element> pipeline, final Class<T> kind) {
     	return Iterators.transform(pipeline, new Function<Element, T>() {
 
 			@Override
@@ -106,16 +106,16 @@ public class FramedGraph {
      * Query over all vertices in the graph.
      * @return The query.
      */
-    public FramedTraversal<Vertex, Vertex> V() {
-        return new FramedTraversal<Vertex, Vertex>(this, delegate).V();
+    public FramedVertexTraversal<Vertex, Vertex> V() {
+        return new FramedTraversalImpl<Vertex, Vertex>(this, delegate).V();
     }
 
     /**
      * Query over all edges in the graph.
      * @return The query.
      */
-    public FramedTraversal<Edge, Edge> E() {
-    	return new FramedTraversal<Edge, Edge>(this, delegate).E();
+    public FramedEdgeTraversal<Edge, Edge> E() {
+    	return new FramedTraversalImpl<Edge, Edge>(this, delegate).E();
     }
 
     
@@ -124,8 +124,8 @@ public class FramedGraph {
      * @param ids The ids of the vertices.
      * @return The query.
      */
-    public FramedTraversal<Vertex, Vertex> v(final Object... ids) {
-    	return new FramedTraversal<Vertex, Vertex>(this, Iterators.transform(Iterators.forArray(ids), new Function<Object, Vertex>() {
+    public FramedVertexTraversal<Vertex, Vertex> v(final Object... ids) {
+    	return new FramedTraversalImpl<Vertex, Vertex>(this, Iterators.transform(Iterators.forArray(ids), new Function<Object, Vertex>() {
 
 			@Override
 			public Vertex apply(Object id) {
@@ -140,8 +140,8 @@ public class FramedGraph {
      * @param ids The ids of the edges.
      * @return The query. 
      */
-    public FramedTraversal<Edge, Edge> e(final Object... ids) {
-    	return new FramedTraversal<Edge, Edge>(this, Iterators.transform(Iterators.forArray(ids), new Function<Object, Edge>() {
+    public FramedEdgeTraversal<Edge, Edge> e(final Object... ids) {
+    	return new FramedTraversalImpl<Edge, Edge>(this, Iterators.transform(Iterators.forArray(ids), new Function<Object, Edge>() {
 
 			@Override
 			public Edge apply(Object id) {

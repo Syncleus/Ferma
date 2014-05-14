@@ -10,112 +10,118 @@ import com.tinkerpop.blueprints.Vertex;
  * @author Bryn Cooke (http://jglue.org)
  */
 
-public abstract class FramedElement<E extends Element> {
-    private E element;
-    private FramedGraph graph;
+public abstract class FramedElement {
+	
+	private Element element;
+	private FramedGraph graph;
 
-
-    @SuppressWarnings("unchecked")
+	@SuppressWarnings("unchecked")
 	protected void init(FramedGraph graph, Element element) {
-        this.graph = graph;
-        this.element = (E)element;
-    }
+		this.graph = graph;
+		this.element = element;
+	}
 
+	protected void init() {
 
-    protected void init() {
+	}
 
-    }
+	/**
+	 * @return The id of this element.
+	 */
+	protected Object getId() {
+		return element.getId();
+	}
 
+	/**
+	 * @return The property keys of this element.
+	 */
+	protected Set<String> getPropertyKeys() {
+		return element.getPropertyKeys();
+	}
 
-    /**
-     * @return The id of this element.
-     */
-    protected Object getId() {
-        return element.getId();
-    }
+	/**
+	 * Remove this element from the graph.
+	 */
+	protected void remove() {
+		element.remove();
+	}
 
+	/**
+	 * @return The underlying element.
+	 */
+	protected Element element() {
+		return element;
+	}
 
-    /**
-     * @return The property keys of this element.
-     */
-    protected Set<String> getPropertyKeys() {
-        return element.getPropertyKeys();
-    }
+	/**
+	 * @return The underlying graph.
+	 */
+	protected FramedGraph graph() {
+		return graph;
+	}
 
+	/**
+	 * Return a property value.
+	 * 
+	 * @param name
+	 *            The name of the property.
+	 * @return the value of the property or null if none was present.
+	 */
+	protected <T> T getProperty(String name) {
+		return element.getProperty(name);
+	}
 
-    /**
-     * Remove this element from the graph.
-     */
-    protected void remove() {
-        element.remove();
-    }
+	/**
+	 * Set a property value.
+	 * 
+	 * @param name
+	 *            The name of the property.
+	 * @param value
+	 *            The value of the property.
+	 */
+	protected void setProperty(String name, Object value) {
+		element.setProperty(name, value);
+	}
 
-    /**
-     * @return The underlying element. 
-     */
-    protected E element() {
-        return element;
-    }
+	/**
+	 * Query over all vertices in the graph.
+	 * 
+	 * @return The query.
+	 */
+	protected FramedVertexTraversal<Vertex, Vertex> V() {
+		return graph.V();
+	}
 
-    /**
-     * @return The underlying graph.
-     */
-    protected FramedGraph graph() {
-        return graph;
-    }
+	/**
+	 * Query over all edges in the graph.
+	 * 
+	 * @return The query.
+	 */
+	protected FramedEdgeTraversal<Edge, Edge> E() {
+		return graph.E();
+	}
 
-    /**
-     * Return a property value.
-     * @param name The name of the property.
-     * @return the value of the property or null if none was present.
-     */
-    protected <T> T getProperty(String name) {
-        return element.getProperty(name);
-    }
+	/**
+	 * Query over a list of vertices in the graph.
+	 * 
+	 * @param ids
+	 *            The ids of the vertices.
+	 * @return The query.
+	 */
+	public FramedVertexTraversal<Vertex, Vertex> v(final Object... ids) {
+		return graph.v(ids);
+	}
 
-    /**
-     * Set a property value.
-     * @param name The name of the property.
-     * @param value The value of the property.
-     */
-    protected void setProperty(String name, Object value) {
-        element.setProperty(name, value);
-    }
-
-    /**
-     * Query over all vertices in the graph.
-     * @return The query.
-     */
-    protected FramedTraversal<Vertex, Vertex> V() {
-        return graph.V();
-    }
-
-    /**
-     * Query over all edges in the graph.
-     * @return The query.
-     */
-    protected FramedTraversal<Edge, Edge> E() {
-        return graph.E();
-    }
-
-    /**
-     * Query over a list of vertices in the graph.
-     * @param ids The ids of the vertices.
-     * @return The query.
-     */
-    public FramedTraversal<Vertex, Vertex> v(final Object... ids) {
-    	return graph.v(ids);
-    }
-
-    /**
-     * Query over a list of edges in the graph.
-     * @param ids The ids of the edges.
-     * @return The query. 
-     */
-    public FramedTraversal<Edge, Edge> e(final Object... ids) {
-    	return graph.e(ids);
-    }
-
+	/**
+	 * Query over a list of edges in the graph.
+	 * 
+	 * @param ids
+	 *            The ids of the edges.
+	 * @return The query.
+	 */
+	public FramedEdgeTraversal<Edge, Edge> e(final Object... ids) {
+		return graph.e(ids);
+	}
 
 	@Override
 	public int hashCode() {
@@ -124,7 +130,6 @@ public abstract class FramedElement<E extends Element> {
 		result = prime * result + ((element == null) ? 0 : element.hashCode());
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -142,6 +147,5 @@ public abstract class FramedElement<E extends Element> {
 			return false;
 		return true;
 	}
-
 
 }

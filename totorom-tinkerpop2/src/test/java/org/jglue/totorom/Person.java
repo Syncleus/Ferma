@@ -35,7 +35,7 @@ public class Person extends FramedVertex {
 
 
     public Person getFirst() {
-        return out("knows").next(Person.class);
+        return out("knows").nextVertex(Person.class);
     }
 
     public Knows addKnows(Person friend) {

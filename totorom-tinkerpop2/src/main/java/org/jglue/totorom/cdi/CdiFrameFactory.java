@@ -30,7 +30,7 @@ public class CdiFrameFactory implements FrameFactory {
 	private Instance<Object> instance;
 
 	@Override
-	public <T extends FramedElement<?>> T create(Element element, Class<T> kind) {
+	public <T extends FramedElement> T create(Element element, Class<T> kind) {
 		return instance.select(kind).get();
 	}
 

@@ -30,7 +30,7 @@ public class SpringFrameFactory implements FrameFactory, BeanFactoryAware {
 	private BeanFactory factory;
 
 	@Override
-	public <T extends FramedElement<?>> T create(Element element, Class<T> kind) {
+	public <T extends FramedElement> T create(Element element, Class<T> kind) {
 		return factory.getBean(kind);
 	}
 

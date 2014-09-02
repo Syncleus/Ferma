@@ -150,7 +150,7 @@ public abstract class FramedTraversalBase<T, SE> implements FramedTraversal<T, S
 	}
 
 	@Override
-	public FramedTraversal ifThenElse(PipeFunction ifFunction, PipeFunction thenFunction, PipeFunction elseFunction) {
+	public FramedTraversal ifThenElse(PipeFunction ifFunction, PipeFunction thenFunction, PipeFunction elseFunction, Class clazz) {
 		pipeline().ifThenElse(ifFunction, thenFunction, elseFunction);
 		return this;
 	}
@@ -158,7 +158,7 @@ public abstract class FramedTraversalBase<T, SE> implements FramedTraversal<T, S
 
 
 	@Override
-	public FramedTraversal loop(String namedStep, PipeFunction whileFunction) {
+	public FramedTraversal loop(String namedStep, PipeFunction whileFunction, Class clazz) {
 		pipeline().loop(namedStep, whileFunction);
 		return this;
 	}
@@ -166,7 +166,7 @@ public abstract class FramedTraversalBase<T, SE> implements FramedTraversal<T, S
 
 
 	@Override
-	public FramedTraversal loop(String namedStep, PipeFunction whileFunction, PipeFunction emitFunction) {
+	public FramedTraversal loop(String namedStep, PipeFunction whileFunction, PipeFunction emitFunction, Class clazz) {
 		pipeline().loop(namedStep, whileFunction, emitFunction);
 		return this;
 	}
@@ -177,10 +177,14 @@ public abstract class FramedTraversalBase<T, SE> implements FramedTraversal<T, S
 		return this;
 	}
 
-	
-
 	@Override
 	public FramedTraversal back(String namedStep) {
+		pipeline().back(namedStep);
+		return this;
+	}
+
+	@Override
+	public FramedTraversal back(String namedStep, Class clazz) {
 		pipeline().back(namedStep);
 		return this;
 	}
@@ -501,7 +505,7 @@ public abstract class FramedTraversalBase<T, SE> implements FramedTraversal<T, S
 	}
 
 	@Override
-	public FramedTraversal scatter() {
+	public FramedTraversal scatter(Class clazz) {
 		pipeline().scatter();
 		return this;
 	}

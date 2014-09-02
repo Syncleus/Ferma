@@ -148,7 +148,7 @@ public interface FramedTraversal<T, SideEffect> {
 	 * @return the extended Pipeline
 	 */
 	public abstract <N> FramedTraversal<N, ?> ifThenElse(PipeFunction<T, Boolean> ifFunction, PipeFunction<T, N> thenFunction,
-			PipeFunction<T, N> elseFunction);
+			PipeFunction<T, N> elseFunction, Class<N> clazz);
 
 
 	/**
@@ -161,7 +161,7 @@ public interface FramedTraversal<T, SideEffect> {
 	 * @param whileFunction whether or not to continue looping on the current object
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> FramedTraversal<N, ?> loop(String namedStep, PipeFunction<LoopPipe.LoopBundle<T>, Boolean> whileFunction);
+	public abstract <N> FramedTraversal<N, ?> loop(String namedStep, PipeFunction<LoopPipe.LoopBundle<T>, Boolean> whileFunction, Class<N> clazz);
 
 
 	/**
@@ -177,7 +177,7 @@ public interface FramedTraversal<T, SideEffect> {
 	 * @return the extended Pipeline
 	 */
 	public abstract <N> FramedTraversal<N, ?> loop(String namedStep, PipeFunction<LoopPipe.LoopBundle<T>, Boolean> whileFunction,
-			PipeFunction<LoopPipe.LoopBundle<T>, Boolean> emitFunction);
+			PipeFunction<LoopPipe.LoopBundle<T>, Boolean> emitFunction, Class<N> clazz);
 
 	/**
 	 * Add an AndFilterPipe to the end the Pipeline.
@@ -654,9 +654,7 @@ public interface FramedTraversal<T, SideEffect> {
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> FramedTraversal<N, ?> simplePath();
-
-	
+	public abstract <T> FramedTraversal<T, ?> simplePath();
 
 	/**
 	 * Add a BackFilterPipe to the end of the Pipeline.
@@ -666,6 +664,15 @@ public interface FramedTraversal<T, SideEffect> {
 	 * @return the extended Pipeline
 	 */
 	public abstract <N> FramedTraversal<N, ?> back(String namedStep);
+
+	/**
+	 * Add a BackFilterPipe to the end of the Pipeline.
+	 * The object that was seen namedSteps ago is emitted.
+	 *
+	 * @param namedStep the name of the step previous to back up to
+	 * @return the extended Pipeline
+	 */
+	public abstract <N> FramedTraversal<N, ?> back(String namedStep, Class<N> type);
 
 	
 	/**
@@ -697,7 +704,7 @@ public interface FramedTraversal<T, SideEffect> {
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<?, ?> scatter();
+	public abstract <N> FramedTraversal<N, ?> scatter(Class<N> clazz);
 
 	/**
 	 * Add a SelectPipe to the end of the Pipeline.

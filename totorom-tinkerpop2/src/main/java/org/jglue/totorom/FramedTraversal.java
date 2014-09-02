@@ -187,7 +187,7 @@ public interface FramedTraversal<T, SideEffect> {
 	 * @param pipes the internal pipes of the AndFilterPipe
 	 * @return the extended Pipeline
 	 */
-	public abstract <T> FramedTraversal<T, ?> and(Pipe<T, ?>... pipes);
+	public abstract FramedTraversal<T, ?> and(Pipe<T, ?>... pipes);
 
 
 	/**
@@ -475,7 +475,7 @@ public interface FramedTraversal<T, SideEffect> {
 	 * @param storageFunction the function to run over each object prior to insertion into the storage collection
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> FramedTraversal<T, Collection<Object>> store(Collection<N> storage, PipeFunction<T, N> storageFunction);
+	public abstract <N> FramedTraversal<T, Collection<N>> store(Collection<N> storage, PipeFunction<T, N> storageFunction);
 
 	/**
 	 * Add an StorePipe to the end of the Pipeline.
@@ -549,7 +549,7 @@ public interface FramedTraversal<T, SideEffect> {
 	 * @param branchFunctions functions to apply to each path object in a round robin fashion
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<T, Tree<Object>> tree(Tree<?> tree, PipeFunction<?, ?>... branchFunctions);
+	public abstract <N> FramedTraversal<T, Tree<N>> tree(Tree<N> tree, PipeFunction<?, ?>... branchFunctions);
 
 	/**
 	 * Add a TreePipe to the end of the Pipeline
@@ -654,7 +654,7 @@ public interface FramedTraversal<T, SideEffect> {
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract <T> FramedTraversal<T, ?> simplePath();
+	public abstract FramedTraversal<T, ?> simplePath();
 
 	/**
 	 * Add a BackFilterPipe to the end of the Pipeline.

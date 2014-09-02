@@ -70,12 +70,12 @@ public class TestFramedElement {
     
     @Test
     public void testv() {
-    	Assert.assertEquals(p1, p1.v(p1.getId()).frame(Person.class).next());
+    	Assert.assertEquals(p1, p1.v(p1.getId()).next(Person.class));
     }
     
     @Test
     public void teste() {
-    	Assert.assertEquals(e1, p1.e(e1.getId()).frame(Knows.class).next());
+    	Assert.assertEquals(e1, p1.e(e1.getId()).next(Knows.class));
     }
     
     @Test

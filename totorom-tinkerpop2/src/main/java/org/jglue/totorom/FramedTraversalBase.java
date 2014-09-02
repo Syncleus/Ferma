@@ -598,6 +598,22 @@ public abstract class FramedTraversalBase<T> implements FramedTraversal<T> {
 		pipeline().remove();
 	}
 
+	@Override
+	public T next() {
 	
+		return (T)pipeline().next();
+	}
+	
+	@Override
+	public FramedEdgeTraversal start(FramedEdge object) {
+		pipeline().start(object);
+		return asEdges();
+	}
+	
+	@Override
+	public FramedVertexTraversal start(FramedVertex object) {
+		pipeline().start(object);
+		return asVertices();
+	}
 	
 }

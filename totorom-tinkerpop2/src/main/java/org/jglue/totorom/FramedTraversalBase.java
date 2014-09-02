@@ -616,4 +616,9 @@ public abstract class FramedTraversalBase<T, SE> implements FramedTraversal<T, S
 		return asVertices();
 	}
 	
+	
+	@Override
+	public <N> FramedTraversal<N, ?> property(String key, Class<N> type) {
+		return (FramedTraversal<N, ?>)property(key);
+	}
 }

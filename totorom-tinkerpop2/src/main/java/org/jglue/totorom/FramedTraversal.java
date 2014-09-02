@@ -17,7 +17,7 @@ import com.tinkerpop.pipes.util.structures.Tree;
 
 
 
-public interface FramedTraversal<T, SE> {
+public interface FramedTraversal<T, SideEffect> {
 
 
 	
@@ -80,6 +80,15 @@ public interface FramedTraversal<T, SE> {
 	 * @return the extended Pipeline
 	 */
 	public abstract FramedTraversal<Object, ?> property(String key);
+	
+	/**
+	 * Add a PropertyPipe to the end of the Pipeline.
+	 * Emit the respective property of the incoming element.
+	 *
+	 * @param key the property key
+	 * @return the extended Pipeline
+	 */
+	public abstract <N> FramedTraversal<N, ?> property(String key, Class<N> type);
 
 	/**
 	 * Add a FunctionPipe to the end of the pipeline.
@@ -561,39 +570,6 @@ public interface FramedTraversal<T, SE> {
 
 	
 	/**
-	 * Add a CyclicPathFilterPipe to the end of the Pipeline.
-	 * If the object's path is repeating (looping), then the object is filtered.
-	 * Thus, what is emitted are those objects whose history is composed of unique objects.
-	 *
-	 * @return the extended Pipeline
-	 */
-	public abstract <N> FramedTraversal<N, ?> simplePath();
-
-	
-
-	/**
-	 * Add a BackFilterPipe to the end of the Pipeline.
-	 * The object that was seen namedSteps ago is emitted.
-	 *
-	 * @param namedStep the name of the step previous to back up to
-	 * @return the extended Pipeline
-	 */
-	public abstract <N> FramedTraversal<N, ?> back(String namedStep);
-
-	
-	/**
-	 * Add a GatherPipe to the end of the Pipeline.
-	 * All the objects previous to this step are aggregated in a greedy fashion into a List.
-	 * The provided function is applied to the aggregate and the results of the function are emitted.
-	 * Typically, the output of the function is a pruned List.
-	 * This is good for selective breadth-first searching.
-	 *
-	 * @param function a transformation to apply to the gathered list
-	 * @return the extended Pipeline
-	 */
-	public abstract <N> FramedTraversal<List<N>, ?> gather(PipeFunction<T, N> function);
-
-	/**
 	 * Add an IdentityPipe to the end of the Pipeline.
 	 * Useful in various situations where a step is needed without processing.
 	 * For example, useful when two as-steps are needed in a row.
@@ -660,6 +636,51 @@ public interface FramedTraversal<T, SE> {
 	 */
 	public abstract FramedTraversal<T, ?> order(PipeFunction<Pair<T, T>, Integer> compareFunction);
 
+	
+	/**
+	 * Wrap the previous step in an AsPipe.
+	 * Useful for naming steps and is used in conjunction with various other steps including: loop, select, back, table, etc.
+	 *
+	 * @param name the name of the AsPipe
+	 * @return the extended Pipeline
+	 */
+	public abstract FramedTraversal<T, ?> as(String name);
+	
+	
+	/**
+	 * Add a CyclicPathFilterPipe to the end of the Pipeline.
+	 * If the object's path is repeating (looping), then the object is filtered.
+	 * Thus, what is emitted are those objects whose history is composed of unique objects.
+	 *
+	 * @return the extended Pipeline
+	 */
+	public abstract <N> FramedTraversal<N, ?> simplePath();
+
+	
+
+	/**
+	 * Add a BackFilterPipe to the end of the Pipeline.
+	 * The object that was seen namedSteps ago is emitted.
+	 *
+	 * @param namedStep the name of the step previous to back up to
+	 * @return the extended Pipeline
+	 */
+	public abstract <N> FramedTraversal<N, ?> back(String namedStep);
+
+	
+	/**
+	 * Add a GatherPipe to the end of the Pipeline.
+	 * All the objects previous to this step are aggregated in a greedy fashion into a List.
+	 * The provided function is applied to the aggregate and the results of the function are emitted.
+	 * Typically, the output of the function is a pruned List.
+	 * This is good for selective breadth-first searching.
+	 *
+	 * @param function a transformation to apply to the gathered list
+	 * @return the extended Pipeline
+	 */
+	public abstract <N> FramedTraversal<List<N>, ?> gather(PipeFunction<T, N> function);
+
+	
 	/**
 	 * Add a PathPipe to the end of the Pipeline.
 	 * This will emit the path that has been seen thus far.
@@ -726,7 +747,7 @@ public interface FramedTraversal<T, SE> {
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<SE, ?> cap();
+	public abstract FramedTraversal<SideEffect, ?> cap();
 
 	/**
 	 * Add a OrderMapPipe to the end of the Pipeline
@@ -764,14 +785,7 @@ public interface FramedTraversal<T, SE> {
 	 */
 	public abstract <N> FramedTraversal<N, ?> transform(PipeFunction<T, N> function);
 
-	/**
-	 * Wrap the previous step in an AsPipe.
-	 * Useful for naming steps and is used in conjunction with various other steps including: loop, select, back, table, etc.
-	 *
-	 * @param name the name of the AsPipe
-	 * @return the extended Pipeline
-	 */
-	public abstract FramedTraversal<T, ?> as(String name);
+	
 
 	/**
 	 * Add a StartPipe to the end of the pipeline.
@@ -841,7 +855,7 @@ public interface FramedTraversal<T, SE> {
 	 *
 	 * @return the Pipeline with path calculations enabled
 	 */
-	public abstract FramedTraversal<T, SE> enablePath();
+	public abstract FramedTraversal<T, SideEffect> enablePath();
 
 	/**
 	 * When possible, Gremlin takes advantage of certain sequences of pipes in order to make a more concise, and generally more efficient expression.
@@ -850,7 +864,7 @@ public interface FramedTraversal<T, SE> {
 	 * @param optimize whether to optimize the pipeline from here on or not
 	 * @return The GremlinPipeline with the optimization turned off
 	 */
-	public abstract FramedTraversal<T, SE> optimize(boolean optimize);
+	public abstract FramedTraversal<T, SideEffect> optimize(boolean optimize);
 
 	/**
 	 * Remove every element at the end of this Pipeline.
@@ -869,13 +883,13 @@ public interface FramedTraversal<T, SE> {
 	 * Cast the traversal as a vertex traversal
 	 * @return
 	 */
-	public abstract FramedVertexTraversal<SE> asVertices();
+	public abstract FramedVertexTraversal<SideEffect> asVertices();
 
 	/**
 	 * Cast the traversal to an edge traversal
 	 * @return
 	 */
-	public abstract FramedEdgeTraversal<SE> asEdges();
+	public abstract FramedEdgeTraversal<SideEffect> asEdges();
 	
 	/**
 	 * Add an OptionalPipe to the end of the Pipeline.

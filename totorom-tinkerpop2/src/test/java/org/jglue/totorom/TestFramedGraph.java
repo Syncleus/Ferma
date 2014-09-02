@@ -1,5 +1,7 @@
 package org.jglue.totorom;
 
+import java.util.Collection;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -40,7 +42,8 @@ public class TestFramedGraph {
         Assert.assertEquals("Bryn", bryn.getName());
         Assert.assertEquals(15, bryn.getKnowsList().get(0).getYears());
    
-
+        Collection<Integer> knowsCollection = fg.V().has("name", "Julia").bothE().property("years", Integer.class).aggregate().cap().next();
+        Assert.assertEquals(1, knowsCollection.size());
     }
     
     @Test
@@ -56,7 +59,7 @@ public class TestFramedGraph {
 
         Person bryn = fg.V().has("name", "Bryn").next(Person.class);
         Person julia = fg.V().has("name", "Julia").next(Person.class);
-        
+
         Assert.assertEquals(Programmer.class, bryn.getClass());
         Assert.assertEquals(Person.class, julia.getClass());
     }

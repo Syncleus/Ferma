@@ -91,14 +91,14 @@ public class TestFramedVertex {
 
         String label = "knows";
         long expectedEdgeCount = p3.outE(label).count()+1;
-        long expectedVerticesCount =  p3.out(label).retain(Lists.newArrayList(p1.element())).count()+1;
+        long expectedVerticesCount =  p3.out(label).retain(Lists.newArrayList(p1)).count()+1;
 
         p3.linkOut(p1, label);
         //Make sure a new edge was created
         Assert.assertEquals("knows edge was not created", expectedEdgeCount, p3.outE(label).count());
 
         //Make sure the edge was created to the correct vertex
-        Assert.assertEquals("Incorrect vertex associated", expectedVerticesCount, p3.out(label).retain(Lists.newArrayList(p1.element())).count());
+        Assert.assertEquals("Incorrect vertex associated", expectedVerticesCount, p3.out(label).retain(Lists.newArrayList(p1)).count());
     }
 
     @Test
@@ -113,7 +113,7 @@ public class TestFramedVertex {
 
         for(String label : newLabels){
             expectedCounts.put("expected_e_" + label, p3.outE(label).count() + 1);
-            expectedCounts.put("expected_v_" + label, p3.out(label).retain(Lists.newArrayList(p1.element())).count() + 1);
+            expectedCounts.put("expected_v_" + label, p3.out(label).retain(Lists.newArrayList(p1)).count() + 1);
         }
 
         p3.linkOut(p1, newLabels);
@@ -124,7 +124,7 @@ public class TestFramedVertex {
             Assert.assertEquals("knows edge was not created", expectedCounts.get("expected_e_" + label), p3.outE(label).count());
 
             //Make sure the edge was created to the correct vertex
-            Assert.assertEquals("Incorrect vertex associated", expectedCounts.get("expected_v_" + label), p3.out(label).retain(Lists.newArrayList(p1.element())).count());
+            Assert.assertEquals("Incorrect vertex associated", expectedCounts.get("expected_v_" + label), p3.out(label).retain(Lists.newArrayList(p1)).count());
         }
           
     }
@@ -136,14 +136,14 @@ public class TestFramedVertex {
 
         String label = "knows";
         long expectedEdgeCount = p3.inE(label).count()+1;
-        long expectedVerticesCount =  p3.in(label).retain(Lists.newArrayList(p1.element())).count()+1;
+        long expectedVerticesCount =  p3.in(label).retain(Lists.newArrayList(p1)).count()+1;
 
         p3.linkIn(p1, label);
         //Make sure a new edge was created
         Assert.assertEquals("knows edge was not created", expectedEdgeCount, p3.inE(label).count());
 
         //Make sure the edge was created to the correct vertex
-        Assert.assertEquals("Incorrect vertex associated", expectedVerticesCount, p3.in(label).retain(Lists.newArrayList(p1.element())).count());
+        Assert.assertEquals("Incorrect vertex associated", expectedVerticesCount, p3.in(label).retain(Lists.newArrayList(p1)).count());
     }
 
     @Test
@@ -158,7 +158,7 @@ public class TestFramedVertex {
 
         for(String label : newLabels){
             expectedCounts.put("expected_e_" + label, p3.inE(label).count() + 1);
-            expectedCounts.put("expected_v_" + label, p3.in(label).retain(Lists.newArrayList(p1.element())).count() + 1);
+            expectedCounts.put("expected_v_" + label, p3.in(label).retain(Lists.newArrayList(p1)).count() + 1);
         }
 
         p3.linkIn(p1, newLabels);
@@ -169,7 +169,7 @@ public class TestFramedVertex {
             Assert.assertEquals("knows edge was not created", expectedCounts.get("expected_e_" + label), p3.inE(label).count());
 
             //Make sure the edge was created to the correct vertex
-            Assert.assertEquals("Incorrect vertex associated", expectedCounts.get("expected_v_" + label), p3.in(label).retain(Lists.newArrayList(p1.element())).count());
+            Assert.assertEquals("Incorrect vertex associated", expectedCounts.get("expected_v_" + label), p3.in(label).retain(Lists.newArrayList(p1)).count());
         }
 
     }
@@ -181,16 +181,16 @@ public class TestFramedVertex {
 
         String label = "knows";
         long expectedEdgeCount = p3.bothE(label).count()+2;
-        long tailCount =  p3.in(label).retain(Lists.newArrayList(p1.element())).count()+1;
-        long headCount =  p3.out(label).retain(Lists.newArrayList(p1.element())).count()+1;
+        long tailCount =  p3.in(label).retain(Lists.newArrayList(p1)).count()+1;
+        long headCount =  p3.out(label).retain(Lists.newArrayList(p1)).count()+1;
 
         p3.linkBoth(p1, label);
         //Make sure a new edge was created
         Assert.assertEquals("knows edge was not created", expectedEdgeCount, p3.bothE(label).count());
 
         //Make sure the edge was created to the correct vertex
-        Assert.assertEquals("Incorrect in vertex associated", tailCount, p3.in(label).retain(Lists.newArrayList(p1.element())).count());
-        Assert.assertEquals("Incorrect out vertex associated", headCount, p3.out(label).retain(Lists.newArrayList(p1.element())).count());
+        Assert.assertEquals("Incorrect in vertex associated", tailCount, p3.in(label).retain(Lists.newArrayList(p1)).count());
+        Assert.assertEquals("Incorrect out vertex associated", headCount, p3.out(label).retain(Lists.newArrayList(p1)).count());
     }
 
     @Test
@@ -205,8 +205,8 @@ public class TestFramedVertex {
 
         for(String label : newLabels){
             expectedCounts.put("expected_e_" + label, p3.bothE(label).count() + 2);
-            expectedCounts.put("expected_tail_" + label, p3.in(label).retain(Lists.newArrayList(p1.element())).count()+1);
-            expectedCounts.put("expected_head_" + label, p3.out(label).retain(Lists.newArrayList(p1.element())).count()+1);
+            expectedCounts.put("expected_tail_" + label, p3.in(label).retain(Lists.newArrayList(p1)).count()+1);
+            expectedCounts.put("expected_head_" + label, p3.out(label).retain(Lists.newArrayList(p1)).count()+1);
         }
 
         p3.linkBoth(p1, newLabels);
@@ -217,8 +217,8 @@ public class TestFramedVertex {
             Assert.assertEquals("knows edge was not created", expectedCounts.get("expected_e_" + label), p3.bothE(label).count());
 
             //Make sure the edge was created to the correct vertex
-            Assert.assertEquals("Incorrect vertex associated", expectedCounts.get("expected_tail_" + label), p3.in(label).retain(Lists.newArrayList(p1.element())).count());
-            Assert.assertEquals("Incorrect vertex associated", expectedCounts.get("expected_head_" + label), p3.out(label).retain(Lists.newArrayList(p1.element())).count());
+            Assert.assertEquals("Incorrect vertex associated", expectedCounts.get("expected_tail_" + label), p3.in(label).retain(Lists.newArrayList(p1)).count());
+            Assert.assertEquals("Incorrect vertex associated", expectedCounts.get("expected_head_" + label), p3.out(label).retain(Lists.newArrayList(p1)).count());
         }
 
     }
@@ -294,7 +294,7 @@ public class TestFramedVertex {
         p4.addEdge(label, p3, Knows.class);
         p5.addEdge(label, p3, Knows.class);
         long allInEdgesCount = p3.in(label).count();
-        Long targetVertex_InEdgeCount = p3.in(label).as("e").retain(Lists.newArrayList(p4.element())).back("e").count();
+        Long targetVertex_InEdgeCount = p3.in(label).as("e").retain(Lists.newArrayList(p4)).back("e").count();
 
         Assert.assertTrue("target vertex requires an in edge for " + label, targetVertex_InEdgeCount > 0);
         Assert.assertTrue("Multiple edges(in) of type "+label+" must exist for vertice", allInEdgesCount - targetVertex_InEdgeCount > 0);
@@ -302,7 +302,7 @@ public class TestFramedVertex {
         p3.unlinkIn(p4, label);
 
         //Make all edges were removed
-        Assert.assertEquals("All " + label + " edges(in) should have been removed from given vertex", 0, p3.in(label).retain(Lists.newArrayList(p4.element())).count());
+        Assert.assertEquals("All " + label + " edges(in) should have been removed from given vertex", 0, p3.in(label).retain(Lists.newArrayList(p4)).count());
         Assert.assertTrue("All " + label + " edges(in) should have remained for other vertices", p3.inE(label).count() > 0);
     }
 
@@ -316,7 +316,7 @@ public class TestFramedVertex {
         p3.addEdge(label, p4, Knows.class);
         p3.addEdge(label, p5, Knows.class);
         long allInEdgesCount = p3.out(label).count();
-        Long targetVertex_OutEdgeCount = p3.out(label).as("e").retain(Lists.newArrayList(p4.element())).back("e").count();
+        Long targetVertex_OutEdgeCount = p3.out(label).as("e").retain(Lists.newArrayList(p4)).back("e").count();
 
         Assert.assertTrue("target vertex requires an in edge for "+label, targetVertex_OutEdgeCount > 0);
         Assert.assertTrue("Multiple edges(out) of type "+label+" must exist for vertice", allInEdgesCount - targetVertex_OutEdgeCount > 0);
@@ -324,7 +324,7 @@ public class TestFramedVertex {
         p3.unlinkOut(p4, label);
 
         //Make all edges were removed
-        Assert.assertEquals("All " + label + " edges(in) should have been removed from given vertex", 0, p3.out(label).retain(Lists.newArrayList(p4.element())).count());
+        Assert.assertEquals("All " + label + " edges(in) should have been removed from given vertex", 0, p3.out(label).retain(Lists.newArrayList(p4)).count());
         Assert.assertTrue("All " + label + " edges(in) should have remained for other vertices", p3.outE(label).count() > 0);
     }
 
@@ -341,7 +341,7 @@ public class TestFramedVertex {
         p3.addEdge(label, p5, Knows.class);
 
         long allInEdgesCount = p3.both(label).count();
-        Long targetVertex_EdgeCount = p3.both(label).as("e").retain(Lists.newArrayList(p4.element())).back("e").count();
+        Long targetVertex_EdgeCount = p3.both(label).as("e").retain(Lists.newArrayList(p4)).back("e").count();
 
         Assert.assertTrue("target vertex requires an in/out edge for "+label, targetVertex_EdgeCount > 0);
         Assert.assertTrue("Multiple edges of type "+label+" must exist for vertice", allInEdgesCount - targetVertex_EdgeCount > 0);
@@ -349,7 +349,7 @@ public class TestFramedVertex {
         p3.unlinkBoth(p4, label);
 
         //Make all edges were removed
-        Assert.assertEquals("All " + label + " edges(in/out) should have been removed from given vertex", 0, p3.both(label).retain(Lists.newArrayList(p4.element())).count());
+        Assert.assertEquals("All " + label + " edges(in/out) should have been removed from given vertex", 0, p3.both(label).retain(Lists.newArrayList(p4)).count());
         Assert.assertTrue("All " + label + " edges(in/out) should have remained for other vertices", p3.bothE(label).count() > 0);
     }
 
@@ -362,16 +362,16 @@ public class TestFramedVertex {
 
         p4.addEdge(label, p3, Knows.class);
 
-        Assert.assertTrue("An edge(in) of type " + label + " must exist between vertices", p3.in(label).retain(Lists.newArrayList(p4.element())).count() > 0);
+        Assert.assertTrue("An edge(in) of type " + label + " must exist between vertices", p3.in(label).retain(Lists.newArrayList(p4)).count() > 0);
 
         p3.setLinkIn(p5, label);
 
         //Make sure old edge was deleted
-        Assert.assertEquals("old " + label + " edge was not removed", 0, p3.in(label).retain(Lists.newArrayList(p4.element())).count());
+        Assert.assertEquals("old " + label + " edge was not removed", 0, p3.in(label).retain(Lists.newArrayList(p4)).count());
 
 
         //Make sure a new edge was created (and to correct vertex)
-        Assert.assertEquals(label + " edge was not created", 1, p3.in(label).retain(Lists.newArrayList(p5.element())).count());
+        Assert.assertEquals(label + " edge was not created", 1, p3.in(label).retain(Lists.newArrayList(p5)).count());
     }
 
     @Test
@@ -383,16 +383,16 @@ public class TestFramedVertex {
 
         p3.addEdge(label, p4, Knows.class);
 
-        Assert.assertTrue("An out edge of type "+label+" must exist between vertices", p3.out(label).retain(Lists.newArrayList(p4.element())).count() > 0);
+        Assert.assertTrue("An out edge of type "+label+" must exist between vertices", p3.out(label).retain(Lists.newArrayList(p4)).count() > 0);
 
         p3.setLinkOut(p5, label);
 
         //Make sure old edge was deleted
-        Assert.assertEquals("old " + label + " edge was not removed", 0, p3.out(label).retain(Lists.newArrayList(p4.element())).count());
+        Assert.assertEquals("old " + label + " edge was not removed", 0, p3.out(label).retain(Lists.newArrayList(p4)).count());
 
 
         //Make sure a new edge was created (and to correct vertex)
-        Assert.assertEquals(label + " edge was not created", 1, p3.out(label).retain(Lists.newArrayList(p5.element())).count());
+        Assert.assertEquals(label + " edge was not created", 1, p3.out(label).retain(Lists.newArrayList(p5)).count());
     }
 
     @Test
@@ -405,19 +405,19 @@ public class TestFramedVertex {
         p4.addEdge(label, p3, Knows.class);
         p3.addEdge(label, p4, Knows.class);
 
-        Assert.assertTrue("An in edge of type " + label + " must exist between vertices", p3.in(label).retain(Lists.newArrayList(p4.element())).count() > 0);
-        Assert.assertTrue("An out edge of type "+label+" must exist between vertices", p3.out(label).retain(Lists.newArrayList(p4.element())).count() > 0);
+        Assert.assertTrue("An in edge of type " + label + " must exist between vertices", p3.in(label).retain(Lists.newArrayList(p4)).count() > 0);
+        Assert.assertTrue("An out edge of type "+label+" must exist between vertices", p3.out(label).retain(Lists.newArrayList(p4)).count() > 0);
 
         p3.setLinkBoth(p5, label);
 
         //Make sure old edge was deleted
-        Assert.assertEquals("old " + label + " edge in was not removed", 0, p3.in(label).retain(Lists.newArrayList(p4.element())).count());
-        Assert.assertEquals("old " + label + " edge out was not removed", 0, p3.out(label).retain(Lists.newArrayList(p4.element())).count());
+        Assert.assertEquals("old " + label + " edge in was not removed", 0, p3.in(label).retain(Lists.newArrayList(p4)).count());
+        Assert.assertEquals("old " + label + " edge out was not removed", 0, p3.out(label).retain(Lists.newArrayList(p4)).count());
 
 
         //Make sure a new edges were created (and to correct vertex)
-        Assert.assertEquals(label + " in edge was not created", 1, p3.in(label).retain(Lists.newArrayList(p5.element())).count());
-        Assert.assertEquals(label + " out edge was not created", 1, p3.out(label).retain(Lists.newArrayList(p5.element())).count());
+        Assert.assertEquals(label + " in edge was not created", 1, p3.in(label).retain(Lists.newArrayList(p5)).count());
+        Assert.assertEquals(label + " out edge was not created", 1, p3.out(label).retain(Lists.newArrayList(p5)).count());
 
     }
 
@@ -429,16 +429,16 @@ public class TestFramedVertex {
 
         p4.addEdge(label, p3, Knows.class);
 
-        Assert.assertTrue("An out edge of type "+label+" must exist between vertices", p3.in(label).retain(Lists.newArrayList(p4.element())).count() > 0);
+        Assert.assertTrue("An out edge of type "+label+" must exist between vertices", p3.in(label).retain(Lists.newArrayList(p4)).count() > 0);
 
         Person p5 = (Person)p3.setLinkIn(Person.class, label);
 
         //Make sure old edge was deleted
-        Assert.assertEquals("old " + label + " edge was not removed", 0, p3.in(label).retain(Lists.newArrayList(p4.element())).count());
+        Assert.assertEquals("old " + label + " edge was not removed", 0, p3.in(label).retain(Lists.newArrayList(p4)).count());
 
 
         //Make sure a new edge was created (and to correct vertex)
-        Assert.assertEquals(label + " edge was not created", 1, p3.in(label).retain(Lists.newArrayList(p5.element())).count());
+        Assert.assertEquals(label + " edge was not created", 1, p3.in(label).retain(Lists.newArrayList(p5)).count());
 
     }
 
@@ -450,16 +450,16 @@ public class TestFramedVertex {
 
         p3.addEdge(label, p4, Knows.class);
 
-        Assert.assertTrue("An out edge of type "+label+" must exist between vertices", p3.out(label).retain(Lists.newArrayList(p4.element())).count() > 0);
+        Assert.assertTrue("An out edge of type "+label+" must exist between vertices", p3.out(label).retain(Lists.newArrayList(p4)).count() > 0);
 
         Person p5 = (Person)p3.setLinkOut(Person.class, label);
 
         //Make sure old edge was deleted
-        Assert.assertEquals("old " + label + " edge was not removed", 0, p3.out(label).retain(Lists.newArrayList(p4.element())).count());
+        Assert.assertEquals("old " + label + " edge was not removed", 0, p3.out(label).retain(Lists.newArrayList(p4)).count());
 
 
         //Make sure a new edge was created (and to correct vertex)
-        Assert.assertEquals(label + " edge was not created", 1, p3.out(label).retain(Lists.newArrayList(p5.element())).count());
+        Assert.assertEquals(label + " edge was not created", 1, p3.out(label).retain(Lists.newArrayList(p5)).count());
 
     }
 
@@ -472,18 +472,18 @@ public class TestFramedVertex {
         p3.addEdge(label, p4, Knows.class);
         p4.addEdge(label, p3, Knows.class);
 
-        Assert.assertTrue("An in edge of type "+label+" must exist between vertices", p3.in(label).retain(Lists.newArrayList(p4.element())).count() > 0);
-        Assert.assertTrue("An out edge of type "+label+" must exist between vertices", p3.out(label).retain(Lists.newArrayList(p4.element())).count() > 0);
+        Assert.assertTrue("An in edge of type "+label+" must exist between vertices", p3.in(label).retain(Lists.newArrayList(p4)).count() > 0);
+        Assert.assertTrue("An out edge of type "+label+" must exist between vertices", p3.out(label).retain(Lists.newArrayList(p4)).count() > 0);
 
         Person p5 = (Person)p3.setLinkBoth(Person.class, label);
 
         //Make sure old edge was deleted
-        Assert.assertEquals("old " + label + " edge was not removed", 0, p3.both(label).retain(Lists.newArrayList(p4.element())).count());
+        Assert.assertEquals("old " + label + " edge was not removed", 0, p3.both(label).retain(Lists.newArrayList(p4)).count());
 
 
         //Make sure a new edge was created (and to correct vertex)
-        Assert.assertEquals(label + " edge(out) was not created", 1, p3.out(label).retain(Lists.newArrayList(p5.element())).count());
-        Assert.assertEquals(label + " edge(in) was not created", 1, p3.in(label).retain(Lists.newArrayList(p5.element())).count());
+        Assert.assertEquals(label + " edge(out) was not created", 1, p3.out(label).retain(Lists.newArrayList(p5)).count());
+        Assert.assertEquals(label + " edge(in) was not created", 1, p3.in(label).retain(Lists.newArrayList(p5)).count());
     }
 
 

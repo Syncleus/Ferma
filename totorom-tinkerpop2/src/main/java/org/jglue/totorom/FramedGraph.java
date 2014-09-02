@@ -106,7 +106,7 @@ public class FramedGraph {
      * Query over all vertices in the graph.
      * @return The query.
      */
-    public FramedVertexTraversal V() {
+    public FramedVertexTraversal<?> V() {
         return new FramedTraversalImpl(this, delegate).V();
     }
 
@@ -114,7 +114,7 @@ public class FramedGraph {
      * Query over all edges in the graph.
      * @return The query.
      */
-    public FramedEdgeTraversal E() {
+    public FramedEdgeTraversal<?> E() {
     	return new FramedTraversalImpl(this, delegate).E();
     }
 
@@ -124,7 +124,7 @@ public class FramedGraph {
      * @param ids The ids of the vertices.
      * @return The query.
      */
-    public FramedVertexTraversal v(final Object... ids) {
+    public FramedVertexTraversal<?> v(final Object... ids) {
     	return new FramedTraversalImpl(this, Iterators.transform(Iterators.forArray(ids), new Function<Object, Vertex>() {
 
 			@Override
@@ -140,7 +140,7 @@ public class FramedGraph {
      * @param ids The ids of the edges.
      * @return The query. 
      */
-    public FramedEdgeTraversal e(final Object... ids) {
+    public FramedEdgeTraversal<?> e(final Object... ids) {
     	return new FramedTraversalImpl(this, Iterators.transform(Iterators.forArray(ids), new Function<Object, Edge>() {
 
 			@Override

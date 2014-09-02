@@ -17,7 +17,7 @@ import com.tinkerpop.pipes.transform.TransformPipe.Order;
 import com.tinkerpop.pipes.util.structures.Table;
 import com.tinkerpop.pipes.util.structures.Tree;
 
-public abstract class FramedTraversalBase<T> implements FramedTraversal<T> {
+public abstract class FramedTraversalBase<T, SE> implements FramedTraversal<T, SE> {
 
 	
 

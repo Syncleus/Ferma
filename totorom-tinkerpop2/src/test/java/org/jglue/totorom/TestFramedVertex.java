@@ -1,20 +1,16 @@
 package org.jglue.totorom;
 
-import com.google.common.collect.Lists;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import com.tinkerpop.blueprints.Element;
+import com.google.common.collect.Lists;
 import com.tinkerpop.blueprints.Graph;
-import com.tinkerpop.blueprints.TransactionalGraph;
 import com.tinkerpop.blueprints.impls.tg.TinkerGraph;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author Bryn Cooke (http://jglue.org)
@@ -109,7 +105,7 @@ public class TestFramedVertex {
         Person p3 = fg.addVertex(Person.class);
         p3.setName("Tjad");
 
-        Map expectedCounts = new HashMap();
+        Map<String, Number> expectedCounts = new HashMap<>();
 
         for(String label : newLabels){
             expectedCounts.put("expected_e_" + label, p3.outE(label).count() + 1);
@@ -154,7 +150,7 @@ public class TestFramedVertex {
         Person p3 = fg.addVertex(Person.class);
         p3.setName("Tjad");
 
-        Map expectedCounts = new HashMap();
+        Map<String, Number> expectedCounts = new HashMap<>();
 
         for(String label : newLabels){
             expectedCounts.put("expected_e_" + label, p3.inE(label).count() + 1);
@@ -201,7 +197,7 @@ public class TestFramedVertex {
         Person p3 = fg.addVertex(Person.class);
         p3.setName("Tjad");
 
-        Map expectedCounts = new HashMap();
+        Map<String, Number> expectedCounts = new HashMap<>();
 
         for(String label : newLabels){
             expectedCounts.put("expected_e_" + label, p3.bothE(label).count() + 2);

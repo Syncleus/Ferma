@@ -2,9 +2,7 @@ package org.jglue.totorom;
 
 import java.util.Set;
 
-import com.tinkerpop.blueprints.Edge;
 import com.tinkerpop.blueprints.Element;
-import com.tinkerpop.blueprints.Vertex;
 
 /**
  * @author Bryn Cooke (http://jglue.org)
@@ -15,7 +13,6 @@ public abstract class FramedElement {
 	private Element element;
 	private FramedGraph graph;
 
-	@SuppressWarnings("unchecked")
 	protected void init(FramedGraph graph, Element element) {
 		this.graph = graph;
 		this.element = element;
@@ -88,7 +85,7 @@ public abstract class FramedElement {
 	 * 
 	 * @return The query.
 	 */
-	protected FramedVertexTraversal V() {
+	protected FramedVertexTraversal<?> V() {
 		return graph.V();
 	}
 
@@ -97,7 +94,7 @@ public abstract class FramedElement {
 	 * 
 	 * @return The query.
 	 */
-	protected FramedEdgeTraversal E() {
+	protected FramedEdgeTraversal<?> E() {
 		return graph.E();
 	}
 
@@ -108,7 +105,7 @@ public abstract class FramedElement {
 	 *            The ids of the vertices.
 	 * @return The query.
 	 */
-	public FramedVertexTraversal v(final Object... ids) {
+	public FramedVertexTraversal<?> v(final Object... ids) {
 		return graph.v(ids);
 	}
 
@@ -119,7 +116,7 @@ public abstract class FramedElement {
 	 *            The ids of the edges.
 	 * @return The query.
 	 */
-	public FramedEdgeTraversal e(final Object... ids) {
+	public FramedEdgeTraversal<?> e(final Object... ids) {
 		return graph.e(ids);
 	}
 

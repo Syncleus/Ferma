@@ -1,6 +1,5 @@
 package org.jglue.totorom;
 
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -14,9 +13,6 @@ import com.tinkerpop.blueprints.Predicate;
 import com.tinkerpop.blueprints.Vertex;
 import com.tinkerpop.gremlin.Tokens.T;
 import com.tinkerpop.gremlin.java.GremlinPipeline;
-import com.tinkerpop.pipes.Pipe;
-import com.tinkerpop.pipes.PipeFunction;
-import com.tinkerpop.pipes.util.structures.Row;
 
 public class FramedTraversalImpl extends FramedTraversalBase implements FramedTraversal {
 
@@ -103,7 +99,7 @@ public class FramedTraversalImpl extends FramedTraversalBase implements FramedTr
 		return graph;
 	}
 
-	protected class FramedEdgeTraversalImpl extends FramedTraversalBase<Edge> implements FramedEdgeTraversal {
+	protected class FramedEdgeTraversalImpl<SE> extends FramedTraversalBase<Edge, SE> implements FramedEdgeTraversal<SE> {
 		@Override
 		public FramedEdgeTraversal has(String key) {
 			return (FramedEdgeTraversal)super.has(key);
@@ -233,7 +229,7 @@ public class FramedTraversalImpl extends FramedTraversalBase implements FramedTr
 
 	}
 
-	protected class FramedVertexTraversalImpl extends FramedTraversalBase<Vertex> implements FramedVertexTraversal {
+	protected class FramedVertexTraversalImpl<SE> extends FramedTraversalBase<Vertex, SE> implements FramedVertexTraversal<SE> {
 
 		@Override
 		public FramedVertexTraversal out(int branchFactor, String... labels) {

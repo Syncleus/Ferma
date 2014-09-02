@@ -1,8 +1,5 @@
 package org.jglue.totorom;
 
-import java.io.Closeable;
-import java.io.IOException;
-
 import com.tinkerpop.blueprints.TransactionalGraph;
 
 /**

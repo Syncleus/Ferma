@@ -45,16 +45,16 @@ public class TestFramedEdge {
     
     @Test
     public void testInV() {
-    	Assert.assertEquals(p2, e1.inV().nextVertex(Person.class));
+    	Assert.assertEquals(p2, e1.inV().next(Person.class));
     }
     
     @Test
     public void testOutV() {
-    	Assert.assertEquals(p1, e1.outV().nextVertex(Person.class));
+    	Assert.assertEquals(p1, e1.outV().next(Person.class));
     }
     
     @Test
     public void testBothV() {
-    	Assert.assertEquals(p1, e1.bothV().nextVertex(Person.class));
+    	Assert.assertEquals(p1, e1.bothV().next(Person.class));
     }
 }

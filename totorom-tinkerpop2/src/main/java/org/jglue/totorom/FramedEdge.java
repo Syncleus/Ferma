@@ -1,8 +1,6 @@
 package org.jglue.totorom;
 
 import com.tinkerpop.blueprints.Edge;
-import com.tinkerpop.blueprints.Element;
-import com.tinkerpop.blueprints.Vertex;
 
 /**
  * The base class that all edge frames must extend.
@@ -25,23 +23,30 @@ public abstract class FramedEdge extends FramedElement {
     /**
      * @return The in vertex for this edge.
      */
-    protected FramedVertexTraversal<Edge, Vertex> inV() {
-        return new FramedTraversalImpl<Edge, Vertex>(graph(), element()).inV();
+    protected FramedVertexTraversal inV() {
+        return new FramedTraversalImpl(graph(), element()).asEdges().inV();
     }
 
     /**
      * @return The out vertex of this edge.
      */
-    protected FramedVertexTraversal<Edge, Vertex> outV() {
-        return new FramedTraversalImpl<Edge, Vertex>(graph(), element()).outV();
+    protected FramedVertexTraversal outV() {
+        return new FramedTraversalImpl(graph(), element()).asEdges().outV();
     }
 
     /**
      * @return The vertices for this edge.
      */
-    protected FramedVertexTraversal<Edge, Vertex> bothV() {
-        return new FramedTraversalImpl<Edge, Vertex>(graph(), element()).bothV();
+    protected FramedVertexTraversal bothV() {
+        return new FramedTraversalImpl(graph(), element()).asEdges().bothV();
     }
 
-
+    /**
+	 * Shortcut to get frameTraversal of current element
+	 * 
+	 * @return
+	 */
+	protected FramedEdgeTraversal traversal() {
+		return new FramedTraversalImpl(graph(), element()).asEdges();
+	}
 }

@@ -11,7 +11,7 @@ import com.tinkerpop.blueprints.Vertex;
  */
 
 public abstract class FramedElement {
-	
+
 	private Element element;
 	private FramedGraph graph;
 
@@ -88,7 +88,7 @@ public abstract class FramedElement {
 	 * 
 	 * @return The query.
 	 */
-	protected FramedVertexTraversal<Vertex, Vertex> V() {
+	protected FramedVertexTraversal V() {
 		return graph.V();
 	}
 
@@ -97,7 +97,7 @@ public abstract class FramedElement {
 	 * 
 	 * @return The query.
 	 */
-	protected FramedEdgeTraversal<Edge, Edge> E() {
+	protected FramedEdgeTraversal E() {
 		return graph.E();
 	}
 
@@ -108,7 +108,7 @@ public abstract class FramedElement {
 	 *            The ids of the vertices.
 	 * @return The query.
 	 */
-	public FramedVertexTraversal<Vertex, Vertex> v(final Object... ids) {
+	public FramedVertexTraversal v(final Object... ids) {
 		return graph.v(ids);
 	}
 
@@ -119,9 +119,11 @@ public abstract class FramedElement {
 	 *            The ids of the edges.
 	 * @return The query.
 	 */
-	public FramedEdgeTraversal<Edge, Edge> e(final Object... ids) {
+	public FramedEdgeTraversal e(final Object... ids) {
 		return graph.e(ids);
 	}
+
+	
 
 	@Override
 	public int hashCode() {

@@ -4,26 +4,24 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.tinkerpop.blueprints.Edge;
-import com.tinkerpop.blueprints.Element;
 import com.tinkerpop.blueprints.Predicate;
-import com.tinkerpop.blueprints.Vertex;
 import com.tinkerpop.gremlin.Tokens;
 
-public interface FramedEdgeTraversal<S, E> extends FramedTraversal<S, E> {
+public interface FramedEdgeTraversal extends FramedTraversal<Edge> {
 
-	public FramedEdgeTraversal<S, E> has(String key);
+	public FramedEdgeTraversal has(String key);
 
-	public FramedEdgeTraversal<S, E> has(String key, Object value);
+	public FramedEdgeTraversal has(String key, Object value);
 
-	public FramedEdgeTraversal<S, E> has(String key, Tokens.T compareToken,
+	public FramedEdgeTraversal has(String key, Tokens.T compareToken,
 			Object value);
 
-	public FramedEdgeTraversal<S, E> has(String key, Predicate predicate,
+	public FramedEdgeTraversal has(String key, Predicate predicate,
 			Object value);
 
-	public FramedEdgeTraversal<S, E> hasNot(String key);
+	public FramedEdgeTraversal hasNot(String key);
 
-	public FramedEdgeTraversal<S, E> hasNot(String key, Object value);
+	public FramedEdgeTraversal hasNot(String key, Object value);
 
 	/*
 	 * (non-Javadoc)
@@ -32,7 +30,7 @@ public interface FramedEdgeTraversal<S, E> extends FramedTraversal<S, E> {
 	 * com.tinkerpop.gremlin.java.GremlinPipeline#interval(java.lang.String,
 	 * java.lang.Comparable, java.lang.Comparable)
 	 */
-	public <C> FramedEdgeTraversal<S, E> interval(String key,
+	public <C> FramedEdgeTraversal interval(String key,
 			Comparable<C> startValue, Comparable<C> endValue);
 
 	/**
@@ -40,13 +38,13 @@ public interface FramedEdgeTraversal<S, E> extends FramedTraversal<S, E> {
 	 * 
 	 * @return The traversal.
 	 */
-	public FramedEdgeTraversal<S, E> identity();
+	public FramedEdgeTraversal identity();
 
-	public FramedVertexTraversal<S, E> inV();
+	public FramedVertexTraversal inV();
 
-	public FramedVertexTraversal<S, E> outV();
+	public FramedVertexTraversal outV();
 
-	public FramedVertexTraversal<S, E> bothV();
+	public FramedVertexTraversal bothV();
 
 	/**
 	 * Get the next object emitted from the pipeline. If no such object exists,
@@ -56,7 +54,7 @@ public interface FramedEdgeTraversal<S, E> extends FramedTraversal<S, E> {
 	 *            The type of frame for the element.
 	 * @return the next emitted object
 	 */
-	public <T extends FramedEdge> T nextEdge(Class<T> kind);
+	public <T extends FramedEdge> T next(Class<T> kind);
 
 	/**
 	 * Return the next X objects in the traversal as a list.
@@ -86,5 +84,16 @@ public interface FramedEdgeTraversal<S, E> extends FramedTraversal<S, E> {
 	 * @return a list of all the objects
 	 */
 	public <T extends FramedEdge> List<T> toList(Class<T> kind);
+
+	public FramedEdgeTraversal as(String name);
+	
+	/**
+	 * Add an LabelPipe to the end of the Pipeline.
+	 * Emit the label of the incoming edge.
+	 *
+	 * @return the extended Pipeline
+	 */
+	public abstract FramedTraversal label();
+
 
 }

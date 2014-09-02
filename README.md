@@ -97,3 +97,6 @@ Using TypeResolver.Java will save the type of Java class the element was created
       Assert.assertEquals(Programmer.class, bryn.getClass());
       Assert.assertEquals(Person.class, julia.getClass());
     }
+    
+    This project uses code derived from the Tinkerpop project (http://www.tinkerpop.com/) under the apache licence and or tinkerpop licence.
+     

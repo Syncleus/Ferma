@@ -17,37 +17,106 @@ import com.tinkerpop.pipes.util.structures.Table;
 import com.tinkerpop.pipes.util.structures.Tree;
 
 public interface FramedEdgeTraversal<SE> extends FramedTraversal<Edge, SE> {
-
+	/**
+     * Check if the element has a property with provided key.
+     *
+     * @param key the property key to check
+     * @return the extended Pipeline
+     */
 	public FramedEdgeTraversal<?> has(String key);
 
+	  /**
+     * Add an IdFilterPipe, LabelFilterPipe, or PropertyFilterPipe to the end of the Pipeline.
+     * If the incoming element has the provided key/value as check with .equals(), then let the element pass.
+     * If the key is id or label, then use respect id or label filtering.
+     *
+     * @param key   the property key to check
+     * @param value the object to filter on (in an OR manner)
+     * @return the extended Pipeline
+     */
 	public FramedEdgeTraversal<?> has(String key, Object value);
 
+	/**
+     * Add an IdFilterPipe, LabelFilterPipe, or PropertyFilterPipe to the end of the Pipeline.
+     * If the incoming element has the provided key/value as check with .equals(), then let the element pass.
+     * If the key is id or label, then use respect id or label filtering.
+     *
+     * @param key          the property key to check
+     * @param compareToken the comparison to use
+     * @param value        the object to filter on
+     * @return the extended Pipeline
+     */
 	public FramedEdgeTraversal<?> has(String key, Tokens.T compareToken,
 			Object value);
 
+	 /**
+     * Add an IdFilterPipe, LabelFilterPipe, or PropertyFilterPipe to the end of the Pipeline.
+     * If the incoming element has the provided key/value as check with .equals(), then let the element pass.
+     * If the key is id or label, then use respect id or label filtering.
+     *
+     * @param key       the property key to check
+     * @param predicate the comparison to use
+     * @param value     the object to filter on
+     * @return the extended Pipeline
+     */
 	public FramedEdgeTraversal<?> has(String key, Predicate predicate,
 			Object value);
 
+	   /**
+     * Check if the element does not have a property with provided key.
+     *
+     * @param key the property key to check
+     * @return the extended Pipeline
+     */
 	public FramedEdgeTraversal<?> hasNot(String key);
 
+	   /**
+  * Add an IdFilterPipe, LabelFilterPipe, or PropertyFilterPipe to the end of the Pipeline.
+  * If the incoming element has the provided key/value as check with .equals(), then filter the element.
+  * If the key is id or label, then use respect id or label filtering.
+  *
+  * @param key   the property key to check
+  * @param value the objects to filter on (in an OR manner)
+  * @return the extended Pipeline
+  */
 	public FramedEdgeTraversal<?> hasNot(String key, Object value);
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.tinkerpop.gremlin.java.GremlinPipeline#interval(java.lang.String,
-	 * java.lang.Comparable, java.lang.Comparable)
-	 */
+	/**
+     * Add an IntervalFilterPipe to the end of the Pipeline.
+     * If the incoming element has a value that is within the interval value range specified, then the element is allows to pass.
+     * If hte incoming element's value for the key is null, the element is filtered.
+     *
+     * @param key        the property key to check
+     * @param startValue the start of the interval (inclusive)
+     * @param endValue   the end of the interval (exclusive)
+     * @return the extended Pipeline
+     */
 	public <C> FramedEdgeTraversal<?> interval(String key,
 			Comparable<C> startValue, Comparable<C> endValue);
 
 	
 
+    /**
+     * Add an InVertexPipe to the end of the Pipeline.
+     * Emit the head vertex of the incoming edge.
+     *
+     * @return the extended Pipeline
+     */
 	public FramedVertexTraversal<?> inV();
 
+	   /**
+     * Add an OutVertexPipe to the end of the Pipeline.
+     * Emit the tail vertex of the incoming edge.
+     *
+     * @return the extended Pipeline
+     */
 	public FramedVertexTraversal<?> outV();
-
+    /**
+     * Add a BothVerticesPipe to the end of the Pipeline.
+     * Emit both the tail and head vertices of the incoming edge.
+     *
+     * @return the extended Pipeline
+     */
 	public FramedVertexTraversal<?> bothV();
 
 	/**

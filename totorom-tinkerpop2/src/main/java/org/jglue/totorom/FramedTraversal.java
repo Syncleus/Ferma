@@ -869,7 +869,7 @@ public interface FramedTraversal<T, SideEffect> extends Iterator<T>, Iterable<T>
 	 *            decrement sort is usable
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> FramedTraversal<N, ?> orderMap(TransformPipe.Order order);
+	public abstract <N, V> FramedTraversal<N, V> orderMap(TransformPipe.Order order);
 
 	/**
 	 * Add a OrderMapPipe to the end of the Pipeline Given a Map as an input,
@@ -880,7 +880,7 @@ public interface FramedTraversal<T, SideEffect> extends Iterator<T>, Iterable<T>
 	 *            decrement sort is usable
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> FramedTraversal<N, ?> orderMap(Tokens.T order);
+	public abstract <N, V> FramedTraversal<N, V> orderMap(Tokens.T order);
 
 	/**
 	 * Add a OrderMapPipe to the end of the Pipeline Given a Map as an input,
@@ -890,8 +890,8 @@ public interface FramedTraversal<T, SideEffect> extends Iterator<T>, Iterable<T>
 	 *            a function to compare to map entries
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> FramedTraversal<N, ?> orderMap(
-			Comparator<Map.Entry<?, ?>> compareFunction);
+	public abstract <N, V> FramedTraversal<N, ?> orderMap(
+			Comparator<Map.Entry<N, V>> compareFunction);
 
 	/**
 	 * Add a TransformFunctionPipe to the end of the Pipeline. Given an input,

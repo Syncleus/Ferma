@@ -2,10 +2,13 @@ package org.jglue.totorom;
 
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Collections2;
 import com.tinkerpop.blueprints.Graph;
 import com.tinkerpop.blueprints.Predicate;
 import com.tinkerpop.gremlin.Tokens;
@@ -19,11 +22,8 @@ import com.tinkerpop.pipes.util.structures.Tree;
 @SuppressWarnings("rawtypes")
 abstract class FramedTraversalBase<T, SE> implements FramedTraversal<T, SE> {
 
-	
-
 	protected abstract FramedGraph graph();
 
-	
 	protected abstract GremlinPipeline pipeline();
 
 	@Override
@@ -153,20 +153,17 @@ abstract class FramedTraversalBase<T, SE> implements FramedTraversal<T, SE> {
 	}
 
 	@Override
-	public FramedTraversal ifThenElse(TraversalFunction ifFunction, TraversalFunction thenFunction, TraversalFunction elseFunction, Class clazz) {
+	public FramedTraversal ifThenElse(TraversalFunction ifFunction, TraversalFunction thenFunction,
+			TraversalFunction elseFunction, Class clazz) {
 		pipeline().ifThenElse(ifFunction, thenFunction, elseFunction);
 		return asTraversal();
 	}
-
-
 
 	@Override
 	public FramedTraversal loop(String namedStep, TraversalFunction whileFunction, Class clazz) {
 		pipeline().loop(namedStep, whileFunction);
 		return asTraversal();
 	}
-
-
 
 	@Override
 	public FramedTraversal loop(String namedStep, TraversalFunction whileFunction, TraversalFunction emitFunction, Class clazz) {
@@ -276,8 +273,6 @@ abstract class FramedTraversalBase<T, SE> implements FramedTraversal<T, SE> {
 		return this;
 	}
 
-	
-
 	@Override
 	public FramedTraversal optional(String namedStep) {
 		pipeline().optional(namedStep);
@@ -304,7 +299,8 @@ abstract class FramedTraversalBase<T, SE> implements FramedTraversal<T, SE> {
 	}
 
 	@Override
-	public FramedTraversal groupBy(TraversalFunction keyFunction, TraversalFunction valueFunction, TraversalFunction reduceFunction) {
+	public FramedTraversal groupBy(TraversalFunction keyFunction, TraversalFunction valueFunction,
+			TraversalFunction reduceFunction) {
 		pipeline().groupBy(keyFunction, valueFunction, reduceFunction);
 		return this;
 	}
@@ -372,7 +368,7 @@ abstract class FramedTraversalBase<T, SE> implements FramedTraversal<T, SE> {
 				sideEffectFunction.execute(argument);
 				return null;
 			}
-			
+
 		});
 		return this;
 	}
@@ -461,14 +457,11 @@ abstract class FramedTraversalBase<T, SE> implements FramedTraversal<T, SE> {
 		return this;
 	}
 
-
 	@Override
 	public FramedTraversal memoize(String namedStep, Map map) {
 		pipeline().memoize(namedStep, map);
 		return this;
 	}
-
-	
 
 	@Override
 	public FramedTraversal order() {
@@ -606,38 +599,54 @@ abstract class FramedTraversalBase<T, SE> implements FramedTraversal<T, SE> {
 
 	@Override
 	public T next() {
-	
-		return (T)pipeline().next();
+
+		return (T) pipeline().next();
 	}
-	
+
 	@Override
 	public FramedEdgeTraversal start(FramedEdge object) {
 		pipeline().start(object);
 		return asEdges();
 	}
-	
+
 	@Override
 	public FramedVertexTraversal start(FramedVertex object) {
 		pipeline().start(object);
 		return asVertices();
 	}
-	
-	
+
 	@Override
 	public <N> FramedTraversal<N, ?> property(String key, Class<N> type) {
-		return (FramedTraversal<N, ?>)property(key);
+		return (FramedTraversal<N, ?>) property(key);
 	}
-	
+
 	protected abstract FramedTraversal asTraversal();
-	
+
 	@Override
 	public boolean hasNext() {
 		return pipeline().hasNext();
 	}
-	
+
 	@Override
 	public Iterator<T> iterator() {
-	
+
 		return pipeline().iterator();
+	}
+
+	protected HashSet unwrap(Collection collection) {
+		HashSet unwrapped = new HashSet(Collections2.transform(collection, new Function<Object, Object>() {
+
+			@Override
+			public Object apply(Object o) {
+				if (o instanceof FramedVertex) {
+					return ((FramedVertex) o).element();
+				}
+				if (o instanceof FramedEdge) {
+					return ((FramedEdge) o).element();
+				}
+				return o;
+			}
+		}));
+		return unwrapped;
 	}
 }

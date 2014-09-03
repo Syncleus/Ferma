@@ -10,11 +10,11 @@ If you like Gremlin and you like Java then you will like this!
 
 http://oss.sonatype.org/content/repositories/snapshots
 
-    <parent>
+    <dependency>
         <groupId>org.jglue.totorom</groupId>
         <artifactId>totorom-tinkerpop2</artifactId>
         <version>0.5.0-SNAPSHOT</version>
-    </parent>
+    </dependency>
 
 It's just a way to give typed context to your gremlin queries:
 
@@ -98,5 +98,5 @@ Using TypeResolver.Java will save the type of Java class the element was created
       Assert.assertEquals(Person.class, julia.getClass());
     }
     
-    This project uses code derived from the Tinkerpop project (http://www.tinkerpop.com/) under the apache licence and or tinkerpop licence.
+This project uses code derived from the Tinkerpop project (http://www.tinkerpop.com/) under the apache licence and or tinkerpop licence.
      

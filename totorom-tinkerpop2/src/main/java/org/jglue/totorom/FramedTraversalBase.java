@@ -1,7 +1,9 @@
 package org.jglue.totorom;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -12,8 +14,8 @@ import com.tinkerpop.blueprints.Predicate;
 import com.tinkerpop.gremlin.Tokens;
 import com.tinkerpop.gremlin.java.GremlinPipeline;
 import com.tinkerpop.pipes.Pipe;
-import com.tinkerpop.pipes.PipeFunction;
 import com.tinkerpop.pipes.transform.TransformPipe.Order;
+import com.tinkerpop.pipes.util.structures.Pair;
 import com.tinkerpop.pipes.util.structures.Table;
 import com.tinkerpop.pipes.util.structures.Tree;
 
@@ -112,65 +114,65 @@ abstract class FramedTraversalBase<T, SE> implements FramedTraversal<T, SE> {
 	@Override
 	public FramedTraversal map(String... keys) {
 		pipeline().map(keys);
-		return this;
+		return asTraversal();
 	}
 
 	@Override
 	public FramedTraversal property(String key) {
 		pipeline().property(key);
-		return this;
+		return asTraversal();
 	}
 
 	@Override
-	public FramedTraversal step(PipeFunction function) {
+	public FramedTraversal step(TraversalFunction function) {
 		pipeline().step(function);
-		return this;
+		return asTraversal();
 	}
 
 	@Override
 	public FramedTraversal step(Pipe pipe) {
 		pipeline().step(pipe);
-		return this;
+		return asTraversal();
 	}
 
 	@Override
 	public FramedTraversal copySplit(Pipe... pipes) {
 		pipeline().copySplit(pipes);
-		return this;
+		return asTraversal();
 	}
 
 	@Override
 	public FramedTraversal exhaustMerge() {
 		pipeline().exhaustMerge();
-		return this;
+		return asTraversal();
 	}
 
 	@Override
 	public FramedTraversal fairMerge() {
 		pipeline().fairMerge();
-		return this;
+		return asTraversal();
 	}
 
 	@Override
-	public FramedTraversal ifThenElse(PipeFunction ifFunction, PipeFunction thenFunction, PipeFunction elseFunction, Class clazz) {
+	public FramedTraversal ifThenElse(TraversalFunction ifFunction, TraversalFunction thenFunction, TraversalFunction elseFunction, Class clazz) {
 		pipeline().ifThenElse(ifFunction, thenFunction, elseFunction);
-		return this;
+		return asTraversal();
 	}
 
 
 
 	@Override
-	public FramedTraversal loop(String namedStep, PipeFunction whileFunction, Class clazz) {
+	public FramedTraversal loop(String namedStep, TraversalFunction whileFunction, Class clazz) {
 		pipeline().loop(namedStep, whileFunction);
-		return this;
+		return asTraversal();
 	}
 
 
 
 	@Override
-	public FramedTraversal loop(String namedStep, PipeFunction whileFunction, PipeFunction emitFunction, Class clazz) {
+	public FramedTraversal loop(String namedStep, TraversalFunction whileFunction, TraversalFunction emitFunction, Class clazz) {
 		pipeline().loop(namedStep, whileFunction, emitFunction);
-		return this;
+		return asTraversal();
 	}
 
 	@Override
@@ -182,13 +184,13 @@ abstract class FramedTraversalBase<T, SE> implements FramedTraversal<T, SE> {
 	@Override
 	public FramedTraversal back(String namedStep) {
 		pipeline().back(namedStep);
-		return this;
+		return asTraversal();
 	}
 
 	@Override
 	public FramedTraversal back(String namedStep, Class clazz) {
 		pipeline().back(namedStep);
-		return this;
+		return asTraversal();
 	}
 
 	@Override
@@ -198,7 +200,7 @@ abstract class FramedTraversalBase<T, SE> implements FramedTraversal<T, SE> {
 	}
 
 	@Override
-	public FramedTraversal dedup(PipeFunction dedupFunction) {
+	public FramedTraversal dedup(TraversalFunction dedupFunction) {
 		pipeline().dedup(dedupFunction);
 		return this;
 	}
@@ -210,7 +212,7 @@ abstract class FramedTraversalBase<T, SE> implements FramedTraversal<T, SE> {
 	}
 
 	@Override
-	public FramedTraversal filter(PipeFunction filterFunction) {
+	public FramedTraversal filter(TraversalFunction filterFunction) {
 		pipeline().filter(filterFunction);
 		return this;
 	}
@@ -279,13 +281,13 @@ abstract class FramedTraversalBase<T, SE> implements FramedTraversal<T, SE> {
 	}
 
 	@Override
-	public FramedTraversal aggregate(Collection aggregate, PipeFunction aggregateFunction) {
+	public FramedTraversal aggregate(Collection aggregate, TraversalFunction aggregateFunction) {
 		pipeline().aggregate(aggregate, aggregateFunction);
 		return this;
 	}
 
 	@Override
-	public FramedTraversal aggregate(PipeFunction aggregateFunction) {
+	public FramedTraversal aggregate(TraversalFunction aggregateFunction) {
 		pipeline().aggregate(aggregateFunction);
 		return this;
 	}
@@ -299,50 +301,50 @@ abstract class FramedTraversalBase<T, SE> implements FramedTraversal<T, SE> {
 	}
 
 	@Override
-	public FramedTraversal groupBy(Map map, PipeFunction keyFunction, PipeFunction valueFunction) {
+	public FramedTraversal groupBy(Map map, TraversalFunction keyFunction, TraversalFunction valueFunction) {
 		pipeline().groupBy(map, keyFunction, valueFunction);
 		return this;
 	}
 
 	@Override
-	public FramedTraversal groupBy(PipeFunction keyFunction, PipeFunction valueFunction) {
+	public FramedTraversal groupBy(TraversalFunction keyFunction, TraversalFunction valueFunction) {
 		pipeline().groupBy(keyFunction, valueFunction);
 		return this;
 	}
 
 	@Override
-	public FramedTraversal groupBy(Map reduceMap, PipeFunction keyFunction, PipeFunction valueFunction,
-			PipeFunction reduceFunction) {
+	public FramedTraversal groupBy(Map reduceMap, TraversalFunction keyFunction, TraversalFunction valueFunction,
+			TraversalFunction reduceFunction) {
 		pipeline().groupBy(reduceMap, keyFunction, valueFunction, reduceFunction);
 		return this;
 	}
 
 	@Override
-	public FramedTraversal groupBy(PipeFunction keyFunction, PipeFunction valueFunction, PipeFunction reduceFunction) {
+	public FramedTraversal groupBy(TraversalFunction keyFunction, TraversalFunction valueFunction, TraversalFunction reduceFunction) {
 		pipeline().groupBy(keyFunction, valueFunction, reduceFunction);
 		return this;
 	}
 
 	@Override
-	public FramedTraversal groupCount(Map map, PipeFunction keyFunction, PipeFunction valueFunction) {
+	public FramedTraversal groupCount(Map map, TraversalFunction keyFunction, TraversalFunction valueFunction) {
 		pipeline().groupCount(map, keyFunction, valueFunction);
 		return this;
 	}
 
 	@Override
-	public FramedTraversal groupCount(PipeFunction keyFunction, PipeFunction valueFunction) {
+	public FramedTraversal groupCount(TraversalFunction keyFunction, TraversalFunction valueFunction) {
 		pipeline().groupCount(keyFunction, valueFunction);
 		return this;
 	}
 
 	@Override
-	public FramedTraversal groupCount(Map map, PipeFunction keyFunction) {
+	public FramedTraversal groupCount(Map map, TraversalFunction keyFunction) {
 		pipeline().groupCount(map, keyFunction);
 		return this;
 	}
 
 	@Override
-	public FramedTraversal groupCount(PipeFunction keyFunction) {
+	public FramedTraversal groupCount(TraversalFunction keyFunction) {
 		pipeline().groupCount(keyFunction);
 		return this;
 	}
@@ -378,8 +380,16 @@ abstract class FramedTraversalBase<T, SE> implements FramedTraversal<T, SE> {
 	}
 
 	@Override
-	public FramedTraversal sideEffect(PipeFunction sideEffectFunction) {
-		pipeline().sideEffect(new FramedPipeFunction(sideEffectFunction, graph()));
+	public FramedTraversal sideEffect(final SideEffectFunction sideEffectFunction) {
+		pipeline().sideEffect(new TraversalFunction() {
+
+			@Override
+			public Object compute(Object argument) {
+				sideEffectFunction.execute(argument);
+				return null;
+			}
+			
+		});
 		return this;
 	}
 
@@ -390,7 +400,7 @@ abstract class FramedTraversalBase<T, SE> implements FramedTraversal<T, SE> {
 	}
 
 	@Override
-	public FramedTraversal store(Collection storage, PipeFunction storageFunction) {
+	public FramedTraversal store(Collection storage, TraversalFunction storageFunction) {
 		pipeline().store(storage, storageFunction);
 		return this;
 	}
@@ -402,25 +412,25 @@ abstract class FramedTraversalBase<T, SE> implements FramedTraversal<T, SE> {
 	}
 
 	@Override
-	public FramedTraversal store(PipeFunction storageFunction) {
+	public FramedTraversal store(TraversalFunction storageFunction) {
 		pipeline().store(storageFunction);
 		return this;
 	}
 
 	@Override
-	public FramedTraversal table(Table table, Collection stepNames, PipeFunction... columnFunctions) {
+	public FramedTraversal table(Table table, Collection stepNames, TraversalFunction... columnFunctions) {
 		pipeline().table(table, stepNames, columnFunctions);
 		return this;
 	}
 
 	@Override
-	public FramedTraversal table(Table table, PipeFunction... columnFunctions) {
+	public FramedTraversal table(Table table, TraversalFunction... columnFunctions) {
 		pipeline().table(table, columnFunctions);
 		return this;
 	}
 
 	@Override
-	public FramedTraversal table(PipeFunction... columnFunctions) {
+	public FramedTraversal table(TraversalFunction... columnFunctions) {
 		pipeline().table(columnFunctions);
 		return this;
 	}
@@ -438,13 +448,13 @@ abstract class FramedTraversalBase<T, SE> implements FramedTraversal<T, SE> {
 	}
 
 	@Override
-	public FramedTraversal tree(Tree tree, PipeFunction... branchFunctions) {
+	public FramedTraversal tree(Tree tree, TraversalFunction... branchFunctions) {
 		pipeline().tree(tree, branchFunctions);
 		return this;
 	}
 
 	@Override
-	public FramedTraversal tree(PipeFunction... branchFunctions) {
+	public FramedTraversal tree(TraversalFunction... branchFunctions) {
 		pipeline().tree(branchFunctions);
 		return this;
 	}
@@ -452,13 +462,13 @@ abstract class FramedTraversalBase<T, SE> implements FramedTraversal<T, SE> {
 	@Override
 	public FramedTraversal gather() {
 		pipeline().gather();
-		return this;
+		return asTraversal();
 	}
 
 	@Override
-	public FramedTraversal gather(PipeFunction function) {
+	public FramedTraversal gather(TraversalFunction function) {
 		pipeline().gather(function);
-		return this;
+		return asTraversal();
 	}
 
 	@Override
@@ -495,51 +505,57 @@ abstract class FramedTraversalBase<T, SE> implements FramedTraversal<T, SE> {
 	}
 
 	@Override
-	public FramedTraversal order(PipeFunction compareFunction) {
-		pipeline().order(compareFunction);
+	public FramedTraversal order(final Comparator compareFunction) {
+		pipeline().order(new TraversalFunction<Pair<Object, Object>, Integer>() {
+
+			@Override
+			public Integer compute(Pair<Object, Object> argument) {
+				return compareFunction.compare(argument.getA(), argument.getB());
+			}
+		});
 		return this;
 	}
 
 	@Override
-	public FramedTraversal path(PipeFunction... pathFunctions) {
+	public FramedTraversal path(TraversalFunction... pathFunctions) {
 		pipeline().path(pathFunctions);
-		return this;
+		return asTraversal();
 	}
 
 	@Override
 	public FramedTraversal scatter(Class clazz) {
 		pipeline().scatter();
-		return this;
+		return asTraversal();
 	}
 
 	@Override
-	public FramedTraversal select(Collection stepNames, PipeFunction... columnFunctions) {
+	public FramedTraversal select(Collection stepNames, TraversalFunction... columnFunctions) {
 		pipeline().select(stepNames, columnFunctions);
-		return this;
+		return asTraversal();
 	}
 
 	@Override
-	public FramedTraversal select(PipeFunction... columnFunctions) {
+	public FramedTraversal select(TraversalFunction... columnFunctions) {
 		pipeline().select(columnFunctions);
-		return this;
+		return asTraversal();
 	}
 
 	@Override
 	public FramedTraversal select() {
 		pipeline().select();
-		return this;
+		return asTraversal();
 	}
 
 	@Override
 	public FramedTraversal shuffle() {
 		pipeline().shuffle();
-		return this;
+		return asTraversal();
 	}
 
 	@Override
 	public FramedTraversal cap() {
 		pipeline().cap();
-		return this;
+		return asTraversal();
 	}
 
 	@Override
@@ -555,15 +571,15 @@ abstract class FramedTraversalBase<T, SE> implements FramedTraversal<T, SE> {
 	}
 
 	@Override
-	public FramedTraversal orderMap(PipeFunction compareFunction) {
+	public FramedTraversal orderMap(TraversalFunction compareFunction) {
 		pipeline().orderMap(compareFunction);
 		return this;
 	}
 
 	@Override
-	public FramedTraversal transform(PipeFunction function) {
+	public FramedTraversal transform(TraversalFunction function) {
 		pipeline().transform(function);
-		return this;
+		return asTraversal();
 	}
 
 	@Override
@@ -626,5 +642,18 @@ abstract class FramedTraversalBase<T, SE> implements FramedTraversal<T, SE> {
 	@Override
 	public <N> FramedTraversal<N, ?> property(String key, Class<N> type) {
 		return (FramedTraversal<N, ?>)property(key);
+	}
+	
+	protected abstract FramedTraversal asTraversal();
+	
+	@Override
+	public boolean hasNext() {
+		return pipeline().hasNext();
+	}
+	
+	@Override
+	public Iterator<T> iterator() {
+	
+		return pipeline().iterator();
 	}
 }

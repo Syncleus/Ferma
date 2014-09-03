@@ -1,13 +1,14 @@
 package org.jglue.totorom;
 
 import java.util.Collection;
+import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import com.tinkerpop.blueprints.Graph;
 import com.tinkerpop.gremlin.Tokens;
 import com.tinkerpop.pipes.Pipe;
-import com.tinkerpop.pipes.PipeFunction;
 import com.tinkerpop.pipes.branch.LoopPipe;
 import com.tinkerpop.pipes.transform.TransformPipe;
 import com.tinkerpop.pipes.util.structures.Pair;
@@ -15,20 +16,18 @@ import com.tinkerpop.pipes.util.structures.Row;
 import com.tinkerpop.pipes.util.structures.Table;
 import com.tinkerpop.pipes.util.structures.Tree;
 
+public interface FramedTraversal<T, SideEffect> extends Iterator<T>, Iterable<T> {
 
-
-public interface FramedTraversal<T, SideEffect> {
-
-
-	
 	/**
 	 * Traverse over all the vertices in the graph.
+	 * 
 	 * @return
 	 */
 	public FramedVertexTraversal<?> V();
 
 	/**
 	 * Traverse over all the edges in the graph.
+	 * 
 	 * @return
 	 */
 	public FramedEdgeTraversal<?> E();
@@ -51,775 +50,884 @@ public interface FramedTraversal<T, SideEffect> {
 	 */
 	public FramedEdgeTraversal<?> e(Object... ids);
 
-	
-
-	
-	
-    /**
-     * Completely drain the pipeline of its objects.
-     * Useful when a sideEffect of the pipeline is desired.
-     */
-    public void iterate();
-    
-	
-	
 	/**
-	 * Add a PropertyMapPipe to the end of the Pipeline.
-	 * Emit the properties of the incoming element as a java.util.Map.
+	 * Completely drain the pipeline of its objects. Useful when a sideEffect of
+	 * the pipeline is desired.
+	 */
+	public void iterate();
+
+	/**
+	 * Add a PropertyMapPipe to the end of the Pipeline. Emit the properties of
+	 * the incoming element as a java.util.Map.
 	 *
-	 * @param keys the keys to get from the element (if none provided, all keys retrieved)
+	 * @param keys
+	 *            the keys to get from the element (if none provided, all keys
+	 *            retrieved)
 	 * @return the extended Pipeline
 	 */
 	public abstract FramedTraversal<Map<String, Object>, ?> map(String... keys);
 
 	/**
-	 * Add a PropertyPipe to the end of the Pipeline.
-	 * Emit the respective property of the incoming element.
+	 * Add a PropertyPipe to the end of the Pipeline. Emit the respective
+	 * property of the incoming element.
 	 *
-	 * @param key the property key
+	 * @param key
+	 *            the property key
 	 * @return the extended Pipeline
 	 */
 	public abstract FramedTraversal<Object, ?> property(String key);
-	
+
 	/**
-	 * Add a PropertyPipe to the end of the Pipeline.
-	 * Emit the respective property of the incoming element.
+	 * Add a PropertyPipe to the end of the Pipeline. Emit the respective
+	 * property of the incoming element.
 	 *
-	 * @param key the property key
+	 * @param key
+	 *            the property key
 	 * @return the extended Pipeline
 	 */
 	public abstract <N> FramedTraversal<N, ?> property(String key, Class<N> type);
 
 	/**
-	 * Add a FunctionPipe to the end of the pipeline.
-	 * The provide provided PipeFunction emits whatever is defined by the function.
-	 * This serves as an arbitrary step computation.
+	 * Add a FunctionPipe to the end of the pipeline. The provide provided
+	 * TraversalFunction emits whatever is defined by the function. This serves
+	 * as an arbitrary step computation.
 	 *
-	 * @param function the function of the FunctionPipe
+	 * @param function
+	 *            the function of the FunctionPipe
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> FramedTraversal<N, ?> step(PipeFunction<T,?> function);
+	public abstract <N> FramedTraversal<N, ?> step(TraversalFunction<T, ?> function);
 
 	/**
 	 * Add an arbitrary Pipe to the end of the pipeline.
 	 *
-	 * @param pipe The provided pipe.
-	 * @param <N>  the object type emitted by the provided pipe.
+	 * @param pipe
+	 *            The provided pipe.
+	 * @param <N>
+	 *            the object type emitted by the provided pipe.
 	 * @return the extended Pipeline
 	 */
 	public abstract <N> FramedTraversal<N, ?> step(Pipe<T, N> pipe);
 
 	/**
-	 * Add a CopySplitPipe to the end of the pipeline.
-	 * The incoming objects are copied to the provided pipes.
-	 * This "split-pipe" is used in conjunction with some type of "merge-pipe."
+	 * Add a CopySplitPipe to the end of the pipeline. The incoming objects are
+	 * copied to the provided pipes. This "split-pipe" is used in conjunction
+	 * with some type of "merge-pipe."
 	 *
-	 * @param pipes the internal pipes of the CopySplitPipe
+	 * @param pipes
+	 *            the internal pipes of the CopySplitPipe
 	 * @return the extended Pipeline
 	 */
 	public abstract <N> FramedTraversal<N, ?> copySplit(Pipe<T, N>... pipes);
 
 	/**
-	 * Add an ExhaustMergePipe to the end of the pipeline.
-	 * The one-step previous MetaPipe in the pipeline's pipes are used as the internal pipes.
-	 * The pipes' emitted objects are merged where the first pipe's objects are exhausted, then the second, etc.
+	 * Add an ExhaustMergePipe to the end of the pipeline. The one-step previous
+	 * MetaPipe in the pipeline's pipes are used as the internal pipes. The
+	 * pipes' emitted objects are merged where the first pipe's objects are
+	 * exhausted, then the second, etc.
 	 *
 	 * @return the extended Pipeline
 	 */
 	public abstract <N> FramedTraversal<N, ?> exhaustMerge();
 
 	/**
-	 * Add a FairMergePipe to the end of the Pipeline.
-	 * The one-step previous MetaPipe in the pipeline's pipes are used as the internal pipes.
-	 * The pipes' emitted objects are merged in a round robin fashion.
+	 * Add a FairMergePipe to the end of the Pipeline. The one-step previous
+	 * MetaPipe in the pipeline's pipes are used as the internal pipes. The
+	 * pipes' emitted objects are merged in a round robin fashion.
 	 *
 	 * @return the extended Pipeline
 	 */
 	public abstract <N> FramedTraversal<N, ?> fairMerge();
 
 	/**
-	 * Add an IfThenElsePipe to the end of the Pipeline.
-	 * If the ifFunction is true, then the results of the thenFunction are emitted.
-	 * If the ifFunction is false, then the results of the elseFunction are emitted.
+	 * Add an IfThenElsePipe to the end of the Pipeline. If the ifFunction is
+	 * true, then the results of the thenFunction are emitted. If the ifFunction
+	 * is false, then the results of the elseFunction are emitted.
 	 *
-	 * @param ifFunction   the function denoting the "if" part of the pipe
-	 * @param thenFunction the function denoting the "then" part of the pipe
-	 * @param elseFunction the function denoting the "else" part of the pipe
+	 * @param ifFunction
+	 *            the function denoting the "if" part of the pipe
+	 * @param thenFunction
+	 *            the function denoting the "then" part of the pipe
+	 * @param elseFunction
+	 *            the function denoting the "else" part of the pipe
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> FramedTraversal<N, ?> ifThenElse(PipeFunction<T, Boolean> ifFunction, PipeFunction<T, N> thenFunction,
-			PipeFunction<T, N> elseFunction, Class<N> clazz);
-
+	public abstract <N> FramedTraversal<N, ?> ifThenElse(TraversalFunction<T, Boolean> ifFunction,
+			TraversalFunction<T, N> thenFunction, TraversalFunction<T, N> elseFunction, Class<N> clazz);
 
 	/**
-	 * Add a LoopPipe to the end of the Pipeline.
-	 * Looping is useful for repeating a section of a pipeline.
-	 * The provided whileFunction determines when to drop out of the loop.
-	 * The whileFunction is provided a LoopBundle object which contains the object in loop along with other useful metadata.
+	 * Add a LoopPipe to the end of the Pipeline. Looping is useful for
+	 * repeating a section of a pipeline. The provided whileFunction determines
+	 * when to drop out of the loop. The whileFunction is provided a LoopBundle
+	 * object which contains the object in loop along with other useful
+	 * metadata.
 	 *
-	 * @param namedStep     the name of the step to loop back to
-	 * @param whileFunction whether or not to continue looping on the current object
+	 * @param namedStep
+	 *            the name of the step to loop back to
+	 * @param whileFunction
+	 *            whether or not to continue looping on the current object
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> FramedTraversal<N, ?> loop(String namedStep, PipeFunction<LoopPipe.LoopBundle<T>, Boolean> whileFunction, Class<N> clazz);
-
+	public abstract <N> FramedTraversal<N, ?> loop(String namedStep,
+			TraversalFunction<LoopPipe.LoopBundle<T>, Boolean> whileFunction, Class<N> clazz);
 
 	/**
-	 * Add a LoopPipe to the end of the Pipeline.
-	 * Looping is useful for repeating a section of a pipeline.
-	 * The provided whileFunction determines when to drop out of the loop.
-	 * The provided emitFunction can be used to emit objects that are still going through a loop.
-	 * The whileFunction and emitFunctions are provided a LoopBundle object which contains the object in loop along with other useful metadata.
+	 * Add a LoopPipe to the end of the Pipeline. Looping is useful for
+	 * repeating a section of a pipeline. The provided whileFunction determines
+	 * when to drop out of the loop. The provided emitFunction can be used to
+	 * emit objects that are still going through a loop. The whileFunction and
+	 * emitFunctions are provided a LoopBundle object which contains the object
+	 * in loop along with other useful metadata.
 	 *
-	 * @param namedStep     the number of steps to loop back to
-	 * @param whileFunction whether or not to continue looping on the current object
-	 * @param emitFunction  whether or not to emit the current object (irrespective of looping)
+	 * @param namedStep
+	 *            the number of steps to loop back to
+	 * @param whileFunction
+	 *            whether or not to continue looping on the current object
+	 * @param emitFunction
+	 *            whether or not to emit the current object (irrespective of
+	 *            looping)
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> FramedTraversal<N, ?> loop(String namedStep, PipeFunction<LoopPipe.LoopBundle<T>, Boolean> whileFunction,
-			PipeFunction<LoopPipe.LoopBundle<T>, Boolean> emitFunction, Class<N> clazz);
+	public abstract <N> FramedTraversal<N, ?> loop(String namedStep,
+			TraversalFunction<LoopPipe.LoopBundle<T>, Boolean> whileFunction,
+			TraversalFunction<LoopPipe.LoopBundle<T>, Boolean> emitFunction, Class<N> clazz);
 
 	/**
-	 * Add an AndFilterPipe to the end the Pipeline.
-	 * If the internal pipes all yield objects, then the object is not filtered.
-	 * The provided pipes are provided the object as their starts.
+	 * Add an AndFilterPipe to the end the Pipeline. If the internal pipes all
+	 * yield objects, then the object is not filtered. The provided pipes are
+	 * provided the object as their starts.
 	 *
-	 * @param pipes the internal pipes of the AndFilterPipe
+	 * @param pipes
+	 *            the internal pipes of the AndFilterPipe
 	 * @return the extended Pipeline
 	 */
 	public abstract FramedTraversal<T, ?> and(Pipe<T, ?>... pipes);
 
-
 	/**
-	 * Add a DuplicateFilterPipe to the end of the Pipeline.
-	 * Will only emit the object if it has not been seen before.
+	 * Add a DuplicateFilterPipe to the end of the Pipeline. Will only emit the
+	 * object if it has not been seen before.
 	 *
 	 * @return the extended Pipeline
 	 */
 	public abstract FramedTraversal<T, ?> dedup();
 
 	/**
-	 * Add a DuplicateFilterPipe to the end of the Pipeline.
-	 * Will only emit the object if the object generated by its function hasn't been seen before.
+	 * Add a DuplicateFilterPipe to the end of the Pipeline. Will only emit the
+	 * object if the object generated by its function hasn't been seen before.
 	 *
-	 * @param dedupFunction a function to call on the object to yield the object to dedup on
+	 * @param dedupFunction
+	 *            a function to call on the object to yield the object to dedup
+	 *            on
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<T, ?> dedup(PipeFunction<T, ?> dedupFunction);
+	public abstract FramedTraversal<T, ?> dedup(TraversalFunction<T, ?> dedupFunction);
 
 	/**
-	 * Add an ExceptFilterPipe to the end of the Pipeline.
-	 * Will only emit the object if it is not in the provided collection.
+	 * Add an ExceptFilterPipe to the end of the Pipeline. Will only emit the
+	 * object if it is not in the provided collection.
 	 *
-	 * @param collection the collection except from the stream
+	 * @param collection
+	 *            the collection except from the stream
 	 * @return the extended Pipeline
 	 */
 	public abstract FramedTraversal<T, ?> except(Collection<T> collection);
 
 	/**
-	 * Add an ExceptFilterPipe to the end of the Pipeline.
-	 * Will only emit the object if it is not equal to any of the objects contained at the named steps.
+	 * Add an ExceptFilterPipe to the end of the Pipeline. Will only emit the
+	 * object if it is not equal to any of the objects contained at the named
+	 * steps.
 	 *
-	 * @param namedSteps the named steps in the pipeline
+	 * @param namedSteps
+	 *            the named steps in the pipeline
 	 * @return the extended Pipeline
 	 */
 	public abstract FramedTraversal<T, ?> except(String... namedSteps);
 
 	/**
-	 * Add an FilterFunctionPipe to the end of the Pipeline.
-	 * The serves are an arbitrary filter where the filter criteria is provided by the filterFunction.
+	 * Add an FilterFunctionPipe to the end of the Pipeline. The serves are an
+	 * arbitrary filter where the filter criteria is provided by the
+	 * filterFunction.
 	 *
-	 * @param filterFunction the filter function of the pipe
+	 * @param filterFunction
+	 *            the filter function of the pipe
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<T, ?> filter(PipeFunction<T, Boolean> filterFunction);
+	public abstract FramedTraversal<T, ?> filter(TraversalFunction<T, Boolean> filterFunction);
 
 	/**
-	 * Add an OrFilterPipe to the end the Pipeline.
-	 * Will only emit the object if one or more of the provides pipes yields an object.
-	 * The provided pipes are provided the object as their starts.
+	 * Add an OrFilterPipe to the end the Pipeline. Will only emit the object if
+	 * one or more of the provides pipes yields an object. The provided pipes
+	 * are provided the object as their starts.
 	 *
-	 * @param pipes the internal pipes of the OrFilterPipe
+	 * @param pipes
+	 *            the internal pipes of the OrFilterPipe
 	 * @return the extended Pipeline
 	 */
 	public abstract FramedTraversal<T, ?> or(Pipe<T, ?>... pipes);
 
 	/**
-	 * Add a RandomFilterPipe to the end of the Pipeline.
-	 * A biased coin toss determines if the object is emitted or not.
+	 * Add a RandomFilterPipe to the end of the Pipeline. A biased coin toss
+	 * determines if the object is emitted or not.
 	 *
-	 * @param bias the bias of the random coin
+	 * @param bias
+	 *            the bias of the random coin
 	 * @return the extended Pipeline
 	 */
 	public abstract FramedTraversal<T, ?> random(Double bias);
 
 	/**
-	 * Add a RageFilterPipe to the end of the Pipeline.
-	 * Analogous to a high/low index lookup.
+	 * Add a RageFilterPipe to the end of the Pipeline. Analogous to a high/low
+	 * index lookup.
 	 *
-	 * @param low  the low end of the range
-	 * @param high the high end of the range
+	 * @param low
+	 *            the low end of the range
+	 * @param high
+	 *            the high end of the range
 	 * @return the extended Pipeline
 	 */
 	public abstract FramedTraversal<T, ?> range(int low, int high);
 
 	/**
-	 * Add a RetainFilterPipe to the end of the Pipeline.
-	 * Will emit the object only if it is in the provided collection.
+	 * Add a RetainFilterPipe to the end of the Pipeline. Will emit the object
+	 * only if it is in the provided collection.
 	 *
-	 * @param collection the collection to retain
+	 * @param collection
+	 *            the collection to retain
 	 * @return the extended Pipeline
 	 */
 	public abstract FramedTraversal<T, ?> retain(Collection<?> collection);
 
 	/**
-	 * Add a RetainFilterPipe to the end of the Pipeline.
-	 * Will only emit the object if it is equal to any of the objects contained at the named steps.
+	 * Add a RetainFilterPipe to the end of the Pipeline. Will only emit the
+	 * object if it is equal to any of the objects contained at the named steps.
 	 *
-	 * @param namedSteps the named steps in the pipeline
+	 * @param namedSteps
+	 *            the named steps in the pipeline
 	 * @return the extended Pipeline
 	 */
 	public abstract FramedTraversal<T, ?> retain(String... namedSteps);
 
-
-	
-	
 	/**
-	 * Add an AggregatePipe to the end of the Pipeline.
-	 * The objects prior to aggregate are greedily collected into an ArrayList.
+	 * Add an AggregatePipe to the end of the Pipeline. The objects prior to
+	 * aggregate are greedily collected into an ArrayList.
 	 *
 	 * @return the extended Pipeline
 	 */
 	public abstract FramedTraversal<T, Collection<T>> aggregate();
 
 	/**
-	 * Add an AggregatePipe to the end of the Pipeline.
-	 * The objects prior to aggregate are greedily collected into the provided collection.
+	 * Add an AggregatePipe to the end of the Pipeline. The objects prior to
+	 * aggregate are greedily collected into the provided collection.
 	 *
-	 * @param aggregate the collection to aggregate results into
+	 * @param aggregate
+	 *            the collection to aggregate results into
 	 * @return the extended Pipeline
 	 */
 	public abstract FramedTraversal<T, Collection<T>> aggregate(Collection<T> aggregate);
 
 	/**
-	 * Add an AggregatePipe to the end of the Pipeline.
-	 * The results of the function evaluated on the objects prior to the aggregate are greedily collected into the provided collection.
+	 * Add an AggregatePipe to the end of the Pipeline. The results of the
+	 * function evaluated on the objects prior to the aggregate are greedily
+	 * collected into the provided collection.
 	 *
-	 * @param aggregate         the collection to aggregate results into
-	 * @param aggregateFunction the function to run over each object prior to insertion into the aggregate
+	 * @param aggregate
+	 *            the collection to aggregate results into
+	 * @param aggregateFunction
+	 *            the function to run over each object prior to insertion into
+	 *            the aggregate
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> FramedTraversal<T, Collection<N>> aggregate(Collection<T> aggregate, PipeFunction<T, N> aggregateFunction);
+	public abstract <N> FramedTraversal<T, Collection<N>> aggregate(Collection<T> aggregate,
+			TraversalFunction<T, N> aggregateFunction);
 
 	/**
-	 * Add an AggregatePipe to the end of the Pipeline.
-	 * The results of the function evaluated on the objects prior to the aggregate are greedily collected into an ArrayList.
+	 * Add an AggregatePipe to the end of the Pipeline. The results of the
+	 * function evaluated on the objects prior to the aggregate are greedily
+	 * collected into an ArrayList.
 	 *
-	 * @param aggregateFunction the function to run over each object prior to insertion into the aggregate
+	 * @param aggregateFunction
+	 *            the function to run over each object prior to insertion into
+	 *            the aggregate
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> FramedTraversal<T, Collection<N>> aggregate(PipeFunction<T, N> aggregateFunction);
-
-
-
+	public abstract <N> FramedTraversal<T, Collection<N>> aggregate(TraversalFunction<T, N> aggregateFunction);
 
 	/**
-	 * Add a GroupByPipe to the end of the Pipeline.
-	 * Group the objects inputted objects according to a key generated from the object and a value generated from the object.
-	 * The grouping map has values that are Lists.
+	 * Add a GroupByPipe to the end of the Pipeline. Group the objects inputted
+	 * objects according to a key generated from the object and a value
+	 * generated from the object. The grouping map has values that are Lists.
 	 *
-	 * @param map           the map to store the grouping in
-	 * @param keyFunction   the function that generates the key from the object
-	 * @param valueFunction the function that generates the value from the function
+	 * @param map
+	 *            the map to store the grouping in
+	 * @param keyFunction
+	 *            the function that generates the key from the object
+	 * @param valueFunction
+	 *            the function that generates the value from the function
 	 * @return the extended Pipeline
 	 */
-	public abstract <K, V> FramedTraversal<T, Map<K, List<V>>> groupBy(Map<K, List<V>> map, PipeFunction<T, K> keyFunction, PipeFunction<T, V> valueFunction);
+	public abstract <K, V> FramedTraversal<T, Map<K, List<V>>> groupBy(Map<K, List<V>> map, TraversalFunction<T, K> keyFunction,
+			TraversalFunction<T, V> valueFunction);
 
 	/**
-	 * Add a GroupByPipe to the end of the Pipeline.
-	 * Group the objects inputted objects according to a key generated from the object and a value generated from the object.
-	 * The grouping map has values that are Lists.
+	 * Add a GroupByPipe to the end of the Pipeline. Group the objects inputted
+	 * objects according to a key generated from the object and a value
+	 * generated from the object. The grouping map has values that are Lists.
 	 *
-	 * @param keyFunction   the function that generates the key from the object
-	 * @param valueFunction the function that generates the value from the function
+	 * @param keyFunction
+	 *            the function that generates the key from the object
+	 * @param valueFunction
+	 *            the function that generates the value from the function
 	 * @return the extended Pipeline
 	 */
-	public abstract <K, V> FramedTraversal<T, Map<K, List<V>>> groupBy(PipeFunction<T, K> keyFunction, PipeFunction<T, V> valueFunction);
+	public abstract <K, V> FramedTraversal<T, Map<K, List<V>>> groupBy(TraversalFunction<T, K> keyFunction,
+			TraversalFunction<T, V> valueFunction);
 
 	/**
-	 * Add a GroupByReducePipe to the end of the Pipeline.
-	 * Group the objects inputted objects according to a key generated from the object and a value generated from the object.
-	 * The grouping map has values that are Lists.
-	 * When the pipe has no more incoming objects, apply the reduce function to the keyed Lists.
-	 * The sideEffect is only fully available when the pipe is empty.
+	 * Add a GroupByReducePipe to the end of the Pipeline. Group the objects
+	 * inputted objects according to a key generated from the object and a value
+	 * generated from the object. The grouping map has values that are Lists.
+	 * When the pipe has no more incoming objects, apply the reduce function to
+	 * the keyed Lists. The sideEffect is only fully available when the pipe is
+	 * empty.
 	 *
-	 * @param reduceMap      a map to perform the reduce operation on (good for having a later reference)
-	 * @param keyFunction    the function that generates the key from the object
-	 * @param valueFunction  the function that generates the value from the function
-	 * @param reduceFunction the function that reduces the value lists
+	 * @param reduceMap
+	 *            a map to perform the reduce operation on (good for having a
+	 *            later reference)
+	 * @param keyFunction
+	 *            the function that generates the key from the object
+	 * @param valueFunction
+	 *            the function that generates the value from the function
+	 * @param reduceFunction
+	 *            the function that reduces the value lists
 	 * @return the extended Pipeline
 	 */
-	public abstract <K, V, V2> FramedTraversal<T, Map<K, V2>> groupBy(Map<K, V2> reduceMap, PipeFunction<T, K> keyFunction, PipeFunction<T, V> valueFunction,
-			PipeFunction<List<V>, V2> reduceFunction);
+	public abstract <K, V, V2> FramedTraversal<T, Map<K, V2>> groupBy(Map<K, V2> reduceMap, TraversalFunction<T, K> keyFunction,
+			TraversalFunction<T, V> valueFunction, TraversalFunction<List<V>, V2> reduceFunction);
 
 	/**
-	 * Add a GroupByReducePipe to the end of the Pipeline.
-	 * Group the objects inputted objects according to a key generated from the object and a value generated from the object.
-	 * The grouping map has values that are Lists.
-	 * When the pipe has no more incoming objects, apply the reduce function to the keyed Lists.
-	 * The sideEffect is only fully available when the pipe is empty.
+	 * Add a GroupByReducePipe to the end of the Pipeline. Group the objects
+	 * inputted objects according to a key generated from the object and a value
+	 * generated from the object. The grouping map has values that are Lists.
+	 * When the pipe has no more incoming objects, apply the reduce function to
+	 * the keyed Lists. The sideEffect is only fully available when the pipe is
+	 * empty.
 	 *
-	 * @param keyFunction    the function that generates the key from the object
-	 * @param valueFunction  the function that generates the value from the function
-	 * @param reduceFunction the function that reduces the value lists
+	 * @param keyFunction
+	 *            the function that generates the key from the object
+	 * @param valueFunction
+	 *            the function that generates the value from the function
+	 * @param reduceFunction
+	 *            the function that reduces the value lists
 	 * @return the extended Pipeline
 	 */
-	public abstract <K, V, V2> FramedTraversal<T, Map<K, V2>> groupBy(PipeFunction<T, K> keyFunction, PipeFunction<T, V> valueFunction,
-			PipeFunction<List<V>, V2> reduceFunction);
+	public abstract <K, V, V2> FramedTraversal<T, Map<K, V2>> groupBy(TraversalFunction<T, K> keyFunction,
+			TraversalFunction<T, V> valueFunction, TraversalFunction<List<V>, V2> reduceFunction);
 
 	/**
-	 * Add a GroupCountPipe or GroupCountFunctionPipe to the end of the Pipeline.
-	 * A map is maintained of counts.
-	 * The map keys are determined by the function on the incoming object.
-	 * The map values are determined by the function on the incoming object (getA()) and the previous value (getB()).
+	 * Add a GroupCountPipe or GroupCountFunctionPipe to the end of the
+	 * Pipeline. A map is maintained of counts. The map keys are determined by
+	 * the function on the incoming object. The map values are determined by the
+	 * function on the incoming object (getA()) and the previous value (getB()).
 	 *
-	 * @param map           a provided count map
-	 * @param keyFunction   the key function to determine map key
-	 * @param valueFunction the value function to determine map value
+	 * @param map
+	 *            a provided count map
+	 * @param keyFunction
+	 *            the key function to determine map key
+	 * @param valueFunction
+	 *            the value function to determine map value
 	 * @return the extended Pipeline
 	 */
-	public abstract <K> FramedTraversal<T, Map<K, Number>> groupCount(Map<K, Number> map, PipeFunction<T, K> keyFunction,
-			PipeFunction<Pair<T, Number>, Number> valueFunction);
+	public abstract <K> FramedTraversal<T, Map<K, Number>> groupCount(Map<K, Number> map, TraversalFunction<T, K> keyFunction,
+			TraversalFunction<Pair<T, Number>, Number> valueFunction);
 
 	/**
-	 * Add a GroupCountPipe or GroupCountFunctionPipe to the end of the Pipeline.
-	 * map is maintained of counts.
-	 * The map keys are determined by the function on the incoming object.
-	 * The map values are determined by the function on the incoming object (getA()) and the previous value (getB()).
+	 * Add a GroupCountPipe or GroupCountFunctionPipe to the end of the
+	 * Pipeline. map is maintained of counts. The map keys are determined by the
+	 * function on the incoming object. The map values are determined by the
+	 * function on the incoming object (getA()) and the previous value (getB()).
 	 *
-	 * @param keyFunction   the key function to determine map key
-	 * @param valueFunction the value function to determine map value
+	 * @param keyFunction
+	 *            the key function to determine map key
+	 * @param valueFunction
+	 *            the value function to determine map value
 	 * @return the extended Pipeline
 	 */
-	public abstract <K> FramedTraversal<T, Map<K, Number>> groupCount(PipeFunction<T, K> keyFunction, PipeFunction<Pair<T, Number>, Number> valueFunction);
+	public abstract <K> FramedTraversal<T, Map<K, Number>> groupCount(TraversalFunction<T, K> keyFunction,
+			TraversalFunction<Pair<T, Number>, Number> valueFunction);
 
 	/**
-	 * Add a GroupCountPipe or GroupCountFunctionPipe to the end of the Pipeline.
-	 * A map is maintained of counts.
-	 * The map keys are determined by the function on the incoming object.
-	 * The map values are 1 plus the previous value for that key.
+	 * Add a GroupCountPipe or GroupCountFunctionPipe to the end of the
+	 * Pipeline. A map is maintained of counts. The map keys are determined by
+	 * the function on the incoming object. The map values are 1 plus the
+	 * previous value for that key.
 	 *
-	 * @param map         a provided count map
-	 * @param keyFunction the key function to determine map key
+	 * @param map
+	 *            a provided count map
+	 * @param keyFunction
+	 *            the key function to determine map key
 	 * @return the extended Pipeline
 	 */
-	public abstract <K> FramedTraversal<T, Map<K, Number>> groupCount(Map<K, Number> map, PipeFunction<T, K> keyFunction);
+	public abstract <K> FramedTraversal<T, Map<K, Number>> groupCount(Map<K, Number> map, TraversalFunction<T, K> keyFunction);
 
 	/**
-	 * Add a GroupCountPipe or GroupCountFunctionPipe to the end of the Pipeline.
-	 * A map is maintained of counts.
-	 * The map keys are determined by the function on the incoming object.
-	 * The map values are 1 plus the previous value for that key.
+	 * Add a GroupCountPipe or GroupCountFunctionPipe to the end of the
+	 * Pipeline. A map is maintained of counts. The map keys are determined by
+	 * the function on the incoming object. The map values are 1 plus the
+	 * previous value for that key.
 	 *
-	 * @param keyFunction the key function to determine map key
+	 * @param keyFunction
+	 *            the key function to determine map key
 	 * @return the extended Pipeline
 	 */
-	public abstract <K> FramedTraversal<T, Map<K, Number>> groupCount(PipeFunction<T, K> keyFunction);
+	public abstract <K> FramedTraversal<T, Map<K, Number>> groupCount(TraversalFunction<T, K> keyFunction);
 
 	/**
-	 * Add a GroupCountPipe to the end of the Pipeline.
-	 * A map is maintained of counts.
-	 * The map keys are the incoming objects.
-	 * The map values are 1 plus the previous value for that key.
+	 * Add a GroupCountPipe to the end of the Pipeline. A map is maintained of
+	 * counts. The map keys are the incoming objects. The map values are 1 plus
+	 * the previous value for that key.
 	 *
-	 * @param map a provided count map
+	 * @param map
+	 *            a provided count map
 	 * @return the extended Pipeline
 	 */
 	public abstract FramedTraversal<T, Map<T, Number>> groupCount(Map<T, Number> map);
 
 	/**
-	 * Add a GroupCountPipe to the end of the Pipeline.
-	 * A map is maintained of counts.
-	 * The map keys are the incoming objects.
-	 * The map values are 1 plus the previous value for that key.
+	 * Add a GroupCountPipe to the end of the Pipeline. A map is maintained of
+	 * counts. The map keys are the incoming objects. The map values are 1 plus
+	 * the previous value for that key.
 	 *
 	 * @return the extended Pipeline
 	 */
 	public abstract FramedTraversal<T, Map<T, Number>> groupCount();
-	
-	
 
 	/**
-	 * Add a SideEffectFunctionPipe to the end of the Pipeline.
-	 * The provided function is evaluated and the incoming object is the outgoing object.
+	 * Add a SideEffectFunctionPipe to the end of the Pipeline. The provided
+	 * function is evaluated and the incoming object is the outgoing object.
 	 *
-	 * @param sideEffectFunction the function of the pipe
+	 * @param sideEffectFunction
+	 *            the function of the pipe
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<T, ?> sideEffect(PipeFunction<T, ?> sideEffectFunction);
+	public abstract FramedTraversal<T, ?> sideEffect(SideEffectFunction<T> sideEffectFunction);
 
 	/**
-	 * Add a StorePipe to the end of the Pipeline.
-	 * Lazily store the incoming objects into the provided collection.
+	 * Add a StorePipe to the end of the Pipeline. Lazily store the incoming
+	 * objects into the provided collection.
 	 *
-	 * @param storage the collection to store results into
+	 * @param storage
+	 *            the collection to store results into
 	 * @return the extended Pipeline
 	 */
 	public abstract FramedTraversal<T, Collection<T>> store(Collection<T> storage);
 
 	/**
-	 * Add a StorePipe to the end of the Pipeline.
-	 * Lazily store the object returned by the function over the incoming object into the provided collection.
+	 * Add a StorePipe to the end of the Pipeline. Lazily store the object
+	 * returned by the function over the incoming object into the provided
+	 * collection.
 	 *
-	 * @param storage         the collection to store results into
-	 * @param storageFunction the function to run over each object prior to insertion into the storage collection
+	 * @param storage
+	 *            the collection to store results into
+	 * @param storageFunction
+	 *            the function to run over each object prior to insertion into
+	 *            the storage collection
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> FramedTraversal<T, Collection<N>> store(Collection<N> storage, PipeFunction<T, N> storageFunction);
+	public abstract <N> FramedTraversal<T, Collection<N>> store(Collection<N> storage, TraversalFunction<T, N> storageFunction);
 
 	/**
-	 * Add an StorePipe to the end of the Pipeline.
-	 * An ArrayList storage collection is provided and filled lazily with incoming objects.
+	 * Add an StorePipe to the end of the Pipeline. An ArrayList storage
+	 * collection is provided and filled lazily with incoming objects.
 	 *
 	 * @return the extended Pipeline
 	 */
 	public abstract FramedTraversal<T, Collection<Object>> store();
 
 	/**
-	 * Add a StorePipe to the end of the Pipeline.
-	 * An ArrayList storage collection is provided and filled lazily with the return of the function evaluated over the incoming objects.
+	 * Add a StorePipe to the end of the Pipeline. An ArrayList storage
+	 * collection is provided and filled lazily with the return of the function
+	 * evaluated over the incoming objects.
 	 *
-	 * @param storageFunction the function to run over each object prior to insertion into the storage collection
+	 * @param storageFunction
+	 *            the function to run over each object prior to insertion into
+	 *            the storage collection
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> FramedTraversal<T, Collection<N>> store(PipeFunction<T, N> storageFunction);
+	public abstract <N> FramedTraversal<T, Collection<N>> store(TraversalFunction<T, N> storageFunction);
 
 	/**
-	 * Add a TablePipe to the end of the Pipeline.
-	 * This step is used for grabbing previously seen objects the pipeline as identified by as-steps.
+	 * Add a TablePipe to the end of the Pipeline. This step is used for
+	 * grabbing previously seen objects the pipeline as identified by as-steps.
 	 *
-	 * @param table           the table to fill
-	 * @param stepNames       the partition steps to include in the filling
-	 * @param columnFunctions the post-processing function for each column
+	 * @param table
+	 *            the table to fill
+	 * @param stepNames
+	 *            the partition steps to include in the filling
+	 * @param columnFunctions
+	 *            the post-processing function for each column
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<T, Table> table(Table table, Collection<String> stepNames, PipeFunction<?, ?>... columnFunctions);
+	public abstract FramedTraversal<T, Table> table(Table table, Collection<String> stepNames,
+			TraversalFunction<?, ?>... columnFunctions);
 
 	/**
-	 * Add a TablePipe to the end of the Pipeline.
-	 * This step is used for grabbing previously seen objects the pipeline as identified by as-steps.
+	 * Add a TablePipe to the end of the Pipeline. This step is used for
+	 * grabbing previously seen objects the pipeline as identified by as-steps.
 	 *
-	 * @param table           the table to fill
-	 * @param columnFunctions the post-processing function for each column
+	 * @param table
+	 *            the table to fill
+	 * @param columnFunctions
+	 *            the post-processing function for each column
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<T, Table> table(Table table, PipeFunction<?, ?>... columnFunctions);
+	public abstract FramedTraversal<T, Table> table(Table table, TraversalFunction<?, ?>... columnFunctions);
 
 	/**
-	 * Add a TablePipe to the end of the Pipeline.
-	 * This step is used for grabbing previously seen objects the pipeline as identified by as-steps.
+	 * Add a TablePipe to the end of the Pipeline. This step is used for
+	 * grabbing previously seen objects the pipeline as identified by as-steps.
 	 *
-	 * @param columnFunctions the post-processing function for each column
+	 * @param columnFunctions
+	 *            the post-processing function for each column
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<T, Table> table(PipeFunction<?, ?>... columnFunctions);
+	public abstract FramedTraversal<T, Table> table(TraversalFunction<?, ?>... columnFunctions);
 
 	/**
-	 * Add a TablePipe to the end of the Pipeline.
-	 * This step is used for grabbing previously seen objects the pipeline as identified by as-steps.
+	 * Add a TablePipe to the end of the Pipeline. This step is used for
+	 * grabbing previously seen objects the pipeline as identified by as-steps.
 	 *
-	 * @param table the table to fill
+	 * @param table
+	 *            the table to fill
 	 * @return the extended Pipeline
 	 */
 	public abstract FramedTraversal<T, Table> table(Table table);
 
 	/**
-	 * Add a TablePipe to the end of the Pipeline.
-	 * This step is used for grabbing previously seen objects the pipeline as identified by as-steps.
+	 * Add a TablePipe to the end of the Pipeline. This step is used for
+	 * grabbing previously seen objects the pipeline as identified by as-steps.
 	 *
 	 * @return the extended Pipeline
 	 */
 	public abstract FramedTraversal<T, Table> table();
 
 	/**
-	 * Add a TreePipe to the end of the Pipeline
-	 * This step maintains an internal tree representation of the paths that have flowed through the step.
+	 * Add a TreePipe to the end of the Pipeline This step maintains an internal
+	 * tree representation of the paths that have flowed through the step.
 	 *
-	 * @param tree            an embedded Map data structure to store the tree representation in
-	 * @param branchFunctions functions to apply to each path object in a round robin fashion
+	 * @param tree
+	 *            an embedded Map data structure to store the tree
+	 *            representation in
+	 * @param branchFunctions
+	 *            functions to apply to each path object in a round robin
+	 *            fashion
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> FramedTraversal<T, Tree<N>> tree(Tree<N> tree, PipeFunction<?, ?>... branchFunctions);
+	public abstract <N> FramedTraversal<T, Tree<N>> tree(Tree<N> tree, TraversalFunction<?, ?>... branchFunctions);
 
 	/**
-	 * Add a TreePipe to the end of the Pipeline
-	 * This step maintains an internal tree representation of the paths that have flowed through the step.
+	 * Add a TreePipe to the end of the Pipeline This step maintains an internal
+	 * tree representation of the paths that have flowed through the step.
 	 *
-	 * @param branchFunctions functions to apply to each path object in a round robin fashion
+	 * @param branchFunctions
+	 *            functions to apply to each path object in a round robin
+	 *            fashion
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<T, Tree<Object>> tree(PipeFunction<?, ?>... branchFunctions);
+	public abstract FramedTraversal<T, Tree<Object>> tree(TraversalFunction<?, ?>... branchFunctions);
 
 	/**
-	 * Add a GatherPipe to the end of the Pipeline.
-	 * All the objects previous to this step are aggregated in a greedy fashion and emitted as a List.
+	 * Add a GatherPipe to the end of the Pipeline. All the objects previous to
+	 * this step are aggregated in a greedy fashion and emitted as a List.
 	 *
 	 * @return the extended Pipeline
 	 */
 	public abstract FramedTraversal<List<T>, ?> gather();
 
-	
 	/**
-	 * Add an IdentityPipe to the end of the Pipeline.
-	 * Useful in various situations where a step is needed without processing.
-	 * For example, useful when two as-steps are needed in a row.
+	 * Add an IdentityPipe to the end of the Pipeline. Useful in various
+	 * situations where a step is needed without processing. For example, useful
+	 * when two as-steps are needed in a row.
 	 *
 	 * @return the extended Pipeline
 	 */
 	public abstract FramedTraversal<T, ?> identity();
 
 	/**
-	 * Add a MemoizePipe to the end of the Pipeline.
-	 * This step will hold a Map of the objects that have entered into its pipeline section.
-	 * If an input is seen twice, then the map stored output is emitted instead of recomputing the pipeline section.
+	 * Add a MemoizePipe to the end of the Pipeline. This step will hold a Map
+	 * of the objects that have entered into its pipeline section. If an input
+	 * is seen twice, then the map stored output is emitted instead of
+	 * recomputing the pipeline section.
 	 *
-	 * @param namedStep the name of the step previous to memoize to
+	 * @param namedStep
+	 *            the name of the step previous to memoize to
 	 * @return the extended Pipeline
 	 */
 	public abstract FramedTraversal<T, ?> memoize(String namedStep);
 
-
 	/**
-	 * Add a MemoizePipe to the end of the Pipeline.
-	 * This step will hold a Map of the objects that have entered into its pipeline section.
-	 * If an input is seen twice, then the map stored output is emitted instead of recomputing the pipeline section.
+	 * Add a MemoizePipe to the end of the Pipeline. This step will hold a Map
+	 * of the objects that have entered into its pipeline section. If an input
+	 * is seen twice, then the map stored output is emitted instead of
+	 * recomputing the pipeline section.
 	 *
-	 * @param namedStep the name of the step previous to memoize to
-	 * @param map       the memoization map
+	 * @param namedStep
+	 *            the name of the step previous to memoize to
+	 * @param map
+	 *            the memoization map
 	 * @return the extended Pipeline
 	 */
 	public abstract FramedTraversal<T, ?> memoize(String namedStep, Map<?, ?> map);
 
-
 	/**
-	 * Add an OrderPipe to the end of the Pipeline.
-	 * This step will sort the objects in the stream in a default Comparable order.
+	 * Add an OrderPipe to the end of the Pipeline. This step will sort the
+	 * objects in the stream in a default Comparable order.
 	 *
 	 * @return the extended Pipeline
 	 */
 	public abstract FramedTraversal<T, ?> order();
 
 	/**
-	 * Add an OrderPipe to the end of the Pipeline.
-	 * This step will sort the objects in the stream in a default Comparable order.
+	 * Add an OrderPipe to the end of the Pipeline. This step will sort the
+	 * objects in the stream in a default Comparable order.
 	 *
-	 * @param order if the stream is composed of comparable objects, then increment or decrement can be specified
+	 * @param order
+	 *            if the stream is composed of comparable objects, then
+	 *            increment or decrement can be specified
 	 * @return the extended Pipeline
 	 */
 	public abstract FramedTraversal<T, ?> order(TransformPipe.Order order);
 
 	/**
-	 * Add an OrderPipe to the end of the Pipeline.
-	 * This step will sort the objects in the stream in a default Comparable order.
+	 * Add an OrderPipe to the end of the Pipeline. This step will sort the
+	 * objects in the stream in a default Comparable order.
 	 *
-	 * @param order if the stream is composed of comparable objects, then increment or decrement can be specified
+	 * @param order
+	 *            if the stream is composed of comparable objects, then
+	 *            increment or decrement can be specified
 	 * @return the extended Pipeline
 	 */
 	public abstract FramedTraversal<T, ?> order(Tokens.T order);
 
 	/**
-	 * Add an OrderPipe to the end of the Pipeline.
-	 * This step will sort the objects in the stream according to a comparator defined in the provided function.
+	 * Add an OrderPipe to the end of the Pipeline. This step will sort the
+	 * objects in the stream according to a comparator defined in the provided
+	 * function.
 	 *
-	 * @param compareFunction a comparator function of two objects of type E
+	 * @param compareFunction
+	 *            a comparator function of two objects of type E
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<T, ?> order(PipeFunction<Pair<T, T>, Integer> compareFunction);
+	public abstract FramedTraversal<T, ?> order(Comparator<T> compareFunction);
 
-	
 	/**
-	 * Wrap the previous step in an AsPipe.
-	 * Useful for naming steps and is used in conjunction with various other steps including: loop, select, back, table, etc.
+	 * Wrap the previous step in an AsPipe. Useful for naming steps and is used
+	 * in conjunction with various other steps including: loop, select, back,
+	 * table, etc.
 	 *
-	 * @param name the name of the AsPipe
+	 * @param name
+	 *            the name of the AsPipe
 	 * @return the extended Pipeline
 	 */
 	public abstract FramedTraversal<T, ?> as(String name);
-	
-	
+
 	/**
-	 * Add a CyclicPathFilterPipe to the end of the Pipeline.
-	 * If the object's path is repeating (looping), then the object is filtered.
-	 * Thus, what is emitted are those objects whose history is composed of unique objects.
+	 * Add a CyclicPathFilterPipe to the end of the Pipeline. If the object's
+	 * path is repeating (looping), then the object is filtered. Thus, what is
+	 * emitted are those objects whose history is composed of unique objects.
 	 *
 	 * @return the extended Pipeline
 	 */
 	public abstract FramedTraversal<T, ?> simplePath();
 
 	/**
-	 * Add a BackFilterPipe to the end of the Pipeline.
-	 * The object that was seen namedSteps ago is emitted.
+	 * Add a BackFilterPipe to the end of the Pipeline. The object that was seen
+	 * namedSteps ago is emitted.
 	 *
-	 * @param namedStep the name of the step previous to back up to
+	 * @param namedStep
+	 *            the name of the step previous to back up to
 	 * @return the extended Pipeline
 	 */
 	public abstract <N> FramedTraversal<N, ?> back(String namedStep);
 
 	/**
-	 * Add a BackFilterPipe to the end of the Pipeline.
-	 * The object that was seen namedSteps ago is emitted.
+	 * Add a BackFilterPipe to the end of the Pipeline. The object that was seen
+	 * namedSteps ago is emitted.
 	 *
-	 * @param namedStep the name of the step previous to back up to
+	 * @param namedStep
+	 *            the name of the step previous to back up to
 	 * @return the extended Pipeline
 	 */
 	public abstract <N> FramedTraversal<N, ?> back(String namedStep, Class<N> type);
 
-	
 	/**
-	 * Add a GatherPipe to the end of the Pipeline.
-	 * All the objects previous to this step are aggregated in a greedy fashion into a List.
-	 * The provided function is applied to the aggregate and the results of the function are emitted.
-	 * Typically, the output of the function is a pruned List.
-	 * This is good for selective breadth-first searching.
+	 * Add a GatherPipe to the end of the Pipeline. All the objects previous to
+	 * this step are aggregated in a greedy fashion into a List. The provided
+	 * function is applied to the aggregate and the results of the function are
+	 * emitted. Typically, the output of the function is a pruned List. This is
+	 * good for selective breadth-first searching.
 	 *
-	 * @param function a transformation to apply to the gathered list
+	 * @param function
+	 *            a transformation to apply to the gathered list
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> FramedTraversal<List<N>, ?> gather(PipeFunction<T, N> function);
+	public abstract <N> FramedTraversal<List<N>, ?> gather(TraversalFunction<T, N> function);
 
-	
 	/**
-	 * Add a PathPipe to the end of the Pipeline.
-	 * This will emit the path that has been seen thus far.
-	 * If path functions are provided, then they are evaluated in a round robin fashion on the objects of the path.
+	 * Add a PathPipe to the end of the Pipeline. This will emit the path that
+	 * has been seen thus far. If path functions are provided, then they are
+	 * evaluated in a round robin fashion on the objects of the path.
 	 *
-	 * @param pathFunctions the path function of the PathPipe
+	 * @param pathFunctions
+	 *            the path function of the PathPipe
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<List<Object>, ?> path(PipeFunction<?, ?>... pathFunctions);
+	public abstract FramedTraversal<List<Object>, ?> path(TraversalFunction<?, ?>... pathFunctions);
 
 	/**
-	 * Add a ScatterPipe to the end of the Pipeline.
-	 * Any inputted iterator or iterable is unrolled and the iterator/iterable's objects are emitted one at a time.
+	 * Add a ScatterPipe to the end of the Pipeline. Any inputted iterator or
+	 * iterable is unrolled and the iterator/iterable's objects are emitted one
+	 * at a time.
 	 *
 	 * @return the extended Pipeline
 	 */
 	public abstract <N> FramedTraversal<N, ?> scatter(Class<N> clazz);
 
 	/**
-	 * Add a SelectPipe to the end of the Pipeline.
-	 * The objects of the named steps (via as) previous in the pipeline are emitted as a Row object.
-	 * A Row object extends ArrayList and simply provides named columns and some helper methods.
-	 * If column functions are provided, then they are evaluated in a round robin fashion on the objects of the Row.
+	 * Add a SelectPipe to the end of the Pipeline. The objects of the named
+	 * steps (via as) previous in the pipeline are emitted as a Row object. A
+	 * Row object extends ArrayList and simply provides named columns and some
+	 * helper methods. If column functions are provided, then they are evaluated
+	 * in a round robin fashion on the objects of the Row.
 	 *
-	 * @param stepNames       the name of the steps in the expression to retrieve the objects from
-	 * @param columnFunctions the functions to apply to the column objects prior to filling the Row
+	 * @param stepNames
+	 *            the name of the steps in the expression to retrieve the
+	 *            objects from
+	 * @param columnFunctions
+	 *            the functions to apply to the column objects prior to filling
+	 *            the Row
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<Row<?>, ?> select(Collection<String> stepNames, PipeFunction<?, ?>... columnFunctions);
+	public abstract FramedTraversal<Row<?>, ?> select(Collection<String> stepNames, TraversalFunction<?, ?>... columnFunctions);
 
 	/**
-	 * Add a SelectPipe to the end of the Pipeline.
-	 * The objects of the named steps (via as) previous in the pipeline are emitted as a Row object.
-	 * A Row object extends ArrayList and simply provides named columns and some helper methods.
-	 * If column functions are provided, then they are evaluated in a round robin fashion on the objects of the Row.
+	 * Add a SelectPipe to the end of the Pipeline. The objects of the named
+	 * steps (via as) previous in the pipeline are emitted as a Row object. A
+	 * Row object extends ArrayList and simply provides named columns and some
+	 * helper methods. If column functions are provided, then they are evaluated
+	 * in a round robin fashion on the objects of the Row.
 	 *
-	 * @param columnFunctions the functions to apply to the column objects prior to filling the Row
+	 * @param columnFunctions
+	 *            the functions to apply to the column objects prior to filling
+	 *            the Row
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<Row<?>, ?> select(PipeFunction<?,?>... columnFunctions);
+	public abstract FramedTraversal<Row<?>, ?> select(TraversalFunction<?, ?>... columnFunctions);
 
 	/**
-	 * Add a SelectPipe to the end of the Pipeline.
-	 * The objects of the named steps (via as) previous in the pipeline are emitted as a Row object.
-	 * A Row object extends ArrayList and simply provides named columns and some helper methods.
+	 * Add a SelectPipe to the end of the Pipeline. The objects of the named
+	 * steps (via as) previous in the pipeline are emitted as a Row object. A
+	 * Row object extends ArrayList and simply provides named columns and some
+	 * helper methods.
 	 *
 	 * @return the extended Pipeline
 	 */
 	public abstract FramedTraversal<Row<T>, ?> select();
 
 	/**
-	 * Add a ShufflePipe to the end of the Pipeline.
-	 * All the objects previous to this step are aggregated in a greedy fashion, their order randomized and emitted
-	 * as a List.
+	 * Add a ShufflePipe to the end of the Pipeline. All the objects previous to
+	 * this step are aggregated in a greedy fashion, their order randomized and
+	 * emitted as a List.
 	 *
 	 * @return the extended Pipeline
 	 */
 	public abstract FramedTraversal<List<T>, ?> shuffle();
 
 	/**
-	 * Add a SideEffectCapPipe to the end of the Pipeline.
-	 * When the previous step in the pipeline is implements SideEffectPipe, then it has a method called getSideEffect().
-	 * The cap step will greedily iterate the pipeline and then, when its empty, emit the side effect of the previous pipe.
+	 * Add a SideEffectCapPipe to the end of the Pipeline. When the previous
+	 * step in the pipeline is implements SideEffectPipe, then it has a method
+	 * called getSideEffect(). The cap step will greedily iterate the pipeline
+	 * and then, when its empty, emit the side effect of the previous pipe.
 	 *
 	 * @return the extended Pipeline
 	 */
 	public abstract FramedTraversal<SideEffect, ?> cap();
 
 	/**
-	 * Add a OrderMapPipe to the end of the Pipeline
-	 * Given a Map as an input, the map is first ordered and then the keys are emitted in the order.
+	 * Add a OrderMapPipe to the end of the Pipeline Given a Map as an input,
+	 * the map is first ordered and then the keys are emitted in the order.
 	 *
-	 * @param order if the values implement Comparable, then a increment or decrement sort is usable
+	 * @param order
+	 *            if the values implement Comparable, then a increment or
+	 *            decrement sort is usable
 	 * @return the extended Pipeline
 	 */
 	public abstract <N> FramedTraversal<N, ?> orderMap(TransformPipe.Order order);
 
 	/**
-	 * Add a OrderMapPipe to the end of the Pipeline
-	 * Given a Map as an input, the map is first ordered and then the keys are emitted in the order.
+	 * Add a OrderMapPipe to the end of the Pipeline Given a Map as an input,
+	 * the map is first ordered and then the keys are emitted in the order.
 	 *
-	 * @param order if the values implement Comparable, then a increment or decrement sort is usable
+	 * @param order
+	 *            if the values implement Comparable, then a increment or
+	 *            decrement sort is usable
 	 * @return the extended Pipeline
 	 */
 	public abstract <N> FramedTraversal<N, ?> orderMap(Tokens.T order);
 
 	/**
-	 * Add a OrderMapPipe to the end of the Pipeline
-	 * Given a Map as an input, the map is first ordered and then the keys are emitted in the order.
+	 * Add a OrderMapPipe to the end of the Pipeline Given a Map as an input,
+	 * the map is first ordered and then the keys are emitted in the order.
 	 *
-	 * @param compareFunction a function to compare to map entries
+	 * @param compareFunction
+	 *            a function to compare to map entries
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> FramedTraversal<N, ?> orderMap(PipeFunction<Pair<Map.Entry<?, ?>, Map.Entry<?, ?>>, Integer> compareFunction);
+	public abstract <N> FramedTraversal<N, ?> orderMap(
+			TraversalFunction<Pair<Map.Entry<?, ?>, Map.Entry<?, ?>>, Integer> compareFunction);
 
 	/**
-	 * Add a TransformFunctionPipe to the end of the Pipeline.
-	 * Given an input, the provided function is computed on the input and the output of that function is emitted.
+	 * Add a TransformFunctionPipe to the end of the Pipeline. Given an input,
+	 * the provided function is computed on the input and the output of that
+	 * function is emitted.
 	 *
-	 * @param function the transformation function of the pipe
+	 * @param function
+	 *            the transformation function of the pipe
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> FramedTraversal<N, ?> transform(PipeFunction<T, N> function);
-
-	
+	public abstract <N> FramedTraversal<N, ?> transform(TraversalFunction<T, N> function);
 
 	/**
-	 * Add a StartPipe to the end of the pipeline.
-	 * Though, in practice, a StartPipe is usually the beginning.
-	 * Moreover, the constructor of the Pipeline will internally use StartPipe.
+	 * Add a StartPipe to the end of the pipeline. Though, in practice, a
+	 * StartPipe is usually the beginning. Moreover, the constructor of the
+	 * Pipeline will internally use StartPipe.
 	 *
-	 * @param object the object that serves as the start of the pipeline (iterator/iterable are unfolded)
+	 * @param object
+	 *            the object that serves as the start of the pipeline
+	 *            (iterator/iterable are unfolded)
 	 * @return the extended Pipeline
 	 */
 	public abstract <N> FramedTraversal<N, ?> start(N object);
-	
+
 	/**
-	 * Add a StartPipe to the end of the pipeline.
-	 * Though, in practice, a StartPipe is usually the beginning.
-	 * Moreover, the constructor of the Pipeline will internally use StartPipe.
+	 * Add a StartPipe to the end of the pipeline. Though, in practice, a
+	 * StartPipe is usually the beginning. Moreover, the constructor of the
+	 * Pipeline will internally use StartPipe.
 	 *
-	 * @param object the object that serves as the start of the pipeline (iterator/iterable are unfolded)
+	 * @param object
+	 *            the object that serves as the start of the pipeline
+	 *            (iterator/iterable are unfolded)
 	 * @return the extended Pipeline
 	 */
 	public abstract FramedVertexTraversal<?> start(FramedVertex object);
-	
+
 	/**
-	 * Add a StartPipe to the end of the pipeline.
-	 * Though, in practice, a StartPipe is usually the beginning.
-	 * Moreover, the constructor of the Pipeline will internally use StartPipe.
+	 * Add a StartPipe to the end of the pipeline. Though, in practice, a
+	 * StartPipe is usually the beginning. Moreover, the constructor of the
+	 * Pipeline will internally use StartPipe.
 	 *
-	 * @param object the object that serves as the start of the pipeline (iterator/iterable are unfolded)
+	 * @param object
+	 *            the object that serves as the start of the pipeline
+	 *            (iterator/iterable are unfolded)
 	 * @return the extended Pipeline
 	 */
 	public abstract FramedEdgeTraversal<?> start(FramedEdge object);
@@ -831,8 +939,6 @@ public interface FramedTraversal<T, SideEffect> {
 	 */
 	public abstract long count();
 
-	
-
 	/**
 	 * Return the next object in the pipeline.
 	 *
@@ -842,7 +948,8 @@ public interface FramedTraversal<T, SideEffect> {
 	/**
 	 * Return the next X objects in the pipeline as a list.
 	 *
-	 * @param number the number of objects to return
+	 * @param number
+	 *            the number of objects to return
 	 * @return a list of X objects (if X objects occur)
 	 */
 	public abstract List<T> next(int number);
@@ -854,21 +961,22 @@ public interface FramedTraversal<T, SideEffect> {
 	 */
 	public abstract List<T> toList();
 
-
-
 	/**
-	 * Enable path calculations within the Pipeline.
-	 * This is typically done automatically and in rare occasions needs to be called.
+	 * Enable path calculations within the Pipeline. This is typically done
+	 * automatically and in rare occasions needs to be called.
 	 *
 	 * @return the Pipeline with path calculations enabled
 	 */
 	public abstract FramedTraversal<T, SideEffect> enablePath();
 
 	/**
-	 * When possible, Gremlin takes advantage of certain sequences of pipes in order to make a more concise, and generally more efficient expression.
-	 * This method will turn on and off query optimization from this stage in the pipeline on.
+	 * When possible, Gremlin takes advantage of certain sequences of pipes in
+	 * order to make a more concise, and generally more efficient expression.
+	 * This method will turn on and off query optimization from this stage in
+	 * the pipeline on.
 	 *
-	 * @param optimize whether to optimize the pipeline from here on or not
+	 * @param optimize
+	 *            whether to optimize the pipeline from here on or not
 	 * @return The GremlinPipeline with the optimization turned off
 	 */
 	public abstract FramedTraversal<T, SideEffect> optimize(boolean optimize);
@@ -881,60 +989,62 @@ public interface FramedTraversal<T, SideEffect> {
 	/**
 	 * Fill the provided collection with the objects in the pipeline.
 	 *
-	 * @param collection the collection to fill
+	 * @param collection
+	 *            the collection to fill
 	 * @return the collection filled
 	 */
 	public abstract Collection<T> fill(Collection<T> collection);
 
-	
 	/**
 	 * Cast the traversal as a vertex traversal
+	 * 
 	 * @return
 	 */
 	public abstract FramedVertexTraversal<SideEffect> asVertices();
 
 	/**
 	 * Cast the traversal to an edge traversalT
+	 * 
 	 * @return
 	 */
 	public abstract FramedEdgeTraversal<SideEffect> asEdges();
-	
+
 	/**
-	 * Add an OptionalPipe to the end of the Pipeline.
-	 * The section of pipeline back to the partition step is evaluated.
+	 * Add an OptionalPipe to the end of the Pipeline. The section of pipeline
+	 * back to the partition step is evaluated.
 	 *
-	 * @param namedStep the name of the step previous to optional back to
+	 * @param namedStep
+	 *            the name of the step previous to optional back to
 	 * @return the extended Pipeline
 	 */
 	public abstract <N> FramedTraversal<N, ?> optional(String namedStep);
-	
-	
 
 	/**
-	 * Add an IdEdgePipe to the end of the Pipeline.
-	 * Emit the edges of the graph whose ids are those of the incoming id objects.
+	 * Add an IdEdgePipe to the end of the Pipeline. Emit the edges of the graph
+	 * whose ids are those of the incoming id objects.
 	 *
-	 * @param graph the graph of the pipe
+	 * @param graph
+	 *            the graph of the pipe
 	 * @return the extended Pipeline
 	 */
 	public abstract FramedEdgeTraversal<?> idEdge(Graph graph);
 
 	/**
-	 * Add an IdPipe to the end of the Pipeline.
-	 * Emit the id of the incoming element.
+	 * Add an IdPipe to the end of the Pipeline. Emit the id of the incoming
+	 * element.
 	 *
 	 * @return the extended Pipeline
 	 */
 	public abstract FramedTraversal<Object, ?> id();
 
 	/**
-	 * Add an IdVertexPipe to the end of the Pipeline.
-	 * Emit the vertices of the graph whose ids are those of the incoming id objects.
+	 * Add an IdVertexPipe to the end of the Pipeline. Emit the vertices of the
+	 * graph whose ids are those of the incoming id objects.
 	 *
-	 * @param graph the graph of the pipe
+	 * @param graph
+	 *            the graph of the pipe
 	 * @return the extended Pipeline
 	 */
 	public abstract FramedVertexTraversal<?> idVertex(Graph graph);
-	
-	
+
 }

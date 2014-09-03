@@ -72,4 +72,10 @@ public class GenericFramedEdge extends FramedEdge {
 
 		super.setProperty(name, value);
 	}
+	
+	@Override
+	public <N> N getId(Class<N> clazz) {
+
+		return (N) super.getId(clazz);
+	}
 }

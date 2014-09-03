@@ -93,7 +93,7 @@ public abstract class FramedVertex extends FramedElement {
     protected void unlinkOut(FramedVertex vertex, String ...labels){
         FramedEdgeTraversal<?> pipeline = outE(labels).as("e");
         if(vertex != null){
-            pipeline = pipeline.inV().retain(Lists.newArrayList(vertex.element())).back("e").asEdges();
+            pipeline = pipeline.inV().retain(Lists.newArrayList(vertex)).back("e").asEdges();
         }
         pipeline.remove();
     }
@@ -101,7 +101,7 @@ public abstract class FramedVertex extends FramedElement {
     protected void unlinkIn(FramedVertex vertex, String ...labels){
         FramedEdgeTraversal<?> pipeline = inE(labels).as("e");
         if(vertex != null){
-            pipeline = pipeline.outV().retain(Lists.newArrayList(vertex.element())).back("e").asEdges();
+            pipeline = pipeline.outV().retain(Lists.newArrayList(vertex)).back("e").asEdges();
         }
         pipeline.remove();
     }
@@ -109,7 +109,7 @@ public abstract class FramedVertex extends FramedElement {
     protected void unlinkBoth(FramedVertex vertex, String ...labels){
         FramedEdgeTraversal<?> pipeline = bothE(labels).as("e");
         if(vertex != null){
-            pipeline = pipeline.bothV().retain(Lists.newArrayList(vertex.element())).back("e").asEdges();
+            pipeline = pipeline.bothV().retain(Lists.newArrayList(vertex)).back("e").asEdges();
         }
         pipeline.remove();
     }

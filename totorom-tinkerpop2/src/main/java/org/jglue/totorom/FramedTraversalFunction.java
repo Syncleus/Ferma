@@ -5,13 +5,17 @@ import com.tinkerpop.blueprints.Element;
 import com.tinkerpop.blueprints.Vertex;
 import com.tinkerpop.pipes.PipeFunction;
 
-class FramedPipeFunction<A, B> implements PipeFunction<A, B>{
+class FramedTraversalFunction<A, B> implements TraversalFunction<A, B>{
 	private PipeFunction<A, B> delegate;
 	private FramedGraph graph;
 
-	public FramedPipeFunction(PipeFunction<A, B> delegate, FramedGraph graph) {
+	public FramedTraversalFunction(PipeFunction<A, B> delegate, FramedGraph graph) {
 		super();
 		this.delegate = delegate;
+		this.graph = graph;
+	}
+
+	public FramedTraversalFunction(FramedGraph graph2) {
 		this.graph = graph;
 	}
 
@@ -24,12 +28,12 @@ class FramedPipeFunction<A, B> implements PipeFunction<A, B>{
 		if(argument instanceof Vertex) {
 			argument = (A)graph.frameElement((Element)argument, GenericFramedVertex.class);
 		}
-		B result = delegate.compute(argument);
 		
-		if(result instanceof FramedElement) {
-			result = (B)((FramedElement) result).element();
+		if(delegate == null) {
+			return (B)argument;
 		}
-		return result;
+	
+		return delegate.compute(argument);
 		
 		
 		

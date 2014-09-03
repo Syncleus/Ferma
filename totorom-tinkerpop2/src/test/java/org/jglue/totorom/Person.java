@@ -22,7 +22,7 @@ public class Person extends FramedVertex {
 
     public Iterator<Person> getKnows() {
 
-        return out("knows").frame(Person.class);
+        return out("knows").frame(Person.class).iterator();
     }
 
     public List<Knows> getKnowsList() {

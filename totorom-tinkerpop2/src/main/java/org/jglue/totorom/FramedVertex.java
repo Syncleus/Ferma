@@ -155,4 +155,6 @@ public abstract class FramedVertex extends FramedElement {
 	protected FramedVertexTraversal<?> traversal() {
 		return new FramedTraversalImpl(graph(), this).asVertices();
 	}
+	
+
 }

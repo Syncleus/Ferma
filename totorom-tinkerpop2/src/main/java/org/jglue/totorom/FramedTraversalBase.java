@@ -1,6 +1,8 @@
 package org.jglue.totorom;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -399,19 +401,19 @@ abstract class FramedTraversalBase<T, SE> implements FramedTraversal<T, SE> {
 
 	@Override
 	public FramedTraversal table(Table table, Collection stepNames, TraversalFunction... columnFunctions) {
-		pipeline().table(table, stepNames, columnFunctions);
+		pipeline().table(table, stepNames, wrap(columnFunctions));
 		return this;
 	}
 
 	@Override
 	public FramedTraversal table(Table table, TraversalFunction... columnFunctions) {
-		pipeline().table(table, columnFunctions);
+		pipeline().table(table, wrap(columnFunctions));
 		return this;
 	}
 
 	@Override
 	public FramedTraversal table(TraversalFunction... columnFunctions) {
-		pipeline().table(columnFunctions);
+		pipeline().table(wrap(columnFunctions));
 		return this;
 	}
 
@@ -429,13 +431,14 @@ abstract class FramedTraversalBase<T, SE> implements FramedTraversal<T, SE> {
 
 	@Override
 	public FramedTraversal tree(Tree tree, TraversalFunction... branchFunctions) {
-		pipeline().tree(tree, branchFunctions);
+		pipeline().tree(tree, wrap(branchFunctions));
 		return this;
 	}
 
+	
 	@Override
 	public FramedTraversal tree(TraversalFunction... branchFunctions) {
-		pipeline().tree(branchFunctions);
+		pipeline().tree(wrap(branchFunctions));
 		return this;
 	}
 
@@ -495,7 +498,7 @@ abstract class FramedTraversalBase<T, SE> implements FramedTraversal<T, SE> {
 
 	@Override
 	public FramedTraversal path(TraversalFunction... pathFunctions) {
-		pipeline().path(pathFunctions);
+		pipeline().path(wrap(pathFunctions));
 		return asTraversal();
 	}
 
@@ -507,13 +510,13 @@ abstract class FramedTraversalBase<T, SE> implements FramedTraversal<T, SE> {
 
 	@Override
 	public FramedTraversal select(Collection stepNames, TraversalFunction... columnFunctions) {
-		pipeline().select(stepNames, columnFunctions);
+		pipeline().select(stepNames, wrap(columnFunctions));
 		return asTraversal();
 	}
 
 	@Override
 	public FramedTraversal select(TraversalFunction... columnFunctions) {
-		pipeline().select(columnFunctions);
+		pipeline().select(wrap(columnFunctions));
 		return asTraversal();
 	}
 
@@ -548,8 +551,15 @@ abstract class FramedTraversalBase<T, SE> implements FramedTraversal<T, SE> {
 	}
 
 	@Override
-	public FramedTraversal orderMap(TraversalFunction compareFunction) {
-		pipeline().orderMap(compareFunction);
+	public FramedTraversal orderMap(final Comparator compareFunction) {
+		final Comparator wrapped = new FramingComparator(compareFunction, graph());
+		pipeline().orderMap(new TraversalFunction<Pair<Object, Object>, Integer>() {
+
+			@Override
+			public Integer compute(Pair<Object, Object> argument) {
+				return wrapped.compare(argument.getA(), argument.getB());
+			}
+		});
 		return this;
 	}
 
@@ -649,4 +659,18 @@ abstract class FramedTraversalBase<T, SE> implements FramedTraversal<T, SE> {
 		}));
 		return unwrapped;
 	}
+	
+	private TraversalFunction[] wrap(TraversalFunction... branchFunctions) {
+		Collection<TraversalFunction> wrapped = Collections2.transform(Arrays.asList(branchFunctions), new Function<TraversalFunction, TraversalFunction>() {
+
+			@Override
+			public TraversalFunction apply(TraversalFunction input) {
+				return new FramingTraversalFunction(input, graph());
+			}
+			
+		});
+		TraversalFunction[] wrappedArray = wrapped.toArray(new TraversalFunction[wrapped.size()]);
+		return wrappedArray;
+	}
+
 }

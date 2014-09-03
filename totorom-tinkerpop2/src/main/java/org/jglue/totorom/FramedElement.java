@@ -148,4 +148,9 @@ public abstract class FramedElement {
 		return (N) getId();
 	}
 
+	@Override
+	public String toString() {
+	
+		return element().toString();
+	}
 }

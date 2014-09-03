@@ -13,28 +13,26 @@ import com.tinkerpop.blueprints.Vertex;
  *
  * @param <T>
  */
-class FramingComparator<T, K extends FramedElement> implements Comparator<T> {
+class FramingComparator<T, K extends FramedElement> extends FrameMaker<K> implements Comparator<T> {
 
 	private Comparator<T> delegate;
-	private FramedGraph graph;
-	private Class<K> kind;
+
+	public FramingComparator(Comparator<T> delegate, FramedGraph graph) {
+		super(graph);
+		this.delegate = delegate;
+
+	}
 
 	public FramingComparator(Comparator<T> delegate, FramedGraph graph, Class<K> kind) {
+		super(graph, kind);
 		this.delegate = delegate;
-		this.graph = graph;
-		this.kind = kind;
 	}
 
 	@Override
 	public int compare(T o1, T o2) {
 
-		if (o1 instanceof Element) {
-			o1 = (T) graph.frameElement((Element) o1, kind);
-		}
-
-		if (o2 instanceof Element) {
-			o2 = (T) graph.frameElement((Element) o2, kind);
-		} 
+		o1 = makeFrame(o1);
+		o2 = makeFrame(o2);		
 
 		return delegate.compare(o1, o2);
 	}

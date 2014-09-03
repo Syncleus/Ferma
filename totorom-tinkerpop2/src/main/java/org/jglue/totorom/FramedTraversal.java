@@ -891,7 +891,7 @@ public interface FramedTraversal<T, SideEffect> extends Iterator<T>, Iterable<T>
 	 * @return the extended Pipeline
 	 */
 	public abstract <N> FramedTraversal<N, ?> orderMap(
-			TraversalFunction<Pair<Map.Entry<?, ?>, Map.Entry<?, ?>>, Integer> compareFunction);
+			Comparator<Map.Entry<?, ?>> compareFunction);
 
 	/**
 	 * Add a TransformFunctionPipe to the end of the Pipeline. Given an input,

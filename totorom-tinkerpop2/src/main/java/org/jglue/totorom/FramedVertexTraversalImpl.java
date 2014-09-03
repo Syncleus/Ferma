@@ -2,6 +2,7 @@ package org.jglue.totorom;
 
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -85,12 +86,12 @@ public abstract class FramedVertexTraversalImpl extends FramedTraversalBase impl
 
 	@Override
 	public FramedVertexTraversal groupCount() {
-		return (FramedVertexTraversal) super.groupCount();
+		return (FramedVertexTraversal) super.groupCount(new FramingMap(new HashMap(), graph()));
 	}
 
 	@Override
 	public FramedVertexTraversal groupCount(Map map) {
-		return (FramedVertexTraversal) super.groupCount(map);
+		return (FramedVertexTraversal) super.groupCount(new FramingMap(map, graph()));
 	}
 
 	@Override

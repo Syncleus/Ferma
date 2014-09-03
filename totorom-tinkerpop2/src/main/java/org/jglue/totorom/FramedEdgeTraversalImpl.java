@@ -2,6 +2,7 @@ package org.jglue.totorom;
 
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -86,12 +87,12 @@ public abstract class FramedEdgeTraversalImpl extends FramedTraversalBase implem
 
 	@Override
 	public FramedEdgeTraversal groupCount() {
-		return (FramedEdgeTraversal) super.groupCount();
+		return (FramedEdgeTraversal) super.groupCount(new FramingMap(new HashMap(), graph()));
 	}
 
 	@Override
 	public FramedEdgeTraversal groupCount(Map map) {
-		return (FramedEdgeTraversal) super.groupCount(map);
+		return (FramedEdgeTraversal) super.groupCount(new FramingMap(map, graph()));
 	}
 
 	@Override

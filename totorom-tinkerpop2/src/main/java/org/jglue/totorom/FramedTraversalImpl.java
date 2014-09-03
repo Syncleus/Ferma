@@ -2,11 +2,13 @@ package org.jglue.totorom;
 
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import com.google.common.base.Function;
+import com.google.common.collect.Collections2;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
@@ -45,10 +47,27 @@ class FramedTraversalImpl extends FramedTraversalBase implements FramedTraversal
 		this(graph, new GremlinPipeline<>(starts));
 	}
 
-	protected FramedTraversalImpl(FramedGraph graph, Element starts) {
-		this(graph, new GremlinPipeline<>(starts));
+	protected FramedTraversalImpl(FramedGraph graph, FramedElement starts) {
+		this(graph, new GremlinPipeline<>(starts.element()));
 	}
 
+	private HashSet unwrap(Collection collection) {
+		HashSet unwrapped = new HashSet(Collections2.transform(collection, new Function<Object, Object>() {
+
+			@Override
+			public Object apply(Object o) {
+				if(o instanceof FramedVertex) {
+					return ((FramedVertex) o).element();
+				}
+				if(o instanceof FramedEdge) {
+					return ((FramedEdge) o).element();
+				}
+				return o;
+			}
+		}));
+		return unwrapped;
+	}
+	
 	@Override
 	public FramedVertexTraversal V() {
 		pipeline.V();
@@ -165,12 +184,12 @@ class FramedTraversalImpl extends FramedTraversalBase implements FramedTraversal
 
 		@Override
 		public FramedEdgeTraversal store() {
-			return (FramedEdgeTraversal) super.store();
+			return (FramedEdgeTraversal) super.store(new FramedTraversalFunction(graph));
 		}
 
 		@Override
 		public FramedEdgeTraversal store(Collection storage) {
-			return (FramedEdgeTraversal) super.store(storage);
+			return (FramedEdgeTraversal) super.store(storage, new FramedTraversalFunction(graph));
 		}
 
 		@Override
@@ -421,7 +440,7 @@ class FramedTraversalImpl extends FramedTraversalBase implements FramedTraversal
 
 		@Override
 		public FramedEdgeTraversal except(Collection collection) {
-			return (FramedEdgeTraversal) super.except(collection);
+			return (FramedEdgeTraversal) super.except(unwrap(collection));
 		}
 
 		@Override
@@ -462,7 +481,7 @@ class FramedTraversalImpl extends FramedTraversalBase implements FramedTraversal
 
 		@Override
 		public FramedEdgeTraversal retain(Collection collection) {
-			return (FramedEdgeTraversal) super.retain(collection);
+			return (FramedEdgeTraversal) super.retain(unwrap(collection));
 
 		}
 
@@ -561,12 +580,12 @@ class FramedTraversalImpl extends FramedTraversalBase implements FramedTraversal
 
 		@Override
 		public FramedVertexTraversal store() {
-			return (FramedVertexTraversal) super.store();
+			return (FramedVertexTraversal) super.store(new FramedTraversalFunction(graph));
 		}
 
 		@Override
 		public FramedVertexTraversal store(Collection storage) {
-			return (FramedVertexTraversal) super.store(new FramedCollection<>(storage, graph, GenericFramedEdge.class));
+			return (FramedVertexTraversal) super.store(storage, new FramedTraversalFunction(graph));
 		}
 
 		@Override
@@ -692,7 +711,7 @@ class FramedTraversalImpl extends FramedTraversalBase implements FramedTraversal
 
 		@Override
 		public FramedVertexTraversal except(Collection collection) {
-			return (FramedVertexTraversal) super.except(collection);
+			return (FramedVertexTraversal) super.except(unwrap(collection));
 		}
 
 		@Override
@@ -733,9 +752,11 @@ class FramedTraversalImpl extends FramedTraversalBase implements FramedTraversal
 
 		@Override
 		public FramedVertexTraversal retain(Collection collection) {
-			return (FramedVertexTraversal) super.retain(collection);
+			return (FramedVertexTraversal) super.retain(unwrap(collection));
 
 		}
+
+	
 
 		@Override
 		public FramedVertexTraversal retain(String... namedSteps) {

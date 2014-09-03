@@ -2,8 +2,17 @@ package org.jglue.totorom;
 
 import java.util.Comparator;
 
+/**
+ * Usefule comparators when dealiong with framed elements
+ * @author bryn
+ *
+ */
 public class Comparators {
 
+	/**
+	 * Compare by Id.
+	 * @return
+	 */
 	public static <N extends FramedElement> Comparator<N> id() {
 		return new Comparator<N>() {
 			@Override
@@ -16,6 +25,10 @@ public class Comparators {
 		};
 	}
 	
+	/**
+	 * Compare by id parsed as a long (Useful for tinkergraph)
+	 * @return
+	 */
 	public static <N extends FramedElement> Comparator<N> idAsLong() {
 		return new Comparator<N>() {
 			@Override
@@ -28,6 +41,11 @@ public class Comparators {
 		};
 	}
 	
+	/**
+	 * Compare by property. Note that no value may be null.
+	 * @param property The property to compare by.
+	 * @return The result of comparing the property.
+	 */
 	public static <N extends FramedElement> Comparator<N> property(final String property) {
 		return new Comparator<N>() {
 			@Override

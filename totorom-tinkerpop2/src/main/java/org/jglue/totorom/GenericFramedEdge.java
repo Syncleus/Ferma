@@ -2,7 +2,12 @@ package org.jglue.totorom;
 
 import java.util.Set;
 
-public class GenericFramedEdge extends FramedEdge {
+/**
+ * A framed edge for use when you don't want to create a new frame class. Typically used in traversals.
+ * @author bryn
+ *
+ */
+public final class GenericFramedEdge extends FramedEdge {
 	@Override
 	public FramedVertexTraversal<?> bothV() {
 		return super.bothV();
@@ -50,7 +55,7 @@ public class GenericFramedEdge extends FramedEdge {
 	}
 
 	@Override
-	public Object getId() {
+	public <N> N getId() {
 
 		return super.getId();
 	}

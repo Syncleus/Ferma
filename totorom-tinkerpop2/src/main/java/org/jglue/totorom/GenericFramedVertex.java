@@ -2,7 +2,12 @@ package org.jglue.totorom;
 
 import java.util.Set;
 
-public class GenericFramedVertex extends FramedVertex {
+/**
+ * A framed vertex for use when you don't want to create a new frame class. Typically used in traversals.
+ * @author bryn
+ *
+ */
+public final class GenericFramedVertex extends FramedVertex {
 
 	@Override
 	public FramedVertexTraversal<?> both(int branchFactor, String... labels) {
@@ -41,10 +46,12 @@ public class GenericFramedVertex extends FramedVertex {
 	}
 
 	@Override
-	public Object getId() {
+	public <N> N getId() {
 
 		return super.getId();
 	}
+	
+	
 	
 	@Override
 	public <N> N getId(Class<N> clazz) {

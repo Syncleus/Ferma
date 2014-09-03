@@ -230,7 +230,7 @@ public interface FramedTraversal<T, SideEffect> extends Iterator<T>, Iterable<T>
 	 *            the collection except from the stream
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<T, ?> except(Collection<T> collection);
+	public abstract FramedTraversal<T, ?> except(Collection<?> collection);
 
 	/**
 	 * Add an ExceptFilterPipe to the end of the Pipeline. Will only emit the

@@ -430,7 +430,7 @@ public interface FramedVertexTraversal<SE> extends FramedTraversal<GenericFramed
 	 *            the collection except from the stream
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedVertexTraversal<?> except(Collection<GenericFramedVertex> collection);
+	public abstract FramedVertexTraversal<?> except(Collection<?> collection);
 
 	/**
 	 * Add an ExceptFilterPipe to the end of the Pipeline. Will only emit the

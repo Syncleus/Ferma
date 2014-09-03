@@ -2,7 +2,6 @@ package org.jglue.totorom;
 
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -214,7 +213,7 @@ public interface FramedEdgeTraversal<SE> extends FramedTraversal<GenericFramedEd
 	 * @param collection the collection except from the stream
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedEdgeTraversal<?> except(Collection<GenericFramedEdge> collection);
+	public abstract FramedEdgeTraversal<?> except(Collection<?> collection);
 
 	/**
 	 * Add an ExceptFilterPipe to the end of the Pipeline.

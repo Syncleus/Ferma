@@ -237,22 +237,7 @@ abstract class FramedTraversalBase<T, SE> implements FramedTraversal<T, SE> {
 
 	@Override
 	public FramedTraversal retain(Collection collection) {
-		HashSet unwrapped = new HashSet(Collections2.transform(collection, new Function<Object, Object>() {
-
-			@Override
-			public Object apply(Object o) {
-				if(o instanceof FramedVertex) {
-					return ((FramedVertex) o).element();
-				}
-				if(o instanceof FramedEdge) {
-					return ((FramedEdge) o).element();
-				}
-				return o;
-			}
-		}));
-		
-		
-		pipeline().retain(unwrapped);
+		pipeline().retain(collection);
 		return this;
 	}
 

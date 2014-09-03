@@ -18,7 +18,10 @@ import com.tinkerpop.gremlin.java.GremlinPipeline;
 import com.tinkerpop.pipes.Pipe;
 import com.tinkerpop.pipes.PipeFunction;
 import com.tinkerpop.pipes.transform.TransformPipe.Order;
+import com.tinkerpop.pipes.util.structures.Table;
+import com.tinkerpop.pipes.util.structures.Tree;
 
+@SuppressWarnings("rawtypes")
 public class FramedTraversalImpl extends FramedTraversalBase implements FramedTraversal {
 
 	private FramedGraph graph;
@@ -104,7 +107,120 @@ public class FramedTraversalImpl extends FramedTraversalBase implements FramedTr
 		return graph;
 	}
 
-	protected class FramedEdgeTraversalImpl<SE> extends FramedTraversalBase<Edge, SE> implements FramedEdgeTraversal<SE> {
+	@SuppressWarnings("unchecked")
+	protected class FramedEdgeTraversalImpl<SE> extends FramedTraversalBase<FramedEdgeImpl, SE> implements FramedEdgeTraversal<SE> {
+		
+		@Override
+		public FramedEdgeTraversal table() {
+			return (FramedEdgeTraversal)super.table();
+		}
+		
+		@Override
+		public FramedEdgeTraversal table(PipeFunction... columnFunctions) {
+
+			return (FramedEdgeTraversal)super.table(columnFunctions);
+		}
+		
+		
+		@Override
+		public FramedEdgeTraversal table(Table table) {
+
+			return (FramedEdgeTraversal)super.table(table);
+		}
+		
+		@Override
+		public FramedEdgeTraversal table(Table table, Collection stepNames, PipeFunction... columnFunctions) {
+
+			return (FramedEdgeTraversal)super.table(table, stepNames, columnFunctions);
+		}
+		
+		@Override
+		public FramedEdgeTraversal table(Table table, PipeFunction... columnFunctions) {
+			return (FramedEdgeTraversal)super.table(table, columnFunctions);
+		}
+		
+		@Override
+		public FramedEdgeTraversal tree(PipeFunction... branchFunctions) {
+			return (FramedEdgeTraversal)super.tree(branchFunctions);
+		}
+		@Override
+		public FramedEdgeTraversal tree(Tree tree, PipeFunction... branchFunctions) {
+			return (FramedEdgeTraversal)super.tree(tree, branchFunctions);
+		}
+		
+		
+		@Override
+		public FramedEdgeTraversal store() {
+			return (FramedEdgeTraversal) super.store();
+		}
+
+		@Override
+		public FramedEdgeTraversal store(Collection storage) {
+			return (FramedEdgeTraversal) super.store(storage);
+		}
+
+		@Override
+		public FramedEdgeTraversal store(Collection storage, PipeFunction storageFunction) {
+			return (FramedEdgeTraversal) super.store(storage, storageFunction);
+		}
+
+		@Override
+		public FramedEdgeTraversal store(PipeFunction storageFunction) {
+			return (FramedEdgeTraversal) super.store(storageFunction);
+		}
+
+		@Override
+		public FramedEdgeTraversal groupCount() {
+			return (FramedEdgeTraversal) super.groupCount();
+		}
+
+		@Override
+		public FramedEdgeTraversal groupCount(Map map) {
+			return (FramedEdgeTraversal) super.groupCount(map);
+		}
+
+		@Override
+		public FramedEdgeTraversal groupCount(Map map, PipeFunction keyFunction) {
+			return (FramedEdgeTraversal) super.groupCount(map, keyFunction);
+		}
+
+		@Override
+		public FramedEdgeTraversal groupCount(Map map, PipeFunction keyFunction, PipeFunction valueFunction) {
+			return (FramedEdgeTraversal) super.groupCount(map, keyFunction, valueFunction);
+		}
+
+		@Override
+		public FramedEdgeTraversal groupCount(PipeFunction keyFunction) {
+			return (FramedEdgeTraversal) super.groupCount(keyFunction);
+		}
+
+		@Override
+		public FramedEdgeTraversal groupCount(PipeFunction keyFunction, PipeFunction valueFunction) {
+			return (FramedEdgeTraversal) super.groupCount(keyFunction, valueFunction);
+		}
+
+		@Override
+		public FramedEdgeTraversal groupBy(PipeFunction keyFunction, PipeFunction valueFunction, PipeFunction reduceFunction) {
+			return (FramedEdgeTraversal) super.groupBy(keyFunction, valueFunction, reduceFunction);
+		}
+
+		@Override
+		public FramedEdgeTraversal groupBy(PipeFunction keyFunction, PipeFunction valueFunction) {
+
+			return (FramedEdgeTraversal) super.groupBy(keyFunction, valueFunction);
+		}
+
+		@Override
+		public FramedEdgeTraversal groupBy(Map reduceMap, PipeFunction keyFunction, PipeFunction valueFunction,
+				PipeFunction reduceFunction) {
+			return (FramedEdgeTraversal) super.groupBy(reduceMap, keyFunction, valueFunction, reduceFunction);
+		}
+
+		@Override
+		public FramedEdgeTraversal groupBy(Map map, PipeFunction keyFunction, PipeFunction valueFunction) {
+			return (FramedEdgeTraversal) super.groupBy(map, keyFunction, valueFunction);
+		}
+		
 		@Override
 		public FramedEdgeTraversal has(String key) {
 			return (FramedEdgeTraversal) super.has(key);
@@ -229,7 +345,7 @@ public class FramedTraversalImpl extends FramedTraversalBase implements FramedTr
 			pipeline.label();
 			return this;
 		}
-		
+
 		@Override
 		public FramedEdgeTraversal filter(PipeFunction filterFunction) {
 			return (FramedEdgeTraversal) super.filter(filterFunction);
@@ -266,11 +382,12 @@ public class FramedTraversalImpl extends FramedTraversalBase implements FramedTr
 			return (FramedEdgeTraversal) super.and(pipes);
 
 		}
+
 		@Override
 		public FramedEdgeTraversal sideEffect(PipeFunction sideEffectFunction) {
-			return (FramedEdgeTraversal)super.sideEffect(sideEffectFunction);
+			return (FramedEdgeTraversal) super.sideEffect(sideEffectFunction);
 		}
-		
+
 		@Override
 		public FramedEdgeTraversal random(Double bias) {
 
@@ -357,9 +474,125 @@ public class FramedTraversalImpl extends FramedTraversalBase implements FramedTr
 
 		}
 
+		@Override
+		public Collection fill(Collection collection, Class clazz) {
+
+			return super.fill(collection);
+		}
 	}
 
+	@SuppressWarnings("unchecked")
 	protected class FramedVertexTraversalImpl extends FramedTraversalBase implements FramedVertexTraversal {
+		@Override
+		public FramedVertexTraversal table() {
+			return (FramedVertexTraversal)super.table();
+		}
+		
+		@Override
+		public FramedVertexTraversal table(PipeFunction... columnFunctions) {
+
+			return (FramedVertexTraversal)super.table(columnFunctions);
+		}
+		
+		
+		@Override
+		public FramedVertexTraversal table(Table table) {
+
+			return (FramedVertexTraversal)super.table(table);
+		}
+		
+		@Override
+		public FramedVertexTraversal table(Table table, Collection stepNames, PipeFunction... columnFunctions) {
+
+			return (FramedVertexTraversal)super.table(table, stepNames, columnFunctions);
+		}
+		
+		@Override
+		public FramedVertexTraversal table(Table table, PipeFunction... columnFunctions) {
+			return (FramedVertexTraversal)super.table(table, columnFunctions);
+		}
+		
+		@Override
+		public FramedVertexTraversal tree(PipeFunction... branchFunctions) {
+			return (FramedVertexTraversal)super.tree(branchFunctions);
+		}
+		@Override
+		public FramedVertexTraversal tree(Tree tree, PipeFunction... branchFunctions) {
+			return (FramedVertexTraversal)super.tree(tree, branchFunctions);
+		}
+		
+		
+		@Override
+		public FramedVertexTraversal store() {
+			return (FramedVertexTraversal) super.store();
+		}
+
+		@Override
+		public FramedVertexTraversal store(Collection storage) {
+			return (FramedVertexTraversal) super.store(storage);
+		}
+
+		@Override
+		public FramedVertexTraversal store(Collection storage, PipeFunction storageFunction) {
+			return (FramedVertexTraversal) super.store(storage, storageFunction);
+		}
+
+		@Override
+		public FramedVertexTraversal store(PipeFunction storageFunction) {
+			return (FramedVertexTraversal) super.store(storageFunction);
+		}
+
+		@Override
+		public FramedVertexTraversal groupCount() {
+			return (FramedVertexTraversal) super.groupCount();
+		}
+
+		@Override
+		public FramedVertexTraversal groupCount(Map map) {
+			return (FramedVertexTraversal) super.groupCount(map);
+		}
+
+		@Override
+		public FramedVertexTraversal groupCount(Map map, PipeFunction keyFunction) {
+			return (FramedVertexTraversal) super.groupCount(map, keyFunction);
+		}
+
+		@Override
+		public FramedVertexTraversal groupCount(Map map, PipeFunction keyFunction, PipeFunction valueFunction) {
+			return (FramedVertexTraversal) super.groupCount(map, keyFunction, valueFunction);
+		}
+
+		@Override
+		public FramedVertexTraversal groupCount(PipeFunction keyFunction) {
+			return (FramedVertexTraversal) super.groupCount(keyFunction);
+		}
+
+		@Override
+		public FramedVertexTraversal groupCount(PipeFunction keyFunction, PipeFunction valueFunction) {
+			return (FramedVertexTraversal) super.groupCount(keyFunction, valueFunction);
+		}
+
+		@Override
+		public FramedVertexTraversal groupBy(PipeFunction keyFunction, PipeFunction valueFunction, PipeFunction reduceFunction) {
+			return (FramedVertexTraversal) super.groupBy(keyFunction, valueFunction, reduceFunction);
+		}
+
+		@Override
+		public FramedVertexTraversal groupBy(PipeFunction keyFunction, PipeFunction valueFunction) {
+
+			return (FramedVertexTraversal) super.groupBy(keyFunction, valueFunction);
+		}
+
+		@Override
+		public FramedVertexTraversal groupBy(Map reduceMap, PipeFunction keyFunction, PipeFunction valueFunction,
+				PipeFunction reduceFunction) {
+			return (FramedVertexTraversal) super.groupBy(reduceMap, keyFunction, valueFunction, reduceFunction);
+		}
+
+		@Override
+		public FramedVertexTraversal groupBy(Map map, PipeFunction keyFunction, PipeFunction valueFunction) {
+			return (FramedVertexTraversal) super.groupBy(map, keyFunction, valueFunction);
+		}
 
 		@Override
 		public FramedVertexTraversal filter(PipeFunction filterFunction) {
@@ -397,11 +630,12 @@ public class FramedTraversalImpl extends FramedTraversalBase implements FramedTr
 			return (FramedVertexTraversal) super.and(pipes);
 
 		}
+
 		@Override
 		public FramedVertexTraversal sideEffect(PipeFunction sideEffectFunction) {
-			return (FramedVertexTraversal)super.sideEffect(sideEffectFunction);
+			return (FramedVertexTraversal) super.sideEffect(sideEffectFunction);
 		}
-		
+
 		@Override
 		public FramedVertexTraversal random(Double bias) {
 
@@ -714,6 +948,11 @@ public class FramedTraversalImpl extends FramedTraversalBase implements FramedTr
 			return this;
 		}
 
+		@Override
+		public Collection fill(Collection collection, Class clazz) {
+
+			return super.fill(collection);
+		}
 
 	}
 

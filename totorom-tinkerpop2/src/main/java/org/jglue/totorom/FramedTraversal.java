@@ -885,6 +885,7 @@ public interface FramedTraversal<T, SideEffect> {
 	 * @return the collection filled
 	 */
 	public abstract Collection<T> fill(Collection<T> collection);
+
 	
 	/**
 	 * Cast the traversal as a vertex traversal
@@ -893,7 +894,7 @@ public interface FramedTraversal<T, SideEffect> {
 	public abstract FramedVertexTraversal<SideEffect> asVertices();
 
 	/**
-	 * Cast the traversal to an edge traversal
+	 * Cast the traversal to an edge traversalT
 	 * @return
 	 */
 	public abstract FramedEdgeTraversal<SideEffect> asEdges();

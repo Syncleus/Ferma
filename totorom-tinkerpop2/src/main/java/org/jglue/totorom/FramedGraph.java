@@ -12,6 +12,7 @@ import com.tinkerpop.blueprints.TransactionalGraph;
 import com.tinkerpop.blueprints.Vertex;
 
 /**
+ * The primary class for framing your blueprints graphs. 
  * @author Bryn Cooke (http://jglue.org)
  */
 
@@ -67,7 +68,9 @@ public class FramedGraph {
 
     <T extends FramedElement> T frameElement(Element e, Class<T> kind) {
 
-        Class<T> frameType = resolver.resolve(e, kind);
+        Class<T> frameType = (kind == GenericFramedVertex.class || kind == GenericFramedEdge.class) ? kind : resolver.resolve(e, kind);
+        
+        
         T framedElement = builder.create(e, frameType);
         framedElement.init(this, e);
         return framedElement;

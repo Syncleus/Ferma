@@ -2,13 +2,10 @@ package org.jglue.totorom;
 
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import com.google.common.base.Function;
-import com.google.common.collect.Collections2;
 import com.tinkerpop.blueprints.Graph;
 import com.tinkerpop.blueprints.Predicate;
 import com.tinkerpop.gremlin.Tokens;
@@ -31,22 +28,24 @@ abstract class FramedTraversalBase<T, SE> implements FramedTraversal<T, SE> {
 
 	@Override
 	public FramedVertexTraversal V() {
-		return graph().V();
+		pipeline().V();
+		return asVertices();
 	}
 
 	@Override
 	public FramedEdgeTraversal E() {
-		return graph().E();
+		pipeline().E();
+		return asEdges();
 	}
 
 	@Override
 	public FramedVertexTraversal v(Object... ids) {
-		return graph().v(ids);
+		return (FramedVertexTraversal) graph().v(ids);
 	}
 
 	@Override
 	public FramedEdgeTraversal e(Object... ids) {
-		return graph().e(ids);
+		return (FramedEdgeTraversal) graph().e(ids);
 	}
 
 	@Override

@@ -5,13 +5,20 @@ import java.util.Iterator;
 
 import com.tinkerpop.blueprints.Element;
 
-public class FramedCollection<E, F extends FramedElement> implements Collection<E> {
+/**
+ * Frames elements as they are inserted in to the delegate.
+ * @author bryn
+ *
+ * @param <E>
+ * @param <K>
+ */
+class FramingCollection<E, K extends FramedElement> implements Collection<E> {
 
 	private Collection<E> delegate;
 	private FramedGraph graph;
-	private Class<F> kind;
+	private Class<K> kind;
 
-	public FramedCollection(Collection<E> delegate, FramedGraph graph, Class<F> kind) {
+	public FramingCollection(Collection<E> delegate, FramedGraph graph, Class<K> kind) {
 		this.delegate = delegate;
 		this.graph = graph;
 		this.kind = kind;
@@ -59,7 +66,11 @@ public class FramedCollection<E, F extends FramedElement> implements Collection<
 	}
 
 	public boolean addAll(Collection<? extends E> c) {
-		throw new UnsupportedOperationException();
+		boolean modified = false;
+		for(E e : c) {
+			modified |= add(e);
+		}
+		return modified;
 	}
 
 	public boolean removeAll(Collection<?> c) {

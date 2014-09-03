@@ -13,6 +13,12 @@ import com.tinkerpop.pipes.util.structures.Pair;
 import com.tinkerpop.pipes.util.structures.Table;
 import com.tinkerpop.pipes.util.structures.Tree;
 
+/**
+ * Edge specific traversal.
+ * @author bryn
+ *
+ * @param <SE>
+ */
 public interface FramedEdgeTraversal<SE> extends FramedTraversal<GenericFramedEdge, SE> {
 	/**
      * Check if the element has a property with provided key.

@@ -24,6 +24,11 @@ import com.tinkerpop.pipes.transform.TransformPipe.Order;
 import com.tinkerpop.pipes.util.structures.Table;
 import com.tinkerpop.pipes.util.structures.Tree;
 
+/**
+ * The implementation of 
+ * @author bryn
+ *
+ */
 @SuppressWarnings("rawtypes")
 class FramedTraversalImpl extends FramedTraversalBase implements FramedTraversal {
 
@@ -68,38 +73,8 @@ class FramedTraversalImpl extends FramedTraversalBase implements FramedTraversal
 		return unwrapped;
 	}
 	
-	@Override
-	public FramedVertexTraversal V() {
-		pipeline.V();
-		return vertexTraversal;
-	}
 
-	@Override
-	public FramedEdgeTraversal E() {
-		pipeline.E();
-		return edgeTraversal;
-	}
 
-	@Override
-	public FramedVertexTraversal v(Object... ids) {
-		return (FramedVertexTraversal) graph.v(ids);
-	}
-
-	@Override
-	public FramedEdgeTraversal e(Object... ids) {
-		return (FramedEdgeTraversal) graph.e(ids);
-	}
-
-	@Override
-	public FramedTraversal identity() {
-		pipeline._();
-		return this;
-	}
-
-	@Override
-	public long count() {
-		return pipeline.count();
-	}
 
 	/**
 	 * @return Cast the traversal to a {@link FramedVertexTraversal}
@@ -184,22 +159,22 @@ class FramedTraversalImpl extends FramedTraversalBase implements FramedTraversal
 
 		@Override
 		public FramedEdgeTraversal store() {
-			return (FramedEdgeTraversal) super.store(new FramedTraversalFunction(graph));
+			return (FramedEdgeTraversal) super.store(new FramingTraversalFunction(graph(), GenericFramedEdge.class));
 		}
 
 		@Override
 		public FramedEdgeTraversal store(Collection storage) {
-			return (FramedEdgeTraversal) super.store(storage, new FramedTraversalFunction(graph));
+			return (FramedEdgeTraversal) super.store(storage, new FramingTraversalFunction(graph(), GenericFramedEdge.class));
 		}
 
 		@Override
 		public FramedEdgeTraversal store(Collection storage, TraversalFunction storageFunction) {
-			return (FramedEdgeTraversal) super.store(storage, new FramedTraversalFunction(storageFunction, graph));
+			return (FramedEdgeTraversal) super.store(storage, new FramingTraversalFunction(storageFunction, graph(), GenericFramedEdge.class));
 		}
 
 		@Override
 		public FramedEdgeTraversal store(TraversalFunction storageFunction) {
-			return (FramedEdgeTraversal) super.store(new FramedTraversalFunction(storageFunction, graph));
+			return (FramedEdgeTraversal) super.store(new FramingTraversalFunction(storageFunction, graph(), GenericFramedEdge.class));
 		}
 
 		@Override
@@ -214,44 +189,44 @@ class FramedTraversalImpl extends FramedTraversalBase implements FramedTraversal
 
 		@Override
 		public FramedEdgeTraversal groupCount(Map map, TraversalFunction keyFunction) {
-			return (FramedEdgeTraversal) super.groupCount(map, new FramedTraversalFunction(keyFunction, graph));
+			return (FramedEdgeTraversal) super.groupCount(map, new FramingTraversalFunction(keyFunction, graph(), GenericFramedEdge.class));
 		}
 
 		@Override
 		public FramedEdgeTraversal groupCount(Map map, TraversalFunction keyFunction, TraversalFunction valueFunction) {
-			return (FramedEdgeTraversal) super.groupCount(map, new FramedTraversalFunction(keyFunction, graph), new FramedTraversalFunction(valueFunction, graph));
+			return (FramedEdgeTraversal) super.groupCount(map, new FramingTraversalFunction(keyFunction, graph(), GenericFramedEdge.class), new FramingTraversalFunction(valueFunction, graph(), GenericFramedEdge.class));
 		}
 
 		@Override
 		public FramedEdgeTraversal groupCount(TraversalFunction keyFunction) {
-			return (FramedEdgeTraversal) super.groupCount(new FramedTraversalFunction(keyFunction, graph));
+			return (FramedEdgeTraversal) super.groupCount(new FramingTraversalFunction(keyFunction, graph(), GenericFramedEdge.class));
 		}
 
 		@Override
 		public FramedEdgeTraversal groupCount(TraversalFunction keyFunction, TraversalFunction valueFunction) {
-			return (FramedEdgeTraversal) super.groupCount(new FramedTraversalFunction(keyFunction, graph), new FramedTraversalFunction(valueFunction, graph));
+			return (FramedEdgeTraversal) super.groupCount(new FramingTraversalFunction(keyFunction, graph(), GenericFramedEdge.class), new FramingTraversalFunction(valueFunction, graph(), GenericFramedEdge.class));
 		}
 
 		@Override
 		public FramedEdgeTraversal groupBy(TraversalFunction keyFunction, TraversalFunction valueFunction, TraversalFunction reduceFunction) {
-			return (FramedEdgeTraversal) super.groupBy(new FramedTraversalFunction(keyFunction, graph), new FramedTraversalFunction(valueFunction, graph), new FramedTraversalFunction(reduceFunction, graph));
+			return (FramedEdgeTraversal) super.groupBy(new FramingTraversalFunction(keyFunction, graph(), GenericFramedEdge.class), new FramingTraversalFunction(valueFunction, graph(), GenericFramedEdge.class), new FramingTraversalFunction(reduceFunction, graph(), GenericFramedEdge.class));
 		}
 
 		@Override
 		public FramedEdgeTraversal groupBy(TraversalFunction keyFunction, TraversalFunction valueFunction) {
 
-			return (FramedEdgeTraversal) super.groupBy(new FramedTraversalFunction(keyFunction, graph), new FramedTraversalFunction(valueFunction, graph));
+			return (FramedEdgeTraversal) super.groupBy(new FramingTraversalFunction(keyFunction, graph(), GenericFramedEdge.class), new FramingTraversalFunction(valueFunction, graph(), GenericFramedEdge.class));
 		}
 
 		@Override
 		public FramedEdgeTraversal groupBy(Map reduceMap, TraversalFunction keyFunction, TraversalFunction valueFunction,
 				TraversalFunction reduceFunction) {
-			return (FramedEdgeTraversal) super.groupBy(reduceMap, new FramedTraversalFunction(keyFunction, graph), new FramedTraversalFunction(valueFunction, graph), new FramedTraversalFunction(reduceFunction, graph));
+			return (FramedEdgeTraversal) super.groupBy(reduceMap, new FramingTraversalFunction(keyFunction, graph(), GenericFramedEdge.class), new FramingTraversalFunction(valueFunction, graph(), GenericFramedEdge.class), new FramingTraversalFunction(reduceFunction, graph(), GenericFramedEdge.class));
 		}
 
 		@Override
 		public FramedEdgeTraversal groupBy(Map map, TraversalFunction keyFunction, TraversalFunction valueFunction) {
-			return (FramedEdgeTraversal) super.groupBy(map, new FramedTraversalFunction(keyFunction, graph), new FramedTraversalFunction(valueFunction, graph));
+			return (FramedEdgeTraversal) super.groupBy(map, new FramingTraversalFunction(keyFunction, graph(), GenericFramedEdge.class), new FramingTraversalFunction(valueFunction, graph(), GenericFramedEdge.class));
 		}
 
 		@Override
@@ -302,53 +277,53 @@ class FramedTraversalImpl extends FramedTraversalBase implements FramedTraversal
 
 		@Override
 		public FramedVertexTraversal inV() {
-			pipeline.inV();
-			return vertexTraversal;
+			pipeline().inV();
+			return asVertices();
 		}
 
 		@Override
 		public FramedVertexTraversal outV() {
-			pipeline.outV();
-			return vertexTraversal;
+			pipeline().outV();
+			return asVertices();
 		}
 
 		@Override
 		public FramedVertexTraversal bothV() {
-			pipeline.bothV();
+			pipeline().bothV();
 			return asVertices();
 		}
 
 		@Override
 		public FramedEdge next(Class kind) {
-			return graph.frameElement((Element) pipeline.next(), kind);
+			return graph().frameElement((Element) pipeline().next(), kind);
 		}
 
 		@Override
 		public List next(int amount, final Class kind) {
-			return Lists.transform(pipeline.next(amount), new Function() {
+			return Lists.transform(pipeline().next(amount), new Function() {
 
 				public Object apply(Object e) {
-					return graph.frameElement((Element) e, kind);
+					return graph().frameElement((Element) e, kind);
 				}
 			});
 		}
 
 		@Override
 		public Iterable frame(final Class kind) {
-			return Iterables.transform(pipeline, new Function() {
+			return Iterables.transform(pipeline(), new Function() {
 
 				public Object apply(Object e) {
-					return graph.frameElement((Element) e, kind);
+					return graph().frameElement((Element) e, kind);
 				}
 			});
 		}
 
 		@Override
 		public List<T> toList(final Class kind) {
-			return Lists.transform(pipeline.toList(), new Function() {
+			return Lists.transform(pipeline().toList(), new Function() {
 
 				public Object apply(Object e) {
-					return graph.frameElement((Element) e, kind);
+					return graph().frameElement((Element) e, kind);
 				}
 			});
 		}
@@ -375,37 +350,37 @@ class FramedTraversalImpl extends FramedTraversalBase implements FramedTraversal
 
 		@Override
 		public FramedTraversal label() {
-			pipeline.label();
+			pipeline().label();
 			return this;
 		}
 
 		@Override
 		public FramedEdgeTraversal filter(TraversalFunction filterFunction) {
-			return (FramedEdgeTraversal) super.filter(new FramedTraversalFunction(filterFunction, graph));
+			return (FramedEdgeTraversal) super.filter(new FramingTraversalFunction(filterFunction, graph(), GenericFramedEdge.class));
 
 		}
 
 		@Override
 		public FramedEdgeTraversal aggregate() {
-			return (FramedEdgeTraversal) super.aggregate(new FramedTraversalFunction(graph));
+			return (FramedEdgeTraversal) super.aggregate(new FramingTraversalFunction(graph(), GenericFramedEdge.class));
 
 		}
 
 		@Override
 		public FramedEdgeTraversal aggregate(Collection aggregate) {
-			return (FramedEdgeTraversal) super.aggregate(aggregate, new FramedTraversalFunction(graph));
+			return (FramedEdgeTraversal) super.aggregate(aggregate, new FramingTraversalFunction(graph(), GenericFramedEdge.class));
 
 		}
 
 		@Override
 		public FramedEdgeTraversal aggregate(Collection aggregate, TraversalFunction aggregateFunction) {
-			return (FramedEdgeTraversal) super.aggregate(aggregate, new FramedTraversalFunction(aggregateFunction, graph));
+			return (FramedEdgeTraversal) super.aggregate(aggregate, new FramingTraversalFunction(aggregateFunction, graph(), GenericFramedEdge.class));
 
 		}
 
 		@Override
 		public FramedEdgeTraversal aggregate(TraversalFunction aggregateFunction) {
-			return (FramedEdgeTraversal) super.aggregate(new FramedTraversalFunction(aggregateFunction, graph));
+			return (FramedEdgeTraversal) super.aggregate(new FramingTraversalFunction(aggregateFunction, graph(), GenericFramedEdge.class));
 
 		}
 
@@ -418,7 +393,7 @@ class FramedTraversalImpl extends FramedTraversalBase implements FramedTraversal
 
 		@Override
 		public FramedEdgeTraversal sideEffect(SideEffectFunction sideEffectFunction) {
-			return (FramedEdgeTraversal) super.sideEffect(new FramedSideEffectFunction(sideEffectFunction, graph));
+			return (FramedEdgeTraversal) super.sideEffect(new FramingSideEffectFunction(sideEffectFunction, graph(), GenericFramedEdge.class));
 		}
 
 		@Override
@@ -429,7 +404,7 @@ class FramedTraversalImpl extends FramedTraversalBase implements FramedTraversal
 
 		@Override
 		public FramedEdgeTraversal dedup(TraversalFunction dedupFunction) {
-			return (FramedEdgeTraversal) super.dedup(new FramedTraversalFunction(dedupFunction, graph));
+			return (FramedEdgeTraversal) super.dedup(new FramingTraversalFunction(dedupFunction, graph(), GenericFramedEdge.class));
 		}
 
 		@Override
@@ -465,7 +440,7 @@ class FramedTraversalImpl extends FramedTraversalBase implements FramedTraversal
 
 		@Override
 		public FramedEdgeTraversal order(Comparator compareFunction) {
-			return (FramedEdgeTraversal) super.order(new FramedComparator(compareFunction, graph));
+			return (FramedEdgeTraversal) super.order(new FramingComparator(compareFunction, graph(), GenericFramedEdge.class));
 		}
 
 		@Override
@@ -509,13 +484,13 @@ class FramedTraversalImpl extends FramedTraversalBase implements FramedTraversal
 
 		@Override
 		public Collection fill(Collection collection) {
-			return super.fill(new FramedCollection<>(collection, graph, GenericFramedEdge.class));
+			return super.fill(new FramingCollection<>(collection, graph(), GenericFramedEdge.class));
 		}
 		
 		@Override
 		public Collection fill(Collection collection, Class clazz) {
 
-			return super.fill(new FramedCollection(collection, graph, clazz));
+			return super.fill(new FramingCollection(collection, graph(), clazz));
 		}
 
 		@Override
@@ -523,10 +498,10 @@ class FramedTraversalImpl extends FramedTraversalBase implements FramedTraversal
 			return FramedTraversalImpl.this;
 		}
 		public java.util.Iterator<GenericFramedEdge> iterator() {
-			return Iterators.transform(pipeline, new Function() {
+			return Iterators.transform(pipeline(), new Function() {
 
 				public Object apply(Object e) {
-					return graph.frameElement((Element) e, GenericFramedEdge.class);
+					return graph().frameElement((Element) e, GenericFramedEdge.class);
 				}
 			});	
 		};
@@ -580,22 +555,22 @@ class FramedTraversalImpl extends FramedTraversalBase implements FramedTraversal
 
 		@Override
 		public FramedVertexTraversal store() {
-			return (FramedVertexTraversal) super.store(new FramedTraversalFunction(graph));
+			return (FramedVertexTraversal) super.store(new FramingTraversalFunction(graph(), GenericFramedVertex.class));
 		}
 
 		@Override
 		public FramedVertexTraversal store(Collection storage) {
-			return (FramedVertexTraversal) super.store(storage, new FramedTraversalFunction(graph));
+			return (FramedVertexTraversal) super.store(storage, new FramingTraversalFunction(graph(), GenericFramedVertex.class));
 		}
 
 		@Override
 		public FramedVertexTraversal store(Collection storage, TraversalFunction storageFunction) {
-			return (FramedVertexTraversal) super.store(storage, new FramedTraversalFunction(storageFunction, graph));
+			return (FramedVertexTraversal) super.store(storage, new FramingTraversalFunction(storageFunction, graph(), GenericFramedVertex.class));
 		}
 
 		@Override
 		public FramedVertexTraversal store(TraversalFunction storageFunction) {
-			return (FramedVertexTraversal) super.store(new FramedTraversalFunction(storageFunction, graph));
+			return (FramedVertexTraversal) super.store(new FramingTraversalFunction(storageFunction, graph(), GenericFramedVertex.class));
 		}
 
 		@Override
@@ -610,73 +585,73 @@ class FramedTraversalImpl extends FramedTraversalBase implements FramedTraversal
 
 		@Override
 		public FramedVertexTraversal groupCount(Map map, TraversalFunction keyFunction) {
-			return (FramedVertexTraversal) super.groupCount(map, new FramedTraversalFunction(keyFunction, graph));
+			return (FramedVertexTraversal) super.groupCount(map, new FramingTraversalFunction(keyFunction, graph(), GenericFramedVertex.class));
 		}
 
 		@Override
 		public FramedVertexTraversal groupCount(Map map, TraversalFunction keyFunction, TraversalFunction valueFunction) {
-			return (FramedVertexTraversal) super.groupCount(map, new FramedTraversalFunction(keyFunction, graph), new FramedTraversalFunction(valueFunction, graph));
+			return (FramedVertexTraversal) super.groupCount(map, new FramingTraversalFunction(keyFunction, graph(), GenericFramedVertex.class), new FramingTraversalFunction(valueFunction, graph(), GenericFramedVertex.class));
 		}
 
 		@Override
 		public FramedVertexTraversal groupCount(TraversalFunction keyFunction) {
-			return (FramedVertexTraversal) super.groupCount(new FramedTraversalFunction(keyFunction, graph));
+			return (FramedVertexTraversal) super.groupCount(new FramingTraversalFunction(keyFunction, graph(), GenericFramedVertex.class));
 		}
 
 		@Override
 		public FramedVertexTraversal groupCount(TraversalFunction keyFunction, TraversalFunction valueFunction) {
-			return (FramedVertexTraversal) super.groupCount(new FramedTraversalFunction(keyFunction, graph), new FramedTraversalFunction(valueFunction, graph));
+			return (FramedVertexTraversal) super.groupCount(new FramingTraversalFunction(keyFunction, graph(), GenericFramedVertex.class), new FramingTraversalFunction(valueFunction, graph(), GenericFramedVertex.class));
 		}
 
 		@Override
 		public FramedVertexTraversal groupBy(TraversalFunction keyFunction, TraversalFunction valueFunction, TraversalFunction reduceFunction) {
-			return (FramedVertexTraversal) super.groupBy(new FramedTraversalFunction(keyFunction, graph), new FramedTraversalFunction(valueFunction, graph), new FramedTraversalFunction(reduceFunction, graph));
+			return (FramedVertexTraversal) super.groupBy(new FramingTraversalFunction(keyFunction, graph(), GenericFramedVertex.class), new FramingTraversalFunction(valueFunction, graph(), GenericFramedVertex.class), new FramingTraversalFunction(reduceFunction, graph(), GenericFramedVertex.class));
 		}
 
 		@Override
 		public FramedVertexTraversal groupBy(TraversalFunction keyFunction, TraversalFunction valueFunction) {
 
-			return (FramedVertexTraversal) super.groupBy(new FramedTraversalFunction(keyFunction, graph), new FramedTraversalFunction(valueFunction, graph));
+			return (FramedVertexTraversal) super.groupBy(new FramingTraversalFunction(keyFunction, graph(), GenericFramedVertex.class), new FramingTraversalFunction(valueFunction, graph(), GenericFramedVertex.class));
 		}
 
 		@Override
 		public FramedVertexTraversal groupBy(Map reduceMap, TraversalFunction keyFunction, TraversalFunction valueFunction,
 				TraversalFunction reduceFunction) {
-			return (FramedVertexTraversal) super.groupBy(reduceMap, new FramedTraversalFunction(keyFunction, graph), new FramedTraversalFunction(valueFunction, graph), new FramedTraversalFunction(reduceFunction, graph));
+			return (FramedVertexTraversal) super.groupBy(reduceMap, new FramingTraversalFunction(keyFunction, graph(), GenericFramedVertex.class), new FramingTraversalFunction(valueFunction, graph(), GenericFramedVertex.class), new FramingTraversalFunction(reduceFunction, graph(), GenericFramedVertex.class));
 		}
 
 		@Override
 		public FramedVertexTraversal groupBy(Map map, TraversalFunction keyFunction, TraversalFunction valueFunction) {
-			return (FramedVertexTraversal) super.groupBy(map, new FramedTraversalFunction(keyFunction, graph), new FramedTraversalFunction(valueFunction, graph));
+			return (FramedVertexTraversal) super.groupBy(map, new FramingTraversalFunction(keyFunction, graph(), GenericFramedVertex.class), new FramingTraversalFunction(valueFunction, graph(), GenericFramedVertex.class));
 		}
 
 		@Override
 		public FramedVertexTraversal filter(TraversalFunction filterFunction) {
-			return (FramedVertexTraversal) super.filter(new FramedTraversalFunction(filterFunction, graph));
+			return (FramedVertexTraversal) super.filter(new FramingTraversalFunction(filterFunction, graph(), GenericFramedVertex.class));
 
 		}
 
 		@Override
 		public FramedVertexTraversal aggregate() {
-			return (FramedVertexTraversal) super.aggregate(new FramedTraversalFunction(graph));
+			return (FramedVertexTraversal) super.aggregate(new FramingTraversalFunction(graph(), GenericFramedVertex.class));
 
 		}
 
 		@Override
 		public FramedVertexTraversal aggregate(Collection aggregate) {
-			return (FramedVertexTraversal) super.aggregate(aggregate, new FramedTraversalFunction(graph));
+			return (FramedVertexTraversal) super.aggregate(aggregate, new FramingTraversalFunction(graph(), GenericFramedVertex.class));
 
 		}
 
 		@Override
 		public FramedVertexTraversal aggregate(Collection aggregate, TraversalFunction aggregateFunction) {
-			return (FramedVertexTraversal) super.aggregate(aggregate, new FramedTraversalFunction(aggregateFunction, graph));
+			return (FramedVertexTraversal) super.aggregate(aggregate, new FramingTraversalFunction(aggregateFunction, graph(), GenericFramedVertex.class));
 
 		}
 
 		@Override
 		public FramedVertexTraversal aggregate(TraversalFunction aggregateFunction) {
-			return (FramedVertexTraversal) super.aggregate(new FramedTraversalFunction(aggregateFunction, graph));
+			return (FramedVertexTraversal) super.aggregate(new FramingTraversalFunction(aggregateFunction, graph(), GenericFramedVertex.class));
 
 		}
 
@@ -689,7 +664,7 @@ class FramedTraversalImpl extends FramedTraversalBase implements FramedTraversal
 
 		@Override
 		public FramedVertexTraversal sideEffect(SideEffectFunction sideEffectFunction) {
-			return (FramedVertexTraversal) super.sideEffect(new FramedSideEffectFunction<>(sideEffectFunction, graph));
+			return (FramedVertexTraversal) super.sideEffect(new FramingSideEffectFunction<>(sideEffectFunction, graph(), GenericFramedVertex.class));
 		}
 
 		@Override
@@ -736,7 +711,7 @@ class FramedTraversalImpl extends FramedTraversalBase implements FramedTraversal
 
 		@Override
 		public FramedVertexTraversal order(Comparator compareFunction) {
-			return (FramedVertexTraversal) super.order(new FramedComparator(compareFunction, graph));
+			return (FramedVertexTraversal) super.order(new FramingComparator(compareFunction, graph(), GenericFramedVertex.class));
 		}
 
 		@Override
@@ -819,37 +794,37 @@ class FramedTraversalImpl extends FramedTraversalBase implements FramedTraversal
 		@Override
 		public FramedEdgeTraversal outE(int branchFactor, String... labels) {
 			pipeline().outE(branchFactor, labels);
-			return edgeTraversal;
+			return asEdges();
 		}
 
 		@Override
 		public FramedEdgeTraversal outE(String... labels) {
 			pipeline().outE(labels);
-			return edgeTraversal;
+			return asEdges();
 		}
 
 		@Override
 		public FramedEdgeTraversal inE(int branchFactor, String... labels) {
 			pipeline().inE(branchFactor, labels);
-			return edgeTraversal;
+			return asEdges();
 		}
 
 		@Override
 		public FramedEdgeTraversal inE(String... labels) {
 			pipeline().inE(labels);
-			return edgeTraversal;
+			return asEdges();
 		}
 
 		@Override
 		public FramedEdgeTraversal bothE(int branchFactor, String... labels) {
 			pipeline().bothE(branchFactor, labels);
-			return edgeTraversal;
+			return asEdges();
 		}
 
 		@Override
 		public FramedEdgeTraversal bothE(String... labels) {
 			pipeline().bothE(labels);
-			return edgeTraversal;
+			return asEdges();
 		}
 
 		@Override
@@ -859,35 +834,35 @@ class FramedTraversalImpl extends FramedTraversalBase implements FramedTraversal
 
 		@Override
 		public FramedVertex next(Class kind) {
-			return graph.frameElement((Element) pipeline.next(), kind);
+			return graph().frameElement((Element) pipeline().next(), kind);
 		}
 
 		@Override
 		public List next(int amount, final Class kind) {
-			return Lists.transform(pipeline.next(amount), new Function() {
+			return Lists.transform(pipeline().next(amount), new Function() {
 
 				public Object apply(Object e) {
-					return graph.frameElement((Element) e, kind);
+					return graph().frameElement((Element) e, kind);
 				}
 			});
 		}
 
 		@Override
 		public Iterable frame(final Class kind) {
-			return Iterables.transform(pipeline, new Function() {
+			return Iterables.transform(pipeline(), new Function() {
 
 				public Object apply(Object e) {
-					return graph.frameElement((Element) e, kind);
+					return graph().frameElement((Element) e, kind);
 				}
 			});
 		}
 
 		@Override
 		public List toList(final Class kind) {
-			return Lists.transform(pipeline.toList(), new Function() {
+			return Lists.transform(pipeline().toList(), new Function() {
 
 				public Object apply(Object e) {
-					return graph.frameElement((Element) e, kind);
+					return graph().frameElement((Element) e, kind);
 				}
 			});
 		}
@@ -1008,13 +983,13 @@ class FramedTraversalImpl extends FramedTraversalBase implements FramedTraversal
 
 		@Override
 		public Collection fill(Collection collection) {
-			return super.fill(new FramedCollection<>(collection, graph, GenericFramedVertex.class));
+			return super.fill(new FramingCollection<>(collection, graph(), GenericFramedVertex.class));
 		}
 		
 		@Override
 		public Collection fill(Collection collection, Class clazz) {
 
-			return super.fill(new FramedCollection<>(collection, graph, clazz));
+			return super.fill(new FramingCollection<>(collection, graph(), clazz));
 		}
 
 		@Override
@@ -1027,7 +1002,7 @@ class FramedTraversalImpl extends FramedTraversalBase implements FramedTraversal
 			return Iterators.transform(pipeline, new Function() {
 
 				public Object apply(Object e) {
-					return graph.frameElement((Element) e, GenericFramedVertex.class);
+					return graph().frameElement((Element) e, GenericFramedVertex.class);
 				}
 			});
 		}

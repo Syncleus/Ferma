@@ -8,6 +8,7 @@ import java.util.Map;
 
 import com.tinkerpop.blueprints.Graph;
 import com.tinkerpop.gremlin.Tokens;
+import com.tinkerpop.gremlin.java.GremlinPipeline;
 import com.tinkerpop.pipes.Pipe;
 import com.tinkerpop.pipes.branch.LoopPipe;
 import com.tinkerpop.pipes.transform.TransformPipe;
@@ -16,6 +17,13 @@ import com.tinkerpop.pipes.util.structures.Row;
 import com.tinkerpop.pipes.util.structures.Table;
 import com.tinkerpop.pipes.util.structures.Tree;
 
+/**
+ * The root traversal class. Wraps a Tinkerpop {@link GremlinPipeline}
+ * @author bryn
+ *
+ * @param <T>
+ * @param <SideEffect>
+ */
 public interface FramedTraversal<T, SideEffect> extends Iterator<T>, Iterable<T> {
 
 	/**

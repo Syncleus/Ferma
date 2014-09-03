@@ -5,6 +5,7 @@ import java.util.Set;
 import com.tinkerpop.blueprints.Element;
 
 /**
+ * The base of all framed elements.
  * @author Bryn Cooke (http://jglue.org)
  */
 

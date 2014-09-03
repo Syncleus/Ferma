@@ -2,7 +2,7 @@ package org.jglue.totorom;
 
 import java.util.Set;
 
-public class FramedVertexImpl extends FramedVertex {
+public class GenericFramedVertex extends FramedVertex {
 
 	@Override
 	public FramedVertexTraversal<?> both(int branchFactor, String... labels) {

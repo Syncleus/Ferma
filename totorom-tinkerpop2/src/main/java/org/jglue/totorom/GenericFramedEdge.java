@@ -2,7 +2,7 @@ package org.jglue.totorom;
 
 import java.util.Set;
 
-public class FramedEdgeImpl extends FramedEdge {
+public class GenericFramedEdge extends FramedEdge {
 	@Override
 	public FramedVertexTraversal<?> bothV() {
 		return super.bothV();

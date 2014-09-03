@@ -14,7 +14,7 @@ import com.tinkerpop.pipes.util.structures.Pair;
 import com.tinkerpop.pipes.util.structures.Table;
 import com.tinkerpop.pipes.util.structures.Tree;
 
-public interface FramedEdgeTraversal<SE> extends FramedTraversal<FramedEdgeImpl, SE> {
+public interface FramedEdgeTraversal<SE> extends FramedTraversal<GenericFramedEdge, SE> {
 	/**
      * Check if the element has a property with provided key.
      *
@@ -187,7 +187,7 @@ public interface FramedEdgeTraversal<SE> extends FramedTraversal<FramedEdgeImpl,
 	 * @param pipes the internal pipes of the AndFilterPipe
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedEdgeTraversal<?> and(Pipe<FramedEdgeImpl, ?>... pipes);
+	public abstract FramedEdgeTraversal<?> and(Pipe<GenericFramedEdge, ?>... pipes);
 
 
 	/**
@@ -205,7 +205,7 @@ public interface FramedEdgeTraversal<SE> extends FramedTraversal<FramedEdgeImpl,
 	 * @param dedupFunction a function to call on the object to yield the object to dedup on
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedEdgeTraversal<?> dedup(PipeFunction<FramedEdgeImpl, ?> dedupFunction);
+	public abstract FramedEdgeTraversal<?> dedup(PipeFunction<GenericFramedEdge, ?> dedupFunction);
 
 	/**
 	 * Add an ExceptFilterPipe to the end of the Pipeline.
@@ -214,7 +214,7 @@ public interface FramedEdgeTraversal<SE> extends FramedTraversal<FramedEdgeImpl,
 	 * @param collection the collection except from the stream
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedEdgeTraversal<?> except(Collection<FramedEdgeImpl> collection);
+	public abstract FramedEdgeTraversal<?> except(Collection<GenericFramedEdge> collection);
 
 	/**
 	 * Add an ExceptFilterPipe to the end of the Pipeline.
@@ -232,7 +232,7 @@ public interface FramedEdgeTraversal<SE> extends FramedTraversal<FramedEdgeImpl,
 	 * @param filterFunction the filter function of the pipe
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedEdgeTraversal<?> filter(PipeFunction<FramedEdgeImpl, Boolean> filterFunction);
+	public abstract FramedEdgeTraversal<?> filter(PipeFunction<GenericFramedEdge, Boolean> filterFunction);
 
 	/**
 	 * Add an OrFilterPipe to the end the Pipeline.
@@ -242,7 +242,7 @@ public interface FramedEdgeTraversal<SE> extends FramedTraversal<FramedEdgeImpl,
 	 * @param pipes the internal pipes of the OrFilterPipe
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedEdgeTraversal<?> or(Pipe<FramedEdgeImpl, ?>... pipes);
+	public abstract FramedEdgeTraversal<?> or(Pipe<GenericFramedEdge, ?>... pipes);
 
 	/**
 	 * Add a RandomFilterPipe to the end of the Pipeline.
@@ -290,7 +290,7 @@ public interface FramedEdgeTraversal<SE> extends FramedTraversal<FramedEdgeImpl,
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedEdgeTraversal<Collection<FramedEdgeImpl>> aggregate();
+	public abstract FramedEdgeTraversal<Collection<GenericFramedEdge>> aggregate();
 
 	/**
 	 * Add an AggregatePipe to the end of the Pipeline.
@@ -299,7 +299,7 @@ public interface FramedEdgeTraversal<SE> extends FramedTraversal<FramedEdgeImpl,
 	 * @param aggregate the collection to aggregate results into
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedEdgeTraversal<Collection<FramedEdgeImpl>> aggregate(Collection<FramedEdgeImpl> aggregate);
+	public abstract FramedEdgeTraversal<Collection<GenericFramedEdge>> aggregate(Collection<GenericFramedEdge> aggregate);
 
 	/**
 	 * Add an AggregatePipe to the end of the Pipeline.
@@ -309,7 +309,7 @@ public interface FramedEdgeTraversal<SE> extends FramedTraversal<FramedEdgeImpl,
 	 * @param aggregateFunction the function to run over each object prior to insertion into the aggregate
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> FramedEdgeTraversal<Collection<N>> aggregate(Collection<FramedEdgeImpl> aggregate, PipeFunction<FramedEdgeImpl, N> aggregateFunction);
+	public abstract <N> FramedEdgeTraversal<Collection<N>> aggregate(Collection<GenericFramedEdge> aggregate, PipeFunction<GenericFramedEdge, N> aggregateFunction);
 
 	/**
 	 * Add an AggregatePipe to the end of the Pipeline.
@@ -318,7 +318,7 @@ public interface FramedEdgeTraversal<SE> extends FramedTraversal<FramedEdgeImpl,
 	 * @param aggregateFunction the function to run over each object prior to insertion into the aggregate
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> FramedEdgeTraversal<Collection<N>> aggregate(PipeFunction<FramedEdgeImpl, N> aggregateFunction);
+	public abstract <N> FramedEdgeTraversal<Collection<N>> aggregate(PipeFunction<GenericFramedEdge, N> aggregateFunction);
 
 
 
@@ -333,7 +333,7 @@ public interface FramedEdgeTraversal<SE> extends FramedTraversal<FramedEdgeImpl,
 	 * @param valueFunction the function that generates the value from the function
 	 * @return the extended Pipeline
 	 */
-	public abstract <K, V> FramedEdgeTraversal<Map<K, List<V>>> groupBy(Map<K, List<V>> map, PipeFunction<FramedEdgeImpl, K> keyFunction, PipeFunction<FramedEdgeImpl, V> valueFunction);
+	public abstract <K, V> FramedEdgeTraversal<Map<K, List<V>>> groupBy(Map<K, List<V>> map, PipeFunction<GenericFramedEdge, K> keyFunction, PipeFunction<GenericFramedEdge, V> valueFunction);
 
 	/**
 	 * Add a GroupByPipe to the end of the Pipeline.
@@ -344,7 +344,7 @@ public interface FramedEdgeTraversal<SE> extends FramedTraversal<FramedEdgeImpl,
 	 * @param valueFunction the function that generates the value from the function
 	 * @return the extended Pipeline
 	 */
-	public abstract <K, V> FramedEdgeTraversal<Map<K, List<V>>> groupBy(PipeFunction<FramedEdgeImpl, K> keyFunction, PipeFunction<FramedEdgeImpl, V> valueFunction);
+	public abstract <K, V> FramedEdgeTraversal<Map<K, List<V>>> groupBy(PipeFunction<GenericFramedEdge, K> keyFunction, PipeFunction<GenericFramedEdge, V> valueFunction);
 
 	/**
 	 * Add a GroupByReducePipe to the end of the Pipeline.
@@ -359,7 +359,7 @@ public interface FramedEdgeTraversal<SE> extends FramedTraversal<FramedEdgeImpl,
 	 * @param reduceFunction the function that reduces the value lists
 	 * @return the extended Pipeline
 	 */
-	public abstract <K, V, V2> FramedEdgeTraversal<Map<K, V2>> groupBy(Map<K, V2> reduceMap, PipeFunction<FramedEdgeImpl, K> keyFunction, PipeFunction<FramedEdgeImpl, V> valueFunction,
+	public abstract <K, V, V2> FramedEdgeTraversal<Map<K, V2>> groupBy(Map<K, V2> reduceMap, PipeFunction<GenericFramedEdge, K> keyFunction, PipeFunction<GenericFramedEdge, V> valueFunction,
 			PipeFunction<List<V>, V2> reduceFunction);
 
 	/**
@@ -374,7 +374,7 @@ public interface FramedEdgeTraversal<SE> extends FramedTraversal<FramedEdgeImpl,
 	 * @param reduceFunction the function that reduces the value lists
 	 * @return the extended Pipeline
 	 */
-	public abstract <K, V, V2> FramedEdgeTraversal<Map<K, V2>> groupBy(PipeFunction<FramedEdgeImpl, K> keyFunction, PipeFunction<FramedEdgeImpl, V> valueFunction,
+	public abstract <K, V, V2> FramedEdgeTraversal<Map<K, V2>> groupBy(PipeFunction<GenericFramedEdge, K> keyFunction, PipeFunction<GenericFramedEdge, V> valueFunction,
 			PipeFunction<List<V>, V2> reduceFunction);
 
 	/**
@@ -388,8 +388,8 @@ public interface FramedEdgeTraversal<SE> extends FramedTraversal<FramedEdgeImpl,
 	 * @param valueFunction the value function to determine map value
 	 * @return the extended Pipeline
 	 */
-	public abstract <K> FramedEdgeTraversal<Map<K, Number>> groupCount(Map<K, Number> map, PipeFunction<FramedEdgeImpl, K> keyFunction,
-			PipeFunction<Pair<FramedEdgeImpl, Number>, Number> valueFunction);
+	public abstract <K> FramedEdgeTraversal<Map<K, Number>> groupCount(Map<K, Number> map, PipeFunction<GenericFramedEdge, K> keyFunction,
+			PipeFunction<Pair<GenericFramedEdge, Number>, Number> valueFunction);
 
 	/**
 	 * Add a GroupCountPipe or GroupCountFunctionPipe to the end of the Pipeline.
@@ -401,7 +401,7 @@ public interface FramedEdgeTraversal<SE> extends FramedTraversal<FramedEdgeImpl,
 	 * @param valueFunction the value function to determine map value
 	 * @return the extended Pipeline
 	 */
-	public abstract <K> FramedEdgeTraversal<Map<K, Number>> groupCount(PipeFunction<FramedEdgeImpl, K> keyFunction, PipeFunction<Pair<FramedEdgeImpl, Number>, Number> valueFunction);
+	public abstract <K> FramedEdgeTraversal<Map<K, Number>> groupCount(PipeFunction<GenericFramedEdge, K> keyFunction, PipeFunction<Pair<GenericFramedEdge, Number>, Number> valueFunction);
 
 	/**
 	 * Add a GroupCountPipe or GroupCountFunctionPipe to the end of the Pipeline.
@@ -413,7 +413,7 @@ public interface FramedEdgeTraversal<SE> extends FramedTraversal<FramedEdgeImpl,
 	 * @param keyFunction the key function to determine map key
 	 * @return the extended Pipeline
 	 */
-	public abstract <K> FramedEdgeTraversal<Map<K, Number>> groupCount(Map<K, Number> map, PipeFunction<FramedEdgeImpl, K> keyFunction);
+	public abstract <K> FramedEdgeTraversal<Map<K, Number>> groupCount(Map<K, Number> map, PipeFunction<GenericFramedEdge, K> keyFunction);
 
 	/**
 	 * Add a GroupCountPipe or GroupCountFunctionPipe to the end of the Pipeline.
@@ -424,7 +424,7 @@ public interface FramedEdgeTraversal<SE> extends FramedTraversal<FramedEdgeImpl,
 	 * @param keyFunction the key function to determine map key
 	 * @return the extended Pipeline
 	 */
-	public abstract <K> FramedEdgeTraversal<Map<K, Number>> groupCount(PipeFunction<FramedEdgeImpl, K> keyFunction);
+	public abstract <K> FramedEdgeTraversal<Map<K, Number>> groupCount(PipeFunction<GenericFramedEdge, K> keyFunction);
 
 	/**
 	 * Add a GroupCountPipe to the end of the Pipeline.
@@ -435,7 +435,7 @@ public interface FramedEdgeTraversal<SE> extends FramedTraversal<FramedEdgeImpl,
 	 * @param map a provided count map
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedEdgeTraversal<Map<FramedEdgeImpl, Number>> groupCount(Map<FramedEdgeImpl, Number> map);
+	public abstract FramedEdgeTraversal<Map<GenericFramedEdge, Number>> groupCount(Map<GenericFramedEdge, Number> map);
 
 	/**
 	 * Add a GroupCountPipe to the end of the Pipeline.
@@ -445,7 +445,7 @@ public interface FramedEdgeTraversal<SE> extends FramedTraversal<FramedEdgeImpl,
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedEdgeTraversal<Map<FramedEdgeImpl, Number>> groupCount();
+	public abstract FramedEdgeTraversal<Map<GenericFramedEdge, Number>> groupCount();
 	
 	
 
@@ -456,7 +456,7 @@ public interface FramedEdgeTraversal<SE> extends FramedTraversal<FramedEdgeImpl,
 	 * @param sideEffectFunction the function of the pipe
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedEdgeTraversal<?> sideEffect(PipeFunction<FramedEdgeImpl, ?> sideEffectFunction);
+	public abstract FramedEdgeTraversal<?> sideEffect(PipeFunction<GenericFramedEdge, ?> sideEffectFunction);
 
 	/**
 	 * Add a StorePipe to the end of the Pipeline.
@@ -465,7 +465,7 @@ public interface FramedEdgeTraversal<SE> extends FramedTraversal<FramedEdgeImpl,
 	 * @param storage the collection to store results into
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedEdgeTraversal<Collection<FramedEdgeImpl>> store(Collection<FramedEdgeImpl> storage);
+	public abstract FramedEdgeTraversal<Collection<GenericFramedEdge>> store(Collection<GenericFramedEdge> storage);
 
 	/**
 	 * Add a StorePipe to the end of the Pipeline.
@@ -475,7 +475,7 @@ public interface FramedEdgeTraversal<SE> extends FramedTraversal<FramedEdgeImpl,
 	 * @param storageFunction the function to run over each object prior to insertion into the storage collection
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> FramedEdgeTraversal<Collection<N>> store(Collection<N> storage, PipeFunction<FramedEdgeImpl, N> storageFunction);
+	public abstract <N> FramedEdgeTraversal<Collection<N>> store(Collection<N> storage, PipeFunction<GenericFramedEdge, N> storageFunction);
 
 	/**
 	 * Add an StorePipe to the end of the Pipeline.
@@ -492,7 +492,7 @@ public interface FramedEdgeTraversal<SE> extends FramedTraversal<FramedEdgeImpl,
 	 * @param storageFunction the function to run over each object prior to insertion into the storage collection
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> FramedEdgeTraversal<Collection<N>> store(PipeFunction<FramedEdgeImpl, N> storageFunction);
+	public abstract <N> FramedEdgeTraversal<Collection<N>> store(PipeFunction<GenericFramedEdge, N> storageFunction);
 
 	/**
 	 * Add a TablePipe to the end of the Pipeline.
@@ -566,7 +566,7 @@ public interface FramedEdgeTraversal<SE> extends FramedTraversal<FramedEdgeImpl,
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<List<FramedEdgeImpl>, ?> gather();
+	public abstract FramedTraversal<List<GenericFramedEdge>, ?> gather();
 
 	
 	/**
@@ -634,7 +634,7 @@ public interface FramedEdgeTraversal<SE> extends FramedTraversal<FramedEdgeImpl,
 	 * @param compareFunction a comparator function of two objects of type E
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedEdgeTraversal<?> order(PipeFunction<Pair<FramedEdgeImpl, FramedEdgeImpl>, Integer> compareFunction);
+	public abstract FramedEdgeTraversal<?> order(PipeFunction<Pair<GenericFramedEdge, GenericFramedEdge>, Integer> compareFunction);
 
 	
 	/**

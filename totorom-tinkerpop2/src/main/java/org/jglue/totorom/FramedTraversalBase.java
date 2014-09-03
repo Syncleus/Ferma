@@ -17,12 +17,14 @@ import com.tinkerpop.pipes.transform.TransformPipe.Order;
 import com.tinkerpop.pipes.util.structures.Table;
 import com.tinkerpop.pipes.util.structures.Tree;
 
-public abstract class FramedTraversalBase<T, SE> implements FramedTraversal<T, SE> {
+@SuppressWarnings("rawtypes")
+abstract class FramedTraversalBase<T, SE> implements FramedTraversal<T, SE> {
 
 	
 
 	protected abstract FramedGraph graph();
 
+	
 	protected abstract GremlinPipeline pipeline();
 
 	@Override
@@ -76,17 +78,17 @@ public abstract class FramedTraversalBase<T, SE> implements FramedTraversal<T, S
 		return this;
 	}
 
-	FramedTraversal has(String key, Predicate predicate, Object value) {
+	public FramedTraversal has(String key, Predicate predicate, Object value) {
 		pipeline().has(key, predicate, value);
 		return this;
 	}
 
-	FramedTraversal hasNot(String key) {
+	public FramedTraversal hasNot(String key) {
 		pipeline().hasNot(key);
 		return this;
 	}
 
-	FramedTraversal hasNot(String key, Object value) {
+	public FramedTraversal hasNot(String key, Object value) {
 		pipeline().hasNot(key, value);
 		return this;
 	}
@@ -377,7 +379,7 @@ public abstract class FramedTraversalBase<T, SE> implements FramedTraversal<T, S
 
 	@Override
 	public FramedTraversal sideEffect(PipeFunction sideEffectFunction) {
-		pipeline().sideEffect(sideEffectFunction);
+		pipeline().sideEffect(new FramedPipeFunction(sideEffectFunction, graph()));
 		return this;
 	}
 

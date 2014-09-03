@@ -15,7 +15,7 @@ import com.tinkerpop.pipes.util.structures.Pair;
 import com.tinkerpop.pipes.util.structures.Table;
 import com.tinkerpop.pipes.util.structures.Tree;
 
-public interface FramedVertexTraversal<SE> extends FramedTraversal<FramedVertexImpl, SE> {
+public interface FramedVertexTraversal<SE> extends FramedTraversal<GenericFramedVertex, SE> {
 
 	/**
 	 * Check if the element has a property with provided key.
@@ -402,7 +402,7 @@ public interface FramedVertexTraversal<SE> extends FramedTraversal<FramedVertexI
 	 *            the internal pipes of the AndFilterPipe
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedVertexTraversal<?> and(Pipe<FramedVertexImpl, ?>... pipes);
+	public abstract FramedVertexTraversal<?> and(Pipe<GenericFramedVertex, ?>... pipes);
 
 	/**
 	 * Add a DuplicateFilterPipe to the end of the Pipeline. Will only emit the
@@ -421,7 +421,7 @@ public interface FramedVertexTraversal<SE> extends FramedTraversal<FramedVertexI
 	 *            on
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedVertexTraversal<?> dedup(PipeFunction<FramedVertexImpl, ?> dedupFunction);
+	public abstract FramedVertexTraversal<?> dedup(PipeFunction<GenericFramedVertex, ?> dedupFunction);
 
 	/**
 	 * Add an ExceptFilterPipe to the end of the Pipeline. Will only emit the
@@ -431,7 +431,7 @@ public interface FramedVertexTraversal<SE> extends FramedTraversal<FramedVertexI
 	 *            the collection except from the stream
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedVertexTraversal<?> except(Collection<FramedVertexImpl> collection);
+	public abstract FramedVertexTraversal<?> except(Collection<GenericFramedVertex> collection);
 
 	/**
 	 * Add an ExceptFilterPipe to the end of the Pipeline. Will only emit the
@@ -453,7 +453,7 @@ public interface FramedVertexTraversal<SE> extends FramedTraversal<FramedVertexI
 	 *            the filter function of the pipe
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedVertexTraversal<?> filter(PipeFunction<FramedVertexImpl, Boolean> filterFunction);
+	public abstract FramedVertexTraversal<?> filter(PipeFunction<GenericFramedVertex, Boolean> filterFunction);
 
 	/**
 	 * Add an OrFilterPipe to the end the Pipeline. Will only emit the object if
@@ -464,7 +464,7 @@ public interface FramedVertexTraversal<SE> extends FramedTraversal<FramedVertexI
 	 *            the internal pipes of the OrFilterPipe
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedVertexTraversal<?> or(Pipe<FramedVertexImpl, ?>... pipes);
+	public abstract FramedVertexTraversal<?> or(Pipe<GenericFramedVertex, ?>... pipes);
 
 	/**
 	 * Add a RandomFilterPipe to the end of the Pipeline. A biased coin toss
@@ -514,7 +514,7 @@ public interface FramedVertexTraversal<SE> extends FramedTraversal<FramedVertexI
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedVertexTraversal<Collection<FramedVertexImpl>> aggregate();
+	public abstract FramedVertexTraversal<Collection<GenericFramedVertex>> aggregate();
 
 	/**
 	 * Add an AggregatePipe to the end of the Pipeline. The objects prior to
@@ -524,7 +524,7 @@ public interface FramedVertexTraversal<SE> extends FramedTraversal<FramedVertexI
 	 *            the collection to aggregate results into
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedVertexTraversal<Collection<FramedVertexImpl>> aggregate(Collection<FramedVertexImpl> aggregate);
+	public abstract FramedVertexTraversal<Collection<GenericFramedVertex>> aggregate(Collection<GenericFramedVertex> aggregate);
 
 	/**
 	 * Add an AggregatePipe to the end of the Pipeline. The results of the
@@ -538,8 +538,8 @@ public interface FramedVertexTraversal<SE> extends FramedTraversal<FramedVertexI
 	 *            the aggregate
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> FramedVertexTraversal<Collection<N>> aggregate(Collection<FramedVertexImpl> aggregate,
-			PipeFunction<FramedVertexImpl, N> aggregateFunction);
+	public abstract <N> FramedVertexTraversal<Collection<N>> aggregate(Collection<GenericFramedVertex> aggregate,
+			PipeFunction<GenericFramedVertex, N> aggregateFunction);
 
 	/**
 	 * Add an AggregatePipe to the end of the Pipeline. The results of the
@@ -551,7 +551,7 @@ public interface FramedVertexTraversal<SE> extends FramedTraversal<FramedVertexI
 	 *            the aggregate
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> FramedVertexTraversal<Collection<N>> aggregate(PipeFunction<FramedVertexImpl, N> aggregateFunction);
+	public abstract <N> FramedVertexTraversal<Collection<N>> aggregate(PipeFunction<GenericFramedVertex, N> aggregateFunction);
 
 	/**
 	 * Add a GroupByPipe to the end of the Pipeline. Group the objects inputted
@@ -567,7 +567,7 @@ public interface FramedVertexTraversal<SE> extends FramedTraversal<FramedVertexI
 	 * @return the extended Pipeline
 	 */
 	public abstract <K, V> FramedVertexTraversal<Map<K, List<V>>> groupBy(Map<K, List<V>> map,
-			PipeFunction<FramedVertexImpl, K> keyFunction, PipeFunction<FramedVertexImpl, V> valueFunction);
+			PipeFunction<GenericFramedVertex, K> keyFunction, PipeFunction<GenericFramedVertex, V> valueFunction);
 
 	/**
 	 * Add a GroupByPipe to the end of the Pipeline. Group the objects inputted
@@ -580,8 +580,8 @@ public interface FramedVertexTraversal<SE> extends FramedTraversal<FramedVertexI
 	 *            the function that generates the value from the function
 	 * @return the extended Pipeline
 	 */
-	public abstract <K, V> FramedVertexTraversal<Map<K, List<V>>> groupBy(PipeFunction<FramedVertexImpl, K> keyFunction,
-			PipeFunction<FramedVertexImpl, V> valueFunction);
+	public abstract <K, V> FramedVertexTraversal<Map<K, List<V>>> groupBy(PipeFunction<GenericFramedVertex, K> keyFunction,
+			PipeFunction<GenericFramedVertex, V> valueFunction);
 
 	/**
 	 * Add a GroupByReducePipe to the end of the Pipeline. Group the objects
@@ -603,7 +603,7 @@ public interface FramedVertexTraversal<SE> extends FramedTraversal<FramedVertexI
 	 * @return the extended Pipeline
 	 */
 	public abstract <K, V, V2> FramedVertexTraversal<Map<K, V2>> groupBy(Map<K, V2> reduceMap,
-			PipeFunction<FramedVertexImpl, K> keyFunction, PipeFunction<FramedVertexImpl, V> valueFunction, PipeFunction<List<V>, V2> reduceFunction);
+			PipeFunction<GenericFramedVertex, K> keyFunction, PipeFunction<GenericFramedVertex, V> valueFunction, PipeFunction<List<V>, V2> reduceFunction);
 
 	/**
 	 * Add a GroupByReducePipe to the end of the Pipeline. Group the objects
@@ -621,8 +621,8 @@ public interface FramedVertexTraversal<SE> extends FramedTraversal<FramedVertexI
 	 *            the function that reduces the value lists
 	 * @return the extended Pipeline
 	 */
-	public abstract <K, V, V2> FramedVertexTraversal<Map<K, V2>> groupBy(PipeFunction<FramedVertexImpl, K> keyFunction,
-			PipeFunction<FramedVertexImpl, V> valueFunction, PipeFunction<List<V>, V2> reduceFunction);
+	public abstract <K, V, V2> FramedVertexTraversal<Map<K, V2>> groupBy(PipeFunction<GenericFramedVertex, K> keyFunction,
+			PipeFunction<GenericFramedVertex, V> valueFunction, PipeFunction<List<V>, V2> reduceFunction);
 
 	/**
 	 * Add a GroupCountPipe or GroupCountFunctionPipe to the end of the
@@ -639,7 +639,7 @@ public interface FramedVertexTraversal<SE> extends FramedTraversal<FramedVertexI
 	 * @return the extended Pipeline
 	 */
 	public abstract <K> FramedVertexTraversal<Map<K, Number>> groupCount(Map<K, Number> map,
-			PipeFunction<FramedVertexImpl, K> keyFunction, PipeFunction<Pair<FramedVertexImpl, Number>, Number> valueFunction);
+			PipeFunction<GenericFramedVertex, K> keyFunction, PipeFunction<Pair<GenericFramedVertex, Number>, Number> valueFunction);
 
 	/**
 	 * Add a GroupCountPipe or GroupCountFunctionPipe to the end of the
@@ -653,8 +653,8 @@ public interface FramedVertexTraversal<SE> extends FramedTraversal<FramedVertexI
 	 *            the value function to determine map value
 	 * @return the extended Pipeline
 	 */
-	public abstract <K> FramedVertexTraversal<Map<K, Number>> groupCount(PipeFunction<FramedVertexImpl, K> keyFunction,
-			PipeFunction<Pair<FramedVertexImpl, Number>, Number> valueFunction);
+	public abstract <K> FramedVertexTraversal<Map<K, Number>> groupCount(PipeFunction<GenericFramedVertex, K> keyFunction,
+			PipeFunction<Pair<GenericFramedVertex, Number>, Number> valueFunction);
 
 	/**
 	 * Add a GroupCountPipe or GroupCountFunctionPipe to the end of the
@@ -668,7 +668,7 @@ public interface FramedVertexTraversal<SE> extends FramedTraversal<FramedVertexI
 	 *            the key function to determine map key
 	 * @return the extended Pipeline
 	 */
-	public abstract <K> FramedVertexTraversal<Map<K, Number>> groupCount(Map<K, Number> map, PipeFunction<FramedVertexImpl, K> keyFunction);
+	public abstract <K> FramedVertexTraversal<Map<K, Number>> groupCount(Map<K, Number> map, PipeFunction<GenericFramedVertex, K> keyFunction);
 
 	/**
 	 * Add a GroupCountPipe or GroupCountFunctionPipe to the end of the
@@ -680,7 +680,7 @@ public interface FramedVertexTraversal<SE> extends FramedTraversal<FramedVertexI
 	 *            the key function to determine map key
 	 * @return the extended Pipeline
 	 */
-	public abstract <K> FramedVertexTraversal<Map<K, Number>> groupCount(PipeFunction<FramedVertexImpl, K> keyFunction);
+	public abstract <K> FramedVertexTraversal<Map<K, Number>> groupCount(PipeFunction<GenericFramedVertex, K> keyFunction);
 
 	/**
 	 * Add a GroupCountPipe to the end of the Pipeline. A map is maintained of
@@ -691,7 +691,7 @@ public interface FramedVertexTraversal<SE> extends FramedTraversal<FramedVertexI
 	 *            a provided count map
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedVertexTraversal<Map<FramedVertexImpl, Number>> groupCount(Map<FramedVertexImpl, Number> map);
+	public abstract FramedVertexTraversal<Map<GenericFramedVertex, Number>> groupCount(Map<GenericFramedVertex, Number> map);
 
 	/**
 	 * Add a GroupCountPipe to the end of the Pipeline. A map is maintained of
@@ -700,7 +700,7 @@ public interface FramedVertexTraversal<SE> extends FramedTraversal<FramedVertexI
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedVertexTraversal<Map<FramedVertexImpl, Number>> groupCount();
+	public abstract FramedVertexTraversal<Map<GenericFramedVertex, Number>> groupCount();
 
 	/**
 	 * Add a SideEffectFunctionPipe to the end of the Pipeline. The provided
@@ -710,7 +710,7 @@ public interface FramedVertexTraversal<SE> extends FramedTraversal<FramedVertexI
 	 *            the function of the pipe
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedVertexTraversal<?> sideEffect(PipeFunction<FramedVertexImpl, ?> sideEffectFunction);
+	public abstract FramedVertexTraversal<?> sideEffect(PipeFunction<GenericFramedVertex, ?> sideEffectFunction);
 
 	/**
 	 * Add a StorePipe to the end of the Pipeline. Lazily store the incoming
@@ -720,7 +720,7 @@ public interface FramedVertexTraversal<SE> extends FramedTraversal<FramedVertexI
 	 *            the collection to store results into
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedVertexTraversal<Collection<FramedVertexImpl>> store(Collection<FramedVertexImpl> storage);
+	public abstract FramedVertexTraversal<Collection<GenericFramedVertex>> store(Collection<GenericFramedVertex> storage);
 
 	/**
 	 * Add a StorePipe to the end of the Pipeline. Lazily store the object
@@ -735,7 +735,7 @@ public interface FramedVertexTraversal<SE> extends FramedTraversal<FramedVertexI
 	 * @return the extended Pipeline
 	 */
 	public abstract <N> FramedVertexTraversal<Collection<N>> store(Collection<N> storage,
-			PipeFunction<FramedVertexImpl, N> storageFunction);
+			PipeFunction<GenericFramedVertex, N> storageFunction);
 
 	/**
 	 * Add an StorePipe to the end of the Pipeline. An ArrayList storage
@@ -755,7 +755,7 @@ public interface FramedVertexTraversal<SE> extends FramedTraversal<FramedVertexI
 	 *            the storage collection
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> FramedVertexTraversal<Collection<N>> store(PipeFunction<FramedVertexImpl, N> storageFunction);
+	public abstract <N> FramedVertexTraversal<Collection<N>> store(PipeFunction<GenericFramedVertex, N> storageFunction);
 
 	/**
 	 * Add a TablePipe to the end of the Pipeline. This step is used for
@@ -843,7 +843,7 @@ public interface FramedVertexTraversal<SE> extends FramedTraversal<FramedVertexI
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<List<FramedVertexImpl>, ?> gather();
+	public abstract FramedTraversal<List<GenericFramedVertex>, ?> gather();
 
 	/**
 	 * Add an IdentityPipe to the end of the Pipeline. Useful in various
@@ -919,7 +919,7 @@ public interface FramedVertexTraversal<SE> extends FramedTraversal<FramedVertexI
 	 *            a comparator function of two objects of type E
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedVertexTraversal<?> order(PipeFunction<Pair<FramedVertexImpl, FramedVertexImpl>, Integer> compareFunction);
+	public abstract FramedVertexTraversal<?> order(PipeFunction<Pair<GenericFramedVertex, GenericFramedVertex>, Integer> compareFunction);
 
 	/**
 	 * Wrap the previous step in an AsPipe. Useful for naming steps and is used

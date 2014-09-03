@@ -22,7 +22,7 @@ import com.tinkerpop.pipes.util.structures.Table;
 import com.tinkerpop.pipes.util.structures.Tree;
 
 @SuppressWarnings("rawtypes")
-public class FramedTraversalImpl extends FramedTraversalBase implements FramedTraversal {
+class FramedTraversalImpl extends FramedTraversalBase implements FramedTraversal {
 
 	private FramedGraph graph;
 	private GremlinPipeline pipeline;
@@ -108,7 +108,12 @@ public class FramedTraversalImpl extends FramedTraversalBase implements FramedTr
 	}
 
 	@SuppressWarnings("unchecked")
-	protected class FramedEdgeTraversalImpl<SE> extends FramedTraversalBase<FramedEdgeImpl, SE> implements FramedEdgeTraversal<SE> {
+	protected class FramedEdgeTraversalImpl<SE> extends FramedTraversalBase<GenericFramedEdge, SE> implements FramedEdgeTraversal<SE> {
+		@Override
+		public GenericFramedEdge next() {
+		
+			return graph().frameElement((Edge)pipeline().next(), GenericFramedEdge.class);
+		}
 		
 		@Override
 		public FramedEdgeTraversal table() {
@@ -483,6 +488,12 @@ public class FramedTraversalImpl extends FramedTraversalBase implements FramedTr
 
 	@SuppressWarnings("unchecked")
 	protected class FramedVertexTraversalImpl extends FramedTraversalBase implements FramedVertexTraversal {
+		@Override
+		public GenericFramedVertex next() {
+			return graph().frameElement((Vertex)pipeline().next(), GenericFramedVertex.class);
+		}
+		
+		
 		@Override
 		public FramedVertexTraversal table() {
 			return (FramedVertexTraversal)super.table();

@@ -6,7 +6,7 @@ import com.tinkerpop.blueprints.Edge;
 import com.tinkerpop.blueprints.Element;
 import com.tinkerpop.blueprints.Vertex;
 
-public class FrameMaker<T extends FramedElement> {
+class FrameMaker<T extends FramedElement> {
 	private FramedGraph graph;
 	private Class<T> kind;
 

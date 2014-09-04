@@ -228,7 +228,7 @@ public abstract class FramedVertexTraversalImpl extends FramedTraversalBase impl
 
 			@Override
 			public Pipe apply(TraversalFunction input) {
-				return ((FramedTraversalImpl) input.compute(new GenericFramedVertex())).pipeline().get(0);
+				return ((FramedTraversalBase) input.compute(new GenericFramedVertex())).pipeline();
 			}
 		});
 		pipeline().and(extractedPipes.toArray(new Pipe[extractedPipes.size()]));
@@ -241,7 +241,7 @@ public abstract class FramedVertexTraversalImpl extends FramedTraversalBase impl
 
 			@Override
 			public Pipe apply(TraversalFunction input) {
-				return ((FramedTraversalImpl) input.compute(new GenericFramedVertex())).pipeline().get(0);
+				return ((FramedTraversalBase) input.compute(new GenericFramedVertex())).pipeline();
 			}
 		});
 		pipeline().or(extractedPipes.toArray(new Pipe[extractedPipes.size()]));

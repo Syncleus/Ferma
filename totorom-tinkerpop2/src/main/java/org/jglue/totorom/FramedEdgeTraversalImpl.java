@@ -297,7 +297,7 @@ public abstract class FramedEdgeTraversalImpl extends FramedTraversalBase implem
 
 			@Override
 			public Pipe apply(TraversalFunction input) {
-				return ((FramedTraversalImpl) input.compute(new GenericFramedEdge())).pipeline().get(0);
+				return ((FramedTraversalBase) input.compute(new GenericFramedEdge())).pipeline();
 			}
 		});
 		pipeline().and(extractedPipes.toArray(new Pipe[extractedPipes.size()]));
@@ -310,7 +310,7 @@ public abstract class FramedEdgeTraversalImpl extends FramedTraversalBase implem
 
 			@Override
 			public Pipe apply(TraversalFunction input) {
-				return ((FramedTraversalImpl) input.compute(new GenericFramedEdge())).pipeline().get(0);
+				return ((FramedTraversalBase) input.compute(new GenericFramedEdge())).pipeline();
 			}
 		});
 		pipeline().or(extractedPipes.toArray(new Pipe[extractedPipes.size()]));

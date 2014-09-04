@@ -711,6 +711,8 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	/**
 	 * Add a BackFilterPipe to the end of the Pipeline. The object that was seen
 	 * namedSteps ago is emitted.
+	 * 
+	 * Note: Using back is discouraged. Instead use 'and'.
 	 *
 	 * @param namedStep
 	 *            the name of the step previous to back up to
@@ -721,6 +723,8 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	/**
 	 * Add a BackFilterPipe to the end of the Pipeline. The object that was seen
 	 * namedSteps ago is emitted.
+	 *
+	 * Note: Using back is discouraged. Instead use 'and'.
 	 *
 	 * @param namedStep
 	 *            the name of the step previous to back up to

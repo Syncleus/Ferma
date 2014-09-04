@@ -947,7 +947,7 @@ public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2>
 	 *            the internal pipes of the AndFilterPipe
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedVertexTraversal<?, ?, ?> and(TraversalFunction<GenericFramedVertex, FramedTraversal>... pipes); 
+	public abstract FramedVertexTraversal<?, ?, ?> and(TraversalFunction<GenericFramedVertex, FramedTraversal<?,?,?,?>>... pipes); 
 
 	/**
 	 * Add an OrFilterPipe to the end the Pipeline. Will only emit the object if
@@ -958,5 +958,5 @@ public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2>
 	 *            the internal pipes of the OrFilterPipe
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedVertexTraversal<?, ?, ?> or(TraversalFunction<GenericFramedVertex, FramedTraversal>... pipes);
+	public abstract FramedVertexTraversal<?, ?, ?> or(TraversalFunction<GenericFramedVertex, FramedTraversal<?,?,?,?>>... pipes);
 }

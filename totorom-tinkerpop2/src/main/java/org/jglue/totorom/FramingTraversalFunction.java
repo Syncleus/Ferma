@@ -13,7 +13,7 @@ import com.tinkerpop.pipes.PipeFunction;
  * @param <A>
  * @param <B>
  */
-class FramingTraversalFunction<A extends FramedElement, B> extends FrameMaker<A> implements TraversalFunction<A, B> {
+class FramingTraversalFunction<A extends FramedElement, B, C> extends FrameMaker<A> implements TraversalFunction<C, B> {
 	private PipeFunction<A, B> delegate;
 
 	public FramingTraversalFunction(PipeFunction<A, B> delegate, FramedGraph graph, Class<A> kind) {
@@ -31,7 +31,7 @@ class FramingTraversalFunction<A extends FramedElement, B> extends FrameMaker<A>
 	}
 
 	@Override
-	public B compute(A argument) {
+	public B compute(C argument) {
 
 		argument = makeFrame(argument);
 
@@ -39,7 +39,7 @@ class FramingTraversalFunction<A extends FramedElement, B> extends FrameMaker<A>
 			return (B) argument;
 		}
 
-		return delegate.compute(argument);
+		return delegate.compute((A)argument);
 
 	}
 

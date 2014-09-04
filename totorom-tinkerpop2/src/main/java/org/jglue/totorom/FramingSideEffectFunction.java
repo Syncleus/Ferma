@@ -17,6 +17,12 @@ class FramingSideEffectFunction<T, K extends FramedElement> extends FrameMaker<K
 		this.delegate = delegate;
 		
 	}
+	
+	public FramingSideEffectFunction(SideEffectFunction<T> delegate, FramedGraph graph) {
+		super(graph);
+		this.delegate = delegate;
+		
+	}
 
 
 

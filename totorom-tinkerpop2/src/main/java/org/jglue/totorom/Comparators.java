@@ -1,6 +1,7 @@
 package org.jglue.totorom;
 
 import java.util.Comparator;
+import java.util.Map.Entry;
 
 /**
  * Usefule comparators when dealiong with framed elements
@@ -57,4 +58,6 @@ public class Comparators {
 			}
 		};
 	}
+	
+	
 }

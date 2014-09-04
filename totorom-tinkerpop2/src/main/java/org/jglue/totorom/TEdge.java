@@ -11,37 +11,37 @@ import java.util.Set;
  */
 public final class TEdge extends FramedEdge {
 	@Override
-	public VertexTraversal<?, ?, ?> bothV() {
+	public VertexTraversal<?> bothV() {
 		return super.bothV();
 	}
 
 	@Override
-	public VertexTraversal<?, ?, ?> inV() {
+	public VertexTraversal<?> inV() {
 		return super.inV();
 	}
 
 	@Override
-	public VertexTraversal<?, ?, ?> outV() {
+	public VertexTraversal<?> outV() {
 		return super.outV();
 	}
 
 	@Override
-	public EdgeTraversal<?, ?, ?> traversal() {
+	public EdgeTraversal<?> traversal() {
 		return super.traversal();
 	}
 
 	@Override
-	public VertexTraversal<?, ?, ?> v(Object... ids) {
+	public VertexTraversal<?> v(Object... ids) {
 		return super.v(ids);
 	}
 
 	@Override
-	public EdgeTraversal<?, ?, ?> E() {
+	public EdgeTraversal<?> E() {
 		return super.E();
 	}
 
 	@Override
-	public VertexTraversal<?, ?, ?> V() {
+	public VertexTraversal<?> V() {
 		return super.V();
 	}
 
@@ -90,5 +90,6 @@ public final class TEdge extends FramedEdge {
 
 		return (N) super.getId(clazz);
 	}
+
 
 }

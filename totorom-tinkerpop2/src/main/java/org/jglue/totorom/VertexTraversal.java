@@ -14,7 +14,7 @@ import com.tinkerpop.pipes.util.structures.Pair;
 import com.tinkerpop.pipes.util.structures.Table;
 import com.tinkerpop.pipes.util.structures.Tree;
 
-public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> extends Traversal<TVertex, SideEffect, GenericParam1, GenericParam2> {
+public interface VertexTraversal<SideEffect> extends Traversal<TVertex, SideEffect> {
 
 	/**
 	 * Check if the element has a property with provided key.
@@ -23,7 +23,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            the property key to check
 	 * @return the extended Pipeline
 	 */
-	public VertexTraversal<?, ?, ?> has(String key);
+	public VertexTraversal<?> has(String key);
 
 	/**
 	 * Add an IdFilterPipe, LabelFilterPipe, or PropertyFilterPipe to the end of
@@ -37,7 +37,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            the object to filter on (in an OR manner)
 	 * @return the extended Pipeline
 	 */
-	public VertexTraversal<?, ?, ?> has(String key, Object value);
+	public VertexTraversal<?> has(String key, Object value);
 
 	/**
 	 * Add an IdFilterPipe, LabelFilterPipe, or PropertyFilterPipe to the end of
@@ -53,7 +53,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            the object to filter on
 	 * @return the extended Pipeline
 	 */
-	public VertexTraversal<?, ?, ?> has(String key, Tokens.T compareToken, Object value);
+	public VertexTraversal<?> has(String key, Tokens.T compareToken, Object value);
 
 	/**
 	 * Add an IdFilterPipe, LabelFilterPipe, or PropertyFilterPipe to the end of
@@ -69,7 +69,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            the object to filter on
 	 * @return the extended Pipeline
 	 */
-	public VertexTraversal<?, ?, ?> has(String key, Predicate predicate, Object value);
+	public VertexTraversal<?> has(String key, Predicate predicate, Object value);
 
 	/**
 	 * Check if the element does not have a property with provided key.
@@ -78,7 +78,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            the property key to check
 	 * @return the extended Pipeline
 	 */
-	public VertexTraversal<?, ?, ?> hasNot(String key);
+	public VertexTraversal<?> hasNot(String key);
 
 	/**
 	 * Add an IdFilterPipe, LabelFilterPipe, or PropertyFilterPipe to the end of
@@ -92,7 +92,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            the objects to filter on (in an OR manner)
 	 * @return the extended Pipeline
 	 */
-	public VertexTraversal<?, ?, ?> hasNot(String key, Object value);
+	public VertexTraversal<?> hasNot(String key, Object value);
 
 	/**
 	 * Add an IntervalFilterPipe to the end of the Pipeline. If the incoming
@@ -108,7 +108,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            the end of the interval (exclusive)
 	 * @return the extended Pipeline
 	 */
-	public <C> VertexTraversal<?, ?, ?> interval(String key, Comparable<C> startValue, Comparable<C> endValue);
+	public <C> VertexTraversal<?> interval(String key, Comparable<C> startValue, Comparable<C> endValue);
 
 	/**
 	 * Add an OutPipe to the end of the Pipeline. Emit the adjacent outgoing
@@ -120,7 +120,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            the edge labels to traverse
 	 * @return the extended Pipeline
 	 */
-	public VertexTraversal<?, ?, ?> out(int branchFactor, String... labels);
+	public VertexTraversal<?> out(int branchFactor, String... labels);
 
 	/**
 	 * Add an OutPipe to the end of the Pipeline. Emit the adjacent outgoing
@@ -130,7 +130,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            the edge labels to traverse
 	 * @return the extended Pipeline
 	 */
-	public VertexTraversal<?, ?, ?> out(String... labels);
+	public VertexTraversal<?> out(String... labels);
 
 	/**
 	 * Add a InPipe to the end of the Pipeline. Emit the adjacent incoming
@@ -142,7 +142,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            the edge labels to traverse
 	 * @return the extended Pipeline
 	 */
-	public VertexTraversal<?, ?, ?> in(int branchFactor, String... labels);
+	public VertexTraversal<?> in(int branchFactor, String... labels);
 
 	/**
 	 * Add a InPipe to the end of the Pipeline. Emit the adjacent incoming
@@ -152,7 +152,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            the edge labels to traverse
 	 * @return the extended Pipeline
 	 */
-	public VertexTraversal<?, ?, ?> in(String... labels);
+	public VertexTraversal<?> in(String... labels);
 
 	/**
 	 * Add a BothPipe to the end of the Pipeline. Emit both the incoming and
@@ -164,7 +164,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            the edge labels to traverse
 	 * @return the extended Pipeline
 	 */
-	public VertexTraversal<?, ?, ?> both(int branchFactor, String... labels);
+	public VertexTraversal<?> both(int branchFactor, String... labels);
 
 	/**
 	 * Add a BothPipe to the end of the Pipeline. Emit both the incoming and
@@ -174,7 +174,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            the edge labels to traverse
 	 * @return the extended Pipeline
 	 */
-	public VertexTraversal<?, ?, ?> both(String... labels);
+	public VertexTraversal<?> both(String... labels);
 
 	/**
 	 * Add an OutEdgesPipe to the end of the Pipeline. Emit the outgoing edges
@@ -186,7 +186,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            the edge labels to traverse
 	 * @return the extended Pipeline
 	 */
-	public EdgeTraversal<?, ?, ?> outE(int branchFactor, String... labels);
+	public EdgeTraversal<?> outE(int branchFactor, String... labels);
 
 	/**
 	 * Add an OutEdgesPipe to the end of the Pipeline. Emit the outgoing edges
@@ -196,7 +196,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            the edge labels to traverse
 	 * @return the extended Pipeline
 	 */
-	public EdgeTraversal<?, ?, ?> outE(String... labels);
+	public EdgeTraversal<?> outE(String... labels);
 
 	/**
 	 * Add an InEdgesPipe to the end of the Pipeline. Emit the incoming edges
@@ -208,7 +208,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            the edge labels to traverse
 	 * @return the extended Pipeline
 	 */
-	public EdgeTraversal<?, ?, ?> inE(int branchFactor, String... labels);
+	public EdgeTraversal<?> inE(int branchFactor, String... labels);
 
 	/**
 	 * Add an InEdgesPipe to the end of the Pipeline. Emit the incoming edges
@@ -218,7 +218,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            the edge labels to traverse
 	 * @return the extended Pipeline
 	 */
-	public EdgeTraversal<?, ?, ?> inE(String... labels);
+	public EdgeTraversal<?> inE(String... labels);
 
 	/**
 	 * Add a BothEdgesPipe to the end of the Pipeline. Emit both incoming and
@@ -230,7 +230,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            the edge labels to traverse
 	 * @return the extended Pipeline
 	 */
-	public EdgeTraversal<?, ?, ?> bothE(int branchFactor, String... labels);
+	public EdgeTraversal<?> bothE(int branchFactor, String... labels);
 
 	/**
 	 * Add a BothEdgesPipe to the end of the Pipeline. Emit both incoming and
@@ -240,7 +240,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            the edge labels to traverse
 	 * @return the extended Pipeline
 	 */
-	public EdgeTraversal<?, ?, ?> bothE(String... labels);
+	public EdgeTraversal<?> bothE(String... labels);
 
 	/**
 	 * Get the next object emitted from the pipeline. If no such object exists,
@@ -251,6 +251,24 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 * @return the next emitted object
 	 */
 	public <N extends FramedVertex> N next(Class<N> kind);
+	
+	/**
+	 * Get the next object emitted from the pipeline. If no such object exists a new vertex is created.
+	 * 
+	 * @param kind
+	 *            The type of frame for the element.
+	 * @return the next emitted object
+	 */
+	public TVertex nextOrDefault();
+	
+	/**
+	 * Get the next object emitted from the pipeline. If no such object exists a new vertex is created.
+	 * 
+	 * @param kind
+	 *            The type of frame for the element.
+	 * @return the next emitted object
+	 */
+	public <N extends FramedVertex> N nextOrDefault(Class<N> kind);
 
 	/**
 	 * Return the next X objects in the traversal as a list.
@@ -291,7 +309,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            the step name that has the other vertex to link to
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<?, ?, ?> linkOut(String label, String namedStep);
+	public abstract VertexTraversal<List<TEdge>> linkOut(String label, String namedStep);
 
 	/**
 	 * Add a LinkPipe to the end of the Pipeline. Emit the incoming vertex, but
@@ -303,7 +321,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            the step name that has the other vertex to link to
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<?, ?, ?> linkIn(String label, String namedStep);
+	public abstract VertexTraversal<List<TEdge>> linkIn(String label, String namedStep);
 
 	/**
 	 * Add a LinkPipe to the end of the Pipeline. Emit the incoming vertex, but
@@ -316,7 +334,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            the step name that has the other vertex to link to
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<?, ?, ?> linkBoth(String label, String namedStep);
+	public abstract VertexTraversal<List<TEdge>> linkBoth(String label, String namedStep);
 
 	/**
 	 * Add a LinkPipe to the end of the Pipeline. Emit the incoming vertex, but
@@ -328,7 +346,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            the other vertex
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<?, ?, ?> linkOut(String label, Vertex other);
+	public abstract VertexTraversal<List<TEdge>> linkOut(String label, Vertex other);
 
 	/**
 	 * Add a LinkPipe to the end of the Pipeline. Emit the incoming vertex, but
@@ -340,7 +358,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            the other vertex
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<?, ?, ?> linkOut(String label, FramedVertex other);
+	public abstract VertexTraversal<List<TEdge>> linkOut(String label, FramedVertex other);
 
 	/**
 	 * Add a LinkPipe to the end of the Pipeline. Emit the incoming vertex, but
@@ -352,7 +370,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            the other vertex
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<?, ?, ?> linkIn(String label, Vertex other);
+	public abstract VertexTraversal<List<TEdge>> linkIn(String label, Vertex other);
 
 	/**
 	 * Add a LinkPipe to the end of the Pipeline. Emit the incoming vertex, but
@@ -365,7 +383,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            the other vertex
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<?, ?, ?> linkBoth(String label, Vertex other);
+	public abstract VertexTraversal<List<TEdge>> linkBoth(String label, Vertex other);
 
 	/**
 	 * Add a LinkPipe to the end of the Pipeline. Emit the incoming vertex, but
@@ -377,7 +395,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            the other vertex
 	 * @return the extended Pipeline
 	 */
-	VertexTraversal<?, ?, ?> linkIn(String label, FramedVertex other);
+	public abstract VertexTraversal<List<TEdge>> linkIn(String label, FramedVertex other);
 
 	/**
 	 * Add a LinkPipe to the end of the Pipeline. Emit the incoming vertex, but
@@ -390,7 +408,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            the other vertex
 	 * @return the extended Pipeline
 	 */
-	VertexTraversal<?, ?, ?> linkBoth(String label, FramedVertex other);
+	public abstract VertexTraversal<List<TEdge>> linkBoth(String label, FramedVertex other);
 
 
 	/**
@@ -399,7 +417,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<?, ?, ?> dedup();
+	public abstract VertexTraversal<?> dedup();
 
 	/**
 	 * Add a DuplicateFilterPipe to the end of the Pipeline. Will only emit the
@@ -410,7 +428,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            on
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<?, ?, ?> dedup(TraversalFunction<TVertex, ?> dedupFunction);
+	public abstract VertexTraversal<?> dedup(TraversalFunction<TVertex, ?> dedupFunction);
 
 	/**
 	 * Add an ExceptFilterPipe to the end of the Pipeline. Will only emit the
@@ -420,7 +438,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            the collection except from the stream
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<?, ?, ?> except(Collection<?> collection);
+	public abstract VertexTraversal<?> except(Collection<?> collection);
 
 	/**
 	 * Add an ExceptFilterPipe to the end of the Pipeline. Will only emit the
@@ -431,7 +449,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            the named steps in the pipeline
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<?, ?, ?> except(String... namedSteps);
+	public abstract VertexTraversal<?> except(String... namedSteps);
 
 	/**
 	 * Add an FilterFunctionPipe to the end of the Pipeline. The serves are an
@@ -442,7 +460,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            the filter function of the pipe
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<?, ?, ?> filter(TraversalFunction<TVertex, Boolean> filterFunction);
+	public abstract VertexTraversal<?> filter(TraversalFunction<TVertex, Boolean> filterFunction);
 
 	
 
@@ -454,7 +472,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            the bias of the random coin
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<?, ?, ?> random(Double bias);
+	public abstract VertexTraversal<?> random(Double bias);
 
 	/**
 	 * Add a RageFilterPipe to the end of the Pipeline. Analogous to a high/low
@@ -466,7 +484,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            the high end of the range
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<?, ?, ?> range(int low, int high);
+	public abstract VertexTraversal<?> range(int low, int high);
 
 	/**
 	 * Add a RetainFilterPipe to the end of the Pipeline. Will emit the object
@@ -476,7 +494,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            the collection to retain
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<?, ?, ?> retain(Collection<?> collection);
+	public abstract VertexTraversal<?> retain(Collection<?> collection);
 
 	/**
 	 * Add a RetainFilterPipe to the end of the Pipeline. Will only emit the
@@ -486,7 +504,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            the named steps in the pipeline
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<?, ?, ?> retain(String... namedSteps);
+	public abstract VertexTraversal<?> retain(String... namedSteps);
 
 	/**
 	 * Add an AggregatePipe to the end of the Pipeline. The objects prior to
@@ -494,7 +512,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<Collection<TVertex>, TVertex, ?> aggregate();
+	public abstract VertexTraversal<Collection<TVertex>> aggregate();
 
 	/**
 	 * Add an AggregatePipe to the end of the Pipeline. The objects prior to
@@ -504,7 +522,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            the collection to aggregate results into
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<Collection<TVertex>, TVertex, ?> aggregate(Collection<TVertex> aggregate);
+	public abstract VertexTraversal<Collection<TVertex>> aggregate(Collection<TVertex> aggregate);
 
 	/**
 	 * Add an AggregatePipe to the end of the Pipeline. The results of the
@@ -518,7 +536,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            the aggregate
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> VertexTraversal<Collection<N>, N, ?> aggregate(Collection<TVertex> aggregate,
+	public abstract <N> VertexTraversal<Collection<N>> aggregate(Collection<TVertex> aggregate,
 			TraversalFunction<TVertex, N> aggregateFunction);
 
 	/**
@@ -531,7 +549,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            the aggregate
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> VertexTraversal<Collection<N>, N, ?> aggregate(TraversalFunction<TVertex, N> aggregateFunction);
+	public abstract <N> VertexTraversal<Collection<N>> aggregate(TraversalFunction<TVertex, N> aggregateFunction);
 
 	/**
 	 * Add a GroupByPipe to the end of the Pipeline. Group the objects inputted
@@ -546,7 +564,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            the function that generates the value from the function
 	 * @return the extended Pipeline
 	 */
-	public abstract <K, V> VertexTraversal<Map<K, List<V>>, K, List<V>> groupBy(Map<K, List<V>> map,
+	public abstract <K, V> VertexTraversal<Map<K, List<V>>> groupBy(Map<K, List<V>> map,
 			TraversalFunction<TVertex, K> keyFunction, TraversalFunction<TVertex, V> valueFunction);
 
 	/**
@@ -560,7 +578,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            the function that generates the value from the function
 	 * @return the extended Pipeline
 	 */
-	public abstract <K, V> VertexTraversal<Map<K, List<V>>, K, List<V>> groupBy(TraversalFunction<TVertex, K> keyFunction,
+	public abstract <K, V> VertexTraversal<Map<K, List<V>>> groupBy(TraversalFunction<TVertex, K> keyFunction,
 			TraversalFunction<TVertex, V> valueFunction);
 
 	/**
@@ -582,7 +600,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            the function that reduces the value lists
 	 * @return the extended Pipeline
 	 */
-	public abstract <K, V, V2> VertexTraversal<Map<K, V2>, K, V2> groupBy(Map<K, V2> reduceMap,
+	public abstract <K, V, V2> VertexTraversal<Map<K, V2>> groupBy(Map<K, V2> reduceMap,
 			TraversalFunction<TVertex, K> keyFunction, TraversalFunction<TVertex, V> valueFunction, TraversalFunction<List<V>, V2> reduceFunction);
 
 	/**
@@ -601,7 +619,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            the function that reduces the value lists
 	 * @return the extended Pipeline
 	 */
-	public abstract <K, V, V2> VertexTraversal<Map<K, V2>, K, V2> groupBy(TraversalFunction<TVertex, K> keyFunction,
+	public abstract <K, V, V2> VertexTraversal<Map<K, V2>> groupBy(TraversalFunction<TVertex, K> keyFunction,
 			TraversalFunction<TVertex, V> valueFunction, TraversalFunction<List<V>, V2> reduceFunction);
 
 	/**
@@ -618,8 +636,8 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            the value function to determine map value
 	 * @return the extended Pipeline
 	 */
-	public abstract <K> VertexTraversal<Map<K, Number>, K, Number> groupCount(Map<K, Number> map,
-			TraversalFunction<TVertex, K> keyFunction, TraversalFunction<Pair<TVertex, Number>, Number> valueFunction);
+	public abstract <K> VertexTraversal<Map<K, Long>> groupCount(Map<K, Long> map,
+			TraversalFunction<TVertex, K> keyFunction, TraversalFunction<Pair<TVertex, Long>, Long> valueFunction);
 
 	/**
 	 * Add a GroupCountPipe or GroupCountFunctionPipe to the end of the
@@ -633,8 +651,8 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            the value function to determine map value
 	 * @return the extended Pipeline
 	 */
-	public abstract <K> VertexTraversal<Map<K, Number>, K, Number> groupCount(TraversalFunction<TVertex, K> keyFunction,
-			TraversalFunction<Pair<TVertex, Number>, Number> valueFunction);
+	public abstract <K> VertexTraversal<Map<K, Long>> groupCount(TraversalFunction<TVertex, K> keyFunction,
+			TraversalFunction<Pair<TVertex, Long>, Long> valueFunction);
 
 	/**
 	 * Add a GroupCountPipe or GroupCountFunctionPipe to the end of the
@@ -648,7 +666,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            the key function to determine map key
 	 * @return the extended Pipeline
 	 */
-	public abstract <K> VertexTraversal<Map<K, Number>, K, Number> groupCount(Map<K, Number> map, TraversalFunction<TVertex, K> keyFunction);
+	public abstract <K> VertexTraversal<Map<K, Long>> groupCount(Map<K, Long> map, TraversalFunction<TVertex, K> keyFunction);
 
 	/**
 	 * Add a GroupCountPipe or GroupCountFunctionPipe to the end of the
@@ -660,7 +678,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            the key function to determine map key
 	 * @return the extended Pipeline
 	 */
-	public abstract <K> VertexTraversal<Map<K, Number>, K, Number> groupCount(TraversalFunction<TVertex, K> keyFunction);
+	public abstract <K> VertexTraversal<Map<K, Long>> groupCount(TraversalFunction<TVertex, K> keyFunction);
 
 	/**
 	 * Add a GroupCountPipe to the end of the Pipeline. A map is maintained of
@@ -671,7 +689,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            a provided count map
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<Map<TVertex, Number>, TVertex, Number> groupCount(Map<TVertex, Number> map);
+	public abstract VertexTraversal<Map<TVertex, Long>> groupCount(Map<TVertex, Long> map);
 
 	/**
 	 * Add a GroupCountPipe to the end of the Pipeline. A map is maintained of
@@ -680,7 +698,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<Map<TVertex, Number>, TVertex, Number> groupCount();
+	public abstract VertexTraversal<Map<TVertex, Long>> groupCount();
 
 	/**
 	 * Add a SideEffectFunctionPipe to the end of the Pipeline. The provided
@@ -690,7 +708,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            the function of the pipe
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<?, ?, ?> sideEffect(SideEffectFunction<TVertex> sideEffectFunction);
+	public abstract VertexTraversal<?> sideEffect(SideEffectFunction<TVertex> sideEffectFunction);
 
 	/**
 	 * Add a StorePipe to the end of the Pipeline. Lazily store the incoming
@@ -700,7 +718,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            the collection to store results into
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<Collection<TVertex>, TVertex, ?> store(Collection<TVertex> storage);
+	public abstract VertexTraversal<Collection<TVertex>> store(Collection<TVertex> storage);
 
 	/**
 	 * Add a StorePipe to the end of the Pipeline. Lazily store the object
@@ -714,7 +732,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            the storage collection
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> VertexTraversal<Collection<N>, N, ?> store(Collection<N> storage,
+	public abstract <N> VertexTraversal<Collection<N>> store(Collection<N> storage,
 			TraversalFunction<TVertex, N> storageFunction);
 
 	/**
@@ -723,7 +741,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<Collection<TVertex>, TVertex, ?> store();
+	public abstract VertexTraversal<Collection<TVertex>> store();
 
 	/**
 	 * Add a StorePipe to the end of the Pipeline. An ArrayList storage
@@ -735,7 +753,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            the storage collection
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> VertexTraversal<Collection<N>, N, ?> store(TraversalFunction<TVertex, N> storageFunction);
+	public abstract <N> VertexTraversal<Collection<N>> store(TraversalFunction<TVertex, N> storageFunction);
 
 	/**
 	 * Add a TablePipe to the end of the Pipeline. This step is used for
@@ -749,7 +767,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            the post-processing function for each column
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<Table, ?, ?> table(Table table, Collection<String> stepNames,
+	public abstract VertexTraversal<Table> table(Table table, Collection<String> stepNames,
 			TraversalFunction<?, ?>... columnFunctions);
 
 	/**
@@ -762,7 +780,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            the post-processing function for each column
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<Table, ?, ?> table(Table table, TraversalFunction<?, ?>... columnFunctions);
+	public abstract VertexTraversal<Table> table(Table table, TraversalFunction<?, ?>... columnFunctions);
 
 	/**
 	 * Add a TablePipe to the end of the Pipeline. This step is used for
@@ -772,7 +790,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            the post-processing function for each column
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<Table, ?, ?> table(TraversalFunction<?, ?>... columnFunctions);
+	public abstract VertexTraversal<Table> table(TraversalFunction<?, ?>... columnFunctions);
 
 	/**
 	 * Add a TablePipe to the end of the Pipeline. This step is used for
@@ -782,7 +800,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            the table to fill
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<Table, ?, ?> table(Table table);
+	public abstract VertexTraversal<Table> table(Table table);
 
 	/**
 	 * Add a TablePipe to the end of the Pipeline. This step is used for
@@ -790,7 +808,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<Table, ?, ?> table();
+	public abstract VertexTraversal<Table> table();
 
 	/**
 	 * Add a TreePipe to the end of the Pipeline This step maintains an internal
@@ -804,7 +822,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            fashion
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> VertexTraversal<Tree<N>, N, ?> tree(Tree<N> tree, TraversalFunction<?, ?>... branchFunctions);
+	public abstract <N> VertexTraversal<Tree<N>> tree(Tree<N> tree, TraversalFunction<?, ?>... branchFunctions);
 
 	/**
 	 * Add a TreePipe to the end of the Pipeline This step maintains an internal
@@ -815,15 +833,8 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            fashion
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<Tree<Object>, ?, ?> tree(TraversalFunction<?, ?>... branchFunctions);
+	public abstract VertexTraversal<Tree<Object>> tree(TraversalFunction<?, ?>... branchFunctions);
 
-	/**
-	 * Add a GatherPipe to the end of the Pipeline. All the objects previous to
-	 * this step are aggregated in a greedy fashion and emitted as a List.
-	 *
-	 * @return the extended Pipeline
-	 */
-	public abstract Traversal<List<TVertex>, ?, TVertex, ?> gather();
 
 	/**
 	 * Add an IdentityPipe to the end of the Pipeline. Useful in various
@@ -832,7 +843,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<?, ?, ?> identity();
+	public abstract VertexTraversal<?> identity();
 
 	/**
 	 * Add a MemoizePipe to the end of the Pipeline. This step will hold a Map
@@ -844,7 +855,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            the name of the step previous to memoize to
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<?, ?, ?> memoize(String namedStep);
+	public abstract VertexTraversal<?> memoize(String namedStep);
 
 	/**
 	 * Add a MemoizePipe to the end of the Pipeline. This step will hold a Map
@@ -858,7 +869,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            the memoization map
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<?, ?, ?> memoize(String namedStep, Map<?, ?> map);
+	public abstract VertexTraversal<?> memoize(String namedStep, Map<?, ?> map);
 
 	/**
 	 * Add an OrderPipe to the end of the Pipeline. This step will sort the
@@ -866,7 +877,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<?, ?, ?> order();
+	public abstract VertexTraversal<?> order();
 	/**
 	 * Add an OrderPipe to the end of the Pipeline. This step will sort the
 	 * objects in the stream according to a comparator defined in the provided
@@ -876,7 +887,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            a comparator function of two objects of type E
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<?, ?, ?> order(Comparator<TVertex> compareFunction);
+	public abstract VertexTraversal<?> order(Comparator<TVertex> compareFunction);
 	/**
 	 * Add an OrderPipe to the end of the Pipeline. This step will sort the
 	 * objects in the stream in a default Comparable order.
@@ -886,7 +897,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            increment or decrement can be specified
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<?, ?, ?> order(TransformPipe.Order order);
+	public abstract VertexTraversal<?> order(TransformPipe.Order order);
 
 	/**
 	 * Add an OrderPipe to the end of the Pipeline. This step will sort the
@@ -897,7 +908,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            increment or decrement can be specified
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<?, ?, ?> order(Tokens.T order);
+	public abstract VertexTraversal<?> order(Tokens.T order);
 
 
 
@@ -910,7 +921,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            the name of the AsPipe
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<?, ?, ?> as(String name);
+	public abstract VertexTraversal<?> as(String name);
 
 	/**
 	 * Add a CyclicPathFilterPipe to the end of the Pipeline. If the object's
@@ -919,7 +930,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<?, ?, ?> simplePath();
+	public abstract VertexTraversal<?> simplePath();
 	
 	/**
 	 * Fill the provided collection with the objects in the pipeline.
@@ -935,7 +946,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<?, ?, ?> gatherScatter();
+	public abstract VertexTraversal<?> gatherScatter();
 	
 	
 	/**
@@ -947,7 +958,7 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            the internal pipes of the AndFilterPipe
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<?, ?, ?> and(TraversalFunction<TVertex, Traversal<?,?,?,?>>... pipes); 
+	public abstract VertexTraversal<?> and(TraversalFunction<TVertex, Traversal<?,?>>... pipes); 
 
 	/**
 	 * Add an OrFilterPipe to the end the Pipeline. Will only emit the object if
@@ -958,5 +969,15 @@ public interface VertexTraversal<SideEffect, GenericParam1, GenericParam2> exten
 	 *            the internal pipes of the OrFilterPipe
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<?, ?, ?> or(TraversalFunction<TVertex, Traversal<?,?,?,?>>... pipes);
+	public abstract VertexTraversal<?> or(TraversalFunction<TVertex, Traversal<?,?>>... pipes);
+
+	/**
+	 * Add a NonTerminatingSideEffectCapPipe to the end of the Pipeline. When the previous
+	 * step in the pipeline is implements SideEffectPipe, then it has a method
+	 * called getSideEffect(). This step call the sideEffectFunction function with the side effect.
+	 *
+	 * @return the extended Pipeline
+	 */
+	public abstract VertexTraversal<?> cap(SideEffectFunction<SideEffect> sideEffectFunction);
+	
 }

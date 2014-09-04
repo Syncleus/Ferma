@@ -42,7 +42,7 @@ public class TestFramedGraph {
         Assert.assertEquals("Bryn", bryn.getName());
         Assert.assertEquals(15, bryn.getKnowsList().get(0).getYears());
    
-        Collection<Integer> knowsCollection = fg.V().has("name", "Julia").bothE().property("years", Integer.class).aggregate().cap().next();
+        Collection<Integer> knowsCollection = fg.V().has("name", "Julia").bothE().property("years", Integer.class).aggregate().cap();
         Assert.assertEquals(1, knowsCollection.size());
     }
     

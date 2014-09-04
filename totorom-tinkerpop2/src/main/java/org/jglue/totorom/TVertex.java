@@ -3,44 +3,46 @@ package org.jglue.totorom;
 import java.util.Set;
 
 /**
- * A framed vertex for use when you don't want to create a new frame class. Typically used in traversals.
+ * A framed vertex for use when you don't want to create a new frame class.
+ * Typically used in traversals.
+ * 
  * @author bryn
  *
  */
 public final class TVertex extends FramedVertex {
 
 	@Override
-	public VertexTraversal<?, ?, ?> both(int branchFactor, String... labels) {
+	public VertexTraversal<?> both(int branchFactor, String... labels) {
 
 		return super.both(branchFactor, labels);
 	}
 
 	@Override
-	public VertexTraversal<?, ?, ?> both(String... labels) {
+	public VertexTraversal<?> both(String... labels) {
 
 		return super.both(labels);
 	}
 
 	@Override
-	public EdgeTraversal<?, ?, ?> bothE(int branchFactor, String... labels) {
+	public EdgeTraversal<?> bothE(int branchFactor, String... labels) {
 
 		return super.bothE(branchFactor, labels);
 	}
 
 	@Override
-	public EdgeTraversal<?, ?, ?> bothE(String... labels) {
+	public EdgeTraversal<?> bothE(String... labels) {
 
 		return super.bothE(labels);
 	}
 
 	@Override
-	public EdgeTraversal<?, ?, ?> E() {
+	public EdgeTraversal<?> E() {
 
 		return super.E();
 	}
 
 	@Override
-	public EdgeTraversal<?, ?, ?> e(Object... ids) {
+	public EdgeTraversal<?> e(Object... ids) {
 
 		return super.e(ids);
 	}
@@ -50,9 +52,7 @@ public final class TVertex extends FramedVertex {
 
 		return super.getId();
 	}
-	
-	
-	
+
 	@Override
 	public <N> N getId(Class<N> clazz) {
 
@@ -64,7 +64,7 @@ public final class TVertex extends FramedVertex {
 
 		return super.getProperty(name);
 	}
-	
+
 	@Override
 	public <T> T getProperty(String name, Class<T> clazz) {
 		return super.getProperty(name, clazz);
@@ -77,51 +77,95 @@ public final class TVertex extends FramedVertex {
 	}
 
 	@Override
-	public VertexTraversal<?, ?, ?> in(int branchFactor, String... labels) {
+	public VertexTraversal<?> in(int branchFactor, String... labels) {
 
 		return super.in(branchFactor, labels);
 	}
 
 	@Override
-	public VertexTraversal<?, ?, ?> in(String... labels) {
+	public VertexTraversal<?> in(String... labels) {
 
 		return super.in(labels);
 	}
 
 	@Override
-	public EdgeTraversal<?, ?, ?> inE(int branchFactor, String... labels) {
+	public EdgeTraversal<?> inE(int branchFactor, String... labels) {
 
 		return super.inE(branchFactor, labels);
 	}
 
 	@Override
-	public EdgeTraversal<?, ?, ?> inE(String... labels) {
+	public EdgeTraversal<?> inE(String... labels) {
 
 		return super.inE(labels);
 	}
 
 	@Override
-	public VertexTraversal<?, ?, ?> out(int branchFactor, String... labels) {
+	public VertexTraversal<?> out(int branchFactor, String... labels) {
 
 		return super.out(branchFactor, labels);
 	}
 
 	@Override
-	public VertexTraversal<?, ?, ?> out(String... labels) {
+	public VertexTraversal<?> out(String... labels) {
 
 		return super.out(labels);
 	}
 
 	@Override
-	public EdgeTraversal<?, ?, ?> outE(int branchFactor, String... labels) {
+	public EdgeTraversal<?> outE(int branchFactor, String... labels) {
 
 		return super.outE(branchFactor, labels);
 	}
 
 	@Override
-	public EdgeTraversal<?, ?, ?> outE(String... labels) {
+	public EdgeTraversal<?> outE(String... labels) {
 
 		return super.outE(labels);
 	}
 
+	@Override
+	public void setProperty(String name, Object value) {
+		super.setProperty(name, value);
+	}
+
+	@Override
+	public void linkBoth(FramedVertex vertex, String... labels) {
+		super.linkBoth(vertex, labels);
+	}
+
+	@Override
+	public void linkIn(FramedVertex vertex, String... labels) {
+		super.linkIn(vertex, labels);
+	}
+
+	@Override
+	public void linkOut(FramedVertex vertex, String... labels) {
+		super.linkOut(vertex, labels);
+	}
+
+	@Override
+	public void unlinkBoth(FramedVertex vertex, String... labels) {
+		super.unlinkBoth(vertex, labels);
+	}
+
+	@Override
+	public void unlinkIn(FramedVertex vertex, String... labels) {
+		super.unlinkIn(vertex, labels);
+	}
+
+	@Override
+	public void unlinkOut(FramedVertex vertex, String... labels) {
+		super.unlinkOut(vertex, labels);
+	}
+	
+	@Override
+	public <T extends FramedEdge> T addEdge(String label, FramedVertex inVertex, Class<T> kind) {
+		return super.addEdge(label, inVertex, kind);
+	}
+	
+	@Override
+	public void remove() {
+		super.remove();
+	}
 }

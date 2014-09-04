@@ -1,6 +1,5 @@
 package org.jglue.totorom;
 
-import java.util.Comparator;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -12,16 +11,17 @@ public class TestTraversals {
 	private FramedGraph graph = new FramedGraph(TinkerGraphFactory.createTinkerGraph());
 
 	@Test
-	public void testOrderMap() {
+	public void testGroupCount() {
 
 		Assert.assertEquals(4,
-				graph.V().out().groupCount().cap().orderMap(new Comparator<Map.Entry<TVertex, Number>>() {
-
+				graph.V().out().groupCount().cap().size());
+		
+		Assert.assertEquals(6,
+				graph.V().out().groupCount().cap(new SideEffectFunction<Map<TVertex,Long>>() {
+					
 					@Override
-					public int compare(Map.Entry<TVertex, Number> o1, Map.Entry<TVertex, Number> o2) {
-						String id1 = o1.getKey().getId();
-						String id2 = o2.getKey().getId();
-						return id1.compareTo(id2);
+					public void execute(Map<TVertex, Long> o) {
+						Assert.assertEquals(4, o.size());
 					}
 				}).count());
 
@@ -29,10 +29,10 @@ public class TestTraversals {
 
 	@Test
 	public void testAnd() {
-		Assert.assertEquals(3, graph.V().and(new TraversalFunction<TVertex, Traversal<?, ?, ?, ?>>() {
+		Assert.assertEquals(3, graph.V().and(new TraversalFunction<TVertex, Traversal<?, ?>>() {
 
 			@Override
-			public Traversal<?, ?, ?, ?> compute(TVertex argument) {
+			public Traversal<?, ?> compute(TVertex argument) {
 				return argument.out().has("name");
 			}
 		}).count());
@@ -40,10 +40,10 @@ public class TestTraversals {
 	
 	@Test
 	public void testOr() {
-		Assert.assertEquals(3, graph.V().or(new TraversalFunction<TVertex, Traversal<?, ?, ?, ?>>() {
+		Assert.assertEquals(3, graph.V().or(new TraversalFunction<TVertex, Traversal<?, ?>>() {
 
 			@Override
-			public Traversal<?, ?, ?, ?> compute(TVertex argument) {
+			public Traversal<?, ?> compute(TVertex argument) {
 				return argument.out().has("name");
 			}
 		}).count());

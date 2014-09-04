@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
@@ -26,6 +27,12 @@ abstract class VertexTraversalImpl extends TraversalBase implements VertexTraver
 	@Override
 	public TVertex next() {
 		return graph().frameElement((Vertex) pipeline().next(), TVertex.class);
+	}
+
+	@Override
+	public TVertex nextOrDefault() {
+
+		return (TVertex) nextOrDefault(TVertex.class);
 	}
 
 	@Override
@@ -78,14 +85,12 @@ abstract class VertexTraversalImpl extends TraversalBase implements VertexTraver
 
 	@Override
 	public VertexTraversal store(Collection storage, TraversalFunction storageFunction) {
-		return (VertexTraversal) super.store(storage, new FramingTraversalFunction(storageFunction, graph(),
-				TVertex.class));
+		return (VertexTraversal) super.store(storage, new FramingTraversalFunction(storageFunction, graph(), TVertex.class));
 	}
 
 	@Override
 	public VertexTraversal store(TraversalFunction storageFunction) {
-		return (VertexTraversal) super.store(new FramingTraversalFunction(storageFunction, graph(),
-				TVertex.class));
+		return (VertexTraversal) super.store(new FramingTraversalFunction(storageFunction, graph(), TVertex.class));
 	}
 
 	@Override
@@ -100,63 +105,58 @@ abstract class VertexTraversalImpl extends TraversalBase implements VertexTraver
 
 	@Override
 	public VertexTraversal groupCount(Map map, TraversalFunction keyFunction) {
-		return (VertexTraversal) super.groupCount(map, new FramingTraversalFunction(keyFunction, graph(),
-				TVertex.class));
+		return (VertexTraversal) super.groupCount(map, new FramingTraversalFunction(keyFunction, graph(), TVertex.class));
 	}
 
 	@Override
 	public VertexTraversal groupCount(Map map, TraversalFunction keyFunction, TraversalFunction valueFunction) {
-		return (VertexTraversal) super.groupCount(map, new FramingTraversalFunction(keyFunction, graph(),
-				TVertex.class), new FramingTraversalFunction(valueFunction, graph(), TVertex.class));
+		return (VertexTraversal) super.groupCount(map, new FramingTraversalFunction(keyFunction, graph(), TVertex.class),
+				new FramingTraversalFunction(valueFunction, graph(), TVertex.class));
 	}
 
 	@Override
 	public VertexTraversal groupCount(TraversalFunction keyFunction) {
-		return (VertexTraversal) super.groupCount(new FramingTraversalFunction(keyFunction, graph(),
-				TVertex.class));
+		return (VertexTraversal) super.groupCount(new FramingTraversalFunction(keyFunction, graph(), TVertex.class));
 	}
 
 	@Override
 	public VertexTraversal groupCount(TraversalFunction keyFunction, TraversalFunction valueFunction) {
-		return (VertexTraversal) super.groupCount(new FramingTraversalFunction(keyFunction, graph(),
-				TVertex.class), new FramingTraversalFunction(valueFunction, graph(), TVertex.class));
+		return (VertexTraversal) super.groupCount(new FramingTraversalFunction(keyFunction, graph(), TVertex.class),
+				new FramingTraversalFunction(valueFunction, graph(), TVertex.class));
 	}
 
 	@Override
 	public VertexTraversal groupBy(TraversalFunction keyFunction, TraversalFunction valueFunction,
 			TraversalFunction reduceFunction) {
-		return (VertexTraversal) super.groupBy(
-				new FramingTraversalFunction(keyFunction, graph(), TVertex.class), new FramingTraversalFunction(
-						valueFunction, graph(), TVertex.class), new FramingTraversalFunction(reduceFunction, graph(),
-						TVertex.class));
+		return (VertexTraversal) super.groupBy(new FramingTraversalFunction(keyFunction, graph(), TVertex.class),
+				new FramingTraversalFunction(valueFunction, graph(), TVertex.class), new FramingTraversalFunction(reduceFunction,
+						graph(), TVertex.class));
 	}
 
 	@Override
 	public VertexTraversal groupBy(TraversalFunction keyFunction, TraversalFunction valueFunction) {
 
-		return (VertexTraversal) super.groupBy(
-				new FramingTraversalFunction(keyFunction, graph(), TVertex.class), new FramingTraversalFunction(
-						valueFunction, graph(), TVertex.class));
+		return (VertexTraversal) super.groupBy(new FramingTraversalFunction(keyFunction, graph(), TVertex.class),
+				new FramingTraversalFunction(valueFunction, graph(), TVertex.class));
 	}
 
 	@Override
 	public VertexTraversal groupBy(Map reduceMap, TraversalFunction keyFunction, TraversalFunction valueFunction,
 			TraversalFunction reduceFunction) {
-		return (VertexTraversal) super.groupBy(reduceMap, new FramingTraversalFunction(keyFunction, graph(),
-				TVertex.class), new FramingTraversalFunction(valueFunction, graph(), TVertex.class),
-				new FramingTraversalFunction(reduceFunction, graph(), TVertex.class));
+		return (VertexTraversal) super.groupBy(reduceMap, new FramingTraversalFunction(keyFunction, graph(), TVertex.class),
+				new FramingTraversalFunction(valueFunction, graph(), TVertex.class), new FramingTraversalFunction(reduceFunction,
+						graph(), TVertex.class));
 	}
 
 	@Override
 	public VertexTraversal groupBy(Map map, TraversalFunction keyFunction, TraversalFunction valueFunction) {
-		return (VertexTraversal) super.groupBy(map, new FramingTraversalFunction(keyFunction, graph(),
-				TVertex.class), new FramingTraversalFunction(valueFunction, graph(), TVertex.class));
+		return (VertexTraversal) super.groupBy(map, new FramingTraversalFunction(keyFunction, graph(), TVertex.class),
+				new FramingTraversalFunction(valueFunction, graph(), TVertex.class));
 	}
 
 	@Override
 	public VertexTraversal filter(TraversalFunction filterFunction) {
-		return (VertexTraversal) super.filter(new FramingTraversalFunction(filterFunction, graph(),
-				TVertex.class));
+		return (VertexTraversal) super.filter(new FramingTraversalFunction(filterFunction, graph(), TVertex.class));
 
 	}
 
@@ -168,8 +168,7 @@ abstract class VertexTraversalImpl extends TraversalBase implements VertexTraver
 
 	@Override
 	public VertexTraversal aggregate(Collection aggregate) {
-		return (VertexTraversal) super.aggregate(aggregate,
-				new FramingTraversalFunction(graph(), TVertex.class));
+		return (VertexTraversal) super.aggregate(aggregate, new FramingTraversalFunction(graph(), TVertex.class));
 
 	}
 
@@ -182,17 +181,13 @@ abstract class VertexTraversalImpl extends TraversalBase implements VertexTraver
 
 	@Override
 	public VertexTraversal aggregate(TraversalFunction aggregateFunction) {
-		return (VertexTraversal) super.aggregate(new FramingTraversalFunction(aggregateFunction, graph(),
-				TVertex.class));
+		return (VertexTraversal) super.aggregate(new FramingTraversalFunction(aggregateFunction, graph(), TVertex.class));
 
 	}
 
-
-
 	@Override
 	public VertexTraversal sideEffect(SideEffectFunction sideEffectFunction) {
-		return (VertexTraversal) super.sideEffect(new FramingSideEffectFunction<>(sideEffectFunction, graph(),
-				TVertex.class));
+		return (VertexTraversal) super.sideEffect(new FramingSideEffectFunction<>(sideEffectFunction, graph(), TVertex.class));
 	}
 
 	@Override
@@ -234,7 +229,7 @@ abstract class VertexTraversalImpl extends TraversalBase implements VertexTraver
 		pipeline().and(extractedPipes.toArray(new Pipe[extractedPipes.size()]));
 		return this;
 	}
-	
+
 	@Override
 	public VertexTraversal or(TraversalFunction... pipes) {
 		Collection<Pipe> extractedPipes = Collections2.transform(Arrays.asList(pipes), new Function<TraversalFunction, Pipe>() {
@@ -247,7 +242,7 @@ abstract class VertexTraversalImpl extends TraversalBase implements VertexTraver
 		pipeline().or(extractedPipes.toArray(new Pipe[extractedPipes.size()]));
 		return this;
 	}
-	
+
 	@Override
 	public VertexTraversal order() {
 		return (VertexTraversal) super.order();
@@ -385,6 +380,16 @@ abstract class VertexTraversalImpl extends TraversalBase implements VertexTraver
 	}
 
 	@Override
+	public FramedVertex nextOrDefault(Class kind) {
+		try {
+			return (FramedVertex) graph().frameElement((Element) pipeline().next(), kind);
+		} catch (NoSuchElementException e) {
+			return graph().addVertex(kind);
+		}
+
+	}
+
+	@Override
 	public List next(int amount, final Class kind) {
 		return Lists.transform(pipeline().next(amount), new Function() {
 
@@ -412,6 +417,11 @@ abstract class VertexTraversalImpl extends TraversalBase implements VertexTraver
 				return graph().frameElement((Element) e, kind);
 			}
 		});
+	}
+
+	@Override
+	public List toList() {
+		return toList(TVertex.class);
 	}
 
 	@Override
@@ -528,9 +538,14 @@ abstract class VertexTraversalImpl extends TraversalBase implements VertexTraver
 			}
 		});
 	}
-	
+
 	@Override
 	public VertexTraversal gatherScatter() {
 		return (VertexTraversal) super.gatherScatter();
+	}
+
+	@Override
+	public VertexTraversal cap(SideEffectFunction sideEffect) {
+		return (VertexTraversal) super.cap(sideEffect);
 	}
 }

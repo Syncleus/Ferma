@@ -9,6 +9,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.jglue.totorom.internal.NonTerminatingSideEffectCapPipe;
+
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
 import com.tinkerpop.blueprints.Graph;
@@ -16,14 +18,16 @@ import com.tinkerpop.blueprints.Predicate;
 import com.tinkerpop.gremlin.Tokens;
 import com.tinkerpop.gremlin.java.GremlinPipeline;
 import com.tinkerpop.pipes.Pipe;
+import com.tinkerpop.pipes.sideeffect.SideEffectPipe;
+import com.tinkerpop.pipes.transform.SideEffectCapPipe;
 import com.tinkerpop.pipes.transform.TransformPipe.Order;
+import com.tinkerpop.pipes.util.FluentUtility;
 import com.tinkerpop.pipes.util.structures.Pair;
 import com.tinkerpop.pipes.util.structures.Table;
 import com.tinkerpop.pipes.util.structures.Tree;
 
 @SuppressWarnings("rawtypes")
-abstract class TraversalBase<T, SE, SideEffectParam1, SideEffectParam2> implements
-		Traversal<T, SE, SideEffectParam1, SideEffectParam2> {
+abstract class TraversalBase<T, SE> implements Traversal<T, SE> {
 
 	protected abstract FramedGraph graph();
 
@@ -421,18 +425,6 @@ abstract class TraversalBase<T, SE, SideEffectParam1, SideEffectParam2> implemen
 	}
 
 	@Override
-	public Traversal gather() {
-		pipeline().gather();
-		return asTraversal();
-	}
-
-	@Override
-	public Traversal gather(TraversalFunction function) {
-		pipeline().gather(function);
-		return asTraversal();
-	}
-
-	@Override
 	public Traversal memoize(String namedStep) {
 		pipeline().memoize(namedStep);
 		return this;
@@ -481,12 +473,6 @@ abstract class TraversalBase<T, SE, SideEffectParam1, SideEffectParam2> implemen
 	}
 
 	@Override
-	public Traversal scatter() {
-		pipeline().scatter();
-		return asTraversal();
-	}
-
-	@Override
 	public Traversal select(Collection stepNames, TraversalFunction... columnFunctions) {
 		pipeline().select(stepNames, wrap(columnFunctions));
 		return asTraversal();
@@ -511,33 +497,28 @@ abstract class TraversalBase<T, SE, SideEffectParam1, SideEffectParam2> implemen
 	}
 
 	@Override
-	public Traversal cap() {
+	public SE cap() {
 		pipeline().cap();
-		return asTraversal();
+		Object next = asTraversal().next();
+		if (next instanceof FramingMap) {
+			next = ((FramingMap) next).getDelegate();
+		}
+		return (SE) next;
 	}
 
 	@Override
-	public Traversal orderMap(Order order) {
-		pipeline().orderMap(order);
-		return this;
-	}
-
-	@Override
-	public Traversal orderMap(Tokens.T order) {
-		pipeline().orderMap(order);
-		return this;
-	}
-
-	@Override
-	public Traversal orderMap(final Comparator compareFunction) {
-		final Comparator wrapped = new FramingComparator(compareFunction, graph());
-		pipeline().orderMap(new TraversalFunction<Pair<Object, Object>, Integer>() {
+	public Traversal<T, ?> cap(final SideEffectFunction sideEffectFunction) {
+		
+		final FramingSideEffectFunction framingSideEffectFunction = new FramingSideEffectFunction(sideEffectFunction, graph());
+		pipeline().add(new NonTerminatingSideEffectCapPipe((SideEffectPipe) FluentUtility.removePreviousPipes(pipeline(), 1).get(0), new TraversalFunction() {
 
 			@Override
-			public Integer compute(Pair<Object, Object> argument) {
-				return wrapped.compare(argument.getA(), argument.getB());
+			public Object compute(Object argument) {
+				framingSideEffectFunction.execute(argument);
+				return null;
 			}
-		});
+
+		}));
 		return this;
 	}
 

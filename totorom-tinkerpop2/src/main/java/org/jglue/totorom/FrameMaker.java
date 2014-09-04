@@ -1,7 +1,5 @@
 package org.jglue.totorom;
 
-import java.util.Map;
-
 import com.tinkerpop.blueprints.Edge;
 import com.tinkerpop.blueprints.Element;
 import com.tinkerpop.blueprints.Vertex;
@@ -20,7 +18,9 @@ class FrameMaker<T extends FramedElement> {
 	}
 
 	<N> N makeFrame(Object o) {
-
+		if (o instanceof FramingMap) {
+			o = ((FramingMap) o).getDelegate();
+		}
 		if (kind == null) {
 			if (o instanceof Edge) {
 				o = graph.frameElement((Element) o, TEdge.class);

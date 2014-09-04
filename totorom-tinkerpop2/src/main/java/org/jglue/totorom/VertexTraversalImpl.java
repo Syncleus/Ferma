@@ -22,7 +22,7 @@ import com.tinkerpop.pipes.transform.TransformPipe.Order;
 import com.tinkerpop.pipes.util.structures.Table;
 import com.tinkerpop.pipes.util.structures.Tree;
 
-public abstract class VertexTraversalImpl extends TraversalBase implements VertexTraversal {
+abstract class VertexTraversalImpl extends TraversalBase implements VertexTraversal {
 	@Override
 	public TVertex next() {
 		return graph().frameElement((Vertex) pipeline().next(), TVertex.class);

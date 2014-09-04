@@ -21,7 +21,7 @@ import com.tinkerpop.pipes.transform.TransformPipe.Order;
 import com.tinkerpop.pipes.util.structures.Table;
 import com.tinkerpop.pipes.util.structures.Tree;
 
-public abstract class EdgeTraversalImpl extends TraversalBase implements EdgeTraversal {
+abstract class EdgeTraversalImpl extends TraversalBase implements EdgeTraversal {
 
 	@Override
 	public TEdge next() {

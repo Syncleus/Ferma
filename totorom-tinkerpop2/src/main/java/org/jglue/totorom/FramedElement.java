@@ -86,7 +86,7 @@ public abstract class FramedElement {
 	 * 
 	 * @return The query.
 	 */
-	protected FramedVertexTraversal<?> V() {
+	protected FramedVertexTraversal<?, ?, ?> V() {
 		return graph.V();
 	}
 
@@ -95,7 +95,7 @@ public abstract class FramedElement {
 	 * 
 	 * @return The query.
 	 */
-	protected FramedEdgeTraversal<?> E() {
+	protected FramedEdgeTraversal<?, ?, ?> E() {
 		return graph.E();
 	}
 
@@ -106,7 +106,7 @@ public abstract class FramedElement {
 	 *            The ids of the vertices.
 	 * @return The query.
 	 */
-	protected FramedVertexTraversal<?> v(final Object... ids) {
+	protected FramedVertexTraversal<?, ?, ?> v(final Object... ids) {
 		return graph.v(ids);
 	}
 
@@ -117,7 +117,7 @@ public abstract class FramedElement {
 	 *            The ids of the edges.
 	 * @return The query.
 	 */
-	protected FramedEdgeTraversal<?> e(final Object... ids) {
+	protected FramedEdgeTraversal<?, ?, ?> e(final Object... ids) {
 		return graph.e(ids);
 	}
 

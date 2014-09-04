@@ -22,7 +22,7 @@ import com.tinkerpop.pipes.util.structures.Table;
 import com.tinkerpop.pipes.util.structures.Tree;
 
 @SuppressWarnings("rawtypes")
-abstract class FramedTraversalBase<T, SE> implements FramedTraversal<T, SE> {
+abstract class FramedTraversalBase<T, SE, SideEffectParam1, SideEffectParam2> implements FramedTraversal<T, SE, SideEffectParam1, SideEffectParam2> {
 
 	protected abstract FramedGraph graph();
 
@@ -124,17 +124,6 @@ abstract class FramedTraversalBase<T, SE> implements FramedTraversal<T, SE> {
 		return asTraversal();
 	}
 
-	@Override
-	public FramedTraversal step(TraversalFunction function) {
-		pipeline().step(function);
-		return asTraversal();
-	}
-
-	@Override
-	public FramedTraversal step(Pipe pipe) {
-		pipeline().step(pipe);
-		return asTraversal();
-	}
 
 	@Override
 	public FramedTraversal copySplit(Pipe... pipes) {
@@ -615,8 +604,8 @@ abstract class FramedTraversalBase<T, SE> implements FramedTraversal<T, SE> {
 	}
 
 	@Override
-	public <N> FramedTraversal<N, ?> property(String key, Class<N> type) {
-		return (FramedTraversal<N, ?>) property(key);
+	public <N> FramedTraversal<N, ?, ?, ?> property(String key, Class<N> type) {
+		return (FramedTraversal<N, ?, ?, ?>) property(key);
 	}
 
 	protected abstract FramedTraversal asTraversal();
@@ -664,7 +653,7 @@ abstract class FramedTraversalBase<T, SE> implements FramedTraversal<T, SE> {
 	}
 
 	@Override
-	public FramedTraversal<T, ?> gatherScatter() {
+	public FramedTraversal<T, ?, ?, ?> gatherScatter() {
 		pipeline().gather().scatter();
 		return this;
 	}

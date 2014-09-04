@@ -23,21 +23,21 @@ public abstract class FramedEdge extends FramedElement {
     /**
      * @return The in vertex for this edge.
      */
-    protected FramedVertexTraversal<?> inV() {
+    protected FramedVertexTraversal<?, ?, ?> inV() {
         return new FramedTraversalImpl(graph(), this).asEdges().inV();
     }
 
     /**
      * @return The out vertex of this edge.
      */
-    protected FramedVertexTraversal<?> outV() {
+    protected FramedVertexTraversal<?, ?, ?> outV() {
         return new FramedTraversalImpl(graph(), this).asEdges().outV();
     }
 
     /**
      * @return The vertices for this edge.
      */
-    protected FramedVertexTraversal<?> bothV() {
+    protected FramedVertexTraversal<?, ?, ?> bothV() {
         return new FramedTraversalImpl(graph(), this).asEdges().bothV();
     }
 
@@ -46,7 +46,7 @@ public abstract class FramedEdge extends FramedElement {
 	 * 
 	 * @return
 	 */
-	protected FramedEdgeTraversal<?> traversal() {
+	protected FramedEdgeTraversal<?, ?, ?> traversal() {
 		return new FramedTraversalImpl(graph(), this).asEdges();
 	}
 }

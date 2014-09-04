@@ -23,51 +23,51 @@ public abstract class FramedVertex extends FramedElement {
 		return framedEdge;
 	}
 
-	protected FramedVertexTraversal<?> out(final int branchFactor, final String... labels) {
+	protected FramedVertexTraversal<?, ?, ?> out(final int branchFactor, final String... labels) {
 		return new FramedTraversalImpl(graph(), this).asVertices().out(branchFactor, labels);
 	}
 
-	protected FramedVertexTraversal<?> out(final String... labels) {
+	protected FramedVertexTraversal<?, ?, ?> out(final String... labels) {
 		return new FramedTraversalImpl(graph(), this).asVertices().out(labels);
 	}
 
-	protected FramedVertexTraversal<?> in(final int branchFactor, final String... labels) {
+	protected FramedVertexTraversal<?, ?, ?> in(final int branchFactor, final String... labels) {
 		return new FramedTraversalImpl(graph(), this).asVertices().in(branchFactor, labels);
 	}
 
-	protected FramedVertexTraversal<?> in(final String... labels) {
+	protected FramedVertexTraversal<?, ?, ?> in(final String... labels) {
 		return new FramedTraversalImpl(graph(), this).asVertices().in(labels);
 	}
 
-	protected FramedVertexTraversal<?> both(final int branchFactor, final String... labels) {
+	protected FramedVertexTraversal<?, ?, ?> both(final int branchFactor, final String... labels) {
 		return new FramedTraversalImpl(graph(), this).asVertices().both(branchFactor, labels);
 	}
 
-	protected FramedVertexTraversal<?> both(final String... labels) {
+	protected FramedVertexTraversal<?, ?, ?> both(final String... labels) {
 		return new FramedTraversalImpl(graph(), this).asVertices().both(labels);
 	}
 
-	protected FramedEdgeTraversal<?> outE(final int branchFactor, final String... labels) {
+	protected FramedEdgeTraversal<?, ?, ?> outE(final int branchFactor, final String... labels) {
 		return new FramedTraversalImpl(graph(), this).asVertices().outE(branchFactor, labels);
 	}
 
-	protected FramedEdgeTraversal<?> outE(final String... labels) {
+	protected FramedEdgeTraversal<?, ?, ?> outE(final String... labels) {
 		return new FramedTraversalImpl(graph(), this).asVertices().outE(labels);
 	}
 
-	protected FramedEdgeTraversal<?> inE(final int branchFactor, final String... labels) {
+	protected FramedEdgeTraversal<?, ?, ?> inE(final int branchFactor, final String... labels) {
 		return new FramedTraversalImpl(graph(), this).asVertices().inE(branchFactor, labels);
 	}
 
-	protected FramedEdgeTraversal<?> inE(final String... labels) {
+	protected FramedEdgeTraversal<?, ?, ?> inE(final String... labels) {
 		return new FramedTraversalImpl(graph(), this).asVertices().inE(labels);
 	}
 
-	protected FramedEdgeTraversal<?> bothE(final int branchFactor, final String... labels) {
+	protected FramedEdgeTraversal<?, ?, ?> bothE(final int branchFactor, final String... labels) {
 		return new FramedTraversalImpl(graph(), this).asVertices().bothE(branchFactor, labels);
 	}
 
-	protected FramedEdgeTraversal<?> bothE(final String... labels) {
+	protected FramedEdgeTraversal<?, ?, ?> bothE(final String... labels) {
 		return new FramedTraversalImpl(graph(), this).asVertices().bothE(labels);
 	}
 
@@ -91,7 +91,7 @@ public abstract class FramedVertex extends FramedElement {
 
 
     protected void unlinkOut(FramedVertex vertex, String ...labels){
-        FramedEdgeTraversal<?> pipeline = outE(labels).as("e");
+        FramedEdgeTraversal<?, ?, ?> pipeline = outE(labels).as("e");
         if(vertex != null){
             pipeline = pipeline.inV().retain(Lists.newArrayList(vertex)).back("e").asEdges();
         }
@@ -99,7 +99,7 @@ public abstract class FramedVertex extends FramedElement {
     }
 
     protected void unlinkIn(FramedVertex vertex, String ...labels){
-        FramedEdgeTraversal<?> pipeline = inE(labels).as("e");
+        FramedEdgeTraversal<?, ?, ?> pipeline = inE(labels).as("e");
         if(vertex != null){
             pipeline = pipeline.outV().retain(Lists.newArrayList(vertex)).back("e").asEdges();
         }
@@ -107,7 +107,7 @@ public abstract class FramedVertex extends FramedElement {
     }
 
     protected void unlinkBoth(FramedVertex vertex, String ...labels){
-        FramedEdgeTraversal<?> pipeline = bothE(labels).as("e");
+        FramedEdgeTraversal<?, ?, ?> pipeline = bothE(labels).as("e");
         if(vertex != null){
             pipeline = pipeline.bothV().retain(Lists.newArrayList(vertex)).back("e").asEdges();
         }
@@ -152,7 +152,7 @@ public abstract class FramedVertex extends FramedElement {
 	 * 
 	 * @return
 	 */
-	protected FramedVertexTraversal<?> traversal() {
+	protected FramedVertexTraversal<?, ?, ?> traversal() {
 		return new FramedTraversalImpl(graph(), this).asVertices();
 	}
 	

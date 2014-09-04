@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.tinkerpop.blueprints.Predicate;
-import com.tinkerpop.blueprints.Vertex;
 import com.tinkerpop.gremlin.Tokens;
 import com.tinkerpop.pipes.Pipe;
 import com.tinkerpop.pipes.transform.TransformPipe;
@@ -14,8 +13,14 @@ import com.tinkerpop.pipes.util.structures.Pair;
 import com.tinkerpop.pipes.util.structures.Table;
 import com.tinkerpop.pipes.util.structures.Tree;
 
-public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2> extends FramedTraversal<GenericFramedVertex, SideEffect, GenericParam1, GenericParam2> {
-
+/**
+ * Edge specific traversal.
+ * 
+ * @author bryn
+ *
+ * @param <SideEffect>
+ */
+public interface EdgeTraversal<SideEffect, GenericParam1, GenericParam2> extends Traversal<TEdge, SideEffect, GenericParam1, GenericParam2> {
 	/**
 	 * Check if the element has a property with provided key.
 	 *
@@ -23,7 +28,7 @@ public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2>
 	 *            the property key to check
 	 * @return the extended Pipeline
 	 */
-	public FramedVertexTraversal<?, ?, ?> has(String key);
+	public EdgeTraversal<?, ?, ?> has(String key);
 
 	/**
 	 * Add an IdFilterPipe, LabelFilterPipe, or PropertyFilterPipe to the end of
@@ -37,7 +42,7 @@ public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2>
 	 *            the object to filter on (in an OR manner)
 	 * @return the extended Pipeline
 	 */
-	public FramedVertexTraversal<?, ?, ?> has(String key, Object value);
+	public EdgeTraversal<?, ?, ?> has(String key, Object value);
 
 	/**
 	 * Add an IdFilterPipe, LabelFilterPipe, or PropertyFilterPipe to the end of
@@ -53,7 +58,7 @@ public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2>
 	 *            the object to filter on
 	 * @return the extended Pipeline
 	 */
-	public FramedVertexTraversal<?, ?, ?> has(String key, Tokens.T compareToken, Object value);
+	public EdgeTraversal<?, ?, ?> has(String key, Tokens.T compareToken, Object value);
 
 	/**
 	 * Add an IdFilterPipe, LabelFilterPipe, or PropertyFilterPipe to the end of
@@ -69,7 +74,7 @@ public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2>
 	 *            the object to filter on
 	 * @return the extended Pipeline
 	 */
-	public FramedVertexTraversal<?, ?, ?> has(String key, Predicate predicate, Object value);
+	public EdgeTraversal<?, ?, ?> has(String key, Predicate predicate, Object value);
 
 	/**
 	 * Check if the element does not have a property with provided key.
@@ -78,7 +83,7 @@ public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2>
 	 *            the property key to check
 	 * @return the extended Pipeline
 	 */
-	public FramedVertexTraversal<?, ?, ?> hasNot(String key);
+	public EdgeTraversal<?, ?, ?> hasNot(String key);
 
 	/**
 	 * Add an IdFilterPipe, LabelFilterPipe, or PropertyFilterPipe to the end of
@@ -92,7 +97,7 @@ public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2>
 	 *            the objects to filter on (in an OR manner)
 	 * @return the extended Pipeline
 	 */
-	public FramedVertexTraversal<?, ?, ?> hasNot(String key, Object value);
+	public EdgeTraversal<?, ?, ?> hasNot(String key, Object value);
 
 	/**
 	 * Add an IntervalFilterPipe to the end of the Pipeline. If the incoming
@@ -108,139 +113,31 @@ public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2>
 	 *            the end of the interval (exclusive)
 	 * @return the extended Pipeline
 	 */
-	public <C> FramedVertexTraversal<?, ?, ?> interval(String key, Comparable<C> startValue, Comparable<C> endValue);
+	public <C> EdgeTraversal<?, ?, ?> interval(String key, Comparable<C> startValue, Comparable<C> endValue);
 
 	/**
-	 * Add an OutPipe to the end of the Pipeline. Emit the adjacent outgoing
-	 * vertices of the incoming vertex.
+	 * Add an InVertexPipe to the end of the Pipeline. Emit the head vertex of
+	 * the incoming edge.
 	 *
-	 * @param branchFactor
-	 *            the number of max adjacent vertices for each incoming vertex
-	 * @param labels
-	 *            the edge labels to traverse
 	 * @return the extended Pipeline
 	 */
-	public FramedVertexTraversal<?, ?, ?> out(int branchFactor, String... labels);
+	public VertexTraversal<?, ?, ?> inV();
 
 	/**
-	 * Add an OutPipe to the end of the Pipeline. Emit the adjacent outgoing
-	 * vertices of the incoming vertex.
+	 * Add an OutVertexPipe to the end of the Pipeline. Emit the tail vertex of
+	 * the incoming edge.
 	 *
-	 * @param labels
-	 *            the edge labels to traverse
 	 * @return the extended Pipeline
 	 */
-	public FramedVertexTraversal<?, ?, ?> out(String... labels);
+	public VertexTraversal<?, ?, ?> outV();
 
 	/**
-	 * Add a InPipe to the end of the Pipeline. Emit the adjacent incoming
-	 * vertices for the incoming vertex.
+	 * Add a BothVerticesPipe to the end of the Pipeline. Emit both the tail and
+	 * head vertices of the incoming edge.
 	 *
-	 * @param branchFactor
-	 *            the number of max adjacent vertices for each incoming vertex
-	 * @param labels
-	 *            the edge labels to traverse
 	 * @return the extended Pipeline
 	 */
-	public FramedVertexTraversal<?, ?, ?> in(int branchFactor, String... labels);
-
-	/**
-	 * Add a InPipe to the end of the Pipeline. Emit the adjacent incoming
-	 * vertices for the incoming vertex.
-	 *
-	 * @param labels
-	 *            the edge labels to traverse
-	 * @return the extended Pipeline
-	 */
-	public FramedVertexTraversal<?, ?, ?> in(String... labels);
-
-	/**
-	 * Add a BothPipe to the end of the Pipeline. Emit both the incoming and
-	 * outgoing adjacent vertices for the incoming vertex.
-	 *
-	 * @param branchFactor
-	 *            the number of max adjacent vertices for each incoming vertex
-	 * @param labels
-	 *            the edge labels to traverse
-	 * @return the extended Pipeline
-	 */
-	public FramedVertexTraversal<?, ?, ?> both(int branchFactor, String... labels);
-
-	/**
-	 * Add a BothPipe to the end of the Pipeline. Emit both the incoming and
-	 * outgoing adjacent vertices for the incoming vertex.
-	 *
-	 * @param labels
-	 *            the edge labels to traverse
-	 * @return the extended Pipeline
-	 */
-	public FramedVertexTraversal<?, ?, ?> both(String... labels);
-
-	/**
-	 * Add an OutEdgesPipe to the end of the Pipeline. Emit the outgoing edges
-	 * for the incoming vertex.
-	 *
-	 * @param branchFactor
-	 *            the number of max incident edges for each incoming vertex
-	 * @param labels
-	 *            the edge labels to traverse
-	 * @return the extended Pipeline
-	 */
-	public FramedEdgeTraversal<?, ?, ?> outE(int branchFactor, String... labels);
-
-	/**
-	 * Add an OutEdgesPipe to the end of the Pipeline. Emit the outgoing edges
-	 * for the incoming vertex.
-	 *
-	 * @param labels
-	 *            the edge labels to traverse
-	 * @return the extended Pipeline
-	 */
-	public FramedEdgeTraversal<?, ?, ?> outE(String... labels);
-
-	/**
-	 * Add an InEdgesPipe to the end of the Pipeline. Emit the incoming edges
-	 * for the incoming vertex.
-	 *
-	 * @param branchFactor
-	 *            the number of max incident edges for each incoming vertex
-	 * @param labels
-	 *            the edge labels to traverse
-	 * @return the extended Pipeline
-	 */
-	public FramedEdgeTraversal<?, ?, ?> inE(int branchFactor, String... labels);
-
-	/**
-	 * Add an InEdgesPipe to the end of the Pipeline. Emit the incoming edges
-	 * for the incoming vertex.
-	 *
-	 * @param labels
-	 *            the edge labels to traverse
-	 * @return the extended Pipeline
-	 */
-	public FramedEdgeTraversal<?, ?, ?> inE(String... labels);
-
-	/**
-	 * Add a BothEdgesPipe to the end of the Pipeline. Emit both incoming and
-	 * outgoing edges for the incoming vertex.
-	 *
-	 * @param branchFactor
-	 *            the number of max incident edges for each incoming vertex
-	 * @param labels
-	 *            the edge labels to traverse
-	 * @return the extended Pipeline
-	 */
-	public FramedEdgeTraversal<?, ?, ?> bothE(int branchFactor, String... labels);
-
-	/**
-	 * Add a BothEdgesPipe to the end of the Pipeline. Emit both incoming and
-	 * outgoing edges for the incoming vertex.
-	 *
-	 * @param labels
-	 *            the edge labels to traverse
-	 * @return the extended Pipeline
-	 */
-	public FramedEdgeTraversal<?, ?, ?> bothE(String... labels);
+	public VertexTraversal<?, ?, ?> bothV();
 
 	/**
 	 * Get the next object emitted from the pipeline. If no such object exists,
@@ -250,7 +147,7 @@ public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2>
 	 *            The type of frame for the element.
 	 * @return the next emitted object
 	 */
-	public <N extends FramedVertex> N next(Class<N> kind);
+	public <T extends FramedEdge> T next(Class<T> kind);
 
 	/**
 	 * Return the next X objects in the traversal as a list.
@@ -261,7 +158,7 @@ public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2>
 	 *            the type of frame to for each element.
 	 * @return a list of X objects (if X objects occur)
 	 */
-	public <N extends FramedVertex> List<N> next(int amount, Class<N> kind);
+	public <T extends FramedEdge> List<T> next(int amount, Class<T> kind);
 
 	/**
 	 * Return an iterator of framed elements.
@@ -270,7 +167,7 @@ public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2>
 	 *            The kind of framed elements to return.
 	 * @return An iterator of framed elements.
 	 */
-	public <N extends FramedVertex> Iterable<N> frame(Class<N> kind);
+	public <T extends FramedEdge> Iterable<T> frame(Class<T> kind);
 
 	/**
 	 * Return a list of all the objects in the pipeline.
@@ -279,119 +176,15 @@ public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2>
 	 *            The kind of framed elements to return.
 	 * @return a list of all the objects
 	 */
-	public <N extends FramedVertex> List<N> toList(Class<N> kind);
+	public <T extends FramedEdge> List<T> toList(Class<T> kind);
 
 	/**
-	 * Add a LinkPipe to the end of the Pipeline. Emit the incoming vertex, but
-	 * have other vertex provide an outgoing edge to incoming vertex.
+	 * Add an LabelPipe to the end of the Pipeline. Emit the label of the
+	 * incoming edge.
 	 *
-	 * @param label
-	 *            the edge label
-	 * @param namedStep
-	 *            the step name that has the other vertex to link to
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedVertexTraversal<?, ?, ?> linkOut(String label, String namedStep);
-
-	/**
-	 * Add a LinkPipe to the end of the Pipeline. Emit the incoming vertex, but
-	 * have other vertex provide an incoming edge to incoming vertex.
-	 *
-	 * @param label
-	 *            the edge label
-	 * @param namedStep
-	 *            the step name that has the other vertex to link to
-	 * @return the extended Pipeline
-	 */
-	public abstract FramedVertexTraversal<?, ?, ?> linkIn(String label, String namedStep);
-
-	/**
-	 * Add a LinkPipe to the end of the Pipeline. Emit the incoming vertex, but
-	 * have other vertex provide an incoming and outgoing edge to incoming
-	 * vertex.
-	 *
-	 * @param label
-	 *            the edge label
-	 * @param namedStep
-	 *            the step name that has the other vertex to link to
-	 * @return the extended Pipeline
-	 */
-	public abstract FramedVertexTraversal<?, ?, ?> linkBoth(String label, String namedStep);
-
-	/**
-	 * Add a LinkPipe to the end of the Pipeline. Emit the incoming vertex, but
-	 * have other vertex provide an outgoing edge to incoming vertex.
-	 *
-	 * @param label
-	 *            the edge label
-	 * @param other
-	 *            the other vertex
-	 * @return the extended Pipeline
-	 */
-	public abstract FramedVertexTraversal<?, ?, ?> linkOut(String label, Vertex other);
-
-	/**
-	 * Add a LinkPipe to the end of the Pipeline. Emit the incoming vertex, but
-	 * have other vertex provide an outgoing edge to incoming vertex.
-	 *
-	 * @param label
-	 *            the edge label
-	 * @param other
-	 *            the other vertex
-	 * @return the extended Pipeline
-	 */
-	public abstract FramedVertexTraversal<?, ?, ?> linkOut(String label, FramedVertex other);
-
-	/**
-	 * Add a LinkPipe to the end of the Pipeline. Emit the incoming vertex, but
-	 * have other vertex provide an incoming edge to incoming vertex.
-	 *
-	 * @param label
-	 *            the edge label
-	 * @param other
-	 *            the other vertex
-	 * @return the extended Pipeline
-	 */
-	public abstract FramedVertexTraversal<?, ?, ?> linkIn(String label, Vertex other);
-
-	/**
-	 * Add a LinkPipe to the end of the Pipeline. Emit the incoming vertex, but
-	 * have other vertex provide an incoming and outgoing edge to incoming
-	 * vertex.
-	 *
-	 * @param label
-	 *            the edge label
-	 * @param other
-	 *            the other vertex
-	 * @return the extended Pipeline
-	 */
-	public abstract FramedVertexTraversal<?, ?, ?> linkBoth(String label, Vertex other);
-
-	/**
-	 * Add a LinkPipe to the end of the Pipeline. Emit the incoming vertex, but
-	 * have other vertex provide an incoming edge to incoming vertex.
-	 *
-	 * @param label
-	 *            the edge label
-	 * @param other
-	 *            the other vertex
-	 * @return the extended Pipeline
-	 */
-	FramedVertexTraversal<?, ?, ?> linkIn(String label, FramedVertex other);
-
-	/**
-	 * Add a LinkPipe to the end of the Pipeline. Emit the incoming vertex, but
-	 * have other vertex provide an incoming and outgoing edge to incoming
-	 * vertex.
-	 *
-	 * @param label
-	 *            the edge label
-	 * @param other
-	 *            the other vertex
-	 * @return the extended Pipeline
-	 */
-	FramedVertexTraversal<?, ?, ?> linkBoth(String label, FramedVertex other);
-
+	public abstract Traversal<String, SideEffect, ?, ?> label();
 
 	/**
 	 * Add a DuplicateFilterPipe to the end of the Pipeline. Will only emit the
@@ -399,7 +192,7 @@ public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2>
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedVertexTraversal<?, ?, ?> dedup();
+	public abstract EdgeTraversal<?, ?, ?> dedup();
 
 	/**
 	 * Add a DuplicateFilterPipe to the end of the Pipeline. Will only emit the
@@ -410,7 +203,7 @@ public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2>
 	 *            on
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedVertexTraversal<?, ?, ?> dedup(TraversalFunction<GenericFramedVertex, ?> dedupFunction);
+	public abstract EdgeTraversal<?, ?, ?> dedup(TraversalFunction<TEdge, ?> dedupFunction);
 
 	/**
 	 * Add an ExceptFilterPipe to the end of the Pipeline. Will only emit the
@@ -420,7 +213,7 @@ public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2>
 	 *            the collection except from the stream
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedVertexTraversal<?, ?, ?> except(Collection<?> collection);
+	public abstract EdgeTraversal<?, ?, ?> except(Collection<?> collection);
 
 	/**
 	 * Add an ExceptFilterPipe to the end of the Pipeline. Will only emit the
@@ -431,7 +224,7 @@ public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2>
 	 *            the named steps in the pipeline
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedVertexTraversal<?, ?, ?> except(String... namedSteps);
+	public abstract EdgeTraversal<?, ?, ?> except(String... namedSteps);
 
 	/**
 	 * Add an FilterFunctionPipe to the end of the Pipeline. The serves are an
@@ -442,9 +235,7 @@ public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2>
 	 *            the filter function of the pipe
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedVertexTraversal<?, ?, ?> filter(TraversalFunction<GenericFramedVertex, Boolean> filterFunction);
-
-	
+	public abstract EdgeTraversal<?, ?, ?> filter(TraversalFunction<TEdge, Boolean> filterFunction);
 
 	/**
 	 * Add a RandomFilterPipe to the end of the Pipeline. A biased coin toss
@@ -454,7 +245,7 @@ public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2>
 	 *            the bias of the random coin
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedVertexTraversal<?, ?, ?> random(Double bias);
+	public abstract EdgeTraversal<?, ?, ?> random(Double bias);
 
 	/**
 	 * Add a RageFilterPipe to the end of the Pipeline. Analogous to a high/low
@@ -466,7 +257,7 @@ public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2>
 	 *            the high end of the range
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedVertexTraversal<?, ?, ?> range(int low, int high);
+	public abstract EdgeTraversal<?, ?, ?> range(int low, int high);
 
 	/**
 	 * Add a RetainFilterPipe to the end of the Pipeline. Will emit the object
@@ -476,7 +267,7 @@ public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2>
 	 *            the collection to retain
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedVertexTraversal<?, ?, ?> retain(Collection<?> collection);
+	public abstract EdgeTraversal<?, ?, ?> retain(Collection<?> collection);
 
 	/**
 	 * Add a RetainFilterPipe to the end of the Pipeline. Will only emit the
@@ -486,7 +277,7 @@ public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2>
 	 *            the named steps in the pipeline
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedVertexTraversal<?, ?, ?> retain(String... namedSteps);
+	public abstract EdgeTraversal<?, ?, ?> retain(String... namedSteps);
 
 	/**
 	 * Add an AggregatePipe to the end of the Pipeline. The objects prior to
@@ -494,7 +285,7 @@ public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2>
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedVertexTraversal<Collection<GenericFramedVertex>, GenericFramedVertex, ?> aggregate();
+	public abstract EdgeTraversal<Collection<TEdge>, TEdge, ?> aggregate();
 
 	/**
 	 * Add an AggregatePipe to the end of the Pipeline. The objects prior to
@@ -504,7 +295,7 @@ public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2>
 	 *            the collection to aggregate results into
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedVertexTraversal<Collection<GenericFramedVertex>, GenericFramedVertex, ?> aggregate(Collection<GenericFramedVertex> aggregate);
+	public abstract EdgeTraversal<Collection<TEdge>, TEdge, ?> aggregate(Collection<TEdge> aggregate);
 
 	/**
 	 * Add an AggregatePipe to the end of the Pipeline. The results of the
@@ -518,8 +309,8 @@ public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2>
 	 *            the aggregate
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> FramedVertexTraversal<Collection<N>, N, ?> aggregate(Collection<GenericFramedVertex> aggregate,
-			TraversalFunction<GenericFramedVertex, N> aggregateFunction);
+	public abstract <N> EdgeTraversal<Collection<N>, N, ?> aggregate(Collection<TEdge> aggregate,
+			TraversalFunction<TEdge, N> aggregateFunction);
 
 	/**
 	 * Add an AggregatePipe to the end of the Pipeline. The results of the
@@ -531,7 +322,7 @@ public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2>
 	 *            the aggregate
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> FramedVertexTraversal<Collection<N>, N, ?> aggregate(TraversalFunction<GenericFramedVertex, N> aggregateFunction);
+	public abstract <N> EdgeTraversal<Collection<N>, N, ?> aggregate(TraversalFunction<TEdge, N> aggregateFunction);
 
 	/**
 	 * Add a GroupByPipe to the end of the Pipeline. Group the objects inputted
@@ -546,8 +337,8 @@ public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2>
 	 *            the function that generates the value from the function
 	 * @return the extended Pipeline
 	 */
-	public abstract <K, V> FramedVertexTraversal<Map<K, List<V>>, K, List<V>> groupBy(Map<K, List<V>> map,
-			TraversalFunction<GenericFramedVertex, K> keyFunction, TraversalFunction<GenericFramedVertex, V> valueFunction);
+	public abstract <K, V> EdgeTraversal<Map<K, List<V>>, K, List<V>> groupBy(Map<K, List<V>> map,
+			TraversalFunction<TEdge, K> keyFunction, TraversalFunction<TEdge, V> valueFunction);
 
 	/**
 	 * Add a GroupByPipe to the end of the Pipeline. Group the objects inputted
@@ -560,8 +351,8 @@ public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2>
 	 *            the function that generates the value from the function
 	 * @return the extended Pipeline
 	 */
-	public abstract <K, V> FramedVertexTraversal<Map<K, List<V>>, K, List<V>> groupBy(TraversalFunction<GenericFramedVertex, K> keyFunction,
-			TraversalFunction<GenericFramedVertex, V> valueFunction);
+	public abstract <K, V> EdgeTraversal<Map<K, List<V>>, K, List<V>> groupBy(TraversalFunction<TEdge, K> keyFunction,
+			TraversalFunction<TEdge, V> valueFunction);
 
 	/**
 	 * Add a GroupByReducePipe to the end of the Pipeline. Group the objects
@@ -582,8 +373,9 @@ public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2>
 	 *            the function that reduces the value lists
 	 * @return the extended Pipeline
 	 */
-	public abstract <K, V, V2> FramedVertexTraversal<Map<K, V2>, K, V2> groupBy(Map<K, V2> reduceMap,
-			TraversalFunction<GenericFramedVertex, K> keyFunction, TraversalFunction<GenericFramedVertex, V> valueFunction, TraversalFunction<List<V>, V2> reduceFunction);
+	public abstract <K, V, V2> EdgeTraversal<Map<K, V2>, K, V2> groupBy(Map<K, V2> reduceMap,
+			TraversalFunction<TEdge, K> keyFunction, TraversalFunction<TEdge, V> valueFunction,
+			TraversalFunction<List<V>, V2> reduceFunction);
 
 	/**
 	 * Add a GroupByReducePipe to the end of the Pipeline. Group the objects
@@ -601,8 +393,8 @@ public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2>
 	 *            the function that reduces the value lists
 	 * @return the extended Pipeline
 	 */
-	public abstract <K, V, V2> FramedVertexTraversal<Map<K, V2>, K, V2> groupBy(TraversalFunction<GenericFramedVertex, K> keyFunction,
-			TraversalFunction<GenericFramedVertex, V> valueFunction, TraversalFunction<List<V>, V2> reduceFunction);
+	public abstract <K, V, V2> EdgeTraversal<Map<K, V2>, K, V2> groupBy(TraversalFunction<TEdge, K> keyFunction,
+			TraversalFunction<TEdge, V> valueFunction, TraversalFunction<List<V>, V2> reduceFunction);
 
 	/**
 	 * Add a GroupCountPipe or GroupCountFunctionPipe to the end of the
@@ -618,8 +410,9 @@ public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2>
 	 *            the value function to determine map value
 	 * @return the extended Pipeline
 	 */
-	public abstract <K> FramedVertexTraversal<Map<K, Number>, K, Number> groupCount(Map<K, Number> map,
-			TraversalFunction<GenericFramedVertex, K> keyFunction, TraversalFunction<Pair<GenericFramedVertex, Number>, Number> valueFunction);
+	public abstract <K> EdgeTraversal<Map<K, Number>, K, Number> groupCount(Map<K, Number> map,
+			TraversalFunction<TEdge, K> keyFunction,
+			TraversalFunction<Pair<TEdge, Number>, Number> valueFunction);
 
 	/**
 	 * Add a GroupCountPipe or GroupCountFunctionPipe to the end of the
@@ -633,8 +426,8 @@ public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2>
 	 *            the value function to determine map value
 	 * @return the extended Pipeline
 	 */
-	public abstract <K> FramedVertexTraversal<Map<K, Number>, K, Number> groupCount(TraversalFunction<GenericFramedVertex, K> keyFunction,
-			TraversalFunction<Pair<GenericFramedVertex, Number>, Number> valueFunction);
+	public abstract <K> EdgeTraversal<Map<K, Number>, K, Number> groupCount(TraversalFunction<TEdge, K> keyFunction,
+			TraversalFunction<Pair<TEdge, Number>, Number> valueFunction);
 
 	/**
 	 * Add a GroupCountPipe or GroupCountFunctionPipe to the end of the
@@ -648,7 +441,8 @@ public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2>
 	 *            the key function to determine map key
 	 * @return the extended Pipeline
 	 */
-	public abstract <K> FramedVertexTraversal<Map<K, Number>, K, Number> groupCount(Map<K, Number> map, TraversalFunction<GenericFramedVertex, K> keyFunction);
+	public abstract <K> EdgeTraversal<Map<K, Number>, K, Number> groupCount(Map<K, Number> map,
+			TraversalFunction<TEdge, K> keyFunction);
 
 	/**
 	 * Add a GroupCountPipe or GroupCountFunctionPipe to the end of the
@@ -660,7 +454,7 @@ public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2>
 	 *            the key function to determine map key
 	 * @return the extended Pipeline
 	 */
-	public abstract <K> FramedVertexTraversal<Map<K, Number>, K, Number> groupCount(TraversalFunction<GenericFramedVertex, K> keyFunction);
+	public abstract <K> EdgeTraversal<Map<K, Number>, K, Number> groupCount(TraversalFunction<TEdge, K> keyFunction);
 
 	/**
 	 * Add a GroupCountPipe to the end of the Pipeline. A map is maintained of
@@ -671,7 +465,7 @@ public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2>
 	 *            a provided count map
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedVertexTraversal<Map<GenericFramedVertex, Number>, GenericFramedVertex, Number> groupCount(Map<GenericFramedVertex, Number> map);
+	public abstract EdgeTraversal<Map<TEdge, Number>, TEdge, Number> groupCount(Map<TEdge, Number> map);
 
 	/**
 	 * Add a GroupCountPipe to the end of the Pipeline. A map is maintained of
@@ -680,7 +474,7 @@ public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2>
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedVertexTraversal<Map<GenericFramedVertex, Number>, GenericFramedVertex, Number> groupCount();
+	public abstract EdgeTraversal<Map<TEdge, Number>, TEdge, Number> groupCount();
 
 	/**
 	 * Add a SideEffectFunctionPipe to the end of the Pipeline. The provided
@@ -690,7 +484,7 @@ public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2>
 	 *            the function of the pipe
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedVertexTraversal<?, ?, ?> sideEffect(SideEffectFunction<GenericFramedVertex> sideEffectFunction);
+	public abstract EdgeTraversal<?, ?, ?> sideEffect(SideEffectFunction<TEdge> sideEffectFunction);
 
 	/**
 	 * Add a StorePipe to the end of the Pipeline. Lazily store the incoming
@@ -700,7 +494,7 @@ public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2>
 	 *            the collection to store results into
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedVertexTraversal<Collection<GenericFramedVertex>, GenericFramedVertex, ?> store(Collection<GenericFramedVertex> storage);
+	public abstract EdgeTraversal<Collection<TEdge>, TEdge, ?> store(Collection<TEdge> storage);
 
 	/**
 	 * Add a StorePipe to the end of the Pipeline. Lazily store the object
@@ -714,8 +508,8 @@ public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2>
 	 *            the storage collection
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> FramedVertexTraversal<Collection<N>, N, ?> store(Collection<N> storage,
-			TraversalFunction<GenericFramedVertex, N> storageFunction);
+	public abstract <N> EdgeTraversal<Collection<N>, N, ?> store(Collection<N> storage,
+			TraversalFunction<TEdge, N> storageFunction);
 
 	/**
 	 * Add an StorePipe to the end of the Pipeline. An ArrayList storage
@@ -723,7 +517,7 @@ public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2>
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedVertexTraversal<Collection<GenericFramedVertex>, GenericFramedVertex, ?> store();
+	public abstract EdgeTraversal<Collection<TEdge>, TEdge, ?> store();
 
 	/**
 	 * Add a StorePipe to the end of the Pipeline. An ArrayList storage
@@ -735,7 +529,7 @@ public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2>
 	 *            the storage collection
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> FramedVertexTraversal<Collection<N>, N, ?> store(TraversalFunction<GenericFramedVertex, N> storageFunction);
+	public abstract <N> EdgeTraversal<Collection<N>, N, ?> store(TraversalFunction<TEdge, N> storageFunction);
 
 	/**
 	 * Add a TablePipe to the end of the Pipeline. This step is used for
@@ -749,7 +543,7 @@ public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2>
 	 *            the post-processing function for each column
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedVertexTraversal<Table, ?, ?> table(Table table, Collection<String> stepNames,
+	public abstract EdgeTraversal<Table, ?, ?> table(Table table, Collection<String> stepNames,
 			TraversalFunction<?, ?>... columnFunctions);
 
 	/**
@@ -762,7 +556,7 @@ public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2>
 	 *            the post-processing function for each column
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedVertexTraversal<Table, ?, ?> table(Table table, TraversalFunction<?, ?>... columnFunctions);
+	public abstract EdgeTraversal<Table, ?, ?> table(Table table, TraversalFunction<?, ?>... columnFunctions);
 
 	/**
 	 * Add a TablePipe to the end of the Pipeline. This step is used for
@@ -772,7 +566,7 @@ public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2>
 	 *            the post-processing function for each column
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedVertexTraversal<Table, ?, ?> table(TraversalFunction<?, ?>... columnFunctions);
+	public abstract EdgeTraversal<Table, ?, ?> table(TraversalFunction<?, ?>... columnFunctions);
 
 	/**
 	 * Add a TablePipe to the end of the Pipeline. This step is used for
@@ -782,7 +576,7 @@ public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2>
 	 *            the table to fill
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedVertexTraversal<Table, ?, ?> table(Table table);
+	public abstract EdgeTraversal<Table, ?, ?> table(Table table);
 
 	/**
 	 * Add a TablePipe to the end of the Pipeline. This step is used for
@@ -790,7 +584,7 @@ public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2>
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedVertexTraversal<Table, ?, ?> table();
+	public abstract EdgeTraversal<Table, ?, ?> table();
 
 	/**
 	 * Add a TreePipe to the end of the Pipeline This step maintains an internal
@@ -804,7 +598,7 @@ public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2>
 	 *            fashion
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> FramedVertexTraversal<Tree<N>, N, ?> tree(Tree<N> tree, TraversalFunction<?, ?>... branchFunctions);
+	public abstract <N> EdgeTraversal<Tree<N>, N, ?> tree(Tree<N> tree, TraversalFunction<?, ?>... branchFunctions);
 
 	/**
 	 * Add a TreePipe to the end of the Pipeline This step maintains an internal
@@ -815,7 +609,7 @@ public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2>
 	 *            fashion
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedVertexTraversal<Tree<Object>, ?, ?> tree(TraversalFunction<?, ?>... branchFunctions);
+	public abstract EdgeTraversal<Tree<Object>, ?, ?> tree(TraversalFunction<?, ?>... branchFunctions);
 
 	/**
 	 * Add a GatherPipe to the end of the Pipeline. All the objects previous to
@@ -823,7 +617,7 @@ public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2>
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<List<GenericFramedVertex>, ?, GenericFramedVertex, ?> gather();
+	public abstract Traversal<List<TEdge>, ?, TEdge, ?> gather();
 
 	/**
 	 * Add an IdentityPipe to the end of the Pipeline. Useful in various
@@ -832,7 +626,7 @@ public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2>
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedVertexTraversal<?, ?, ?> identity();
+	public abstract EdgeTraversal<?, ?, ?> identity();
 
 	/**
 	 * Add a MemoizePipe to the end of the Pipeline. This step will hold a Map
@@ -844,7 +638,7 @@ public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2>
 	 *            the name of the step previous to memoize to
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedVertexTraversal<?, ?, ?> memoize(String namedStep);
+	public abstract EdgeTraversal<?, ?, ?> memoize(String namedStep);
 
 	/**
 	 * Add a MemoizePipe to the end of the Pipeline. This step will hold a Map
@@ -858,7 +652,7 @@ public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2>
 	 *            the memoization map
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedVertexTraversal<?, ?, ?> memoize(String namedStep, Map<?, ?> map);
+	public abstract EdgeTraversal<?, ?, ?> memoize(String namedStep, Map<?, ?> map);
 
 	/**
 	 * Add an OrderPipe to the end of the Pipeline. This step will sort the
@@ -866,7 +660,19 @@ public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2>
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedVertexTraversal<?, ?, ?> order();
+	public abstract EdgeTraversal<?, ?, ?> order();
+
+	/**
+	 * Add an OrderPipe to the end of the Pipeline. This step will sort the
+	 * objects in the stream in a default Comparable order.
+	 *
+	 * @param order
+	 *            if the stream is composed of comparable objects, then
+	 *            increment or decrement can be specified
+	 * @return the extended Pipeline
+	 */
+	public abstract EdgeTraversal<?, ?, ?> order(TransformPipe.Order order);
+
 	/**
 	 * Add an OrderPipe to the end of the Pipeline. This step will sort the
 	 * objects in the stream according to a comparator defined in the provided
@@ -876,30 +682,7 @@ public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2>
 	 *            a comparator function of two objects of type E
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedVertexTraversal<?, ?, ?> order(Comparator<GenericFramedVertex> compareFunction);
-	/**
-	 * Add an OrderPipe to the end of the Pipeline. This step will sort the
-	 * objects in the stream in a default Comparable order.
-	 *
-	 * @param order
-	 *            if the stream is composed of comparable objects, then
-	 *            increment or decrement can be specified
-	 * @return the extended Pipeline
-	 */
-	public abstract FramedVertexTraversal<?, ?, ?> order(TransformPipe.Order order);
-
-	/**
-	 * Add an OrderPipe to the end of the Pipeline. This step will sort the
-	 * objects in the stream in a default Comparable order.
-	 *
-	 * @param order
-	 *            if the stream is composed of comparable objects, then
-	 *            increment or decrement can be specified
-	 * @return the extended Pipeline
-	 */
-	public abstract FramedVertexTraversal<?, ?, ?> order(Tokens.T order);
-
-
+	public abstract EdgeTraversal<?, ?, ?> order(Comparator<TEdge> compareFunction);
 
 	/**
 	 * Wrap the previous step in an AsPipe. Useful for naming steps and is used
@@ -910,7 +693,7 @@ public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2>
 	 *            the name of the AsPipe
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedVertexTraversal<?, ?, ?> as(String name);
+	public abstract EdgeTraversal<?, ?, ?> as(String name);
 
 	/**
 	 * Add a CyclicPathFilterPipe to the end of the Pipeline. If the object's
@@ -919,25 +702,24 @@ public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2>
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedVertexTraversal<?, ?, ?> simplePath();
-	
+	public abstract EdgeTraversal<?, ?, ?> simplePath();
+
 	/**
 	 * Fill the provided collection with the objects in the pipeline.
 	 *
-	 * @param collection the collection to fill
+	 * @param collection
+	 *            the collection to fill
 	 * @return the collection filled
 	 */
-	public abstract <N extends FramedVertex> Collection<N> fill(Collection<N> collection, Class<N> clazz);
-	
-	
+	public abstract <N extends FramedEdge> Collection<N> fill(Collection<N> collection, Class<N> clazz);
+
 	/**
-	 * Causes the pipeline to be greedy up to this step. 
+	 * Causes the pipeline to be greedy up to this step.
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedVertexTraversal<?, ?, ?> gatherScatter();
-	
-	
+	public abstract EdgeTraversal<?, ?, ?> gatherScatter();
+
 	/**
 	 * Add an AndFilterPipe to the end the Pipeline. If the internal pipes all
 	 * yield objects, then the object is not filtered. The provided pipes are
@@ -947,7 +729,7 @@ public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2>
 	 *            the internal pipes of the AndFilterPipe
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedVertexTraversal<?, ?, ?> and(TraversalFunction<GenericFramedVertex, FramedTraversal<?,?,?,?>>... pipes); 
+	public abstract EdgeTraversal<?, ?, ?> and(TraversalFunction<TEdge, Traversal<?, ?, ?, ?>>... pipes);
 
 	/**
 	 * Add an OrFilterPipe to the end the Pipeline. Will only emit the object if
@@ -958,5 +740,6 @@ public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2>
 	 *            the internal pipes of the OrFilterPipe
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedVertexTraversal<?, ?, ?> or(TraversalFunction<GenericFramedVertex, FramedTraversal<?,?,?,?>>... pipes);
+	public abstract EdgeTraversal<?, ?, ?> or(TraversalFunction<TEdge, Traversal<?, ?, ?, ?>>... pipes);
+
 }

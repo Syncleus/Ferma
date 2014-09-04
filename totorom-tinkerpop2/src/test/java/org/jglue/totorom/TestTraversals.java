@@ -15,10 +15,10 @@ public class TestTraversals {
 	public void testOrderMap() {
 
 		Assert.assertEquals(4,
-				graph.V().out().groupCount().cap().orderMap(new Comparator<Map.Entry<GenericFramedVertex, Number>>() {
+				graph.V().out().groupCount().cap().orderMap(new Comparator<Map.Entry<TVertex, Number>>() {
 
 					@Override
-					public int compare(Map.Entry<GenericFramedVertex, Number> o1, Map.Entry<GenericFramedVertex, Number> o2) {
+					public int compare(Map.Entry<TVertex, Number> o1, Map.Entry<TVertex, Number> o2) {
 						String id1 = o1.getKey().getId();
 						String id2 = o2.getKey().getId();
 						return id1.compareTo(id2);
@@ -29,10 +29,10 @@ public class TestTraversals {
 
 	@Test
 	public void testAnd() {
-		Assert.assertEquals(3, graph.V().and(new TraversalFunction<GenericFramedVertex, FramedTraversal<?, ?, ?, ?>>() {
+		Assert.assertEquals(3, graph.V().and(new TraversalFunction<TVertex, Traversal<?, ?, ?, ?>>() {
 
 			@Override
-			public FramedTraversal<?, ?, ?, ?> compute(GenericFramedVertex argument) {
+			public Traversal<?, ?, ?, ?> compute(TVertex argument) {
 				return argument.out().has("name");
 			}
 		}).count());
@@ -40,10 +40,10 @@ public class TestTraversals {
 	
 	@Test
 	public void testOr() {
-		Assert.assertEquals(3, graph.V().or(new TraversalFunction<GenericFramedVertex, FramedTraversal<?, ?, ?, ?>>() {
+		Assert.assertEquals(3, graph.V().or(new TraversalFunction<TVertex, Traversal<?, ?, ?, ?>>() {
 
 			@Override
-			public FramedTraversal<?, ?, ?, ?> compute(GenericFramedVertex argument) {
+			public Traversal<?, ?, ?, ?> compute(TVertex argument) {
 				return argument.out().has("name");
 			}
 		}).count());

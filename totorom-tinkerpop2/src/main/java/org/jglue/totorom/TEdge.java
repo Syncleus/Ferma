@@ -9,39 +9,39 @@ import java.util.Set;
  * @author bryn
  *
  */
-public final class GenericFramedEdge extends FramedEdge {
+public final class TEdge extends FramedEdge {
 	@Override
-	public FramedVertexTraversal<?, ?, ?> bothV() {
+	public VertexTraversal<?, ?, ?> bothV() {
 		return super.bothV();
 	}
 
 	@Override
-	public FramedVertexTraversal<?, ?, ?> inV() {
+	public VertexTraversal<?, ?, ?> inV() {
 		return super.inV();
 	}
 
 	@Override
-	public FramedVertexTraversal<?, ?, ?> outV() {
+	public VertexTraversal<?, ?, ?> outV() {
 		return super.outV();
 	}
 
 	@Override
-	public FramedEdgeTraversal<?, ?, ?> traversal() {
+	public EdgeTraversal<?, ?, ?> traversal() {
 		return super.traversal();
 	}
 
 	@Override
-	public FramedVertexTraversal<?, ?, ?> v(Object... ids) {
+	public VertexTraversal<?, ?, ?> v(Object... ids) {
 		return super.v(ids);
 	}
 
 	@Override
-	public FramedEdgeTraversal<?, ?, ?> E() {
+	public EdgeTraversal<?, ?, ?> E() {
 		return super.E();
 	}
 
 	@Override
-	public FramedVertexTraversal<?, ?, ?> V() {
+	public VertexTraversal<?, ?, ?> V() {
 		return super.V();
 	}
 

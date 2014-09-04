@@ -30,20 +30,20 @@ import com.tinkerpop.pipes.util.structures.Tree;
  *
  */
 @SuppressWarnings("rawtypes")
-class FramedTraversalImpl extends FramedTraversalBase implements FramedTraversal {
+class TraversalImpl extends TraversalBase implements Traversal {
 
 	private FramedGraph graph;
 	private GremlinPipeline pipeline;
 
-	private FramedEdgeTraversal edgeTraversal = new FramedEdgeTraversalImpl() {
+	private EdgeTraversal edgeTraversal = new EdgeTraversalImpl() {
 
 		@Override
-		public FramedVertexTraversal castToVertices() {
+		public VertexTraversal castToVertices() {
 			return vertexTraversal;
 		}
 
 		@Override
-		public FramedEdgeTraversal castToEdges() {
+		public EdgeTraversal castToEdges() {
 			return edgeTraversal;
 		}
 
@@ -57,24 +57,24 @@ class FramedTraversalImpl extends FramedTraversalBase implements FramedTraversal
 			return pipeline;
 		}
 		@Override
-		protected FramedTraversal asTraversal() {
-			return FramedTraversalImpl.this;
+		protected Traversal asTraversal() {
+			return TraversalImpl.this;
 		}
 	};
-	private FramedVertexTraversal vertexTraversal = new FramedVertexTraversalImpl(){
+	private VertexTraversal vertexTraversal = new VertexTraversalImpl(){
 		@Override
-		public FramedVertexTraversal castToVertices() {
+		public VertexTraversal castToVertices() {
 			return vertexTraversal;
 		}
 
 		@Override
-		public FramedEdgeTraversal castToEdges() {
+		public EdgeTraversal castToEdges() {
 			return edgeTraversal;
 		}
 		
 		@Override
-		protected FramedTraversal asTraversal() {
-			return FramedTraversalImpl.this;
+		protected Traversal asTraversal() {
+			return TraversalImpl.this;
 		}
 		
 
@@ -90,21 +90,21 @@ class FramedTraversalImpl extends FramedTraversalBase implements FramedTraversal
 		
 	};
 
-	private FramedTraversalImpl(FramedGraph graph, GremlinPipeline pipeline) {
+	private TraversalImpl(FramedGraph graph, GremlinPipeline pipeline) {
 		this.graph = graph;
 		this.pipeline = pipeline;
 
 	}
 
-	protected FramedTraversalImpl(FramedGraph graph, Graph delegate) {
+	protected TraversalImpl(FramedGraph graph, Graph delegate) {
 		this(graph, new GremlinPipeline<>(delegate));
 	}
 
-	protected FramedTraversalImpl(FramedGraph graph, Iterator starts) {
+	protected TraversalImpl(FramedGraph graph, Iterator starts) {
 		this(graph, new GremlinPipeline<>(starts));
 	}
 
-	protected FramedTraversalImpl(FramedGraph graph, FramedElement starts) {
+	protected TraversalImpl(FramedGraph graph, FramedElement starts) {
 		this(graph, new GremlinPipeline<>(starts.element()));
 	}
 
@@ -114,21 +114,21 @@ class FramedTraversalImpl extends FramedTraversalBase implements FramedTraversal
 
 
 	/**
-	 * @return Cast the traversal to a {@link FramedVertexTraversal}
+	 * @return Cast the traversal to a {@link VertexTraversal}
 	 */
-	public FramedVertexTraversal castToVertices() {
+	public VertexTraversal castToVertices() {
 		return vertexTraversal;
 	}
 
 	/**
-	 * @return Cast the traversal to a {@link FramedEdgeTraversal}
+	 * @return Cast the traversal to a {@link EdgeTraversal}
 	 */
-	public FramedEdgeTraversal castToEdges() {
+	public EdgeTraversal castToEdges() {
 		return edgeTraversal;
 	}
 
 	@Override
-	protected FramedTraversal asTraversal() {
+	protected Traversal asTraversal() {
 		return this;
 	}
 

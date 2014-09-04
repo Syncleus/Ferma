@@ -68,7 +68,7 @@ public class FramedGraph {
 
     <T extends FramedElement> T frameElement(Element e, Class<T> kind) {
 
-        Class<T> frameType = (kind == GenericFramedVertex.class || kind == GenericFramedEdge.class) ? kind : resolver.resolve(e, kind);
+        Class<T> frameType = (kind == TVertex.class || kind == TEdge.class) ? kind : resolver.resolve(e, kind);
         
         
         T framedElement = builder.create(e, frameType);
@@ -109,16 +109,16 @@ public class FramedGraph {
      * Query over all vertices in the graph.
      * @return The query.
      */
-    public FramedVertexTraversal<?, ?, ?> V() {
-        return new FramedTraversalImpl(this, delegate).V();
+    public VertexTraversal<?, ?, ?> V() {
+        return new TraversalImpl(this, delegate).V();
     }
 
     /**
      * Query over all edges in the graph.
      * @return The query.
      */
-    public FramedEdgeTraversal<?, ?, ?> E() {
-    	return new FramedTraversalImpl(this, delegate).E();
+    public EdgeTraversal<?, ?, ?> E() {
+    	return new TraversalImpl(this, delegate).E();
     }
 
     
@@ -127,8 +127,8 @@ public class FramedGraph {
      * @param ids The ids of the vertices.
      * @return The query.
      */
-    public FramedVertexTraversal<?, ?, ?> v(final Object... ids) {
-    	return new FramedTraversalImpl(this, Iterators.transform(Iterators.forArray(ids), new Function<Object, Vertex>() {
+    public VertexTraversal<?, ?, ?> v(final Object... ids) {
+    	return new TraversalImpl(this, Iterators.transform(Iterators.forArray(ids), new Function<Object, Vertex>() {
 
 			@Override
 			public Vertex apply(Object id) {
@@ -143,8 +143,8 @@ public class FramedGraph {
      * @param ids The ids of the edges.
      * @return The query. 
      */
-    public FramedEdgeTraversal<?, ?, ?> e(final Object... ids) {
-    	return new FramedTraversalImpl(this, Iterators.transform(Iterators.forArray(ids), new Function<Object, Edge>() {
+    public EdgeTraversal<?, ?, ?> e(final Object... ids) {
+    	return new TraversalImpl(this, Iterators.transform(Iterators.forArray(ids), new Function<Object, Edge>() {
 
 			@Override
 			public Edge apply(Object id) {

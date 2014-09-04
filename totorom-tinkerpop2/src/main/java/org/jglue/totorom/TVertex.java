@@ -7,40 +7,40 @@ import java.util.Set;
  * @author bryn
  *
  */
-public final class GenericFramedVertex extends FramedVertex {
+public final class TVertex extends FramedVertex {
 
 	@Override
-	public FramedVertexTraversal<?, ?, ?> both(int branchFactor, String... labels) {
+	public VertexTraversal<?, ?, ?> both(int branchFactor, String... labels) {
 
 		return super.both(branchFactor, labels);
 	}
 
 	@Override
-	public FramedVertexTraversal<?, ?, ?> both(String... labels) {
+	public VertexTraversal<?, ?, ?> both(String... labels) {
 
 		return super.both(labels);
 	}
 
 	@Override
-	public FramedEdgeTraversal<?, ?, ?> bothE(int branchFactor, String... labels) {
+	public EdgeTraversal<?, ?, ?> bothE(int branchFactor, String... labels) {
 
 		return super.bothE(branchFactor, labels);
 	}
 
 	@Override
-	public FramedEdgeTraversal<?, ?, ?> bothE(String... labels) {
+	public EdgeTraversal<?, ?, ?> bothE(String... labels) {
 
 		return super.bothE(labels);
 	}
 
 	@Override
-	public FramedEdgeTraversal<?, ?, ?> E() {
+	public EdgeTraversal<?, ?, ?> E() {
 
 		return super.E();
 	}
 
 	@Override
-	public FramedEdgeTraversal<?, ?, ?> e(Object... ids) {
+	public EdgeTraversal<?, ?, ?> e(Object... ids) {
 
 		return super.e(ids);
 	}
@@ -77,49 +77,49 @@ public final class GenericFramedVertex extends FramedVertex {
 	}
 
 	@Override
-	public FramedVertexTraversal<?, ?, ?> in(int branchFactor, String... labels) {
+	public VertexTraversal<?, ?, ?> in(int branchFactor, String... labels) {
 
 		return super.in(branchFactor, labels);
 	}
 
 	@Override
-	public FramedVertexTraversal<?, ?, ?> in(String... labels) {
+	public VertexTraversal<?, ?, ?> in(String... labels) {
 
 		return super.in(labels);
 	}
 
 	@Override
-	public FramedEdgeTraversal<?, ?, ?> inE(int branchFactor, String... labels) {
+	public EdgeTraversal<?, ?, ?> inE(int branchFactor, String... labels) {
 
 		return super.inE(branchFactor, labels);
 	}
 
 	@Override
-	public FramedEdgeTraversal<?, ?, ?> inE(String... labels) {
+	public EdgeTraversal<?, ?, ?> inE(String... labels) {
 
 		return super.inE(labels);
 	}
 
 	@Override
-	public FramedVertexTraversal<?, ?, ?> out(int branchFactor, String... labels) {
+	public VertexTraversal<?, ?, ?> out(int branchFactor, String... labels) {
 
 		return super.out(branchFactor, labels);
 	}
 
 	@Override
-	public FramedVertexTraversal<?, ?, ?> out(String... labels) {
+	public VertexTraversal<?, ?, ?> out(String... labels) {
 
 		return super.out(labels);
 	}
 
 	@Override
-	public FramedEdgeTraversal<?, ?, ?> outE(int branchFactor, String... labels) {
+	public EdgeTraversal<?, ?, ?> outE(int branchFactor, String... labels) {
 
 		return super.outE(branchFactor, labels);
 	}
 
 	@Override
-	public FramedEdgeTraversal<?, ?, ?> outE(String... labels) {
+	public EdgeTraversal<?, ?, ?> outE(String... labels) {
 
 		return super.outE(labels);
 	}

@@ -23,9 +23,9 @@ class FrameMaker<T extends FramedElement> {
 
 		if (kind == null) {
 			if (o instanceof Edge) {
-				o = graph.frameElement((Element) o, GenericFramedEdge.class);
+				o = graph.frameElement((Element) o, TEdge.class);
 			} else if (o instanceof Vertex) {
-				o = graph.frameElement((Element) o, GenericFramedVertex.class);
+				o = graph.frameElement((Element) o, TVertex.class);
 			}
 		}
 		else {

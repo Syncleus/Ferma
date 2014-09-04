@@ -24,21 +24,21 @@ import com.tinkerpop.pipes.util.structures.Tree;
  * @param <T>
  * @param <SideEffect>
  */
-public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> extends Iterator<T>, Iterable<T> {
+public interface Traversal<T, SideEffect, GenericParam1, GenericParam2> extends Iterator<T>, Iterable<T> {
 
 	/**
 	 * Traverse over all the vertices in the graph.
 	 * 
 	 * @return
 	 */
-	public FramedVertexTraversal<?, ?, ?> V();
+	public VertexTraversal<?, ?, ?> V();
 
 	/**
 	 * Traverse over all the edges in the graph.
 	 * 
 	 * @return
 	 */
-	public FramedEdgeTraversal<?, ?, ?> E();
+	public EdgeTraversal<?, ?, ?> E();
 
 	/**
 	 * Traversal over a list of vertices in the graph.
@@ -47,7 +47,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            The ids of the vertices.
 	 * @return The traversal.
 	 */
-	public FramedVertexTraversal<?, ?, ?> v(Object... ids);
+	public VertexTraversal<?, ?, ?> v(Object... ids);
 
 	/**
 	 * Traversal over a list of edges in the graph.
@@ -56,7 +56,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            The ids of the edges.
 	 * @return The traversal.
 	 */
-	public FramedEdgeTraversal<?, ?, ?> e(Object... ids);
+	public EdgeTraversal<?, ?, ?> e(Object... ids);
 
 	/**
 	 * Completely drain the pipeline of its objects. Useful when a sideEffect of
@@ -73,7 +73,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            retrieved)
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<Map<String, Object>, ?, ?, ?> map(String... keys);
+	public abstract Traversal<Map<String, Object>, ?, ?, ?> map(String... keys);
 
 	/**
 	 * Add a PropertyPipe to the end of the Pipeline. Emit the respective
@@ -83,7 +83,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            the property key
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<Object, ?, ?, ?> property(String key);
+	public abstract Traversal<Object, ?, ?, ?> property(String key);
 
 	/**
 	 * Add a PropertyPipe to the end of the Pipeline. Emit the respective
@@ -93,7 +93,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            the property key
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> FramedTraversal<N, ?, ?, ?> property(String key, Class<N> type);
+	public abstract <N> Traversal<N, ?, ?, ?> property(String key, Class<N> type);
 
 	
 
@@ -106,7 +106,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            the internal pipes of the CopySplitPipe
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> FramedTraversal<N, ?, ?, ?> copySplit(Pipe<T, N>... pipes);
+	public abstract <N> Traversal<N, ?, ?, ?> copySplit(Pipe<T, N>... pipes);
 
 	/**
 	 * Add an ExhaustMergePipe to the end of the pipeline. The one-step previous
@@ -116,7 +116,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> FramedTraversal<N, ?, ?, ?> exhaustMerge();
+	public abstract <N> Traversal<N, ?, ?, ?> exhaustMerge();
 
 	/**
 	 * Add a FairMergePipe to the end of the Pipeline. The one-step previous
@@ -125,7 +125,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> FramedTraversal<N, ?, ?, ?> fairMerge();
+	public abstract <N> Traversal<N, ?, ?, ?> fairMerge();
 
 	/**
 	 * Add an IfThenElsePipe to the end of the Pipeline. If the ifFunction is
@@ -140,7 +140,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            the function denoting the "else" part of the pipe
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> FramedTraversal<N, ?, ?, ?> ifThenElse(TraversalFunction<T, Boolean> ifFunction,
+	public abstract <N> Traversal<N, ?, ?, ?> ifThenElse(TraversalFunction<T, Boolean> ifFunction,
 			TraversalFunction<T, N> thenFunction, TraversalFunction<T, N> elseFunction, Class<N> clazz);
 
 	/**
@@ -156,7 +156,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            whether or not to continue looping on the current object
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> FramedTraversal<N, ?, ?, ?> loop(String namedStep,
+	public abstract <N> Traversal<N, ?, ?, ?> loop(String namedStep,
 			TraversalFunction<LoopPipe.LoopBundle<T>, Boolean> whileFunction, Class<N> clazz);
 
 	/**
@@ -176,7 +176,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            looping)
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> FramedTraversal<N, ?, ?, ?> loop(String namedStep,
+	public abstract <N> Traversal<N, ?, ?, ?> loop(String namedStep,
 			TraversalFunction<LoopPipe.LoopBundle<T>, Boolean> whileFunction,
 			TraversalFunction<LoopPipe.LoopBundle<T>, Boolean> emitFunction, Class<N> clazz);
 
@@ -188,7 +188,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<T, ?, ?, ?> dedup();
+	public abstract Traversal<T, ?, ?, ?> dedup();
 
 	/**
 	 * Add a DuplicateFilterPipe to the end of the Pipeline. Will only emit the
@@ -199,7 +199,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            on
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<T, ?, ?, ?> dedup(TraversalFunction<T, ?> dedupFunction);
+	public abstract Traversal<T, ?, ?, ?> dedup(TraversalFunction<T, ?> dedupFunction);
 
 	/**
 	 * Add an ExceptFilterPipe to the end of the Pipeline. Will only emit the
@@ -209,7 +209,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            the collection except from the stream
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<T, ?, ?, ?> except(Collection<?> collection);
+	public abstract Traversal<T, ?, ?, ?> except(Collection<?> collection);
 
 	/**
 	 * Add an ExceptFilterPipe to the end of the Pipeline. Will only emit the
@@ -220,7 +220,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            the named steps in the pipeline
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<T, ?, ?, ?> except(String... namedSteps);
+	public abstract Traversal<T, ?, ?, ?> except(String... namedSteps);
 
 	/**
 	 * Add an FilterFunctionPipe to the end of the Pipeline. The serves are an
@@ -231,7 +231,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            the filter function of the pipe
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<T, ?, ?, ?> filter(TraversalFunction<T, Boolean> filterFunction);
+	public abstract Traversal<T, ?, ?, ?> filter(TraversalFunction<T, Boolean> filterFunction);
 
 
 	/**
@@ -242,7 +242,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            the bias of the random coin
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<T, ?, ?, ?> random(Double bias);
+	public abstract Traversal<T, ?, ?, ?> random(Double bias);
 
 	/**
 	 * Add a RageFilterPipe to the end of the Pipeline. Analogous to a high/low
@@ -254,7 +254,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            the high end of the range
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<T, ?, ?, ?> range(int low, int high);
+	public abstract Traversal<T, ?, ?, ?> range(int low, int high);
 
 	/**
 	 * Add a RetainFilterPipe to the end of the Pipeline. Will emit the object
@@ -264,7 +264,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            the collection to retain
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<T, ?, ?, ?> retain(Collection<?> collection);
+	public abstract Traversal<T, ?, ?, ?> retain(Collection<?> collection);
 
 	/**
 	 * Add a RetainFilterPipe to the end of the Pipeline. Will only emit the
@@ -274,7 +274,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            the named steps in the pipeline
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<T, ?, ?, ?> retain(String... namedSteps);
+	public abstract Traversal<T, ?, ?, ?> retain(String... namedSteps);
 
 	/**
 	 * Add an AggregatePipe to the end of the Pipeline. The objects prior to
@@ -282,7 +282,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<T, Collection<T>, T, ?> aggregate();
+	public abstract Traversal<T, Collection<T>, T, ?> aggregate();
 
 	/**
 	 * Add an AggregatePipe to the end of the Pipeline. The objects prior to
@@ -292,7 +292,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            the collection to aggregate results into
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<T, Collection<T>, T, ?> aggregate(Collection<T> aggregate);
+	public abstract Traversal<T, Collection<T>, T, ?> aggregate(Collection<T> aggregate);
 
 	/**
 	 * Add an AggregatePipe to the end of the Pipeline. The results of the
@@ -306,7 +306,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            the aggregate
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> FramedTraversal<T, Collection<N>, N, ?> aggregate(Collection<T> aggregate,
+	public abstract <N> Traversal<T, Collection<N>, N, ?> aggregate(Collection<T> aggregate,
 			TraversalFunction<T, N> aggregateFunction);
 
 	/**
@@ -319,7 +319,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            the aggregate
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> FramedTraversal<T, Collection<N>, N, ?> aggregate(TraversalFunction<T, N> aggregateFunction);
+	public abstract <N> Traversal<T, Collection<N>, N, ?> aggregate(TraversalFunction<T, N> aggregateFunction);
 
 	/**
 	 * Add a GroupByPipe to the end of the Pipeline. Group the objects inputted
@@ -334,7 +334,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            the function that generates the value from the function
 	 * @return the extended Pipeline
 	 */
-	public abstract <K, V> FramedTraversal<T, Map<K, List<V>>, K, List<V>> groupBy(Map<K, List<V>> map, TraversalFunction<T, K> keyFunction,
+	public abstract <K, V> Traversal<T, Map<K, List<V>>, K, List<V>> groupBy(Map<K, List<V>> map, TraversalFunction<T, K> keyFunction,
 			TraversalFunction<T, V> valueFunction);
 
 	/**
@@ -348,7 +348,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            the function that generates the value from the function
 	 * @return the extended Pipeline
 	 */
-	public abstract <K, V> FramedTraversal<T, Map<K, List<V>>, K, List<V>> groupBy(TraversalFunction<T, K> keyFunction,
+	public abstract <K, V> Traversal<T, Map<K, List<V>>, K, List<V>> groupBy(TraversalFunction<T, K> keyFunction,
 			TraversalFunction<T, V> valueFunction);
 
 	/**
@@ -370,7 +370,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            the function that reduces the value lists
 	 * @return the extended Pipeline
 	 */
-	public abstract <K, V, V2> FramedTraversal<T, Map<K, V2>, K, V2> groupBy(Map<K, V2> reduceMap, TraversalFunction<T, K> keyFunction,
+	public abstract <K, V, V2> Traversal<T, Map<K, V2>, K, V2> groupBy(Map<K, V2> reduceMap, TraversalFunction<T, K> keyFunction,
 			TraversalFunction<T, V> valueFunction, TraversalFunction<List<V>, V2> reduceFunction);
 
 	/**
@@ -389,7 +389,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            the function that reduces the value lists
 	 * @return the extended Pipeline
 	 */
-	public abstract <K, V, V2> FramedTraversal<T, Map<K, V2>, K, V2> groupBy(TraversalFunction<T, K> keyFunction,
+	public abstract <K, V, V2> Traversal<T, Map<K, V2>, K, V2> groupBy(TraversalFunction<T, K> keyFunction,
 			TraversalFunction<T, V> valueFunction, TraversalFunction<List<V>, V2> reduceFunction);
 
 	/**
@@ -406,7 +406,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            the value function to determine map value
 	 * @return the extended Pipeline
 	 */
-	public abstract <K> FramedTraversal<T, Map<K, Number>, K, Number> groupCount(Map<K, Number> map, TraversalFunction<T, K> keyFunction,
+	public abstract <K> Traversal<T, Map<K, Number>, K, Number> groupCount(Map<K, Number> map, TraversalFunction<T, K> keyFunction,
 			TraversalFunction<Pair<T, Number>, Number> valueFunction);
 
 	/**
@@ -421,7 +421,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            the value function to determine map value
 	 * @return the extended Pipeline
 	 */
-	public abstract <K> FramedTraversal<T, Map<K, Number>, K, Number> groupCount(TraversalFunction<T, K> keyFunction,
+	public abstract <K> Traversal<T, Map<K, Number>, K, Number> groupCount(TraversalFunction<T, K> keyFunction,
 			TraversalFunction<Pair<T, Number>, Number> valueFunction);
 
 	/**
@@ -436,7 +436,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            the key function to determine map key
 	 * @return the extended Pipeline
 	 */
-	public abstract <K> FramedTraversal<T, Map<K, Number>, K, Number> groupCount(Map<K, Number> map, TraversalFunction<T, K> keyFunction);
+	public abstract <K> Traversal<T, Map<K, Number>, K, Number> groupCount(Map<K, Number> map, TraversalFunction<T, K> keyFunction);
 
 	/**
 	 * Add a GroupCountPipe or GroupCountFunctionPipe to the end of the
@@ -448,7 +448,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            the key function to determine map key
 	 * @return the extended Pipeline
 	 */
-	public abstract <K> FramedTraversal<T, Map<K, Number>, K, Number> groupCount(TraversalFunction<T, K> keyFunction);
+	public abstract <K> Traversal<T, Map<K, Number>, K, Number> groupCount(TraversalFunction<T, K> keyFunction);
 
 	/**
 	 * Add a GroupCountPipe to the end of the Pipeline. A map is maintained of
@@ -459,7 +459,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            a provided count map
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<T, Map<T, Number>, T, Number> groupCount(Map<T, Number> map);
+	public abstract Traversal<T, Map<T, Number>, T, Number> groupCount(Map<T, Number> map);
 
 	/**
 	 * Add a GroupCountPipe to the end of the Pipeline. A map is maintained of
@@ -468,7 +468,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<T, Map<T, Number>, T, Number> groupCount();
+	public abstract Traversal<T, Map<T, Number>, T, Number> groupCount();
 
 	/**
 	 * Add a SideEffectFunctionPipe to the end of the Pipeline. The provided
@@ -478,7 +478,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            the function of the pipe
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<T, ?, ?, ?> sideEffect(SideEffectFunction<T> sideEffectFunction);
+	public abstract Traversal<T, ?, ?, ?> sideEffect(SideEffectFunction<T> sideEffectFunction);
 
 	/**
 	 * Add a StorePipe to the end of the Pipeline. Lazily store the incoming
@@ -488,7 +488,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            the collection to store results into
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<T, Collection<T>, T, ?> store(Collection<T> storage);
+	public abstract Traversal<T, Collection<T>, T, ?> store(Collection<T> storage);
 
 	/**
 	 * Add a StorePipe to the end of the Pipeline. Lazily store the object
@@ -502,7 +502,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            the storage collection
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> FramedTraversal<T, Collection<N>, N, ?> store(Collection<N> storage, TraversalFunction<T, N> storageFunction);
+	public abstract <N> Traversal<T, Collection<N>, N, ?> store(Collection<N> storage, TraversalFunction<T, N> storageFunction);
 
 	/**
 	 * Add an StorePipe to the end of the Pipeline. An ArrayList storage
@@ -510,7 +510,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<T, Collection<T>, T, ?> store();
+	public abstract Traversal<T, Collection<T>, T, ?> store();
 
 	/**
 	 * Add a StorePipe to the end of the Pipeline. An ArrayList storage
@@ -522,7 +522,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            the storage collection
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> FramedTraversal<T, Collection<N>, N, ?> store(TraversalFunction<T, N> storageFunction);
+	public abstract <N> Traversal<T, Collection<N>, N, ?> store(TraversalFunction<T, N> storageFunction);
 
 	/**
 	 * Add a TablePipe to the end of the Pipeline. This step is used for
@@ -536,7 +536,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            the post-processing function for each column
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<T, Table, ?, ?> table(Table table, Collection<String> stepNames,
+	public abstract Traversal<T, Table, ?, ?> table(Table table, Collection<String> stepNames,
 			TraversalFunction<?, ?>... columnFunctions);
 
 	/**
@@ -549,7 +549,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            the post-processing function for each column
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<T, Table, ?, ?> table(Table table, TraversalFunction<?, ?>... columnFunctions);
+	public abstract Traversal<T, Table, ?, ?> table(Table table, TraversalFunction<?, ?>... columnFunctions);
 
 	/**
 	 * Add a TablePipe to the end of the Pipeline. This step is used for
@@ -559,7 +559,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            the post-processing function for each column
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<T, Table, ?, ?> table(TraversalFunction<?, ?>... columnFunctions);
+	public abstract Traversal<T, Table, ?, ?> table(TraversalFunction<?, ?>... columnFunctions);
 
 	/**
 	 * Add a TablePipe to the end of the Pipeline. This step is used for
@@ -569,7 +569,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            the table to fill
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<T, Table, ?, ?> table(Table table);
+	public abstract Traversal<T, Table, ?, ?> table(Table table);
 
 	/**
 	 * Add a TablePipe to the end of the Pipeline. This step is used for
@@ -577,7 +577,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<T, Table, ?, ?> table();
+	public abstract Traversal<T, Table, ?, ?> table();
 
 	/**
 	 * Add a TreePipe to the end of the Pipeline This step maintains an internal
@@ -591,7 +591,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            fashion
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> FramedTraversal<T, Tree<N>, N, ?> tree(Tree<N> tree, TraversalFunction<?, ?>... branchFunctions);
+	public abstract <N> Traversal<T, Tree<N>, N, ?> tree(Tree<N> tree, TraversalFunction<?, ?>... branchFunctions);
 
 	/**
 	 * Add a TreePipe to the end of the Pipeline This step maintains an internal
@@ -602,7 +602,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            fashion
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<T, Tree<Object>, ?, ?> tree(TraversalFunction<?, ?>... branchFunctions);
+	public abstract Traversal<T, Tree<Object>, ?, ?> tree(TraversalFunction<?, ?>... branchFunctions);
 
 	/**
 	 * Add a GatherPipe to the end of the Pipeline. All the objects previous to
@@ -610,7 +610,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<List<T>, ?, T, ?> gather();
+	public abstract Traversal<List<T>, ?, T, ?> gather();
 
 	/**
 	 * Add an IdentityPipe to the end of the Pipeline. Useful in various
@@ -619,7 +619,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<T, ?, ?, ?> identity();
+	public abstract Traversal<T, ?, ?, ?> identity();
 
 	/**
 	 * Add a MemoizePipe to the end of the Pipeline. This step will hold a Map
@@ -631,7 +631,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            the name of the step previous to memoize to
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<T, ?, ?, ?> memoize(String namedStep);
+	public abstract Traversal<T, ?, ?, ?> memoize(String namedStep);
 
 	/**
 	 * Add a MemoizePipe to the end of the Pipeline. This step will hold a Map
@@ -645,7 +645,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            the memoization map
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<T, ?, ?, ?> memoize(String namedStep, Map<?, ?> map);
+	public abstract Traversal<T, ?, ?, ?> memoize(String namedStep, Map<?, ?> map);
 
 	/**
 	 * Add an OrderPipe to the end of the Pipeline. This step will sort the
@@ -653,18 +653,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<T, ?, ?, ?> order();
-
-	/**
-	 * Add an OrderPipe to the end of the Pipeline. This step will sort the
-	 * objects in the stream in a default Comparable order.
-	 *
-	 * @param order
-	 *            if the stream is composed of comparable objects, then
-	 *            increment or decrement can be specified
-	 * @return the extended Pipeline
-	 */
-	public abstract FramedTraversal<T, ?, ?, ?> order(TransformPipe.Order order);
+	public abstract Traversal<T, ?, ?, ?> order();
 
 	/**
 	 * Add an OrderPipe to the end of the Pipeline. This step will sort the
@@ -675,7 +664,18 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            increment or decrement can be specified
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<T, ?, ?, ?> order(Tokens.T order);
+	public abstract Traversal<T, ?, ?, ?> order(TransformPipe.Order order);
+
+	/**
+	 * Add an OrderPipe to the end of the Pipeline. This step will sort the
+	 * objects in the stream in a default Comparable order.
+	 *
+	 * @param order
+	 *            if the stream is composed of comparable objects, then
+	 *            increment or decrement can be specified
+	 * @return the extended Pipeline
+	 */
+	public abstract Traversal<T, ?, ?, ?> order(Tokens.T order);
 
 	/**
 	 * Add an OrderPipe to the end of the Pipeline. This step will sort the
@@ -686,7 +686,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            a comparator function of two objects of type E
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<T, ?, ?, ?> order(Comparator<T> compareFunction);
+	public abstract Traversal<T, ?, ?, ?> order(Comparator<T> compareFunction);
 
 	/**
 	 * Wrap the previous step in an AsPipe. Useful for naming steps and is used
@@ -697,7 +697,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            the name of the AsPipe
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<T, ?, ?, ?> as(String name);
+	public abstract Traversal<T, ?, ?, ?> as(String name);
 
 	/**
 	 * Add a CyclicPathFilterPipe to the end of the Pipeline. If the object's
@@ -706,7 +706,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<T, ?, ?, ?> simplePath();
+	public abstract Traversal<T, ?, ?, ?> simplePath();
 
 	/**
 	 * Add a BackFilterPipe to the end of the Pipeline. The object that was seen
@@ -718,7 +718,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            the name of the step previous to back up to
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> FramedTraversal<N, ?, ?, ?> back(String namedStep);
+	public abstract <N> Traversal<N, ?, ?, ?> back(String namedStep);
 
 	/**
 	 * Add a BackFilterPipe to the end of the Pipeline. The object that was seen
@@ -730,7 +730,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            the name of the step previous to back up to
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> FramedTraversal<N, ?, ?, ?> back(String namedStep, Class<N> type);
+	public abstract <N> Traversal<N, ?, ?, ?> back(String namedStep, Class<N> type);
 
 	/**
 	 * Add a GatherPipe to the end of the Pipeline. All the objects previous to
@@ -743,7 +743,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            a transformation to apply to the gathered list
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> FramedTraversal<List<N>, ?, N, ?> gather(TraversalFunction<T, N> function);
+	public abstract <N> Traversal<List<N>, ?, N, ?> gather(TraversalFunction<T, N> function);
 	
 	
 
@@ -752,7 +752,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<T, ?, ?, ?> gatherScatter();
+	public abstract Traversal<T, ?, ?, ?> gatherScatter();
 	
 	
 	
@@ -766,7 +766,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            the path function of the PathPipe
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<List<Object>, ?, Object, ?> path(TraversalFunction<?, ?>... pathFunctions);
+	public abstract Traversal<List<Object>, ?, Object, ?> path(TraversalFunction<?, ?>... pathFunctions);
 
 	/**
 	 * Add a ScatterPipe to the end of the Pipeline. Any inputted iterator or
@@ -775,7 +775,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<GenericParam1, ?, ?, ?> scatter();
+	public abstract Traversal<GenericParam1, ?, ?, ?> scatter();
 
 	/**
 	 * Add a SelectPipe to the end of the Pipeline. The objects of the named
@@ -792,7 +792,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            the Row
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<Row<?>, ?, ?, ?> select(Collection<String> stepNames, TraversalFunction<?, ?>... columnFunctions);
+	public abstract Traversal<Row<?>, ?, ?, ?> select(Collection<String> stepNames, TraversalFunction<?, ?>... columnFunctions);
 
 	/**
 	 * Add a SelectPipe to the end of the Pipeline. The objects of the named
@@ -806,7 +806,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            the Row
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<Row<?>, ?, ?, ?> select(TraversalFunction<?, ?>... columnFunctions);
+	public abstract Traversal<Row<?>, ?, ?, ?> select(TraversalFunction<?, ?>... columnFunctions);
 
 	/**
 	 * Add a SelectPipe to the end of the Pipeline. The objects of the named
@@ -816,7 +816,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<Row<?>, ?, ?, ?> select();
+	public abstract Traversal<Row<?>, ?, ?, ?> select();
 
 	/**
 	 * Add a ShufflePipe to the end of the Pipeline. All the objects previous to
@@ -825,7 +825,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<List<T>, ?, T, ?> shuffle();
+	public abstract Traversal<List<T>, ?, T, ?> shuffle();
 
 	/**
 	 * Add a SideEffectCapPipe to the end of the Pipeline. When the previous
@@ -835,7 +835,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<SideEffect, ?, GenericParam1, GenericParam2> cap();
+	public abstract Traversal<SideEffect, ?, GenericParam1, GenericParam2> cap();
 
 	/**
 	 * Add a OrderMapPipe to the end of the Pipeline Given a Map as an input,
@@ -846,7 +846,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            decrement sort is usable
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<GenericParam1, ?, ?, ?> orderMap(TransformPipe.Order order);
+	public abstract Traversal<GenericParam1, ?, ?, ?> orderMap(TransformPipe.Order order);
 
 	/**
 	 * Add a OrderMapPipe to the end of the Pipeline Given a Map as an input,
@@ -857,7 +857,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            decrement sort is usable
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<GenericParam1, ?, ?, ?> orderMap(Tokens.T order);
+	public abstract Traversal<GenericParam1, ?, ?, ?> orderMap(Tokens.T order);
 
 	/**
 	 * Add a OrderMapPipe to the end of the Pipeline Given a Map as an input,
@@ -867,7 +867,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            a function to compare to map entries
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<GenericParam1, ?, ?, ?> orderMap(
+	public abstract Traversal<GenericParam1, ?, ?, ?> orderMap(
 			Comparator<Map.Entry<GenericParam1, GenericParam2>> compareFunction);
 
 	/**
@@ -879,7 +879,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            the transformation function of the pipe
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> FramedTraversal<N, ?, ?, ?> transform(TraversalFunction<T, N> function);
+	public abstract <N> Traversal<N, ?, ?, ?> transform(TraversalFunction<T, N> function);
 
 	/**
 	 * Add a StartPipe to the end of the pipeline. Though, in practice, a
@@ -891,7 +891,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            (iterator/iterable are unfolded)
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> FramedTraversal<N, ?, ?, ?> start(N object);
+	public abstract <N> Traversal<N, ?, ?, ?> start(N object);
 
 	/**
 	 * Add a StartPipe to the end of the pipeline. Though, in practice, a
@@ -903,7 +903,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            (iterator/iterable are unfolded)
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedVertexTraversal<?, ?, ?> start(FramedVertex object);
+	public abstract VertexTraversal<?, ?, ?> start(FramedVertex object);
 
 	/**
 	 * Add a StartPipe to the end of the pipeline. Though, in practice, a
@@ -915,7 +915,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            (iterator/iterable are unfolded)
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedEdgeTraversal<?, ?, ?> start(FramedEdge object);
+	public abstract EdgeTraversal<?, ?, ?> start(FramedEdge object);
 
 	/**
 	 * Return the number of objects iterated through the pipeline.
@@ -952,7 +952,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *
 	 * @return the Pipeline with path calculations enabled
 	 */
-	public abstract FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> enablePath();
+	public abstract Traversal<T, SideEffect, GenericParam1, GenericParam2> enablePath();
 
 	/**
 	 * When possible, Gremlin takes advantage of certain sequences of pipes in
@@ -964,7 +964,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            whether to optimize the pipeline from here on or not
 	 * @return The GremlinPipeline with the optimization turned off
 	 */
-	public abstract FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> optimize(boolean optimize);
+	public abstract Traversal<T, SideEffect, GenericParam1, GenericParam2> optimize(boolean optimize);
 
 	/**
 	 * Remove every element at the end of this Pipeline.
@@ -985,21 +985,21 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 * 
 	 * @return
 	 */
-	public abstract FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> cast(Class<T> clazz);
+	public abstract Traversal<T, SideEffect, GenericParam1, GenericParam2> cast(Class<T> clazz);
 	
 	/**
 	 * Cast the traversal as a vertex traversal
 	 * 
 	 * @return
 	 */
-	public abstract FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2> castToVertices();
+	public abstract VertexTraversal<SideEffect, GenericParam1, GenericParam2> castToVertices();
 
 	/**
 	 * Cast the traversal to an edge traversalT
 	 * 
 	 * @return
 	 */
-	public abstract FramedEdgeTraversal<SideEffect, GenericParam1, GenericParam2> castToEdges();
+	public abstract EdgeTraversal<SideEffect, GenericParam1, GenericParam2> castToEdges();
 
 	/**
 	 * Add an OptionalPipe to the end of the Pipeline. The section of pipeline
@@ -1009,7 +1009,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            the name of the step previous to optional back to
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> FramedTraversal<N, ?, ?, ?> optional(String namedStep);
+	public abstract <N> Traversal<N, ?, ?, ?> optional(String namedStep);
 
 	/**
 	 * Add an IdEdgePipe to the end of the Pipeline. Emit the edges of the graph
@@ -1019,7 +1019,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            the graph of the pipe
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedEdgeTraversal<?, ?, ?> idEdge(Graph graph);
+	public abstract EdgeTraversal<?, ?, ?> idEdge(Graph graph);
 
 	/**
 	 * Add an IdPipe to the end of the Pipeline. Emit the id of the incoming
@@ -1027,7 +1027,7 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<Object, ?, ?, ?> id();
+	public abstract Traversal<Object, ?, ?, ?> id();
 
 	/**
 	 * Add an IdVertexPipe to the end of the Pipeline. Emit the vertices of the
@@ -1037,6 +1037,6 @@ public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> ex
 	 *            the graph of the pipe
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedVertexTraversal<?, ?, ?> idVertex(Graph graph);
+	public abstract VertexTraversal<?, ?, ?> idVertex(Graph graph);
 
 }

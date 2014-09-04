@@ -27,7 +27,7 @@ import com.tinkerpop.pipes.util.structures.Table;
 import com.tinkerpop.pipes.util.structures.Tree;
 
 @SuppressWarnings("rawtypes")
-abstract class TraversalBase<T, SE> implements Traversal<T, SE> {
+abstract class TraversalBase<T, SE, LSE> implements Traversal<T, SE, LSE> {
 
 	protected abstract FramedGraph graph();
 
@@ -507,7 +507,7 @@ abstract class TraversalBase<T, SE> implements Traversal<T, SE> {
 	}
 
 	@Override
-	public Traversal<T, ?> cap(final SideEffectFunction sideEffectFunction) {
+	public Traversal cap(final SideEffectFunction sideEffectFunction) {
 		
 		final FramingSideEffectFunction framingSideEffectFunction = new FramingSideEffectFunction(sideEffectFunction, graph());
 		pipeline().add(new NonTerminatingSideEffectCapPipe((SideEffectPipe) FluentUtility.removePreviousPipes(pipeline(), 1).get(0), new TraversalFunction() {

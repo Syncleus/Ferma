@@ -29,10 +29,10 @@ public class TestTraversals {
 
 	@Test
 	public void testAnd() {
-		Assert.assertEquals(3, graph.V().and(new TraversalFunction<TVertex, Traversal<?, ?>>() {
+		Assert.assertEquals(3, graph.V().and(new TraversalFunction<TVertex, Traversal<?, ?, ?>>() {
 
 			@Override
-			public Traversal<?, ?> compute(TVertex argument) {
+			public Traversal<?, ?, ?> compute(TVertex argument) {
 				return argument.out().has("name");
 			}
 		}).count());
@@ -40,10 +40,10 @@ public class TestTraversals {
 	
 	@Test
 	public void testOr() {
-		Assert.assertEquals(3, graph.V().or(new TraversalFunction<TVertex, Traversal<?, ?>>() {
+		Assert.assertEquals(3, graph.V().or(new TraversalFunction<TVertex, Traversal<?, ?, ?>>() {
 
 			@Override
-			public Traversal<?, ?> compute(TVertex argument) {
+			public Traversal<?, ?, ?> compute(TVertex argument) {
 				return argument.out().has("name");
 			}
 		}).count());

@@ -30,9 +30,9 @@ abstract class VertexTraversalImpl extends TraversalBase implements VertexTraver
 	}
 
 	@Override
-	public TVertex nextOrDefault() {
+	public TVertex nextOrAdd() {
 
-		return (TVertex) nextOrDefault(TVertex.class);
+		return (TVertex) nextOrAdd(TVertex.class);
 	}
 
 	@Override
@@ -380,7 +380,7 @@ abstract class VertexTraversalImpl extends TraversalBase implements VertexTraver
 	}
 
 	@Override
-	public FramedVertex nextOrDefault(Class kind) {
+	public FramedVertex nextOrAdd(Class kind) {
 		try {
 			return (FramedVertex) graph().frameElement((Element) pipeline().next(), kind);
 		} catch (NoSuchElementException e) {
@@ -529,15 +529,7 @@ abstract class VertexTraversalImpl extends TraversalBase implements VertexTraver
 		return super.fill(new FramingCollection<>(collection, graph(), clazz));
 	}
 
-	@Override
-	public Iterator iterator() {
-		return Iterators.transform(pipeline(), new Function() {
 
-			public Object apply(Object e) {
-				return graph().frameElement((Element) e, TVertex.class);
-			}
-		});
-	}
 
 	@Override
 	public VertexTraversal gatherScatter() {

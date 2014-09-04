@@ -13,6 +13,8 @@ import org.jglue.totorom.internal.NonTerminatingSideEffectCapPipe;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
+import com.google.common.collect.Iterators;
+import com.tinkerpop.blueprints.Element;
 import com.tinkerpop.blueprints.Graph;
 import com.tinkerpop.blueprints.Predicate;
 import com.tinkerpop.gremlin.Tokens;
@@ -596,11 +598,21 @@ abstract class TraversalBase<T, SE, LSE> implements Traversal<T, SE, LSE> {
 		return pipeline().hasNext();
 	}
 
+	
 	@Override
-	public Iterator<T> iterator() {
+	public Iterator iterator() {
+		return Iterators.transform(pipeline(), new Function() {
 
-		return pipeline().iterator();
+			public Object apply(Object e) {
+				if (e instanceof Element) {
+					return graph().frameElement((Element) e, TVertex.class);
+				}
+
+				return e;
+			}
+		});
 	}
+
 
 	protected HashSet unwrap(Collection collection) {
 		HashSet unwrapped = new HashSet(Collections2.transform(collection, new Function<Object, Object>() {

@@ -259,7 +259,7 @@ public interface VertexTraversal<SideEffect, LazySideEffect> extends Traversal<T
 	 *            The type of frame for the element.
 	 * @return the next emitted object
 	 */
-	public TVertex nextOrDefault();
+	public TVertex nextOrAdd();
 
 	/**
 	 * Get the next object emitted from the pipeline. If no such object exists a
@@ -269,7 +269,7 @@ public interface VertexTraversal<SideEffect, LazySideEffect> extends Traversal<T
 	 *            The type of frame for the element.
 	 * @return the next emitted object
 	 */
-	public <N extends FramedVertex> N nextOrDefault(Class<N> kind);
+	public <N extends FramedVertex> N nextOrAdd(Class<N> kind);
 
 	/**
 	 * Return the next X objects in the traversal as a list.

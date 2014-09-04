@@ -70,6 +70,17 @@ public abstract class FramedElement {
 	}
 
 	/**
+	 * Return a property value.
+	 * 
+	 * @param name
+	 *            The name of the property.
+	 * @return the value of the property or null if none was present.
+	 */
+	protected <T> T getProperty(String name, Class<T> clazz) {
+		return element.getProperty(name);
+	}
+	
+	/**
 	 * Set a property value.
 	 * 
 	 * @param name

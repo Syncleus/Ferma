@@ -64,6 +64,11 @@ public final class GenericFramedVertex extends FramedVertex {
 
 		return super.getProperty(name);
 	}
+	
+	@Override
+	public <T> T getProperty(String name, Class<T> clazz) {
+		return super.getProperty(name, clazz);
+	}
 
 	@Override
 	public Set<String> getPropertyKeys() {

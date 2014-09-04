@@ -3,7 +3,9 @@ package org.jglue.totorom;
 import java.util.Set;
 
 /**
- * A framed edge for use when you don't want to create a new frame class. Typically used in traversals.
+ * A framed edge for use when you don't want to create a new frame class.
+ * Typically used in traversals.
+ * 
  * @author bryn
  *
  */
@@ -67,6 +69,11 @@ public final class GenericFramedEdge extends FramedEdge {
 	}
 
 	@Override
+	public <T> T getProperty(String name, Class<T> clazz) {
+		return super.getProperty(name, clazz);
+	}
+
+	@Override
 	public Set<String> getPropertyKeys() {
 
 		return super.getPropertyKeys();
@@ -77,10 +84,11 @@ public final class GenericFramedEdge extends FramedEdge {
 
 		super.setProperty(name, value);
 	}
-	
+
 	@Override
 	public <N> N getId(Class<N> clazz) {
 
 		return (N) super.getId(clazz);
 	}
+
 }

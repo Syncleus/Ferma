@@ -38,12 +38,12 @@ class FramedTraversalImpl extends FramedTraversalBase implements FramedTraversal
 	private FramedEdgeTraversal edgeTraversal = new FramedEdgeTraversalImpl() {
 
 		@Override
-		public FramedVertexTraversal asVertices() {
+		public FramedVertexTraversal castToVertices() {
 			return vertexTraversal;
 		}
 
 		@Override
-		public FramedEdgeTraversal asEdges() {
+		public FramedEdgeTraversal castToEdges() {
 			return edgeTraversal;
 		}
 
@@ -63,12 +63,12 @@ class FramedTraversalImpl extends FramedTraversalBase implements FramedTraversal
 	};
 	private FramedVertexTraversal vertexTraversal = new FramedVertexTraversalImpl(){
 		@Override
-		public FramedVertexTraversal asVertices() {
+		public FramedVertexTraversal castToVertices() {
 			return vertexTraversal;
 		}
 
 		@Override
-		public FramedEdgeTraversal asEdges() {
+		public FramedEdgeTraversal castToEdges() {
 			return edgeTraversal;
 		}
 		
@@ -116,14 +116,14 @@ class FramedTraversalImpl extends FramedTraversalBase implements FramedTraversal
 	/**
 	 * @return Cast the traversal to a {@link FramedVertexTraversal}
 	 */
-	public FramedVertexTraversal asVertices() {
+	public FramedVertexTraversal castToVertices() {
 		return vertexTraversal;
 	}
 
 	/**
 	 * @return Cast the traversal to a {@link FramedEdgeTraversal}
 	 */
-	public FramedEdgeTraversal asEdges() {
+	public FramedEdgeTraversal castToEdges() {
 		return edgeTraversal;
 	}
 

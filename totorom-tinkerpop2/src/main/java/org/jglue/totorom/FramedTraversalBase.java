@@ -31,13 +31,13 @@ abstract class FramedTraversalBase<T, SE, SideEffectParam1, SideEffectParam2> im
 	@Override
 	public FramedVertexTraversal V() {
 		pipeline().V();
-		return asVertices();
+		return castToVertices();
 	}
 
 	@Override
 	public FramedEdgeTraversal E() {
 		pipeline().E();
-		return asEdges();
+		return castToEdges();
 	}
 
 	@Override
@@ -325,7 +325,7 @@ abstract class FramedTraversalBase<T, SE, SideEffectParam1, SideEffectParam2> im
 	@Override
 	public FramedEdgeTraversal idEdge(Graph graph) {
 		pipeline().idEdge(graph);
-		return asEdges();
+		return castToEdges();
 	}
 
 	@Override
@@ -337,7 +337,7 @@ abstract class FramedTraversalBase<T, SE, SideEffectParam1, SideEffectParam2> im
 	@Override
 	public FramedVertexTraversal idVertex(Graph graph) {
 		pipeline().idVertex(graph);
-		return asVertices();
+		return castToVertices();
 	}
 
 	@Override
@@ -481,7 +481,7 @@ abstract class FramedTraversalBase<T, SE, SideEffectParam1, SideEffectParam2> im
 	}
 
 	@Override
-	public FramedTraversal scatter(Class clazz) {
+	public FramedTraversal scatter() {
 		pipeline().scatter();
 		return asTraversal();
 	}
@@ -594,18 +594,18 @@ abstract class FramedTraversalBase<T, SE, SideEffectParam1, SideEffectParam2> im
 	@Override
 	public FramedEdgeTraversal start(FramedEdge object) {
 		pipeline().start(object);
-		return asEdges();
+		return castToEdges();
 	}
 
 	@Override
 	public FramedVertexTraversal start(FramedVertex object) {
 		pipeline().start(object);
-		return asVertices();
+		return castToVertices();
 	}
 
 	@Override
-	public <N> FramedTraversal<N, ?, ?, ?> property(String key, Class<N> type) {
-		return (FramedTraversal<N, ?, ?, ?>) property(key);
+	public  FramedTraversal property(String key, Class type) {
+		return (FramedTraversal) property(key);
 	}
 
 	protected abstract FramedTraversal asTraversal();
@@ -653,8 +653,14 @@ abstract class FramedTraversalBase<T, SE, SideEffectParam1, SideEffectParam2> im
 	}
 
 	@Override
-	public FramedTraversal<T, ?, ?, ?> gatherScatter() {
+	public FramedTraversal gatherScatter() {
 		pipeline().gather().scatter();
+		return this;
+	}
+	
+	@Override
+	public FramedTraversal cast(Class<T> clazz) {
+	
 		return this;
 	}
 }

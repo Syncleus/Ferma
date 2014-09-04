@@ -135,7 +135,7 @@ public class FramedGraph {
 				return delegate.getVertex(id);
 			}
 
-		})).asVertices();
+		})).castToVertices();
     }
     
     /**
@@ -151,7 +151,7 @@ public class FramedGraph {
 				return delegate.getEdge(id);
 			}
 
-		})).asEdges();
+		})).castToEdges();
     }
 
 

@@ -341,37 +341,37 @@ public abstract class FramedVertexTraversalImpl extends FramedTraversalBase impl
 	@Override
 	public FramedEdgeTraversal outE(int branchFactor, String... labels) {
 		pipeline().outE(branchFactor, labels);
-		return asEdges();
+		return castToEdges();
 	}
 
 	@Override
 	public FramedEdgeTraversal outE(String... labels) {
 		pipeline().outE(labels);
-		return asEdges();
+		return castToEdges();
 	}
 
 	@Override
 	public FramedEdgeTraversal inE(int branchFactor, String... labels) {
 		pipeline().inE(branchFactor, labels);
-		return asEdges();
+		return castToEdges();
 	}
 
 	@Override
 	public FramedEdgeTraversal inE(String... labels) {
 		pipeline().inE(labels);
-		return asEdges();
+		return castToEdges();
 	}
 
 	@Override
 	public FramedEdgeTraversal bothE(int branchFactor, String... labels) {
 		pipeline().bothE(branchFactor, labels);
-		return asEdges();
+		return castToEdges();
 	}
 
 	@Override
 	public FramedEdgeTraversal bothE(String... labels) {
 		pipeline().bothE(labels);
-		return asEdges();
+		return castToEdges();
 	}
 
 	@Override

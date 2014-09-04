@@ -1,6 +1,7 @@
 package org.jglue.totorom;
 
 import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Test;
@@ -22,5 +23,15 @@ public class TestTraversals {
 				return id1.compareTo(id2);
 			}
 		}).toList());
+		
+		
+		graph.V().gather().transform(new TraversalFunction<List<GenericFramedVertex>, Integer>() {
+
+			@Override
+			public Integer compute(List<GenericFramedVertex> argument) {
+
+				return 3;
+			}
+		}).scatter().castToEdges().bothV().iterate();
 	}
 }

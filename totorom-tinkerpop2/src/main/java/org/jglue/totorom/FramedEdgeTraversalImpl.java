@@ -201,19 +201,19 @@ public abstract class FramedEdgeTraversalImpl extends FramedTraversalBase implem
 	@Override
 	public FramedVertexTraversal inV() {
 		pipeline().inV();
-		return asVertices();
+		return castToVertices();
 	}
 
 	@Override
 	public FramedVertexTraversal outV() {
 		pipeline().outV();
-		return asVertices();
+		return castToVertices();
 	}
 
 	@Override
 	public FramedVertexTraversal bothV() {
 		pipeline().bothV();
-		return asVertices();
+		return castToVertices();
 	}
 
 	@Override

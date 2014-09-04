@@ -18,9 +18,9 @@ import com.tinkerpop.pipes.util.structures.Tree;
  * 
  * @author bryn
  *
- * @param <SE>
+ * @param <SideEffect>
  */
-public interface FramedEdgeTraversal<SE, SideEffectParam1, SideEffectParam2> extends FramedTraversal<GenericFramedEdge, SE, SideEffectParam1, SideEffectParam2> {
+public interface FramedEdgeTraversal<SideEffect, GenericParam1, GenericParam2> extends FramedTraversal<GenericFramedEdge, SideEffect, GenericParam1, GenericParam2> {
 	/**
 	 * Check if the element has a property with provided key.
 	 *
@@ -184,7 +184,7 @@ public interface FramedEdgeTraversal<SE, SideEffectParam1, SideEffectParam2> ext
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<String, SE, ?, ?> label();
+	public abstract FramedTraversal<String, SideEffect, ?, ?> label();
 
 	/**
 	 * Add a DuplicateFilterPipe to the end of the Pipeline. Will only emit the
@@ -617,7 +617,7 @@ public interface FramedEdgeTraversal<SE, SideEffectParam1, SideEffectParam2> ext
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<List<GenericFramedEdge>, ?, ?, ?> gather();
+	public abstract FramedTraversal<List<GenericFramedEdge>, ?, GenericFramedEdge, ?> gather();
 
 	/**
 	 * Add an IdentityPipe to the end of the Pipeline. Useful in various

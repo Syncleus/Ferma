@@ -24,7 +24,7 @@ import com.tinkerpop.pipes.util.structures.Tree;
  * @param <T>
  * @param <SideEffect>
  */
-public interface FramedTraversal<T, SideEffect, SideEffectParam1, SideEffectParam2> extends Iterator<T>, Iterable<T> {
+public interface FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> extends Iterator<T>, Iterable<T> {
 
 	/**
 	 * Traverse over all the vertices in the graph.
@@ -610,7 +610,7 @@ public interface FramedTraversal<T, SideEffect, SideEffectParam1, SideEffectPara
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<List<T>, ?, ?, ?> gather();
+	public abstract FramedTraversal<List<T>, ?, T, ?> gather();
 
 	/**
 	 * Add an IdentityPipe to the end of the Pipeline. Useful in various
@@ -739,7 +739,7 @@ public interface FramedTraversal<T, SideEffect, SideEffectParam1, SideEffectPara
 	 *            a transformation to apply to the gathered list
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> FramedTraversal<List<N>, ?, ?, ?> gather(TraversalFunction<T, N> function);
+	public abstract <N> FramedTraversal<List<N>, ?, N, ?> gather(TraversalFunction<T, N> function);
 	
 	
 
@@ -771,7 +771,7 @@ public interface FramedTraversal<T, SideEffect, SideEffectParam1, SideEffectPara
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> FramedTraversal<N, ?, ?, ?> scatter(Class<N> clazz);
+	public abstract FramedTraversal<GenericParam1, ?, ?, ?> scatter();
 
 	/**
 	 * Add a SelectPipe to the end of the Pipeline. The objects of the named
@@ -831,7 +831,7 @@ public interface FramedTraversal<T, SideEffect, SideEffectParam1, SideEffectPara
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<SideEffect, ?, SideEffectParam1, SideEffectParam2> cap();
+	public abstract FramedTraversal<SideEffect, ?, GenericParam1, GenericParam2> cap();
 
 	/**
 	 * Add a OrderMapPipe to the end of the Pipeline Given a Map as an input,
@@ -842,7 +842,7 @@ public interface FramedTraversal<T, SideEffect, SideEffectParam1, SideEffectPara
 	 *            decrement sort is usable
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<SideEffectParam1, ?, ?, ?> orderMap(TransformPipe.Order order);
+	public abstract FramedTraversal<GenericParam1, ?, ?, ?> orderMap(TransformPipe.Order order);
 
 	/**
 	 * Add a OrderMapPipe to the end of the Pipeline Given a Map as an input,
@@ -853,7 +853,7 @@ public interface FramedTraversal<T, SideEffect, SideEffectParam1, SideEffectPara
 	 *            decrement sort is usable
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<SideEffectParam1, ?, ?, ?> orderMap(Tokens.T order);
+	public abstract FramedTraversal<GenericParam1, ?, ?, ?> orderMap(Tokens.T order);
 
 	/**
 	 * Add a OrderMapPipe to the end of the Pipeline Given a Map as an input,
@@ -863,8 +863,8 @@ public interface FramedTraversal<T, SideEffect, SideEffectParam1, SideEffectPara
 	 *            a function to compare to map entries
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<SideEffectParam1, ?, ?, ?> orderMap(
-			Comparator<Map.Entry<SideEffectParam1, SideEffectParam2>> compareFunction);
+	public abstract FramedTraversal<GenericParam1, ?, ?, ?> orderMap(
+			Comparator<Map.Entry<GenericParam1, GenericParam2>> compareFunction);
 
 	/**
 	 * Add a TransformFunctionPipe to the end of the Pipeline. Given an input,
@@ -948,7 +948,7 @@ public interface FramedTraversal<T, SideEffect, SideEffectParam1, SideEffectPara
 	 *
 	 * @return the Pipeline with path calculations enabled
 	 */
-	public abstract FramedTraversal<T, SideEffect, SideEffectParam1, SideEffectParam2> enablePath();
+	public abstract FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> enablePath();
 
 	/**
 	 * When possible, Gremlin takes advantage of certain sequences of pipes in
@@ -960,7 +960,7 @@ public interface FramedTraversal<T, SideEffect, SideEffectParam1, SideEffectPara
 	 *            whether to optimize the pipeline from here on or not
 	 * @return The GremlinPipeline with the optimization turned off
 	 */
-	public abstract FramedTraversal<T, SideEffect, SideEffectParam1, SideEffectParam2> optimize(boolean optimize);
+	public abstract FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> optimize(boolean optimize);
 
 	/**
 	 * Remove every element at the end of this Pipeline.
@@ -981,14 +981,21 @@ public interface FramedTraversal<T, SideEffect, SideEffectParam1, SideEffectPara
 	 * 
 	 * @return
 	 */
-	public abstract FramedVertexTraversal<SideEffect, SideEffectParam1, SideEffectParam2> asVertices();
+	public abstract FramedTraversal<T, SideEffect, GenericParam1, GenericParam2> cast(Class<T> clazz);
+	
+	/**
+	 * Cast the traversal as a vertex traversal
+	 * 
+	 * @return
+	 */
+	public abstract FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2> castToVertices();
 
 	/**
 	 * Cast the traversal to an edge traversalT
 	 * 
 	 * @return
 	 */
-	public abstract FramedEdgeTraversal<SideEffect, SideEffectParam1, SideEffectParam2> asEdges();
+	public abstract FramedEdgeTraversal<SideEffect, GenericParam1, GenericParam2> castToEdges();
 
 	/**
 	 * Add an OptionalPipe to the end of the Pipeline. The section of pipeline

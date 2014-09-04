@@ -14,7 +14,7 @@ import com.tinkerpop.pipes.util.structures.Pair;
 import com.tinkerpop.pipes.util.structures.Table;
 import com.tinkerpop.pipes.util.structures.Tree;
 
-public interface FramedVertexTraversal<SE, SideEffectParam1, SideEffectParam2> extends FramedTraversal<GenericFramedVertex, SE, SideEffectParam1, SideEffectParam2> {
+public interface FramedVertexTraversal<SideEffect, GenericParam1, GenericParam2> extends FramedTraversal<GenericFramedVertex, SideEffect, GenericParam1, GenericParam2> {
 
 	/**
 	 * Check if the element has a property with provided key.
@@ -823,7 +823,7 @@ public interface FramedVertexTraversal<SE, SideEffectParam1, SideEffectParam2> e
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract FramedTraversal<List<GenericFramedVertex>, ?, ?, ?> gather();
+	public abstract FramedTraversal<List<GenericFramedVertex>, ?, GenericFramedVertex, ?> gather();
 
 	/**
 	 * Add an IdentityPipe to the end of the Pipeline. Useful in various

@@ -971,7 +971,7 @@ public interface VertexTraversal<SideEffect, LazySideEffect> extends Traversal<T
 	/**
 	 * Add a NonTerminatingSideEffectCapPipe to the end of the Pipeline. When
 	 * the previous step in the pipeline is implements SideEffectPipe, then it
-	 * has a method called getSideEffect(). This step call the
+	 * has a method called getSideEffect(). This step calls the
 	 * sideEffectFunction function with the side effect.
 	 *
 	 * @return the extended Pipeline

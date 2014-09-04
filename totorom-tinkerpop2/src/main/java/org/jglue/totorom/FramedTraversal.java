@@ -200,17 +200,8 @@ public interface FramedTraversal<T, SideEffect> extends Iterator<T>, Iterable<T>
 			TraversalFunction<LoopPipe.LoopBundle<T>, Boolean> whileFunction,
 			TraversalFunction<LoopPipe.LoopBundle<T>, Boolean> emitFunction, Class<N> clazz);
 
-	/**
-	 * Add an AndFilterPipe to the end the Pipeline. If the internal pipes all
-	 * yield objects, then the object is not filtered. The provided pipes are
-	 * provided the object as their starts.
-	 *
-	 * @param pipes
-	 *            the internal pipes of the AndFilterPipe
-	 * @return the extended Pipeline
-	 */
-	public abstract FramedTraversal<T, ?> and(Pipe<T, ?>... pipes);
 
+	
 	/**
 	 * Add a DuplicateFilterPipe to the end of the Pipeline. Will only emit the
 	 * object if it has not been seen before.
@@ -262,16 +253,6 @@ public interface FramedTraversal<T, SideEffect> extends Iterator<T>, Iterable<T>
 	 */
 	public abstract FramedTraversal<T, ?> filter(TraversalFunction<T, Boolean> filterFunction);
 
-	/**
-	 * Add an OrFilterPipe to the end the Pipeline. Will only emit the object if
-	 * one or more of the provides pipes yields an object. The provided pipes
-	 * are provided the object as their starts.
-	 *
-	 * @param pipes
-	 *            the internal pipes of the OrFilterPipe
-	 * @return the extended Pipeline
-	 */
-	public abstract FramedTraversal<T, ?> or(Pipe<T, ?>... pipes);
 
 	/**
 	 * Add a RandomFilterPipe to the end of the Pipeline. A biased coin toss
@@ -779,6 +760,18 @@ public interface FramedTraversal<T, SideEffect> extends Iterator<T>, Iterable<T>
 	 * @return the extended Pipeline
 	 */
 	public abstract <N> FramedTraversal<List<N>, ?> gather(TraversalFunction<T, N> function);
+	
+	
+
+	/**
+	 * Causes the pipeline to be greedy up to this step. 
+	 *
+	 * @return the extended Pipeline
+	 */
+	public abstract FramedTraversal<T, ?> gatherScatter();
+	
+	
+	
 
 	/**
 	 * Add a PathPipe to the end of the Pipeline. This will emit the path that

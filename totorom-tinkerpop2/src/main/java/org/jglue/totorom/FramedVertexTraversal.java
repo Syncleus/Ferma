@@ -392,16 +392,6 @@ public interface FramedVertexTraversal<SE> extends FramedTraversal<GenericFramed
 	 */
 	FramedVertexTraversal<?> linkBoth(String label, FramedVertex other);
 
-	/**
-	 * Add an AndFilterPipe to the end the Pipeline. If the internal pipes all
-	 * yield objects, then the object is not filtered. The provided pipes are
-	 * provided the object as their starts.
-	 *
-	 * @param pipes
-	 *            the internal pipes of the AndFilterPipe
-	 * @return the extended Pipeline
-	 */
-	public abstract FramedVertexTraversal<?> and(Pipe<GenericFramedVertex, ?>... pipes);
 
 	/**
 	 * Add a DuplicateFilterPipe to the end of the Pipeline. Will only emit the
@@ -454,16 +444,7 @@ public interface FramedVertexTraversal<SE> extends FramedTraversal<GenericFramed
 	 */
 	public abstract FramedVertexTraversal<?> filter(TraversalFunction<GenericFramedVertex, Boolean> filterFunction);
 
-	/**
-	 * Add an OrFilterPipe to the end the Pipeline. Will only emit the object if
-	 * one or more of the provides pipes yields an object. The provided pipes
-	 * are provided the object as their starts.
-	 *
-	 * @param pipes
-	 *            the internal pipes of the OrFilterPipe
-	 * @return the extended Pipeline
-	 */
-	public abstract FramedVertexTraversal<?> or(Pipe<GenericFramedVertex, ?>... pipes);
+	
 
 	/**
 	 * Add a RandomFilterPipe to the end of the Pipeline. A biased coin toss
@@ -947,4 +928,35 @@ public interface FramedVertexTraversal<SE> extends FramedTraversal<GenericFramed
 	 * @return the collection filled
 	 */
 	public abstract <N extends FramedVertex> Collection<N> fill(Collection<N> collection, Class<N> clazz);
+	
+	
+	/**
+	 * Causes the pipeline to be greedy up to this step. 
+	 *
+	 * @return the extended Pipeline
+	 */
+	public abstract FramedVertexTraversal<?> gatherScatter();
+	
+	
+	/**
+	 * Add an AndFilterPipe to the end the Pipeline. If the internal pipes all
+	 * yield objects, then the object is not filtered. The provided pipes are
+	 * provided the object as their starts.
+	 *
+	 * @param pipes
+	 *            the internal pipes of the AndFilterPipe
+	 * @return the extended Pipeline
+	 */
+	public abstract FramedVertexTraversal<?> and(TraversalFunction<GenericFramedVertex, FramedTraversal>... pipes); 
+
+	/**
+	 * Add an OrFilterPipe to the end the Pipeline. Will only emit the object if
+	 * one or more of the provides pipes yields an object. The provided pipes
+	 * are provided the object as their starts.
+	 *
+	 * @param pipes
+	 *            the internal pipes of the OrFilterPipe
+	 * @return the extended Pipeline
+	 */
+	public abstract FramedVertexTraversal<?> or(TraversalFunction<GenericFramedVertex, FramedTraversal>... pipes);
 }

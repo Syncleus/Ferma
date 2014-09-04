@@ -173,11 +173,7 @@ abstract class FramedTraversalBase<T, SE> implements FramedTraversal<T, SE> {
 		return asTraversal();
 	}
 
-	@Override
-	public FramedTraversal and(Pipe... pipes) {
-		pipeline().and(pipes);
-		return this;
-	}
+
 
 	@Override
 	public FramedTraversal back(String namedStep) {
@@ -212,12 +208,6 @@ abstract class FramedTraversalBase<T, SE> implements FramedTraversal<T, SE> {
 	@Override
 	public FramedTraversal filter(TraversalFunction filterFunction) {
 		pipeline().filter(filterFunction);
-		return this;
-	}
-
-	@Override
-	public FramedTraversal or(Pipe... pipes) {
-		pipeline().or(pipes);
 		return this;
 	}
 
@@ -435,7 +425,6 @@ abstract class FramedTraversalBase<T, SE> implements FramedTraversal<T, SE> {
 		return this;
 	}
 
-	
 	@Override
 	public FramedTraversal tree(TraversalFunction... branchFunctions) {
 		pipeline().tree(wrap(branchFunctions));
@@ -659,18 +648,24 @@ abstract class FramedTraversalBase<T, SE> implements FramedTraversal<T, SE> {
 		}));
 		return unwrapped;
 	}
-	
-	private TraversalFunction[] wrap(TraversalFunction... branchFunctions) {
-		Collection<TraversalFunction> wrapped = Collections2.transform(Arrays.asList(branchFunctions), new Function<TraversalFunction, TraversalFunction>() {
 
-			@Override
-			public TraversalFunction apply(TraversalFunction input) {
-				return new FramingTraversalFunction(input, graph());
-			}
-			
-		});
+	private TraversalFunction[] wrap(TraversalFunction... branchFunctions) {
+		Collection<TraversalFunction> wrapped = Collections2.transform(Arrays.asList(branchFunctions),
+				new Function<TraversalFunction, TraversalFunction>() {
+
+					@Override
+					public TraversalFunction apply(TraversalFunction input) {
+						return new FramingTraversalFunction(input, graph());
+					}
+
+				});
 		TraversalFunction[] wrappedArray = wrapped.toArray(new TraversalFunction[wrapped.size()]);
 		return wrappedArray;
 	}
 
+	@Override
+	public FramedTraversal<T, ?> gatherScatter() {
+		pipeline().gather().scatter();
+		return this;
+	}
 }

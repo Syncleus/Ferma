@@ -37,7 +37,6 @@ class FramedTraversalImpl extends FramedTraversalBase implements FramedTraversal
 
 	private FramedEdgeTraversal edgeTraversal = new FramedEdgeTraversalImpl() {
 
-		
 		@Override
 		public FramedVertexTraversal asVertices() {
 			return vertexTraversal;

@@ -1,5 +1,6 @@
 package org.jglue.totorom;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -7,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.google.common.base.Function;
+import com.google.common.collect.Collections2;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
@@ -287,11 +289,32 @@ public abstract class FramedEdgeTraversalImpl extends FramedTraversalBase implem
 
 	}
 
+	
+
 	@Override
-	public FramedEdgeTraversal and(Pipe... pipes) {
+	public FramedEdgeTraversal and(TraversalFunction... pipes) {
+		Collection<Pipe> extractedPipes = Collections2.transform(Arrays.asList(pipes), new Function<TraversalFunction, Pipe>() {
 
-		return (FramedEdgeTraversal) super.and(pipes);
+			@Override
+			public Pipe apply(TraversalFunction input) {
+				return ((FramedTraversalImpl) input.compute(new GenericFramedEdge())).pipeline().get(0);
+			}
+		});
+		pipeline().and(extractedPipes.toArray(new Pipe[extractedPipes.size()]));
+		return this;
+	}
+	
+	@Override
+	public FramedEdgeTraversal or(TraversalFunction... pipes) {
+		Collection<Pipe> extractedPipes = Collections2.transform(Arrays.asList(pipes), new Function<TraversalFunction, Pipe>() {
 
+			@Override
+			public Pipe apply(TraversalFunction input) {
+				return ((FramedTraversalImpl) input.compute(new GenericFramedEdge())).pipeline().get(0);
+			}
+		});
+		pipeline().or(extractedPipes.toArray(new Pipe[extractedPipes.size()]));
+		return this;
 	}
 
 	@Override
@@ -325,11 +348,6 @@ public abstract class FramedEdgeTraversalImpl extends FramedTraversalBase implem
 	@Override
 	public FramedEdgeTraversal range(int low, int high) {
 		return (FramedEdgeTraversal) super.range(low, high);
-	}
-
-	@Override
-	public FramedEdgeTraversal or(Pipe... pipes) {
-		return (FramedEdgeTraversal) super.or(pipes);
 	}
 
 	@Override
@@ -405,4 +423,10 @@ public abstract class FramedEdgeTraversalImpl extends FramedTraversalBase implem
 			}
 		});
 	};
+
+	@Override
+	public FramedEdgeTraversal gatherScatter() {
+
+		return (FramedEdgeTraversal) super.gatherScatter();
+	}
 }

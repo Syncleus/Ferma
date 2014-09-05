@@ -980,18 +980,18 @@ public interface VertexTraversal<Cap, SideEffect> extends Traversal<TVertex, Cap
 	 *            the internal pipes of the AndFilterPipe
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<?, ?> and(TraversalFunction<TVertex, Traversal<?, ?, ?>>... pipes);
+	public abstract VertexTraversal<?, ?> and(TraversalFunction<TVertex, Traversal<?, ?, ?>>... traversals);
 
 	/**
 	 * Add an OrFilterPipe to the end the Pipeline. Will only emit the object if
 	 * one or more of the provides pipes yields an object. The provided pipes
 	 * are provided the object as their starts.
 	 *
-	 * @param pipes
+	 * @param traversals
 	 *            the internal pipes of the OrFilterPipe
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<?, ?> or(TraversalFunction<TVertex, Traversal<?, ?, ?>>... pipes);
+	public abstract VertexTraversal<?, ?> or(TraversalFunction<TVertex, Traversal<?, ?, ?>>... traversals);
 
 	/**
 	 * This step calls emits the input but also calls the sideEffectFunction function with the side effect of

@@ -9,7 +9,6 @@ import java.util.Map;
 import com.tinkerpop.blueprints.Graph;
 import com.tinkerpop.gremlin.Tokens;
 import com.tinkerpop.gremlin.java.GremlinPipeline;
-import com.tinkerpop.pipes.Pipe;
 import com.tinkerpop.pipes.branch.LoopPipe;
 import com.tinkerpop.pipes.transform.TransformPipe;
 import com.tinkerpop.pipes.util.structures.Pair;
@@ -96,89 +95,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 */
 	public abstract <N> Traversal<N, ?, ?> property(String key, Class<N> type);
 
-	/**
-	 * Add a CopySplitPipe to the end of the pipeline. The incoming objects are
-	 * copied to the provided pipes. This "split-pipe" is used in conjunction
-	 * with some type of "merge-pipe."
-	 *
-	 * @param pipes
-	 *            the internal pipes of the CopySplitPipe
-	 * @return the extended Pipeline
-	 */
-	public abstract <N> Traversal<N, ?, ?> copySplit(Pipe<T, N>... pipes);
-
-	/**
-	 * Add an ExhaustMergePipe to the end of the pipeline. The one-step previous
-	 * MetaPipe in the pipeline's pipes are used as the internal pipes. The
-	 * pipes' emitted objects are merged where the first pipe's objects are
-	 * exhausted, then the second, etc.
-	 *
-	 * @return the extended Pipeline
-	 */
-	public abstract <N> Traversal<N, ?, ?> exhaustMerge();
-
-	/**
-	 * Add a FairMergePipe to the end of the Pipeline. The one-step previous
-	 * MetaPipe in the pipeline's pipes are used as the internal pipes. The
-	 * pipes' emitted objects are merged in a round robin fashion.
-	 *
-	 * @return the extended Pipeline
-	 */
-	public abstract <N> Traversal<N, ?, ?> fairMerge();
-
-	/**
-	 * Add an IfThenElsePipe to the end of the Pipeline. If the ifFunction is
-	 * true, then the results of the thenFunction are emitted. If the ifFunction
-	 * is false, then the results of the elseFunction are emitted.
-	 *
-	 * @param ifFunction
-	 *            the function denoting the "if" part of the pipe
-	 * @param thenFunction
-	 *            the function denoting the "then" part of the pipe
-	 * @param elseFunction
-	 *            the function denoting the "else" part of the pipe
-	 * @return the extended Pipeline
-	 */
-	public abstract <N> Traversal<N, ?, ?> ifThenElse(TraversalFunction<T, Boolean> ifFunction,
-			TraversalFunction<T, N> thenFunction, TraversalFunction<T, N> elseFunction, Class<N> clazz);
-
-	/**
-	 * Add a LoopPipe to the end of the Pipeline. Looping is useful for
-	 * repeating a section of a pipeline. The provided whileFunction determines
-	 * when to drop out of the loop. The whileFunction is provided a LoopBundle
-	 * object which contains the object in loop along with other useful
-	 * metadata.
-	 *
-	 * @param namedStep
-	 *            the name of the step to loop back to
-	 * @param whileFunction
-	 *            whether or not to continue looping on the current object
-	 * @return the extended Pipeline
-	 */
-	public abstract <N> Traversal<N, ?, ?> loop(String namedStep,
-			TraversalFunction<LoopPipe.LoopBundle<T>, Boolean> whileFunction, Class<N> clazz);
-
-	/**
-	 * Add a LoopPipe to the end of the Pipeline. Looping is useful for
-	 * repeating a section of a pipeline. The provided whileFunction determines
-	 * when to drop out of the loop. The provided emitFunction can be used to
-	 * emit objects that are still going through a loop. The whileFunction and
-	 * emitFunctions are provided a LoopBundle object which contains the object
-	 * in loop along with other useful metadata.
-	 *
-	 * @param namedStep
-	 *            the number of steps to loop back to
-	 * @param whileFunction
-	 *            whether or not to continue looping on the current object
-	 * @param emitFunction
-	 *            whether or not to emit the current object (irrespective of
-	 *            looping)
-	 * @return the extended Pipeline
-	 */
-	public abstract <N> Traversal<N, ?, ?> loop(String namedStep,
-			TraversalFunction<LoopPipe.LoopBundle<T>, Boolean> whileFunction,
-			TraversalFunction<LoopPipe.LoopBundle<T>, Boolean> emitFunction, Class<N> clazz);
-
+	
 	/**
 	 * Add a DuplicateFilterPipe to the end of the Pipeline. Will only emit the
 	 * object if it has not been seen before.

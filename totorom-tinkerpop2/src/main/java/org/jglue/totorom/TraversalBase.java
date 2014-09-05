@@ -136,42 +136,7 @@ abstract class TraversalBase<T, SE, LSE> implements Traversal<T, SE, LSE> {
 		return asTraversal();
 	}
 
-	@Override
-	public Traversal copySplit(Pipe... pipes) {
-		pipeline().copySplit(pipes);
-		return asTraversal();
-	}
 
-	@Override
-	public Traversal exhaustMerge() {
-		pipeline().exhaustMerge();
-		return asTraversal();
-	}
-
-	@Override
-	public Traversal fairMerge() {
-		pipeline().fairMerge();
-		return asTraversal();
-	}
-
-	@Override
-	public Traversal ifThenElse(TraversalFunction ifFunction, TraversalFunction thenFunction, TraversalFunction elseFunction,
-			Class clazz) {
-		pipeline().ifThenElse(ifFunction, thenFunction, elseFunction);
-		return asTraversal();
-	}
-
-	@Override
-	public Traversal loop(String namedStep, TraversalFunction whileFunction, Class clazz) {
-		pipeline().loop(namedStep, whileFunction);
-		return asTraversal();
-	}
-
-	@Override
-	public Traversal loop(String namedStep, TraversalFunction whileFunction, TraversalFunction emitFunction, Class clazz) {
-		pipeline().loop(namedStep, whileFunction, emitFunction);
-		return asTraversal();
-	}
 
 	@Override
 	public Traversal back(String namedStep) {
@@ -271,39 +236,45 @@ abstract class TraversalBase<T, SE, LSE> implements Traversal<T, SE, LSE> {
 
 	@Override
 	public Traversal groupBy(Map map, TraversalFunction keyFunction, TraversalFunction valueFunction) {
-		pipeline().groupBy(map, new FramingTraversalFunction<>(keyFunction, graph()), new TraversalFunctionPipe(new FramingTraversalFunction<>(valueFunction, graph())));
+		pipeline().groupBy(map, new FramingTraversalFunction<>(keyFunction, graph()),
+				new TraversalFunctionPipe(new FramingTraversalFunction<>(valueFunction, graph())));
 		return this;
 	}
 
 	@Override
 	public Traversal groupBy(TraversalFunction keyFunction, TraversalFunction valueFunction) {
 
-		pipeline().groupBy(new FramingTraversalFunction<>(keyFunction, graph()), new TraversalFunctionPipe(new FramingTraversalFunction<>(valueFunction, graph())));
+		pipeline().groupBy(new FramingTraversalFunction<>(keyFunction, graph()),
+				new TraversalFunctionPipe(new FramingTraversalFunction<>(valueFunction, graph())));
 		return this;
 	}
 
 	@Override
 	public Traversal groupBy(Map reduceMap, TraversalFunction keyFunction, TraversalFunction valueFunction,
 			TraversalFunction reduceFunction) {
-		pipeline().groupBy(reduceMap, new FramingTraversalFunction<>(keyFunction, graph()), new TraversalFunctionPipe(new FramingTraversalFunction<>(valueFunction, graph())), reduceFunction);
+		pipeline().groupBy(reduceMap, new FramingTraversalFunction<>(keyFunction, graph()),
+				new TraversalFunctionPipe(new FramingTraversalFunction<>(valueFunction, graph())), reduceFunction);
 		return this;
 	}
 
 	@Override
 	public Traversal groupBy(TraversalFunction keyFunction, TraversalFunction valueFunction, TraversalFunction reduceFunction) {
-		pipeline().groupBy(new FramingTraversalFunction<>(keyFunction, graph()), new TraversalFunctionPipe(new FramingTraversalFunction<>(valueFunction, graph())), reduceFunction);
+		pipeline().groupBy(new FramingTraversalFunction<>(keyFunction, graph()),
+				new TraversalFunctionPipe(new FramingTraversalFunction<>(valueFunction, graph())), reduceFunction);
 		return this;
 	}
 
 	@Override
 	public Traversal groupCount(Map map, TraversalFunction keyFunction, TraversalFunction valueFunction) {
-		pipeline().groupCount(map, new FramingTraversalFunction<>(keyFunction, graph()), new TraversalFunctionPipe(new FramingTraversalFunction<>(valueFunction, graph())));
+		pipeline().groupCount(map, new FramingTraversalFunction<>(keyFunction, graph()),
+				new TraversalFunctionPipe(new FramingTraversalFunction<>(valueFunction, graph())));
 		return this;
 	}
 
 	@Override
 	public Traversal groupCount(TraversalFunction keyFunction, TraversalFunction valueFunction) {
-		pipeline().groupCount(new FramingTraversalFunction<>(keyFunction, graph()), new FramingTraversalFunction<>(valueFunction, graph()));
+		pipeline().groupCount(new FramingTraversalFunction<>(keyFunction, graph()),
+				new FramingTraversalFunction<>(valueFunction, graph()));
 		return this;
 	}
 
@@ -328,7 +299,7 @@ abstract class TraversalBase<T, SE, LSE> implements Traversal<T, SE, LSE> {
 	@Override
 	public Traversal groupCount() {
 		return this.groupCount(new HashMap());
-		
+
 	}
 
 	@Override
@@ -429,13 +400,12 @@ abstract class TraversalBase<T, SE, LSE> implements Traversal<T, SE, LSE> {
 		pipeline().tree(wrap(branchFunctions));
 		return this;
 	}
-	
+
 	@Override
 	public Traversal tree() {
 		pipeline().tree(new FramingTraversalFunction<>(graph()));
 		return this;
 	}
-
 
 	@Override
 	public Traversal memoize(String namedStep) {
@@ -482,10 +452,9 @@ abstract class TraversalBase<T, SE, LSE> implements Traversal<T, SE, LSE> {
 
 	@Override
 	public Traversal path(TraversalFunction... pathFunctions) {
-		if(pathFunctions.length == 0) {
+		if (pathFunctions.length == 0) {
 			pipeline().path(new FramingTraversalFunction<>(graph()));
-		}
-		else {
+		} else {
 			pipeline().path(wrap(pathFunctions));
 		}
 		return asTraversal();
@@ -527,17 +496,19 @@ abstract class TraversalBase<T, SE, LSE> implements Traversal<T, SE, LSE> {
 
 	@Override
 	public Traversal divert(final SideEffectFunction sideEffectFunction) {
-		
+
 		final FramingSideEffectFunction framingSideEffectFunction = new FramingSideEffectFunction(sideEffectFunction, graph());
-		pipeline().add(new NonTerminatingSideEffectCapPipe((SideEffectPipe) FluentUtility.removePreviousPipes(pipeline(), 1).get(0), new TraversalFunction() {
+		pipeline().add(
+				new NonTerminatingSideEffectCapPipe((SideEffectPipe) FluentUtility.removePreviousPipes(pipeline(), 1).get(0),
+						new TraversalFunction() {
 
-			@Override
-			public Object compute(Object argument) {
-				framingSideEffectFunction.execute(argument);
-				return null;
-			}
+							@Override
+							public Object compute(Object argument) {
+								framingSideEffectFunction.execute(argument);
+								return null;
+							}
 
-		}));
+						}));
 		return this;
 	}
 
@@ -615,7 +586,6 @@ abstract class TraversalBase<T, SE, LSE> implements Traversal<T, SE, LSE> {
 		return pipeline().hasNext();
 	}
 
-	
 	@Override
 	public Iterator iterator() {
 		return Iterators.transform(pipeline(), new Function() {
@@ -629,7 +599,6 @@ abstract class TraversalBase<T, SE, LSE> implements Traversal<T, SE, LSE> {
 			}
 		});
 	}
-
 
 	private HashSet unwrap(Collection collection) {
 		HashSet unwrapped = new HashSet(Collections2.transform(collection, new Function<Object, Object>() {
@@ -661,8 +630,6 @@ abstract class TraversalBase<T, SE, LSE> implements Traversal<T, SE, LSE> {
 		TraversalFunction[] wrappedArray = wrapped.toArray(new TraversalFunction[wrapped.size()]);
 		return wrappedArray;
 	}
-	
-	
 
 	@Override
 	public Traversal gatherScatter() {

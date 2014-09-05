@@ -13,6 +13,8 @@ import org.junit.Test;
 import com.tinkerpop.blueprints.impls.tg.TinkerGraphFactory;
 import com.tinkerpop.pipes.transform.TransformPipe.Order;
 import com.tinkerpop.pipes.util.structures.Row;
+import com.tinkerpop.pipes.util.structures.Table;
+import com.tinkerpop.pipes.util.structures.Tree;
 
 public class TestTraversals {
 	private FramedGraph graph = new FramedGraph(TinkerGraphFactory.createTinkerGraph());
@@ -153,7 +155,6 @@ public class TestTraversals {
 		Assert.assertEquals(6, graph.V().gatherScatter().out().count());
 
 		Assert.assertEquals(3, graph.V().range(0, 2).gatherScatter().out().count());
-		
 
 	}
 
@@ -283,7 +284,6 @@ public class TestTraversals {
 		Map<TVertex, Long> cap = graph.V().out().groupCount().cap();
 		Assert.assertEquals(4, cap.size());
 		Assert.assertTrue(cap.keySet().iterator().next() instanceof TVertex);
-		
 
 		Assert.assertEquals(4, graph.V().out().groupCount(new TraversalFunction<TVertex, String>() {
 
@@ -319,7 +319,63 @@ public class TestTraversals {
 		Assert.assertEquals(6, cap.size());
 		Assert.assertEquals(3, cap.get(graph.v(1).next()).size());
 		Assert.assertTrue(cap.get(graph.v(1).next()).iterator().next() instanceof TVertex);
-		
 
+	}
+
+	@Test
+	public void testOptional() {
+
+	}
+
+	@Test
+	public void testSideEffect() {
+		final List<TVertex> collected = new ArrayList<TVertex>();
+		graph.v(1).sideEffect(new SideEffectFunction<TVertex>() {
+
+			@Override
+			public void execute(TVertex o) {
+				collected.add(o);
+
+			}
+		}).iterate();
+		Assert.assertEquals(1, collected.size());
+
+	}
+
+	@Test
+	public void testStore() {
+		Collection<TVertex> x = new ArrayList<>();
+		graph.v(1).store(x).next();
+		Assert.assertEquals(graph.v(1).next(), x.iterator().next());
+	}
+
+	@Test
+	public void testTable() {
+		
+		Table table = graph.V().as("vertex").as("x").property("name").as("name").back("x").property("age").as("age").table().cap();
+		Assert.assertEquals(6, table.size());
+		Assert.assertTrue(table.get(0).get(0) instanceof TVertex);
+		
+	}
+	
+	
+	@Test
+	public void testTree() {
+		
+		Tree<TVertex> tree = graph.v(1).out().out().tree().cap();
+		Assert.assertEquals(1, tree.get(graph.v(1).next()).size());
+		
+		Tree<TVertex> tree2 = graph.v(1).out().out().tree(new TraversalFunction<TVertex, TVertex>() {
+
+			@Override
+			public TVertex compute(TVertex argument) {
+				return argument;
+			}
+			
+		}).cap();
+		
+		Assert.assertEquals(1, tree2.get(graph.v(1).next()).size());
+		
+		
 	}
 }

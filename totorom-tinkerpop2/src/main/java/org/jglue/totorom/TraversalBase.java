@@ -351,11 +351,12 @@ abstract class TraversalBase<T, SE, LSE> implements Traversal<T, SE, LSE> {
 
 	@Override
 	public Traversal sideEffect(final SideEffectFunction sideEffectFunction) {
+		final FramingSideEffectFunction function = new FramingSideEffectFunction<>(sideEffectFunction, graph());
 		pipeline().sideEffect(new TraversalFunction() {
 
 			@Override
 			public Object compute(Object argument) {
-				sideEffectFunction.execute(argument);
+				function.execute(argument);
 				return null;
 			}
 
@@ -365,7 +366,7 @@ abstract class TraversalBase<T, SE, LSE> implements Traversal<T, SE, LSE> {
 
 	@Override
 	public Traversal store(Collection storage) {
-		pipeline().store(storage);
+		pipeline().store(new FramingCollection<>(storage, graph()));
 		return this;
 	}
 
@@ -428,6 +429,13 @@ abstract class TraversalBase<T, SE, LSE> implements Traversal<T, SE, LSE> {
 		pipeline().tree(wrap(branchFunctions));
 		return this;
 	}
+	
+	@Override
+	public Traversal tree() {
+		pipeline().tree(new FramingTraversalFunction<>(graph()));
+		return this;
+	}
+
 
 	@Override
 	public Traversal memoize(String namedStep) {

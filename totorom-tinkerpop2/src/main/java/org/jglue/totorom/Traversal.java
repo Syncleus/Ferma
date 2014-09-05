@@ -604,6 +604,14 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	public abstract <N> Traversal<T, Tree<N>, Tree<N>> tree(TraversalFunction<?, N>... branchFunctions);
 
 	/**
+	 * Add a TreePipe to the end of the Pipeline This step maintains an internal
+	 * tree representation of the paths that have flowed through the step.
+	 *
+	 * @return the extended Pipeline
+	 */
+	public abstract Traversal<T, Tree<T>, Tree<T>> tree();
+	
+	/**
 	 * Add an IdentityPipe to the end of the Pipeline. Useful in various
 	 * situations where a step is needed without processing. For example, useful
 	 * when two as-steps are needed in a row.

@@ -19,12 +19,13 @@ import com.tinkerpop.pipes.util.structures.Tree;
 
 /**
  * The root traversal class. Wraps a Tinkerpop {@link GremlinPipeline}
+ * 
  * @author bryn
  *
  * @param <T>
- * @param <SideEffect>
+ * @param <Cap>
  */
-public interface Traversal<T, SideEffect, LazySideEffect> extends Iterator<T>, Iterable<T> {
+public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> {
 
 	/**
 	 * Traverse over all the vertices in the graph.
@@ -94,8 +95,6 @@ public interface Traversal<T, SideEffect, LazySideEffect> extends Iterator<T>, I
 	 * @return the extended Pipeline
 	 */
 	public abstract <N> Traversal<N, ?, ?> property(String key, Class<N> type);
-
-	
 
 	/**
 	 * Add a CopySplitPipe to the end of the pipeline. The incoming objects are
@@ -180,8 +179,6 @@ public interface Traversal<T, SideEffect, LazySideEffect> extends Iterator<T>, I
 			TraversalFunction<LoopPipe.LoopBundle<T>, Boolean> whileFunction,
 			TraversalFunction<LoopPipe.LoopBundle<T>, Boolean> emitFunction, Class<N> clazz);
 
-
-	
 	/**
 	 * Add a DuplicateFilterPipe to the end of the Pipeline. Will only emit the
 	 * object if it has not been seen before.
@@ -209,7 +206,7 @@ public interface Traversal<T, SideEffect, LazySideEffect> extends Iterator<T>, I
 	 *            the collection except from the stream
 	 * @return the extended Pipeline
 	 */
-	public abstract Traversal<T, ?, ?> except(Collection<?> collection);
+	public abstract Traversal<T, ?, ?> except(Iterable<?> collection);
 
 	/**
 	 * Add an ExceptFilterPipe to the end of the Pipeline. Will only emit the
@@ -233,7 +230,6 @@ public interface Traversal<T, SideEffect, LazySideEffect> extends Iterator<T>, I
 	 */
 	public abstract Traversal<T, ?, ?> filter(TraversalFunction<T, Boolean> filterFunction);
 
-
 	/**
 	 * Add a RandomFilterPipe to the end of the Pipeline. A biased coin toss
 	 * determines if the object is emitted or not.
@@ -242,7 +238,7 @@ public interface Traversal<T, SideEffect, LazySideEffect> extends Iterator<T>, I
 	 *            the bias of the random coin
 	 * @return the extended Pipeline
 	 */
-	public abstract Traversal<T, ?, ?> random(Double bias);
+	public abstract Traversal<T, ?, ?> random(double bias);
 
 	/**
 	 * Add a RageFilterPipe to the end of the Pipeline. Analogous to a high/low
@@ -264,7 +260,9 @@ public interface Traversal<T, SideEffect, LazySideEffect> extends Iterator<T>, I
 	 *            the collection to retain
 	 * @return the extended Pipeline
 	 */
-	public abstract Traversal<T, ?, ?> retain(Collection<?> collection);
+	public abstract Traversal<T, ?, ?> retain(Iterable<?> collection);
+	
+
 
 	/**
 	 * Add a RetainFilterPipe to the end of the Pipeline. Will only emit the
@@ -334,8 +332,8 @@ public interface Traversal<T, SideEffect, LazySideEffect> extends Iterator<T>, I
 	 *            the function that generates the value from the function
 	 * @return the extended Pipeline
 	 */
-	public abstract <K, V> Traversal<T, Map<K, List<V>>, Map<K, List<V>>> groupBy(Map<K, List<V>> map, TraversalFunction<T, K> keyFunction,
-			TraversalFunction<T, V> valueFunction);
+	public abstract <K, V> Traversal<T, Map<K, List<V>>, Map<K, List<V>>> groupBy(Map<K, List<V>> map,
+			TraversalFunction<T, K> keyFunction, TraversalFunction<T, Iterator<V>> valueFunction);
 
 	/**
 	 * Add a GroupByPipe to the end of the Pipeline. Group the objects inputted
@@ -349,7 +347,7 @@ public interface Traversal<T, SideEffect, LazySideEffect> extends Iterator<T>, I
 	 * @return the extended Pipeline
 	 */
 	public abstract <K, V> Traversal<T, Map<K, List<V>>, Map<K, List<V>>> groupBy(TraversalFunction<T, K> keyFunction,
-			TraversalFunction<T, V> valueFunction);
+			TraversalFunction<T, Iterator<V>> valueFunction);
 
 	/**
 	 * Add a GroupByReducePipe to the end of the Pipeline. Group the objects
@@ -370,8 +368,9 @@ public interface Traversal<T, SideEffect, LazySideEffect> extends Iterator<T>, I
 	 *            the function that reduces the value lists
 	 * @return the extended Pipeline
 	 */
-	public abstract <K, V, V2> Traversal<T, Map<K, V2>, Map<K, V2>> groupBy(Map<K, V2> reduceMap, TraversalFunction<T, K> keyFunction,
-			TraversalFunction<T, V> valueFunction, TraversalFunction<List<V>, V2> reduceFunction);
+	public abstract <K, V, V2> Traversal<T, Map<K, V2>, Map<K, V2>> groupBy(Map<K, V2> reduceMap,
+			TraversalFunction<T, K> keyFunction, TraversalFunction<T, Iterator<V>> valueFunction,
+			TraversalFunction<List<V>, V2> reduceFunction);
 
 	/**
 	 * Add a GroupByReducePipe to the end of the Pipeline. Group the objects
@@ -390,7 +389,7 @@ public interface Traversal<T, SideEffect, LazySideEffect> extends Iterator<T>, I
 	 * @return the extended Pipeline
 	 */
 	public abstract <K, V, V2> Traversal<T, Map<K, V2>, Map<K, V2>> groupBy(TraversalFunction<T, K> keyFunction,
-			TraversalFunction<T, V> valueFunction, TraversalFunction<List<V>, V2> reduceFunction);
+			TraversalFunction<T, Iterator<V>> valueFunction, TraversalFunction<List<V>, V2> reduceFunction);
 
 	/**
 	 * Add a GroupCountPipe or GroupCountFunctionPipe to the end of the
@@ -406,8 +405,8 @@ public interface Traversal<T, SideEffect, LazySideEffect> extends Iterator<T>, I
 	 *            the value function to determine map value
 	 * @return the extended Pipeline
 	 */
-	public abstract <K> Traversal<T, Map<K, Long>, Map<K, Long>> groupCount(Map<K, Long> map, TraversalFunction<T, K> keyFunction,
-			TraversalFunction<Pair<T, Long>, Long> valueFunction);
+	public abstract <K> Traversal<T, Map<K, Long>, Map<K, Long>> groupCount(Map<K, Long> map,
+			TraversalFunction<T, K> keyFunction, TraversalFunction<Pair<T, Long>, Long> valueFunction);
 
 	/**
 	 * Add a GroupCountPipe or GroupCountFunctionPipe to the end of the
@@ -604,7 +603,6 @@ public interface Traversal<T, SideEffect, LazySideEffect> extends Iterator<T>, I
 	 */
 	public abstract <N> Traversal<T, Tree<N>, Tree<N>> tree(TraversalFunction<?, N>... branchFunctions);
 
-
 	/**
 	 * Add an IdentityPipe to the end of the Pipeline. Useful in various
 	 * situations where a step is needed without processing. For example, useful
@@ -725,18 +723,12 @@ public interface Traversal<T, SideEffect, LazySideEffect> extends Iterator<T>, I
 	 */
 	public abstract <N> Traversal<N, ?, ?> back(String namedStep, Class<N> type);
 
-
-	
-
 	/**
-	 * Causes the pipeline to be greedy up to this step. 
+	 * Causes the pipeline to be greedy up to this step.
 	 *
 	 * @return the extended Pipeline
 	 */
 	public abstract Traversal<T, ?, ?> gatherScatter();
-	
-	
-	
 
 	/**
 	 * Add a PathPipe to the end of the Pipeline. This will emit the path that
@@ -747,8 +739,7 @@ public interface Traversal<T, SideEffect, LazySideEffect> extends Iterator<T>, I
 	 *            the path function of the PathPipe
 	 * @return the extended Pipeline
 	 */
-	public abstract Traversal<List<Object>, ?, ?> path(TraversalFunction<?, ?>... pathFunctions);
-
+	public abstract Iterator<List<?>> path(TraversalFunction<?, ?>... pathFunctions);
 
 	/**
 	 * Add a SelectPipe to the end of the Pipeline. The objects of the named
@@ -765,7 +756,7 @@ public interface Traversal<T, SideEffect, LazySideEffect> extends Iterator<T>, I
 	 *            the Row
 	 * @return the extended Pipeline
 	 */
-	public abstract Traversal<Row<?>, ?, ?> select(Collection<String> stepNames, TraversalFunction<?, ?>... columnFunctions);
+	public abstract Iterator<Row<?>> select(Collection<String> stepNames, TraversalFunction<?, ?>... columnFunctions);
 
 	/**
 	 * Add a SelectPipe to the end of the Pipeline. The objects of the named
@@ -779,7 +770,7 @@ public interface Traversal<T, SideEffect, LazySideEffect> extends Iterator<T>, I
 	 *            the Row
 	 * @return the extended Pipeline
 	 */
-	public abstract Traversal<Row<?>, ?, ?> select(TraversalFunction<?, ?>... columnFunctions);
+	public abstract Iterator<Row<?>> select(TraversalFunction<?, ?>... columnFunctions);
 
 	/**
 	 * Add a SelectPipe to the end of the Pipeline. The objects of the named
@@ -789,16 +780,16 @@ public interface Traversal<T, SideEffect, LazySideEffect> extends Iterator<T>, I
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract Traversal<Row<?>, ?, ?> select();
+	public abstract Iterator<Row<?>> select();
 
 	/**
 	 * Add a ShufflePipe to the end of the Pipeline. All the objects previous to
 	 * this step are aggregated in a greedy fashion, their order randomized and
-	 * emitted as a List.
+	 * emitted.
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract Traversal<List<T>, ?, ?> shuffle();
+	public abstract Traversal<T, ?, ?> shuffle();
 
 	/**
 	 * Add a SideEffectCapPipe to the end of the Pipeline. When the previous
@@ -808,17 +799,15 @@ public interface Traversal<T, SideEffect, LazySideEffect> extends Iterator<T>, I
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract SideEffect cap();
-	
+	public abstract Cap cap();
+
 	/**
-	 * Add a NonTerminatingSideEffectCapPipe to the end of the Pipeline. When the previous
-	 * step in the pipeline is implements SideEffectPipe, then it has a method
-	 * called getSideEffect(). This step calls the sideEffectFunction function with the side effect.
+	 * This step calls emits the input but also calls the sideEffectFunction function with the side effect of
+	 * the previous step when it is ready.
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract Traversal<T, ?, ?> cap(SideEffectFunction<LazySideEffect> sideEffectFunction);
-
+	public abstract Traversal<T, ?, ?> divert(SideEffectFunction<SideEffect> sideEffectFunction);
 
 	/**
 	 * Add a TransformFunctionPipe to the end of the Pipeline. Given an input,
@@ -902,7 +891,7 @@ public interface Traversal<T, SideEffect, LazySideEffect> extends Iterator<T>, I
 	 *
 	 * @return the Pipeline with path calculations enabled
 	 */
-	public abstract Traversal<T, SideEffect, LazySideEffect> enablePath();
+	public abstract Traversal<T, Cap, SideEffect> enablePath();
 
 	/**
 	 * When possible, Gremlin takes advantage of certain sequences of pipes in
@@ -914,7 +903,7 @@ public interface Traversal<T, SideEffect, LazySideEffect> extends Iterator<T>, I
 	 *            whether to optimize the pipeline from here on or not
 	 * @return The GremlinPipeline with the optimization turned off
 	 */
-	public abstract Traversal<T, SideEffect, LazySideEffect> optimize(boolean optimize);
+	public abstract Traversal<T, Cap, SideEffect> optimize(boolean optimize);
 
 	/**
 	 * Remove every element at the end of this Pipeline.
@@ -935,21 +924,21 @@ public interface Traversal<T, SideEffect, LazySideEffect> extends Iterator<T>, I
 	 * 
 	 * @return
 	 */
-	public abstract Traversal<T, SideEffect, LazySideEffect> cast(Class<T> clazz);
-	
+	public abstract Traversal<T, Cap, SideEffect> cast(Class<T> clazz);
+
 	/**
 	 * Cast the traversal as a vertex traversal
 	 * 
 	 * @return
 	 */
-	public abstract VertexTraversal<SideEffect, LazySideEffect> castToVertices();
+	public abstract VertexTraversal<Cap, SideEffect> castToVertices();
 
 	/**
 	 * Cast the traversal to an edge traversalT
 	 * 
 	 * @return
 	 */
-	public abstract EdgeTraversal<SideEffect, LazySideEffect> castToEdges();
+	public abstract EdgeTraversal<Cap, SideEffect> castToEdges();
 
 	/**
 	 * Add an OptionalPipe to the end of the Pipeline. The section of pipeline
@@ -989,6 +978,4 @@ public interface Traversal<T, SideEffect, LazySideEffect> extends Iterator<T>, I
 	 */
 	public abstract VertexTraversal<?, ?> idVertex(Graph graph);
 
-	
-	
 }

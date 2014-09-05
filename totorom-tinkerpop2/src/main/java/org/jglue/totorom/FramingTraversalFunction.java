@@ -29,6 +29,10 @@ class FramingTraversalFunction<A extends FramedElement, B, C> extends FrameMaker
 	public FramingTraversalFunction(FramedGraph graph, Class<A> kind) {
 		super(graph, kind);
 	}
+	
+	public FramingTraversalFunction(FramedGraph graph) {
+		super(graph);
+	}
 
 	@Override
 	public B compute(C argument) {

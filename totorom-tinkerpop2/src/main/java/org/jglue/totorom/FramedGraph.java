@@ -52,16 +52,15 @@ public class FramedGraph {
     		return new Transaction((TransactionalGraph)delegate);
     	}
     	else {
-    		throw new UnsupportedOperationException("Underlying graph is not transactional");
+    		return new Transaction((TransactionalGraph)null);
     	}
     }
 
 
     /**
      * Close the delegate graph.
-     * @throws Exception
      */
-    public void close() throws Exception {
+    public void close() {
         delegate.shutdown();
     }
 

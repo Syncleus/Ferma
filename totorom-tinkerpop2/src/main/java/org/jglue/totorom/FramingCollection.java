@@ -3,26 +3,31 @@ package org.jglue.totorom;
 import java.util.Collection;
 import java.util.Iterator;
 
+import com.tinkerpop.blueprints.Edge;
 import com.tinkerpop.blueprints.Element;
+import com.tinkerpop.blueprints.Vertex;
 
 /**
  * Frames elements as they are inserted in to the delegate.
+ * 
  * @author bryn
  *
  * @param <E>
  * @param <K>
  */
-class FramingCollection<E, K extends FramedElement> implements Collection<E> {
+class FramingCollection<E, K extends FramedElement> extends FrameMaker<K> implements Collection<E> {
 
 	private Collection<E> delegate;
-	private FramedGraph graph;
-	private Class<K> kind;
 
 	public FramingCollection(Collection<E> delegate, FramedGraph graph, Class<K> kind) {
+		super(graph, kind);
 		this.delegate = delegate;
-		this.graph = graph;
-		this.kind = kind;
-		
+
+	}
+
+	public FramingCollection(Collection<E> delegate, FramedGraph graph) {
+		super(graph);
+		this.delegate = delegate;
 	}
 
 	public int size() {
@@ -50,10 +55,8 @@ class FramingCollection<E, K extends FramedElement> implements Collection<E> {
 	}
 
 	public boolean add(E e) {
-		if(e instanceof Element) {
-			e = (E)graph.frameElement((Element)e, kind);
-		}
-		
+		e = makeFrame(e);
+
 		return delegate.add(e);
 	}
 
@@ -67,7 +70,7 @@ class FramingCollection<E, K extends FramedElement> implements Collection<E> {
 
 	public boolean addAll(Collection<? extends E> c) {
 		boolean modified = false;
-		for(E e : c) {
+		for (E e : c) {
 			modified |= add(e);
 		}
 		return modified;

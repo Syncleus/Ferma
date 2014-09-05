@@ -74,82 +74,74 @@ abstract class EdgeTraversalImpl extends TraversalBase implements EdgeTraversal 
 
 	@Override
 	public EdgeTraversal store() {
-		return (EdgeTraversal) super.store(new FramingTraversalFunction(graph(), TEdge.class));
+		return (EdgeTraversal) super.store();
 	}
 
 	@Override
 	public EdgeTraversal store(Collection storage) {
-		return (EdgeTraversal) super.store(storage, new FramingTraversalFunction(graph(), TEdge.class));
+		return (EdgeTraversal) super.store(storage);
 	}
 
 	@Override
 	public EdgeTraversal store(Collection storage, TraversalFunction storageFunction) {
-		return (EdgeTraversal) super.store(storage, new FramingTraversalFunction(storageFunction, graph(), TEdge.class));
+		return (EdgeTraversal) super.store(storage, storageFunction);
 	}
 
 	@Override
 	public EdgeTraversal store(TraversalFunction storageFunction) {
-		return (EdgeTraversal) super.store(new FramingTraversalFunction(storageFunction, graph(), TEdge.class));
+		return (EdgeTraversal) super.store(storageFunction);
 	}
 
 	@Override
 	public EdgeTraversal groupCount() {
-		return (EdgeTraversal) super.groupCount(new FramingMap(new HashMap(), graph()));
+		return (EdgeTraversal) super.groupCount();
 	}
 
 	@Override
 	public EdgeTraversal groupCount(Map map) {
-		return (EdgeTraversal) super.groupCount(new FramingMap(map, graph()));
+		return (EdgeTraversal) super.groupCount(map);
 	}
 
 	@Override
 	public EdgeTraversal groupCount(Map map, TraversalFunction keyFunction) {
-		return (EdgeTraversal) super.groupCount(map, new FramingTraversalFunction(keyFunction, graph(), TEdge.class));
+		return (EdgeTraversal) super.groupCount(map, keyFunction);
 	}
 
 	@Override
 	public EdgeTraversal groupCount(Map map, TraversalFunction keyFunction, TraversalFunction valueFunction) {
-		return (EdgeTraversal) super.groupCount(map, new FramingTraversalFunction(keyFunction, graph(), TEdge.class),
-				new FramingTraversalFunction(valueFunction, graph(), TEdge.class));
+		return (EdgeTraversal) super.groupCount(map, keyFunction, valueFunction);
 	}
 
 	@Override
 	public EdgeTraversal groupCount(TraversalFunction keyFunction) {
-		return (EdgeTraversal) super.groupCount(new FramingTraversalFunction(keyFunction, graph(), TEdge.class));
+		return (EdgeTraversal) super.groupCount(keyFunction);
 	}
 
 	@Override
 	public EdgeTraversal groupCount(TraversalFunction keyFunction, TraversalFunction valueFunction) {
-		return (EdgeTraversal) super.groupCount(new FramingTraversalFunction(keyFunction, graph(), TEdge.class),
-				new FramingTraversalFunction(valueFunction, graph(), TEdge.class));
+		return (EdgeTraversal) super.groupCount(keyFunction, valueFunction);
 	}
 
 	@Override
 	public EdgeTraversal groupBy(TraversalFunction keyFunction, TraversalFunction valueFunction, TraversalFunction reduceFunction) {
-		return (EdgeTraversal) super.groupBy(new FramingTraversalFunction(keyFunction, graph(), TEdge.class),
-				new FramingTraversalFunction(valueFunction, graph(), TEdge.class), new FramingTraversalFunction(reduceFunction,
-						graph(), TEdge.class));
+		return (EdgeTraversal) super.groupBy(keyFunction, valueFunction, reduceFunction);
 	}
 
 	@Override
 	public EdgeTraversal groupBy(TraversalFunction keyFunction, TraversalFunction valueFunction) {
 
-		return (EdgeTraversal) super.groupBy(new FramingTraversalFunction(keyFunction, graph(), TEdge.class),
-				new FramingTraversalFunction(valueFunction, graph(), TEdge.class));
+		return (EdgeTraversal) super.groupBy(keyFunction, valueFunction);
 	}
 
 	@Override
 	public EdgeTraversal groupBy(Map reduceMap, TraversalFunction keyFunction, TraversalFunction valueFunction,
 			TraversalFunction reduceFunction) {
-		return (EdgeTraversal) super.groupBy(reduceMap, new FramingTraversalFunction(keyFunction, graph(), TEdge.class),
-				new FramingTraversalFunction(valueFunction, graph(), TEdge.class), new FramingTraversalFunction(reduceFunction,
-						graph(), TEdge.class));
+		return (EdgeTraversal) super.groupBy(reduceMap, keyFunction, valueFunction, reduceFunction);
 	}
 
 	@Override
 	public EdgeTraversal groupBy(Map map, TraversalFunction keyFunction, TraversalFunction valueFunction) {
-		return (EdgeTraversal) super.groupBy(map, new FramingTraversalFunction(keyFunction, graph(), TEdge.class),
-				new FramingTraversalFunction(valueFunction, graph(), TEdge.class));
+		return (EdgeTraversal) super.groupBy(map, keyFunction, valueFunction);
 	}
 
 	@Override
@@ -254,36 +246,36 @@ abstract class EdgeTraversalImpl extends TraversalBase implements EdgeTraversal 
 	@Override
 	public Traversal label() {
 		pipeline().label();
-		return this;
+		return asTraversal();
 	}
 
 	@Override
 	public EdgeTraversal filter(TraversalFunction filterFunction) {
-		return (EdgeTraversal) super.filter(new FramingTraversalFunction(filterFunction, graph(), TEdge.class));
+		return (EdgeTraversal) super.filter(filterFunction);
 
 	}
 
 	@Override
 	public EdgeTraversal aggregate() {
-		return (EdgeTraversal) super.aggregate(new FramingTraversalFunction(graph(), TEdge.class));
+		return (EdgeTraversal) super.aggregate();
 
 	}
 
 	@Override
 	public EdgeTraversal aggregate(Collection aggregate) {
-		return (EdgeTraversal) super.aggregate(aggregate, new FramingTraversalFunction(graph(), TEdge.class));
+		return (EdgeTraversal) super.aggregate(aggregate);
 
 	}
 
 	@Override
 	public EdgeTraversal aggregate(Collection aggregate, TraversalFunction aggregateFunction) {
-		return (EdgeTraversal) super.aggregate(aggregate, new FramingTraversalFunction(aggregateFunction, graph(), TEdge.class));
+		return (EdgeTraversal) super.aggregate(aggregate, aggregateFunction);
 
 	}
 
 	@Override
 	public EdgeTraversal aggregate(TraversalFunction aggregateFunction) {
-		return (EdgeTraversal) super.aggregate(new FramingTraversalFunction(aggregateFunction, graph(), TEdge.class));
+		return (EdgeTraversal) super.aggregate(aggregateFunction);
 
 	}
 
@@ -315,18 +307,18 @@ abstract class EdgeTraversalImpl extends TraversalBase implements EdgeTraversal 
 
 	@Override
 	public EdgeTraversal sideEffect(SideEffectFunction sideEffectFunction) {
-		return (EdgeTraversal) super.sideEffect(new FramingSideEffectFunction(sideEffectFunction, graph(), TEdge.class));
+		return (EdgeTraversal) super.sideEffect(sideEffectFunction);
 	}
 
 	@Override
-	public EdgeTraversal random(Double bias) {
+	public EdgeTraversal random(double bias) {
 
 		return (EdgeTraversal) super.random(bias);
 	}
 
 	@Override
 	public EdgeTraversal dedup(TraversalFunction dedupFunction) {
-		return (EdgeTraversal) super.dedup(new FramingTraversalFunction(dedupFunction, graph(), TEdge.class));
+		return (EdgeTraversal) super.dedup(dedupFunction);
 	}
 
 	@Override
@@ -336,8 +328,8 @@ abstract class EdgeTraversalImpl extends TraversalBase implements EdgeTraversal 
 	}
 
 	@Override
-	public EdgeTraversal except(Collection collection) {
-		return (EdgeTraversal) super.except(unwrap(collection));
+	public EdgeTraversal except(Iterable collection) {
+		return (EdgeTraversal) super.except(Lists.newArrayList(collection));
 	}
 
 	@Override
@@ -357,7 +349,7 @@ abstract class EdgeTraversalImpl extends TraversalBase implements EdgeTraversal 
 
 	@Override
 	public EdgeTraversal order(Comparator compareFunction) {
-		return (EdgeTraversal) super.order(new FramingComparator(compareFunction, graph(), TEdge.class));
+		return (EdgeTraversal) super.order(compareFunction);
 	}
 
 	@Override
@@ -369,12 +361,6 @@ abstract class EdgeTraversalImpl extends TraversalBase implements EdgeTraversal 
 	public EdgeTraversal dedup() {
 
 		return (EdgeTraversal) super.dedup();
-	}
-
-	@Override
-	public EdgeTraversal retain(Collection collection) {
-		return (EdgeTraversal) super.retain(unwrap(collection));
-
 	}
 
 	@Override
@@ -401,13 +387,13 @@ abstract class EdgeTraversalImpl extends TraversalBase implements EdgeTraversal 
 
 	@Override
 	public Collection fill(Collection collection) {
-		return super.fill(new FramingCollection<>(collection, graph(), TEdge.class));
+		return super.fill(collection);
 	}
 
 	@Override
 	public Collection fill(Collection collection, Class clazz) {
 
-		return super.fill(new FramingCollection(collection, graph(), clazz));
+		return pipeline().fill(new FramingCollection(collection, graph(), clazz));
 	}
 
 	public java.util.Iterator<TEdge> iterator() {
@@ -426,7 +412,29 @@ abstract class EdgeTraversalImpl extends TraversalBase implements EdgeTraversal 
 	}
 
 	@Override
-	public EdgeTraversal cap(SideEffectFunction sideEffect) {
-		return (EdgeTraversal) super.cap(sideEffect);
+	public EdgeTraversal divert(SideEffectFunction sideEffect) {
+		return (EdgeTraversal) super.divert(sideEffect);
+	}
+
+	@Override
+	public EdgeTraversal retain(FramedEdge... edges) {
+
+		return (EdgeTraversal) super.retain(Arrays.asList(edges));
+	}
+
+	@Override
+	public EdgeTraversal shuffle() {
+		return (EdgeTraversal) super.shuffle();
+	}
+
+	@Override
+	public EdgeTraversal except(FramedEdge... edges) {
+		return (EdgeTraversal) super.retain(Arrays.asList(edges));
+	}
+
+	@Override
+	public EdgeTraversal retain(Iterable collection) {
+
+		return (EdgeTraversal) super.retain(Lists.newArrayList(collection));
 	}
 }

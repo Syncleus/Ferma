@@ -172,9 +172,9 @@ public abstract class FramedVertex extends FramedElement {
 		for (String key : getPropertyKeys()) {
 
 			Object value = getProperty(key);
-			if (getId() instanceof Number) {
+			if (value instanceof Number) {
 				json.addProperty(key, (Number) value);
-			} else if (getId() instanceof String) {
+			} else if (value instanceof String) {
 				json.addProperty(key, (String) value);
 			}
 		}

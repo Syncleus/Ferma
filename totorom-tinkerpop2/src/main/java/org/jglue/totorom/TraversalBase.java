@@ -1,19 +1,22 @@
 package org.jglue.totorom;
 
-import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.jglue.totorom.internal.NonTerminatingSideEffectCapPipe;
+import org.jglue.totorom.internal.TraversalFunctionPipe;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Iterators;
+import com.google.common.collect.Lists;
 import com.tinkerpop.blueprints.Element;
 import com.tinkerpop.blueprints.Graph;
 import com.tinkerpop.blueprints.Predicate;
@@ -21,7 +24,6 @@ import com.tinkerpop.gremlin.Tokens;
 import com.tinkerpop.gremlin.java.GremlinPipeline;
 import com.tinkerpop.pipes.Pipe;
 import com.tinkerpop.pipes.sideeffect.SideEffectPipe;
-import com.tinkerpop.pipes.transform.SideEffectCapPipe;
 import com.tinkerpop.pipes.transform.TransformPipe.Order;
 import com.tinkerpop.pipes.util.FluentUtility;
 import com.tinkerpop.pipes.util.structures.Pair;
@@ -117,8 +119,8 @@ abstract class TraversalBase<T, SE, LSE> implements Traversal<T, SE, LSE> {
 		return this;
 	}
 
-	public Traversal except(Collection collection) {
-		pipeline().except(collection);
+	public Traversal except(Iterable collection) {
+		pipeline().except(unwrap(Lists.newArrayList(collection)));
 		return this;
 	}
 
@@ -203,12 +205,12 @@ abstract class TraversalBase<T, SE, LSE> implements Traversal<T, SE, LSE> {
 
 	@Override
 	public Traversal filter(TraversalFunction filterFunction) {
-		pipeline().filter(filterFunction);
+		pipeline().filter(new FramingTraversalFunction(filterFunction, graph()));
 		return this;
 	}
 
 	@Override
-	public Traversal random(Double bias) {
+	public Traversal random(double bias) {
 		pipeline().random(bias);
 		return this;
 	}
@@ -220,8 +222,8 @@ abstract class TraversalBase<T, SE, LSE> implements Traversal<T, SE, LSE> {
 	}
 
 	@Override
-	public Traversal retain(Collection collection) {
-		pipeline().retain(collection);
+	public Traversal retain(Iterable collection) {
+		pipeline().retain(unwrap(Lists.newArrayList(collection)));
 		return this;
 	}
 
@@ -239,7 +241,7 @@ abstract class TraversalBase<T, SE, LSE> implements Traversal<T, SE, LSE> {
 
 	@Override
 	public Traversal aggregate() {
-		pipeline().aggregate();
+		pipeline().aggregate(new FramingCollection(new ArrayList(), graph()));
 		return this;
 	}
 
@@ -269,63 +271,64 @@ abstract class TraversalBase<T, SE, LSE> implements Traversal<T, SE, LSE> {
 
 	@Override
 	public Traversal groupBy(Map map, TraversalFunction keyFunction, TraversalFunction valueFunction) {
-		pipeline().groupBy(map, keyFunction, valueFunction);
+		pipeline().groupBy(map, new FramingTraversalFunction<>(keyFunction, graph()), new TraversalFunctionPipe(new FramingTraversalFunction<>(valueFunction, graph())));
 		return this;
 	}
 
 	@Override
 	public Traversal groupBy(TraversalFunction keyFunction, TraversalFunction valueFunction) {
-		pipeline().groupBy(keyFunction, valueFunction);
+
+		pipeline().groupBy(new FramingTraversalFunction<>(keyFunction, graph()), new TraversalFunctionPipe(new FramingTraversalFunction<>(valueFunction, graph())));
 		return this;
 	}
 
 	@Override
 	public Traversal groupBy(Map reduceMap, TraversalFunction keyFunction, TraversalFunction valueFunction,
 			TraversalFunction reduceFunction) {
-		pipeline().groupBy(reduceMap, keyFunction, valueFunction, reduceFunction);
+		pipeline().groupBy(reduceMap, new FramingTraversalFunction<>(keyFunction, graph()), new TraversalFunctionPipe(new FramingTraversalFunction<>(valueFunction, graph())), reduceFunction);
 		return this;
 	}
 
 	@Override
 	public Traversal groupBy(TraversalFunction keyFunction, TraversalFunction valueFunction, TraversalFunction reduceFunction) {
-		pipeline().groupBy(keyFunction, valueFunction, reduceFunction);
+		pipeline().groupBy(new FramingTraversalFunction<>(keyFunction, graph()), new TraversalFunctionPipe(new FramingTraversalFunction<>(valueFunction, graph())), reduceFunction);
 		return this;
 	}
 
 	@Override
 	public Traversal groupCount(Map map, TraversalFunction keyFunction, TraversalFunction valueFunction) {
-		pipeline().groupCount(map, keyFunction, valueFunction);
+		pipeline().groupCount(map, new FramingTraversalFunction<>(keyFunction, graph()), new TraversalFunctionPipe(new FramingTraversalFunction<>(valueFunction, graph())));
 		return this;
 	}
 
 	@Override
 	public Traversal groupCount(TraversalFunction keyFunction, TraversalFunction valueFunction) {
-		pipeline().groupCount(keyFunction, valueFunction);
+		pipeline().groupCount(new FramingTraversalFunction<>(keyFunction, graph()), new FramingTraversalFunction<>(valueFunction, graph()));
 		return this;
 	}
 
 	@Override
 	public Traversal groupCount(Map map, TraversalFunction keyFunction) {
-		pipeline().groupCount(map, keyFunction);
+		pipeline().groupCount(new FramingMap<>(map, graph()), new FramingTraversalFunction<>(keyFunction, graph()));
 		return this;
 	}
 
 	@Override
 	public Traversal groupCount(TraversalFunction keyFunction) {
-		pipeline().groupCount(keyFunction);
+		pipeline().groupCount(new FramingTraversalFunction<>(keyFunction, graph()));
 		return this;
 	}
 
 	@Override
 	public Traversal groupCount(Map map) {
-		pipeline().groupCount(map);
+		pipeline().groupCount(new FramingMap<>(map, graph()));
 		return this;
 	}
 
 	@Override
 	public Traversal groupCount() {
-		pipeline().groupCount();
-		return this;
+		return this.groupCount(new HashMap());
+		
 	}
 
 	@Override
@@ -337,7 +340,7 @@ abstract class TraversalBase<T, SE, LSE> implements Traversal<T, SE, LSE> {
 	@Override
 	public Traversal id() {
 		pipeline().id();
-		return this;
+		return asTraversal();
 	}
 
 	@Override
@@ -404,13 +407,13 @@ abstract class TraversalBase<T, SE, LSE> implements Traversal<T, SE, LSE> {
 
 	@Override
 	public Traversal table(Table table) {
-		pipeline().table(table);
+		pipeline().table(table, new FramingTraversalFunction<>(graph()));
 		return this;
 	}
 
 	@Override
 	public Traversal table() {
-		pipeline().table();
+		pipeline().table(new FramingTraversalFunction<>(graph()));
 		return this;
 	}
 
@@ -458,11 +461,12 @@ abstract class TraversalBase<T, SE, LSE> implements Traversal<T, SE, LSE> {
 
 	@Override
 	public Traversal order(final Comparator compareFunction) {
+		final FramingComparator framingComparator = new FramingComparator(compareFunction, graph());
 		pipeline().order(new TraversalFunction<Pair<Object, Object>, Integer>() {
 
 			@Override
 			public Integer compute(Pair<Object, Object> argument) {
-				return compareFunction.compare(argument.getA(), argument.getB());
+				return framingComparator.compare(argument.getA(), argument.getB());
 			}
 		});
 		return this;
@@ -470,7 +474,12 @@ abstract class TraversalBase<T, SE, LSE> implements Traversal<T, SE, LSE> {
 
 	@Override
 	public Traversal path(TraversalFunction... pathFunctions) {
-		pipeline().path(wrap(pathFunctions));
+		if(pathFunctions.length == 0) {
+			pipeline().path(new FramingTraversalFunction<>(graph()));
+		}
+		else {
+			pipeline().path(wrap(pathFunctions));
+		}
 		return asTraversal();
 	}
 
@@ -488,14 +497,14 @@ abstract class TraversalBase<T, SE, LSE> implements Traversal<T, SE, LSE> {
 
 	@Override
 	public Traversal select() {
-		pipeline().select();
+		pipeline().select(new FramingTraversalFunction<>(graph()));
 		return asTraversal();
 	}
 
 	@Override
 	public Traversal shuffle() {
 		pipeline().shuffle();
-		return asTraversal();
+		return this;
 	}
 
 	@Override
@@ -509,7 +518,7 @@ abstract class TraversalBase<T, SE, LSE> implements Traversal<T, SE, LSE> {
 	}
 
 	@Override
-	public Traversal cap(final SideEffectFunction sideEffectFunction) {
+	public Traversal divert(final SideEffectFunction sideEffectFunction) {
 		
 		final FramingSideEffectFunction framingSideEffectFunction = new FramingSideEffectFunction(sideEffectFunction, graph());
 		pipeline().add(new NonTerminatingSideEffectCapPipe((SideEffectPipe) FluentUtility.removePreviousPipes(pipeline(), 1).get(0), new TraversalFunction() {
@@ -526,7 +535,7 @@ abstract class TraversalBase<T, SE, LSE> implements Traversal<T, SE, LSE> {
 
 	@Override
 	public Traversal transform(TraversalFunction function) {
-		pipeline().transform(function);
+		pipeline().transform(new FramingTraversalFunction(function, graph()));
 		return asTraversal();
 	}
 
@@ -548,7 +557,7 @@ abstract class TraversalBase<T, SE, LSE> implements Traversal<T, SE, LSE> {
 
 	@Override
 	public Collection fill(Collection collection) {
-		return pipeline().fill(collection);
+		return pipeline().fill(new FramingCollection<>(collection, graph()));
 	}
 
 	@Override
@@ -614,7 +623,7 @@ abstract class TraversalBase<T, SE, LSE> implements Traversal<T, SE, LSE> {
 	}
 
 
-	protected HashSet unwrap(Collection collection) {
+	private HashSet unwrap(Collection collection) {
 		HashSet unwrapped = new HashSet(Collections2.transform(collection, new Function<Object, Object>() {
 
 			@Override
@@ -644,6 +653,8 @@ abstract class TraversalBase<T, SE, LSE> implements Traversal<T, SE, LSE> {
 		TraversalFunction[] wrappedArray = wrapped.toArray(new TraversalFunction[wrapped.size()]);
 		return wrappedArray;
 	}
+	
+	
 
 	@Override
 	public Traversal gatherScatter() {

@@ -2,6 +2,7 @@ package org.jglue.totorom;
 
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -18,9 +19,9 @@ import com.tinkerpop.pipes.util.structures.Tree;
  * 
  * @author bryn
  *
- * @param <SideEffect>
+ * @param <Cap>
  */
-public interface EdgeTraversal<SideEffect, LazySideEffect> extends Traversal<TEdge, SideEffect, LazySideEffect> {
+public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, SideEffect> {
 	/**
 	 * Check if the element has a property with provided key.
 	 *
@@ -29,7 +30,7 @@ public interface EdgeTraversal<SideEffect, LazySideEffect> extends Traversal<TEd
 	 * @return the extended Pipeline
 	 */
 	public EdgeTraversal<?, ?> has(String key);
-
+	
 	/**
 	 * Add an IdFilterPipe, LabelFilterPipe, or PropertyFilterPipe to the end of
 	 * the Pipeline. If the incoming element has the provided key/value as check
@@ -213,7 +214,18 @@ public interface EdgeTraversal<SideEffect, LazySideEffect> extends Traversal<TEd
 	 *            the collection except from the stream
 	 * @return the extended Pipeline
 	 */
-	public abstract EdgeTraversal<?, ?> except(Collection<?> collection);
+	public abstract EdgeTraversal<?, ?> except(Iterable<?> collection);
+	
+
+	/**
+	 * Add an ExceptFilterPipe to the end of the Pipeline. Will only emit the
+	 * object if it is not in the provided collection.
+	 *
+	 * @param collection
+	 *            the collection except from the stream
+	 * @return the extended Pipeline
+	 */
+	public abstract EdgeTraversal<?, ?> except(FramedEdge... edges);
 
 	/**
 	 * Add an ExceptFilterPipe to the end of the Pipeline. Will only emit the
@@ -245,7 +257,7 @@ public interface EdgeTraversal<SideEffect, LazySideEffect> extends Traversal<TEd
 	 *            the bias of the random coin
 	 * @return the extended Pipeline
 	 */
-	public abstract EdgeTraversal<?, ?> random(Double bias);
+	public abstract EdgeTraversal<?, ?> random(double bias);
 
 	/**
 	 * Add a RageFilterPipe to the end of the Pipeline. Analogous to a high/low
@@ -259,6 +271,8 @@ public interface EdgeTraversal<SideEffect, LazySideEffect> extends Traversal<TEd
 	 */
 	public abstract EdgeTraversal<?, ?> range(int low, int high);
 
+
+	
 	/**
 	 * Add a RetainFilterPipe to the end of the Pipeline. Will emit the object
 	 * only if it is in the provided collection.
@@ -267,7 +281,17 @@ public interface EdgeTraversal<SideEffect, LazySideEffect> extends Traversal<TEd
 	 *            the collection to retain
 	 * @return the extended Pipeline
 	 */
-	public abstract EdgeTraversal<?, ?> retain(Collection<?> collection);
+	public abstract EdgeTraversal<?, ?> retain(Iterable<?> collection);
+	
+	/**
+	 * Add a RetainFilterPipe to the end of the Pipeline. Will emit the object
+	 * only if it is in the provided collection.
+	 *
+	 * @param edges
+	 *            the collection to retain
+	 * @return the extended Pipeline
+	 */
+	public abstract EdgeTraversal<?, ?> retain(FramedEdge... edges);
 
 	/**
 	 * Add a RetainFilterPipe to the end of the Pipeline. Will only emit the
@@ -337,8 +361,8 @@ public interface EdgeTraversal<SideEffect, LazySideEffect> extends Traversal<TEd
 	 *            the function that generates the value from the function
 	 * @return the extended Pipeline
 	 */
-	public abstract <K, V> EdgeTraversal<Map<K, List<V>>, Map<K, List<V>>> groupBy(Map<K, List<V>> map, TraversalFunction<TEdge, K> keyFunction,
-			TraversalFunction<TEdge, V> valueFunction);
+	public abstract <K, V> EdgeTraversal<Map<K, List<V>>, Map<K, List<V>>> groupBy(Map<K, List<V>> map,
+			TraversalFunction<TEdge, K> keyFunction, TraversalFunction<TEdge, Iterator<V>> valueFunction);
 
 	/**
 	 * Add a GroupByPipe to the end of the Pipeline. Group the objects inputted
@@ -352,7 +376,7 @@ public interface EdgeTraversal<SideEffect, LazySideEffect> extends Traversal<TEd
 	 * @return the extended Pipeline
 	 */
 	public abstract <K, V> EdgeTraversal<Map<K, List<V>>, Map<K, List<V>>> groupBy(TraversalFunction<TEdge, K> keyFunction,
-			TraversalFunction<TEdge, V> valueFunction);
+			TraversalFunction<TEdge, Iterator<V>> valueFunction);
 
 	/**
 	 * Add a GroupByReducePipe to the end of the Pipeline. Group the objects
@@ -374,7 +398,7 @@ public interface EdgeTraversal<SideEffect, LazySideEffect> extends Traversal<TEd
 	 * @return the extended Pipeline
 	 */
 	public abstract <K, V, V2> EdgeTraversal<Map<K, V2>, Map<K, V2>> groupBy(Map<K, V2> reduceMap,
-			TraversalFunction<TEdge, K> keyFunction, TraversalFunction<TEdge, V> valueFunction,
+			TraversalFunction<TEdge, K> keyFunction, TraversalFunction<TEdge, Iterator<V>> valueFunction,
 			TraversalFunction<List<V>, V2> reduceFunction);
 
 	/**
@@ -394,7 +418,7 @@ public interface EdgeTraversal<SideEffect, LazySideEffect> extends Traversal<TEd
 	 * @return the extended Pipeline
 	 */
 	public abstract <K, V, V2> EdgeTraversal<Map<K, V2>, Map<K, V2>> groupBy(TraversalFunction<TEdge, K> keyFunction,
-			TraversalFunction<TEdge, V> valueFunction, TraversalFunction<List<V>, V2> reduceFunction);
+			TraversalFunction<TEdge, Iterator<V>> valueFunction, TraversalFunction<List<V>, V2> reduceFunction);
 
 	/**
 	 * Add a GroupCountPipe or GroupCountFunctionPipe to the end of the
@@ -733,13 +757,14 @@ public interface EdgeTraversal<SideEffect, LazySideEffect> extends Traversal<TEd
 	public abstract EdgeTraversal<?, ?> or(TraversalFunction<TEdge, Traversal<?, ?, ?>>... pipes);
 
 	/**
-	 * Add a NonTerminatingSideEffectCapPipe to the end of the Pipeline. When
-	 * the previous step in the pipeline is implements SideEffectPipe, then it
-	 * has a method called getSideEffect(). This step calls the
-	 * sideEffectFunction function with the side effect.
+	 * This step calls emits the input but also calls the sideEffectFunction function with the side effect of
+	 * the previous step when it is ready.
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract EdgeTraversal<?, ?> cap(SideEffectFunction<LazySideEffect> sideEffect);
+	public abstract EdgeTraversal<?, ?> divert(SideEffectFunction<SideEffect> sideEffect);
+	
+	@Override
+	public EdgeTraversal<?, ?> shuffle();
 
 }

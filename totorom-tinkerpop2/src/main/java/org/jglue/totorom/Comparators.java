@@ -3,6 +3,8 @@ package org.jglue.totorom;
 import java.util.Comparator;
 import java.util.Map.Entry;
 
+import com.tinkerpop.pipes.transform.TransformPipe.Order;
+
 /**
  * Usefule comparators when dealiong with framed elements
  * @author bryn
@@ -58,6 +60,10 @@ public class Comparators {
 			}
 		};
 	}
+	
+	
+	
+
 	
 	
 }

@@ -2,6 +2,7 @@ package org.jglue.totorom;
 
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -13,7 +14,7 @@ import com.tinkerpop.pipes.util.structures.Pair;
 import com.tinkerpop.pipes.util.structures.Table;
 import com.tinkerpop.pipes.util.structures.Tree;
 
-public interface VertexTraversal<SideEffect, LazySideEffect> extends Traversal<TVertex, SideEffect, LazySideEffect> {
+public interface VertexTraversal<Cap, SideEffect> extends Traversal<TVertex, Cap, SideEffect> {
 
 	/**
 	 * Check if the element has a property with provided key.
@@ -438,7 +439,18 @@ public interface VertexTraversal<SideEffect, LazySideEffect> extends Traversal<T
 	 *            the collection except from the stream
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<?, ?> except(Collection<?> collection);
+	public abstract VertexTraversal<?, ?> except(Iterable<?> collection);
+	
+	
+	/**
+	 * Add an ExceptFilterPipe to the end of the Pipeline. Will only emit the
+	 * object if it is not in the provided collection.
+	 *
+	 * @param collection
+	 *            the collection except from the stream
+	 * @return the extended Pipeline
+	 */
+	public abstract VertexTraversal<?, ?> except(FramedVertex... vertices);
 
 	/**
 	 * Add an ExceptFilterPipe to the end of the Pipeline. Will only emit the
@@ -470,7 +482,7 @@ public interface VertexTraversal<SideEffect, LazySideEffect> extends Traversal<T
 	 *            the bias of the random coin
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<?, ?> random(Double bias);
+	public abstract VertexTraversal<?, ?> random(double bias);
 
 	/**
 	 * Add a RageFilterPipe to the end of the Pipeline. Analogous to a high/low
@@ -484,15 +496,28 @@ public interface VertexTraversal<SideEffect, LazySideEffect> extends Traversal<T
 	 */
 	public abstract VertexTraversal<?, ?> range(int low, int high);
 
+	
+	
 	/**
 	 * Add a RetainFilterPipe to the end of the Pipeline. Will emit the object
 	 * only if it is in the provided collection.
 	 *
-	 * @param collection
+	 * @param vertices
 	 *            the collection to retain
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<?, ?> retain(Collection<?> collection);
+	public abstract VertexTraversal<?, ?> retain(FramedVertex... vertices);
+	
+	/**
+	 * Add a RetainFilterPipe to the end of the Pipeline. Will emit the object
+	 * only if it is in the provided collection.
+	 *
+	 * @param vertices
+	 *            the collection to retain
+	 * @return the extended Pipeline
+	 */
+	public abstract VertexTraversal<?, ?> retain(Iterable<?> vertices);
+
 
 	/**
 	 * Add a RetainFilterPipe to the end of the Pipeline. Will only emit the
@@ -563,7 +588,7 @@ public interface VertexTraversal<SideEffect, LazySideEffect> extends Traversal<T
 	 * @return the extended Pipeline
 	 */
 	public abstract <K, V> VertexTraversal<Map<K, List<V>>, Map<K, List<V>>> groupBy(Map<K, List<V>> map,
-			TraversalFunction<TVertex, K> keyFunction, TraversalFunction<TVertex, V> valueFunction);
+			TraversalFunction<TVertex, K> keyFunction, TraversalFunction<TVertex, Iterator<V>> valueFunction);
 
 	/**
 	 * Add a GroupByPipe to the end of the Pipeline. Group the objects inputted
@@ -577,7 +602,7 @@ public interface VertexTraversal<SideEffect, LazySideEffect> extends Traversal<T
 	 * @return the extended Pipeline
 	 */
 	public abstract <K, V> VertexTraversal<Map<K, List<V>>, Map<K, List<V>>> groupBy(TraversalFunction<TVertex, K> keyFunction,
-			TraversalFunction<TVertex, V> valueFunction);
+			TraversalFunction<TVertex, Iterator<V>> valueFunction);
 
 	/**
 	 * Add a GroupByReducePipe to the end of the Pipeline. Group the objects
@@ -599,7 +624,7 @@ public interface VertexTraversal<SideEffect, LazySideEffect> extends Traversal<T
 	 * @return the extended Pipeline
 	 */
 	public abstract <K, V, V2> VertexTraversal<Map<K, V2>, Map<K, V2>> groupBy(Map<K, V2> reduceMap,
-			TraversalFunction<TVertex, K> keyFunction, TraversalFunction<TVertex, V> valueFunction,
+			TraversalFunction<TVertex, K> keyFunction, TraversalFunction<TVertex, Iterator<V>> valueFunction,
 			TraversalFunction<List<V>, V2> reduceFunction);
 
 	/**
@@ -619,7 +644,7 @@ public interface VertexTraversal<SideEffect, LazySideEffect> extends Traversal<T
 	 * @return the extended Pipeline
 	 */
 	public abstract <K, V, V2> VertexTraversal<Map<K, V2>, Map<K, V2>> groupBy(TraversalFunction<TVertex, K> keyFunction,
-			TraversalFunction<TVertex, V> valueFunction, TraversalFunction<List<V>, V2> reduceFunction);
+			TraversalFunction<TVertex, Iterator<V>> valueFunction, TraversalFunction<List<V>, V2> reduceFunction);
 
 	/**
 	 * Add a GroupCountPipe or GroupCountFunctionPipe to the end of the
@@ -969,13 +994,16 @@ public interface VertexTraversal<SideEffect, LazySideEffect> extends Traversal<T
 	public abstract VertexTraversal<?, ?> or(TraversalFunction<TVertex, Traversal<?, ?, ?>>... pipes);
 
 	/**
-	 * Add a NonTerminatingSideEffectCapPipe to the end of the Pipeline. When
-	 * the previous step in the pipeline is implements SideEffectPipe, then it
-	 * has a method called getSideEffect(). This step calls the
-	 * sideEffectFunction function with the side effect.
+	 * This step calls emits the input but also calls the sideEffectFunction function with the side effect of
+	 * the previous step when it is ready.
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<?, ?> cap(SideEffectFunction<LazySideEffect> sideEffectFunction);
+	public abstract VertexTraversal<?, ?> divert(SideEffectFunction<SideEffect> sideEffectFunction);
+	
+	
+	
+	@Override
+	public VertexTraversal<?, ?> shuffle();
 
 }

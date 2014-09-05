@@ -1,5 +1,6 @@
 package org.jglue.totorom;
 
+import com.tinkerpop.pipes.Pipe;
 import com.tinkerpop.pipes.PipeFunction;
 
 /**
@@ -9,6 +10,9 @@ import com.tinkerpop.pipes.PipeFunction;
  * @param <A>
  * @param <B>
  */
-public interface TraversalFunction<A, B> extends PipeFunction<A, B> {
+public interface TraversalFunction<A, B> extends PipeFunction<A, B>{
+	
+	
+	
 
 }

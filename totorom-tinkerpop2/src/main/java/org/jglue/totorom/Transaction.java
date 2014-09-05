@@ -3,9 +3,10 @@ package org.jglue.totorom;
 import com.tinkerpop.blueprints.TransactionalGraph;
 
 /**
- * Represents a transaction on the underlying graph. 
- * Note that for tinkerpop2 this is not a true transaction object and just wraps calls to commit and rollback. Therefore nested transactions won't work.
- *   
+ * Represents a transaction on the underlying graph. Note that for tinkerpop2
+ * this is not a true transaction object and just wraps calls to commit and
+ * rollback. Therefore nested transactions won't work.
+ * 
  * @author Bryn Cooke (http://jglue.org)
  *
  */
@@ -17,14 +18,16 @@ public class Transaction implements AutoCloseable {
 
 	Transaction(TransactionalGraph graph) {
 		this.graph = graph;
-		
+
 	}
 
 	/**
 	 * Commit the transaction.
 	 */
 	public void commit() {
-		graph.commit();
+		if (graph != null) {
+			graph.commit();
+		}
 		comitted = true;
 	}
 
@@ -32,19 +35,23 @@ public class Transaction implements AutoCloseable {
 	 * Rollback the transaction.
 	 */
 	public void rollback() {
-		graph.rollback();
+		if (graph != null) {
+			graph.rollback();
+		}
 		rolledBack = true;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.io.Closeable#close()
 	 */
 	@Override
 	public void close() {
-		if(!comitted && !rolledBack) {
+		if (!comitted && !rolledBack) {
 			rollback();
 		}
-		
+
 	}
 
 }

@@ -96,4 +96,9 @@ class FramingCollection<E, K extends FramedElement> extends FrameMaker<K> implem
 		throw new UnsupportedOperationException();
 	}
 
+	public Collection<E> getDelegate() {
+
+		return delegate;
+	}
+
 }

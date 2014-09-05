@@ -86,7 +86,6 @@ public class TestFramedGraph {
     @Mock
     private TransactionalGraph transactionalGraph;
     
-    @Test(expected=UnsupportedOperationException.class)
     public void testTransactionUnsupported() {
         Graph g = new TinkerGraph();
         FramedGraph fg = new FramedGraph(g);

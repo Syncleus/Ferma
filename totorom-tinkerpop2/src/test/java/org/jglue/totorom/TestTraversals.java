@@ -273,9 +273,11 @@ public class TestTraversals {
 	@Test
 	public void testAggregate() {
 
-		Collection<TVertex> x = new ArrayList<TVertex>();
+		List<TVertex> x = new ArrayList<TVertex>();
 		Assert.assertEquals(graph.v(3).next(), graph.v(1).out().aggregate(x).next());
+		Assert.assertEquals(3, graph.v(1).out().aggregate().cap().size());
 		Assert.assertEquals(3, x.size());
+		Assert.assertTrue(x.get(0) instanceof TVertex);
 	}
 
 	@Test
@@ -347,6 +349,7 @@ public class TestTraversals {
 		Collection<TVertex> x = new ArrayList<>();
 		graph.v(1).store(x).next();
 		Assert.assertEquals(graph.v(1).next(), x.iterator().next());
+		Assert.assertEquals(graph.v(1).next(), graph.v(1).store().cap().iterator().next());
 	}
 
 	@Test

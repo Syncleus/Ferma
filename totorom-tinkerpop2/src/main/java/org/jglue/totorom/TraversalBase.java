@@ -206,25 +206,25 @@ abstract class TraversalBase<T, SE, LSE> implements Traversal<T, SE, LSE> {
 
 	@Override
 	public Traversal aggregate() {
-		pipeline().aggregate(new FramingCollection(new ArrayList(), graph()));
-		return this;
+		return this.aggregate(new ArrayList());
+		
 	}
 
 	@Override
 	public Traversal aggregate(Collection aggregate) {
-		pipeline().aggregate(aggregate);
+		pipeline().aggregate(aggregate, new FramingTraversalFunction<>(graph()));
 		return this;
 	}
 
 	@Override
 	public Traversal aggregate(Collection aggregate, TraversalFunction aggregateFunction) {
-		pipeline().aggregate(aggregate, aggregateFunction);
+		pipeline().aggregate(aggregate, new FramingTraversalFunction<>(aggregateFunction, graph()));
 		return this;
 	}
 
 	@Override
 	public Traversal aggregate(TraversalFunction aggregateFunction) {
-		pipeline().aggregate(aggregateFunction);
+		pipeline().aggregate(new FramingTraversalFunction<>(aggregateFunction, graph()));
 		return this;
 	}
 
@@ -337,25 +337,24 @@ abstract class TraversalBase<T, SE, LSE> implements Traversal<T, SE, LSE> {
 
 	@Override
 	public Traversal store(Collection storage) {
-		pipeline().store(new FramingCollection<>(storage, graph()));
+		pipeline().store(storage, new FramingTraversalFunction<>(graph()));
 		return this;
 	}
 
 	@Override
 	public Traversal store(Collection storage, TraversalFunction storageFunction) {
-		pipeline().store(storage, storageFunction);
+		pipeline().store(storage, new FramingTraversalFunction<>(storageFunction, graph()));
 		return this;
 	}
 
 	@Override
 	public Traversal store() {
-		pipeline().store();
-		return this;
+		return this.store(new ArrayList<>());
 	}
 
 	@Override
 	public Traversal store(TraversalFunction storageFunction) {
-		pipeline().store(storageFunction);
+		pipeline().store(new FramingTraversalFunction<>(storageFunction, graph()));
 		return this;
 	}
 
@@ -490,6 +489,9 @@ abstract class TraversalBase<T, SE, LSE> implements Traversal<T, SE, LSE> {
 		Object next = asTraversal().next();
 		if (next instanceof FramingMap) {
 			next = ((FramingMap) next).getDelegate();
+		}
+		if (next instanceof FramingCollection) {
+			next = ((FramingCollection) next).getDelegate();
 		}
 		return (SE) next;
 	}

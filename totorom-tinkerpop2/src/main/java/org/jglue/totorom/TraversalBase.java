@@ -127,14 +127,10 @@ abstract class TraversalBase<T, Cap, SideEffect, Mark> implements Traversal<T, C
 	@Override
 	public Traversal map(String... keys) {
 		pipeline().map(keys);
-		return asTraversal();
+		return castToTraversal();
 	}
 
-	@Override
-	public Traversal property(String key) {
-		pipeline().property(key);
-		return asTraversal();
-	}
+
 
 
 
@@ -312,10 +308,14 @@ abstract class TraversalBase<T, Cap, SideEffect, Mark> implements Traversal<T, C
 		return castToEdges();
 	}
 
-	@Override
+	
 	public Traversal id() {
 		pipeline().id();
-		return asTraversal();
+		return castToTraversal();
+	}
+	
+	public Traversal id(Class c) {
+		return id();
 	}
 
 	@Override
@@ -460,25 +460,25 @@ abstract class TraversalBase<T, Cap, SideEffect, Mark> implements Traversal<T, C
 		} else {
 			pipeline().path(wrap(pathFunctions));
 		}
-		return asTraversal();
+		return castToTraversal();
 	}
 
 	@Override
 	public Traversal select(Collection stepNames, TraversalFunction... columnFunctions) {
 		pipeline().select(stepNames, wrap(columnFunctions));
-		return asTraversal();
+		return castToTraversal();
 	}
 
 	@Override
 	public Traversal select(TraversalFunction... columnFunctions) {
 		pipeline().select(wrap(columnFunctions));
-		return asTraversal();
+		return castToTraversal();
 	}
 
 	@Override
 	public Traversal select() {
 		pipeline().select(new FramingTraversalFunction<>(graph()));
-		return asTraversal();
+		return castToTraversal();
 	}
 
 	@Override
@@ -490,7 +490,7 @@ abstract class TraversalBase<T, Cap, SideEffect, Mark> implements Traversal<T, C
 	@Override
 	public Cap cap() {
 		pipeline().cap();
-		Object next = asTraversal().next();
+		Object next = castToTraversal().next();
 		if (next instanceof FramingMap) {
 			next = ((FramingMap) next).getDelegate();
 		}
@@ -521,7 +521,7 @@ abstract class TraversalBase<T, Cap, SideEffect, Mark> implements Traversal<T, C
 	@Override
 	public Traversal transform(TraversalFunction function) {
 		pipeline().transform(new FramingTraversalFunction(function, graph()));
-		return asTraversal();
+		return castToTraversal();
 	}
 
 	@Override
@@ -580,12 +580,17 @@ abstract class TraversalBase<T, Cap, SideEffect, Mark> implements Traversal<T, C
 		return castToVertices();
 	}
 
-	@Override
+	public Traversal property(String key) {
+		pipeline().property(key);
+		return castToTraversal();
+	}
+	
 	public Traversal property(String key, Class type) {
-		return (Traversal) property(key);
+		return property(key);
+		
 	}
 
-	protected abstract Traversal asTraversal();
+	protected abstract Traversal castToTraversal();
 
 	@Override
 	public boolean hasNext() {

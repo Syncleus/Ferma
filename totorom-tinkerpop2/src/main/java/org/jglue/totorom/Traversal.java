@@ -75,25 +75,7 @@ public interface Traversal<T, Cap, SideEffect, Mark> extends Iterator<T>, Iterab
 	 */
 	public abstract Traversal<Map<String, Object>, ?, ?, Mark> map(String... keys);
 
-	/**
-	 * Add a PropertyPipe to the end of the Pipeline. Emit the respective
-	 * property of the incoming element.
-	 *
-	 * @param key
-	 *            the property key
-	 * @return the extended Pipeline
-	 */
-	public abstract Traversal<Object, ?, ?, Mark> property(String key);
 
-	/**
-	 * Add a PropertyPipe to the end of the Pipeline. Emit the respective
-	 * property of the incoming element.
-	 *
-	 * @param key
-	 *            the property key
-	 * @return the extended Pipeline
-	 */
-	public abstract <N> Traversal<N, ?, ?, Mark> property(String key, Class<N> type);
 
 	
 	/**
@@ -858,13 +840,7 @@ public interface Traversal<T, Cap, SideEffect, Mark> extends Iterator<T>, Iterab
 	 */
 	public abstract EdgeTraversal<?, ?, Mark> idEdge(Graph graph);
 
-	/**
-	 * Add an IdPipe to the end of the Pipeline. Emit the id of the incoming
-	 * element.
-	 *
-	 * @return the extended Pipeline
-	 */
-	public abstract Traversal<Object, ?, ?, Mark> id();
+
 
 	/**
 	 * Add an IdVertexPipe to the end of the Pipeline. Emit the vertices of the
@@ -875,5 +851,7 @@ public interface Traversal<T, Cap, SideEffect, Mark> extends Iterator<T>, Iterab
 	 * @return the extended Pipeline
 	 */
 	public abstract VertexTraversal<?, ?, Mark> idVertex(Graph graph);
+
+	
 
 }

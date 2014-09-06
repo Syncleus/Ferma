@@ -774,4 +774,40 @@ public interface EdgeTraversal<Cap, SideEffect, Mark> extends Traversal<TEdge, C
 	@SuppressWarnings("unchecked")
 	@Override
 	public EdgeTraversal<Cap, SideEffect, EdgeTraversal<Cap, SideEffect, Mark>> mark();
+	
+	/**
+	 * Add an IdPipe to the end of the Pipeline. Emit the id of the incoming
+	 * element.
+	 *
+	 * @return the extended Pipeline
+	 */
+	public abstract <N> Traversal<N, ?, ?, Mark> id();
+	
+	/**
+	 * Add an IdPipe to the end of the Pipeline. Emit the id of the incoming
+	 * element.
+	 *
+	 * @return the extended Pipeline
+	 */
+	public abstract <N> Traversal<N, ?, ?, Mark> id(Class<N> type);
+	
+	/**
+	 * Add a PropertyPipe to the end of the Pipeline. Emit the respective
+	 * property of the incoming element.
+	 *
+	 * @param key
+	 *            the property key
+	 * @return the extended Pipeline
+	 */
+	public abstract <N> Traversal<N, ?, ?, Mark> property(String key);
+
+	/**
+	 * Add a PropertyPipe to the end of the Pipeline. Emit the respective
+	 * property of the incoming element.
+	 *
+	 * @param key
+	 *            the property key
+	 * @return the extended Pipeline
+	 */
+	public abstract <N> Traversal<N, ?, ?, Mark> property(String key, Class<N> type);
 }

@@ -440,8 +440,7 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	 * @return the extended Pipeline
 	 */
 	public abstract VertexTraversal<?, ?, Mark> except(Iterable<?> collection);
-	
-	
+
 	/**
 	 * Add an ExceptFilterPipe to the end of the Pipeline. Will only emit the
 	 * object if it is not in the provided collection.
@@ -496,8 +495,6 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	 */
 	public abstract VertexTraversal<?, ?, Mark> range(int low, int high);
 
-	
-	
 	/**
 	 * Add a RetainFilterPipe to the end of the Pipeline. Will emit the object
 	 * only if it is in the provided collection.
@@ -507,7 +504,7 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	 * @return the extended Pipeline
 	 */
 	public abstract VertexTraversal<?, ?, Mark> retain(FramedVertex... vertices);
-	
+
 	/**
 	 * Add a RetainFilterPipe to the end of the Pipeline. Will emit the object
 	 * only if it is in the provided collection.
@@ -517,7 +514,6 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	 * @return the extended Pipeline
 	 */
 	public abstract VertexTraversal<?, ?, Mark> retain(Iterable<?> vertices);
-
 
 	/**
 	 * Add a RetainFilterPipe to the end of the Pipeline. Will only emit the
@@ -572,7 +568,8 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	 *            the aggregate
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> VertexTraversal<Collection<N>, Collection<N>, Mark> aggregate(TraversalFunction<TVertex, N> aggregateFunction);
+	public abstract <N> VertexTraversal<Collection<N>, Collection<N>, Mark> aggregate(
+			TraversalFunction<TVertex, N> aggregateFunction);
 
 	/**
 	 * Add a GroupByPipe to the end of the Pipeline. Group the objects inputted
@@ -601,8 +598,8 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	 *            the function that generates the value from the function
 	 * @return the extended Pipeline
 	 */
-	public abstract <K, V> VertexTraversal<Map<K, List<V>>, Map<K, List<V>>, Mark> groupBy(TraversalFunction<TVertex, K> keyFunction,
-			TraversalFunction<TVertex, Iterator<V>> valueFunction);
+	public abstract <K, V> VertexTraversal<Map<K, List<V>>, Map<K, List<V>>, Mark> groupBy(
+			TraversalFunction<TVertex, K> keyFunction, TraversalFunction<TVertex, Iterator<V>> valueFunction);
 
 	/**
 	 * Add a GroupByReducePipe to the end of the Pipeline. Group the objects
@@ -757,7 +754,8 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	 *            the storage collection
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> VertexTraversal<Collection<N>, N, Mark> store(Collection<N> storage, TraversalFunction<TVertex, N> storageFunction);
+	public abstract <N> VertexTraversal<Collection<N>, N, Mark> store(Collection<N> storage,
+			TraversalFunction<TVertex, N> storageFunction);
 
 	/**
 	 * Add an StorePipe to the end of the Pipeline. An ArrayList storage
@@ -791,7 +789,7 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	 *            the post-processing function for each column
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<Table,Table, Mark> table(Table table, Collection<String> stepNames,
+	public abstract VertexTraversal<Table, Table, Mark> table(Table table, Collection<String> stepNames,
 			TraversalFunction<?, ?>... columnFunctions);
 
 	/**
@@ -994,24 +992,55 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	public abstract VertexTraversal<?, ?, Mark> or(TraversalFunction<TVertex, Traversal<?, ?, ?, ?>>... traversals);
 
 	/**
-	 * This step calls emits the input but also calls the sideEffectFunction function with the side effect of
-	 * the previous step when it is ready.
+	 * This step calls emits the input but also calls the sideEffectFunction
+	 * function with the side effect of the previous step when it is ready.
 	 *
 	 * @return the extended Pipeline
 	 */
 	public abstract VertexTraversal<?, ?, Mark> divert(SideEffectFunction<SideEffect> sideEffectFunction);
-	
-	
-	
+
 	@Override
 	public VertexTraversal<?, ?, Mark> shuffle();
-	
-	
-	
 
-	
 	@SuppressWarnings("unchecked")
 	@Override
 	public VertexTraversal<Cap, SideEffect, VertexTraversal<Cap, SideEffect, Mark>> mark();
+
+	/**
+	 * Add an IdPipe to the end of the Pipeline. Emit the id of the incoming
+	 * element.
+	 *
+	 * @return the extended Pipeline
+	 */
+	public abstract <N> Traversal<N, ?, ?, Mark> id();
 	
+	/**
+	 * Add an IdPipe to the end of the Pipeline. Emit the id of the incoming
+	 * element.
+	 *
+	 * @return the extended Pipeline
+	 */
+	public abstract <N> Traversal<N, ?, ?, Mark> id(Class<N> type);
+
+	/**
+	 * Add a PropertyPipe to the end of the Pipeline. Emit the respective
+	 * property of the incoming element.
+	 *
+	 * @param key
+	 *            the property key
+	 * @return the extended Pipeline
+	 */
+	public abstract <N> Traversal<N, ?, ?, Mark> property(String key);
+
+	/**
+	 * Add a PropertyPipe to the end of the Pipeline. Emit the respective
+	 * property of the incoming element.
+	 *
+	 * @param key
+	 *            the property key
+	 * @param type
+	 *            the property type;
+	 * @return the extended Pipeline
+	 */
+	public abstract <N> Traversal<N, ?, ?, Mark> property(String key, Class<N> type);
 }

@@ -85,7 +85,7 @@ class TraversalImpl extends TraversalBase implements Traversal {
 		}
 
 		@Override
-		protected Traversal asTraversal() {
+		protected Traversal castToTraversal() {
 			return TraversalImpl.this;
 		}
 
@@ -109,7 +109,7 @@ class TraversalImpl extends TraversalBase implements Traversal {
 		}
 
 		@Override
-		protected Traversal asTraversal() {
+		protected Traversal castToTraversal() {
 			return TraversalImpl.this;
 		}
 
@@ -167,7 +167,7 @@ class TraversalImpl extends TraversalBase implements Traversal {
 	}
 
 	@Override
-	protected Traversal asTraversal() {
+	protected Traversal castToTraversal() {
 		return this;
 	}
 

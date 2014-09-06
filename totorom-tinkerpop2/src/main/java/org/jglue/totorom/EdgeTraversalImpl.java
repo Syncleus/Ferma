@@ -246,7 +246,7 @@ abstract class EdgeTraversalImpl extends TraversalBase implements EdgeTraversal 
 	@Override
 	public Traversal label() {
 		pipeline().label();
-		return asTraversal();
+		return castToTraversal();
 	}
 
 	@Override

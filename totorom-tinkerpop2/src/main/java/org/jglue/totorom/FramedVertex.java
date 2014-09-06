@@ -28,51 +28,51 @@ public abstract class FramedVertex extends FramedElement {
 		return framedEdge;
 	}
 
-	protected VertexTraversal<?, ?> out(final int branchFactor, final String... labels) {
+	protected VertexTraversal<?, ?, ?> out(final int branchFactor, final String... labels) {
 		return new TraversalImpl(graph(), this).castToVertices().out(branchFactor, labels);
 	}
 
-	protected VertexTraversal<?, ?> out(final String... labels) {
+	protected VertexTraversal<?, ?, ?> out(final String... labels) {
 		return new TraversalImpl(graph(), this).castToVertices().out(labels);
 	}
 
-	protected VertexTraversal<?, ?> in(final int branchFactor, final String... labels) {
+	protected VertexTraversal<?, ?, ?> in(final int branchFactor, final String... labels) {
 		return new TraversalImpl(graph(), this).castToVertices().in(branchFactor, labels);
 	}
 
-	protected VertexTraversal<?, ?> in(final String... labels) {
+	protected VertexTraversal<?, ?, ?> in(final String... labels) {
 		return new TraversalImpl(graph(), this).castToVertices().in(labels);
 	}
 
-	protected VertexTraversal<?, ?> both(final int branchFactor, final String... labels) {
+	protected VertexTraversal<?, ?, ?> both(final int branchFactor, final String... labels) {
 		return new TraversalImpl(graph(), this).castToVertices().both(branchFactor, labels);
 	}
 
-	protected VertexTraversal<?, ?> both(final String... labels) {
+	protected VertexTraversal<?, ?, ?> both(final String... labels) {
 		return new TraversalImpl(graph(), this).castToVertices().both(labels);
 	}
 
-	protected EdgeTraversal<?, ?> outE(final int branchFactor, final String... labels) {
+	protected EdgeTraversal<?, ?, ?> outE(final int branchFactor, final String... labels) {
 		return new TraversalImpl(graph(), this).castToVertices().outE(branchFactor, labels);
 	}
 
-	protected EdgeTraversal<?, ?> outE(final String... labels) {
+	protected EdgeTraversal<?, ?, ?> outE(final String... labels) {
 		return new TraversalImpl(graph(), this).castToVertices().outE(labels);
 	}
 
-	protected EdgeTraversal<?, ?> inE(final int branchFactor, final String... labels) {
+	protected EdgeTraversal<?, ?, ?> inE(final int branchFactor, final String... labels) {
 		return new TraversalImpl(graph(), this).castToVertices().inE(branchFactor, labels);
 	}
 
-	protected EdgeTraversal<?, ?> inE(final String... labels) {
+	protected EdgeTraversal<?, ?, ?> inE(final String... labels) {
 		return new TraversalImpl(graph(), this).castToVertices().inE(labels);
 	}
 
-	protected EdgeTraversal<?, ?> bothE(final int branchFactor, final String... labels) {
+	protected EdgeTraversal<?, ?, ?> bothE(final int branchFactor, final String... labels) {
 		return new TraversalImpl(graph(), this).castToVertices().bothE(branchFactor, labels);
 	}
 
-	protected EdgeTraversal<?, ?> bothE(final String... labels) {
+	protected EdgeTraversal<?, ?, ?> bothE(final String... labels) {
 		return new TraversalImpl(graph(), this).castToVertices().bothE(labels);
 	}
 
@@ -95,27 +95,28 @@ public abstract class FramedVertex extends FramedElement {
 	}
 
 	protected void unlinkOut(FramedVertex vertex, String... labels) {
-		EdgeTraversal<?, ?> pipeline = outE(labels).as("e");
 		if (vertex != null) {
-			pipeline = pipeline.inV().retain(Lists.newArrayList(vertex)).back("e").castToEdges();
+			outE(labels).mark().inV().retain(vertex).back().remove();
+		} else {
+			outE(labels).remove();
 		}
-		pipeline.remove();
 	}
 
 	protected void unlinkIn(FramedVertex vertex, String... labels) {
-		EdgeTraversal<?, ?> pipeline = inE(labels).as("e");
 		if (vertex != null) {
-			pipeline = pipeline.outV().retain(Lists.newArrayList(vertex)).back("e").castToEdges();
+			inE(labels).mark().outV().retain(vertex).back().remove();
+		} else {
+			inE(labels).remove();
 		}
-		pipeline.remove();
 	}
 
 	protected void unlinkBoth(FramedVertex vertex, String... labels) {
-		EdgeTraversal<?, ?> pipeline = bothE(labels).as("e");
 		if (vertex != null) {
-			pipeline = pipeline.bothV().retain(Lists.newArrayList(vertex)).back("e").castToEdges();
+			bothE(labels).mark().bothV().retain(vertex).back().remove();
 		}
-		pipeline.remove();
+		else {
+			bothE(labels).remove();
+		}
 	}
 
 	protected void setLinkIn(FramedVertex vertex, String... labels) {
@@ -156,7 +157,7 @@ public abstract class FramedVertex extends FramedElement {
 	 * 
 	 * @return
 	 */
-	protected VertexTraversal<?, ?> traversal() {
+	protected VertexTraversal<?, ?, ?> traversal() {
 		return new TraversalImpl(graph(), this).castToVertices();
 	}
 

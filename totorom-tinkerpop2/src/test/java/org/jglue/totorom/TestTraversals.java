@@ -20,6 +20,12 @@ public class TestTraversals {
 	private FramedGraph graph = new FramedGraph(TinkerGraphFactory.createTinkerGraph());
 
 	@Test
+	public void testMarkBack() {
+		
+		
+	}
+	
+	@Test
 	public void testBoth() {
 		Assert.assertEquals(3, graph.v(4).both().count());
 		Assert.assertEquals(1, graph.v(4).both("knows").count());
@@ -192,16 +198,16 @@ public class TestTraversals {
 
 	@Test
 	public void testAnd() {
-		Assert.assertEquals(2, graph.V().and(new TraversalFunction<TVertex, Traversal<?, ?, ?>>() {
+		Assert.assertEquals(2, graph.V().and(new TraversalFunction<TVertex, Traversal<?, ?, ?, ?>>() {
 
 			@Override
-			public Traversal<?, ?, ?> compute(TVertex v) {
+			public Traversal<?, ?, ?, ?> compute(TVertex v) {
 				return v.both("knows");
 			}
-		}, new TraversalFunction<TVertex, Traversal<?, ?, ?>>() {
+		}, new TraversalFunction<TVertex, Traversal<?, ?, ?, ?>>() {
 
 			@Override
-			public Traversal<?, ?, ?> compute(TVertex v) {
+			public Traversal<?, ?, ?, ?> compute(TVertex v) {
 				return v.both("created");
 			}
 		}).count());
@@ -209,10 +215,10 @@ public class TestTraversals {
 
 	@Test
 	public void testOr() {
-		Assert.assertEquals(3, graph.V().or(new TraversalFunction<TVertex, Traversal<?, ?, ?>>() {
+		Assert.assertEquals(3, graph.V().or(new TraversalFunction<TVertex, Traversal<?, ?, ?, ?>>() {
 
 			@Override
-			public Traversal<?, ?, ?> compute(TVertex argument) {
+			public Traversal<?, ?, ?, ?> compute(TVertex argument) {
 				return argument.out().has("name");
 			}
 		}).count());
@@ -355,7 +361,7 @@ public class TestTraversals {
 	@Test
 	public void testTable() {
 		
-		Table table = graph.V().as("vertex").as("x").property("name").as("name").back("x").property("age").as("age").table().cap();
+		Table table = graph.V().as("vertex").mark().property("name").as("name").back().property("age").as("age").table().cap();
 		Assert.assertEquals(6, table.size());
 		Assert.assertTrue(table.get(0).get(0) instanceof TVertex);
 		

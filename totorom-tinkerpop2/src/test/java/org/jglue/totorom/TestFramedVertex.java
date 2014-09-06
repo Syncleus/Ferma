@@ -290,7 +290,7 @@ public class TestFramedVertex {
         p4.addEdge(label, p3, Knows.class);
         p5.addEdge(label, p3, Knows.class);
         long allInEdgesCount = p3.in(label).count();
-        Long targetVertex_InEdgeCount = p3.in(label).as("e").retain(Lists.newArrayList(p4)).back("e").count();
+        Long targetVertex_InEdgeCount = p3.in(label).mark().retain(Lists.newArrayList(p4)).back().count();
 
         Assert.assertTrue("target vertex requires an in edge for " + label, targetVertex_InEdgeCount > 0);
         Assert.assertTrue("Multiple edges(in) of type "+label+" must exist for vertice", allInEdgesCount - targetVertex_InEdgeCount > 0);
@@ -312,7 +312,7 @@ public class TestFramedVertex {
         p3.addEdge(label, p4, Knows.class);
         p3.addEdge(label, p5, Knows.class);
         long allInEdgesCount = p3.out(label).count();
-        Long targetVertex_OutEdgeCount = p3.out(label).as("e").retain(Lists.newArrayList(p4)).back("e").count();
+        Long targetVertex_OutEdgeCount = p3.out(label).mark().retain(Lists.newArrayList(p4)).back().count();
 
         Assert.assertTrue("target vertex requires an in edge for "+label, targetVertex_OutEdgeCount > 0);
         Assert.assertTrue("Multiple edges(out) of type "+label+" must exist for vertice", allInEdgesCount - targetVertex_OutEdgeCount > 0);
@@ -337,7 +337,7 @@ public class TestFramedVertex {
         p3.addEdge(label, p5, Knows.class);
 
         long allInEdgesCount = p3.both(label).count();
-        Long targetVertex_EdgeCount = p3.both(label).as("e").retain(Lists.newArrayList(p4)).back("e").count();
+        Long targetVertex_EdgeCount = p3.both(label).mark().retain(Lists.newArrayList(p4)).back().count();
 
         Assert.assertTrue("target vertex requires an in/out edge for "+label, targetVertex_EdgeCount > 0);
         Assert.assertTrue("Multiple edges of type "+label+" must exist for vertice", allInEdgesCount - targetVertex_EdgeCount > 0);

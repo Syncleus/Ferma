@@ -437,4 +437,13 @@ abstract class EdgeTraversalImpl extends TraversalBase implements EdgeTraversal 
 
 		return (EdgeTraversal) super.retain(Lists.newArrayList(collection));
 	}
+	
+	
+	
+	@Override
+	public EdgeTraversal mark() {
+	
+		return (EdgeTraversal) super.mark();
+	}
+	
 }

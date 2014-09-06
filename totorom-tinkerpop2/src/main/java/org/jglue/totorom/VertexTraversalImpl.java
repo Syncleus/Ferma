@@ -547,4 +547,14 @@ abstract class VertexTraversalImpl extends TraversalBase implements VertexTraver
 	public VertexTraversal retain(Iterable vertices) {
 		return (VertexTraversal) super.retain(Lists.newArrayList(vertices));
 	}
+
+
+
+	@Override
+	public VertexTraversal mark() {
+
+		return (VertexTraversal) super.mark();
+	}
+	
+	
 }

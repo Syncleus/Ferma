@@ -24,21 +24,21 @@ import com.tinkerpop.pipes.util.structures.Tree;
  * @param <T>
  * @param <Cap>
  */
-public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> {
+public interface Traversal<T, Cap, SideEffect, Mark> extends Iterator<T>, Iterable<T> {
 
 	/**
 	 * Traverse over all the vertices in the graph.
 	 * 
 	 * @return
 	 */
-	public VertexTraversal<?, ?> V();
+	public VertexTraversal<?, ?, Mark> V();
 
 	/**
 	 * Traverse over all the edges in the graph.
 	 * 
 	 * @return
 	 */
-	public EdgeTraversal<?, ?> E();
+	public EdgeTraversal<?, ?, Mark> E();
 
 	/**
 	 * Traversal over a list of vertices in the graph.
@@ -47,7 +47,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *            The ids of the vertices.
 	 * @return The traversal.
 	 */
-	public VertexTraversal<?, ?> v(Object... ids);
+	public VertexTraversal<?, ?, Mark> v(Object... ids);
 
 	/**
 	 * Traversal over a list of edges in the graph.
@@ -56,7 +56,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *            The ids of the edges.
 	 * @return The traversal.
 	 */
-	public EdgeTraversal<?, ?> e(Object... ids);
+	public EdgeTraversal<?, ?, Mark> e(Object... ids);
 
 	/**
 	 * Completely drain the pipeline of its objects. Useful when a sideEffect of
@@ -73,7 +73,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *            retrieved)
 	 * @return the extended Pipeline
 	 */
-	public abstract Traversal<Map<String, Object>, ?, ?> map(String... keys);
+	public abstract Traversal<Map<String, Object>, ?, ?, Mark> map(String... keys);
 
 	/**
 	 * Add a PropertyPipe to the end of the Pipeline. Emit the respective
@@ -83,7 +83,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *            the property key
 	 * @return the extended Pipeline
 	 */
-	public abstract Traversal<Object, ?, ?> property(String key);
+	public abstract Traversal<Object, ?, ?, Mark> property(String key);
 
 	/**
 	 * Add a PropertyPipe to the end of the Pipeline. Emit the respective
@@ -93,7 +93,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *            the property key
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> Traversal<N, ?, ?> property(String key, Class<N> type);
+	public abstract <N> Traversal<N, ?, ?, Mark> property(String key, Class<N> type);
 
 	
 	/**
@@ -102,7 +102,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract Traversal<T, ?, ?> dedup();
+	public abstract Traversal<T, ?, ?, Mark> dedup();
 
 	/**
 	 * Add a DuplicateFilterPipe to the end of the Pipeline. Will only emit the
@@ -113,7 +113,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *            on
 	 * @return the extended Pipeline
 	 */
-	public abstract Traversal<T, ?, ?> dedup(TraversalFunction<T, ?> dedupFunction);
+	public abstract Traversal<T, ?, ?, Mark> dedup(TraversalFunction<T, ?> dedupFunction);
 
 	/**
 	 * Add an ExceptFilterPipe to the end of the Pipeline. Will only emit the
@@ -123,7 +123,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *            the collection except from the stream
 	 * @return the extended Pipeline
 	 */
-	public abstract Traversal<T, ?, ?> except(Iterable<?> collection);
+	public abstract Traversal<T, ?, ?, Mark> except(Iterable<?> collection);
 
 	/**
 	 * Add an ExceptFilterPipe to the end of the Pipeline. Will only emit the
@@ -134,7 +134,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *            the named steps in the pipeline
 	 * @return the extended Pipeline
 	 */
-	public abstract Traversal<T, ?, ?> except(String... namedSteps);
+	public abstract Traversal<T, ?, ?, Mark> except(String... namedSteps);
 
 	/**
 	 * Add an FilterFunctionPipe to the end of the Pipeline. The serves are an
@@ -145,7 +145,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *            the filter function of the pipe
 	 * @return the extended Pipeline
 	 */
-	public abstract Traversal<T, ?, ?> filter(TraversalFunction<T, Boolean> filterFunction);
+	public abstract Traversal<T, ?, ?, Mark> filter(TraversalFunction<T, Boolean> filterFunction);
 
 	/**
 	 * Add a RandomFilterPipe to the end of the Pipeline. A biased coin toss
@@ -155,7 +155,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *            the bias of the random coin
 	 * @return the extended Pipeline
 	 */
-	public abstract Traversal<T, ?, ?> random(double bias);
+	public abstract Traversal<T, ?, ?, Mark> random(double bias);
 
 	/**
 	 * Add a RageFilterPipe to the end of the Pipeline. Analogous to a high/low
@@ -167,7 +167,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *            the high end of the range
 	 * @return the extended Pipeline
 	 */
-	public abstract Traversal<T, ?, ?> range(int low, int high);
+	public abstract Traversal<T, ?, ?, Mark> range(int low, int high);
 
 	/**
 	 * Add a RetainFilterPipe to the end of the Pipeline. Will emit the object
@@ -177,7 +177,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *            the collection to retain
 	 * @return the extended Pipeline
 	 */
-	public abstract Traversal<T, ?, ?> retain(Iterable<?> collection);
+	public abstract Traversal<T, ?, ?, Mark> retain(Iterable<?> collection);
 	
 
 
@@ -189,7 +189,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *            the named steps in the pipeline
 	 * @return the extended Pipeline
 	 */
-	public abstract Traversal<T, ?, ?> retain(String... namedSteps);
+	public abstract Traversal<T, ?, ?, Mark> retain(String... namedSteps);
 
 	/**
 	 * Add an AggregatePipe to the end of the Pipeline. The objects prior to
@@ -197,7 +197,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract Traversal<T, Collection<T>, Collection<T>> aggregate();
+	public abstract Traversal<T, Collection<T>, Collection<T>, Mark> aggregate();
 
 	/**
 	 * Add an AggregatePipe to the end of the Pipeline. The objects prior to
@@ -207,7 +207,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *            the collection to aggregate results into
 	 * @return the extended Pipeline
 	 */
-	public abstract Traversal<T, Collection<T>, Collection<T>> aggregate(Collection<T> aggregate);
+	public abstract Traversal<T, Collection<T>, Collection<T>, Mark> aggregate(Collection<T> aggregate);
 
 	/**
 	 * Add an AggregatePipe to the end of the Pipeline. The results of the
@@ -221,7 +221,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *            the aggregate
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> Traversal<T, Collection<N>, Collection<N>> aggregate(Collection<T> aggregate,
+	public abstract <N> Traversal<T, Collection<N>, Collection<N>, Mark> aggregate(Collection<T> aggregate,
 			TraversalFunction<T, N> aggregateFunction);
 
 	/**
@@ -234,7 +234,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *            the aggregate
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> Traversal<T, Collection<N>, Collection<N>> aggregate(TraversalFunction<T, N> aggregateFunction);
+	public abstract <N> Traversal<T, Collection<N>, Collection<N>, Mark> aggregate(TraversalFunction<T, N> aggregateFunction);
 
 	/**
 	 * Add a GroupByPipe to the end of the Pipeline. Group the objects inputted
@@ -249,7 +249,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *            the function that generates the value from the function
 	 * @return the extended Pipeline
 	 */
-	public abstract <K, V> Traversal<T, Map<K, List<V>>, Map<K, List<V>>> groupBy(Map<K, List<V>> map,
+	public abstract <K, V> Traversal<T, Map<K, List<V>>, Map<K, List<V>>, Mark> groupBy(Map<K, List<V>> map,
 			TraversalFunction<T, K> keyFunction, TraversalFunction<T, Iterator<V>> valueFunction);
 
 	/**
@@ -263,7 +263,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *            the function that generates the value from the function
 	 * @return the extended Pipeline
 	 */
-	public abstract <K, V> Traversal<T, Map<K, List<V>>, Map<K, List<V>>> groupBy(TraversalFunction<T, K> keyFunction,
+	public abstract <K, V> Traversal<T, Map<K, List<V>>, Map<K, List<V>>, Mark> groupBy(TraversalFunction<T, K> keyFunction,
 			TraversalFunction<T, Iterator<V>> valueFunction);
 
 	/**
@@ -285,7 +285,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *            the function that reduces the value lists
 	 * @return the extended Pipeline
 	 */
-	public abstract <K, V, V2> Traversal<T, Map<K, V2>, Map<K, V2>> groupBy(Map<K, V2> reduceMap,
+	public abstract <K, V, V2> Traversal<T, Map<K, V2>, Map<K, V2>, Mark> groupBy(Map<K, V2> reduceMap,
 			TraversalFunction<T, K> keyFunction, TraversalFunction<T, Iterator<V>> valueFunction,
 			TraversalFunction<List<V>, V2> reduceFunction);
 
@@ -305,7 +305,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *            the function that reduces the value lists
 	 * @return the extended Pipeline
 	 */
-	public abstract <K, V, V2> Traversal<T, Map<K, V2>, Map<K, V2>> groupBy(TraversalFunction<T, K> keyFunction,
+	public abstract <K, V, V2> Traversal<T, Map<K, V2>, Map<K, V2>, Mark> groupBy(TraversalFunction<T, K> keyFunction,
 			TraversalFunction<T, Iterator<V>> valueFunction, TraversalFunction<List<V>, V2> reduceFunction);
 
 	/**
@@ -322,7 +322,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *            the value function to determine map value
 	 * @return the extended Pipeline
 	 */
-	public abstract <K> Traversal<T, Map<K, Long>, Map<K, Long>> groupCount(Map<K, Long> map,
+	public abstract <K> Traversal<T, Map<K, Long>, Map<K, Long>, Mark> groupCount(Map<K, Long> map,
 			TraversalFunction<T, K> keyFunction, TraversalFunction<Pair<T, Long>, Long> valueFunction);
 
 	/**
@@ -337,7 +337,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *            the value function to determine map value
 	 * @return the extended Pipeline
 	 */
-	public abstract <K> Traversal<T, Map<K, Long>, Map<K, Long>> groupCount(TraversalFunction<T, K> keyFunction,
+	public abstract <K> Traversal<T, Map<K, Long>, Map<K, Long>, Mark> groupCount(TraversalFunction<T, K> keyFunction,
 			TraversalFunction<Pair<T, Long>, Long> valueFunction);
 
 	/**
@@ -352,7 +352,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *            the key function to determine map key
 	 * @return the extended Pipeline
 	 */
-	public abstract <K> Traversal<T, Map<K, Long>, Map<K, Long>> groupCount(Map<K, Long> map, TraversalFunction<T, K> keyFunction);
+	public abstract <K> Traversal<T, Map<K, Long>, Map<K, Long>, Mark> groupCount(Map<K, Long> map, TraversalFunction<T, K> keyFunction);
 
 	/**
 	 * Add a GroupCountPipe or GroupCountFunctionPipe to the end of the
@@ -364,7 +364,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *            the key function to determine map key
 	 * @return the extended Pipeline
 	 */
-	public abstract <K> Traversal<T, Map<K, Long>, Map<K, Long>> groupCount(TraversalFunction<T, K> keyFunction);
+	public abstract <K> Traversal<T, Map<K, Long>, Map<K, Long>, Mark> groupCount(TraversalFunction<T, K> keyFunction);
 
 	/**
 	 * Add a GroupCountPipe to the end of the Pipeline. A map is maintained of
@@ -375,7 +375,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *            a provided count map
 	 * @return the extended Pipeline
 	 */
-	public abstract Traversal<T, Map<T, Long>, Map<T, Long>> groupCount(Map<T, Long> map);
+	public abstract Traversal<T, Map<T, Long>, Map<T, Long>, Mark> groupCount(Map<T, Long> map);
 
 	/**
 	 * Add a GroupCountPipe to the end of the Pipeline. A map is maintained of
@@ -384,7 +384,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract Traversal<T, Map<T, Long>, Map<T, Long>> groupCount();
+	public abstract Traversal<T, Map<T, Long>, Map<T, Long>, Mark> groupCount();
 
 	/**
 	 * Add a SideEffectFunctionPipe to the end of the Pipeline. The provided
@@ -394,7 +394,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *            the function of the pipe
 	 * @return the extended Pipeline
 	 */
-	public abstract Traversal<T, ?, ?> sideEffect(SideEffectFunction<T> sideEffectFunction);
+	public abstract Traversal<T, ?, ?, Mark> sideEffect(SideEffectFunction<T> sideEffectFunction);
 
 	/**
 	 * Add a StorePipe to the end of the Pipeline. Lazily store the incoming
@@ -404,7 +404,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *            the collection to store results into
 	 * @return the extended Pipeline
 	 */
-	public abstract Traversal<T, Collection<T>, T> store(Collection<T> storage);
+	public abstract Traversal<T, Collection<T>, T, Mark> store(Collection<T> storage);
 
 	/**
 	 * Add a StorePipe to the end of the Pipeline. Lazily store the object
@@ -418,7 +418,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *            the storage collection
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> Traversal<T, Collection<N>, N> store(Collection<N> storage, TraversalFunction<T, N> storageFunction);
+	public abstract <N> Traversal<T, Collection<N>, N, Mark> store(Collection<N> storage, TraversalFunction<T, N> storageFunction);
 
 	/**
 	 * Add an StorePipe to the end of the Pipeline. An ArrayList storage
@@ -426,7 +426,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract Traversal<T, Collection<T>, T> store();
+	public abstract Traversal<T, Collection<T>, T, Mark> store();
 
 	/**
 	 * Add a StorePipe to the end of the Pipeline. An ArrayList storage
@@ -438,7 +438,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *            the storage collection
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> Traversal<T, Collection<N>, N> store(TraversalFunction<T, N> storageFunction);
+	public abstract <N> Traversal<T, Collection<N>, N, Mark> store(TraversalFunction<T, N> storageFunction);
 
 	/**
 	 * Add a TablePipe to the end of the Pipeline. This step is used for
@@ -452,7 +452,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *            the post-processing function for each column
 	 * @return the extended Pipeline
 	 */
-	public abstract Traversal<T, Table, Table> table(Table table, Collection<String> stepNames,
+	public abstract Traversal<T, Table, Table, Mark> table(Table table, Collection<String> stepNames,
 			TraversalFunction<?, ?>... columnFunctions);
 
 	/**
@@ -465,7 +465,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *            the post-processing function for each column
 	 * @return the extended Pipeline
 	 */
-	public abstract Traversal<T, Table, Table> table(Table table, TraversalFunction<?, ?>... columnFunctions);
+	public abstract Traversal<T, Table, Table, Mark> table(Table table, TraversalFunction<?, ?>... columnFunctions);
 
 	/**
 	 * Add a TablePipe to the end of the Pipeline. This step is used for
@@ -475,7 +475,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *            the post-processing function for each column
 	 * @return the extended Pipeline
 	 */
-	public abstract Traversal<T, Table, Table> table(TraversalFunction<?, ?>... columnFunctions);
+	public abstract Traversal<T, Table, Table, Mark> table(TraversalFunction<?, ?>... columnFunctions);
 
 	/**
 	 * Add a TablePipe to the end of the Pipeline. This step is used for
@@ -485,7 +485,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *            the table to fill
 	 * @return the extended Pipeline
 	 */
-	public abstract Traversal<T, Table, Table> table(Table table);
+	public abstract Traversal<T, Table, Table, Mark> table(Table table);
 
 	/**
 	 * Add a TablePipe to the end of the Pipeline. This step is used for
@@ -493,7 +493,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract Traversal<T, Table, Table> table();
+	public abstract Traversal<T, Table, Table, Mark> table();
 
 	/**
 	 * Add a TreePipe to the end of the Pipeline This step maintains an internal
@@ -507,7 +507,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *            fashion
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> Traversal<T, Tree<N>, Tree<N>> tree(Tree<N> tree, TraversalFunction<?, N>... branchFunctions);
+	public abstract <N> Traversal<T, Tree<N>, Tree<N>, Mark> tree(Tree<N> tree, TraversalFunction<?, N>... branchFunctions);
 
 	/**
 	 * Add a TreePipe to the end of the Pipeline This step maintains an internal
@@ -518,7 +518,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *            fashion
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> Traversal<T, Tree<N>, Tree<N>> tree(TraversalFunction<?, N>... branchFunctions);
+	public abstract <N> Traversal<T, Tree<N>, Tree<N>, Mark> tree(TraversalFunction<?, N>... branchFunctions);
 
 	/**
 	 * Add a TreePipe to the end of the Pipeline This step maintains an internal
@@ -526,7 +526,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract Traversal<T, Tree<T>, Tree<T>> tree();
+	public abstract Traversal<T, Tree<T>, Tree<T>, Mark> tree();
 	
 	/**
 	 * Add an IdentityPipe to the end of the Pipeline. Useful in various
@@ -535,7 +535,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract Traversal<T, ?, ?> identity();
+	public abstract Traversal<T, ?, ?, Mark> identity();
 
 	/**
 	 * Add a MemoizePipe to the end of the Pipeline. This step will hold a Map
@@ -547,7 +547,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *            the name of the step previous to memoize to
 	 * @return the extended Pipeline
 	 */
-	public abstract Traversal<T, ?, ?> memoize(String namedStep);
+	public abstract Traversal<T, ?, ?, Mark> memoize(String namedStep);
 
 	/**
 	 * Add a MemoizePipe to the end of the Pipeline. This step will hold a Map
@@ -561,7 +561,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *            the memoization map
 	 * @return the extended Pipeline
 	 */
-	public abstract Traversal<T, ?, ?> memoize(String namedStep, Map<?, ?> map);
+	public abstract Traversal<T, ?, ?, Mark> memoize(String namedStep, Map<?, ?> map);
 
 	/**
 	 * Add an OrderPipe to the end of the Pipeline. This step will sort the
@@ -569,18 +569,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract Traversal<T, ?, ?> order();
-
-	/**
-	 * Add an OrderPipe to the end of the Pipeline. This step will sort the
-	 * objects in the stream in a default Comparable order.
-	 *
-	 * @param order
-	 *            if the stream is composed of comparable objects, then
-	 *            increment or decrement can be specified
-	 * @return the extended Pipeline
-	 */
-	public abstract Traversal<T, ?, ?> order(TransformPipe.Order order);
+	public abstract Traversal<T, ?, ?, Mark> order();
 
 	/**
 	 * Add an OrderPipe to the end of the Pipeline. This step will sort the
@@ -591,7 +580,18 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *            increment or decrement can be specified
 	 * @return the extended Pipeline
 	 */
-	public abstract Traversal<T, ?, ?> order(Tokens.T order);
+	public abstract Traversal<T, ?, ?, Mark> order(TransformPipe.Order order);
+
+	/**
+	 * Add an OrderPipe to the end of the Pipeline. This step will sort the
+	 * objects in the stream in a default Comparable order.
+	 *
+	 * @param order
+	 *            if the stream is composed of comparable objects, then
+	 *            increment or decrement can be specified
+	 * @return the extended Pipeline
+	 */
+	public abstract Traversal<T, ?, ?, Mark> order(Tokens.T order);
 
 	/**
 	 * Add an OrderPipe to the end of the Pipeline. This step will sort the
@@ -602,7 +602,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *            a comparator function of two objects of type E
 	 * @return the extended Pipeline
 	 */
-	public abstract Traversal<T, ?, ?> order(Comparator<T> compareFunction);
+	public abstract Traversal<T, ?, ?, Mark> order(Comparator<T> compareFunction);
 
 	/**
 	 * Wrap the previous step in an AsPipe. Useful for naming steps and is used
@@ -613,7 +613,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *            the name of the AsPipe
 	 * @return the extended Pipeline
 	 */
-	public abstract Traversal<T, ?, ?> as(String name);
+	public abstract Traversal<T, ?, ?, Mark> as(String name);
 
 	/**
 	 * Add a CyclicPathFilterPipe to the end of the Pipeline. If the object's
@@ -622,38 +622,30 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract Traversal<T, ?, ?> simplePath();
+	public abstract Traversal<T, ?, ?, Mark> simplePath();
 
 	/**
 	 * Add a BackFilterPipe to the end of the Pipeline. The object that was seen
-	 * namedSteps ago is emitted.
-	 * 
-	 * Note: Using back is discouraged. Instead use 'and'.
+	 * at the last marked step is emmitted
 	 *
-	 * @param namedStep
-	 *            the name of the step previous to back up to
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> Traversal<N, ?, ?> back(String namedStep);
+	public abstract Mark back();
+
 
 	/**
-	 * Add a BackFilterPipe to the end of the Pipeline. The object that was seen
-	 * namedSteps ago is emitted.
-	 *
-	 * Note: Using back is discouraged. Instead use 'and'.
-	 *
-	 * @param namedStep
-	 *            the name of the step previous to back up to
+	 * Marks the step so that a subsequent call to back or mark may return to this point 
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> Traversal<N, ?, ?> back(String namedStep, Class<N> type);
+	public abstract <M extends Traversal<T, Cap, SideEffect, Mark>> Traversal<T, Cap, SideEffect, M> mark();
+	
 
 	/**
 	 * Causes the pipeline to be greedy up to this step.
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract Traversal<T, ?, ?> gatherScatter();
+	public abstract Traversal<T, ?, ?, Mark> gatherScatter();
 
 	/**
 	 * Add a PathPipe to the end of the Pipeline. This will emit the path that
@@ -681,7 +673,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *            the Row
 	 * @return the extended Pipeline
 	 */
-	public abstract Iterator<Row<?>> select(Collection<String> stepNames, TraversalFunction<?, ?>... columnFunctions);
+	public abstract Traversal<Row<?>, ?, ?, Mark> select(Collection<String> stepNames, TraversalFunction<?, ?>... columnFunctions);
 
 	/**
 	 * Add a SelectPipe to the end of the Pipeline. The objects of the named
@@ -695,7 +687,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *            the Row
 	 * @return the extended Pipeline
 	 */
-	public abstract Iterator<Row<?>> select(TraversalFunction<?, ?>... columnFunctions);
+	public abstract Traversal<Row<?>, ?, ?, Mark> select(TraversalFunction<?, ?>... columnFunctions);
 
 	/**
 	 * Add a SelectPipe to the end of the Pipeline. The objects of the named
@@ -705,7 +697,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract Iterator<Row<?>> select();
+	public abstract Traversal<Row<?>, ?, ?, Mark> select();
 
 	/**
 	 * Add a ShufflePipe to the end of the Pipeline. All the objects previous to
@@ -714,7 +706,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract Traversal<T, ?, ?> shuffle();
+	public abstract Traversal<T, ?, ?, Mark> shuffle();
 
 	/**
 	 * Add a SideEffectCapPipe to the end of the Pipeline. When the previous
@@ -732,7 +724,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract Traversal<T, ?, ?> divert(SideEffectFunction<SideEffect> sideEffectFunction);
+	public abstract Traversal<T, ?, ?, Mark> divert(SideEffectFunction<SideEffect> sideEffectFunction);
 
 	/**
 	 * Add a TransformFunctionPipe to the end of the Pipeline. Given an input,
@@ -743,7 +735,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *            the transformation function of the pipe
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> Traversal<N, ?, ?> transform(TraversalFunction<T, N> function);
+	public abstract <N> Traversal<N, ?, ?, Mark> transform(TraversalFunction<T, N> function);
 
 	/**
 	 * Add a StartPipe to the end of the pipeline. Though, in practice, a
@@ -755,7 +747,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *            (iterator/iterable are unfolded)
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> Traversal<N, ?, ?> start(N object);
+	public abstract <N> Traversal<N, ?, ?, Mark> start(N object);
 
 	/**
 	 * Add a StartPipe to the end of the pipeline. Though, in practice, a
@@ -767,7 +759,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *            (iterator/iterable are unfolded)
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<?, ?> start(FramedVertex object);
+	public abstract VertexTraversal<?, ?, Mark> start(FramedVertex object);
 
 	/**
 	 * Add a StartPipe to the end of the pipeline. Though, in practice, a
@@ -779,7 +771,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *            (iterator/iterable are unfolded)
 	 * @return the extended Pipeline
 	 */
-	public abstract EdgeTraversal<?, ?> start(FramedEdge object);
+	public abstract EdgeTraversal<?, ?, Mark> start(FramedEdge object);
 
 	/**
 	 * Return the number of objects iterated through the pipeline.
@@ -816,7 +808,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *
 	 * @return the Pipeline with path calculations enabled
 	 */
-	public abstract Traversal<T, Cap, SideEffect> enablePath();
+	public abstract Traversal<T, Cap, SideEffect, Mark> enablePath();
 
 	/**
 	 * When possible, Gremlin takes advantage of certain sequences of pipes in
@@ -828,7 +820,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *            whether to optimize the pipeline from here on or not
 	 * @return The GremlinPipeline with the optimization turned off
 	 */
-	public abstract Traversal<T, Cap, SideEffect> optimize(boolean optimize);
+	public abstract Traversal<T, Cap, SideEffect, Mark> optimize(boolean optimize);
 
 	/**
 	 * Remove every element at the end of this Pipeline.
@@ -844,36 +836,17 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 */
 	public abstract Collection<T> fill(Collection<T> collection);
 
-	/**
-	 * Cast the traversal as a vertex traversal
-	 * 
-	 * @return
-	 */
-	public abstract Traversal<T, Cap, SideEffect> cast(Class<T> clazz);
+	
 
-	/**
-	 * Cast the traversal as a vertex traversal
-	 * 
-	 * @return
-	 */
-	public abstract VertexTraversal<Cap, SideEffect> castToVertices();
 
-	/**
-	 * Cast the traversal to an edge traversalT
-	 * 
-	 * @return
-	 */
-	public abstract EdgeTraversal<Cap, SideEffect> castToEdges();
 
 	/**
 	 * Add an OptionalPipe to the end of the Pipeline. The section of pipeline
-	 * back to the partition step is evaluated.
+	 * back to the marked step is evaluated.
 	 *
-	 * @param namedStep
-	 *            the name of the step previous to optional back to
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> Traversal<N, ?, ?> optional(String namedStep);
+	public abstract Mark optional();
 
 	/**
 	 * Add an IdEdgePipe to the end of the Pipeline. Emit the edges of the graph
@@ -883,7 +856,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *            the graph of the pipe
 	 * @return the extended Pipeline
 	 */
-	public abstract EdgeTraversal<?, ?> idEdge(Graph graph);
+	public abstract EdgeTraversal<?, ?, Mark> idEdge(Graph graph);
 
 	/**
 	 * Add an IdPipe to the end of the Pipeline. Emit the id of the incoming
@@ -891,7 +864,7 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract Traversal<Object, ?, ?> id();
+	public abstract Traversal<Object, ?, ?, Mark> id();
 
 	/**
 	 * Add an IdVertexPipe to the end of the Pipeline. Emit the vertices of the
@@ -901,6 +874,6 @@ public interface Traversal<T, Cap, SideEffect> extends Iterator<T>, Iterable<T> 
 	 *            the graph of the pipe
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<?, ?> idVertex(Graph graph);
+	public abstract VertexTraversal<?, ?, Mark> idVertex(Graph graph);
 
 }

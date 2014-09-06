@@ -21,7 +21,7 @@ import com.tinkerpop.pipes.util.structures.Tree;
  *
  * @param <Cap>
  */
-public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, SideEffect> {
+public interface EdgeTraversal<Cap, SideEffect, Mark> extends Traversal<TEdge, Cap, SideEffect, Mark> {
 	/**
 	 * Check if the element has a property with provided key.
 	 *
@@ -29,7 +29,7 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *            the property key to check
 	 * @return the extended Pipeline
 	 */
-	public EdgeTraversal<?, ?> has(String key);
+	public EdgeTraversal<?, ?, Mark> has(String key);
 	
 	/**
 	 * Add an IdFilterPipe, LabelFilterPipe, or PropertyFilterPipe to the end of
@@ -43,7 +43,7 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *            the object to filter on (in an OR manner)
 	 * @return the extended Pipeline
 	 */
-	public EdgeTraversal<?, ?> has(String key, Object value);
+	public EdgeTraversal<?, ?, Mark> has(String key, Object value);
 
 	/**
 	 * Add an IdFilterPipe, LabelFilterPipe, or PropertyFilterPipe to the end of
@@ -59,7 +59,7 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *            the object to filter on
 	 * @return the extended Pipeline
 	 */
-	public EdgeTraversal<?, ?> has(String key, Tokens.T compareToken, Object value);
+	public EdgeTraversal<?, ?, Mark> has(String key, Tokens.T compareToken, Object value);
 
 	/**
 	 * Add an IdFilterPipe, LabelFilterPipe, or PropertyFilterPipe to the end of
@@ -75,7 +75,7 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *            the object to filter on
 	 * @return the extended Pipeline
 	 */
-	public EdgeTraversal<?, ?> has(String key, Predicate predicate, Object value);
+	public EdgeTraversal<?, ?, Mark> has(String key, Predicate predicate, Object value);
 
 	/**
 	 * Check if the element does not have a property with provided key.
@@ -84,7 +84,7 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *            the property key to check
 	 * @return the extended Pipeline
 	 */
-	public EdgeTraversal<?, ?> hasNot(String key);
+	public EdgeTraversal<?, ?, Mark> hasNot(String key);
 
 	/**
 	 * Add an IdFilterPipe, LabelFilterPipe, or PropertyFilterPipe to the end of
@@ -98,7 +98,7 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *            the objects to filter on (in an OR manner)
 	 * @return the extended Pipeline
 	 */
-	public EdgeTraversal<?, ?> hasNot(String key, Object value);
+	public EdgeTraversal<?, ?, Mark> hasNot(String key, Object value);
 
 	/**
 	 * Add an IntervalFilterPipe to the end of the Pipeline. If the incoming
@@ -114,7 +114,7 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *            the end of the interval (exclusive)
 	 * @return the extended Pipeline
 	 */
-	public <C> EdgeTraversal<?, ?> interval(String key, Comparable<C> startValue, Comparable<C> endValue);
+	public <C> EdgeTraversal<?, ?, Mark> interval(String key, Comparable<C> startValue, Comparable<C> endValue);
 
 	/**
 	 * Add an InVertexPipe to the end of the Pipeline. Emit the head vertex of
@@ -122,7 +122,7 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *
 	 * @return the extended Pipeline
 	 */
-	public VertexTraversal<?, ?> inV();
+	public VertexTraversal<?, ?, Mark> inV();
 
 	/**
 	 * Add an OutVertexPipe to the end of the Pipeline. Emit the tail vertex of
@@ -130,7 +130,7 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *
 	 * @return the extended Pipeline
 	 */
-	public VertexTraversal<?, ?> outV();
+	public VertexTraversal<?, ?, Mark> outV();
 
 	/**
 	 * Add a BothVerticesPipe to the end of the Pipeline. Emit both the tail and
@@ -138,7 +138,7 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *
 	 * @return the extended Pipeline
 	 */
-	public VertexTraversal<?, ?> bothV();
+	public VertexTraversal<?, ?, Mark> bothV();
 
 	/**
 	 * Get the next object emitted from the pipeline. If no such object exists,
@@ -185,7 +185,7 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract Traversal<String, ?, ?> label();
+	public abstract Traversal<String, ?, ?, Mark> label();
 
 	/**
 	 * Add a DuplicateFilterPipe to the end of the Pipeline. Will only emit the
@@ -193,7 +193,7 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract EdgeTraversal<?, ?> dedup();
+	public abstract EdgeTraversal<?, ?, Mark> dedup();
 
 	/**
 	 * Add a DuplicateFilterPipe to the end of the Pipeline. Will only emit the
@@ -204,7 +204,7 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *            on
 	 * @return the extended Pipeline
 	 */
-	public abstract EdgeTraversal<?, ?> dedup(TraversalFunction<TEdge, ?> dedupFunction);
+	public abstract EdgeTraversal<?, ?, Mark> dedup(TraversalFunction<TEdge, ?> dedupFunction);
 
 	/**
 	 * Add an ExceptFilterPipe to the end of the Pipeline. Will only emit the
@@ -214,7 +214,7 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *            the collection except from the stream
 	 * @return the extended Pipeline
 	 */
-	public abstract EdgeTraversal<?, ?> except(Iterable<?> collection);
+	public abstract EdgeTraversal<?, ?, Mark> except(Iterable<?> collection);
 	
 
 	/**
@@ -225,7 +225,7 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *            the collection except from the stream
 	 * @return the extended Pipeline
 	 */
-	public abstract EdgeTraversal<?, ?> except(FramedEdge... edges);
+	public abstract EdgeTraversal<?, ?, Mark> except(FramedEdge... edges);
 
 	/**
 	 * Add an ExceptFilterPipe to the end of the Pipeline. Will only emit the
@@ -236,7 +236,7 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *            the named steps in the pipeline
 	 * @return the extended Pipeline
 	 */
-	public abstract EdgeTraversal<?, ?> except(String... namedSteps);
+	public abstract EdgeTraversal<?, ?, Mark> except(String... namedSteps);
 
 	/**
 	 * Add an FilterFunctionPipe to the end of the Pipeline. The serves are an
@@ -247,7 +247,7 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *            the filter function of the pipe
 	 * @return the extended Pipeline
 	 */
-	public abstract EdgeTraversal<?, ?> filter(TraversalFunction<TEdge, Boolean> filterFunction);
+	public abstract EdgeTraversal<?, ?, Mark> filter(TraversalFunction<TEdge, Boolean> filterFunction);
 
 	/**
 	 * Add a RandomFilterPipe to the end of the Pipeline. A biased coin toss
@@ -257,7 +257,7 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *            the bias of the random coin
 	 * @return the extended Pipeline
 	 */
-	public abstract EdgeTraversal<?, ?> random(double bias);
+	public abstract EdgeTraversal<?, ?, Mark> random(double bias);
 
 	/**
 	 * Add a RageFilterPipe to the end of the Pipeline. Analogous to a high/low
@@ -269,7 +269,7 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *            the high end of the range
 	 * @return the extended Pipeline
 	 */
-	public abstract EdgeTraversal<?, ?> range(int low, int high);
+	public abstract EdgeTraversal<?, ?, Mark> range(int low, int high);
 
 
 	
@@ -281,7 +281,7 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *            the collection to retain
 	 * @return the extended Pipeline
 	 */
-	public abstract EdgeTraversal<?, ?> retain(Iterable<?> collection);
+	public abstract EdgeTraversal<?, ?, Mark> retain(Iterable<?> collection);
 	
 	/**
 	 * Add a RetainFilterPipe to the end of the Pipeline. Will emit the object
@@ -291,7 +291,7 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *            the collection to retain
 	 * @return the extended Pipeline
 	 */
-	public abstract EdgeTraversal<?, ?> retain(FramedEdge... edges);
+	public abstract EdgeTraversal<?, ?, Mark> retain(FramedEdge... edges);
 
 	/**
 	 * Add a RetainFilterPipe to the end of the Pipeline. Will only emit the
@@ -301,7 +301,7 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *            the named steps in the pipeline
 	 * @return the extended Pipeline
 	 */
-	public abstract EdgeTraversal<?, ?> retain(String... namedSteps);
+	public abstract EdgeTraversal<?, ?, Mark> retain(String... namedSteps);
 
 	/**
 	 * Add an AggregatePipe to the end of the Pipeline. The objects prior to
@@ -309,7 +309,7 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract EdgeTraversal<Collection<TEdge>, Collection<TEdge>> aggregate();
+	public abstract EdgeTraversal<Collection<TEdge>, Collection<TEdge>, Mark> aggregate();
 
 	/**
 	 * Add an AggregatePipe to the end of the Pipeline. The objects prior to
@@ -319,7 +319,7 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *            the collection to aggregate results into
 	 * @return the extended Pipeline
 	 */
-	public abstract EdgeTraversal<Collection<TEdge>, Collection<TEdge>> aggregate(Collection<TEdge> aggregate);
+	public abstract EdgeTraversal<Collection<TEdge>, Collection<TEdge>, Mark> aggregate(Collection<TEdge> aggregate);
 
 	/**
 	 * Add an AggregatePipe to the end of the Pipeline. The results of the
@@ -333,7 +333,7 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *            the aggregate
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> EdgeTraversal<Collection<N>, Collection<N>> aggregate(Collection<TEdge> aggregate,
+	public abstract <N> EdgeTraversal<Collection<N>, Collection<N>, Mark> aggregate(Collection<TEdge> aggregate,
 			TraversalFunction<TEdge, N> aggregateFunction);
 
 	/**
@@ -346,7 +346,7 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *            the aggregate
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> EdgeTraversal<Collection<N>, Collection<N>> aggregate(TraversalFunction<TEdge, N> aggregateFunction);
+	public abstract <N> EdgeTraversal<Collection<N>, Collection<N>, Mark> aggregate(TraversalFunction<TEdge, N> aggregateFunction);
 
 	/**
 	 * Add a GroupByPipe to the end of the Pipeline. Group the objects inputted
@@ -361,7 +361,7 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *            the function that generates the value from the function
 	 * @return the extended Pipeline
 	 */
-	public abstract <K, V> EdgeTraversal<Map<K, List<V>>, Map<K, List<V>>> groupBy(Map<K, List<V>> map,
+	public abstract <K, V> EdgeTraversal<Map<K, List<V>>, Map<K, List<V>>, Mark> groupBy(Map<K, List<V>> map,
 			TraversalFunction<TEdge, K> keyFunction, TraversalFunction<TEdge, Iterator<V>> valueFunction);
 
 	/**
@@ -375,7 +375,7 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *            the function that generates the value from the function
 	 * @return the extended Pipeline
 	 */
-	public abstract <K, V> EdgeTraversal<Map<K, List<V>>, Map<K, List<V>>> groupBy(TraversalFunction<TEdge, K> keyFunction,
+	public abstract <K, V> EdgeTraversal<Map<K, List<V>>, Map<K, List<V>>, Mark> groupBy(TraversalFunction<TEdge, K> keyFunction,
 			TraversalFunction<TEdge, Iterator<V>> valueFunction);
 
 	/**
@@ -397,7 +397,7 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *            the function that reduces the value lists
 	 * @return the extended Pipeline
 	 */
-	public abstract <K, V, V2> EdgeTraversal<Map<K, V2>, Map<K, V2>> groupBy(Map<K, V2> reduceMap,
+	public abstract <K, V, V2> EdgeTraversal<Map<K, V2>, Map<K, V2>, Mark> groupBy(Map<K, V2> reduceMap,
 			TraversalFunction<TEdge, K> keyFunction, TraversalFunction<TEdge, Iterator<V>> valueFunction,
 			TraversalFunction<List<V>, V2> reduceFunction);
 
@@ -417,7 +417,7 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *            the function that reduces the value lists
 	 * @return the extended Pipeline
 	 */
-	public abstract <K, V, V2> EdgeTraversal<Map<K, V2>, Map<K, V2>> groupBy(TraversalFunction<TEdge, K> keyFunction,
+	public abstract <K, V, V2> EdgeTraversal<Map<K, V2>, Map<K, V2>, Mark> groupBy(TraversalFunction<TEdge, K> keyFunction,
 			TraversalFunction<TEdge, Iterator<V>> valueFunction, TraversalFunction<List<V>, V2> reduceFunction);
 
 	/**
@@ -434,7 +434,7 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *            the value function to determine map value
 	 * @return the extended Pipeline
 	 */
-	public abstract <K> EdgeTraversal<Map<K, Long>, Map<K, Long>> groupCount(Map<K, Long> map,
+	public abstract <K> EdgeTraversal<Map<K, Long>, Map<K, Long>, Mark> groupCount(Map<K, Long> map,
 			TraversalFunction<TEdge, K> keyFunction, TraversalFunction<Pair<TEdge, Long>, Long> valueFunction);
 
 	/**
@@ -449,7 +449,7 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *            the value function to determine map value
 	 * @return the extended Pipeline
 	 */
-	public abstract <K> EdgeTraversal<Map<K, Long>, Map<K, Long>> groupCount(TraversalFunction<TEdge, K> keyFunction,
+	public abstract <K> EdgeTraversal<Map<K, Long>, Map<K, Long>, Mark> groupCount(TraversalFunction<TEdge, K> keyFunction,
 			TraversalFunction<Pair<TEdge, Long>, Long> valueFunction);
 
 	/**
@@ -464,7 +464,7 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *            the key function to determine map key
 	 * @return the extended Pipeline
 	 */
-	public abstract <K> EdgeTraversal<Map<K, Long>, Map<K, Long>> groupCount(Map<K, Long> map,
+	public abstract <K> EdgeTraversal<Map<K, Long>, Map<K, Long>, Mark> groupCount(Map<K, Long> map,
 			TraversalFunction<TEdge, K> keyFunction);
 
 	/**
@@ -477,7 +477,7 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *            the key function to determine map key
 	 * @return the extended Pipeline
 	 */
-	public abstract <K> EdgeTraversal<Map<K, Long>, Map<K, Long>> groupCount(TraversalFunction<TEdge, K> keyFunction);
+	public abstract <K> EdgeTraversal<Map<K, Long>, Map<K, Long>, Mark> groupCount(TraversalFunction<TEdge, K> keyFunction);
 
 	/**
 	 * Add a GroupCountPipe to the end of the Pipeline. A map is maintained of
@@ -488,7 +488,7 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *            a provided count map
 	 * @return the extended Pipeline
 	 */
-	public abstract EdgeTraversal<Map<TEdge, Long>, Map<TEdge, Long>> groupCount(Map<TEdge, Long> map);
+	public abstract EdgeTraversal<Map<TEdge, Long>, Map<TEdge, Long>, Mark> groupCount(Map<TEdge, Long> map);
 
 	/**
 	 * Add a GroupCountPipe to the end of the Pipeline. A map is maintained of
@@ -497,7 +497,7 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract EdgeTraversal<Map<TEdge, Long>, Map<TEdge, Long>> groupCount();
+	public abstract EdgeTraversal<Map<TEdge, Long>, Map<TEdge, Long>, Mark> groupCount();
 
 	/**
 	 * Add a SideEffectFunctionPipe to the end of the Pipeline. The provided
@@ -507,7 +507,7 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *            the function of the pipe
 	 * @return the extended Pipeline
 	 */
-	public abstract EdgeTraversal<?, ?> sideEffect(SideEffectFunction<TEdge> sideEffectFunction);
+	public abstract EdgeTraversal<?, ?, Mark> sideEffect(SideEffectFunction<TEdge> sideEffectFunction);
 
 	/**
 	 * Add a StorePipe to the end of the Pipeline. Lazily store the incoming
@@ -517,7 +517,7 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *            the collection to store results into
 	 * @return the extended Pipeline
 	 */
-	public abstract EdgeTraversal<Collection<TEdge>, TEdge> store(Collection<TEdge> storage);
+	public abstract EdgeTraversal<Collection<TEdge>, TEdge, Mark> store(Collection<TEdge> storage);
 
 	/**
 	 * Add a StorePipe to the end of the Pipeline. Lazily store the object
@@ -531,7 +531,7 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *            the storage collection
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> EdgeTraversal<Collection<N>, N> store(Collection<N> storage, TraversalFunction<TEdge, N> storageFunction);
+	public abstract <N> EdgeTraversal<Collection<N>, N, Mark> store(Collection<N> storage, TraversalFunction<TEdge, N> storageFunction);
 
 	/**
 	 * Add an StorePipe to the end of the Pipeline. An ArrayList storage
@@ -539,7 +539,7 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract EdgeTraversal<Collection<TEdge>, TEdge> store();
+	public abstract EdgeTraversal<Collection<TEdge>, TEdge, Mark> store();
 
 	/**
 	 * Add a StorePipe to the end of the Pipeline. An ArrayList storage
@@ -551,7 +551,7 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *            the storage collection
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> EdgeTraversal<Collection<N>, N> store(TraversalFunction<TEdge, N> storageFunction);
+	public abstract <N> EdgeTraversal<Collection<N>, N, Mark> store(TraversalFunction<TEdge, N> storageFunction);
 
 	/**
 	 * Add a TablePipe to the end of the Pipeline. This step is used for
@@ -565,7 +565,7 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *            the post-processing function for each column
 	 * @return the extended Pipeline
 	 */
-	public abstract EdgeTraversal<Table, Table> table(Table table, Collection<String> stepNames,
+	public abstract EdgeTraversal<Table, Table, Mark> table(Table table, Collection<String> stepNames,
 			TraversalFunction<?, ?>... columnFunctions);
 
 	/**
@@ -578,7 +578,7 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *            the post-processing function for each column
 	 * @return the extended Pipeline
 	 */
-	public abstract EdgeTraversal<Table, Table> table(Table table, TraversalFunction<?, ?>... columnFunctions);
+	public abstract EdgeTraversal<Table, Table, Mark> table(Table table, TraversalFunction<?, ?>... columnFunctions);
 
 	/**
 	 * Add a TablePipe to the end of the Pipeline. This step is used for
@@ -588,7 +588,7 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *            the post-processing function for each column
 	 * @return the extended Pipeline
 	 */
-	public abstract EdgeTraversal<Table, Table> table(TraversalFunction<?, ?>... columnFunctions);
+	public abstract EdgeTraversal<Table, Table, Mark> table(TraversalFunction<?, ?>... columnFunctions);
 
 	/**
 	 * Add a TablePipe to the end of the Pipeline. This step is used for
@@ -598,7 +598,7 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *            the table to fill
 	 * @return the extended Pipeline
 	 */
-	public abstract EdgeTraversal<Table, Table> table(Table table);
+	public abstract EdgeTraversal<Table, Table, Mark> table(Table table);
 
 	/**
 	 * Add a TablePipe to the end of the Pipeline. This step is used for
@@ -606,7 +606,7 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract EdgeTraversal<Table, Table> table();
+	public abstract EdgeTraversal<Table, Table, Mark> table();
 
 	/**
 	 * Add a TreePipe to the end of the Pipeline This step maintains an internal
@@ -620,7 +620,7 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *            fashion
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> EdgeTraversal<Tree<N>, Tree<N>> tree(Tree<N> tree, TraversalFunction<?, N>... branchFunctions);
+	public abstract <N> EdgeTraversal<Tree<N>, Tree<N>, Mark> tree(Tree<N> tree, TraversalFunction<?, N>... branchFunctions);
 
 	/**
 	 * Add a TreePipe to the end of the Pipeline This step maintains an internal
@@ -631,7 +631,7 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *            fashion
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> EdgeTraversal<Tree<N>, Tree<N>> tree(TraversalFunction<?, N>... branchFunctions);
+	public abstract <N> EdgeTraversal<Tree<N>, Tree<N>, Mark> tree(TraversalFunction<?, N>... branchFunctions);
 
 	/**
 	 * Add an IdentityPipe to the end of the Pipeline. Useful in various
@@ -640,7 +640,7 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract EdgeTraversal<?, ?> identity();
+	public abstract EdgeTraversal<?, ?, Mark> identity();
 
 	/**
 	 * Add a MemoizePipe to the end of the Pipeline. This step will hold a Map
@@ -652,7 +652,7 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *            the name of the step previous to memoize to
 	 * @return the extended Pipeline
 	 */
-	public abstract EdgeTraversal<?, ?> memoize(String namedStep);
+	public abstract EdgeTraversal<?, ?, Mark> memoize(String namedStep);
 
 	/**
 	 * Add a MemoizePipe to the end of the Pipeline. This step will hold a Map
@@ -666,7 +666,7 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *            the memoization map
 	 * @return the extended Pipeline
 	 */
-	public abstract EdgeTraversal<?, ?> memoize(String namedStep, Map<?, ?> map);
+	public abstract EdgeTraversal<?, ?, Mark> memoize(String namedStep, Map<?, ?> map);
 
 	/**
 	 * Add an OrderPipe to the end of the Pipeline. This step will sort the
@@ -674,7 +674,7 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract EdgeTraversal<?, ?> order();
+	public abstract EdgeTraversal<?, ?, Mark> order();
 
 	/**
 	 * Add an OrderPipe to the end of the Pipeline. This step will sort the
@@ -685,7 +685,7 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *            increment or decrement can be specified
 	 * @return the extended Pipeline
 	 */
-	public abstract EdgeTraversal<?, ?> order(TransformPipe.Order order);
+	public abstract EdgeTraversal<?, ?, Mark> order(TransformPipe.Order order);
 
 	/**
 	 * Add an OrderPipe to the end of the Pipeline. This step will sort the
@@ -696,7 +696,7 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *            a comparator function of two objects of type E
 	 * @return the extended Pipeline
 	 */
-	public abstract EdgeTraversal<?, ?> order(Comparator<TEdge> compareFunction);
+	public abstract EdgeTraversal<?, ?, Mark> order(Comparator<TEdge> compareFunction);
 
 	/**
 	 * Wrap the previous step in an AsPipe. Useful for naming steps and is used
@@ -707,7 +707,7 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *            the name of the AsPipe
 	 * @return the extended Pipeline
 	 */
-	public abstract EdgeTraversal<?, ?> as(String name);
+	public abstract EdgeTraversal<?, ?, Mark> as(String name);
 
 	/**
 	 * Add a CyclicPathFilterPipe to the end of the Pipeline. If the object's
@@ -716,7 +716,7 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract EdgeTraversal<?, ?> simplePath();
+	public abstract EdgeTraversal<?, ?, Mark> simplePath();
 
 	/**
 	 * Fill the provided collection with the objects in the pipeline.
@@ -732,7 +732,7 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract EdgeTraversal<?, ?> gatherScatter();
+	public abstract EdgeTraversal<?, ?, Mark> gatherScatter();
 
 	/**
 	 * Add an AndFilterPipe to the end the Pipeline. If the internal pipes all
@@ -743,7 +743,7 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *            the internal pipes of the AndFilterPipe
 	 * @return the extended Pipeline
 	 */
-	public abstract EdgeTraversal<?, ?> and(TraversalFunction<TEdge, Traversal<?, ?, ?>>... pipes);
+	public abstract EdgeTraversal<?, ?, Mark> and(TraversalFunction<TEdge, Traversal<?, ?, ?, ?>>... pipes);
 
 	/**
 	 * Add an OrFilterPipe to the end the Pipeline. Will only emit the object if
@@ -754,7 +754,7 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *            the internal pipes of the OrFilterPipe
 	 * @return the extended Pipeline
 	 */
-	public abstract EdgeTraversal<?, ?> or(TraversalFunction<TEdge, Traversal<?, ?, ?>>... pipes);
+	public abstract EdgeTraversal<?, ?, Mark> or(TraversalFunction<TEdge, Traversal<?, ?, ?, ?>>... pipes);
 
 	/**
 	 * This step calls emits the input but also calls the sideEffectFunction function with the side effect of
@@ -762,9 +762,16 @@ public interface EdgeTraversal<Cap, SideEffect> extends Traversal<TEdge, Cap, Si
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract EdgeTraversal<?, ?> divert(SideEffectFunction<SideEffect> sideEffect);
+	public abstract EdgeTraversal<?, ?, Mark> divert(SideEffectFunction<SideEffect> sideEffect);
 	
 	@Override
-	public EdgeTraversal<?, ?> shuffle();
+	public EdgeTraversal<?, ?, Mark> shuffle();
 
+	
+	
+	
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public EdgeTraversal<Cap, SideEffect, EdgeTraversal<Cap, SideEffect, Mark>> mark();
 }

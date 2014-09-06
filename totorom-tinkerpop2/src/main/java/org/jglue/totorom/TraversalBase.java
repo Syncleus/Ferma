@@ -31,7 +31,7 @@ import com.tinkerpop.pipes.util.structures.Table;
 import com.tinkerpop.pipes.util.structures.Tree;
 
 @SuppressWarnings("rawtypes")
-abstract class TraversalBase<T, SE, LSE> implements Traversal<T, SE, LSE> {
+abstract class TraversalBase<T, Cap, SideEffect, Mark> implements Traversal<T, Cap, SideEffect, Mark> {
 
 	protected abstract FramedGraph graph();
 
@@ -138,17 +138,19 @@ abstract class TraversalBase<T, SE, LSE> implements Traversal<T, SE, LSE> {
 
 
 
-	@Override
-	public Traversal back(String namedStep) {
-		pipeline().back(namedStep);
-		return asTraversal();
-	}
-
-	@Override
-	public Traversal back(String namedStep, Class clazz) {
-		pipeline().back(namedStep);
-		return asTraversal();
-	}
+//	@Override
+//	public Traversal back(String namedStep) {
+//		pipeline().back(namedStep);
+//		return asTraversal();
+//	}
+//
+//	@Override
+//	public Traversal back(String namedStep, Class clazz) {
+//		pipeline().back(namedStep);
+//		return asTraversal();
+//	}
+	
+	
 
 	@Override
 	public Traversal dedup() {
@@ -228,12 +230,14 @@ abstract class TraversalBase<T, SE, LSE> implements Traversal<T, SE, LSE> {
 		return this;
 	}
 
-	@Override
-	public Traversal optional(String namedStep) {
-		pipeline().optional(namedStep);
-		return this;
-	}
+//	@Override
+//	public Traversal optional(String namedStep) {
+//		pipeline().optional(namedStep);
+//		return this;
+//	}
 
+	
+	
 	@Override
 	public Traversal groupBy(Map map, TraversalFunction keyFunction, TraversalFunction valueFunction) {
 		pipeline().groupBy(map, new FramingTraversalFunction<>(keyFunction, graph()),
@@ -484,7 +488,7 @@ abstract class TraversalBase<T, SE, LSE> implements Traversal<T, SE, LSE> {
 	}
 
 	@Override
-	public SE cap() {
+	public Cap cap() {
 		pipeline().cap();
 		Object next = asTraversal().next();
 		if (next instanceof FramingMap) {
@@ -493,7 +497,7 @@ abstract class TraversalBase<T, SE, LSE> implements Traversal<T, SE, LSE> {
 		if (next instanceof FramingCollection) {
 			next = ((FramingCollection) next).getDelegate();
 		}
-		return (SE) next;
+		return (Cap) next;
 	}
 
 	@Override
@@ -639,9 +643,49 @@ abstract class TraversalBase<T, SE, LSE> implements Traversal<T, SE, LSE> {
 		return this;
 	}
 
+	
 	@Override
-	public Traversal cast(Class<T> clazz) {
-
+	public Traversal mark() {
+		MarkId mark = pushMark();
+		pipeline().as(mark.id);
+		
 		return this;
+	}
+	
+	@Override
+	public Mark back() {
+		MarkId mark = popMark();
+		pipeline().back(mark.id);
+		return (Mark) mark.traversal;
+	}
+	
+	@Override
+	public Mark optional() {
+		MarkId mark = popMark();
+		pipeline().optional(mark.id);
+		return (Mark) mark.traversal;
+	}
+	
+	/**
+	 * Cast the traversal as a vertex traversal
+	 * 
+	 * @return
+	 */
+	public abstract VertexTraversal<Cap, SideEffect, Mark> castToVertices();
+
+	/**
+	 * Cast the traversal to an edge traversalT
+	 * 
+	 * @return
+	 */
+	public abstract EdgeTraversal<Cap, SideEffect, Mark> castToEdges();
+	
+	
+	public abstract MarkId pushMark();
+	public abstract MarkId popMark();
+	
+	protected static class MarkId {
+		Traversal traversal;
+		String id;
 	}
 }

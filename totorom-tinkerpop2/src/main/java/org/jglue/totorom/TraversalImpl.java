@@ -1,11 +1,14 @@
 package org.jglue.totorom;
 
+import java.util.ArrayDeque;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.Deque;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
@@ -25,7 +28,8 @@ import com.tinkerpop.pipes.util.structures.Table;
 import com.tinkerpop.pipes.util.structures.Tree;
 
 /**
- * The implementation of 
+ * The implementation of
+ * 
  * @author bryn
  *
  */
@@ -34,7 +38,30 @@ class TraversalImpl extends TraversalBase implements Traversal {
 
 	private FramedGraph graph;
 	private GremlinPipeline pipeline;
+	private Deque<MarkId> marks = new ArrayDeque<>();
+	private int markId = 0;
 
+	
+	public MarkId pushMark(Traversal<?,?,?,?> traversal) {
+		MarkId mark = new MarkId();
+		mark.id = "traversalMark" + markId++;
+		mark.traversal = traversal;
+		marks.push(mark);
+		
+		return mark;
+	}
+	
+	@Override
+	public MarkId pushMark() {
+	
+		return pushMark(this);
+	}
+	
+	@Override
+	public MarkId popMark() {
+		return marks.pop();
+	}
+	
 	private EdgeTraversal edgeTraversal = new EdgeTraversalImpl() {
 
 		@Override
@@ -56,12 +83,21 @@ class TraversalImpl extends TraversalBase implements Traversal {
 		protected GremlinPipeline pipeline() {
 			return pipeline;
 		}
+
 		@Override
 		protected Traversal asTraversal() {
 			return TraversalImpl.this;
 		}
+
+		public TraversalBase.MarkId pushMark() {
+			return TraversalImpl.this.pushMark(this);
+		};
+		
+		public TraversalBase.MarkId popMark() {
+			return TraversalImpl.this.popMark();
+		};
 	};
-	private VertexTraversal vertexTraversal = new VertexTraversalImpl(){
+	private VertexTraversal vertexTraversal = new VertexTraversalImpl() {
 		@Override
 		public VertexTraversal castToVertices() {
 			return vertexTraversal;
@@ -71,12 +107,11 @@ class TraversalImpl extends TraversalBase implements Traversal {
 		public EdgeTraversal castToEdges() {
 			return edgeTraversal;
 		}
-		
+
 		@Override
 		protected Traversal asTraversal() {
 			return TraversalImpl.this;
 		}
-		
 
 		@Override
 		protected FramedGraph graph() {
@@ -87,7 +122,14 @@ class TraversalImpl extends TraversalBase implements Traversal {
 		protected GremlinPipeline pipeline() {
 			return pipeline;
 		}
+
+		public TraversalBase.MarkId pushMark() {
+			return TraversalImpl.this.pushMark(this);
+		};
 		
+		public TraversalBase.MarkId popMark() {
+			return TraversalImpl.this.popMark();
+		};
 	};
 
 	private TraversalImpl(FramedGraph graph, GremlinPipeline pipeline) {
@@ -108,10 +150,7 @@ class TraversalImpl extends TraversalBase implements Traversal {
 		this(graph, new GremlinPipeline<>(starts.element()));
 	}
 
-
 	
-
-
 
 	/**
 	 * @return Cast the traversal to a {@link VertexTraversal}
@@ -144,9 +183,6 @@ class TraversalImpl extends TraversalBase implements Traversal {
 		return graph;
 	}
 
-
-
-
-
-
+	
+	
 }

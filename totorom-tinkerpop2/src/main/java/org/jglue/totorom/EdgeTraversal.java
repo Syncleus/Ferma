@@ -810,4 +810,9 @@ public interface EdgeTraversal<Cap, SideEffect, Mark> extends Traversal<TEdge, C
 	 * @return the extended Pipeline
 	 */
 	public abstract <N> Traversal<N, ?, ?, Mark> property(String key, Class<N> type);
+	
+	/**
+	 * Remove every element at the end of this Pipeline.
+	 */
+	public abstract void remove();
 }

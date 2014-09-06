@@ -804,10 +804,7 @@ public interface Traversal<T, Cap, SideEffect, Mark> extends Iterator<T>, Iterab
 	 */
 	public abstract Traversal<T, Cap, SideEffect, Mark> optimize(boolean optimize);
 
-	/**
-	 * Remove every element at the end of this Pipeline.
-	 */
-	public abstract void remove();
+	
 
 	/**
 	 * Fill the provided collection with the objects in the pipeline.

@@ -1043,4 +1043,9 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	 * @return the extended Pipeline
 	 */
 	public abstract <N> Traversal<N, ?, ?, Mark> property(String key, Class<N> type);
+	
+	/**
+	 * Remove every element at the end of this Pipeline.
+	 */
+	public abstract void remove();
 }

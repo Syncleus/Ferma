@@ -548,13 +548,15 @@ abstract class VertexTraversalImpl extends TraversalBase implements VertexTraver
 		return (VertexTraversal) super.retain(Lists.newArrayList(vertices));
 	}
 
-
-
 	@Override
 	public VertexTraversal mark() {
 
 		return (VertexTraversal) super.mark();
 	}
-	
-	
+
+	@Override
+	public void remove() {
+		pipeline().remove();
+	}
+
 }

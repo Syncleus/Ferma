@@ -557,10 +557,7 @@ abstract class TraversalBase<T, Cap, SideEffect, Mark> implements Traversal<T, C
 		return this;
 	}
 
-	@Override
-	public void remove() {
-		pipeline().remove();
-	}
+	
 
 	@Override
 	public T next() {

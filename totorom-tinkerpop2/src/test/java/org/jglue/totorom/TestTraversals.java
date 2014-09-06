@@ -11,6 +11,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.tinkerpop.blueprints.impls.tg.TinkerGraphFactory;
+import com.tinkerpop.gremlin.Tokens.T;
 import com.tinkerpop.pipes.transform.TransformPipe.Order;
 import com.tinkerpop.pipes.util.structures.Row;
 import com.tinkerpop.pipes.util.structures.Table;
@@ -21,10 +22,18 @@ public class TestTraversals {
 
 	@Test
 	public void testMarkBack() {
-		
-		
+
+		Assert.assertEquals(29, graph.V().mark().outE("knows").inV().has("age", T.gt, 30).back().property("age").next());
 	}
-	
+
+	@Test
+	public void testMarkOptional() {
+		List<TVertex> aggregate = new ArrayList<>();
+		Assert.assertEquals(6, graph.V().mark().outE("knows").inV().has("age", T.gt, 30).aggregate(aggregate).optional()
+				.property("age").count());
+		Assert.assertEquals(graph.v(4).next(), aggregate.get(0));
+	}
+
 	@Test
 	public void testBoth() {
 		Assert.assertEquals(3, graph.v(4).both().count());
@@ -360,31 +369,29 @@ public class TestTraversals {
 
 	@Test
 	public void testTable() {
-		
+
 		Table table = graph.V().as("vertex").mark().property("name").as("name").back().property("age").as("age").table().cap();
 		Assert.assertEquals(6, table.size());
 		Assert.assertTrue(table.get(0).get(0) instanceof TVertex);
-		
+
 	}
-	
-	
+
 	@Test
 	public void testTree() {
-		
+
 		Tree<TVertex> tree = graph.v(1).out().out().tree().cap();
 		Assert.assertEquals(1, tree.get(graph.v(1).next()).size());
-		
+
 		Tree<TVertex> tree2 = graph.v(1).out().out().tree(new TraversalFunction<TVertex, TVertex>() {
 
 			@Override
 			public TVertex compute(TVertex argument) {
 				return argument;
 			}
-			
+
 		}).cap();
-		
+
 		Assert.assertEquals(1, tree2.get(graph.v(1).next()).size());
-		
-		
+
 	}
 }

@@ -843,6 +843,17 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	 */
 	public abstract VertexTraversal<Tree<TVertex>, Tree<TVertex>, Mark> tree();
 	
+	/**
+	 * Add a TreePipe to the end of the Pipeline This step maintains an internal
+	 * tree representation of the paths that have flowed through the step.
+	 *
+	 * @param tree
+	 *            an embedded Map data structure to store the tree
+	 *            representation in
+	 * @return the extended Pipeline
+	 */
+	public abstract <N> VertexTraversal<Tree<N>, Tree<N>, Mark> tree(Tree<N> tree);
+
 	
 
 	/**

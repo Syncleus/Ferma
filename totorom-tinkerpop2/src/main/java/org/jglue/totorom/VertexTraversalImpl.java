@@ -64,14 +64,11 @@ abstract class VertexTraversalImpl extends TraversalBase implements VertexTraver
 		return (VertexTraversal) super.table(table, columnFunctions);
 	}
 
-	@Override
-	public VertexTraversal tree(TraversalFunction branchFunctions) {
-		return (VertexTraversal) super.tree(branchFunctions);
-	}
+
 
 	@Override
-	public VertexTraversal tree(Tree tree, TraversalFunction branchFunctions) {
-		return (VertexTraversal) super.tree(tree, branchFunctions);
+	public VertexTraversal tree(Tree tree) {
+		return (VertexTraversal) super.tree(tree);
 	}
 
 	@Override

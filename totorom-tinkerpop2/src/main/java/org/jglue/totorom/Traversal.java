@@ -473,7 +473,19 @@ public interface Traversal<T, Cap, SideEffect, Mark> extends Iterator<T>, Iterab
 	 */
 	public abstract Traversal<T, Table, Table, Mark> table();
 
-	
+	/**
+	 * Add a TreePipe to the end of the Pipeline This step maintains an internal
+	 * tree representation of the paths that have flowed through the step.
+	 *
+	 * @param tree
+	 *            an embedded Map data structure to store the tree
+	 *            representation in
+	 * @return the extended Pipeline
+	 */
+	public abstract <N> Traversal<T, Tree<N>, Tree<N>, Mark> tree(Tree<N> tree);
+
+
+
 	/**
 	 * Add a TreePipe to the end of the Pipeline This step maintains an internal
 	 * tree representation of the paths that have flowed through the step.

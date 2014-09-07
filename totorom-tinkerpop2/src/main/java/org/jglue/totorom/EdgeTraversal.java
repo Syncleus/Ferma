@@ -608,7 +608,19 @@ public interface EdgeTraversal<Cap, SideEffect, Mark> extends Traversal<TEdge, C
 	 */
 	public abstract EdgeTraversal<Table, Table, Mark> table();
 
-	
+	/**
+	 * Add a TreePipe to the end of the Pipeline This step maintains an internal
+	 * tree representation of the paths that have flowed through the step.
+	 *
+	 * @param tree
+	 *            an embedded Map data structure to store the tree
+	 *            representation in
+	 * @param branchFunction
+	 *            functions to apply to each path object
+	 * @return the extended Pipeline
+	 */
+	public abstract <N> EdgeTraversal<Tree<N>, Tree<N>, Mark> tree(Tree<N> tree);
+
 
 	/**
 	 * Add an IdentityPipe to the end of the Pipeline. Useful in various

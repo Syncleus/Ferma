@@ -63,14 +63,10 @@ abstract class EdgeTraversalImpl extends TraversalBase implements EdgeTraversal 
 		return (EdgeTraversal) super.table(table, columnFunctions);
 	}
 
-	@Override
-	public EdgeTraversal tree(TraversalFunction branchFunctions) {
-		return (EdgeTraversal) super.tree(branchFunctions);
-	}
 
 	@Override
-	public EdgeTraversal tree(Tree tree, TraversalFunction branchFunctions) {
-		return (EdgeTraversal) super.tree(tree, branchFunctions);
+	public EdgeTraversal tree(Tree tree) {
+		return (EdgeTraversal) super.tree(tree);
 	}
 
 	@Override

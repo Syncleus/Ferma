@@ -91,5 +91,16 @@ public final class TEdge extends FramedEdge {
 		return (N) super.getId(clazz);
 	}
 
+	@Override
+	public <N> Traversal<N, ?, ?, ?> property(String key) {
+		return super.property(key);
+	}
 
+	@Override
+	public <N> Traversal<N, ?, ?, ?> property(String key, Class<N> kind) {
+
+		return super.property(key, kind);
+	}
+	
+	
 }

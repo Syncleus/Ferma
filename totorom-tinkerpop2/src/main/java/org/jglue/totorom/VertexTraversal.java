@@ -1047,5 +1047,25 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	/**
 	 * Remove every element at the end of this Pipeline.
 	 */
-	public abstract void remove();
+	public abstract void removeAll();
+	
+	
+//	/**
+//	 * Remove the current element at the end of this Pipeline.
+//	 */
+//	public abstract void remove();
+	
+	/**
+	 * Add a CopySplitPipe to the end of the pipeline. The incoming objects are
+	 * copied to the provided pipes. This "split-pipe" is used in conjunction
+	 * with some type of "merge-pipe."
+	 *
+	 * @param traversals
+	 *            the internal pipes of the CopySplitPipe
+	 * @return the extended Pipeline
+	 */
+	public abstract SplitTraversal<Traversal<?, ?, ?, Mark>> copySplit(TraversalFunction<TVertex, Traversal<?, ?, ?, ?>>... traversals);
+	
+	
+
 }

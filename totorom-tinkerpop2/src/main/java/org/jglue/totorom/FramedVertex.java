@@ -96,26 +96,26 @@ public abstract class FramedVertex extends FramedElement {
 
 	protected void unlinkOut(FramedVertex vertex, String... labels) {
 		if (vertex != null) {
-			outE(labels).mark().inV().retain(vertex).back().remove();
+			outE(labels).mark().inV().retain(vertex).back().removeAll();
 		} else {
-			outE(labels).remove();
+			outE(labels).removeAll();
 		}
 	}
 
 	protected void unlinkIn(FramedVertex vertex, String... labels) {
 		if (vertex != null) {
-			inE(labels).mark().outV().retain(vertex).back().remove();
+			inE(labels).mark().outV().retain(vertex).back().removeAll();
 		} else {
-			inE(labels).remove();
+			inE(labels).removeAll();
 		}
 	}
 
 	protected void unlinkBoth(FramedVertex vertex, String... labels) {
 		if (vertex != null) {
-			bothE(labels).mark().bothV().retain(vertex).back().remove();
+			bothE(labels).mark().bothV().retain(vertex).back().removeAll();
 		}
 		else {
-			bothE(labels).remove();
+			bothE(labels).removeAll();
 		}
 	}
 

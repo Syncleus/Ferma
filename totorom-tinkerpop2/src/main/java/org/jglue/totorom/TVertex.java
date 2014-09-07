@@ -168,4 +168,20 @@ public final class TVertex extends FramedVertex {
 	public void remove() {
 		super.remove();
 	}
+	
+	@Override
+	public <N> Traversal<N, ?, ?, ?> property(String key) {
+		return super.property(key);
+	}
+	
+	@Override
+	public <N> Traversal<N, ?, ?, ?> property(String key, Class<N> kind) {
+	
+		return super.property(key, kind);
+	}
+	
+	@Override
+	public VertexTraversal<?, ?, ?> traversal() {
+		return super.traversal();
+	};
 }

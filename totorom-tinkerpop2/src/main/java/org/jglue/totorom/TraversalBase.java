@@ -17,12 +17,13 @@ import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
+import com.tinkerpop.blueprints.Edge;
 import com.tinkerpop.blueprints.Element;
 import com.tinkerpop.blueprints.Graph;
 import com.tinkerpop.blueprints.Predicate;
+import com.tinkerpop.blueprints.Vertex;
 import com.tinkerpop.gremlin.Tokens;
 import com.tinkerpop.gremlin.java.GremlinPipeline;
-import com.tinkerpop.pipes.Pipe;
 import com.tinkerpop.pipes.sideeffect.SideEffectPipe;
 import com.tinkerpop.pipes.transform.TransformPipe.Order;
 import com.tinkerpop.pipes.util.FluentUtility;
@@ -130,23 +131,17 @@ abstract class TraversalBase<T, Cap, SideEffect, Mark> implements Traversal<T, C
 		return castToTraversal();
 	}
 
-
-
-
-
-//	@Override
-//	public Traversal back(String namedStep) {
-//		pipeline().back(namedStep);
-//		return asTraversal();
-//	}
-//
-//	@Override
-//	public Traversal back(String namedStep, Class clazz) {
-//		pipeline().back(namedStep);
-//		return asTraversal();
-//	}
-	
-	
+	// @Override
+	// public Traversal back(String namedStep) {
+	// pipeline().back(namedStep);
+	// return asTraversal();
+	// }
+	//
+	// @Override
+	// public Traversal back(String namedStep, Class clazz) {
+	// pipeline().back(namedStep);
+	// return asTraversal();
+	// }
 
 	@Override
 	public Traversal dedup() {
@@ -205,7 +200,7 @@ abstract class TraversalBase<T, Cap, SideEffect, Mark> implements Traversal<T, C
 	@Override
 	public Traversal aggregate() {
 		return this.aggregate(new ArrayList());
-		
+
 	}
 
 	@Override
@@ -226,14 +221,12 @@ abstract class TraversalBase<T, Cap, SideEffect, Mark> implements Traversal<T, C
 		return this;
 	}
 
-//	@Override
-//	public Traversal optional(String namedStep) {
-//		pipeline().optional(namedStep);
-//		return this;
-//	}
+	// @Override
+	// public Traversal optional(String namedStep) {
+	// pipeline().optional(namedStep);
+	// return this;
+	// }
 
-	
-	
 	@Override
 	public Traversal groupBy(Map map, TraversalFunction keyFunction, TraversalFunction valueFunction) {
 		pipeline().groupBy(map, new FramingTraversalFunction<>(keyFunction, graph()),
@@ -308,12 +301,11 @@ abstract class TraversalBase<T, Cap, SideEffect, Mark> implements Traversal<T, C
 		return castToEdges();
 	}
 
-	
 	public Traversal id() {
 		pipeline().id();
 		return castToTraversal();
 	}
-	
+
 	public Traversal id(Class c) {
 		return id();
 	}
@@ -532,12 +524,35 @@ abstract class TraversalBase<T, Cap, SideEffect, Mark> implements Traversal<T, C
 
 	@Override
 	public List next(int number) {
-		return pipeline().next(number);
+		return Lists.transform(pipeline().next(number), new Function() {
+
+			public Object apply(Object e) {
+				if (e instanceof Edge) {
+					return graph().frameElement((Element) e, TEdge.class);
+				} else if (e instanceof Vertex) {
+					return graph().frameElement((Element) e, TVertex.class);
+				}
+				return e;
+			}
+		});
+
 	}
 
 	@Override
 	public List toList() {
-		return pipeline().toList();
+
+		return Lists.transform(pipeline().toList(), new Function() {
+
+			public Object apply(Object e) {
+				if (e instanceof Edge) {
+					return graph().frameElement((Element) e, TEdge.class);
+				} else if (e instanceof Vertex) {
+					return graph().frameElement((Element) e, TVertex.class);
+				}
+				return e;
+			}
+		});
+
 	}
 
 	@Override
@@ -557,12 +572,15 @@ abstract class TraversalBase<T, Cap, SideEffect, Mark> implements Traversal<T, C
 		return this;
 	}
 
-	
-
 	@Override
 	public T next() {
-
-		return (T) pipeline().next();
+		Object e = pipeline().next();
+		if (e instanceof Edge) {
+			return (T) graph().frameElement((Element) e, TEdge.class);
+		} else if (e instanceof Vertex) {
+			return (T) graph().frameElement((Element) e, TVertex.class);
+		}
+		return (T) e;
 	}
 
 	@Override
@@ -581,10 +599,10 @@ abstract class TraversalBase<T, Cap, SideEffect, Mark> implements Traversal<T, C
 		pipeline().property(key);
 		return castToTraversal();
 	}
-	
+
 	public Traversal property(String key, Class type) {
 		return property(key);
-		
+
 	}
 
 	protected abstract Traversal castToTraversal();
@@ -645,47 +663,53 @@ abstract class TraversalBase<T, Cap, SideEffect, Mark> implements Traversal<T, C
 		return this;
 	}
 
-	
 	@Override
 	public Traversal mark() {
 		MarkId mark = pushMark();
 		pipeline().as(mark.id);
-		
+
 		return this;
 	}
-	
+
 	@Override
 	public Mark back() {
 		MarkId mark = popMark();
 		pipeline().back(mark.id);
 		return (Mark) mark.traversal;
 	}
-	
+
 	@Override
 	public Mark optional() {
 		MarkId mark = popMark();
 		pipeline().optional(mark.id);
 		return (Mark) mark.traversal;
 	}
-	
+
+	/**
+	 * Cast the traversal as a split traversal
+	 * 
+	 * @return
+	 */
+	protected abstract <N> SplitTraversal<N> castToSplit();
+
 	/**
 	 * Cast the traversal as a vertex traversal
 	 * 
 	 * @return
 	 */
-	public abstract VertexTraversal<Cap, SideEffect, Mark> castToVertices();
+	protected abstract VertexTraversal<Cap, SideEffect, Mark> castToVertices();
 
 	/**
 	 * Cast the traversal to an edge traversalT
 	 * 
 	 * @return
 	 */
-	public abstract EdgeTraversal<Cap, SideEffect, Mark> castToEdges();
-	
-	
+	protected abstract EdgeTraversal<Cap, SideEffect, Mark> castToEdges();
+
 	public abstract MarkId pushMark();
+
 	public abstract MarkId popMark();
-	
+
 	protected static class MarkId {
 		Traversal traversal;
 		String id;

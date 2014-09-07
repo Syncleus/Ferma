@@ -41,27 +41,41 @@ class TraversalImpl extends TraversalBase implements Traversal {
 	private Deque<MarkId> marks = new ArrayDeque<>();
 	private int markId = 0;
 
-	
-	public MarkId pushMark(Traversal<?,?,?,?> traversal) {
+	public MarkId pushMark(Traversal<?, ?, ?, ?> traversal) {
 		MarkId mark = new MarkId();
 		mark.id = "traversalMark" + markId++;
 		mark.traversal = traversal;
 		marks.push(mark);
-		
+
 		return mark;
 	}
-	
+
 	@Override
 	public MarkId pushMark() {
-	
+
 		return pushMark(this);
 	}
-	
+
 	@Override
 	public MarkId popMark() {
 		return marks.pop();
 	}
-	
+
+	private SplitTraversal splitTraversal = new SplitTraversal() {
+
+		@Override
+		public Traversal exhaustMerge() {
+			pipeline().exhaustMerge();
+			return castToTraversal();
+		}
+
+		@Override
+		public Traversal fairMerge() {
+			pipeline().fairMerge();
+			return castToTraversal();
+		}
+	};
+
 	private EdgeTraversal edgeTraversal = new EdgeTraversalImpl() {
 
 		@Override
@@ -92,9 +106,13 @@ class TraversalImpl extends TraversalBase implements Traversal {
 		public TraversalBase.MarkId pushMark() {
 			return TraversalImpl.this.pushMark(this);
 		};
-		
+
 		public TraversalBase.MarkId popMark() {
 			return TraversalImpl.this.popMark();
+		};
+
+		public SplitTraversal castToSplit() {
+			return splitTraversal;
 		};
 	};
 	private VertexTraversal vertexTraversal = new VertexTraversalImpl() {
@@ -126,9 +144,13 @@ class TraversalImpl extends TraversalBase implements Traversal {
 		public TraversalBase.MarkId pushMark() {
 			return TraversalImpl.this.pushMark(this);
 		};
-		
+
 		public TraversalBase.MarkId popMark() {
 			return TraversalImpl.this.popMark();
+		};
+
+		public SplitTraversal castToSplit() {
+			return splitTraversal;
 		};
 	};
 
@@ -149,8 +171,6 @@ class TraversalImpl extends TraversalBase implements Traversal {
 	protected TraversalImpl(FramedGraph graph, FramedElement starts) {
 		this(graph, new GremlinPipeline<>(starts.element()));
 	}
-
-	
 
 	/**
 	 * @return Cast the traversal to a {@link VertexTraversal}
@@ -183,6 +203,9 @@ class TraversalImpl extends TraversalBase implements Traversal {
 		return graph;
 	}
 
-	
-	
+	@Override
+	protected SplitTraversal castToSplit() {
+		return splitTraversal;
+	}
+
 }

@@ -21,6 +21,45 @@ public class TestTraversals {
 	private FramedGraph graph = new FramedGraph(TinkerGraphFactory.createTinkerGraph());
 
 	@Test
+	public void testCopySplit() {
+		List<?> fair = graph.v(1).out("knows").copySplit(new TraversalFunction<TVertex, Traversal<?, ?, ?, ?>>() {
+
+			@Override
+			public Traversal<?, ?, ?, ?> compute(TVertex v) {
+				return v.traversal();
+			}
+		}, new TraversalFunction<TVertex, Traversal<?, ?, ?, ?>>() {
+
+			@Override
+			public Traversal<?, ?, ?, ?> compute(TVertex v) {
+				return v.property("age");
+			}
+		}).fairMerge().toList();
+		
+		List<?> exhaust = graph.v(1).out("knows").copySplit(new TraversalFunction<TVertex, Traversal<?, ?, ?, ?>>() {
+
+			@Override
+			public Traversal<?, ?, ?, ?> compute(TVertex v) {
+				return v.traversal();
+			}
+		}, new TraversalFunction<TVertex, Traversal<?, ?, ?, ?>>() {
+
+			@Override
+			public Traversal<?, ?, ?, ?> compute(TVertex v) {
+				return v.property("age");
+			}
+		}).exhaustMerge().toList();
+		
+		Assert.assertEquals(exhaust.get(0), fair.get(0));
+		Assert.assertNotEquals(exhaust.get(1), fair.get(1));
+		Assert.assertEquals(exhaust.get(2), fair.get(1));
+		Assert.assertEquals(exhaust.get(1), fair.get(2));
+		Assert.assertTrue(exhaust.get(0) instanceof TVertex);
+		
+		
+	}
+	
+	@Test
 	public void testMarkBack() {
 
 		Assert.assertEquals(29, graph.V().mark().outE("knows").inV().has("age", T.gt, 30).back().property("age").next());

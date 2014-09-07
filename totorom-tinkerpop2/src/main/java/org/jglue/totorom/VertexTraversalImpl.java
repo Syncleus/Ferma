@@ -555,8 +555,21 @@ abstract class VertexTraversalImpl extends TraversalBase implements VertexTraver
 	}
 
 	@Override
-	public void remove() {
+	public void removeAll() {
 		pipeline().remove();
 	}
 
+	
+	@Override
+	public SplitTraversal copySplit(TraversalFunction... traversals) {
+		Collection<Pipe> extractedPipes = Collections2.transform(Arrays.asList(traversals), new Function<TraversalFunction, Pipe>() {
+
+			@Override
+			public Pipe apply(TraversalFunction input) {
+				return ((TraversalBase) input.compute(new TVertex())).pipeline();
+			}
+		});
+		pipeline().copySplit(extractedPipes.toArray(new Pipe[extractedPipes.size()]));
+		return castToSplit();
+	}
 }

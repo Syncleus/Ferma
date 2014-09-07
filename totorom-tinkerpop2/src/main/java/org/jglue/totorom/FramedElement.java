@@ -18,6 +18,8 @@ public abstract class FramedElement {
 		this.graph = graph;
 		this.element = element;
 	}
+	
+	
 
 	protected void init() {
 
@@ -78,6 +80,24 @@ public abstract class FramedElement {
 	 */
 	protected <T> T getProperty(String name, Class<T> clazz) {
 		return element.getProperty(name);
+	}
+	
+	/**
+	 * Return a traversal over the property.
+	 * 
+	 * @return The query.
+	 */
+	protected <N> Traversal<N, ?, ?, ?> property(String key) {
+		return new TraversalImpl(graph(), this).property(key);
+	}
+	
+	/**
+	 * Return a traversal over the property.
+	 * 
+	 * @return The query.
+	 */
+	protected <N> Traversal<N, ?, ?, ?> property(String key, Class<N> kind) {
+		return new TraversalImpl(graph(), this).property(key);
 	}
 	
 	/**

@@ -8,7 +8,6 @@ Discussion at https://groups.google.com/forum/#!forum/totorom
 This project has been created as an alternative to the Tinkerpop Frames project.
 If you like Gremlin and you like Java then you will like this!
 
-http://oss.sonatype.org/content/repositories/snapshots
 
     <dependency>
         <groupId>org.jglue.totorom</groupId>

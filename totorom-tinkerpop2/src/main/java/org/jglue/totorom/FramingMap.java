@@ -12,11 +12,11 @@ class FramingMap<T extends FramedElement> extends FrameMaker<T> implements Map {
 	}
 
 	private Map delegate;
-	
+
 	public Map getDelegate() {
 		return delegate;
 	}
-	
+
 	@Override
 	public int size() {
 		throw new UnsupportedOperationException();
@@ -76,10 +76,10 @@ class FramingMap<T extends FramedElement> extends FrameMaker<T> implements Map {
 	public Set entrySet() {
 		return delegate.entrySet();
 	}
-	
+
 	@Override
 	public String toString() {
-	
+
 		return delegate.toString();
 	}
 

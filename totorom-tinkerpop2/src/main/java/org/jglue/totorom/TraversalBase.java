@@ -389,8 +389,6 @@ abstract class TraversalBase<T, Cap, SideEffect, Mark> implements Traversal<T, C
 		return this;
 	}
 
-	
-
 	public Traversal tree() {
 		pipeline().tree(new FramingTraversalFunction<>(graph()));
 		return this;

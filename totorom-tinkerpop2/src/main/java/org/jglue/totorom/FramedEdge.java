@@ -1,7 +1,5 @@
 package org.jglue.totorom;
 
-import java.util.Iterator;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;

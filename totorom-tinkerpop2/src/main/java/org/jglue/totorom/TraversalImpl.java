@@ -1,31 +1,11 @@
 package org.jglue.totorom;
 
 import java.util.ArrayDeque;
-import java.util.Collection;
-import java.util.Comparator;
 import java.util.Deque;
-import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Stack;
 
-import com.google.common.base.Function;
-import com.google.common.collect.Collections2;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Iterators;
-import com.google.common.collect.Lists;
-import com.tinkerpop.blueprints.Edge;
-import com.tinkerpop.blueprints.Element;
 import com.tinkerpop.blueprints.Graph;
-import com.tinkerpop.blueprints.Predicate;
-import com.tinkerpop.blueprints.Vertex;
-import com.tinkerpop.gremlin.Tokens.T;
 import com.tinkerpop.gremlin.java.GremlinPipeline;
-import com.tinkerpop.pipes.Pipe;
-import com.tinkerpop.pipes.transform.TransformPipe.Order;
-import com.tinkerpop.pipes.util.structures.Table;
-import com.tinkerpop.pipes.util.structures.Tree;
 
 /**
  * The implementation of

@@ -2,8 +2,6 @@ package org.jglue.totorom;
 
 public interface SplitTraversal<T> {
 
-
-
 	/**
 	 * Add an ExhaustMergePipe to the end of the pipeline. The one-step previous
 	 * MetaPipe in the pipeline's pipes are used as the internal pipes. The
@@ -22,5 +20,5 @@ public interface SplitTraversal<T> {
 	 * @return the extended Pipeline
 	 */
 	public abstract T fairMerge();
-	
+
 }

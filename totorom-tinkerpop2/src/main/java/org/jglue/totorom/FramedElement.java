@@ -6,6 +6,7 @@ import com.tinkerpop.blueprints.Element;
 
 /**
  * The base of all framed elements.
+ * 
  * @author Bryn Cooke (http://jglue.org)
  */
 
@@ -18,8 +19,6 @@ public abstract class FramedElement {
 		this.graph = graph;
 		this.element = element;
 	}
-	
-	
 
 	protected void init() {
 
@@ -29,7 +28,7 @@ public abstract class FramedElement {
 	 * @return The id of this element.
 	 */
 	protected <N> N getId() {
-		return (N)element.getId();
+		return (N) element.getId();
 	}
 
 	/**
@@ -81,25 +80,7 @@ public abstract class FramedElement {
 	protected <T> T getProperty(String name, Class<T> clazz) {
 		return element.getProperty(name);
 	}
-	
-	/**
-	 * Return a traversal over the property.
-	 * 
-	 * @return The query.
-	 */
-	protected <N> Traversal<N, ?, ?, ?> property(String key) {
-		return new TraversalImpl(graph(), this).property(key);
-	}
-	
-	/**
-	 * Return a traversal over the property.
-	 * 
-	 * @return The query.
-	 */
-	protected <N> Traversal<N, ?, ?, ?> property(String key, Class<N> kind) {
-		return new TraversalImpl(graph(), this).property(key);
-	}
-	
+
 	/**
 	 * Set a property value.
 	 * 
@@ -181,7 +162,7 @@ public abstract class FramedElement {
 
 	@Override
 	public String toString() {
-	
+
 		return element().toString();
 	}
 }

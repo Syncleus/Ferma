@@ -3,10 +3,6 @@ package org.jglue.totorom;
 import java.util.Collection;
 import java.util.Iterator;
 
-import com.tinkerpop.blueprints.Edge;
-import com.tinkerpop.blueprints.Element;
-import com.tinkerpop.blueprints.Vertex;
-
 /**
  * Frames elements as they are inserted in to the delegate.
  * 

@@ -2,10 +2,6 @@ package org.jglue.totorom;
 
 import java.util.Comparator;
 
-import com.tinkerpop.blueprints.Edge;
-import com.tinkerpop.blueprints.Element;
-import com.tinkerpop.blueprints.Vertex;
-
 /**
  * Framed elements before delegation.
  * 
@@ -32,7 +28,7 @@ class FramingComparator<T, K extends FramedElement> extends FrameMaker<K> implem
 	public int compare(T o1, T o2) {
 
 		o1 = makeFrame(o1);
-		o2 = makeFrame(o2);		
+		o2 = makeFrame(o2);
 
 		return delegate.compare(o1, o2);
 	}

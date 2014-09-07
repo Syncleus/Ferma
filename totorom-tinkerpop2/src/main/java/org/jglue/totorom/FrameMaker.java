@@ -27,9 +27,8 @@ class FrameMaker<T extends FramedElement> {
 			} else if (o instanceof Vertex) {
 				o = graph.frameElement((Element) o, TVertex.class);
 			}
-		}
-		else {
-			if(o instanceof Element) {
+		} else {
+			if (o instanceof Element) {
 				o = graph.frameElement((Element) o, kind);
 			}
 		}
@@ -37,10 +36,10 @@ class FrameMaker<T extends FramedElement> {
 	}
 
 	protected Object removeFrame(Object object) {
-		if(object instanceof FramedElement) {
+		if (object instanceof FramedElement) {
 			return ((FramedElement) object).element();
 		}
 		return object;
 	}
-	
+
 }

@@ -2,10 +2,7 @@ package org.jglue.totorom;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -13,7 +10,6 @@ import java.util.NoSuchElementException;
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Iterables;
-import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
 import com.tinkerpop.blueprints.Element;
 import com.tinkerpop.blueprints.Predicate;
@@ -63,8 +59,6 @@ abstract class VertexTraversalImpl extends TraversalBase implements VertexTraver
 	public VertexTraversal table(Table table, TraversalFunction... columnFunctions) {
 		return (VertexTraversal) super.table(table, columnFunctions);
 	}
-
-
 
 	@Override
 	public VertexTraversal tree(Tree tree) {

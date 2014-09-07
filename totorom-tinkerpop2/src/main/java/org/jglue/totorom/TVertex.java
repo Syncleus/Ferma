@@ -158,28 +158,17 @@ public final class TVertex extends FramedVertex {
 	public void unlinkOut(FramedVertex vertex, String... labels) {
 		super.unlinkOut(vertex, labels);
 	}
-	
+
 	@Override
 	public <T extends FramedEdge> T addEdge(String label, FramedVertex inVertex, Class<T> kind) {
 		return super.addEdge(label, inVertex, kind);
 	}
-	
+
 	@Override
 	public void remove() {
 		super.remove();
 	}
-	
-	@Override
-	public <N> Traversal<N, ?, ?, ?> property(String key) {
-		return super.property(key);
-	}
-	
-	@Override
-	public <N> Traversal<N, ?, ?, ?> property(String key, Class<N> kind) {
-	
-		return super.property(key, kind);
-	}
-	
+
 	@Override
 	public VertexTraversal<?, ?, ?> traversal() {
 		return super.traversal();

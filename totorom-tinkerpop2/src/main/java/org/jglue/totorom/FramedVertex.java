@@ -1,8 +1,5 @@
 package org.jglue.totorom;
 
-import java.util.Iterator;
-
-import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
@@ -113,8 +110,7 @@ public abstract class FramedVertex extends FramedElement {
 	protected void unlinkBoth(FramedVertex vertex, String... labels) {
 		if (vertex != null) {
 			bothE(labels).mark().bothV().retain(vertex).back().removeAll();
-		}
-		else {
+		} else {
 			bothE(labels).removeAll();
 		}
 	}

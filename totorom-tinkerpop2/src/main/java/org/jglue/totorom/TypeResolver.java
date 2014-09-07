@@ -18,8 +18,7 @@ public interface TypeResolver {
 	 *            The kind of frame that is being requested by the client code.
 	 * @return The kind of frame
 	 */
-	public <T extends FramedElement> Class<T> resolve(Element element,
-			Class<T> kind);
+	public <T extends FramedElement> Class<T> resolve(Element element, Class<T> kind);
 
 	/**
 	 * Called when a new element is created on the graph. Initialization can be
@@ -38,14 +37,12 @@ public interface TypeResolver {
 	 */
 	public static final TypeResolver Untyped = new TypeResolver() {
 		@Override
-		public <T extends FramedElement> Class<T> resolve(Element element,
-				Class<T> kind) {
+		public <T extends FramedElement> Class<T> resolve(Element element, Class<T> kind) {
 			return kind;
 		}
 
 		@Override
-		public <T extends FramedElement> void init(Element element,
-				Class<T> kind) {
+		public <T extends FramedElement> void init(Element element, Class<T> kind) {
 
 		}
 	};
@@ -57,23 +54,20 @@ public interface TypeResolver {
 	public static final TypeResolver Java = new TypeResolver() {
 		@SuppressWarnings("unchecked")
 		@Override
-		public <T extends FramedElement> Class<T> resolve(Element element,
-				Class<T> kind) {
+		public <T extends FramedElement> Class<T> resolve(Element element, Class<T> kind) {
 			String clazz = element.getProperty("java_class");
 			if (clazz != null) {
 				try {
 					return (Class<T>) Class.forName(clazz);
 				} catch (ClassNotFoundException e) {
-					throw new RuntimeException("The class " + clazz
-							+ " cannot be found");
+					throw new RuntimeException("The class " + clazz + " cannot be found");
 				}
 			}
 			return kind;
 		}
 
 		@Override
-		public <T extends FramedElement> void init(Element element,
-				Class<T> kind) {
+		public <T extends FramedElement> void init(Element element, Class<T> kind) {
 			String clazz = element.getProperty("java_class");
 			if (clazz == null) {
 				element.setProperty("java_class", kind.getName());

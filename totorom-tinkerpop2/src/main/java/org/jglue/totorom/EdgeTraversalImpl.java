@@ -3,8 +3,6 @@ package org.jglue.totorom;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -62,7 +60,6 @@ abstract class EdgeTraversalImpl extends TraversalBase implements EdgeTraversal 
 	public EdgeTraversal table(Table table, TraversalFunction... columnFunctions) {
 		return (EdgeTraversal) super.table(table, columnFunctions);
 	}
-
 
 	@Override
 	public EdgeTraversal tree(Tree tree) {
@@ -440,8 +437,6 @@ abstract class EdgeTraversalImpl extends TraversalBase implements EdgeTraversal 
 
 		return (EdgeTraversal) super.mark();
 	}
-	
-	
 
 	@Override
 	public void removeAll() {
@@ -450,20 +445,21 @@ abstract class EdgeTraversalImpl extends TraversalBase implements EdgeTraversal 
 
 	@Override
 	public SplitTraversal copySplit(TraversalFunction... traversals) {
-		Collection<Pipe> extractedPipes = Collections2.transform(Arrays.asList(traversals), new Function<TraversalFunction, Pipe>() {
+		Collection<Pipe> extractedPipes = Collections2.transform(Arrays.asList(traversals),
+				new Function<TraversalFunction, Pipe>() {
 
-			@Override
-			public Pipe apply(TraversalFunction input) {
-				return ((TraversalBase) input.compute(new TEdge())).pipeline();
-			}
-		});
+					@Override
+					public Pipe apply(TraversalFunction input) {
+						return ((TraversalBase) input.compute(new TEdge())).pipeline();
+					}
+				});
 		pipeline().copySplit(extractedPipes.toArray(new Pipe[extractedPipes.size()]));
 		return castToSplit();
 	}
-	
+
 	@Override
 	public EdgeTraversal tree() {
-	
+
 		return (EdgeTraversal) super.tree();
 	}
 }

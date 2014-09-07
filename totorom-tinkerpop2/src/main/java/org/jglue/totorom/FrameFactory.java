@@ -17,8 +17,7 @@ public interface FrameFactory {
 	 */
 	public static FrameFactory Default = new FrameFactory() {
 		@Override
-		public <T extends FramedElement> T create(Element element,
-				Class<T> kind) {
+		public <T extends FramedElement> T create(Element element, Class<T> kind) {
 			try {
 				return kind.newInstance();
 			} catch (InstantiationException e) {

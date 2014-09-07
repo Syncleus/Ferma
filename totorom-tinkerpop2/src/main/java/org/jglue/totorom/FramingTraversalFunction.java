@@ -1,8 +1,5 @@
 package org.jglue.totorom;
 
-import com.tinkerpop.blueprints.Edge;
-import com.tinkerpop.blueprints.Element;
-import com.tinkerpop.blueprints.Vertex;
 import com.tinkerpop.pipes.PipeFunction;
 
 /**
@@ -29,7 +26,7 @@ class FramingTraversalFunction<A extends FramedElement, B, C> extends FrameMaker
 	public FramingTraversalFunction(FramedGraph graph, Class<A> kind) {
 		super(graph, kind);
 	}
-	
+
 	public FramingTraversalFunction(FramedGraph graph) {
 		super(graph);
 	}
@@ -43,7 +40,7 @@ class FramingTraversalFunction<A extends FramedElement, B, C> extends FrameMaker
 			return (B) argument;
 		}
 
-		return delegate.compute((A)argument);
+		return delegate.compute((A) argument);
 
 	}
 

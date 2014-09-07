@@ -5,11 +5,12 @@ import java.util.Iterator;
 
 /**
  * Used to store a single value. Useful for the store step.
+ * 
  * @author bryn
  *
  * @param <T>
  */
-public class Storage<T> implements Collection<T>{
+public class Storage<T> implements Collection<T> {
 
 	private T e;
 

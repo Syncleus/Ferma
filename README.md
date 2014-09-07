@@ -13,7 +13,7 @@ http://oss.sonatype.org/content/repositories/snapshots
     <dependency>
         <groupId>org.jglue.totorom</groupId>
         <artifactId>totorom-tinkerpop2</artifactId>
-        <version>0.5.0-SNAPSHOT</version>
+        <version>0.5.0</version>
     </dependency>
 
 It's just a way to give typed context to your gremlin queries:

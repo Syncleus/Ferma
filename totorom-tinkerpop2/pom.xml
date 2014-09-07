@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.jglue.totorom</groupId>
 		<artifactId>totorom-parent</artifactId>
-		<version>0.5.0</version>
+		<version>0.5.1-SNAPSHOT</version>
 	</parent>
 
 
@@ -101,8 +101,4 @@
 			</plugin>
 		</plugins>
 	</reporting>
-
-  <scm>
-    <tag>totorom-parent-0.5.0</tag>
-  </scm>
 </project>

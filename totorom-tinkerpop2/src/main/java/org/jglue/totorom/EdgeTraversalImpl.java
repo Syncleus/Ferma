@@ -64,12 +64,12 @@ abstract class EdgeTraversalImpl extends TraversalBase implements EdgeTraversal 
 	}
 
 	@Override
-	public EdgeTraversal tree(TraversalFunction... branchFunctions) {
+	public EdgeTraversal tree(TraversalFunction branchFunctions) {
 		return (EdgeTraversal) super.tree(branchFunctions);
 	}
 
 	@Override
-	public EdgeTraversal tree(Tree tree, TraversalFunction... branchFunctions) {
+	public EdgeTraversal tree(Tree tree, TraversalFunction branchFunctions) {
 		return (EdgeTraversal) super.tree(tree, branchFunctions);
 	}
 
@@ -463,5 +463,11 @@ abstract class EdgeTraversalImpl extends TraversalBase implements EdgeTraversal 
 		});
 		pipeline().copySplit(extractedPipes.toArray(new Pipe[extractedPipes.size()]));
 		return castToSplit();
+	}
+	
+	@Override
+	public EdgeTraversal tree() {
+	
+		return (EdgeTraversal) super.tree();
 	}
 }

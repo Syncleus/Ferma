@@ -65,12 +65,12 @@ abstract class VertexTraversalImpl extends TraversalBase implements VertexTraver
 	}
 
 	@Override
-	public VertexTraversal tree(TraversalFunction... branchFunctions) {
+	public VertexTraversal tree(TraversalFunction branchFunctions) {
 		return (VertexTraversal) super.tree(branchFunctions);
 	}
 
 	@Override
-	public VertexTraversal tree(Tree tree, TraversalFunction... branchFunctions) {
+	public VertexTraversal tree(Tree tree, TraversalFunction branchFunctions) {
 		return (VertexTraversal) super.tree(tree, branchFunctions);
 	}
 
@@ -559,17 +559,23 @@ abstract class VertexTraversalImpl extends TraversalBase implements VertexTraver
 		pipeline().remove();
 	}
 
-	
 	@Override
 	public SplitTraversal copySplit(TraversalFunction... traversals) {
-		Collection<Pipe> extractedPipes = Collections2.transform(Arrays.asList(traversals), new Function<TraversalFunction, Pipe>() {
+		Collection<Pipe> extractedPipes = Collections2.transform(Arrays.asList(traversals),
+				new Function<TraversalFunction, Pipe>() {
 
-			@Override
-			public Pipe apply(TraversalFunction input) {
-				return ((TraversalBase) input.compute(new TVertex())).pipeline();
-			}
-		});
+					@Override
+					public Pipe apply(TraversalFunction input) {
+						return ((TraversalBase) input.compute(new TVertex())).pipeline();
+					}
+				});
 		pipeline().copySplit(extractedPipes.toArray(new Pipe[extractedPipes.size()]));
 		return castToSplit();
+	}
+
+	@Override
+	public VertexTraversal tree() {
+
+		return (VertexTraversal) super.tree();
 	}
 }

@@ -836,26 +836,14 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	 * Add a TreePipe to the end of the Pipeline This step maintains an internal
 	 * tree representation of the paths that have flowed through the step.
 	 *
-	 * @param tree
-	 *            an embedded Map data structure to store the tree
-	 *            representation in
 	 * @param branchFunctions
 	 *            functions to apply to each path object in a round robin
 	 *            fashion
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> VertexTraversal<Tree<N>, Tree<N>, Mark> tree(Tree<N> tree, TraversalFunction<?, N>... branchFunctions);
-
-	/**
-	 * Add a TreePipe to the end of the Pipeline This step maintains an internal
-	 * tree representation of the paths that have flowed through the step.
-	 *
-	 * @param branchFunctions
-	 *            functions to apply to each path object in a round robin
-	 *            fashion
-	 * @return the extended Pipeline
-	 */
-	public abstract <N> VertexTraversal<Tree<N>, Tree<N>, Mark> tree(TraversalFunction<?, N>... branchFunctions);
+	public abstract VertexTraversal<Tree<TVertex>, Tree<TVertex>, Mark> tree();
+	
+	
 
 	/**
 	 * Add an IdentityPipe to the end of the Pipeline. Useful in various
@@ -1013,7 +1001,7 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	 * @return the extended Pipeline
 	 */
 	public abstract <N> Traversal<N, ?, ?, Mark> id();
-	
+
 	/**
 	 * Add an IdPipe to the end of the Pipeline. Emit the id of the incoming
 	 * element.
@@ -1043,18 +1031,17 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	 * @return the extended Pipeline
 	 */
 	public abstract <N> Traversal<N, ?, ?, Mark> property(String key, Class<N> type);
-	
+
 	/**
 	 * Remove every element at the end of this Pipeline.
 	 */
 	public abstract void removeAll();
-	
-	
-//	/**
-//	 * Remove the current element at the end of this Pipeline.
-//	 */
-//	public abstract void remove();
-	
+
+	// /**
+	// * Remove the current element at the end of this Pipeline.
+	// */
+	// public abstract void remove();
+
 	/**
 	 * Add a CopySplitPipe to the end of the pipeline. The incoming objects are
 	 * copied to the provided pipes. This "split-pipe" is used in conjunction
@@ -1064,8 +1051,7 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	 *            the internal pipes of the CopySplitPipe
 	 * @return the extended Pipeline
 	 */
-	public abstract SplitTraversal<Traversal<?, ?, ?, Mark>> copySplit(TraversalFunction<TVertex, Traversal<?, ?, ?, ?>>... traversals);
-	
-	
+	public abstract <N> SplitTraversal<Traversal<N, ?, ?, Mark>> copySplit(
+			TraversalFunction<TVertex, Traversal<N, ?, ?, ?>>... traversals);
 
 }

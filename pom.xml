@@ -35,6 +35,7 @@
 
 	<modules>
 		<module>totorom-tinkerpop2</module>
+		<module>totorom-tinkerpop2-java8-demo</module>
 		
 	</modules>
 	<build>
@@ -120,4 +121,11 @@
 		<url>https://github.com/BrynCooke/totorom</url>
 	</scm>
 
+	<dependencies>
+		<dependency>
+			<groupId>org.jglue.totorom</groupId>
+			<artifactId>totorom-tinkerpop2</artifactId>
+			<version>0.5.0-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
 </project>

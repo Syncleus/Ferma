@@ -384,19 +384,16 @@ abstract class TraversalBase<T, Cap, SideEffect, Mark> implements Traversal<T, C
 		return this;
 	}
 
-	@Override
-	public Traversal tree(Tree tree, TraversalFunction... branchFunctions) {
+	public Traversal tree(Tree tree, TraversalFunction branchFunctions) {
 		pipeline().tree(tree, wrap(branchFunctions));
 		return this;
 	}
 
-	@Override
-	public Traversal tree(TraversalFunction... branchFunctions) {
+	public Traversal tree(TraversalFunction branchFunctions) {
 		pipeline().tree(wrap(branchFunctions));
 		return this;
 	}
 
-	@Override
 	public Traversal tree() {
 		pipeline().tree(new FramingTraversalFunction<>(graph()));
 		return this;

@@ -75,9 +75,6 @@ public interface Traversal<T, Cap, SideEffect, Mark> extends Iterator<T>, Iterab
 	 */
 	public abstract Traversal<Map<String, Object>, ?, ?, Mark> map(String... keys);
 
-
-
-	
 	/**
 	 * Add a DuplicateFilterPipe to the end of the Pipeline. Will only emit the
 	 * object if it has not been seen before.
@@ -160,8 +157,6 @@ public interface Traversal<T, Cap, SideEffect, Mark> extends Iterator<T>, Iterab
 	 * @return the extended Pipeline
 	 */
 	public abstract Traversal<T, ?, ?, Mark> retain(Iterable<?> collection);
-	
-
 
 	/**
 	 * Add a RetainFilterPipe to the end of the Pipeline. Will only emit the
@@ -334,7 +329,8 @@ public interface Traversal<T, Cap, SideEffect, Mark> extends Iterator<T>, Iterab
 	 *            the key function to determine map key
 	 * @return the extended Pipeline
 	 */
-	public abstract <K> Traversal<T, Map<K, Long>, Map<K, Long>, Mark> groupCount(Map<K, Long> map, TraversalFunction<T, K> keyFunction);
+	public abstract <K> Traversal<T, Map<K, Long>, Map<K, Long>, Mark> groupCount(Map<K, Long> map,
+			TraversalFunction<T, K> keyFunction);
 
 	/**
 	 * Add a GroupCountPipe or GroupCountFunctionPipe to the end of the
@@ -477,31 +473,7 @@ public interface Traversal<T, Cap, SideEffect, Mark> extends Iterator<T>, Iterab
 	 */
 	public abstract Traversal<T, Table, Table, Mark> table();
 
-	/**
-	 * Add a TreePipe to the end of the Pipeline This step maintains an internal
-	 * tree representation of the paths that have flowed through the step.
-	 *
-	 * @param tree
-	 *            an embedded Map data structure to store the tree
-	 *            representation in
-	 * @param branchFunctions
-	 *            functions to apply to each path object in a round robin
-	 *            fashion
-	 * @return the extended Pipeline
-	 */
-	public abstract <N> Traversal<T, Tree<N>, Tree<N>, Mark> tree(Tree<N> tree, TraversalFunction<?, N>... branchFunctions);
-
-	/**
-	 * Add a TreePipe to the end of the Pipeline This step maintains an internal
-	 * tree representation of the paths that have flowed through the step.
-	 *
-	 * @param branchFunctions
-	 *            functions to apply to each path object in a round robin
-	 *            fashion
-	 * @return the extended Pipeline
-	 */
-	public abstract <N> Traversal<T, Tree<N>, Tree<N>, Mark> tree(TraversalFunction<?, N>... branchFunctions);
-
+	
 	/**
 	 * Add a TreePipe to the end of the Pipeline This step maintains an internal
 	 * tree representation of the paths that have flowed through the step.
@@ -509,7 +481,7 @@ public interface Traversal<T, Cap, SideEffect, Mark> extends Iterator<T>, Iterab
 	 * @return the extended Pipeline
 	 */
 	public abstract Traversal<T, Tree<T>, Tree<T>, Mark> tree();
-	
+
 	/**
 	 * Add an IdentityPipe to the end of the Pipeline. Useful in various
 	 * situations where a step is needed without processing. For example, useful
@@ -614,13 +586,13 @@ public interface Traversal<T, Cap, SideEffect, Mark> extends Iterator<T>, Iterab
 	 */
 	public abstract Mark back();
 
-
 	/**
-	 * Marks the step so that a subsequent call to back or mark may return to this point 
+	 * Marks the step so that a subsequent call to back or mark may return to
+	 * this point
+	 * 
 	 * @return the extended Pipeline
 	 */
 	public abstract <M extends Traversal<T, Cap, SideEffect, Mark>> Traversal<T, Cap, SideEffect, M> mark();
-	
 
 	/**
 	 * Causes the pipeline to be greedy up to this step.
@@ -701,8 +673,8 @@ public interface Traversal<T, Cap, SideEffect, Mark> extends Iterator<T>, Iterab
 	public abstract Cap cap();
 
 	/**
-	 * This step calls emits the input but also calls the sideEffectFunction function with the side effect of
-	 * the previous step when it is ready.
+	 * This step calls emits the input but also calls the sideEffectFunction
+	 * function with the side effect of the previous step when it is ready.
 	 *
 	 * @return the extended Pipeline
 	 */
@@ -804,8 +776,6 @@ public interface Traversal<T, Cap, SideEffect, Mark> extends Iterator<T>, Iterab
 	 */
 	public abstract Traversal<T, Cap, SideEffect, Mark> optimize(boolean optimize);
 
-	
-
 	/**
 	 * Fill the provided collection with the objects in the pipeline.
 	 *
@@ -814,10 +784,6 @@ public interface Traversal<T, Cap, SideEffect, Mark> extends Iterator<T>, Iterab
 	 * @return the collection filled
 	 */
 	public abstract Collection<T> fill(Collection<T> collection);
-
-	
-
-
 
 	/**
 	 * Add an OptionalPipe to the end of the Pipeline. The section of pipeline
@@ -837,8 +803,6 @@ public interface Traversal<T, Cap, SideEffect, Mark> extends Iterator<T>, Iterab
 	 */
 	public abstract EdgeTraversal<?, ?, Mark> idEdge(Graph graph);
 
-
-
 	/**
 	 * Add an IdVertexPipe to the end of the Pipeline. Emit the vertices of the
 	 * graph whose ids are those of the incoming id objects.
@@ -848,7 +812,5 @@ public interface Traversal<T, Cap, SideEffect, Mark> extends Iterator<T>, Iterab
 	 * @return the extended Pipeline
 	 */
 	public abstract VertexTraversal<?, ?, Mark> idVertex(Graph graph);
-
-	
 
 }

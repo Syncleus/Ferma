@@ -10,8 +10,8 @@
 		<artifactId>oss-parent</artifactId>
 		<version>7</version>
 	</parent>
-	
-	
+
+
 	<name>Totorom</name>
 	<url></url>
 	<description>An ORM for the Tinkerpop graph stack.</description>
@@ -22,7 +22,7 @@
 	</developers>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		
+		<additionalparam>-Xdoclint:none</additionalparam>
 	</properties>
 
 	<licenses>
@@ -36,11 +36,11 @@
 	<modules>
 		<module>totorom-tinkerpop2</module>
 		<module>totorom-tinkerpop2-java8-demo</module>
-		
+
 	</modules>
 	<build>
 		<plugins>
-		
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -48,6 +48,7 @@
 				<configuration>
 					<source>1.7</source>
 					<target>1.7</target>
+
 				</configuration>
 			</plugin>
 			<plugin>

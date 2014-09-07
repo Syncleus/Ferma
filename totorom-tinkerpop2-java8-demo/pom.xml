@@ -1,17 +1,16 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>totorom-tinkerpop2-java8-demo</artifactId>
 	<packaging>jar</packaging>
 	<parent>
 		<groupId>org.jglue.totorom</groupId>
 		<artifactId>totorom-parent</artifactId>
-		<version>0.5.0-SNAPSHOT</version>
+		<version>0.5.0</version>
 	</parent>
 
 
 	<name>Totorom Tinkerpop2 Java8 Demo</name>
-	<url></url>
+	<url />
 	<description>An ORM for the Tinkerpop2 graph stack.</description>
 	<developers>
 		<developer>
@@ -37,7 +36,7 @@
 	<dependency>
 		<groupId>org.jglue.totorom</groupId>
 		<artifactId>totorom-tinkerpop2</artifactId>
-		<version>0.5.0-SNAPSHOT</version>
+		<version>0.5.0</version>
 	</dependency>
 	</dependencies>
 	<build>
@@ -86,4 +85,8 @@
 			</plugin>
 		</plugins>
 	</reporting>
+
+  <scm>
+    <tag>totorom-parent-0.5.0</tag>
+  </scm>
 </project>

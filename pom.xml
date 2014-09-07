@@ -131,6 +131,7 @@
 		<developerConnection>scm:git:git@github.com:BrynCooke/totorom.git</developerConnection>
 		<url>https://github.com/BrynCooke/totorom</url>
 
+    <tag>totorom-parent-0.5.0</tag>
   </scm>
 
 

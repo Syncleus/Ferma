@@ -210,14 +210,7 @@ public class TestTraversals {
 
 	@Test
 	public void testTransform() {
-		Assert.assertEquals(new Integer(1), graph.v(1).transform(new TraversalFunction<TVertex, Integer>() {
-
-			@Override
-			public Integer compute(TVertex argument) {
-
-				return 1;
-			}
-		}).next());
+		Assert.assertEquals(new Integer(1), graph.v(1).transform(t->{return 1;}).next());
 
 	}
 

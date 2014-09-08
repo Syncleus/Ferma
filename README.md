@@ -14,6 +14,7 @@ If you like Gremlin and you like Java then you will like this!
         <artifactId>totorom-tinkerpop2</artifactId>
         <version>0.5.0</version>
     </dependency>
+    
 
 It's just a way to give typed context to your gremlin queries:
 
@@ -100,6 +101,9 @@ Using TypeResolver.Java will save the type of Java class the element was created
       Assert.assertEquals(Programmer.class, bryn.getClass());
       Assert.assertEquals(Person.class, julia.getClass());
     }
-    
-This project uses code derived from the Tinkerpop project (http://www.tinkerpop.com/) under the apache licence and or tinkerpop licence.
+
+Here's a nice blog post talking about Totorom
+* [The new graph database framing ally Totorom](http://tjadclark.com/blog/article/13-the-new-graph-database-framing-ally-totorom)
+
+This project uses code derived from the [Tinkerpop](http://www.tinkerpop.com/) project under the apache licence and or tinkerpop licence.
      

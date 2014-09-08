@@ -29,9 +29,9 @@ public class TestTraversals {
 
 	@Test
 	public void testCopySplit() {
-		List<TVertex> fair = graph.v(1).out("knows").copySplit(v->{return v.traversal();}, v->{return v.out();}).fairMerge().toList();
+		List<TVertex> fair = graph.v(1).out("knows").copySplit(v->v.traversal(), v->v.out()).fairMerge().toList();
 		
-		List<TVertex> exhaust = graph.v(1).out("knows").copySplit(v->{return v.traversal();}, v->{return v.out();}).exhaustMerge().toList();
+		List<TVertex> exhaust = graph.v(1).out("knows").copySplit(v->v.traversal(), v->v.out()).exhaustMerge().toList();
 		
 		Assert.assertEquals(exhaust.get(0), fair.get(0));
 		Assert.assertNotEquals(exhaust.get(1), fair.get(1));
@@ -210,7 +210,7 @@ public class TestTraversals {
 
 	@Test
 	public void testTransform() {
-		Assert.assertEquals(new Integer(1), graph.v(1).transform(t->{return 1;}).next());
+		Assert.assertEquals(new Integer(1), graph.v(1).transform(t->1).next());
 
 	}
 
@@ -222,12 +222,12 @@ public class TestTraversals {
 
 	@Test
 	public void testAnd() {
-		Assert.assertEquals(2, graph.V().and(v->{return v.both("knows");}, v->{return v.both("created");}).count());
+		Assert.assertEquals(2, graph.V().and(v->v.both("knows"), v->v.both("created")).count());
 	}
 
 	@Test
 	public void testOr() {
-		Assert.assertEquals(3, graph.V().or(v->{ return v.out().has("name");}).count());
+		Assert.assertEquals(3, graph.V().or(v->v.out().has("name")).count());
 	}
 
 	@Test
@@ -242,7 +242,7 @@ public class TestTraversals {
 
 	@Test
 	public void testFilter() {
-		Assert.assertEquals(2, graph.V().filter(v->{return v.getProperty("age") != null && v.getProperty("age", Integer.class) > 29;}).count());
+		Assert.assertEquals(2, graph.V().filter(v->v.getProperty("age") != null && v.getProperty("age", Integer.class) > 29).count());
 	}
 
 	@Test
@@ -293,9 +293,9 @@ public class TestTraversals {
 		Assert.assertEquals(4, cap.size());
 		Assert.assertTrue(cap.keySet().iterator().next() instanceof TVertex);
 
-		Assert.assertEquals(4, graph.V().out().groupCount(v->{return v.getId();}).cap().size());
+		Assert.assertEquals(4, graph.V().out().groupCount(v->v.getId()).cap().size());
 
-		Assert.assertEquals(6, graph.V().out().groupCount().divert(gc->{Assert.assertEquals(4, gc.size());}).count());
+		Assert.assertEquals(6, graph.V().out().groupCount().divert(gc->Assert.assertEquals(4, gc.size())).count());
 
 	}
 
@@ -303,7 +303,7 @@ public class TestTraversals {
 	public void testGroupBy() {
 
 		Map<TVertex, List<TVertex>> cap = graph.V()
-				.groupBy(v->{return v;}, v->{return v.out();}).cap();
+				.groupBy(v->v, v->v.out()).cap();
 		Assert.assertEquals(6, cap.size());
 		Assert.assertEquals(3, cap.get(graph.v(1).next()).size());
 		Assert.assertTrue(cap.get(graph.v(1).next()).iterator().next() instanceof TVertex);

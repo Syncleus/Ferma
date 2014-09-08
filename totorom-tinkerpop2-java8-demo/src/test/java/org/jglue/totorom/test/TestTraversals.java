@@ -153,7 +153,7 @@ public class TestTraversals {
 		Assert.assertEquals("josh", graph.V().property("name").order().next());
 		Assert.assertEquals("vadas", graph.V().property("name").order(Order.DECR).next());
 
-		Assert.assertEquals(graph.v(2).next(), graph.V().order(Comparators.<TVertex> property("name")).out("knows").next());
+		Assert.assertEquals(graph.v(2).next(), graph.V().order(Comparators.property("name")).out("knows").next());
 
 	}
 

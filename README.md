@@ -32,6 +32,10 @@ It's just a way to give typed context to your gremlin queries:
         return outE("knows").toList(Knows.class); //Gremlin natively supported
       }
       
+      public List<Person> getFriendsOfFriends() {
+        return out("knows").out("knows").except(this).toList(Person.class); //Gremlin natively supported
+      }
+      
       public Knows addKnows(Person friend) {
         return addEdge("knows", friend, Knows.class); //Elements are automatically unwrapped
       }

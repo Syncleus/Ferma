@@ -8,7 +8,7 @@ package org.jglue.totorom;
  *
  * @param <T>
  */
-class FramingSideEffectFunction<T, K extends FramedElement> extends FrameMaker<K> implements SideEffectFunction<T> {
+class FramingSideEffectFunction<T, K extends FramedElement> extends FrameMaker implements SideEffectFunction<T> {
 	private SideEffectFunction<T> delegate;
 
 	public FramingSideEffectFunction(SideEffectFunction<T> delegate, FramedGraph graph, Class<K> kind) {

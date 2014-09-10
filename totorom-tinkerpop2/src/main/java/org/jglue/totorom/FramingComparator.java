@@ -9,7 +9,7 @@ import java.util.Comparator;
  *
  * @param <T>
  */
-class FramingComparator<T, K extends FramedElement> extends FrameMaker<K> implements Comparator<T> {
+class FramingComparator<T, K extends FramedElement> extends FrameMaker implements Comparator<T> {
 
 	private Comparator<T> delegate;
 

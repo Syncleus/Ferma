@@ -3,12 +3,13 @@ package org.jglue.totorom;
 import com.tinkerpop.blueprints.Edge;
 import com.tinkerpop.blueprints.Element;
 import com.tinkerpop.blueprints.Vertex;
+import com.tinkerpop.pipes.util.structures.Pair;
 
-class FrameMaker<T extends FramedElement> {
+class FrameMaker {
 	private FramedGraph graph;
-	private Class<T> kind;
+	private Class<?> kind;
 
-	public FrameMaker(FramedGraph graph, Class<T> kind) {
+	public <T extends FramedElement> FrameMaker(FramedGraph graph, Class<T> kind) {
 		this.graph = graph;
 		this.kind = kind;
 	}
@@ -21,6 +22,10 @@ class FrameMaker<T extends FramedElement> {
 		if (o instanceof FramingMap) {
 			o = ((FramingMap) o).getDelegate();
 		}
+		if (o instanceof Pair) {
+			Pair pair = (Pair) o;
+			o = new Pair(makeFrame(pair.getA()), makeFrame(pair.getB()));
+		}
 		if (kind == null) {
 			if (o instanceof Edge) {
 				o = graph.frameElement((Element) o, TEdge.class);
@@ -29,7 +34,7 @@ class FrameMaker<T extends FramedElement> {
 			}
 		} else {
 			if (o instanceof Element) {
-				o = graph.frameElement((Element) o, kind);
+				o = graph.frameElement((Element) o, (Class<FramedElement>)kind);
 			}
 		}
 		return (N) o;

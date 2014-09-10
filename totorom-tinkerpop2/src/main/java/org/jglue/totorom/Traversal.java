@@ -130,7 +130,7 @@ public interface Traversal<T, Cap, SideEffect, Mark> extends Iterator<T>, Iterab
 	public abstract Traversal<T, ?, ?, Mark> random(double bias);
 
 	/**
-	 * Analogous to a high/low index lookup.
+	 * Analogous to a high/low index lookup. This is an open range so high is inclusive.
 	 *
 	 * @param low
 	 *            the low end of the range

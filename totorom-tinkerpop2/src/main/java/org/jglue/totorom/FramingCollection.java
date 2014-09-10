@@ -11,7 +11,7 @@ import java.util.Iterator;
  * @param <E>
  * @param <K>
  */
-class FramingCollection<E, K extends FramedElement> extends FrameMaker<K> implements Collection<E> {
+class FramingCollection<E, K extends FramedElement> extends FrameMaker implements Collection<E> {
 
 	private Collection<E> delegate;
 

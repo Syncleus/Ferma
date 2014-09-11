@@ -660,4 +660,19 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	public abstract <N> SplitTraversal<Traversal<N, ?, ?, Mark>> copySplit(
 			TraversalFunction<TVertex, Traversal<N, ?, ?, ?>>... traversals);
 
+	
+	/**
+	 * The pipeline loops over the supplied traversal.
+	 *
+	 * @return the extended Pipeline
+	 */
+	public abstract <T> VertexTraversal<?, ?, Mark> loop(TraversalFunction<TVertex, VertexTraversal<?, ?, ?>> traversal);
+	
+	/**
+	 * The pipeline loops over the supplied traversal up to a maximum depth.
+	 *
+	 * @param depth The maximum depth to loop to
+	 * @return the extended Pipeline
+	 */
+	public abstract <T> VertexTraversal<?, ?, Mark> loop(TraversalFunction<TVertex, VertexTraversal<?, ?, ?>> traversal, int depth);
 }

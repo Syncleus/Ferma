@@ -423,4 +423,18 @@ public class TestTraversals {
 
 
 	}
+	
+	
+	@Test
+	public void testLoop() {
+
+		List<TVertex> list = graph.v(1).loop(new TraversalFunction<TVertex, VertexTraversal<?, ?, ?>>() {
+			
+			@Override
+			public VertexTraversal<?, ?, ?> compute(TVertex argument) {
+				return argument.out();
+			}
+		}, 3).toList();
+		Assert.assertEquals(2, list.size());
+	}
 }

@@ -24,6 +24,10 @@ import com.tinkerpop.blueprints.Predicate;
 import com.tinkerpop.blueprints.Vertex;
 import com.tinkerpop.gremlin.Tokens;
 import com.tinkerpop.gremlin.java.GremlinPipeline;
+import com.tinkerpop.pipes.Pipe;
+import com.tinkerpop.pipes.PipeFunction;
+import com.tinkerpop.pipes.branch.LoopPipe;
+import com.tinkerpop.pipes.branch.LoopPipe.LoopBundle;
 import com.tinkerpop.pipes.sideeffect.SideEffectPipe;
 import com.tinkerpop.pipes.transform.TransformPipe.Order;
 import com.tinkerpop.pipes.util.FluentUtility;
@@ -705,5 +709,31 @@ abstract class TraversalBase<T, Cap, SideEffect, Mark> implements Traversal<T, C
 	protected static class MarkId {
 		Traversal traversal;
 		String id;
+	}
+
+	@Override
+	public VertexTraversal<?, ?, Mark> v(Collection<?> ids) {
+		return (VertexTraversal) graph().v(ids);
+	}
+
+	@Override
+	public EdgeTraversal<?, ?, Mark> e(Collection<?> ids) {
+		return (EdgeTraversal) graph().e(ids);
+	}
+
+	public Traversal loop(TraversalFunction input) {
+		GremlinPipeline pipeline = ((TraversalBase) input.compute(new TVertex())).pipeline();
+		pipeline().add(new LoopPipe(pipeline, LoopPipe.createTrueFunction(), null));
+
+		return this;
+
+	}
+
+	public Traversal loop(TraversalFunction input, final int depth) {
+		GremlinPipeline pipeline = ((TraversalBase) input.compute(new TVertex())).pipeline();
+		pipeline().add(new LoopPipe(pipeline, LoopPipe.createLoopsFunction(depth), null));
+
+		return this;
+
 	}
 }

@@ -1,6 +1,7 @@
 package org.jglue.totorom;
 
 import java.io.Closeable;
+import java.util.Collection;
 import java.util.Iterator;
 
 import com.google.common.base.Function;
@@ -131,6 +132,24 @@ public class FramedGraph {
 	 *            The ids of the vertices.
 	 * @return The query.
 	 */
+	public VertexTraversal<?, ?, ?> v(final Collection<?> ids) {
+		return new TraversalImpl(this, Iterators.transform(ids.iterator(), new Function<Object, Vertex>() {
+
+			@Override
+			public Vertex apply(Object id) {
+				return delegate.getVertex(id);
+			}
+
+		})).castToVertices();
+	}
+	
+	/**
+	 * Query over a list of vertices in the graph.
+	 * 
+	 * @param ids
+	 *            The ids of the vertices.
+	 * @return The query.
+	 */
 	public VertexTraversal<?, ?, ?> v(final Object... ids) {
 		return new TraversalImpl(this, Iterators.transform(Iterators.forArray(ids), new Function<Object, Vertex>() {
 
@@ -151,6 +170,25 @@ public class FramedGraph {
 	 */
 	public EdgeTraversal<?, ?, ?> e(final Object... ids) {
 		return new TraversalImpl(this, Iterators.transform(Iterators.forArray(ids), new Function<Object, Edge>() {
+
+			@Override
+			public Edge apply(Object id) {
+				return delegate.getEdge(id);
+			}
+
+		})).castToEdges();
+	}
+	
+	
+	/**
+	 * Query over a list of edges in the graph.
+	 * 
+	 * @param ids
+	 *            The ids of the edges.
+	 * @return The query.
+	 */
+	public EdgeTraversal<?, ?, ?> e(final Collection<?> ids) {
+		return new TraversalImpl(this, Iterators.transform(ids.iterator(), new Function<Object, Edge>() {
 
 			@Override
 			public Edge apply(Object id) {

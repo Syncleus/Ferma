@@ -14,6 +14,7 @@ import org.jglue.totorom.TVertex;
 import org.jglue.totorom.Traversal;
 import org.jglue.totorom.TraversalFunction;
 import org.jglue.totorom.TraversalFunctions;
+import org.jglue.totorom.VertexTraversal;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -347,5 +348,12 @@ public class TestTraversals {
 		Assert.assertEquals(1, tree.get(graph.v(1).next()).size());
 
 
+	}
+	
+	@Test
+	public void testLoop() {
+
+		List<TVertex> list = graph.v(1).loop(v->v.out(), 3).toList();
+		Assert.assertEquals(2, list.size());
 	}
 }

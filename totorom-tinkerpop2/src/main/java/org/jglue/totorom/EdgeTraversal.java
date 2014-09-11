@@ -441,4 +441,19 @@ public interface EdgeTraversal<Cap, SideEffect, Mark> extends Traversal<TEdge, C
 	 */
 	public abstract <N> SplitTraversal<Traversal<N, ?, ?, Mark>> copySplit(
 			TraversalFunction<TEdge, Traversal<N, ?, ?, ?>>... traversals);
+	
+	/**
+	 * The pipeline loops over the supplied traversal.
+	 *
+	 * @return the extended Pipeline
+	 */
+	public abstract <T> EdgeTraversal<?, ?, Mark> loop(TraversalFunction<TEdge, EdgeTraversal<?, ?, ?>> traversal);
+	
+	/**
+	 * The pipeline loops over the supplied traversal up to a maximum depth.
+	 *
+	 * @param depth The maximum depth to loop to
+	 * @return the extended Pipeline
+	 */
+	public abstract <T> EdgeTraversal<?, ?, Mark> loop(TraversalFunction<TEdge, EdgeTraversal<?, ?, ?>> traversal, int depth);
 }

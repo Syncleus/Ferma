@@ -569,4 +569,14 @@ abstract class VertexTraversalImpl extends TraversalBase implements VertexTraver
 
 		return (VertexTraversal) super.tree();
 	}
+
+	@Override
+	public VertexTraversal loop(TraversalFunction input) {
+		return (VertexTraversal) super.loop(input);
+	}
+
+	@Override
+	public VertexTraversal loop(TraversalFunction input, int depth) {
+		return (VertexTraversal) super.loop(input, depth);
+	}
 }

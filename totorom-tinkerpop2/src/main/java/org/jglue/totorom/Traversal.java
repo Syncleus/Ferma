@@ -47,6 +47,15 @@ public interface Traversal<T, Cap, SideEffect, Mark> extends Iterator<T>, Iterab
 	 * @return The traversal.
 	 */
 	public VertexTraversal<?, ?, Mark> v(Object... ids);
+	
+	/**
+	 * Traversal over a list of vertices in the graph.
+	 * 
+	 * @param ids
+	 *            The ids of the vertices.
+	 * @return The traversal.
+	 */
+	public VertexTraversal<?, ?, Mark> v(Collection<?> ids);
 
 	/**
 	 * Traversal over a list of edges in the graph.
@@ -56,6 +65,16 @@ public interface Traversal<T, Cap, SideEffect, Mark> extends Iterator<T>, Iterab
 	 * @return The traversal.
 	 */
 	public EdgeTraversal<?, ?, Mark> e(Object... ids);
+	
+
+	/**
+	 * Traversal over a list of edges in the graph.
+	 * 
+	 * @param ids
+	 *            The ids of the edges.
+	 * @return The traversal.
+	 */
+	public EdgeTraversal<?, ?, Mark> e(Collection<?> ids);
 
 	/**
 	 * Completely drain the pipeline of its objects. Useful when a sideEffect of
@@ -566,7 +585,7 @@ public interface Traversal<T, Cap, SideEffect, Mark> extends Iterator<T>, Iterab
 	public abstract Traversal<T, ?, ?, Mark> simplePath();
 
 	/**
-	 * The object that was seen at the topmost marked step is emitted.
+	 * The object that was seen at the topmost marked step is emitted. The mark step is removed from the stack.
 	 *
 	 * @return the extended Pipeline
 	 */
@@ -768,7 +787,7 @@ public interface Traversal<T, Cap, SideEffect, Mark> extends Iterator<T>, Iterab
 	public abstract Collection<T> fill(Collection<T> collection);
 
 	/**
-	 * The section of pipeline back to the topmost marked step is evaluated.
+	 * The section of pipeline back to the topmost marked step is evaluated. The mark is removed from the stack.
 	 *
 	 * @return the extended Pipeline
 	 */
@@ -793,5 +812,8 @@ public interface Traversal<T, Cap, SideEffect, Mark> extends Iterator<T>, Iterab
 	 * @return the extended Pipeline
 	 */
 	public abstract VertexTraversal<?, ?, Mark> idVertex(Graph graph);
+	
+	
+
 
 }

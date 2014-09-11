@@ -462,4 +462,14 @@ abstract class EdgeTraversalImpl extends TraversalBase implements EdgeTraversal 
 
 		return (EdgeTraversal) super.tree();
 	}
+	
+	@Override
+	public EdgeTraversal loop(TraversalFunction input) {
+		return (EdgeTraversal) super.loop(input);
+	}
+
+	@Override
+	public EdgeTraversal loop(TraversalFunction input, int depth) {
+		return (EdgeTraversal) super.loop(input, depth);
+	}
 }

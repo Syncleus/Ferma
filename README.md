@@ -1,7 +1,7 @@
 Totorom
 ========
 
-An ORM for the Tinkerpop graph stack.
+An ORM / OGM for the Tinkerpop graph stack.
 
 Discussion at https://groups.google.com/forum/#!forum/totorom
 

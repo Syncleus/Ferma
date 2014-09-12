@@ -12,7 +12,7 @@ If you like Gremlin and you like Java then you will like this!
     <dependency>
         <groupId>org.jglue.totorom</groupId>
         <artifactId>totorom-tinkerpop2</artifactId>
-        <version>0.5.0</version>
+        <version>0.5.1</version>
     </dependency>
     
 

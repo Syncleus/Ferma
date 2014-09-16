@@ -742,6 +742,12 @@ public interface Traversal<T, Cap, SideEffect, Mark> extends Iterator<T>, Iterab
 	public abstract T next();
 
 	/**
+	 * Return the next object in the pipeline.
+	 *
+	 */
+	public abstract T nextOrDefault(T defaultValue);
+
+	/**
 	 * Return the next X objects in the pipeline as a list.
 	 *
 	 * @param number

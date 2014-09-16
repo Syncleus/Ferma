@@ -238,6 +238,18 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	public <N extends FramedVertex> N next(Class<N> kind);
 
 	/**
+	 * Get the next object emitted from the pipeline. If no such object exists,
+	 * then a the default value is returned.
+	 * 
+	 * @param kind
+	 *            The type of frame for the element.
+	 * @param defaultValue
+	 *            The object to return if no next object exists.
+	 * @return the next emitted object
+	 */
+	public <N extends FramedVertex> N nextOrDefault(Class<N> kind, N defaultValue);
+
+	/**
 	 * Get the next object emitted from the pipeline. If no such object exists a
 	 * new vertex is created.
 	 * 

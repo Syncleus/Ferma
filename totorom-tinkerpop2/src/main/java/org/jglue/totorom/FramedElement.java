@@ -90,7 +90,11 @@ public abstract class FramedElement {
 	 *            The value of the property.
 	 */
 	protected void setProperty(String name, Object value) {
-		element.setProperty(name, value);
+		if (value == null) {
+			element.removeProperty(name);
+		} else {
+			element.setProperty(name, value);
+		}
 	}
 
 	/**

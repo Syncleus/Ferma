@@ -371,6 +371,19 @@ public class TestFramedVertex {
     }
 
     @Test
+	public void testSetLinkInNull() {
+		String label = "knows";
+		Person p3 = fg.addVertex(Person.class);
+		Person p4 = fg.addVertex(Person.class);
+		p3.setLinkIn(p4, label);
+		Assert.assertTrue("An out edge of type " + label + " must exist between vertices", p3.in(label).retain(Lists.newArrayList(p4)).count() > 0);
+		
+		// tests if setLinkOut accepts null values, and only unlinks the edges
+		p3.setLinkIn((FramedVertex) null, label);
+		Assert.assertEquals(label + " edge was not unlinked", 0, p3.in(label).count());
+	}
+
+	@Test
     public void testSetLinkOut(){
         String label = "knows";
         Person p3 = fg.addVertex(Person.class);
@@ -392,6 +405,19 @@ public class TestFramedVertex {
     }
 
     @Test
+	public void testSetLinkOutNull() {
+		String label = "knows";
+		Person p3 = fg.addVertex(Person.class);
+		Person p4 = fg.addVertex(Person.class);
+		p3.setLinkOut(p4, label);
+		Assert.assertTrue("An out edge of type " + label + " must exist between vertices", p3.out(label).retain(Lists.newArrayList(p4)).count() > 0);
+
+		// tests if setLinkOut accepts null values, and only unlinks the edges
+		p3.setLinkOut((FramedVertex) null, label);
+		Assert.assertEquals(label + " edge was not unlinked", 0, p3.out(label).count());
+	}
+
+	@Test
     public void testSetLinkBoth(){
         String label = "knows";
         Person p3 = fg.addVertex(Person.class);
@@ -416,6 +442,19 @@ public class TestFramedVertex {
         Assert.assertEquals(label + " out edge was not created", 1, p3.out(label).retain(Lists.newArrayList(p5)).count());
 
     }
+
+    @Test
+	public void testSetLinkBothNull() {
+		String label = "knows";
+		Person p3 = fg.addVertex(Person.class);
+		Person p4 = fg.addVertex(Person.class);
+		p3.setLinkBoth(p4, label);
+		Assert.assertTrue("An out edge of type " + label + " must exist between vertices", p3.both(label).retain(Lists.newArrayList(p4)).count() > 0);
+
+		// tests if setLinkOut accepts null values, and only unlinks the edges
+		p3.setLinkBoth((FramedVertex) null, label);
+		Assert.assertEquals(label + " edge was not unlinked", 0, p3.both(label).count());
+	}
 
     @Test
     public void testSetNewLinkIn(){

@@ -51,6 +51,18 @@ public class TestFramedElement {
     	Assert.assertEquals("Bryn", p1.getProperty("name"));
     }
     
+    @Test
+    public void testSetProperty() {
+    	p1.setProperty("name", "Bryn Cooke");
+    	Assert.assertEquals("Bryn Cooke", p1.getProperty("name"));
+    }
+    
+    @Test
+    public void testSetPropertyNull() {
+    	p1.setProperty("name", null);
+    	Assert.assertNull(p1.getProperty("name"));
+    }
+    
     
     @Test
     public void testV() {

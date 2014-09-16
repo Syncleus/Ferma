@@ -166,7 +166,9 @@ public abstract class FramedVertex extends FramedElement {
 	 */
 	protected void setLinkOut(FramedVertex vertex, String... labels) {
 		unlinkOut(null, labels);
-		linkOut(vertex, labels);
+		if (vertex != null) {
+			linkOut(vertex, labels);
+		}
 	}
 	
 	/**
@@ -176,7 +178,9 @@ public abstract class FramedVertex extends FramedElement {
 	 */
 	protected void setLinkIn(FramedVertex vertex, String... labels) {
 		unlinkIn(null, labels);
-		linkIn(vertex, labels);
+		if (vertex != null) {
+			linkIn(vertex, labels);
+		}
 	}
 
 	
@@ -187,7 +191,9 @@ public abstract class FramedVertex extends FramedElement {
 	 */
 	protected void setLinkBoth(FramedVertex vertex, String... labels) {
 		unlinkBoth(null, labels);
-		linkBoth(vertex, labels);
+		if (vertex != null) {
+			linkBoth(vertex, labels);
+		}
 	}
 
 	/**

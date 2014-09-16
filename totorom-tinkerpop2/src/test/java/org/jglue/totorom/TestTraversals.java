@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -436,5 +437,39 @@ public class TestTraversals {
 			}
 		}, 3).toList();
 		Assert.assertEquals(2, list.size());
+	}
+	
+	@Test
+	public void testNext() {
+		Assert.assertEquals(graph.v(3).next(), graph.v(6).out("created").next());
+	}
+
+	@Test(expected = NoSuchElementException.class)
+	public void testNextNoSuchElement() {
+		graph.v(6).out("knows").next();
+	}
+
+	@Test
+	public void testNextOrDefault() {
+		TVertex defaultValue = new TVertex(); 
+		Assert.assertEquals(graph.v(3).next(), graph.v(6).out("created").nextOrDefault(defaultValue));
+	}
+
+	@Test
+	public void testNextOrDefaultNoSuchElement() {
+		TVertex defaultValue = new TVertex(); 
+		Assert.assertEquals(defaultValue, graph.v(6).out("knows").nextOrDefault(defaultValue));
+	}
+	
+	@Test
+	public void testNextOrDefaultWithKind() {
+		Program defaultValue = new Program(); 
+		Assert.assertEquals(graph.v(3).next(Program.class), graph.v(6).out("created").nextOrDefault(Program.class, defaultValue));
+	}
+
+	@Test
+	public void testNextOrDefaultWithKindNoSuchElement() {
+		Person defaultValue = new Person(); 
+		Assert.assertEquals(defaultValue, graph.v(6).out("knows").nextOrDefault(Person.class, defaultValue));
 	}
 }

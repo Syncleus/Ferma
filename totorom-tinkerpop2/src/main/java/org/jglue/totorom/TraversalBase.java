@@ -578,6 +578,15 @@ abstract class TraversalBase<T, Cap, SideEffect, Mark> implements Traversal<T, C
 		}
 		return (T) e;
 	}
+	
+	@Override
+	public T nextOrDefault(T defaultValue) {
+		if (pipeline().hasNext()) {
+			return next();
+		} else {
+			return defaultValue;
+		}
+	}
 
 	@Override
 	public EdgeTraversal start(FramedEdge object) {

@@ -13,13 +13,13 @@ import com.tinkerpop.pipes.util.FastNoSuchElementException;
 import com.tinkerpop.pipes.util.MetaPipe;
 import com.tinkerpop.pipes.util.PipeHelper;
 
-public class NonTerminatingSideEffectCapPipe<S, T> extends AbstractMetaPipe<S, S> implements MetaPipe {
+public class DivertPipe<S, T> extends AbstractMetaPipe<S, S> implements MetaPipe {
 
 	private final SideEffectPipe<S, T> pipeToCap;
 	
 	private PipeFunction<T, ?> sideEffectFunction;
 
-	public NonTerminatingSideEffectCapPipe(final SideEffectPipe<S, T> pipeToCap, final PipeFunction<T, ?> sideEffectFunction) {
+	public DivertPipe(final SideEffectPipe<S, T> pipeToCap, final PipeFunction<T, ?> sideEffectFunction) {
 		this.pipeToCap = pipeToCap;
 		this.sideEffectFunction = sideEffectFunction;
 	}

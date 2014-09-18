@@ -4,6 +4,8 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Iterator;
 
+import org.jglue.totorom.internal.TotoromGremlinPipeline;
+
 import com.tinkerpop.blueprints.Graph;
 import com.tinkerpop.gremlin.java.GremlinPipeline;
 
@@ -141,15 +143,15 @@ class TraversalImpl extends TraversalBase implements Traversal {
 	}
 
 	protected TraversalImpl(FramedGraph graph, Graph delegate) {
-		this(graph, new GremlinPipeline<>(delegate));
+		this(graph, new TotoromGremlinPipeline<>(delegate));
 	}
 
 	protected TraversalImpl(FramedGraph graph, Iterator starts) {
-		this(graph, new GremlinPipeline<>(starts));
+		this(graph, new TotoromGremlinPipeline<>(starts));
 	}
 
 	protected TraversalImpl(FramedGraph graph, FramedElement starts) {
-		this(graph, new GremlinPipeline<>(starts.element()));
+		this(graph, new TotoromGremlinPipeline<>(starts.element()));
 	}
 
 	/**

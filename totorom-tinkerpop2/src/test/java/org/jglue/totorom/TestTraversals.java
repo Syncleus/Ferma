@@ -196,11 +196,11 @@ public class TestTraversals {
 	@Test
 	public void testPath() {
 
-		List<?> path = graph.v(1).out().path().next();
+		Path path = graph.v(1).out().path().next();
 
 		Assert.assertEquals(2, path.size());
-		Assert.assertTrue(path.get(0) instanceof TVertex);
-		Assert.assertTrue(path.get(1) instanceof TVertex);
+		Assert.assertTrue(path.get(0, TVertex.class) instanceof TVertex);
+		Assert.assertTrue(path.get(1, TVertex.class) instanceof TVertex);
 
 	}
 

@@ -10,7 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.jglue.totorom.internal.NonTerminatingSideEffectCapPipe;
+import org.jglue.totorom.internal.DivertPipe;
 import org.jglue.totorom.internal.TraversalFunctionPipe;
 
 import com.google.common.base.Function;
@@ -493,7 +493,7 @@ abstract class TraversalBase<T, Cap, SideEffect, Mark> implements Traversal<T, C
 
 		final FramingSideEffectFunction framingSideEffectFunction = new FramingSideEffectFunction(sideEffectFunction, graph());
 		pipeline().add(
-				new NonTerminatingSideEffectCapPipe((SideEffectPipe) FluentUtility.removePreviousPipes(pipeline(), 1).get(0),
+				new DivertPipe((SideEffectPipe) FluentUtility.removePreviousPipes(pipeline(), 1).get(0),
 						new TraversalFunction() {
 
 							@Override

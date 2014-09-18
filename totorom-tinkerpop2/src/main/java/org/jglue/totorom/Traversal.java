@@ -617,7 +617,7 @@ public interface Traversal<T, Cap, SideEffect, Mark> extends Iterator<T>, Iterab
 	 *            the path function of the PathPipe
 	 * @return the extended Pipeline
 	 */
-	public abstract Iterator<List<?>> path(TraversalFunction<?, ?>... pathFunctions);
+	public abstract Traversal<Path, ? , ?, Mark> path(TraversalFunction<?, ?>... pathFunctions);
 
 	/**
 	 * The objects of the named steps (via as) previous in the pipeline are

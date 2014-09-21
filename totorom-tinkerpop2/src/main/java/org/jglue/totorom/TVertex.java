@@ -165,6 +165,11 @@ public final class TVertex extends FramedVertex {
 	}
 
 	@Override
+	public TEdge addEdge(String label, FramedVertex inVertex) {
+		return super.addEdge(label, inVertex);
+	}
+
+	@Override
 	public void remove() {
 		super.remove();
 	}
@@ -173,4 +178,45 @@ public final class TVertex extends FramedVertex {
 	public VertexTraversal<?, ?, ?> traversal() {
 		return super.traversal();
 	};
+
+	@Override
+	public <K extends FramedVertex> FramedVertex setLinkBoth(Class<K> kind, String... labels) {
+		return super.setLinkBoth(kind, labels);
+	}
+
+	@Override
+	public void setLinkBoth(FramedVertex vertex, String... labels) {
+		super.setLinkBoth(vertex, labels);
+	}
+
+	@Override
+	public <K extends FramedVertex> FramedVertex setLinkIn(Class<K> kind, String... labels) {
+		return super.setLinkIn(kind, labels);
+	}
+
+	@Override
+	public void setLinkIn(FramedVertex vertex, String... labels) {
+		super.setLinkIn(vertex, labels);
+	}
+
+	@Override
+	public <K extends FramedVertex> FramedVertex setLinkOut(Class<K> kind, String... labels) {
+		return super.setLinkOut(kind, labels);
+	}
+
+	@Override
+	public void setLinkOut(FramedVertex vertex, String... labels) {
+		super.setLinkOut(vertex, labels);
+	}
+	
+	
+	@Override
+	public VertexTraversal<?, ?, ?> V() {
+		return super.V();
+	}
+	
+	@Override
+	public VertexTraversal<?, ?, ?> v(Object... ids) {
+		return super.v(ids);
+	}
 }

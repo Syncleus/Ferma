@@ -25,10 +25,11 @@ public abstract class FramedVertex extends FramedElement {
 	};
 
 	/**
-	 * @param label
-	 * @param inVertex
-	 * @param kind
-	 * @return
+	 * Add an edge using the supplied frame type.
+	 * @param label The label for the edge
+	 * @param inVertex The vertex to link to.
+	 * @param kind The kind of frame.
+	 * @return The new edge.
 	 */
 	protected <T extends FramedEdge> T addEdge(String label, FramedVertex inVertex, Class<T> kind) {
 
@@ -36,6 +37,16 @@ public abstract class FramedVertex extends FramedElement {
 		T framedEdge = graph().frameNewElement(edge, kind);
 		framedEdge.init();
 		return framedEdge;
+	}
+	
+	/**
+	 * Add an edge using a frame type of {@link TEdge}.
+	 * @param label The label for the edge
+	 * @param inVertex The vertex to link to.
+	 * @return The added edge.
+	 */
+	protected TEdge addEdge(String label, FramedVertex inVertex) {
+		return addEdge(label, inVertex, TEdge.class);
 	}
 
 	protected VertexTraversal<?, ?, ?> out(final int branchFactor, final String... labels) {

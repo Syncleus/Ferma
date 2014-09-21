@@ -106,6 +106,16 @@ public class FramedGraph {
 		framedVertex.init();
 		return framedVertex;
 	}
+	
+	/**
+	 * Add a vertex to the graph using a frame type of {@link TVertex}.
+	 * 
+	 * @return The framed vertex.
+	 */
+	public TVertex addVertex() {
+		
+		return addVertex(TVertex.class);
+	}
 
 	/**
 	 * Query over all vertices in the graph.

@@ -142,5 +142,27 @@ public class TestFramedGraph {
         Mockito.verify(transactionalGraph).rollback();
     }
     
+
+    @Test
+    public void testUntypedFrames() {
+        Graph g = new TinkerGraph();
+        FramedGraph fg = new FramedGraph(g);
+        TVertex p1 = fg.addVertex();
+        p1.setProperty("name", "Bryn");
+
+        TVertex p2 = fg.addVertex();
+        p2.setProperty("name", "Julia");
+        TEdge knows = p1.addEdge("knows", p2);
+        knows.setProperty("years", 15);
+
+        TVertex bryn = fg.V().has("name", "Bryn").next();
+        
+        
+        Assert.assertEquals("Bryn", bryn.getProperty("name"));
+        Assert.assertEquals(15, bryn.outE("knows").toList().get(0).getProperty("years"));
+   
+        Collection<Integer> knowsCollection = fg.V().has("name", "Julia").bothE().property("years", Integer.class).aggregate().cap();
+        Assert.assertEquals(1, knowsCollection.size());
+    }
     
 }

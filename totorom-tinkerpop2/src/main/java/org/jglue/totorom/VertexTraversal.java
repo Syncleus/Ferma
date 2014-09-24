@@ -440,6 +440,9 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 
 	@Override
 	public abstract VertexTraversal<?, ?, Mark> range(int low, int high);
+	
+	@Override
+	public abstract VertexTraversal<?, ?, Mark> limit(int limit);
 
 	/**
 	 * Will emit the object only if it is in the provided collection.

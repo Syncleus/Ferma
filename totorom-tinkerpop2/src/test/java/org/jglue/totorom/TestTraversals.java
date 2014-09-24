@@ -472,4 +472,10 @@ public class TestTraversals {
 		Person defaultValue = new Person(); 
 		Assert.assertEquals(defaultValue, graph.v(6).out("knows").nextOrDefault(Person.class, defaultValue));
 	}
+	
+	@Test
+	public void testLimit() {
+		Assert.assertEquals(1, graph.V().limit(1).count());
+		Assert.assertEquals(2, graph.V().limit(2).count());
+	}
 }

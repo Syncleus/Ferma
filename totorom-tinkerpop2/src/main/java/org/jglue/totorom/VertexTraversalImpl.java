@@ -355,7 +355,7 @@ abstract class VertexTraversalImpl extends TraversalBase implements VertexTraver
 	public FramedVertex next(Class kind) {
 		return (FramedVertex) graph().frameElement((Element) pipeline().next(), kind);
 	}
-	
+
 	@Override
 	public FramedVertex nextOrDefault(Class kind, FramedVertex defaultValue) {
 		if (pipeline().hasNext()) {
@@ -587,5 +587,11 @@ abstract class VertexTraversalImpl extends TraversalBase implements VertexTraver
 	@Override
 	public VertexTraversal loop(TraversalFunction input, int depth) {
 		return (VertexTraversal) super.loop(input, depth);
+
+	}
+
+	@Override
+	public VertexTraversal limit(int limit) {
+		return (VertexTraversal) super.limit(limit);
 	}
 }

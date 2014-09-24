@@ -493,16 +493,15 @@ abstract class TraversalBase<T, Cap, SideEffect, Mark> implements Traversal<T, C
 
 		final FramingSideEffectFunction framingSideEffectFunction = new FramingSideEffectFunction(sideEffectFunction, graph());
 		pipeline().add(
-				new DivertPipe((SideEffectPipe) FluentUtility.removePreviousPipes(pipeline(), 1).get(0),
-						new TraversalFunction() {
+				new DivertPipe((SideEffectPipe) FluentUtility.removePreviousPipes(pipeline(), 1).get(0), new TraversalFunction() {
 
-							@Override
-							public Object compute(Object argument) {
-								framingSideEffectFunction.execute(argument);
-								return null;
-							}
+					@Override
+					public Object compute(Object argument) {
+						framingSideEffectFunction.execute(argument);
+						return null;
+					}
 
-						}));
+				}));
 		return this;
 	}
 
@@ -578,7 +577,7 @@ abstract class TraversalBase<T, Cap, SideEffect, Mark> implements Traversal<T, C
 		}
 		return (T) e;
 	}
-	
+
 	@Override
 	public T nextOrDefault(T defaultValue) {
 		if (pipeline().hasNext()) {
@@ -744,5 +743,10 @@ abstract class TraversalBase<T, Cap, SideEffect, Mark> implements Traversal<T, C
 
 		return this;
 
+	}
+
+	@Override
+	public Traversal<T, ?, ?, Mark> limit(int limit) {
+		return range(0, limit - 1);
 	}
 }

@@ -158,6 +158,15 @@ public interface Traversal<T, Cap, SideEffect, Mark> extends Iterator<T>, Iterab
 	 * @return the extended Pipeline
 	 */
 	public abstract Traversal<T, ?, ?, Mark> range(int low, int high);
+	
+	
+	/**
+	 * Limit the number of elements returned.
+	 *
+	 * @param limit the number of elements to return.
+	 * @return the extended Pipeline
+	 */
+	public abstract Traversal<T, ?, ?, Mark> limit(int limit);
 
 	/**
 	 * Will emit the object only if it is in the provided collection.

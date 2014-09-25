@@ -215,6 +215,9 @@ public interface EdgeTraversal<Cap, SideEffect, Mark> extends Traversal<TEdge, C
 
 	@Override
 	public abstract EdgeTraversal<?, ?, Mark> range(int low, int high);
+	
+	@Override
+	public abstract EdgeTraversal<?, ?, Mark> limit(int limit);
 
 	@Override
 	public abstract EdgeTraversal<?, ?, Mark> retain(Iterable<?> collection);

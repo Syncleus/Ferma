@@ -102,8 +102,6 @@ Using TypeResolver.Java will save the type of Java class the element was created
       Assert.assertEquals(Person.class, julia.getClass());
     }
 
-Here's a nice blog post talking about Totorom
-* [The new graph database framing ally Totorom](http://tjadclark.com/blog/article/13-the-new-graph-database-framing-ally-totorom)
 
 This project uses code derived from the [Tinkerpop](http://www.tinkerpop.com/) project under the apache licence and or tinkerpop licence.
      

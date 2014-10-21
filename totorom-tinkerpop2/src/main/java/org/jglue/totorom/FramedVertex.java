@@ -17,7 +17,9 @@ import com.tinkerpop.blueprints.Vertex;
  */
 public abstract class FramedVertex extends FramedElement {
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.jglue.totorom.FramedElement#element()
 	 */
 	protected Vertex element() {
@@ -26,9 +28,13 @@ public abstract class FramedVertex extends FramedElement {
 
 	/**
 	 * Add an edge using the supplied frame type.
-	 * @param label The label for the edge
-	 * @param inVertex The vertex to link to.
-	 * @param kind The kind of frame.
+	 * 
+	 * @param label
+	 *            The label for the edge
+	 * @param inVertex
+	 *            The vertex to link to.
+	 * @param kind
+	 *            The kind of frame.
 	 * @return The new edge.
 	 */
 	protected <T extends FramedEdge> T addEdge(String label, FramedVertex inVertex, Class<T> kind) {
@@ -38,11 +44,14 @@ public abstract class FramedVertex extends FramedElement {
 		framedEdge.init();
 		return framedEdge;
 	}
-	
+
 	/**
 	 * Add an edge using a frame type of {@link TEdge}.
-	 * @param label The label for the edge
-	 * @param inVertex The vertex to link to.
+	 * 
+	 * @param label
+	 *            The label for the edge
+	 * @param inVertex
+	 *            The vertex to link to.
 	 * @return The added edge.
 	 */
 	protected TEdge addEdge(String label, FramedVertex inVertex) {
@@ -98,9 +107,13 @@ public abstract class FramedVertex extends FramedElement {
 	}
 
 	/**
-	 * Create edges from the framed vertex to the supplied vertex with the supplied labels
-	 * @param vertex The vertex to link to.
-	 * @param labels The labels for the edges.
+	 * Create edges from the framed vertex to the supplied vertex with the
+	 * supplied labels
+	 * 
+	 * @param vertex
+	 *            The vertex to link to.
+	 * @param labels
+	 *            The labels for the edges.
 	 */
 	protected void linkOut(FramedVertex vertex, String... labels) {
 		for (String label : labels) {
@@ -109,9 +122,13 @@ public abstract class FramedVertex extends FramedElement {
 	}
 
 	/**
-	 * Create edges from the supplied vertex to the framed vertex with the supplied labels
-	 * @param vertex The vertex to link from.
-	 * @param labels The labels for the edges.
+	 * Create edges from the supplied vertex to the framed vertex with the
+	 * supplied labels
+	 * 
+	 * @param vertex
+	 *            The vertex to link from.
+	 * @param labels
+	 *            The labels for the edges.
 	 */
 	protected void linkIn(FramedVertex vertex, String... labels) {
 		for (String label : labels) {
@@ -120,9 +137,13 @@ public abstract class FramedVertex extends FramedElement {
 	}
 
 	/**
-	 * Create edges from the supplied vertex to the framed vertex and vice versa with the supplied labels
-	 * @param vertex The vertex to link to and from.
-	 * @param labels The labels for the edges.
+	 * Create edges from the supplied vertex to the framed vertex and vice versa
+	 * with the supplied labels
+	 * 
+	 * @param vertex
+	 *            The vertex to link to and from.
+	 * @param labels
+	 *            The labels for the edges.
 	 */
 	protected void linkBoth(FramedVertex vertex, String... labels) {
 		for (String label : labels) {
@@ -132,8 +153,11 @@ public abstract class FramedVertex extends FramedElement {
 
 	/**
 	 * Remove all edges to the supplied vertex with the supplied labels.
-	 * @param vertex The vertex to removed the edges to.
-	 * @param labels The labels of the edges.
+	 * 
+	 * @param vertex
+	 *            The vertex to removed the edges to.
+	 * @param labels
+	 *            The labels of the edges.
 	 */
 	protected void unlinkOut(FramedVertex vertex, String... labels) {
 		if (vertex != null) {
@@ -145,8 +169,11 @@ public abstract class FramedVertex extends FramedElement {
 
 	/**
 	 * Remove all edges to the supplied vertex with the supplied labels.
-	 * @param vertex The vertex to removed the edges from.
-	 * @param labels The labels of the edges.
+	 * 
+	 * @param vertex
+	 *            The vertex to removed the edges from.
+	 * @param labels
+	 *            The labels of the edges.
 	 */
 	protected void unlinkIn(FramedVertex vertex, String... labels) {
 		if (vertex != null) {
@@ -158,8 +185,11 @@ public abstract class FramedVertex extends FramedElement {
 
 	/**
 	 * Remove all edges to/from the supplied vertex with the supplied labels.
-	 * @param vertex The vertex to removed the edges to/from.
-	 * @param labels The labels of the edges.
+	 * 
+	 * @param vertex
+	 *            The vertex to removed the edges to/from.
+	 * @param labels
+	 *            The labels of the edges.
 	 */
 	protected void unlinkBoth(FramedVertex vertex, String... labels) {
 		if (vertex != null) {
@@ -169,11 +199,14 @@ public abstract class FramedVertex extends FramedElement {
 		}
 	}
 
-	
 	/**
-	 * Remove all out edges with the labels and then add a single edge to the supplied vertex.
-	 * @param vertex the vertex to link to.
-	 * @param labels The labels of the edges.
+	 * Remove all out edges with the labels and then add a single edge to the
+	 * supplied vertex.
+	 * 
+	 * @param vertex
+	 *            the vertex to link to.
+	 * @param labels
+	 *            The labels of the edges.
 	 */
 	protected void setLinkOut(FramedVertex vertex, String... labels) {
 		unlinkOut(null, labels);
@@ -181,11 +214,15 @@ public abstract class FramedVertex extends FramedElement {
 			linkOut(vertex, labels);
 		}
 	}
-	
+
 	/**
-	 * Remove all in edges with the labels and then add a single edge from the supplied vertex.
-	 * @param vertex the vertex to link from.
-	 * @param labels The labels of the edges.
+	 * Remove all in edges with the labels and then add a single edge from the
+	 * supplied vertex.
+	 * 
+	 * @param vertex
+	 *            the vertex to link from.
+	 * @param labels
+	 *            The labels of the edges.
 	 */
 	protected void setLinkIn(FramedVertex vertex, String... labels) {
 		unlinkIn(null, labels);
@@ -194,11 +231,14 @@ public abstract class FramedVertex extends FramedElement {
 		}
 	}
 
-	
 	/**
-	 * Remove all in edges with the labels and then add a edges from the supplied vertex and to the supplied vertex. 
-	 * @param vertex the vertex to link from.
-	 * @param labels The labels of the edges.
+	 * Remove all in edges with the labels and then add a edges from the
+	 * supplied vertex and to the supplied vertex.
+	 * 
+	 * @param vertex
+	 *            the vertex to link from.
+	 * @param labels
+	 *            The labels of the edges.
 	 */
 	protected void setLinkBoth(FramedVertex vertex, String... labels) {
 		unlinkBoth(null, labels);
@@ -208,9 +248,13 @@ public abstract class FramedVertex extends FramedElement {
 	}
 
 	/**
-	 * Remove all out edges with the labels and then add a single edge to a new vertex.
-	 * @param vertex the vertex to link to.
-	 * @param labels The labels of the edges.
+	 * Remove all out edges with the labels and then add a single edge to a new
+	 * vertex.
+	 * 
+	 * @param vertex
+	 *            the vertex to link to.
+	 * @param labels
+	 *            The labels of the edges.
 	 */
 	protected <K extends FramedVertex> FramedVertex setLinkOut(Class<K> kind, String... labels) {
 		K vertex = graph().addVertex(kind);
@@ -219,9 +263,13 @@ public abstract class FramedVertex extends FramedElement {
 	}
 
 	/**
-	 * Remove all out edges with the labels and then add a single edge from a new vertex.
-	 * @param vertex the vertex to link to.
-	 * @param labels The labels of the edges.
+	 * Remove all out edges with the labels and then add a single edge from a
+	 * new vertex.
+	 * 
+	 * @param vertex
+	 *            the vertex to link to.
+	 * @param labels
+	 *            The labels of the edges.
 	 */
 	protected <K extends FramedVertex> FramedVertex setLinkIn(Class<K> kind, String... labels) {
 		K vertex = graph().addVertex(kind);
@@ -230,9 +278,13 @@ public abstract class FramedVertex extends FramedElement {
 	}
 
 	/**
-	 * Remove all out edges with the labels and then add edges to/from a new vertex.
-	 * @param vertex the vertex to link to.
-	 * @param labels The labels of the edges.
+	 * Remove all out edges with the labels and then add edges to/from a new
+	 * vertex.
+	 * 
+	 * @param vertex
+	 *            the vertex to link to.
+	 * @param labels
+	 *            The labels of the edges.
 	 */
 	protected <K extends FramedVertex> FramedVertex setLinkBoth(Class<K> kind, String... labels) {
 		K vertex = graph().addVertex(kind);
@@ -251,6 +303,7 @@ public abstract class FramedVertex extends FramedElement {
 
 	/**
 	 * Output the vertex as json.
+	 * 
 	 * @return
 	 */
 	public JsonObject toJson() {
@@ -278,5 +331,14 @@ public abstract class FramedVertex extends FramedElement {
 	public String toString() {
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		return gson.toJson(toJson());
+	}
+
+	/**
+	 * Reframe this element as a different type of frame.
+	 * @param kind The new kind of frame.
+	 * @return The new frame
+	 */
+	protected <T extends FramedVertex> T reframe(Class<T> kind) {
+		return graph().frameElement(element(), kind);
 	}
 }

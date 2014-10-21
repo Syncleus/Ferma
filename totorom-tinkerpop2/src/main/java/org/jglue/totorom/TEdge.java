@@ -91,6 +91,8 @@ public final class TEdge extends FramedEdge {
 		return (N) super.getId(clazz);
 	}
 
-	
+	public <T extends FramedEdge> T reframe(Class<T> kind) {
+		return graph().frameElement(element(), kind);
+	}
 	
 }

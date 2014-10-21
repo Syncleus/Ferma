@@ -90,4 +90,10 @@ public class TestFramedElement {
     	Assert.assertEquals(1, p1.V().count());
     }
     
+    @Test
+    public void testReframe() {
+    	TVertex v1 = p1.reframe(TVertex.class);
+    	Assert.assertEquals(p1.getId(), v1.getId());
+    }
+    
 }

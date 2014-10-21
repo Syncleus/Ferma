@@ -86,6 +86,9 @@ abstract class TraversalBase<T, Cap, SideEffect, Mark> implements Traversal<T, C
 	}
 
 	public Traversal has(String key, Object value) {
+		if(value instanceof Enum) {
+			value = value.toString();
+		}
 		pipeline().has(key, value);
 		return this;
 	}
@@ -99,6 +102,9 @@ abstract class TraversalBase<T, Cap, SideEffect, Mark> implements Traversal<T, C
 	}
 
 	public Traversal has(String key, Predicate predicate, Object value) {
+		if(value instanceof Enum) {
+			value = value.toString();
+		}
 		pipeline().has(key, predicate, value);
 		return this;
 	}
@@ -109,11 +115,20 @@ abstract class TraversalBase<T, Cap, SideEffect, Mark> implements Traversal<T, C
 	}
 
 	public Traversal hasNot(String key, Object value) {
+		if(value instanceof Enum) {
+			value = value.toString();
+		}
 		pipeline().hasNot(key, value);
 		return this;
 	}
 
 	public Traversal interval(String key, Comparable startValue, Comparable endValue) {
+		if(startValue instanceof Enum) {
+			startValue = startValue.toString();
+		}
+		if(endValue instanceof Enum) {
+			endValue = endValue.toString();
+		}
 		pipeline().interval(key, startValue, endValue);
 		return this;
 	}

@@ -7,7 +7,15 @@ import com.tinkerpop.gremlin.Tokens.T;
 public class Path extends ArrayList<Object> {
 
 	public <T> T get(int index, Class<T> clazz) {
-		return (T) get(index);
+		
+		T object = (T) get(index);
+		if(object instanceof TVertex) {
+			return (T) ((TVertex) object).reframe((Class)clazz);
+		}
+		if(object instanceof TEdge) {
+			return (T) ((TEdge) object).reframe((Class)clazz);
+		}
+		return object;
 	}
 
 }

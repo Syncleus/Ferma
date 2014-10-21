@@ -75,9 +75,16 @@ public abstract class FramedElement {
 	 * 
 	 * @param name
 	 *            The name of the property.
+	 * @param type
+	 *            The type of the property.
+	 * 
 	 * @return the value of the property or null if none was present.
 	 */
-	protected <T> T getProperty(String name, Class<T> clazz) {
+	protected <T> T getProperty(String name, Class<T> type) {
+		if (type.isEnum()) {
+			return (T) Enum.valueOf((Class<Enum>) type, (String) element.getProperty(name));
+		}
+
 		return element.getProperty(name);
 	}
 
@@ -93,7 +100,11 @@ public abstract class FramedElement {
 		if (value == null) {
 			element.removeProperty(name);
 		} else {
-			element.setProperty(name, value);
+			if (value instanceof Enum) {
+				element.setProperty(name, value.toString());
+			} else {
+				element.setProperty(name, value);
+			}
 		}
 	}
 
@@ -169,4 +180,6 @@ public abstract class FramedElement {
 
 		return element().toString();
 	}
+	
+	
 }

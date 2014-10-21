@@ -219,4 +219,8 @@ public final class TVertex extends FramedVertex {
 	public VertexTraversal<?, ?, ?> v(Object... ids) {
 		return super.v(ids);
 	}
+	
+	public <T extends FramedVertex> T reframe(Class<T> kind) {
+		return graph().frameElement(element(), kind);
+	}
 }

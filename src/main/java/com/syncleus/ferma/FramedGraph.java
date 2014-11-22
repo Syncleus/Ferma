@@ -118,6 +118,29 @@ public class FramedGraph {
 	}
 
 	/**
+	 * Add a edge to the graph
+	 *
+	 * @param kind
+	 *            The kind of the frame.
+	 * @return The framed edge.
+	 */
+	public <T extends FramedEdge> T addEdge(final FramedVertex source, final FramedVertex destination, final String label, Class<T> kind) {
+		T framedEdge = frameNewElement(this.delegate.addEdge(null, source.element(), destination.element(), label), kind);
+		framedEdge.init();
+		return framedEdge;
+	}
+
+	/**
+	 * Add a edge to the graph using a frame type of {@link TEdge}.
+	 *
+	 * @return The framed edge.
+	 */
+	public TEdge addEdge(final FramedVertex source, final FramedVertex destination, final String label) {
+
+		return addEdge(source, destination, label, TEdge.class);
+	}
+
+	/**
 	 * Query over all vertices in the graph.
 	 * 
 	 * @return The query.

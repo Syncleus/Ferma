@@ -235,7 +235,7 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	 *            The type of frame for the element.
 	 * @return the next emitted object
 	 */
-	public <N extends FramedVertex> N next(Class<N> kind);
+	public <N> N next(Class<N> kind);
 
 	/**
 	 * Get the next object emitted from the pipeline. If no such object exists,
@@ -247,7 +247,7 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	 *            The object to return if no next object exists.
 	 * @return the next emitted object
 	 */
-	public <N extends FramedVertex> N nextOrDefault(Class<N> kind, N defaultValue);
+	public <N> N nextOrDefault(Class<N> kind, N defaultValue);
 
 	/**
 	 * Get the next object emitted from the pipeline. If no such object exists a
@@ -265,7 +265,7 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	 *            The type of frame for the element.
 	 * @return the next emitted object
 	 */
-	public <N extends FramedVertex> N nextOrAdd(Class<N> kind);
+	public <N> N nextOrAdd(Class<N> kind);
 
 	/**
 	 * Return the next X objects in the traversal as a list.
@@ -276,7 +276,7 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	 *            the type of frame to for each element.
 	 * @return a list of X objects (if X objects occur)
 	 */
-	public <N extends FramedVertex> List<N> next(int amount, Class<N> kind);
+	public <N> List<N> next(int amount, Class<N> kind);
 
 	/**
 	 * Return an iterator of framed elements.
@@ -285,7 +285,7 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	 *            The kind of framed elements to return.
 	 * @return An iterator of framed elements.
 	 */
-	public <N extends FramedVertex> Iterable<N> frame(Class<N> kind);
+	public <N> Iterable<N> frame(Class<N> kind);
 
 	/**
 	 * Return a list of all the objects in the pipeline.
@@ -294,7 +294,7 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	 *            The kind of framed elements to return.
 	 * @return a list of all the objects
 	 */
-	public <N extends FramedVertex> List<N> toList(Class<N> kind);
+	public <N> List<N> toList(Class<N> kind);
 
 	/**
 	 * Emit the incoming vertex, but have other vertex provide an outgoing edge

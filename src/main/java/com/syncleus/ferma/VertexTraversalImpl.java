@@ -357,7 +357,7 @@ abstract class VertexTraversalImpl extends TraversalBase implements VertexTraver
 	}
 
 	@Override
-	public FramedVertex nextOrDefault(Class kind, FramedVertex defaultValue) {
+	public Object nextOrDefault(Class kind, Object defaultValue) {
 		if (pipeline().hasNext()) {
 			return next(kind);
 		} else {

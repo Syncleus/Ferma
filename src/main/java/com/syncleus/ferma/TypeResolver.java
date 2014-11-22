@@ -1,5 +1,6 @@
 package com.syncleus.ferma;
 
+import com.syncleus.ferma.annotations.AnnotationTypeResolver;
 import com.tinkerpop.blueprints.Element;
 
 /**

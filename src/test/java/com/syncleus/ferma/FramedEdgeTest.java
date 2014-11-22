@@ -11,7 +11,7 @@ import com.tinkerpop.blueprints.impls.tg.TinkerGraph;
  * @author Bryn Cooke (http://jglue.org)
  */
 
-public class TestFramedEdge {
+public class FramedEdgeTest {
 
 	
 	private FramedGraph fg;

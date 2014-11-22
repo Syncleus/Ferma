@@ -5,8 +5,6 @@ import com.tinkerpop.blueprints.Element;
 /**
  * Type resolvers resolve the frame type from the element being requested and
  * may optionally store metadata about the frame type on the element.
- * 
- * @author Bryn Cooke (http://jglue.org)
  */
 public interface TypeResolver {
 	/**
@@ -18,7 +16,7 @@ public interface TypeResolver {
 	 *            The kind of frame that is being requested by the client code.
 	 * @return The kind of frame
 	 */
-	public <T extends FramedElement> Class<T> resolve(Element element, Class<T> kind);
+	public <T> Class<T> resolve(Element element, Class<T> kind);
 
 	/**
 	 * Called when a new element is created on the graph. Initialization can be
@@ -30,19 +28,19 @@ public interface TypeResolver {
 	 * @param kind
 	 *            The kind of frame that was resolved.
 	 */
-	public <T extends FramedElement> void init(Element element, Class<T> kind);
+	public <T> void init(Element element, Class<T> kind);
 
 	/**
 	 * This type resolver simply returns the type requested by the client.
 	 */
 	public static final TypeResolver Untyped = new TypeResolver() {
 		@Override
-		public <T extends FramedElement> Class<T> resolve(Element element, Class<T> kind) {
+		public <T> Class<T> resolve(Element element, Class<T> kind) {
 			return kind;
 		}
 
 		@Override
-		public <T extends FramedElement> void init(Element element, Class<T> kind) {
+		public <T> void init(Element element, Class<T> kind) {
 
 		}
 	};
@@ -54,7 +52,7 @@ public interface TypeResolver {
 	public static final TypeResolver Java = new TypeResolver() {
 		@SuppressWarnings("unchecked")
 		@Override
-		public <T extends FramedElement> Class<T> resolve(Element element, Class<T> kind) {
+		public <T> Class<T> resolve(Element element, Class<T> kind) {
 			String clazz = element.getProperty("java_class");
 			if (clazz != null) {
 				try {
@@ -67,7 +65,7 @@ public interface TypeResolver {
 		}
 
 		@Override
-		public <T extends FramedElement> void init(Element element, Class<T> kind) {
+		public <T> void init(Element element, Class<T> kind) {
 			String clazz = element.getProperty("java_class");
 			if (clazz == null) {
 				element.setProperty("java_class", kind.getName());

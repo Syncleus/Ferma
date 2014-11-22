@@ -22,7 +22,7 @@ public abstract class FramedVertex extends FramedElement {
 	 * 
 	 * @see FramedElement#element()
 	 */
-	protected Vertex element() {
+	public Vertex element() {
 		return (Vertex) super.element();
 	};
 
@@ -37,7 +37,7 @@ public abstract class FramedVertex extends FramedElement {
 	 *            The kind of frame.
 	 * @return The new edge.
 	 */
-	protected <T extends FramedEdge> T addEdge(String label, FramedVertex inVertex, Class<T> kind) {
+	public <T extends FramedEdge> T addEdge(String label, FramedVertex inVertex, Class<T> kind) {
 
 		Edge edge = element().addEdge(label, inVertex.element());
 		T framedEdge = graph().frameNewElement(edge, kind);
@@ -54,55 +54,55 @@ public abstract class FramedVertex extends FramedElement {
 	 *            The vertex to link to.
 	 * @return The added edge.
 	 */
-	protected TEdge addEdge(String label, FramedVertex inVertex) {
+	public TEdge addEdge(String label, FramedVertex inVertex) {
 		return addEdge(label, inVertex, TEdge.class);
 	}
 
-	protected VertexTraversal<?, ?, ?> out(final int branchFactor, final String... labels) {
+	public VertexTraversal<?, ?, ?> out(final int branchFactor, final String... labels) {
 		return new TraversalImpl(graph(), this).castToVertices().out(branchFactor, labels);
 	}
 
-	protected VertexTraversal<?, ?, ?> out(final String... labels) {
+	public VertexTraversal<?, ?, ?> out(final String... labels) {
 		return new TraversalImpl(graph(), this).castToVertices().out(labels);
 	}
 
-	protected VertexTraversal<?, ?, ?> in(final int branchFactor, final String... labels) {
+	public VertexTraversal<?, ?, ?> in(final int branchFactor, final String... labels) {
 		return new TraversalImpl(graph(), this).castToVertices().in(branchFactor, labels);
 	}
 
-	protected VertexTraversal<?, ?, ?> in(final String... labels) {
+	public VertexTraversal<?, ?, ?> in(final String... labels) {
 		return new TraversalImpl(graph(), this).castToVertices().in(labels);
 	}
 
-	protected VertexTraversal<?, ?, ?> both(final int branchFactor, final String... labels) {
+	public VertexTraversal<?, ?, ?> both(final int branchFactor, final String... labels) {
 		return new TraversalImpl(graph(), this).castToVertices().both(branchFactor, labels);
 	}
 
-	protected VertexTraversal<?, ?, ?> both(final String... labels) {
+	public VertexTraversal<?, ?, ?> both(final String... labels) {
 		return new TraversalImpl(graph(), this).castToVertices().both(labels);
 	}
 
-	protected EdgeTraversal<?, ?, ?> outE(final int branchFactor, final String... labels) {
+	public EdgeTraversal<?, ?, ?> outE(final int branchFactor, final String... labels) {
 		return new TraversalImpl(graph(), this).castToVertices().outE(branchFactor, labels);
 	}
 
-	protected EdgeTraversal<?, ?, ?> outE(final String... labels) {
+	public EdgeTraversal<?, ?, ?> outE(final String... labels) {
 		return new TraversalImpl(graph(), this).castToVertices().outE(labels);
 	}
 
-	protected EdgeTraversal<?, ?, ?> inE(final int branchFactor, final String... labels) {
+	public EdgeTraversal<?, ?, ?> inE(final int branchFactor, final String... labels) {
 		return new TraversalImpl(graph(), this).castToVertices().inE(branchFactor, labels);
 	}
 
-	protected EdgeTraversal<?, ?, ?> inE(final String... labels) {
+	public EdgeTraversal<?, ?, ?> inE(final String... labels) {
 		return new TraversalImpl(graph(), this).castToVertices().inE(labels);
 	}
 
-	protected EdgeTraversal<?, ?, ?> bothE(final int branchFactor, final String... labels) {
+	public EdgeTraversal<?, ?, ?> bothE(final int branchFactor, final String... labels) {
 		return new TraversalImpl(graph(), this).castToVertices().bothE(branchFactor, labels);
 	}
 
-	protected EdgeTraversal<?, ?, ?> bothE(final String... labels) {
+	public EdgeTraversal<?, ?, ?> bothE(final String... labels) {
 		return new TraversalImpl(graph(), this).castToVertices().bothE(labels);
 	}
 
@@ -115,7 +115,7 @@ public abstract class FramedVertex extends FramedElement {
 	 * @param labels
 	 *            The labels for the edges.
 	 */
-	protected void linkOut(FramedVertex vertex, String... labels) {
+	public void linkOut(FramedVertex vertex, String... labels) {
 		for (String label : labels) {
 			traversal().linkOut(label, vertex).iterate();
 		}
@@ -130,7 +130,7 @@ public abstract class FramedVertex extends FramedElement {
 	 * @param labels
 	 *            The labels for the edges.
 	 */
-	protected void linkIn(FramedVertex vertex, String... labels) {
+	public void linkIn(FramedVertex vertex, String... labels) {
 		for (String label : labels) {
 			traversal().linkIn(label, vertex).iterate();
 		}
@@ -145,7 +145,7 @@ public abstract class FramedVertex extends FramedElement {
 	 * @param labels
 	 *            The labels for the edges.
 	 */
-	protected void linkBoth(FramedVertex vertex, String... labels) {
+	public void linkBoth(FramedVertex vertex, String... labels) {
 		for (String label : labels) {
 			traversal().linkBoth(label, vertex).iterate();
 		}
@@ -159,7 +159,7 @@ public abstract class FramedVertex extends FramedElement {
 	 * @param labels
 	 *            The labels of the edges.
 	 */
-	protected void unlinkOut(FramedVertex vertex, String... labels) {
+	public void unlinkOut(FramedVertex vertex, String... labels) {
 		if (vertex != null) {
 			outE(labels).mark().inV().retain(vertex).back().removeAll();
 		} else {
@@ -175,7 +175,7 @@ public abstract class FramedVertex extends FramedElement {
 	 * @param labels
 	 *            The labels of the edges.
 	 */
-	protected void unlinkIn(FramedVertex vertex, String... labels) {
+	public void unlinkIn(FramedVertex vertex, String... labels) {
 		if (vertex != null) {
 			inE(labels).mark().outV().retain(vertex).back().removeAll();
 		} else {
@@ -191,7 +191,7 @@ public abstract class FramedVertex extends FramedElement {
 	 * @param labels
 	 *            The labels of the edges.
 	 */
-	protected void unlinkBoth(FramedVertex vertex, String... labels) {
+	public void unlinkBoth(FramedVertex vertex, String... labels) {
 		if (vertex != null) {
 			bothE(labels).mark().bothV().retain(vertex).back().removeAll();
 		} else {
@@ -208,7 +208,7 @@ public abstract class FramedVertex extends FramedElement {
 	 * @param labels
 	 *            The labels of the edges.
 	 */
-	protected void setLinkOut(FramedVertex vertex, String... labels) {
+	public void setLinkOut(FramedVertex vertex, String... labels) {
 		unlinkOut(null, labels);
 		if (vertex != null) {
 			linkOut(vertex, labels);
@@ -224,7 +224,7 @@ public abstract class FramedVertex extends FramedElement {
 	 * @param labels
 	 *            The labels of the edges.
 	 */
-	protected void setLinkIn(FramedVertex vertex, String... labels) {
+	public void setLinkIn(FramedVertex vertex, String... labels) {
 		unlinkIn(null, labels);
 		if (vertex != null) {
 			linkIn(vertex, labels);
@@ -240,7 +240,7 @@ public abstract class FramedVertex extends FramedElement {
 	 * @param labels
 	 *            The labels of the edges.
 	 */
-	protected void setLinkBoth(FramedVertex vertex, String... labels) {
+	public void setLinkBoth(FramedVertex vertex, String... labels) {
 		unlinkBoth(null, labels);
 		if (vertex != null) {
 			linkBoth(vertex, labels);
@@ -256,7 +256,7 @@ public abstract class FramedVertex extends FramedElement {
 	 * @param labels
 	 *            The labels of the edges.
 	 */
-	protected <K extends FramedVertex> FramedVertex setLinkOut(Class<K> kind, String... labels) {
+	public <K extends FramedVertex> FramedVertex setLinkOut(Class<K> kind, String... labels) {
 		K vertex = graph().addVertex(kind);
 		setLinkOut(vertex, labels);
 		return vertex;
@@ -271,7 +271,7 @@ public abstract class FramedVertex extends FramedElement {
 	 * @param labels
 	 *            The labels of the edges.
 	 */
-	protected <K extends FramedVertex> FramedVertex setLinkIn(Class<K> kind, String... labels) {
+	public <K extends FramedVertex> FramedVertex setLinkIn(Class<K> kind, String... labels) {
 		K vertex = graph().addVertex(kind);
 		setLinkIn(vertex, labels);
 		return vertex;
@@ -286,7 +286,7 @@ public abstract class FramedVertex extends FramedElement {
 	 * @param labels
 	 *            The labels of the edges.
 	 */
-	protected <K extends FramedVertex> FramedVertex setLinkBoth(Class<K> kind, String... labels) {
+	public <K extends FramedVertex> FramedVertex setLinkBoth(Class<K> kind, String... labels) {
 		K vertex = graph().addVertex(kind);
 		setLinkBoth(vertex, labels);
 		return vertex;
@@ -297,7 +297,7 @@ public abstract class FramedVertex extends FramedElement {
 	 * 
 	 * @return
 	 */
-	protected VertexTraversal<?, ?, ?> traversal() {
+	public VertexTraversal<?, ?, ?> traversal() {
 		return new TraversalImpl(graph(), this).castToVertices();
 	}
 
@@ -338,7 +338,7 @@ public abstract class FramedVertex extends FramedElement {
 	 * @param kind The new kind of frame.
 	 * @return The new frame
 	 */
-	protected <T extends FramedVertex> T reframe(Class<T> kind) {
+	public <T extends FramedVertex> T reframe(Class<T> kind) {
 		return graph().frameElement(element(), kind);
 	}
 }

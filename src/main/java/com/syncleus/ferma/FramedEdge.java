@@ -12,35 +12,35 @@ import com.tinkerpop.blueprints.Edge;
  */
 public abstract class FramedEdge extends FramedElement {
 
-	protected Edge element() {
+	public Edge element() {
 		return (Edge) super.element();
 	};
 
 	/**
 	 * @return The label associated with this edge
 	 */
-	protected String getLabel() {
+	public String getLabel() {
 		return element().getLabel();
 	}
 
 	/**
 	 * @return The in vertex for this edge.
 	 */
-	protected VertexTraversal<?, ?, ?> inV() {
+	public VertexTraversal<?, ?, ?> inV() {
 		return new TraversalImpl(graph(), this).castToEdges().inV();
 	}
 
 	/**
 	 * @return The out vertex of this edge.
 	 */
-	protected VertexTraversal<?, ?, ?> outV() {
+	public VertexTraversal<?, ?, ?> outV() {
 		return new TraversalImpl(graph(), this).castToEdges().outV();
 	}
 
 	/**
 	 * @return The vertices for this edge.
 	 */
-	protected VertexTraversal<?, ?, ?> bothV() {
+	public VertexTraversal<?, ?, ?> bothV() {
 		return new TraversalImpl(graph(), this).castToEdges().bothV();
 	}
 
@@ -49,7 +49,7 @@ public abstract class FramedEdge extends FramedElement {
 	 * 
 	 * @return
 	 */
-	protected EdgeTraversal<?, ?, ?> traversal() {
+	public EdgeTraversal<?, ?, ?> traversal() {
 		return new TraversalImpl(graph(), this).castToEdges();
 	}
 

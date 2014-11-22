@@ -270,7 +270,7 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	/**
 	 * Return the next X objects in the traversal as a list.
 	 * 
-	 * @param number
+	 * @param amount
 	 *            the number of objects to return
 	 * @param kind
 	 *            the type of frame to for each element.

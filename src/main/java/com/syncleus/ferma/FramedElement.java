@@ -27,35 +27,35 @@ public abstract class FramedElement {
 	/**
 	 * @return The id of this element.
 	 */
-	protected <N> N getId() {
+	public <N> N getId() {
 		return (N) element.getId();
 	}
 
 	/**
 	 * @return The property keys of this element.
 	 */
-	protected Set<String> getPropertyKeys() {
+	public Set<String> getPropertyKeys() {
 		return element.getPropertyKeys();
 	}
 
 	/**
 	 * Remove this element from the graph.
 	 */
-	protected void remove() {
+	public void remove() {
 		element.remove();
 	}
 
 	/**
 	 * @return The underlying element.
 	 */
-	protected Element element() {
+	public Element element() {
 		return element;
 	}
 
 	/**
 	 * @return The underlying graph.
 	 */
-	protected FramedGraph graph() {
+	public FramedGraph graph() {
 		return graph;
 	}
 
@@ -66,7 +66,7 @@ public abstract class FramedElement {
 	 *            The name of the property.
 	 * @return the value of the property or null if none was present.
 	 */
-	protected <T> T getProperty(String name) {
+	public <T> T getProperty(String name) {
 		return element.getProperty(name);
 	}
 
@@ -80,7 +80,7 @@ public abstract class FramedElement {
 	 * 
 	 * @return the value of the property or null if none was present.
 	 */
-	protected <T> T getProperty(String name, Class<T> type) {
+	public <T> T getProperty(String name, Class<T> type) {
 		if (type.isEnum()) {
 			return (T) Enum.valueOf((Class<Enum>) type, (String) element.getProperty(name));
 		}
@@ -96,7 +96,7 @@ public abstract class FramedElement {
 	 * @param value
 	 *            The value of the property.
 	 */
-	protected void setProperty(String name, Object value) {
+	public void setProperty(String name, Object value) {
 		if (value == null) {
 			element.removeProperty(name);
 		} else {
@@ -113,7 +113,7 @@ public abstract class FramedElement {
 	 * 
 	 * @return The query.
 	 */
-	protected VertexTraversal<?, ?, ?> V() {
+	public VertexTraversal<?, ?, ?> V() {
 		return graph.V();
 	}
 
@@ -122,7 +122,7 @@ public abstract class FramedElement {
 	 * 
 	 * @return The query.
 	 */
-	protected EdgeTraversal<?, ?, ?> E() {
+	public EdgeTraversal<?, ?, ?> E() {
 		return graph.E();
 	}
 
@@ -133,7 +133,7 @@ public abstract class FramedElement {
 	 *            The ids of the vertices.
 	 * @return The query.
 	 */
-	protected VertexTraversal<?, ?, ?> v(final Object... ids) {
+	public VertexTraversal<?, ?, ?> v(final Object... ids) {
 		return graph.v(ids);
 	}
 
@@ -144,7 +144,7 @@ public abstract class FramedElement {
 	 *            The ids of the edges.
 	 * @return The query.
 	 */
-	protected EdgeTraversal<?, ?, ?> e(final Object... ids) {
+	public EdgeTraversal<?, ?, ?> e(final Object... ids) {
 		return graph.e(ids);
 	}
 

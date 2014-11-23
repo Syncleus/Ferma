@@ -93,7 +93,7 @@ public class FramedGraphTest {
 			
 			@SuppressWarnings("unchecked")
 			@Override
-			public <T extends FramedElement> T create(Element e, Class<T> kind) {
+			public <T> T create(Element e, Class<T> kind) {
 				return (T)o;
 			}
 		}, TypeResolver.JAVA);

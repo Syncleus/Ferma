@@ -221,7 +221,7 @@ abstract class EdgeTraversalImpl extends TraversalBase implements EdgeTraversal 
 	}
 
 	@Override
-	public FramedEdge next(Class kind) {
+	public Object next(Class kind) {
 		return (FramedEdge) graph().frameElement((Element) pipeline().next(), kind);
 	}
 

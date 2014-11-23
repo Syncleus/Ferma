@@ -32,7 +32,7 @@ public class AnnotationFrameFactory implements FrameFactory {
     }
 
     @Override
-    public <T extends FramedElement> T create(final Element e, final Class<T> kind) {
+    public <T> T create(final Element e, final Class<T> kind) {
         try {
             T object = kind.newInstance();
             if( object instanceof CachedHierarchy)

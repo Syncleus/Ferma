@@ -384,7 +384,7 @@ abstract class VertexTraversalImpl extends TraversalBase implements VertexTraver
 	}
 
 	@Override
-	public FramedVertex nextOrAdd(Class kind) {
+	public Object nextOrAdd(Class kind) {
 		try {
 			return (FramedVertex) graph().frameElement((Element) pipeline().next(), kind);
 		} catch (NoSuchElementException e) {

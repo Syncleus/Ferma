@@ -164,7 +164,7 @@ public interface EdgeTraversal<Cap, SideEffect, Mark> extends Traversal<TEdge, C
 	 *            The type of frame for the element.
 	 * @return the next emitted object
 	 */
-	public <T extends FramedEdge> T next(Class<T> kind);
+	public <T> T next(Class<T> kind);
 
 	/**
 	 * Return the next X objects in the traversal as a list.
@@ -175,7 +175,7 @@ public interface EdgeTraversal<Cap, SideEffect, Mark> extends Traversal<TEdge, C
 	 *            the type of frame to for each element.
 	 * @return a list of X objects (if X objects occur)
 	 */
-	public <T extends FramedEdge> List<T> next(int amount, Class<T> kind);
+	public <T> List<T> next(int amount, Class<T> kind);
 
 	/**
 	 * Return an iterator of framed elements.
@@ -184,7 +184,7 @@ public interface EdgeTraversal<Cap, SideEffect, Mark> extends Traversal<TEdge, C
 	 *            The kind of framed elements to return.
 	 * @return An iterator of framed elements.
 	 */
-	public <T extends FramedEdge> Iterable<T> frame(Class<T> kind);
+	public <T> Iterable<T> frame(Class<T> kind);
 
 	/**
 	 * Return a list of all the objects in the pipeline.
@@ -193,7 +193,7 @@ public interface EdgeTraversal<Cap, SideEffect, Mark> extends Traversal<TEdge, C
 	 *            The kind of framed elements to return.
 	 * @return a list of all the objects
 	 */
-	public <T extends FramedEdge> List<T> toList(Class<T> kind);
+	public <T> List<T> toList(Class<T> kind);
 
 	/**
 	 * Add an LabelPipe to the end of the Pipeline. Emit the label of the
@@ -371,7 +371,7 @@ public interface EdgeTraversal<Cap, SideEffect, Mark> extends Traversal<TEdge, C
 	 *            The kind of framed elements to return.
 	 * @return the collection filled
 	 */
-	public abstract <N extends FramedEdge> Collection<N> fill(Collection<N> collection, Class<N> kind);
+	public abstract <N> Collection<N> fill(Collection<N> collection, Class<N> kind);
 
 	@Override
 	public abstract EdgeTraversal<?, ?, Mark> gatherScatter();

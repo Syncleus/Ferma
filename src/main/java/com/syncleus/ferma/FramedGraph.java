@@ -111,16 +111,16 @@ public class FramedGraph {
 		delegate.shutdown();
 	}
 
-	<T extends FramedElement> T frameElement(Element e, Class<T> kind) {
+	<T> T frameElement(Element e, Class<T> kind) {
 
 		Class<T> frameType = (kind == TVertex.class || kind == TEdge.class) ? kind : resolver.resolve(e, kind);
 
 		T framedElement = builder.create(e, frameType);
-		framedElement.init(this, e);
+		((FramedElement)framedElement).init(this, e);
 		return framedElement;
 	}
 
-	<T extends FramedElement> T frameNewElement(Element e, Class<T> kind) {
+	<T> T frameNewElement(Element e, Class<T> kind) {
 		T t = frameElement(e, kind);
 		resolver.init(e, kind);
 		return t;
@@ -144,9 +144,9 @@ public class FramedGraph {
 	 *            The kind of the frame.
 	 * @return The framed vertex.
 	 */
-	public <T extends FramedVertex> T addVertex(Class<T> kind) {
+	public <T> T addVertex(Class<T> kind) {
 		T framedVertex = frameNewElement(delegate.addVertex(null), kind);
-		framedVertex.init();
+		((FramedVertex)framedVertex).init();
 		return framedVertex;
 	}
 	
@@ -167,9 +167,9 @@ public class FramedGraph {
 	 *            The kind of the frame.
 	 * @return The framed edge.
 	 */
-	public <T extends FramedEdge> T addEdge(final FramedVertex source, final FramedVertex destination, final String label, Class<T> kind) {
+	public <T> T addEdge(final FramedVertex source, final FramedVertex destination, final String label, Class<T> kind) {
 		T framedEdge = frameNewElement(this.delegate.addEdge(null, source.element(), destination.element(), label), kind);
-		framedEdge.init();
+		((FramedEdge)framedEdge).init();
 		return framedEdge;
 	}
 

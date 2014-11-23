@@ -16,55 +16,72 @@
  *  Philadelphia, PA 19148                                                     *
  *                                                                             *
  ******************************************************************************/
-package com.syncleus.ferma.internal;
+package com.syncleus.ferma.pipes;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.NoSuchElementException;
 
-import com.syncleus.ferma.Path;
+import com.syncleus.ferma.TraversalFunction;
 
-import com.tinkerpop.pipes.AbstractPipe;
 import com.tinkerpop.pipes.Pipe;
-import com.tinkerpop.pipes.PipeFunction;
-import com.tinkerpop.pipes.transform.TransformPipe;
 
-public class PathPipe<S> extends AbstractPipe<S, List> implements TransformPipe<S, List> {
+public class TraversalFunctionPipe implements TraversalFunction {
 
-    private final PipeFunction[] pathFunctions;
+	private TraversalFunction delegate;
 
-    public PathPipe(final PipeFunction... pathFunctions) {
-        if (pathFunctions.length == 0) {
-            this.pathFunctions = null;
-        } else {
-            this.pathFunctions = pathFunctions;
-        }
-    }
+	public TraversalFunctionPipe(TraversalFunction delegate) {
+		this.delegate = delegate;
+	}
 
-    public void setStarts(final Iterator<S> starts) {
-        super.setStarts(starts);
-        this.enablePath(true);
-    }
+	@Override
+	public Object compute(Object argument) {
+		Object result = delegate.compute(argument);
+		if(result instanceof Iterator) {
+			final Iterator i = (Iterator) result; 
+			return new Pipe() {
 
-    public List processNextStart() {
-        if (this.starts instanceof Pipe) {
-            this.starts.next();
-            final List path = ((Pipe) this.starts).getCurrentPath();
-            if (null == this.pathFunctions) {
-                return path;
-            } else {
-                final List closedPath = new Path();
-                int nextFunction = 0;
-                for (final Object object : path) {
-                    closedPath.add(this.pathFunctions[nextFunction].compute(object));
-                    nextFunction = (nextFunction + 1) % this.pathFunctions.length;
-                }
-                return closedPath;
-            }
-        } else {
-            throw new NoSuchElementException("The start of this pipe was not a pipe");
-        }
-    }
+				@Override
+				public boolean hasNext() {
+					return i.hasNext();
+				}
 
+				@Override
+				public Object next() {
+					return i.next();
+				}
+
+				@Override
+				public Iterator iterator() {
+					return null;
+				}
+
+				@Override
+				public void setStarts(Iterator starts) {
+					
+				}
+
+				@Override
+				public void setStarts(Iterable starts) {
+					
+				}
+
+				@Override
+				public List getCurrentPath() {
+					return null;
+				}
+
+				@Override
+				public void enablePath(boolean enable) {
+					
+				}
+
+				@Override
+				public void reset() {
+					
+				}
+			};
+		}
+		return result;
+	}
 
 }

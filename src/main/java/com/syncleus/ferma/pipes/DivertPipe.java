@@ -16,7 +16,7 @@
  *  Philadelphia, PA 19148                                                     *
  *                                                                             *
  ******************************************************************************/
-package com.syncleus.ferma.internal;
+package com.syncleus.ferma.pipes;
 
 import java.util.Arrays;
 import java.util.Iterator;

@@ -16,30 +16,29 @@
  *  Philadelphia, PA 19148                                                     *
  *                                                                             *
  ******************************************************************************/
-package com.syncleus.ferma.internal;
+package com.syncleus.ferma.pipes;
 
 import java.util.List;
 
-import com.tinkerpop.gremlin.java.GremlinPipeline;
 import com.tinkerpop.pipes.PipeFunction;
 import com.tinkerpop.pipes.util.FluentUtility;
 
-public class TotoromGremlinPipeline<S, E> extends GremlinPipeline<S, E> {
+public class GremlinPipeline<S, E> extends com.tinkerpop.gremlin.java.GremlinPipeline<S, E> {
 
-	public TotoromGremlinPipeline() {
+	public GremlinPipeline() {
 		super();
 	}
 
-	public TotoromGremlinPipeline(Object starts, boolean doQueryOptimization) {
+	public GremlinPipeline(Object starts, boolean doQueryOptimization) {
 		super(starts, doQueryOptimization);
 	}
 
-	public TotoromGremlinPipeline(Object starts) {
+	public GremlinPipeline(Object starts) {
 		super(starts);
 	}
 
 	@Override
-	public GremlinPipeline<S, List> path(PipeFunction... pathFunctions) {
+	public com.tinkerpop.gremlin.java.GremlinPipeline<S, List> path(PipeFunction... pathFunctions) {
 	
 		return this.add(new PathPipe<Object>(FluentUtility.prepareFunctions(this.asMap, pathFunctions)));
 	}

@@ -28,8 +28,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import com.syncleus.ferma.internal.DivertPipe;
-import com.syncleus.ferma.internal.TraversalFunctionPipe;
+import com.syncleus.ferma.pipes.DivertPipe;
+import com.syncleus.ferma.pipes.TraversalFunctionPipe;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;

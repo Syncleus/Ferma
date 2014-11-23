@@ -22,10 +22,9 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Iterator;
 
-import com.syncleus.ferma.internal.TotoromGremlinPipeline;
+import com.syncleus.ferma.pipes.GremlinPipeline;
 
 import com.tinkerpop.blueprints.Graph;
-import com.tinkerpop.gremlin.java.GremlinPipeline;
 
 /**
  * The implementation of
@@ -37,7 +36,7 @@ import com.tinkerpop.gremlin.java.GremlinPipeline;
 class TraversalImpl extends TraversalBase implements Traversal {
 
 	private FramedGraph graph;
-	private GremlinPipeline pipeline;
+	private com.tinkerpop.gremlin.java.GremlinPipeline pipeline;
 	private Deque<MarkId> marks = new ArrayDeque<>();
 	private int markId = 0;
 
@@ -94,7 +93,7 @@ class TraversalImpl extends TraversalBase implements Traversal {
 		}
 
 		@Override
-		protected GremlinPipeline pipeline() {
+		protected com.tinkerpop.gremlin.java.GremlinPipeline pipeline() {
 			return pipeline;
 		}
 
@@ -137,7 +136,7 @@ class TraversalImpl extends TraversalBase implements Traversal {
 		}
 
 		@Override
-		protected GremlinPipeline pipeline() {
+		protected com.tinkerpop.gremlin.java.GremlinPipeline pipeline() {
 			return pipeline;
 		}
 
@@ -154,22 +153,22 @@ class TraversalImpl extends TraversalBase implements Traversal {
 		};
 	};
 
-	private TraversalImpl(FramedGraph graph, GremlinPipeline pipeline) {
+	private TraversalImpl(FramedGraph graph, com.tinkerpop.gremlin.java.GremlinPipeline pipeline) {
 		this.graph = graph;
 		this.pipeline = pipeline;
 
 	}
 
 	protected TraversalImpl(FramedGraph graph, Graph delegate) {
-		this(graph, new TotoromGremlinPipeline<>(delegate));
+		this(graph, new GremlinPipeline<>(delegate));
 	}
 
 	protected TraversalImpl(FramedGraph graph, Iterator starts) {
-		this(graph, new TotoromGremlinPipeline<>(starts));
+		this(graph, new GremlinPipeline<>(starts));
 	}
 
 	protected TraversalImpl(FramedGraph graph, FramedElement starts) {
-		this(graph, new TotoromGremlinPipeline<>(starts.element()));
+		this(graph, new GremlinPipeline<>(starts.element()));
 	}
 
 	/**
@@ -192,7 +191,7 @@ class TraversalImpl extends TraversalBase implements Traversal {
 	}
 
 	@Override
-	protected GremlinPipeline pipeline() {
+	protected com.tinkerpop.gremlin.java.GremlinPipeline pipeline() {
 
 		return pipeline;
 	}

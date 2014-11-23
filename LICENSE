@@ -1,0 +1,187 @@
+Open Source Community License
+Type C, Version 1.0
+(c) Syncleus, Inc., 2004
+
+
+
+A. DEFINITIONS
+
+For the purpose of this license we will set forth certain definitions
+for the ease of communications:
+
+"you" - Any person granted use of source code under this license by the
+inclusion of this license in the source by the author and copyright holder.
+
+"program" - The Source code this license is bundled as well as any executables
+and derivative work under copyright law. Any program this license is assigned
+to, and means either the Program or any derivative work under copyright law.
+Meaning any work containing the program or a portion of it, modified or
+verbatim, and/or translated into other languages.
+
+"Authors' Recursive License" - A special license granted to certain
+contributors of the program. See section F below.
+
+"this license" - The Open Source Public License - Type C Version 1.0 or any
+later version at your option, as published by Syncleus, Inc. All
+future versions will be in the same spirit but will correct any legal
+oversights addressed by earlier versions.
+
+"source code" - The preferred form of the program for making modifications to
+it that make up the program in part or in whole. For executables this means the
+source code, plus any modules that are needed to compile it, including scripts
+that control its compiling. This need not include components not normally
+needed for compiling such as operating system libraries, or the kernel.
+
+"distribute" - The act of distributing, publishing, or otherwise making the
+program available to one or more persons, in whole or in part.
+
+"entity" - Any one of the following: person, group of persons, company
+or entity under law.
+
+
+
+B. SCOPE
+
+This license addresses copying, distribution, execution and modification of the
+source code. Everything else is outside the scope of this license and no rights
+are granted either written or implied outside its scope.
+
+You may not copy, distribute, execute, or sub-license except under the terms
+and conditions of this license. Any attempt to do so outside of this license is
+void and will immediately and automatically terminate any rights you have under
+this license. This license is guaranteed not to be terminated so long as you
+follow the rules and conditions of this license.
+
+You are not required to accept this license since you have not signed it.
+However if you do not accept this license then all privileges and rights
+granted herein is void. Unless specifically granted through another legal
+license you shall not have the right to copy, distribute, execute or
+sub-license this program in part or in whole.
+
+If for any reason you are not able to follow the conditions of this license
+including, but not limited to, court order, agreement, or law, then you are not
+excused from the conditions of this license. If for any reason you cannot
+follow the terms and conditions of this license then you are not given the
+privileges associated with them. For example, if you cannot provide the source
+code to accompany the executable you cannot distribute the program.
+
+
+
+C. EXECUTION
+
+This License does not restrict execution of the program, including any uses of
+its output so long as the terms and conditions of this license are upheld. The
+right to execution is immediately revoked for any program under this license
+found in violation of the terms.
+
+
+
+D. DISTRIBUTION
+
+You may copy and distribute the program according to the terms of this license
+so long as you perform at least one of the following:
+
+1. Offer the source code to be distributed through the same medium by which
+the program is distributed at no additional cost except for the cost of
+offering and distributing the source code.
+
+2. Provide the program with a written offer for physical distribution good for
+at least one year or until the distributing entity no longer exists, whichever
+comes first.
+
+3. Provide the program bundled with the source code. If the program is offered
+without the bundled source code then the source code must still be made
+available through one of the two options above.
+
+
+
+E. LICENSE PROPAGATION
+
+You may copy and distribute the program verbatim, according to the terms and
+conditions of this license, so long as all copyright and warranty disclaimers
+remain unchanged and all references to this license remain. All copies of the
+source code and its individual pages must appropriately and in plain sight
+contain a notice of this license. The program must be distributed with a copy
+of this license and all notices should point to the included copy.
+
+Propagation of this license, and the authors' recursive license below, is not
+effected by mere aggregation of the program with other work on the same storage
+medium. The propagation of these licenses only applies to work which were done
+due to knowledge of the source code or output or were intended at some point in
+its design to interact primarily with the program. This includes, but is not
+limited to, libraries designed for the program, source code that is compiled
+using the source code or portions of it, or programs designed specifically to
+interact with this program closely invoking its execution with arguments or
+inputs.
+
+Any time you distribute the program the recipient is automatically granted this
+license from the original licensor. You may not impose any greater restrictions
+to the recipient and it is not your responsibility to enforce this compliance
+of this license by its recipients.
+
+You may copy and distribute, according to the terms and conditions of this
+license, any modified version of the program or portion of it, creating a
+derivative work, as long as all of the following conditions are met:
+
+1. You must record what files you have changed and when they were changed and
+include that record in the source code. Any files part of the source code which
+were changed must have clear and obvious notices of what was changed. You can
+record your changes in an external file included with the source code so long as
+the files which were changed contain a clear and obvious notice pointing to the
+external file.
+
+2. You must allow any code you distribute that is derived from the program or
+contains the program, in whole or in part, to be governed under this license.
+
+3. You must grant an Author's Recursive License, as described in the section
+Authors' Recursive License to any copyright holder of any source code used in
+the program that your modifications interact with. You also grant the same
+Authors' Recursive License to anyone that copyright holder had to issue an
+Authors' Recursive License to in order to publish modifications. Interactions
+are included, but not limited to, calling of functions, calling or using parts
+of a class, using variables provided by the interface, and any similar
+interaction.
+
+4. If any notices are displayed in the output of the program making a notice of
+warranty or license they must remain intact. If the nature of the program is
+changed such that the output containing any such notices are no longer used an
+equivalent notice must be placed elsewhere in the output in plain sight. The
+only exception to this is if the program will no longer have any output at all,
+or the output it produces is inappropriate to contain such a notice.
+
+
+
+F. AUTHORS' RECURSIVE LICENSE
+
+The Recursive Authors' License gives the following rights and privileges to the
+individuals explained in section E subsection 3 above. The license is as
+follows, ending at the end of this section:
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistribution of source code must retain the any copyright notices, and a
+copy of this license, and any references to this license in the source code.
+
+2. Redistribution in binary form must reproduce any copyright notices, and a
+copy of this license.
+
+3. The names of its contributors and copyright holders may not be used to
+endorse or promote products derived from this software without specific prior
+written permission.
+
+4. The disclaimer in section G of this license is accepted.
+
+
+G. DISCLAIMER
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.

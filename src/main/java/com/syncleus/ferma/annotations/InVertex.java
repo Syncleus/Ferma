@@ -18,34 +18,15 @@
  ******************************************************************************/
 package com.syncleus.ferma.annotations;
 
-import com.tinkerpop.blueprints.Direction;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-public interface God {
-
-    @Property("name")
-    String getName();
-
-    @Property("name")
-    void setName(String newName);
-
-    @Property("age")
-    Integer getAge();
-
-    @Property("type")
-    String getType();
-    
-    @Adjacency(label="father", direction= Direction.IN)
-    <N extends God> Iterable<? extends N> getSons(Class<? extends N> type);
-
-    @Adjacency(label="father", direction= Direction.IN)
-    <N extends God> N getSon(Class<? extends N> type);
-
-    @Adjacency(label="father", direction= Direction.IN)
-    <N extends God> N addSon(Class<? extends N> type);
-
-    @Incidence(label="father", direction= Direction.IN)
-    <N extends FatherEdge> Iterable<? extends N> getSonEdges(Class<? extends N> type);
-
-    @Incidence(label="father", direction= Direction.IN)
-    <N extends FatherEdge> N getSonEdge(Class<? extends N> type);
+/**
+ * Marks the in vertex (head) of a framed edge.
+ */
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
+public @interface InVertex {
 }

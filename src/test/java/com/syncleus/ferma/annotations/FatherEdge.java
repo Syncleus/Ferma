@@ -19,11 +19,9 @@
 package com.syncleus.ferma.annotations;
 
 public interface FatherEdge {
-    /*
     @InVertex
     God getFather();
 
     @OutVertex
     God getSon();
-    */
 }

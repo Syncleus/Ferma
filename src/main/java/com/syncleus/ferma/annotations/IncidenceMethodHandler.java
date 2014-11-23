@@ -31,12 +31,10 @@ import net.bytebuddy.instrumentation.method.matcher.MethodMatchers;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 
 /**
- * A TinkerPop method handler that implemented the TypedIncidence Annotation.
+ * A TinkerPop method handler that implemented the Incidence Annotation.
  *
  * @since 0.1
  */
@@ -48,8 +46,6 @@ public class IncidenceMethodHandler implements MethodHandler {
 
     @Override
     public <E> DynamicType.Builder<E> processMethod(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
-        final Incidence typedAnnotation = (Incidence) annotation;
-        assert typedAnnotation.label() != null;
         final java.lang.reflect.Parameter[] arguments = method.getParameters();
 
         if( ReflectionUtility.isGetMethod(method) ) {
@@ -68,18 +64,18 @@ public class IncidenceMethodHandler implements MethodHandler {
                 throw new IllegalStateException(method.getName() + " was annotated with @Incidence but had more than 1 arguments.");
         }
         else
-            throw new IllegalStateException(method.getName() + " was annotated with @Incidence but did not begin with either of the following keywords: add, get");
+            throw new IllegalStateException(method.getName() + " was annotated with @Incidence but did not begin with: get");
     }
 
     private <E> DynamicType.Builder<E> getEdges(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
-        return builder.method(MethodMatchers.is(method)).intercept(MethodDelegation.to(getEdgesInterceptor.class));
+        return builder.method(MethodMatchers.is(method)).intercept(MethodDelegation.to(GetEdgesInterceptor.class));
     }
 
     private <E> DynamicType.Builder<E> getEdge(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
-        return builder.method(MethodMatchers.is(method)).intercept(MethodDelegation.to(getEdgeInterceptor.class));
+        return builder.method(MethodMatchers.is(method)).intercept(MethodDelegation.to(GetEdgeInterceptor.class));
     }
 
-    public static final class getEdgesInterceptor {
+    public static final class GetEdgesInterceptor {
         @RuntimeType
         public static Iterable getEdges(@This final FramedVertex thiz, @Origin final Method method, @RuntimeType @Argument(0) final Class type) {
             final Incidence annotation = method.getAnnotation(Incidence.class);
@@ -101,7 +97,7 @@ public class IncidenceMethodHandler implements MethodHandler {
         }
     }
 
-    public static final class getEdgeInterceptor {
+    public static final class GetEdgeInterceptor {
         @RuntimeType
         public static Object getEdge(@This final FramedVertex thiz, @Origin final Method method, @RuntimeType @Argument(0) final Class type) {
             final Incidence annotation = method.getAnnotation(Incidence.class);

@@ -31,12 +31,10 @@ import net.bytebuddy.instrumentation.method.matcher.MethodMatchers;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 
 /**
- * A method handler that implemented the TypedAdjacency Annotation.
+ * A method handler that implemented the Adjacency Annotation.
  *
  * @since 0.1
  */
@@ -48,8 +46,6 @@ public class AdjacencyMethodHandler implements MethodHandler {
 
     @Override
     public <E> DynamicType.Builder<E> processMethod(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
-        final Adjacency typedAnnotation = (Adjacency) annotation;
-        assert typedAnnotation.label() != null;
         final java.lang.reflect.Parameter[] arguments = method.getParameters();
 
         if (ReflectionUtility.isAddMethod(method)) {
@@ -84,20 +80,20 @@ public class AdjacencyMethodHandler implements MethodHandler {
     }
 
     private <E> DynamicType.Builder<E> getNodes(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
-        return builder.method(MethodMatchers.is(method)).intercept(MethodDelegation.to(getNodesInterceptor.class));
+        return builder.method(MethodMatchers.is(method)).intercept(MethodDelegation.to(GetVertexesInterceptor.class));
     }
 
     private <E> DynamicType.Builder<E> getNode(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
-        return builder.method(MethodMatchers.is(method)).intercept(MethodDelegation.to(getNodeInterceptor.class));
+        return builder.method(MethodMatchers.is(method)).intercept(MethodDelegation.to(GetVertexInterceptor.class));
     }
 
     private <E> DynamicType.Builder<E> addNode(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
-        return builder.method(MethodMatchers.is(method)).intercept(MethodDelegation.to(addNodeInterceptor.class));
+        return builder.method(MethodMatchers.is(method)).intercept(MethodDelegation.to(AddVertexInterceptor.class));
     }
 
-    public static final class getNodesInterceptor {
+    public static final class GetVertexesInterceptor {
         @RuntimeType
-        public static Iterable getNodes(@This final FramedVertex thiz, @Origin final Method method, @RuntimeType @Argument(0) final Class type) {
+        public static Iterable getVertexes(@This final FramedVertex thiz, @Origin final Method method, @RuntimeType @Argument(0) final Class type) {
             final Adjacency annotation = method.getAnnotation(Adjacency.class);
             final Direction direction = annotation.direction();
             final String label = annotation.label();
@@ -116,9 +112,9 @@ public class AdjacencyMethodHandler implements MethodHandler {
         }
     }
 
-    public static final class getNodeInterceptor {
+    public static final class GetVertexInterceptor {
         @RuntimeType
-        public static Object getNode(@This final FramedVertex thiz, @Origin final Method method, @RuntimeType @Argument(0) final Class type) {
+        public static Object getVertex(@This final FramedVertex thiz, @Origin final Method method, @RuntimeType @Argument(0) final Class type) {
             final Adjacency annotation = method.getAnnotation(Adjacency.class);
             final Direction direction = annotation.direction();
             final String label = annotation.label();
@@ -137,9 +133,9 @@ public class AdjacencyMethodHandler implements MethodHandler {
         }
     }
 
-    public static final class addNodeInterceptor {
+    public static final class AddVertexInterceptor {
         @RuntimeType
-        public static Object addNode(@This final FramedVertex thiz, @Origin final Method method, @RuntimeType @Argument(0) final Class type) {
+        public static Object addVertex(@This final FramedVertex thiz, @Origin final Method method, @RuntimeType @Argument(0) final Class type) {
             final Object newNode = thiz.graph().addVertex(type);
             assert newNode instanceof FramedVertex;
             final FramedVertex newVertex = ((FramedVertex) newNode);

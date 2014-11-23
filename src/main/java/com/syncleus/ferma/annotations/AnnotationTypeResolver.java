@@ -47,13 +47,19 @@ public class AnnotationTypeResolver implements TypeResolver {
      * @since 0.1
      */
     public AnnotationTypeResolver() {
-        PropertyMethodHandler propertyHandler = new PropertyMethodHandler();
+        final PropertyMethodHandler propertyHandler = new PropertyMethodHandler();
         methodHandlers.put(propertyHandler.getAnnotationType(), propertyHandler);
 
-        AdjacencyMethodHandler adjacencyHandler = new AdjacencyMethodHandler();
+        final InVertexMethodHandler inVertexHandler = new InVertexMethodHandler();
+        methodHandlers.put(inVertexHandler.getAnnotationType(), inVertexHandler);
+
+        final OutVertexMethodHandler outVertexHandler = new OutVertexMethodHandler();
+        methodHandlers.put(outVertexHandler.getAnnotationType(), outVertexHandler);
+
+        final AdjacencyMethodHandler adjacencyHandler = new AdjacencyMethodHandler();
         methodHandlers.put(adjacencyHandler.getAnnotationType(), adjacencyHandler);
 
-        IncidenceMethodHandler incidenceHandler = new IncidenceMethodHandler();
+        final IncidenceMethodHandler incidenceHandler = new IncidenceMethodHandler();
         methodHandlers.put(incidenceHandler.getAnnotationType(), incidenceHandler);
     }
 

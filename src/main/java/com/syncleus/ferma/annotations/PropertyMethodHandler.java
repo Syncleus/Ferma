@@ -18,6 +18,7 @@
  ******************************************************************************/
 package com.syncleus.ferma.annotations;
 
+import com.syncleus.ferma.FramedElement;
 import com.syncleus.ferma.FramedVertex;
 import net.bytebuddy.dynamic.DynamicType;
 import net.bytebuddy.instrumentation.MethodDelegation;
@@ -42,8 +43,6 @@ public class PropertyMethodHandler implements MethodHandler {
 
     @Override
     public <E> DynamicType.Builder<E> processMethod(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
-        final Property typedAnnotation = (Property) annotation;
-        assert typedAnnotation.value() != null;
         final java.lang.reflect.Parameter[] arguments = method.getParameters();
 
         if (ReflectionUtility.isSetMethod(method)) {
@@ -65,14 +64,22 @@ public class PropertyMethodHandler implements MethodHandler {
     }
 
     private <E> DynamicType.Builder<E> setProperty(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
-        return builder.method(MethodMatchers.is(method)).intercept(MethodDelegation.to(setPropertyInterceptor.class));
+        return builder.method(MethodMatchers.is(method)).intercept(MethodDelegation.to(SetPropertyInterceptor.class));
     }
 
     private <E> DynamicType.Builder<E> getProperty(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
-        return builder.method(MethodMatchers.is(method)).intercept(MethodDelegation.to(getPropertyInterceptor.class));
+        return builder.method(MethodMatchers.is(method)).intercept(MethodDelegation.to(GetPropertyInterceptor.class));
     }
 
-    public static final class getPropertyInterceptor {
+    private static Enum getValueAsEnum(final Method method, final Object value) {
+        Class<Enum> en = (Class<Enum>) method.getReturnType();
+        if (value != null)
+            return Enum.valueOf(en, value.toString());
+
+        return null;
+    }
+
+    public static final class GetPropertyInterceptor {
         @RuntimeType
         public static Object getProperty(@This final FramedVertex thiz, @Origin final Method method) {
             final Property annotation = method.getAnnotation(Property.class);
@@ -86,9 +93,9 @@ public class PropertyMethodHandler implements MethodHandler {
         }
     }
 
-    public static final class setPropertyInterceptor {
+    public static final class SetPropertyInterceptor {
         @RuntimeType
-        public static void setProperty(@This final FramedVertex thiz, @Origin final Method method, @RuntimeType @Argument(0) final Object obj) {
+        public static void setProperty(@This final FramedElement thiz, @Origin final Method method, @RuntimeType @Argument(0) final Object obj) {
             final Property annotation = method.getAnnotation(Property.class);
             final String value = annotation.value();
 
@@ -99,13 +106,5 @@ public class PropertyMethodHandler implements MethodHandler {
                 thiz.setProperty(value, obj);
             }
         }
-    }
-
-    private static Enum getValueAsEnum(final Method method, final Object value) {
-        Class<Enum> en = (Class<Enum>) method.getReturnType();
-        if (value != null)
-            return Enum.valueOf(en, value.toString());
-
-        return null;
     }
 }

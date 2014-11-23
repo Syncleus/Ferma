@@ -19,8 +19,4 @@
 package com.syncleus.ferma.annotations;
 
 public interface FatherEdgeExtended extends FatherEdge {
-    /*
-    @Property("extending")
-    String getExtending();
-    */
 }

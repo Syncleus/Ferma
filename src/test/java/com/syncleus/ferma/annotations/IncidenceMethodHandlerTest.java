@@ -28,7 +28,7 @@ import org.junit.Test;
 
 import java.util.*;
 
-public class IncidenceHandlerTest {
+public class IncidenceMethodHandlerTest {
     private static final Set<Class<?>> TEST_TYPES = new HashSet<Class<?>>(Arrays.asList(new Class<?>[]{God.class, FatherEdge.class, GodExtended.class, FatherEdgeExtended.class}));
 
     @Test

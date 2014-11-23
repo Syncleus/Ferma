@@ -80,7 +80,8 @@ public class IncidenceMethodHandler implements MethodHandler {
     }
 
     public static final class getEdgesInterceptor {
-        public static Iterable getEdges(@This final FramedVertex thiz, @Origin final Method method, @Argument(0) final Class type) {
+        @RuntimeType
+        public static Iterable getEdges(@This final FramedVertex thiz, @Origin final Method method, @RuntimeType @Argument(0) final Class type) {
             final Incidence annotation = method.getAnnotation(Incidence.class);
             final Direction direction = annotation.direction();
             final String label = annotation.label();
@@ -102,7 +103,7 @@ public class IncidenceMethodHandler implements MethodHandler {
 
     public static final class getEdgeInterceptor {
         @RuntimeType
-        public static Object getEdge(@This final FramedVertex thiz, @Origin final Method method, @Argument(0) final Class type) {
+        public static Object getEdge(@This final FramedVertex thiz, @Origin final Method method, @RuntimeType @Argument(0) final Class type) {
             final Incidence annotation = method.getAnnotation(Incidence.class);
             final Direction direction = annotation.direction();
             final String label = annotation.label();

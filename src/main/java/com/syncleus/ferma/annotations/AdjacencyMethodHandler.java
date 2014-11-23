@@ -96,7 +96,8 @@ public class AdjacencyMethodHandler implements MethodHandler {
     }
 
     public static final class getNodesInterceptor {
-        public static Iterable getNodes(@This final FramedVertex thiz, @Origin final Method method, @Argument(0) final Class type) {
+        @RuntimeType
+        public static Iterable getNodes(@This final FramedVertex thiz, @Origin final Method method, @RuntimeType @Argument(0) final Class type) {
             final Adjacency annotation = method.getAnnotation(Adjacency.class);
             final Direction direction = annotation.direction();
             final String label = annotation.label();
@@ -117,7 +118,7 @@ public class AdjacencyMethodHandler implements MethodHandler {
 
     public static final class getNodeInterceptor {
         @RuntimeType
-        public static Object getNode(@This final FramedVertex thiz, @Origin final Method method, @Argument(0) final Class type) {
+        public static Object getNode(@This final FramedVertex thiz, @Origin final Method method, @RuntimeType @Argument(0) final Class type) {
             final Adjacency annotation = method.getAnnotation(Adjacency.class);
             final Direction direction = annotation.direction();
             final String label = annotation.label();
@@ -138,7 +139,7 @@ public class AdjacencyMethodHandler implements MethodHandler {
 
     public static final class addNodeInterceptor {
         @RuntimeType
-        public static Object addNode(@This final FramedVertex thiz, @Origin final Method method, @Argument(0) final Class type) {
+        public static Object addNode(@This final FramedVertex thiz, @Origin final Method method, @RuntimeType @Argument(0) final Class type) {
             final Object newNode = thiz.graph().addVertex(type);
             assert newNode instanceof FramedVertex;
             final FramedVertex newVertex = ((FramedVertex) newNode);

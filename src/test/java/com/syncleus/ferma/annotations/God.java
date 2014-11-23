@@ -21,6 +21,32 @@ package com.syncleus.ferma.annotations;
 import com.tinkerpop.blueprints.Direction;
 
 public interface God {
+    /*
+        @Adjacency(label="father")
+        God getFather();
+
+        @GremlinGroovy("it.in('father')")
+        God getSon();
+
+        @Adjacency(label="father", direction= Direction.IN)
+        Iterable<? extends God> getSons();
+
+        @Adjacency(label="lives")
+        Location getHome();
+    */
+
+    @Property("name")
+    String getName();
+
+    @Property("name")
+    void setName(String newName);
+
+    @Property("age")
+    Integer getAge();
+
+    @Property("type")
+    String getType();
+    
     @Adjacency(label="father", direction= Direction.IN)
     <N extends God> Iterable<? extends N> getSons(Class<? extends N> type);
 

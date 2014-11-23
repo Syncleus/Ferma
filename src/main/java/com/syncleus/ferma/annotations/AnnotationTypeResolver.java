@@ -29,6 +29,9 @@ public class AnnotationTypeResolver implements TypeResolver {
      * @since 0.1
      */
     public AnnotationTypeResolver() {
+        PropertyMethodHandler propertyHandler = new PropertyMethodHandler();
+        methodHandlers.put(propertyHandler.getAnnotationType(), propertyHandler);
+
         AdjacencyMethodHandler adjacencyHandler = new AdjacencyMethodHandler();
         methodHandlers.put(adjacencyHandler.getAnnotationType(), adjacencyHandler);
 

@@ -23,4 +23,6 @@ public interface GodExtended extends GodIntermediate {
     @GremlinGroovy("it.in('father').in('father')")
     God getGrandson();
     */
+    @Property("nickname")
+    String getNickName();
 }

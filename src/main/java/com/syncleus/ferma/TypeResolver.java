@@ -52,7 +52,7 @@ public interface TypeResolver {
 	/**
 	 * This type resolver simply returns the type requested by the client.
 	 */
-	public static final TypeResolver Untyped = new TypeResolver() {
+	public static final TypeResolver UNTYPED = new TypeResolver() {
 		@Override
 		public <T> Class<T> resolve(Element element, Class<T> kind) {
 			return kind;
@@ -68,7 +68,7 @@ public interface TypeResolver {
 	 * This type resolver will use the Java class stored in the 'java_class' on
 	 * the element.
 	 */
-	public static final TypeResolver Java = new TypeResolver() {
+	public static final TypeResolver JAVA = new TypeResolver() {
 		@SuppressWarnings("unchecked")
 		@Override
 		public <T> Class<T> resolve(Element element, Class<T> kind) {
@@ -91,4 +91,9 @@ public interface TypeResolver {
 			}
 		}
 	};
+
+	/**
+	 * This type resolver is used when Annotations are to be used.
+	 */
+	public static final TypeResolver ANNOTATED = new AnnotationTypeResolver();
 }

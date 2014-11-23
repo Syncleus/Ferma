@@ -67,7 +67,7 @@ public class FramedGraphTest {
     @Test
     public void testJavaTyping() {
         Graph g = new TinkerGraph();
-        FramedGraph fg = new FramedGraph(g, FrameFactory.Default, TypeResolver.Java);
+        FramedGraph fg = new FramedGraph(g, FrameFactory.Default, TypeResolver.JAVA);
 
         Person p1 = fg.addVertex(Programmer.class);
         p1.setName("Bryn");
@@ -96,7 +96,7 @@ public class FramedGraphTest {
 			public <T extends FramedElement> T create(Element e, Class<T> kind) {
 				return (T)o;
 			}
-		}, TypeResolver.Java);
+		}, TypeResolver.JAVA);
         Person person = fg.addVertex(Person.class);
         Assert.assertEquals(o, person);
     }

@@ -24,6 +24,7 @@ import java.util.Iterator;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Iterators;
+import com.syncleus.ferma.annotations.AnnotationFrameFactory;
 import com.tinkerpop.blueprints.Edge;
 import com.tinkerpop.blueprints.Element;
 import com.tinkerpop.blueprints.Graph;
@@ -65,7 +66,31 @@ public class FramedGraph {
 	 *            The graph to wrap.
 	 */
 	public FramedGraph(Graph delegate) {
-		this(delegate, FrameFactory.Default, TypeResolver.Untyped);
+		this(delegate, FrameFactory.Default, TypeResolver.UNTYPED);
+	}
+
+	/**
+	 * Construct an untyped framed graph using no special frame construction.
+	 *
+	 * @param delegate
+	 *            The graph to wrap.
+	 * @param resolver
+	 *            The type resolver that will decide the final frame type.
+	 */
+	public FramedGraph(Graph delegate, final TypeResolver resolver) {
+		this(delegate, FrameFactory.Default, resolver);
+	}
+
+	/**
+	 * Construct an untyped framed graph using no special frame construction.
+	 *
+	 * @param delegate
+	 *            The graph to wrap.
+	 * @param annotatedTypes
+	 *            The types to be consider for type resolution.
+	 */
+	public FramedGraph(Graph delegate, final Collection<? extends Class<?>> annotatedTypes) {
+		this(delegate, new AnnotationFrameFactory(annotatedTypes), TypeResolver.ANNOTATED.ANNOTATED);
 	}
 
 	/**

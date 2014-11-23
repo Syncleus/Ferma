@@ -21,6 +21,16 @@ package com.syncleus.ferma.annotations;
 import com.tinkerpop.blueprints.Direction;
 
 public interface God {
+    /*
+        @Adjacency(label="father")
+        God getFather();
+
+        @Adjacency(label="father", direction= Direction.IN)
+        Iterable<? extends God> getSons();
+
+        @Adjacency(label="lives")
+        Location getHome();
+    */
 
     @Property("name")
     String getName();

@@ -32,7 +32,33 @@ public class AdjacencyMethodHandlerTest {
     private static final Set<Class<?>> TEST_TYPES = new HashSet<Class<?>>(Arrays.asList(new Class<?>[]{God.class, FatherEdge.class, GodExtended.class, GodAlternative.class}));
 
     @Test
-    public void testGetSons() {
+    public void testGetSonsDefault() {
+        final TinkerGraph godGraph = new TinkerGraph();
+        GodGraphLoader.load(godGraph);
+
+        final AnnotationTypeResolver resolver = new AnnotationTypeResolver();
+        final AnnotationFrameFactory factory = new AnnotationFrameFactory(TEST_TYPES);
+        final FramedGraph framedGraph = new FramedGraph(godGraph, factory, resolver);
+
+        final List<God> gods = framedGraph.V().has("name", "jupiter").toList(God.class);
+
+        final God father = gods.iterator().next();
+        Assert.assertTrue(father instanceof FramedVertex);
+        final FramedVertex fatherVertex = (FramedVertex) father;
+        Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
+
+        final Iterable<? extends God> children = father.getSons();
+        final Iterator<? extends God> childIterator = children.iterator();
+        Assert.assertTrue(childIterator.hasNext());
+        final God child = childIterator.next();
+        Assert.assertTrue(child instanceof FramedVertex);
+        final FramedVertex childVertex = (FramedVertex) child;
+        Assert.assertEquals(childVertex.element().getProperty("name"), "hercules");
+        Assert.assertTrue(child instanceof GodExtended);
+    }
+
+    @Test
+    public void testGetSonsByType() {
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
 
@@ -132,7 +158,31 @@ public class AdjacencyMethodHandlerTest {
     }
 
     @Test
-    public void testGetSon() {
+    public void testGetSonDefault() {
+        final TinkerGraph godGraph = new TinkerGraph();
+        GodGraphLoader.load(godGraph);
+
+        final AnnotationTypeResolver resolver = new AnnotationTypeResolver();
+        final AnnotationFrameFactory factory = new AnnotationFrameFactory(TEST_TYPES);
+        final FramedGraph framedGraph = new FramedGraph(godGraph, factory, resolver);
+
+        final List<God> gods = framedGraph.V().has("name", "jupiter").toList(God.class);
+
+        final God father = gods.iterator().next();
+        Assert.assertTrue(father instanceof FramedVertex);
+        final FramedVertex fatherVertex = (FramedVertex) father;
+        Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
+
+        final God child = father.getSon();
+        Assert.assertNotNull(child);
+        Assert.assertTrue(child instanceof FramedVertex);
+        final FramedVertex childVertex = (FramedVertex) child;
+        Assert.assertEquals(childVertex.element().getProperty("name"), "hercules");
+        Assert.assertTrue(child instanceof GodExtended);
+    }
+
+    @Test
+    public void testGetSonByType() {
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
 

@@ -82,9 +82,7 @@ public class AnnotationTypeResolver implements TypeResolver {
         }
 
         Class<T> resolvedKind;
-        if(nodeKind.isAssignableFrom(kind))
-            resolvedKind = kind;
-        else if(kind.isAssignableFrom(nodeKind))
+        if(kind.isAssignableFrom(nodeKind) || kind.equals(FramedVertex.class) || kind.equals(FramedEdge.class) || kind.equals(Object.class))
             resolvedKind = nodeKind;
         else
             resolvedKind = kind;

@@ -61,16 +61,20 @@ public class AdjacencyMethodHandler implements MethodHandler {
                 throw new IllegalStateException(method.getName() + " was annotated with @Adjacency but had more than 1 arguments.");
         }
         else if (ReflectionUtility.isGetMethod(method)) {
-            if (arguments == null || arguments.length == 0)
-                throw new IllegalStateException(method.getName() + " was annotated with @Adjacency but had no arguments.");
+            if (arguments == null || arguments.length == 0) {
+                if (Iterable.class.isAssignableFrom(method.getReturnType()))
+                    return this.getNodesDefault(builder, method, annotation);
+
+                return this.getNodeDefault(builder, method, annotation);
+            }
             else if (arguments.length == 1) {
                 if (!(Class.class.isAssignableFrom(arguments[0].getType())))
                     throw new IllegalStateException(method.getName() + " was annotated with @Adjacency, had a single argument, but that argument was not of the type Class");
 
                 if (Iterable.class.isAssignableFrom(method.getReturnType()))
-                    return this.getNodes(builder, method, annotation);
+                    return this.getNodesByType(builder, method, annotation);
 
-                return this.getNode(builder, method, annotation);
+                return this.getNodeByType(builder, method, annotation);
             }
             else
                 throw new IllegalStateException(method.getName() + " was annotated with @Adjacency but had more than 1 arguments.");
@@ -79,19 +83,46 @@ public class AdjacencyMethodHandler implements MethodHandler {
             throw new IllegalStateException(method.getName() + " was annotated with @Adjacency but did not begin with either of the following keywords: add, get");
     }
 
-    private <E> DynamicType.Builder<E> getNodes(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
-        return builder.method(MethodMatchers.is(method)).intercept(MethodDelegation.to(GetVertexesInterceptor.class));
+    private <E> DynamicType.Builder<E> getNodesDefault(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
+        return builder.method(MethodMatchers.is(method)).intercept(MethodDelegation.to(GetVertexesDefaultInterceptor.class));
     }
 
-    private <E> DynamicType.Builder<E> getNode(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
-        return builder.method(MethodMatchers.is(method)).intercept(MethodDelegation.to(GetVertexInterceptor.class));
+    private <E> DynamicType.Builder<E> getNodeDefault(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
+        return builder.method(MethodMatchers.is(method)).intercept(MethodDelegation.to(GetVertexDefaultInterceptor.class));
+    }
+
+    private <E> DynamicType.Builder<E> getNodesByType(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
+        return builder.method(MethodMatchers.is(method)).intercept(MethodDelegation.to(GetVertexesByTypeInterceptor.class));
+    }
+
+    private <E> DynamicType.Builder<E> getNodeByType(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
+        return builder.method(MethodMatchers.is(method)).intercept(MethodDelegation.to(GetVertexByTypeInterceptor.class));
     }
 
     private <E> DynamicType.Builder<E> addNode(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
         return builder.method(MethodMatchers.is(method)).intercept(MethodDelegation.to(AddVertexInterceptor.class));
     }
 
-    public static final class GetVertexesInterceptor {
+    public static final class GetVertexesDefaultInterceptor {
+        @RuntimeType
+        public static Iterable getVertexes(@This final FramedVertex thiz, @Origin final Method method) {
+            final Adjacency annotation = method.getAnnotation(Adjacency.class);
+            final Direction direction = annotation.direction();
+            final String label = annotation.label();
+
+            switch (direction) {
+                case BOTH:
+                    return thiz.both(label).frame(FramedVertex.class);
+                case IN:
+                    return thiz.in(label).frame(FramedVertex.class);
+                //Assume out direction
+                default:
+                    return thiz.out(label).frame(FramedVertex.class);
+            }
+        }
+    }
+
+    public static final class GetVertexesByTypeInterceptor {
         @RuntimeType
         public static Iterable getVertexes(@This final FramedVertex thiz, @Origin final Method method, @RuntimeType @Argument(0) final Class type) {
             final Adjacency annotation = method.getAnnotation(Adjacency.class);
@@ -112,7 +143,26 @@ public class AdjacencyMethodHandler implements MethodHandler {
         }
     }
 
-    public static final class GetVertexInterceptor {
+    public static final class GetVertexDefaultInterceptor {
+        @RuntimeType
+        public static Object getVertexes(@This final FramedVertex thiz, @Origin final Method method) {
+            final Adjacency annotation = method.getAnnotation(Adjacency.class);
+            final Direction direction = annotation.direction();
+            final String label = annotation.label();
+
+            switch (direction) {
+                case BOTH:
+                    return thiz.both(label).next(FramedVertex.class);
+                case IN:
+                    return thiz.in(label).next(FramedVertex.class);
+                //Assume out direction
+                default:
+                    return thiz.out(label).next(FramedVertex.class);
+            }
+        }
+    }
+
+    public static final class GetVertexByTypeInterceptor {
         @RuntimeType
         public static Object getVertex(@This final FramedVertex thiz, @Origin final Method method, @RuntimeType @Argument(0) final Class type) {
             final Adjacency annotation = method.getAnnotation(Adjacency.class);

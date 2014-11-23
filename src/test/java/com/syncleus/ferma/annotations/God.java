@@ -43,7 +43,13 @@ public interface God {
 
     @Property("type")
     String getType();
-    
+
+    @Adjacency(label="father", direction= Direction.IN)
+    Iterable<? extends God> getSons();
+
+    @Adjacency(label="father", direction= Direction.IN)
+    God getSon();
+
     @Adjacency(label="father", direction= Direction.IN)
     <N extends God> Iterable<? extends N> getSons(Class<? extends N> type);
 

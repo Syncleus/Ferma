@@ -68,7 +68,7 @@ public interface TypeResolver {
 	 * This type resolver will use the Java class stored in the 'java_class' on
 	 * the element.
 	 */
-	public static final TypeResolver JAVA = new TypeResolver() {
+	public static final TypeResolver SIMPLE = new TypeResolver() {
 		@SuppressWarnings("unchecked")
 		@Override
 		public <T> Class<T> resolve(Element element, Class<T> kind) {

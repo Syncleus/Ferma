@@ -90,7 +90,7 @@ public class FramedGraph {
 	 *            The types to be consider for type resolution.
 	 */
 	public FramedGraph(Graph delegate, final Collection<? extends Class<?>> annotatedTypes) {
-		this(delegate, new AnnotationFrameFactory(annotatedTypes), TypeResolver.ANNOTATED.ANNOTATED);
+		this(delegate, new AnnotationFrameFactory(annotatedTypes), TypeResolver.ANNOTATED);
 	}
 
 	/**

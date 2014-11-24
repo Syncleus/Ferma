@@ -231,3 +231,16 @@ construct the byte-code for any abstract annotated methods..
       Assert.assertEquals(Programmer.class, jeff.getClass());
       Assert.assertEquals(Person.class, julia.getClass());
     }
+
+## Obtaining the Source
+
+The official source repository for Ferma is located on the Syncleus Gerrit instance and can be cloned using the
+following command.
+
+```
+git clone http://gerrit.syncleus.com/Ferma
+```
+
+We also maintain a GitHub clone of the official repository which can be found
+[here](https://github.com/Syncleus/Ferma). Finally Syncleus also hosts an instance of GitLab which has a
+clone of the repository which can be found [here](http://gitlab.syncleus.com/syncleus/Ferma).

@@ -16,6 +16,15 @@
  *  Philadelphia, PA 19148                                                     *
  *                                                                             *
  ******************************************************************************/
+
+/*
+ * Part or all of this source file was forked from a third-party project, the details of which are listed below.
+ *
+ * Source Project: Totorom
+ * Source URL: https://github.com/BrynCooke/totorom
+ * Source License: Apache Public License v2.0
+ * When: November, 20th 2014
+ */
 package com.syncleus.ferma;
 
 import com.google.gson.Gson;
@@ -26,12 +35,6 @@ import com.tinkerpop.blueprints.Vertex;
 
 /**
  * The base class that all vertex frames must extend.
- * 
- * @author Bryn Cooke (http://jglue.org)
- */
-/**
- * @author bryn
- *
  */
 public abstract class FramedVertex extends FramedElement {
 

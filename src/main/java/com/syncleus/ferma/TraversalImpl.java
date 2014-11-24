@@ -16,6 +16,15 @@
  *  Philadelphia, PA 19148                                                     *
  *                                                                             *
  ******************************************************************************/
+
+/*
+ * Part or all of this source file was forked from a third-party project, the details of which are listed below.
+ *
+ * Source Project: Totorom
+ * Source URL: https://github.com/BrynCooke/totorom
+ * Source License: Apache Public License v2.0
+ * When: November, 20th 2014
+ */
 package com.syncleus.ferma;
 
 import java.util.ArrayDeque;
@@ -26,12 +35,6 @@ import com.syncleus.ferma.pipes.GremlinPipeline;
 
 import com.tinkerpop.blueprints.Graph;
 
-/**
- * The implementation of
- * 
- * @author bryn
- *
- */
 @SuppressWarnings("rawtypes")
 class TraversalImpl extends TraversalBase implements Traversal {
 

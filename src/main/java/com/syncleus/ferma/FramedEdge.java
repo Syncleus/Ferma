@@ -16,6 +16,15 @@
  *  Philadelphia, PA 19148                                                     *
  *                                                                             *
  ******************************************************************************/
+
+/*
+ * Part or all of this source file was forked from a third-party project, the details of which are listed below.
+ *
+ * Source Project: Totorom
+ * Source URL: https://github.com/BrynCooke/totorom
+ * Source License: Apache Public License v2.0
+ * When: November, 20th 2014
+ */
 package com.syncleus.ferma;
 
 import com.google.gson.Gson;
@@ -25,8 +34,6 @@ import com.tinkerpop.blueprints.Edge;
 
 /**
  * The base class that all edge frames must extend.
- * 
- * @author Bryn Cooke (http://jglue.org)
  */
 public abstract class FramedEdge extends FramedElement {
 

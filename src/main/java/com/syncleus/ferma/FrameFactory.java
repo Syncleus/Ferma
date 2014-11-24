@@ -16,15 +16,21 @@
  *  Philadelphia, PA 19148                                                     *
  *                                                                             *
  ******************************************************************************/
+
+/*
+ * Part or all of this source file was forked from a third-party project, the details of which are listed below.
+ *
+ * Source Project: Totorom
+ * Source URL: https://github.com/BrynCooke/totorom
+ * Source License: Apache Public License v2.0
+ * When: November, 20th 2014
+ */
 package com.syncleus.ferma;
 
 import com.tinkerpop.blueprints.Element;
 
 /**
  * Does the actual work of constructing the frame. Implementations
- * 
- * @author Bryn Cooke (http://jglue.org)
- * 
  */
 public interface FrameFactory {
 

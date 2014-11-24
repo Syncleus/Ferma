@@ -18,6 +18,7 @@
  ******************************************************************************/
 package com.syncleus.ferma.annotations;
 
+import com.syncleus.ferma.FramedEdge;
 import com.syncleus.ferma.FramedVertex;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.gremlin.Tokens;
@@ -50,21 +51,21 @@ public class AdjacencyMethodHandler implements MethodHandler {
 
         if (ReflectionUtility.isAddMethod(method)) {
             if (arguments == null || arguments.length == 0)
-                return this.addNodeDefault(builder, method, annotation);
+                return this.addVertexDefault(builder, method, annotation);
             else if (arguments.length == 1) {
                 if (Class.class.isAssignableFrom(arguments[0].getType()))
-                    return this.addNodeByTypeUntypedEdge(builder, method, annotation);
+                    return this.addVertexByTypeUntypedEdge(builder, method, annotation);
                 else
-                    return this.addNodeByObjectUntypedEdge(builder, method, annotation);
+                    return this.addVertexByObjectUntypedEdge(builder, method, annotation);
             }
             else if (arguments.length == 2) {
                 if (!(Class.class.isAssignableFrom(arguments[1].getType())))
                     throw new IllegalStateException(method.getName() + " was annotated with @Adjacency, had two arguments, but the second argument was not of the type Class");
 
                 if (Class.class.isAssignableFrom(arguments[0].getType()))
-                    return this.addNodeByTypeTypedEdge(builder, method, annotation);
+                    return this.addVertexByTypeTypedEdge(builder, method, annotation);
                 else
-                    return this.addNodeByObjectTypedEdge(builder, method, annotation);
+                    return this.addVertexByObjectTypedEdge(builder, method, annotation);
             }
             else
                 throw new IllegalStateException(method.getName() + " was annotated with @Adjacency but had more than 1 arguments.");
@@ -72,60 +73,72 @@ public class AdjacencyMethodHandler implements MethodHandler {
         else if (ReflectionUtility.isGetMethod(method)) {
             if (arguments == null || arguments.length == 0) {
                 if (Iterable.class.isAssignableFrom(method.getReturnType()))
-                    return this.getNodesDefault(builder, method, annotation);
+                    return this.getVertexesDefault(builder, method, annotation);
 
-                return this.getNodeDefault(builder, method, annotation);
+                return this.getVertexDefault(builder, method, annotation);
             }
             else if (arguments.length == 1) {
                 if (!(Class.class.isAssignableFrom(arguments[0].getType())))
                     throw new IllegalStateException(method.getName() + " was annotated with @Adjacency, had a single argument, but that argument was not of the type Class");
 
                 if (Iterable.class.isAssignableFrom(method.getReturnType()))
-                    return this.getNodesByType(builder, method, annotation);
+                    return this.getVertexesByType(builder, method, annotation);
 
-                return this.getNodeByType(builder, method, annotation);
+                return this.getVertexByType(builder, method, annotation);
             }
             else
                 throw new IllegalStateException(method.getName() + " was annotated with @Adjacency but had more than 1 arguments.");
         }
+        else if (ReflectionUtility.isRemoveMethod(method)) {
+            if( arguments == null  || arguments.length == 0 )
+                throw new IllegalStateException(method.getName() + " was annotated with @Adjacency but had no arguments.");
+            else if (arguments.length == 1)
+                return this.removeVertex(builder, method, annotation);
+            else
+                throw new IllegalStateException(method.getName() + " was annotated with @Adjacency but had more than 1 arguments.");
+        }
         else
-            throw new IllegalStateException(method.getName() + " was annotated with @Adjacency but did not begin with either of the following keywords: add, get");
+            throw new IllegalStateException(method.getName() + " was annotated with @Adjacency but did not begin with either of the following keywords: add, get, remove");
     }
 
-    private <E> DynamicType.Builder<E> getNodesDefault(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
+    private <E> DynamicType.Builder<E> getVertexesDefault(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
         return builder.method(MethodMatchers.is(method)).intercept(MethodDelegation.to(GetVertexesDefaultInterceptor.class));
     }
 
-    private <E> DynamicType.Builder<E> getNodeDefault(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
+    private <E> DynamicType.Builder<E> getVertexDefault(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
         return builder.method(MethodMatchers.is(method)).intercept(MethodDelegation.to(GetVertexDefaultInterceptor.class));
     }
 
-    private <E> DynamicType.Builder<E> getNodesByType(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
+    private <E> DynamicType.Builder<E> getVertexesByType(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
         return builder.method(MethodMatchers.is(method)).intercept(MethodDelegation.to(GetVertexesByTypeInterceptor.class));
     }
 
-    private <E> DynamicType.Builder<E> getNodeByType(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
+    private <E> DynamicType.Builder<E> getVertexByType(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
         return builder.method(MethodMatchers.is(method)).intercept(MethodDelegation.to(GetVertexByTypeInterceptor.class));
     }
 
-    private <E> DynamicType.Builder<E> addNodeDefault(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
+    private <E> DynamicType.Builder<E> addVertexDefault(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
         return builder.method(MethodMatchers.is(method)).intercept(MethodDelegation.to(AddVertexDefaultInterceptor.class));
     }
 
-    private <E> DynamicType.Builder<E> addNodeByTypeUntypedEdge(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
+    private <E> DynamicType.Builder<E> addVertexByTypeUntypedEdge(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
         return builder.method(MethodMatchers.is(method)).intercept(MethodDelegation.to(AddVertexByTypeUntypedEdgeInterceptor.class));
     }
 
-    private <E> DynamicType.Builder<E> addNodeByObjectUntypedEdge(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
+    private <E> DynamicType.Builder<E> addVertexByObjectUntypedEdge(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
         return builder.method(MethodMatchers.is(method)).intercept(MethodDelegation.to(AddVertexByObjectUntypedEdgeInterceptor.class));
     }
 
-    private <E> DynamicType.Builder<E> addNodeByTypeTypedEdge(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
+    private <E> DynamicType.Builder<E> addVertexByTypeTypedEdge(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
         return builder.method(MethodMatchers.is(method)).intercept(MethodDelegation.to(AddVertexByTypeTypedEdgeInterceptor.class));
     }
 
-    private <E> DynamicType.Builder<E> addNodeByObjectTypedEdge(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
+    private <E> DynamicType.Builder<E> addVertexByObjectTypedEdge(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
         return builder.method(MethodMatchers.is(method)).intercept(MethodDelegation.to(AddVertexByObjectTypedEdgeInterceptor.class));
+    }
+
+    private <E> DynamicType.Builder<E> removeVertex(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
+        return builder.method(MethodMatchers.is(method)).intercept(MethodDelegation.to(RemoveVertexInterceptor.class));
     }
 
     public static final class GetVertexesDefaultInterceptor {
@@ -341,6 +354,37 @@ public class AdjacencyMethodHandler implements MethodHandler {
             }
 
             return newVertex;
+        }
+    }
+
+    public static final class RemoveVertexInterceptor {
+        @RuntimeType
+        public static void removeVertex(@This final FramedVertex thiz, @Origin final Method method, @RuntimeType @Argument(0) final FramedVertex removeVertex) {
+
+            final Adjacency annotation = method.getAnnotation(Adjacency.class);
+            final Direction direction = annotation.direction();
+            final String label = annotation.label();
+
+            switch (direction) {
+                case BOTH:
+                    for(final FramedEdge edge : thiz.bothE(label) ) {
+                        if (null == removeVertex || edge.outV().next().getId().equals(removeVertex.getId()) || edge.inV().next().getId().equals(removeVertex.getId()))
+                            edge.remove();
+                    }
+                    break;
+                case IN:
+                    for(final FramedEdge edge : thiz.inE(label) ) {
+                        if (null == removeVertex || edge.outV().next().getId().equals(removeVertex.getId()))
+                            edge.remove();
+                    }
+                    break;
+                //Assume out direction
+                default:
+                    for(final FramedEdge edge : thiz.outE(label) ) {
+                        if (null == removeVertex || edge.inV().next().getId().equals(removeVertex.getId()))
+                            edge.remove();
+                    }
+            }
         }
     }
 }

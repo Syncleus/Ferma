@@ -72,6 +72,9 @@ public interface God {
     @Adjacency(label="father", direction= Direction.IN)
     God addSon(God son, Class<? extends FatherEdge> edge);
 
+    @Adjacency(label="father", direction= Direction.IN)
+    void removeSon(God son);
+
     @Incidence(label="father", direction= Direction.IN)
     <N extends FatherEdge> Iterable<? extends N> getSonEdges(Class<? extends N> type);
 

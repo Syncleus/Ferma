@@ -206,7 +206,27 @@ public class AdjacencyMethodHandlerTest {
     }
 
     @Test
-    public void testAddSon() {
+    public void testAddSonDefault() {
+        final TinkerGraph godGraph = new TinkerGraph();
+        GodGraphLoader.load(godGraph);
+
+        final AnnotationTypeResolver resolver = new AnnotationTypeResolver();
+        final AnnotationFrameFactory factory = new AnnotationFrameFactory(TEST_TYPES);
+        final FramedGraph framedGraph = new FramedGraph(godGraph, factory, resolver);
+
+        final List<God> gods = framedGraph.V().has("name", "jupiter").toList(God.class);
+
+        final God father = gods.iterator().next();
+        Assert.assertTrue(father instanceof FramedVertex);
+        final FramedVertex fatherVertex = (FramedVertex) father;
+        Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
+
+        final FramedVertex childVertex = father.addSon();
+        Assert.assertNull(childVertex.element().getProperty("name"));
+    }
+
+    @Test
+    public void testAddSonByTypeUntypedEdge() {
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
 
@@ -222,6 +242,76 @@ public class AdjacencyMethodHandlerTest {
         Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
 
         final God child = father.addSon(God.class);
+        Assert.assertTrue(child instanceof FramedVertex);
+        final FramedVertex childVertex = (FramedVertex) child;
+        Assert.assertNull(childVertex.element().getProperty("name"));
+    }
+
+    @Test
+    public void testAddSonByObjectUntypedEdge() {
+        final TinkerGraph godGraph = new TinkerGraph();
+        GodGraphLoader.load(godGraph);
+
+        final AnnotationTypeResolver resolver = new AnnotationTypeResolver();
+        final AnnotationFrameFactory factory = new AnnotationFrameFactory(TEST_TYPES);
+        final FramedGraph framedGraph = new FramedGraph(godGraph, factory, resolver);
+
+        final List<God> gods = framedGraph.V().has("name", "jupiter").toList(God.class);
+
+        final God father = gods.iterator().next();
+        Assert.assertTrue(father instanceof FramedVertex);
+        final FramedVertex fatherVertex = (FramedVertex) father;
+        Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
+
+        final God child = framedGraph.addVertex(God.class);
+        father.addSon(child);
+
+        Assert.assertTrue(child instanceof FramedVertex);
+        final FramedVertex childVertex = (FramedVertex) child;
+        Assert.assertNull(childVertex.element().getProperty("name"));
+    }
+
+    @Test
+    public void testAddSonByTypeTypedEdge() {
+        final TinkerGraph godGraph = new TinkerGraph();
+        GodGraphLoader.load(godGraph);
+
+        final AnnotationTypeResolver resolver = new AnnotationTypeResolver();
+        final AnnotationFrameFactory factory = new AnnotationFrameFactory(TEST_TYPES);
+        final FramedGraph framedGraph = new FramedGraph(godGraph, factory, resolver);
+
+        final List<God> gods = framedGraph.V().has("name", "jupiter").toList(God.class);
+
+        final God father = gods.iterator().next();
+        Assert.assertTrue(father instanceof FramedVertex);
+        final FramedVertex fatherVertex = (FramedVertex) father;
+        Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
+
+        final God child = father.addSon(God.class, FatherEdge.class);
+        Assert.assertTrue(child instanceof FramedVertex);
+        final FramedVertex childVertex = (FramedVertex) child;
+        Assert.assertNull(childVertex.element().getProperty("name"));
+    }
+
+    @Test
+    public void testAddSonByObjectTypedEdge() {
+        final TinkerGraph godGraph = new TinkerGraph();
+        GodGraphLoader.load(godGraph);
+
+        final AnnotationTypeResolver resolver = new AnnotationTypeResolver();
+        final AnnotationFrameFactory factory = new AnnotationFrameFactory(TEST_TYPES);
+        final FramedGraph framedGraph = new FramedGraph(godGraph, factory, resolver);
+
+        final List<God> gods = framedGraph.V().has("name", "jupiter").toList(God.class);
+
+        final God father = gods.iterator().next();
+        Assert.assertTrue(father instanceof FramedVertex);
+        final FramedVertex fatherVertex = (FramedVertex) father;
+        Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
+
+        final God child = framedGraph.addVertex(God.class);
+        father.addSon(child, FatherEdge.class);
+
         Assert.assertTrue(child instanceof FramedVertex);
         final FramedVertex childVertex = (FramedVertex) child;
         Assert.assertNull(childVertex.element().getProperty("name"));

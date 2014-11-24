@@ -50,12 +50,21 @@ public class AdjacencyMethodHandler implements MethodHandler {
 
         if (ReflectionUtility.isAddMethod(method)) {
             if (arguments == null || arguments.length == 0)
-                throw new IllegalStateException(method.getName() + " was annotated with @Adjacency but had no arguments.");
+                return this.addNodeDefault(builder, method, annotation);
             else if (arguments.length == 1) {
-                if (!(Class.class.isAssignableFrom(arguments[0].getType())))
-                    throw new IllegalStateException(method.getName() + " was annotated with @Adjacency, had a single argument, but that argument was not of the type Class");
+                if (Class.class.isAssignableFrom(arguments[0].getType()))
+                    return this.addNodeByTypeUntypedEdge(builder, method, annotation);
+                else
+                    return this.addNodeByObjectUntypedEdge(builder, method, annotation);
+            }
+            else if (arguments.length == 2) {
+                if (!(Class.class.isAssignableFrom(arguments[1].getType())))
+                    throw new IllegalStateException(method.getName() + " was annotated with @Adjacency, had two arguments, but the second argument was not of the type Class");
 
-                return this.addNode(builder, method, annotation);
+                if (Class.class.isAssignableFrom(arguments[0].getType()))
+                    return this.addNodeByTypeTypedEdge(builder, method, annotation);
+                else
+                    return this.addNodeByObjectTypedEdge(builder, method, annotation);
             }
             else
                 throw new IllegalStateException(method.getName() + " was annotated with @Adjacency but had more than 1 arguments.");
@@ -99,8 +108,24 @@ public class AdjacencyMethodHandler implements MethodHandler {
         return builder.method(MethodMatchers.is(method)).intercept(MethodDelegation.to(GetVertexByTypeInterceptor.class));
     }
 
-    private <E> DynamicType.Builder<E> addNode(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
-        return builder.method(MethodMatchers.is(method)).intercept(MethodDelegation.to(AddVertexInterceptor.class));
+    private <E> DynamicType.Builder<E> addNodeDefault(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
+        return builder.method(MethodMatchers.is(method)).intercept(MethodDelegation.to(AddVertexDefaultInterceptor.class));
+    }
+
+    private <E> DynamicType.Builder<E> addNodeByTypeUntypedEdge(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
+        return builder.method(MethodMatchers.is(method)).intercept(MethodDelegation.to(AddVertexByTypeUntypedEdgeInterceptor.class));
+    }
+
+    private <E> DynamicType.Builder<E> addNodeByObjectUntypedEdge(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
+        return builder.method(MethodMatchers.is(method)).intercept(MethodDelegation.to(AddVertexByObjectUntypedEdgeInterceptor.class));
+    }
+
+    private <E> DynamicType.Builder<E> addNodeByTypeTypedEdge(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
+        return builder.method(MethodMatchers.is(method)).intercept(MethodDelegation.to(AddVertexByTypeTypedEdgeInterceptor.class));
+    }
+
+    private <E> DynamicType.Builder<E> addNodeByObjectTypedEdge(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
+        return builder.method(MethodMatchers.is(method)).intercept(MethodDelegation.to(AddVertexByObjectTypedEdgeInterceptor.class));
     }
 
     public static final class GetVertexesDefaultInterceptor {
@@ -183,10 +208,36 @@ public class AdjacencyMethodHandler implements MethodHandler {
         }
     }
 
-    public static final class AddVertexInterceptor {
+    public static final class AddVertexDefaultInterceptor {
         @RuntimeType
-        public static Object addVertex(@This final FramedVertex thiz, @Origin final Method method, @RuntimeType @Argument(0) final Class type) {
-            final Object newNode = thiz.graph().addVertex(type);
+        public static Object addVertex(@This final FramedVertex thiz, @Origin final Method method) {
+            final FramedVertex newVertex = thiz.graph().addVertex();
+
+            final Adjacency annotation = method.getAnnotation(Adjacency.class);
+            final Direction direction = annotation.direction();
+            final String label = annotation.label();
+
+            switch (direction) {
+                case BOTH:
+                    thiz.graph().addEdge(newVertex, thiz, label);
+                    thiz.graph().addEdge(thiz, newVertex, label);
+                    break;
+                case IN:
+                    thiz.graph().addEdge(newVertex, thiz, label);
+                    break;
+                //Assume out direction
+                default:
+                    thiz.graph().addEdge(thiz, newVertex, label);
+            }
+
+            return newVertex;
+        }
+    }
+
+    public static final class AddVertexByTypeUntypedEdgeInterceptor {
+        @RuntimeType
+        public static Object addVertex(@This final FramedVertex thiz, @Origin final Method method, @RuntimeType @Argument(0) final Class vertexType) {
+            final Object newNode = thiz.graph().addVertex(vertexType);
             assert newNode instanceof FramedVertex;
             final FramedVertex newVertex = ((FramedVertex) newNode);
 
@@ -194,7 +245,7 @@ public class AdjacencyMethodHandler implements MethodHandler {
             final Direction direction = annotation.direction();
             final String label = annotation.label();
 
-            assert type.isInstance(newNode);
+            assert vertexType.isInstance(newNode);
 
             switch (direction) {
                 case BOTH:
@@ -210,6 +261,86 @@ public class AdjacencyMethodHandler implements MethodHandler {
             }
 
             return newNode;
+        }
+    }
+
+    public static final class AddVertexByTypeTypedEdgeInterceptor {
+        @RuntimeType
+        public static Object addVertex(@This final FramedVertex thiz, @Origin final Method method, @RuntimeType @Argument(0) final Class vertexType, @RuntimeType @Argument(1) final Class edgeType) {
+            final Object newNode = thiz.graph().addVertex(vertexType);
+            assert newNode instanceof FramedVertex;
+            final FramedVertex newVertex = ((FramedVertex) newNode);
+
+            final Adjacency annotation = method.getAnnotation(Adjacency.class);
+            final Direction direction = annotation.direction();
+            final String label = annotation.label();
+
+            assert vertexType.isInstance(newNode);
+
+            switch (direction) {
+                case BOTH:
+                    thiz.graph().addEdge(newVertex, thiz, label, edgeType);
+                    thiz.graph().addEdge(thiz, newVertex, label, edgeType);
+                    break;
+                case IN:
+                    thiz.graph().addEdge(newVertex, thiz, label, edgeType);
+                    break;
+                //Assume out direction
+                default:
+                    thiz.graph().addEdge(thiz, newVertex, label, edgeType);
+            }
+
+            return newNode;
+        }
+    }
+
+    public static final class AddVertexByObjectUntypedEdgeInterceptor {
+        @RuntimeType
+        public static Object addVertex(@This final FramedVertex thiz, @Origin final Method method, @RuntimeType @Argument(0) final FramedVertex newVertex) {
+
+            final Adjacency annotation = method.getAnnotation(Adjacency.class);
+            final Direction direction = annotation.direction();
+            final String label = annotation.label();
+
+            switch (direction) {
+                case BOTH:
+                    thiz.graph().addEdge(newVertex, thiz, label);
+                    thiz.graph().addEdge(thiz, newVertex, label);
+                    break;
+                case IN:
+                    thiz.graph().addEdge(newVertex, thiz, label);
+                    break;
+                //Assume out direction
+                default:
+                    thiz.graph().addEdge(thiz, newVertex, label);
+            }
+
+            return newVertex;
+        }
+    }
+
+    public static final class AddVertexByObjectTypedEdgeInterceptor {
+        @RuntimeType
+        public static Object addVertex(@This final FramedVertex thiz, @Origin final Method method, @RuntimeType @Argument(0) final FramedVertex newVertex, @RuntimeType @Argument(1) final Class edgeType) {
+
+            final Adjacency annotation = method.getAnnotation(Adjacency.class);
+            final Direction direction = annotation.direction();
+            final String label = annotation.label();
+
+            switch (direction) {
+                case BOTH:
+                    thiz.graph().addEdge(newVertex, thiz, label, edgeType);
+                    thiz.graph().addEdge(thiz, newVertex, label, edgeType);
+                    break;
+                case IN:
+                    thiz.graph().addEdge(newVertex, thiz, label, edgeType);
+                    break;
+                //Assume out direction
+                default:
+                    thiz.graph().addEdge(thiz, newVertex, label, edgeType);
+            }
+
+            return newVertex;
         }
     }
 }

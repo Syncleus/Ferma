@@ -206,7 +206,7 @@ The same example as above done with annotations would look something like this.
     }
 
 If we pass a collection of Class objects to the FramedGraph constructor then the annotated type resolver will be used.
-In this mode you want to tell the engine what classes you will be using so it can handle type resolution property and
+In this mode you want to tell the engine what classes you will be using so it can handle type resolution properly and
 construct the byte-code for any abstract annotated methods..
 
     public void testAnnotatedTyping() {

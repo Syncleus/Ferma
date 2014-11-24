@@ -177,12 +177,11 @@ The same example as above done with annotations would look something like this.
       @Incidence("knows")
       public abstract Iterable<Knows> getKnows();
 
+      @Incidence("knows")
+      public abstract Knows addKnows(Person friend);
+
       public List<Person> getFriendsOfFriends() {
         return out("knows").out("knows").except(this).toList(Person.class);
-      }
-
-      public Knows addKnows(Person friend) {
-        return addEdge("knows", friend, Knows.class);
       }
     }
 

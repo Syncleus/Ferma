@@ -1,0 +1,5 @@
+[gerrit]
+host=gerrit.syncleus.com
+port=29418
+defaultbranch=master
+project=Ferma

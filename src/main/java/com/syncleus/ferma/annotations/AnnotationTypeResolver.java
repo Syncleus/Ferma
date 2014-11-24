@@ -38,6 +38,7 @@ import java.util.*;
 
 public class AnnotationTypeResolver implements TypeResolver {
     private final Map<Class<? extends Annotation>, MethodHandler> methodHandlers = new HashMap<>();
+    private final Map<Class, Class> classCache = new HashMap<>();
 
     /**
      * Creates a new GrailTypeResolver with a typing engine that can recognize the specified types. While these types
@@ -110,6 +111,10 @@ public class AnnotationTypeResolver implements TypeResolver {
     }
 
     private final <E> Class<? extends E> constructClass(final Element element, final Class<E> clazz) {
+        Class constructedClass = classCache.get(clazz);
+        if(constructedClass != null )
+            return constructedClass;
+
         DynamicType.Builder<? extends E> classBuilder;
         if( clazz.isInterface() ) {
             if( element instanceof Vertex)
@@ -143,6 +148,8 @@ public class AnnotationTypeResolver implements TypeResolver {
             }
         }
 
-        return classBuilder.make().load(AnnotationTypeResolver.class.getClassLoader(), ClassLoadingStrategy.Default.WRAPPER).getLoaded();
+        constructedClass = classBuilder.make().load(AnnotationTypeResolver.class.getClassLoader(), ClassLoadingStrategy.Default.WRAPPER).getLoaded();
+        this.classCache.put(clazz, constructedClass);
+        return constructedClass;
     }
 }

@@ -77,6 +77,9 @@ public interface God {
     God addSon(God son, Class<? extends FatherEdge> edge);
 
     @Adjacency(label="father", direction= Direction.IN)
+    void setSons(Iterable<? extends God> vertexSet);
+
+    @Adjacency(label="father", direction= Direction.IN)
     void removeSon(God son);
 
     @Incidence(label="father", direction= Direction.IN)

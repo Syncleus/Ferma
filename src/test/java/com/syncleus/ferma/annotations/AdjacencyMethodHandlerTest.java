@@ -318,6 +318,63 @@ public class AdjacencyMethodHandlerTest {
     }
 
     @Test
+    public void testSetSonsEmpty() {
+        final TinkerGraph godGraph = new TinkerGraph();
+        GodGraphLoader.load(godGraph);
+
+        final AnnotationTypeResolver resolver = new AnnotationTypeResolver();
+        final AnnotationFrameFactory factory = new AnnotationFrameFactory(TEST_TYPES);
+        final FramedGraph framedGraph = new FramedGraph(godGraph, factory, resolver);
+
+        final List<God> gods = framedGraph.V().has("name", "jupiter").toList(God.class);
+
+        final God father = gods.iterator().next();
+        Assert.assertTrue(father instanceof FramedVertex);
+        final FramedVertex fatherVertex = (FramedVertex) father;
+        Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
+
+        God child = father.getSon(God.class);
+        Assert.assertNotNull(child);
+        Assert.assertTrue(child instanceof FramedVertex);
+        final FramedVertex childVertex = (FramedVertex) child;
+        Assert.assertEquals(childVertex.element().getProperty("name"), "hercules");
+        Assert.assertTrue(child instanceof GodExtended);
+
+        father.setSons(Collections.<God>emptySet());
+        Assert.assertFalse(father.getSons(God.class).iterator().hasNext());
+    }
+
+    @Test
+    public void testSetSons() {
+        final TinkerGraph godGraph = new TinkerGraph();
+        GodGraphLoader.load(godGraph);
+
+        final AnnotationTypeResolver resolver = new AnnotationTypeResolver();
+        final AnnotationFrameFactory factory = new AnnotationFrameFactory(TEST_TYPES);
+        final FramedGraph framedGraph = new FramedGraph(godGraph, factory, resolver);
+
+        final List<God> gods = framedGraph.V().has("name", "jupiter").toList(God.class);
+
+        final God father = gods.iterator().next();
+        Assert.assertTrue(father instanceof FramedVertex);
+        final FramedVertex fatherVertex = (FramedVertex) father;
+        Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
+
+        God child = father.getSon(God.class);
+        Assert.assertNotNull(child);
+        Assert.assertTrue(child instanceof FramedVertex);
+        final FramedVertex childVertex = (FramedVertex) child;
+        Assert.assertEquals(childVertex.element().getProperty("name"), "hercules");
+        Assert.assertTrue(child instanceof GodExtended);
+
+        father.setSons(Arrays.asList(new God[]{framedGraph.addVertex(God.class)}));
+
+        child = father.getSon(God.class);
+        Assert.assertNotNull(child);
+        Assert.assertNull(child.getName());
+    }
+
+    @Test
     public void testRemoveSon() {
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);

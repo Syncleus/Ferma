@@ -97,6 +97,18 @@ public class AdjacencyMethodHandler implements MethodHandler {
             else
                 throw new IllegalStateException(method.getName() + " was annotated with @Adjacency but had more than 1 arguments.");
         }
+        else if (ReflectionUtility.isSetMethod(method)) {
+            if( arguments == null  || arguments.length == 0 )
+                throw new IllegalStateException(method.getName() + " was annotated with @Adjacency but had no arguments.");
+            else if (arguments.length == 1) {
+                if (!(Iterable.class.isAssignableFrom(arguments[0].getType())))
+                    throw new IllegalStateException(method.getName() + " was annotated with @Adjacency, had a single argument, but that argument was not of the type Class");
+
+                return this.setVertex(builder, method, annotation);
+            }
+            else
+                throw new IllegalStateException(method.getName() + " was annotated with @Adjacency but had more than 1 arguments.");
+        }
         else
             throw new IllegalStateException(method.getName() + " was annotated with @Adjacency but did not begin with either of the following keywords: add, get, remove");
     }
@@ -135,6 +147,10 @@ public class AdjacencyMethodHandler implements MethodHandler {
 
     private <E> DynamicType.Builder<E> addVertexByObjectTypedEdge(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
         return builder.method(MethodMatchers.is(method)).intercept(MethodDelegation.to(AddVertexByObjectTypedEdgeInterceptor.class));
+    }
+
+    private <E> DynamicType.Builder<E> setVertex(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
+        return builder.method(MethodMatchers.is(method)).intercept(MethodDelegation.to(SetVertexInterceptor.class));
     }
 
     private <E> DynamicType.Builder<E> removeVertex(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
@@ -354,6 +370,40 @@ public class AdjacencyMethodHandler implements MethodHandler {
             }
 
             return newVertex;
+        }
+    }
+
+    public static final class SetVertexInterceptor {
+        @RuntimeType
+        public static void setVertex(@This final FramedVertex thiz, @Origin final Method method, @RuntimeType @Argument(0) final Iterable vertexSet) {
+
+            final Adjacency annotation = method.getAnnotation(Adjacency.class);
+            final Direction direction = annotation.direction();
+            final String label = annotation.label();
+
+
+            switch (direction) {
+                case BOTH:
+                    for( final FramedEdge existingEdge : thiz.bothE(label) )
+                        existingEdge.remove();
+                    for( final FramedVertex newVertex : (Iterable<? extends FramedVertex>) vertexSet ) {
+                        thiz.graph().addEdge(newVertex, thiz, label);
+                        thiz.graph().addEdge(thiz, newVertex, label);
+                    }
+                    break;
+                case IN:
+                    for( final FramedEdge existingEdge : thiz.inE(label) )
+                        existingEdge.remove();
+                    for( final FramedVertex newVertex : (Iterable<? extends FramedVertex>) vertexSet )
+                        thiz.graph().addEdge(newVertex, thiz, label);
+                    break;
+                //Assume out direction
+                default:
+                    for( final FramedEdge existingEdge : thiz.outE(label) )
+                        existingEdge.remove();
+                    for( final FramedVertex newVertex : (Iterable<? extends FramedVertex>) vertexSet )
+                        thiz.graph().addEdge(thiz, newVertex, label);
+            }
         }
     }
 

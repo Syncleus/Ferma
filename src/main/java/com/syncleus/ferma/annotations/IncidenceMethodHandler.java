@@ -18,6 +18,7 @@
  ******************************************************************************/
 package com.syncleus.ferma.annotations;
 
+import com.syncleus.ferma.FramedEdge;
 import com.syncleus.ferma.FramedVertex;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.gremlin.Tokens;
@@ -63,6 +64,15 @@ public class IncidenceMethodHandler implements MethodHandler {
             else
                 throw new IllegalStateException(method.getName() + " was annotated with @Incidence but had more than 1 arguments.");
         }
+        else if( ReflectionUtility.isRemoveMethod(method) ) {
+            if( arguments == null  || arguments.length == 0 )
+                throw new IllegalStateException(method.getName() + " was annotated with @Incidence but had no arguments.");
+            else if( arguments.length == 1 ) {
+                return this.removeEdge(builder, method, annotation);
+            }
+            else
+                throw new IllegalStateException(method.getName() + " was annotated with @Incidence but had more than 1 arguments.");
+        }
         else
             throw new IllegalStateException(method.getName() + " was annotated with @Incidence but did not begin with: get");
     }
@@ -73,6 +83,10 @@ public class IncidenceMethodHandler implements MethodHandler {
 
     private <E> DynamicType.Builder<E> getEdge(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
         return builder.method(MethodMatchers.is(method)).intercept(MethodDelegation.to(GetEdgeInterceptor.class));
+    }
+
+    private <E> DynamicType.Builder<E> removeEdge(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
+        return builder.method(MethodMatchers.is(method)).intercept(MethodDelegation.to(RemoveEdgeInterceptor.class));
     }
 
     public static final class GetEdgesInterceptor {
@@ -116,6 +130,13 @@ public class IncidenceMethodHandler implements MethodHandler {
                     return thiz.outE(label).has("implementation_type", Tokens.T.in, allAllowedValues).next(type);
             }
 
+        }
+    }
+
+    public static final class RemoveEdgeInterceptor {
+        @RuntimeType
+        public static void removeEdge(@This final FramedVertex thiz, @Origin final Method method, @RuntimeType @Argument(0) final FramedEdge edge) {
+            edge.remove();
         }
     }
 }

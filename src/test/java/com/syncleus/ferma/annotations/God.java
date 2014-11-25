@@ -80,4 +80,7 @@ public interface God {
 
     @Incidence(label="father", direction= Direction.IN)
     <N extends FatherEdge> N getSonEdge(Class<? extends N> type);
+
+    @Incidence(label="father", direction= Direction.IN)
+    void removeSonEdge(FatherEdge edge);
 }

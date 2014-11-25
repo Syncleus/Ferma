@@ -103,4 +103,31 @@ public class IncidenceMethodHandlerTest {
         final FramedEdge edge = (FramedEdge) childEdge;
         Assert.assertEquals(edge.element().getVertex(Direction.OUT).getProperty("name"), "hercules");
     }
+
+    @Test
+    public void testRemoveSonEdge() {
+        final TinkerGraph godGraph = new TinkerGraph();
+        GodGraphLoader.load(godGraph);
+
+        final AnnotationTypeResolver resolver = new AnnotationTypeResolver();
+        final AnnotationFrameFactory factory = new AnnotationFrameFactory(TEST_TYPES);
+        final FramedGraph framedGraph = new FramedGraph(godGraph, factory, resolver);
+
+        final List<God> gods = framedGraph.V().has("name", "jupiter").toList(God.class);
+
+        final God father = gods.iterator().next();
+        Assert.assertTrue(father instanceof FramedVertex);
+        final FramedVertex fatherVertex = (FramedVertex) father;
+        Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
+
+        FatherEdge child = father.getSonEdge(FatherEdge.class);
+        Assert.assertNotNull(child);
+        Assert.assertTrue(child instanceof FramedEdge);
+        final FramedEdge childEdge = (FramedEdge) child;
+        Assert.assertEquals(childEdge.outV().next().element().getProperty("name"), "hercules");
+
+        father.removeSonEdge(child);
+
+        Assert.assertFalse(father.getSonEdges(FatherEdge.class).iterator().hasNext());
+    }
 }

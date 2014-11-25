@@ -40,6 +40,9 @@ public interface God {
     @Property("name")
     void setName(String newName);
 
+    @Property("name")
+    void removeName();
+
     @Property("age")
     Integer getAge();
 

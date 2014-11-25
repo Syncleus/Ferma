@@ -45,7 +45,7 @@ public class PropertyMethodHandler implements MethodHandler {
     public <E> DynamicType.Builder<E> processMethod(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
         final java.lang.reflect.Parameter[] arguments = method.getParameters();
 
-        if (ReflectionUtility.isSetMethod(method)) {
+        if(ReflectionUtility.isSetMethod(method)) {
             if (arguments == null || arguments.length == 0)
                 throw new IllegalStateException(method.getName() + " was annotated with @Property but had no arguments.");
             else if (arguments.length == 1)
@@ -53,11 +53,17 @@ public class PropertyMethodHandler implements MethodHandler {
             else
                 throw new IllegalStateException(method.getName() + " was annotated with @Property but had more than 1 arguments.");
         }
-        else if (ReflectionUtility.isGetMethod(method)) {
+        else if(ReflectionUtility.isGetMethod(method)) {
             if (arguments == null || arguments.length == 0)
                 return this.getProperty(builder, method, annotation);
             else
                 throw new IllegalStateException(method.getName() + " was annotated with @Property but had arguments.");
+        }
+        else if(ReflectionUtility.isRemoveMethod(method)) {
+            if (arguments == null || arguments.length == 0)
+                return this.removeProperty(builder, method, annotation);
+            else
+                throw new IllegalStateException(method.getName() + " was annotated with @Property but had some arguments.");
         }
         else
             throw new IllegalStateException(method.getName() + " was annotated with @Property but did not begin with either of the following keywords: add, get");
@@ -69,6 +75,10 @@ public class PropertyMethodHandler implements MethodHandler {
 
     private <E> DynamicType.Builder<E> getProperty(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
         return builder.method(MethodMatchers.is(method)).intercept(MethodDelegation.to(GetPropertyInterceptor.class));
+    }
+
+    private <E> DynamicType.Builder<E> removeProperty(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
+        return builder.method(MethodMatchers.is(method)).intercept(MethodDelegation.to(RemovePropertyInterceptor.class));
     }
 
     private static Enum getValueAsEnum(final Method method, final Object value) {
@@ -105,6 +115,15 @@ public class PropertyMethodHandler implements MethodHandler {
             else {
                 thiz.setProperty(value, obj);
             }
+        }
+    }
+
+    public static final class RemovePropertyInterceptor {
+        public static void removeProperty(@This final FramedVertex thiz, @Origin final Method method) {
+            final Property annotation = method.getAnnotation(Property.class);
+            final String value = annotation.value();
+
+            thiz.element().removeProperty(value);
         }
     }
 }

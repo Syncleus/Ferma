@@ -71,4 +71,24 @@ public class PropertyMethodHandlerTest {
         fatherVertex = (FramedVertex) father;
         Assert.assertEquals(fatherVertex.getProperty("name"), "joopiter");
     }
+
+    @Test
+    public void testRemoveName() {
+        final TinkerGraph godGraph = new TinkerGraph();
+        GodGraphLoader.load(godGraph);
+
+        final AnnotationTypeResolver resolver = new AnnotationTypeResolver();
+        final AnnotationFrameFactory factory = new AnnotationFrameFactory(TEST_TYPES);
+        final FramedGraph framedGraph = new FramedGraph(godGraph, factory, resolver);
+
+        List<God> gods = framedGraph.V().has("name", "jupiter").toList(God.class);
+
+        God father = gods.iterator().next();
+        Assert.assertTrue(father instanceof FramedVertex);
+        FramedVertex fatherVertex = (FramedVertex) father;
+        Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
+        father.removeName();
+
+        Assert.assertNull(fatherVertex.getProperty("name"));
+    }
 }

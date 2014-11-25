@@ -32,7 +32,30 @@ public class IncidenceMethodHandlerTest {
     private static final Set<Class<?>> TEST_TYPES = new HashSet<Class<?>>(Arrays.asList(new Class<?>[]{God.class, FatherEdge.class, GodExtended.class, FatherEdgeExtended.class}));
 
     @Test
-    public void testGetSonEdges() {
+    public void testGetSonEdgesDefault() {
+        final TinkerGraph godGraph = new TinkerGraph();
+        GodGraphLoader.load(godGraph);
+
+        final AnnotationTypeResolver resolver = new AnnotationTypeResolver();
+        final AnnotationFrameFactory factory = new AnnotationFrameFactory(TEST_TYPES);
+        final FramedGraph framedGraph = new FramedGraph(godGraph, factory, resolver);
+
+        final List<God> gods = framedGraph.V().has("name", "jupiter").toList(God.class);
+
+        final God father = gods.iterator().next();
+        Assert.assertTrue(father instanceof FramedVertex);
+        final FramedVertex fatherVertex = (FramedVertex) father;
+        Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
+
+        final Iterable<? extends FramedEdge> childrenEdges = father.getSonEdges();
+        final Iterator<? extends FramedEdge> childEdgeIterator = childrenEdges.iterator();
+        Assert.assertTrue(childEdgeIterator.hasNext());
+        final FramedEdge childEdge = childEdgeIterator.next();
+        Assert.assertEquals(childEdge.element().getVertex(Direction.OUT).getProperty("name"), "hercules");
+    }
+
+    @Test
+    public void testGetSonEdgesByType() {
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
 
@@ -83,7 +106,27 @@ public class IncidenceMethodHandlerTest {
     }
 
     @Test
-    public void testGetSonEdge() {
+    public void testGetSonEdgeDefault() {
+        final TinkerGraph godGraph = new TinkerGraph();
+        GodGraphLoader.load(godGraph);
+
+        final AnnotationTypeResolver resolver = new AnnotationTypeResolver();
+        final AnnotationFrameFactory factory = new AnnotationFrameFactory(TEST_TYPES);
+        final FramedGraph framedGraph = new FramedGraph(godGraph, factory, resolver);
+
+        final List<God> gods = framedGraph.V().has("name", "jupiter").toList(God.class);
+
+        final God father = gods.iterator().next();
+        Assert.assertTrue(father instanceof FramedVertex);
+        final FramedVertex fatherVertex = (FramedVertex) father;
+        Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
+
+        final FramedEdge childEdge = father.getSonEdge();
+        Assert.assertEquals(childEdge.element().getVertex(Direction.OUT).getProperty("name"), "hercules");
+    }
+
+    @Test
+    public void testGetSonEdgeByType() {
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
 

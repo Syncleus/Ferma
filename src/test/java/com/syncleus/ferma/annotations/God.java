@@ -18,6 +18,7 @@
  ******************************************************************************/
 package com.syncleus.ferma.annotations;
 
+import com.syncleus.ferma.FramedEdge;
 import com.syncleus.ferma.FramedVertex;
 import com.tinkerpop.blueprints.Direction;
 
@@ -76,7 +77,13 @@ public interface God {
     void removeSon(God son);
 
     @Incidence(label="father", direction= Direction.IN)
+    Iterable<? extends FramedEdge> getSonEdges();
+
+    @Incidence(label="father", direction= Direction.IN)
     <N extends FatherEdge> Iterable<? extends N> getSonEdges(Class<? extends N> type);
+
+    @Incidence(label="father", direction= Direction.IN)
+    FramedEdge getSonEdge();
 
     @Incidence(label="father", direction= Direction.IN)
     <N extends FatherEdge> N getSonEdge(Class<? extends N> type);

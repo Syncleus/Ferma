@@ -91,7 +91,7 @@ public class PropertyMethodHandler implements MethodHandler {
 
     public static final class GetPropertyInterceptor {
         @RuntimeType
-        public static Object getProperty(@This final FramedVertex thiz, @Origin final Method method) {
+        public static Object getProperty(@RuntimeType @This final FramedElement thiz, @Origin final Method method) {
             final Property annotation = method.getAnnotation(Property.class);
             final String value = annotation.value();
 
@@ -119,7 +119,7 @@ public class PropertyMethodHandler implements MethodHandler {
     }
 
     public static final class RemovePropertyInterceptor {
-        public static void removeProperty(@This final FramedVertex thiz, @Origin final Method method) {
+        public static void removeProperty(@This final FramedElement thiz, @Origin final Method method) {
             final Property annotation = method.getAnnotation(Property.class);
             final String value = annotation.value();
 

@@ -77,7 +77,7 @@ public class IncidenceMethodHandler implements MethodHandler {
                 throw new IllegalStateException(method.getName() + " was annotated with @Incidence but had more than 1 arguments.");
         }
         else
-            throw new IllegalStateException(method.getName() + " was annotated with @Incidence but did not begin with: get");
+            throw new IllegalStateException(method.getName() + " was annotated with @Incidence but did not begin with: get, remove");
     }
 
     private <E> DynamicType.Builder<E> getEdgesDefault(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {

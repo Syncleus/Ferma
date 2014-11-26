@@ -197,8 +197,8 @@ public class FramedGraph implements Graph {
 	 * 
 	 * @return The query.
 	 */
-	public VertexTraversal<?, ?, ?> V() {
-		return new TraversalImpl(this, delegate).V();
+	public VertexTraversal<?, ?, ?> v() {
+		return new TraversalImpl(this, delegate).v();
 	}
 
 	/**
@@ -206,8 +206,8 @@ public class FramedGraph implements Graph {
 	 * 
 	 * @return The query.
 	 */
-	public EdgeTraversal<?, ?, ?> E() {
-		return new TraversalImpl(this, delegate).E();
+	public EdgeTraversal<?, ?, ?> e() {
+		return new TraversalImpl(this, delegate).e();
 	}
 
 	public <F> Iterable<F> getVertices(final String key, final Object value, final Class<F> kind) {

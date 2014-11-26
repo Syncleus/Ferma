@@ -138,7 +138,7 @@ public abstract class FramedElement {
 	 * @return The query.
 	 */
 	public VertexTraversal<?, ?, ?> V() {
-		return graph.V();
+		return graph.v();
 	}
 
 	/**
@@ -147,7 +147,7 @@ public abstract class FramedElement {
 	 * @return The query.
 	 */
 	public EdgeTraversal<?, ?, ?> E() {
-		return graph.E();
+		return graph.e();
 	}
 
 	/**

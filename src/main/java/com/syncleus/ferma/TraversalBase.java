@@ -67,13 +67,13 @@ abstract class TraversalBase<T, Cap, SideEffect, Mark> implements Traversal<T, C
 	protected abstract GremlinPipeline pipeline();
 
 	@Override
-	public VertexTraversal V() {
+	public VertexTraversal v() {
 		pipeline().V();
 		return castToVertices();
 	}
 
 	@Override
-	public EdgeTraversal E() {
+	public EdgeTraversal e() {
 		pipeline().E();
 		return castToEdges();
 	}

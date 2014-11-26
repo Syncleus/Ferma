@@ -55,14 +55,14 @@ public interface Traversal<T, Cap, SideEffect, Mark> extends Iterator<T>, Iterab
 	 * 
 	 * @return
 	 */
-	public VertexTraversal<?, ?, Mark> V();
+	public VertexTraversal<?, ?, Mark> v();
 
 	/**
 	 * Traverse over all the edges in the graph.
 	 * 
 	 * @return
 	 */
-	public EdgeTraversal<?, ?, Mark> E();
+	public EdgeTraversal<?, ?, Mark> e();
 
 	/**
 	 * Traversal over a list of vertices in the graph.
@@ -593,7 +593,7 @@ public interface Traversal<T, Cap, SideEffect, Mark> extends Iterator<T>, Iterab
 	 * defined in the provided function.
 	 *
 	 * @param compareFunction
-	 *            a comparator function of two objects of type E
+	 *            a comparator function of two objects of type e
 	 * @return the extended Pipeline
 	 */
 	public abstract Traversal<T, ?, ?, Mark> order(Comparator<T> compareFunction);

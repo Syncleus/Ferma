@@ -36,7 +36,7 @@ public class OutVertexMethodHandlerTest {
 
         final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
 
-        final List<God> gods = framedGraph.V().has("name", "jupiter").toList(God.class);
+        final List<God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father instanceof FramedVertex);

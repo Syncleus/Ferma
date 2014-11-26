@@ -81,13 +81,13 @@ public class TraversalsTest {
 	@Test
 	public void testMarkBack() {
 
-		Assert.assertEquals(29, graph.V().mark().outE("knows").inV().has("age", T.gt, 30).back().property("age").next());
+		Assert.assertEquals(29, graph.v().mark().outE("knows").inV().has("age", T.gt, 30).back().property("age").next());
 	}
 
 	@Test
 	public void testMarkOptional() {
 		List<TVertex> aggregate = new ArrayList<>();
-		Assert.assertEquals(6, graph.V().mark().outE("knows").inV().has("age", T.gt, 30).aggregate(aggregate).optional()
+		Assert.assertEquals(6, graph.v().mark().outE("knows").inV().has("age", T.gt, 30).aggregate(aggregate).optional()
 				.property("age").count());
 		Assert.assertEquals(graph.v(4).next(), aggregate.get(0));
 	}
@@ -120,12 +120,12 @@ public class TraversalsTest {
 	@Test
 	public void testCap() {
 
-		Assert.assertEquals(3, graph.V().has("lang", "java").in("created").groupCount().cap().size());
+		Assert.assertEquals(3, graph.v().has("lang", "java").in("created").groupCount().cap().size());
 	}
 
 	@Test
 	public void testId() {
-		Assert.assertEquals("1", graph.V().has("name", "marko").id().next());
+		Assert.assertEquals("1", graph.v().has("name", "marko").id().next());
 	}
 
 	@Test
@@ -172,24 +172,24 @@ public class TraversalsTest {
 	@Test
 	public void testMap() {
 		Assert.assertEquals(2, graph.v(1).map().next().size());
-		Assert.assertEquals(6, graph.V().map("id", "age").count());
+		Assert.assertEquals(6, graph.v().map("id", "age").count());
 
 	}
 
 	@Test
 	public void testMemoize() {
-		Assert.assertEquals(2, graph.V().out().as("here").out().memoize("here").property("name").count());
+		Assert.assertEquals(2, graph.v().out().as("here").out().memoize("here").property("name").count());
 		Map<?, ?> map = new HashMap<>();
-		Assert.assertEquals(2, graph.V().out().as("here").out().memoize("here", map).property("name").count());
+		Assert.assertEquals(2, graph.v().out().as("here").out().memoize("here", map).property("name").count());
 		Assert.assertEquals(4, map.size());
 	}
 
 	@Test
 	public void testOrder() {
-		Assert.assertEquals("josh", graph.V().property("name").order().next());
-		Assert.assertEquals("vadas", graph.V().property("name").order(Order.DECR).next());
+		Assert.assertEquals("josh", graph.v().property("name").order().next());
+		Assert.assertEquals("vadas", graph.v().property("name").order(Order.DECR).next());
 
-		Assert.assertEquals(graph.v(2).next(), graph.V().order(Comparators.<TVertex> property("name")).out("knows").next());
+		Assert.assertEquals(graph.v(2).next(), graph.v().order(Comparators.<TVertex> property("name")).out("knows").next());
 
 	}
 
@@ -225,9 +225,9 @@ public class TraversalsTest {
 	@Test
 	public void testGatherScatter() {
 
-		Assert.assertEquals(6, graph.V().gatherScatter().out().count());
+		Assert.assertEquals(6, graph.v().gatherScatter().out().count());
 
-		Assert.assertEquals(3, graph.V().range(0, 2).gatherScatter().out().count());
+		Assert.assertEquals(3, graph.v().range(0, 2).gatherScatter().out().count());
 
 	}
 
@@ -265,7 +265,7 @@ public class TraversalsTest {
 
 	@Test
 	public void testAnd() {
-		Assert.assertEquals(2, graph.V().and(new TraversalFunction<TVertex, Traversal<?, ?, ?, ?>>() {
+		Assert.assertEquals(2, graph.v().and(new TraversalFunction<TVertex, Traversal<?, ?, ?, ?>>() {
 
 			@Override
 			public Traversal<?, ?, ?, ?> compute(TVertex v) {
@@ -282,7 +282,7 @@ public class TraversalsTest {
 
 	@Test
 	public void testOr() {
-		Assert.assertEquals(3, graph.V().or(new TraversalFunction<TVertex, Traversal<?, ?, ?, ?>>() {
+		Assert.assertEquals(3, graph.v().or(new TraversalFunction<TVertex, Traversal<?, ?, ?, ?>>() {
 
 			@Override
 			public Traversal<?, ?, ?, ?> compute(TVertex argument) {
@@ -298,12 +298,12 @@ public class TraversalsTest {
 
 	@Test
 	public void testExcept() {
-		Assert.assertEquals(5, graph.V().except(graph.v(1)).count());
+		Assert.assertEquals(5, graph.v().except(graph.v(1)).count());
 	}
 
 	@Test
 	public void testFilter() {
-		Assert.assertEquals(2, graph.V().filter(new TraversalFunction<TVertex, Boolean>() {
+		Assert.assertEquals(2, graph.v().filter(new TraversalFunction<TVertex, Boolean>() {
 
 			@Override
 			public Boolean compute(TVertex argument) {
@@ -314,28 +314,28 @@ public class TraversalsTest {
 
 	@Test
 	public void testHas() {
-		Assert.assertEquals(1, graph.V().has("name", "marko").count());
+		Assert.assertEquals(1, graph.v().has("name", "marko").count());
 	}
 
 	@Test
 	public void testHasNot() {
-		Assert.assertEquals(5, graph.V().hasNot("name", "marko").count());
+		Assert.assertEquals(5, graph.v().hasNot("name", "marko").count());
 	}
 
 	@Test
 	public void testInterval() {
-		Assert.assertEquals(3, graph.E().interval("weight", 0.3f, 0.9f).count());
+		Assert.assertEquals(3, graph.e().interval("weight", 0.3f, 0.9f).count());
 	}
 
 	@Test
 	public void testRandom() {
-		// Assert.assertEquals(3, graph.V().random(0.5).count()); //Can't test
+		// Assert.assertEquals(3, graph.v().random(0.5).count()); //Can't test
 		// this :)
 	}
 
 	@Test
 	public void testRetain() {
-		Assert.assertEquals(1, graph.V().retain(graph.v(1)).count());
+		Assert.assertEquals(1, graph.v().retain(graph.v(1)).count());
 	}
 
 	@Test
@@ -356,11 +356,11 @@ public class TraversalsTest {
 	@Test
 	public void testGroupCount() {
 
-		Map<TVertex, Long> cap = graph.V().out().groupCount().cap();
+		Map<TVertex, Long> cap = graph.v().out().groupCount().cap();
 		Assert.assertEquals(4, cap.size());
 		Assert.assertTrue(cap.keySet().iterator().next() instanceof TVertex);
 
-		Assert.assertEquals(4, graph.V().out().groupCount(new TraversalFunction<TVertex, String>() {
+		Assert.assertEquals(4, graph.v().out().groupCount(new TraversalFunction<TVertex, String>() {
 
 			@Override
 			public String compute(TVertex argument) {
@@ -369,7 +369,7 @@ public class TraversalsTest {
 			}
 		}).cap().size());
 
-		Assert.assertEquals(6, graph.V().out().groupCount().divert(new SideEffectFunction<Map<TVertex, Long>>() {
+		Assert.assertEquals(6, graph.v().out().groupCount().divert(new SideEffectFunction<Map<TVertex, Long>>() {
 
 			@Override
 			public void execute(Map<TVertex, Long> o) {
@@ -382,7 +382,7 @@ public class TraversalsTest {
 	@Test
 	public void testGroupBy() {
 
-		Map<TVertex, List<TVertex>> cap = graph.V()
+		Map<TVertex, List<TVertex>> cap = graph.v()
 				.groupBy(TraversalFunctions.<TVertex> identity(), new TraversalFunction<TVertex, Iterator<TVertex>>() {
 
 					@Override
@@ -428,7 +428,7 @@ public class TraversalsTest {
 	@Test
 	public void testTable() {
 
-		Table table = graph.V().as("vertex").mark().property("name").as("name").back().property("age").as("age").table().cap();
+		Table table = graph.v().as("vertex").mark().property("name").as("name").back().property("age").as("age").table().cap();
 		Assert.assertEquals(6, table.size());
 		Assert.assertTrue(table.get(0).get(0) instanceof TVertex);
 
@@ -493,7 +493,7 @@ public class TraversalsTest {
 	
 	@Test
 	public void testLimit() {
-		Assert.assertEquals(1, graph.V().limit(1).count());
-		Assert.assertEquals(2, graph.V().limit(2).count());
+		Assert.assertEquals(1, graph.v().limit(1).count());
+		Assert.assertEquals(2, graph.v().limit(2).count());
 	}
 }

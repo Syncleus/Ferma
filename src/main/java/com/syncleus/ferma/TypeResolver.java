@@ -100,9 +100,4 @@ public interface TypeResolver {
 			}
 		}
 	};
-
-	/**
-	 * This type resolver is used when Annotations are to be used.
-	 */
-	public static final TypeResolver ANNOTATED = new AnnotationTypeResolver();
 }

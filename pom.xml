@@ -118,6 +118,11 @@
 			<artifactId>byte-buddy</artifactId>
 			<version>0.4</version>
 		</dependency>
+		<dependency>
+			<groupId>org.reflections</groupId>
+			<artifactId>reflections</artifactId>
+			<version>0.9.9</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<defaultGoal>package</defaultGoal>
@@ -138,6 +143,9 @@
 				<version>2.16</version>
 				<configuration>
 					<argLine>-enableassertions</argLine>
+					<excludes>
+						<exclude>**/PerformanceTest.java</exclude>
+					</excludes>
 				</configuration>
 			</plugin>
 			<plugin>

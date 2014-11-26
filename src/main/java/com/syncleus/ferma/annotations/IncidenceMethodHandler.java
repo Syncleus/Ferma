@@ -103,7 +103,7 @@ public class IncidenceMethodHandler implements MethodHandler {
     public static final class GetEdgesDefaultInterceptor {
         @RuntimeType
         public static Iterable getEdges(@This final FramedVertex thiz, @Origin final Method method) {
-            final Incidence annotation = method.getAnnotation(Incidence.class);
+            final Incidence annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Incidence.class);
             final Direction direction = annotation.direction();
             final String label = annotation.label();
 
@@ -123,11 +123,11 @@ public class IncidenceMethodHandler implements MethodHandler {
     public static final class GetEdgesByTypeInterceptor {
         @RuntimeType
         public static Iterable getEdges(@This final FramedVertex thiz, @Origin final Method method, @RuntimeType @Argument(0) final Class type) {
-            final Incidence annotation = method.getAnnotation(Incidence.class);
+            final Incidence annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Incidence.class);
             final Direction direction = annotation.direction();
             final String label = annotation.label();
             final String typeName = type.getName();
-            final Set<String> allAllowedValues = ((CachedHierarchy)thiz).getHierarchy().get(typeName);
+            final Set<? extends String> allAllowedValues = ((CachesReflection)thiz).getReflectionCache().getSubTypeNames(typeName);
 
             switch (direction) {
                 case BOTH:
@@ -145,7 +145,7 @@ public class IncidenceMethodHandler implements MethodHandler {
     public static final class GetEdgeDefaultInterceptor {
         @RuntimeType
         public static Object getEdges(@This final FramedVertex thiz, @Origin final Method method) {
-            final Incidence annotation = method.getAnnotation(Incidence.class);
+            final Incidence annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Incidence.class);
             final Direction direction = annotation.direction();
             final String label = annotation.label();
 
@@ -165,11 +165,11 @@ public class IncidenceMethodHandler implements MethodHandler {
     public static final class GetEdgeByTypeInterceptor {
         @RuntimeType
         public static Object getEdge(@This final FramedVertex thiz, @Origin final Method method, @RuntimeType @Argument(0) final Class type) {
-            final Incidence annotation = method.getAnnotation(Incidence.class);
+            final Incidence annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Incidence.class);
             final Direction direction = annotation.direction();
             final String label = annotation.label();
             final String typeName = type.getName();
-            final Set<String> allAllowedValues = ((CachedHierarchy)thiz).getHierarchy().get(typeName);
+            final Set<? extends String> allAllowedValues = ((CachesReflection)thiz).getReflectionCache().getSubTypeNames(typeName);
 
             switch (direction) {
                 case BOTH:

@@ -67,7 +67,7 @@ public class FramedGraphTest {
     @Test
     public void testJavaTyping() {
         Graph g = new TinkerGraph();
-        FramedGraph fg = new FramedGraph(g, FrameFactory.Default, TypeResolver.SIMPLE);
+        FramedGraph fg = new FramedGraph(g, FrameFactory.DEFAULT, TypeResolver.SIMPLE);
 
         Person p1 = fg.addVertex(Programmer.class);
         p1.setName("Bryn");

@@ -28,17 +28,24 @@
 package com.syncleus.ferma;
 
 import java.io.Closeable;
-import java.util.Collection;
-import java.util.Iterator;
+import java.net.URL;
+import java.util.*;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Iterators;
 import com.syncleus.ferma.annotations.AnnotationFrameFactory;
+import com.syncleus.ferma.annotations.AnnotationTypeResolver;
 import com.tinkerpop.blueprints.Edge;
 import com.tinkerpop.blueprints.Element;
 import com.tinkerpop.blueprints.Graph;
 import com.tinkerpop.blueprints.TransactionalGraph;
 import com.tinkerpop.blueprints.Vertex;
+import org.reflections.Reflections;
+import org.reflections.scanners.ResourcesScanner;
+import org.reflections.scanners.SubTypesScanner;
+import org.reflections.scanners.TypeAnnotationsScanner;
+import org.reflections.util.ClasspathHelper;
+import org.reflections.util.ConfigurationBuilder;
 
 /**
  * The primary class for framing your blueprints graphs.
@@ -49,6 +56,7 @@ public class FramedGraph {
 
 	private TypeResolver resolver;
 	private FrameFactory builder;
+	private final ReflectionCache reflections;
 
 	/**
 	 * Construct a framed graph.
@@ -61,6 +69,7 @@ public class FramedGraph {
 	 *            The type resolver that will decide the final frame type.
 	 */
 	public FramedGraph(Graph delegate, FrameFactory builder, TypeResolver resolver) {
+		this.reflections = null;
 		this.delegate = delegate;
 		this.resolver = resolver;
 		this.builder = builder;
@@ -73,7 +82,7 @@ public class FramedGraph {
 	 *            The graph to wrap.
 	 */
 	public FramedGraph(Graph delegate) {
-		this(delegate, FrameFactory.Default, TypeResolver.UNTYPED);
+		this(delegate, FrameFactory.DEFAULT, TypeResolver.UNTYPED);
 	}
 
 	/**
@@ -85,7 +94,7 @@ public class FramedGraph {
 	 *            The type resolver that will decide the final frame type.
 	 */
 	public FramedGraph(Graph delegate, final TypeResolver resolver) {
-		this(delegate, FrameFactory.Default, resolver);
+		this(delegate, FrameFactory.DEFAULT, resolver);
 	}
 
 	/**
@@ -97,7 +106,11 @@ public class FramedGraph {
 	 *            The types to be consider for type resolution.
 	 */
 	public FramedGraph(Graph delegate, final Collection<? extends Class<?>> annotatedTypes) {
-		this(delegate, new AnnotationFrameFactory(annotatedTypes), TypeResolver.ANNOTATED);
+		this.reflections = new ReflectionCache(annotatedTypes);
+		this.delegate = delegate;
+		this.resolver = new AnnotationTypeResolver(this.reflections);
+		this.builder = new AnnotationFrameFactory(this.reflections);
+
 	}
 
 	/**
@@ -206,6 +219,10 @@ public class FramedGraph {
 	 */
 	public EdgeTraversal<?, ?, ?> E() {
 		return new TraversalImpl(this, delegate).E();
+	}
+
+	public <F> Iterable<F> getVertices(final String key, final Object value, final Class<F> kind) {
+		return new FramedVertexIterable<>(this, this.delegate.getVertices(key, value), kind);
 	}
 
 	/**

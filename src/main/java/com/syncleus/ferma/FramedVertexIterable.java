@@ -16,40 +16,42 @@
  *  Philadelphia, PA 19148                                                     *
  *                                                                             *
  ******************************************************************************/
-
-/*
- * Part or all of this source file was forked from a third-party project, the details of which are listed below.
- *
- * Source Project: Totorom
- * Source URL: https://github.com/BrynCooke/totorom
- * Source License: Apache Public License v2.0
- * When: November, 20th 2014
- */
 package com.syncleus.ferma;
 
-import com.tinkerpop.blueprints.Element;
+import com.tinkerpop.blueprints.Graph;
+import com.tinkerpop.blueprints.Vertex;
+
+import java.util.Iterator;
 
 /**
- * Does the actual work of constructing the frame. Implementations
+ * @author Marko A. Rodriguez (http://markorodriguez.com)
  */
-public interface FrameFactory {
+public class FramedVertexIterable<T> implements Iterable<T> {
+    protected final Class<T> kind;
+    protected final Iterable<Vertex> iterable;
+    protected final FramedGraph framedGraph;
 
-	public <T> T create(Element e, Class<T> kind);
+    public FramedVertexIterable(final FramedGraph framedGraph, final Iterable<Vertex> iterable, final Class<T> kind) {
+        this.framedGraph = framedGraph;
+        this.iterable = iterable;
+        this.kind = kind;
+    }
 
-	/**
-	 * Creates the frame using reflection.
-	 */
-	public static FrameFactory DEFAULT = new FrameFactory() {
-		@Override
-		public <T> T create(Element element, Class<T> kind) {
-			try {
-				return kind.newInstance();
-			} catch (InstantiationException e) {
-				throw new RuntimeException(e);
-			} catch (IllegalAccessException e) {
-				throw new RuntimeException(e);
-			}
-		}
-	};
+    public Iterator<T> iterator() {
+        return new Iterator<T>() {
+            private Iterator<Vertex> iterator = iterable.iterator();
 
+            public void remove() {
+                throw new UnsupportedOperationException();
+            }
+
+            public boolean hasNext() {
+                return this.iterator.hasNext();
+            }
+
+            public T next() {
+                return framedGraph.frameElement(this.iterator.next(), kind);
+            }
+        };
+    }
 }

@@ -58,6 +58,9 @@ public interface God {
     @Adjacency(label="father", direction= Direction.IN)
     <N extends God> Iterable<? extends N> getSons(Class<? extends N> type);
 
+    @Adjacency(label="father", direction= Direction.OUT)
+    <N extends God> Iterable<? extends N> getParents();
+
     @Adjacency(label="father", direction= Direction.IN)
     <N extends God> N getSon(Class<? extends N> type);
 

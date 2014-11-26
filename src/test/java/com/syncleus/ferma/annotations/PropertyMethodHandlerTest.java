@@ -34,9 +34,7 @@ public class PropertyMethodHandlerTest {
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
 
-        final AnnotationTypeResolver resolver = new AnnotationTypeResolver();
-        final AnnotationFrameFactory factory = new AnnotationFrameFactory(TEST_TYPES);
-        final FramedGraph framedGraph = new FramedGraph(godGraph, factory, resolver);
+        final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
 
         final List<God> gods = framedGraph.V().has("name", "jupiter").toList(God.class);
 
@@ -52,9 +50,7 @@ public class PropertyMethodHandlerTest {
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
 
-        final AnnotationTypeResolver resolver = new AnnotationTypeResolver();
-        final AnnotationFrameFactory factory = new AnnotationFrameFactory(TEST_TYPES);
-        final FramedGraph framedGraph = new FramedGraph(godGraph, factory, resolver);
+        final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
 
         List<God> gods = framedGraph.V().has("name", "jupiter").toList(God.class);
 
@@ -77,9 +73,7 @@ public class PropertyMethodHandlerTest {
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
 
-        final AnnotationTypeResolver resolver = new AnnotationTypeResolver();
-        final AnnotationFrameFactory factory = new AnnotationFrameFactory(TEST_TYPES);
-        final FramedGraph framedGraph = new FramedGraph(godGraph, factory, resolver);
+        final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
 
         List<God> gods = framedGraph.V().has("name", "jupiter").toList(God.class);
 

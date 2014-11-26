@@ -36,9 +36,7 @@ public class AdjacencyMethodHandlerTest {
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
 
-        final AnnotationTypeResolver resolver = new AnnotationTypeResolver();
-        final AnnotationFrameFactory factory = new AnnotationFrameFactory(TEST_TYPES);
-        final FramedGraph framedGraph = new FramedGraph(godGraph, factory, resolver);
+        final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
 
         final List<God> gods = framedGraph.V().has("name", "jupiter").toList(God.class);
 
@@ -62,9 +60,7 @@ public class AdjacencyMethodHandlerTest {
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
 
-        final AnnotationTypeResolver resolver = new AnnotationTypeResolver();
-        final AnnotationFrameFactory factory = new AnnotationFrameFactory(TEST_TYPES);
-        final FramedGraph framedGraph = new FramedGraph(godGraph, factory, resolver);
+        final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
 
         final List<God> gods = framedGraph.V().has("name", "jupiter").toList(God.class);
 
@@ -88,9 +84,7 @@ public class AdjacencyMethodHandlerTest {
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
 
-        final AnnotationTypeResolver resolver = new AnnotationTypeResolver();
-        final AnnotationFrameFactory factory = new AnnotationFrameFactory(TEST_TYPES);
-        final FramedGraph framedGraph = new FramedGraph(godGraph, factory, resolver);
+        final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
 
         final List<God> gods = (List<God>) framedGraph.V().has("name", "jupiter").toList(God.class);
 
@@ -114,9 +108,7 @@ public class AdjacencyMethodHandlerTest {
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
 
-        final AnnotationTypeResolver resolver = new AnnotationTypeResolver();
-        final AnnotationFrameFactory factory = new AnnotationFrameFactory(TEST_TYPES);
-        final FramedGraph framedGraph = new FramedGraph(godGraph, factory, resolver);
+        final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
 
         final List<GodAlternative> gods = (List<GodAlternative>) framedGraph.V().has("name", "jupiter").toList(GodAlternative.class);
 
@@ -141,9 +133,7 @@ public class AdjacencyMethodHandlerTest {
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
 
-        final AnnotationTypeResolver resolver = new AnnotationTypeResolver();
-        final AnnotationFrameFactory factory = new AnnotationFrameFactory(TEST_TYPES);
-        final FramedGraph framedGraph = new FramedGraph(godGraph, factory, resolver);
+        final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
 
         final List<GodAlternative> gods = framedGraph.V().has("name", "jupiter").toList(GodAlternative.class);
 
@@ -162,9 +152,7 @@ public class AdjacencyMethodHandlerTest {
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
 
-        final AnnotationTypeResolver resolver = new AnnotationTypeResolver();
-        final AnnotationFrameFactory factory = new AnnotationFrameFactory(TEST_TYPES);
-        final FramedGraph framedGraph = new FramedGraph(godGraph, factory, resolver);
+        final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
 
         final List<God> gods = framedGraph.V().has("name", "jupiter").toList(God.class);
 
@@ -186,9 +174,7 @@ public class AdjacencyMethodHandlerTest {
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
 
-        final AnnotationTypeResolver resolver = new AnnotationTypeResolver();
-        final AnnotationFrameFactory factory = new AnnotationFrameFactory(TEST_TYPES);
-        final FramedGraph framedGraph = new FramedGraph(godGraph, factory, resolver);
+        final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
 
         final List<God> gods = framedGraph.V().has("name", "jupiter").toList(God.class);
 
@@ -210,9 +196,7 @@ public class AdjacencyMethodHandlerTest {
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
 
-        final AnnotationTypeResolver resolver = new AnnotationTypeResolver();
-        final AnnotationFrameFactory factory = new AnnotationFrameFactory(TEST_TYPES);
-        final FramedGraph framedGraph = new FramedGraph(godGraph, factory, resolver);
+        final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
 
         final List<God> gods = framedGraph.V().has("name", "jupiter").toList(God.class);
 
@@ -230,9 +214,7 @@ public class AdjacencyMethodHandlerTest {
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
 
-        final AnnotationTypeResolver resolver = new AnnotationTypeResolver();
-        final AnnotationFrameFactory factory = new AnnotationFrameFactory(TEST_TYPES);
-        final FramedGraph framedGraph = new FramedGraph(godGraph, factory, resolver);
+        final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
 
         final List<God> gods = framedGraph.V().has("name", "jupiter").toList(God.class);
 
@@ -252,9 +234,7 @@ public class AdjacencyMethodHandlerTest {
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
 
-        final AnnotationTypeResolver resolver = new AnnotationTypeResolver();
-        final AnnotationFrameFactory factory = new AnnotationFrameFactory(TEST_TYPES);
-        final FramedGraph framedGraph = new FramedGraph(godGraph, factory, resolver);
+        final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
 
         final List<God> gods = framedGraph.V().has("name", "jupiter").toList(God.class);
 
@@ -276,9 +256,7 @@ public class AdjacencyMethodHandlerTest {
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
 
-        final AnnotationTypeResolver resolver = new AnnotationTypeResolver();
-        final AnnotationFrameFactory factory = new AnnotationFrameFactory(TEST_TYPES);
-        final FramedGraph framedGraph = new FramedGraph(godGraph, factory, resolver);
+        final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
 
         final List<God> gods = framedGraph.V().has("name", "jupiter").toList(God.class);
 
@@ -298,9 +276,7 @@ public class AdjacencyMethodHandlerTest {
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
 
-        final AnnotationTypeResolver resolver = new AnnotationTypeResolver();
-        final AnnotationFrameFactory factory = new AnnotationFrameFactory(TEST_TYPES);
-        final FramedGraph framedGraph = new FramedGraph(godGraph, factory, resolver);
+        final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
 
         final List<God> gods = framedGraph.V().has("name", "jupiter").toList(God.class);
 
@@ -322,9 +298,7 @@ public class AdjacencyMethodHandlerTest {
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
 
-        final AnnotationTypeResolver resolver = new AnnotationTypeResolver();
-        final AnnotationFrameFactory factory = new AnnotationFrameFactory(TEST_TYPES);
-        final FramedGraph framedGraph = new FramedGraph(godGraph, factory, resolver);
+        final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
 
         final List<God> gods = framedGraph.V().has("name", "jupiter").toList(God.class);
 
@@ -349,9 +323,7 @@ public class AdjacencyMethodHandlerTest {
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
 
-        final AnnotationTypeResolver resolver = new AnnotationTypeResolver();
-        final AnnotationFrameFactory factory = new AnnotationFrameFactory(TEST_TYPES);
-        final FramedGraph framedGraph = new FramedGraph(godGraph, factory, resolver);
+        final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
 
         final List<God> gods = framedGraph.V().has("name", "jupiter").toList(God.class);
 
@@ -379,9 +351,7 @@ public class AdjacencyMethodHandlerTest {
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
 
-        final AnnotationTypeResolver resolver = new AnnotationTypeResolver();
-        final AnnotationFrameFactory factory = new AnnotationFrameFactory(TEST_TYPES);
-        final FramedGraph framedGraph = new FramedGraph(godGraph, factory, resolver);
+        final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
 
         final List<God> gods = framedGraph.V().has("name", "jupiter").toList(God.class);
 
@@ -409,9 +379,7 @@ public class AdjacencyMethodHandlerTest {
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
 
-        final AnnotationTypeResolver resolver = new AnnotationTypeResolver();
-        final AnnotationFrameFactory factory = new AnnotationFrameFactory(exceptionTypes);
-        final FramedGraph framedGraph = new FramedGraph(godGraph, factory, resolver);
+        final FramedGraph framedGraph = new FramedGraph(godGraph, exceptionTypes);
 
         final List<BadGetSonsArgumentClass> gods = framedGraph.V().has("name", "jupiter").toList(BadGetSonsArgumentClass.class);
 
@@ -426,9 +394,7 @@ public class AdjacencyMethodHandlerTest {
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
 
-        final AnnotationTypeResolver resolver = new AnnotationTypeResolver();
-        final AnnotationFrameFactory factory = new AnnotationFrameFactory(exceptionTypes);
-        final FramedGraph framedGraph = new FramedGraph(godGraph, factory, resolver);
+        final FramedGraph framedGraph = new FramedGraph(godGraph, exceptionTypes);
 
         final List<BadGetSonsArgumentInterface> gods = framedGraph.V().has("name", "jupiter").toList(BadGetSonsArgumentInterface.class);
 
@@ -443,9 +409,7 @@ public class AdjacencyMethodHandlerTest {
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
 
-        final AnnotationTypeResolver resolver = new AnnotationTypeResolver();
-        final AnnotationFrameFactory factory = new AnnotationFrameFactory(exceptionTypes);
-        final FramedGraph framedGraph = new FramedGraph(godGraph, factory, resolver);
+        final FramedGraph framedGraph = new FramedGraph(godGraph, exceptionTypes);
 
         final List<BadGetSonsArgumentInterface> gods = framedGraph.V().has("name", "jupiter").toList(BadGetSonsArgumentInterface.class);
 
@@ -460,9 +424,7 @@ public class AdjacencyMethodHandlerTest {
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
 
-        final AnnotationTypeResolver resolver = new AnnotationTypeResolver();
-        final AnnotationFrameFactory factory = new AnnotationFrameFactory(exceptionTypes);
-        final FramedGraph framedGraph = new FramedGraph(godGraph, factory, resolver);
+        final FramedGraph framedGraph = new FramedGraph(godGraph, exceptionTypes);
 
         final List<BadGetSonsArgumentInterface> gods = framedGraph.V().has("name", "jupiter").toList(BadGetSonsArgumentInterface.class);
 
@@ -477,9 +439,7 @@ public class AdjacencyMethodHandlerTest {
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
 
-        final AnnotationTypeResolver resolver = new AnnotationTypeResolver();
-        final AnnotationFrameFactory factory = new AnnotationFrameFactory(exceptionTypes);
-        final FramedGraph framedGraph = new FramedGraph(godGraph, factory, resolver);
+        final FramedGraph framedGraph = new FramedGraph(godGraph, exceptionTypes);
 
         final List<BadGetSonsArgumentInterface> gods = framedGraph.V().has("name", "jupiter").toList(BadGetSonsArgumentInterface.class);
 
@@ -494,9 +454,7 @@ public class AdjacencyMethodHandlerTest {
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
 
-        final AnnotationTypeResolver resolver = new AnnotationTypeResolver();
-        final AnnotationFrameFactory factory = new AnnotationFrameFactory(exceptionTypes);
-        final FramedGraph framedGraph = new FramedGraph(godGraph, factory, resolver);
+        final FramedGraph framedGraph = new FramedGraph(godGraph, exceptionTypes);
 
         final List<BadGetSonsArgumentInterface> gods = framedGraph.V().has("name", "jupiter").toList(BadGetSonsArgumentInterface.class);
 

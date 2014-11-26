@@ -20,6 +20,7 @@ package com.syncleus.ferma.annotations;
 
 import com.syncleus.ferma.FramedEdge;
 import com.syncleus.ferma.FramedVertex;
+import com.syncleus.ferma.ReflectionCache;
 import com.syncleus.ferma.TypeResolver;
 import com.tinkerpop.blueprints.Edge;
 import com.tinkerpop.blueprints.Element;
@@ -39,6 +40,8 @@ import java.util.*;
 public class AnnotationTypeResolver implements TypeResolver {
     private final Map<Class<? extends Annotation>, MethodHandler> methodHandlers = new HashMap<>();
     private final Map<Class, Class> classCache = new HashMap<>();
+    private final Map<String, Class> classStringCache = new HashMap<>();
+    private final ReflectionCache reflectionCache;
 
     /**
      * Creates a new GrailTypeResolver with a typing engine that can recognize the specified types. While these types
@@ -47,7 +50,9 @@ public class AnnotationTypeResolver implements TypeResolver {
      *
      * @since 0.1
      */
-    public AnnotationTypeResolver() {
+    public AnnotationTypeResolver(final ReflectionCache reflectionCache) {
+        this.reflectionCache = reflectionCache;
+
         final PropertyMethodHandler propertyHandler = new PropertyMethodHandler();
         methodHandlers.put(propertyHandler.getAnnotationType(), propertyHandler);
 
@@ -74,12 +79,15 @@ public class AnnotationTypeResolver implements TypeResolver {
                 return (Class<T>) constructClass(element, kind);
         }
 
-        final Class<T> nodeKind;
-        try {
-             nodeKind = (Class<T>) Class.forName(nodeClazz);
-        }
-        catch (ClassNotFoundException e) {
-            throw new IllegalStateException("The class " + nodeClazz + " cannot be found");
+        Class<T> nodeKind = (Class<T>) classStringCache.get(nodeClazz);
+        if(nodeKind == null) {
+            try {
+                nodeKind = (Class<T>) Class.forName(nodeClazz);
+            }
+            catch (ClassNotFoundException e) {
+                throw new IllegalStateException("The class " + nodeClazz + " cannot be found");
+            }
+            classStringCache.put(nodeClazz, nodeKind);
         }
 
         Class<T> resolvedKind;
@@ -132,7 +140,7 @@ public class AnnotationTypeResolver implements TypeResolver {
             classBuilder = (DynamicType.Builder<? extends E>) new ByteBuddy().subclass(clazz);
         }
 
-        classBuilder = classBuilder.defineField("hierarchy", Map.class, Visibility.PRIVATE, FieldManifestation.PLAIN).implement(CachedHierarchy.class).intercept(FieldAccessor.ofBeanProperty());
+        classBuilder = classBuilder.defineField("reflectionCache", ReflectionCache.class, Visibility.PRIVATE, FieldManifestation.PLAIN).implement(CachesReflection.class).intercept(FieldAccessor.ofBeanProperty());
 
         //try and construct any abstract methods that are left
         for(final Method method : clazz.getMethods() ) {

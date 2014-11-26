@@ -92,7 +92,7 @@ public class PropertyMethodHandler implements MethodHandler {
     public static final class GetPropertyInterceptor {
         @RuntimeType
         public static Object getProperty(@This final FramedElement thiz, @Origin final Method method) {
-            final Property annotation = method.getAnnotation(Property.class);
+            final Property annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Property.class);
             final String value = annotation.value();
 
             final Object obj = thiz.getProperty(value);
@@ -106,7 +106,7 @@ public class PropertyMethodHandler implements MethodHandler {
     public static final class SetPropertyInterceptor {
         @RuntimeType
         public static void setProperty(@This final FramedElement thiz, @Origin final Method method, @RuntimeType @Argument(0) final Object obj) {
-            final Property annotation = method.getAnnotation(Property.class);
+            final Property annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Property.class);
             final String value = annotation.value();
 
             if (obj.getClass().isEnum()) {
@@ -120,7 +120,7 @@ public class PropertyMethodHandler implements MethodHandler {
 
     public static final class RemovePropertyInterceptor {
         public static void removeProperty(@This final FramedElement thiz, @Origin final Method method) {
-            final Property annotation = method.getAnnotation(Property.class);
+            final Property annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Property.class);
             final String value = annotation.value();
 
             thiz.element().removeProperty(value);

@@ -80,6 +80,11 @@ public class TestFramedElement {
     }
     
     @Test
+    public void testvNull() {
+    	Assert.assertNull(p1.v("noId").next());
+    }
+    
+    @Test
     public void teste() {
     	Assert.assertEquals(e1, p1.e(e1.getId()).next(Knows.class));
     }

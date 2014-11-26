@@ -28,7 +28,6 @@
 package com.syncleus.ferma;
 
 import java.io.Closeable;
-import java.net.URL;
 import java.util.*;
 
 import com.google.common.base.Function;
@@ -36,12 +35,6 @@ import com.google.common.collect.Iterators;
 import com.syncleus.ferma.annotations.AnnotationFrameFactory;
 import com.syncleus.ferma.annotations.AnnotationTypeResolver;
 import com.tinkerpop.blueprints.*;
-import org.reflections.Reflections;
-import org.reflections.scanners.ResourcesScanner;
-import org.reflections.scanners.SubTypesScanner;
-import org.reflections.scanners.TypeAnnotationsScanner;
-import org.reflections.util.ClasspathHelper;
-import org.reflections.util.ConfigurationBuilder;
 
 /**
  * The primary class for framing your blueprints graphs.
@@ -218,7 +211,11 @@ public class FramedGraph implements Graph {
 	}
 
 	public <F> Iterable<F> getVertices(final String key, final Object value, final Class<F> kind) {
-		return new FramedVertexIterable<>(this, this.delegate.getVertices(key, value), kind);
+		return new FramedVertexIterable<>(this, this.getVertices(key, value), kind);
+	}
+
+	public <F> Iterable<F> getEdges(final String key, final Object value, final Class<F> kind) {
+		return new FramedEdgeIterable<>(this, this.getEdges(key, value), kind);
 	}
 
 	/**

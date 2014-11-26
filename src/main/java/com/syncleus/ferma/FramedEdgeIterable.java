@@ -27,16 +27,16 @@
  */
 package com.syncleus.ferma;
 
-import com.tinkerpop.blueprints.Vertex;
+import com.tinkerpop.blueprints.Edge;
 
 import java.util.Iterator;
 
-public class FramedVertexIterable<T> implements Iterable<T> {
+public class FramedEdgeIterable<T> implements Iterable<T> {
     protected final Class<T> kind;
-    protected final Iterable<Vertex> iterable;
+    protected final Iterable<Edge> iterable;
     protected final FramedGraph framedGraph;
 
-    public FramedVertexIterable(final FramedGraph framedGraph, final Iterable<Vertex> iterable, final Class<T> kind) {
+    public FramedEdgeIterable(final FramedGraph framedGraph, final Iterable<Edge> iterable, final Class<T> kind) {
         this.framedGraph = framedGraph;
         this.iterable = iterable;
         this.kind = kind;
@@ -44,7 +44,7 @@ public class FramedVertexIterable<T> implements Iterable<T> {
 
     public Iterator<T> iterator() {
         return new Iterator<T>() {
-            private Iterator<Vertex> iterator = iterable.iterator();
+            private Iterator<Edge> iterator = iterable.iterator();
 
             public void remove() {
                 throw new UnsupportedOperationException();

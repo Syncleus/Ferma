@@ -12,18 +12,19 @@ import com.tinkerpop.gremlin.java.GremlinPipeline;
 import com.tinkerpop.pipes.PipeFunction;
 
 public class TestPerformance {
-	private static final int ITERATIONS = 100000;
+	private int iterations = 1;
 	private static final MetricRegistry metrics = new MetricRegistry();
 
 	public static void main(String[] args) {
 		TestPerformance test = new TestPerformance();
-		for(int count = 0; count < 10; count++) {
+		test.iterations = 100000;
+		for (int count = 0; count < 10; count++) {
 			test.testTraversalPerformance();
 			test.testIndexPerformance();
 			test.testFilterPerformance();
 		}
 	}
-	
+
 	@Test
 	public void testTraversalPerformance() {
 
@@ -32,39 +33,20 @@ public class TestPerformance {
 		FramedGraph f = new FramedGraph(t);
 
 		Timer timer = metrics.timer("gremlin");
-		Context time = timer.time();
 
-		for (int count = 0; count < ITERATIONS; count++) {
+		Context time = timer.time();
+		for (int count = 0; count < iterations; count++) {
 			GremlinPipeline g = new GremlinPipeline(t);
 			g.V().both().both().both().toList();
 		}
 		long nanoseconds = time.stop();
-
-		System.out.println("Iterate over all GremlinPipeline1 " + nanoseconds/1000000);
-
+		System.out.println("Iterate over all GremlinPipeline " + nanoseconds / 1000000);
 		time = timer.time();
-
-		for (int count = 0; count < ITERATIONS; count++) {
-			GremlinPipeline g = new GremlinPipeline(t);
-			g.V().both().both().both().toList();
-		}
-		nanoseconds = time.stop();
-
-		System.out.println("Iterate over all GremlinPipeline2 " + nanoseconds/1000000);
-
-		time = timer.time();
-		for (int count = 0; count < ITERATIONS; count++) {
+		for (int count = 0; count < iterations; count++) {
 			f.V().both().both().both().toList();
 		}
 		nanoseconds = time.stop();
-		System.out.println("Iterate over all Totorom1 " + nanoseconds/1000000);
-
-		time = timer.time();
-		for (int count = 0; count < ITERATIONS; count++) {
-			f.V().both().both().both().toList();
-		}
-		nanoseconds = time.stop();
-		System.out.println("Iterate over all Totorom2 " + nanoseconds/1000000);
+		System.out.println("Iterate over all Totorom " + nanoseconds / 1000000);
 	}
 
 	@Test
@@ -76,10 +58,9 @@ public class TestPerformance {
 		FramedGraph f = new FramedGraph(t);
 
 		Timer timer = metrics.timer("gremlin");
-		Context time = timer.time();
 
 		Vertex lastVertex = null;
-		for (int count = 0; count < ITERATIONS; count++) {
+		for (int count = 0; count < iterations; count++) {
 			Vertex v = t.addVertex(null);
 			v.setProperty("name", "name" + count);
 			if (lastVertex != null) {
@@ -89,39 +70,22 @@ public class TestPerformance {
 
 		}
 
-		for (int count = 0; count < ITERATIONS; count++) {
+		Context time = timer.time();
+		for (int count = 0; count < iterations; count++) {
 			GremlinPipeline g = new GremlinPipeline(t);
 			g.V("name", "name" + count).both().both().both().toList();
 		}
 		long nanoseconds = time.stop();
-
-		System.out.println("Iterate with index lookup GemlinPipeline1 " + nanoseconds/1000000);
-
+		System.out.println("Iterate with index lookup GremlinPipeline " + nanoseconds / 1000000);
 		time = timer.time();
-
-		for (int count = 0; count < ITERATIONS; count++) {
-			GremlinPipeline g = new GremlinPipeline(t);
-			g.V("name", "name" + count).both().both().both().toList();
-		}
-		nanoseconds = time.stop();
-
-		System.out.println("Iterate with index lookup GemlinPipeline2 " + nanoseconds/1000000);
-
-		time = timer.time();
-		for (int count = 0; count < ITERATIONS; count++) {
+		for (int count = 0; count < iterations; count++) {
 			f.V("name", "name" + count).both().both().both().toList();
 		}
 		nanoseconds = time.stop();
-		System.out.println("Iterate with index lookup Totorom1 " + nanoseconds/1000000);
+		System.out.println("Iterate with index lookup Totorom " + nanoseconds / 1000000);
 
-		time = timer.time();
-		for (int count = 0; count < ITERATIONS; count++) {
-			f.V("name", "name" + count).both().both().both().toList();
-		}
-		nanoseconds = time.stop();
-		System.out.println("Iterate with index lookup Totorom2 " + nanoseconds/1000000);
 	}
-	
+
 	@Test
 	public void testFilterPerformance() {
 
@@ -131,8 +95,7 @@ public class TestPerformance {
 
 		Timer timer = metrics.timer("gremlin");
 		Context time = timer.time();
-
-		for (int count = 0; count < ITERATIONS; count++) {
+		for (int count = 0; count < iterations; count++) {
 			GremlinPipeline g = new GremlinPipeline(t);
 			g.V().both().both().both().filter(new PipeFunction<Vertex, Boolean>() {
 
@@ -141,35 +104,16 @@ public class TestPerformance {
 
 					return "java".equals(argument.getProperty("lang"));
 				}
-				
+
 			}).toList();
 		}
 		long nanoseconds = time.stop();
-
-		System.out.println("Iterate with filter GremlinPipeline1 " + nanoseconds/1000000);
-
-		time = timer.time();
-
-		for (int count = 0; count < ITERATIONS; count++) {
-			GremlinPipeline g = new GremlinPipeline(t);
-			g.V().both().both().both().filter(new PipeFunction<Vertex, Boolean>() {
-
-				@Override
-				public Boolean compute(Vertex argument) {
-
-					return "java".equals(argument.getProperty("lang"));
-				}
-				
-			}).toList();
-		}
-		nanoseconds = time.stop();
-
-		System.out.println("Iterate with filter GremlinPipeline2 " + nanoseconds/1000000);
+		System.out.println("Iterate with filter GremlinPipeline " + nanoseconds / 1000000);
 
 		time = timer.time();
-		for (int count = 0; count < ITERATIONS; count++) {
+		for (int count = 0; count < iterations; count++) {
 			f.V().both().both().both().filter(new TraversalFunction<TVertex, Boolean>() {
-				
+
 				@Override
 				public Boolean compute(TVertex argument) {
 					return "java".equals(argument.getProperty("name"));
@@ -177,19 +121,7 @@ public class TestPerformance {
 			}).toList();
 		}
 		nanoseconds = time.stop();
-		System.out.println("Iterate with filter Totorom1 " + nanoseconds/1000000);
+		System.out.println("Iterate with filter Totorom " + nanoseconds / 1000000);
 
-		time = timer.time();
-		for (int count = 0; count < ITERATIONS; count++) {
-			f.V().both().both().both().filter(new TraversalFunction<TVertex, Boolean>() {
-				
-				@Override
-				public Boolean compute(TVertex argument) {
-					return "java".equals(argument.getProperty("name"));
-				}
-			}).toList();
-		}
-		nanoseconds = time.stop();
-		System.out.println("Iterate with filter Totorom2 " + nanoseconds/1000000);
 	}
 }

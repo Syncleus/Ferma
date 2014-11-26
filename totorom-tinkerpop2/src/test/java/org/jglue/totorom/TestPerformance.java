@@ -15,16 +15,16 @@ public class TestPerformance {
 	private static final int ITERATIONS = 100000;
 	private static final MetricRegistry metrics = new MetricRegistry();
 
-	@Test
-	public void runTests() {
+	public static void main(String[] args) {
+		TestPerformance test = new TestPerformance();
 		for(int count = 0; count < 10; count++) {
-			testTraversalPerformance();
-			testIndexPerformance();
-			testFilterPerformance();
+			test.testTraversalPerformance();
+			test.testIndexPerformance();
+			test.testFilterPerformance();
 		}
 	}
 	
-	
+	@Test
 	public void testTraversalPerformance() {
 
 		TinkerGraph t = TinkerGraphFactory.createTinkerGraph();
@@ -67,6 +67,7 @@ public class TestPerformance {
 		System.out.println("Iterate over all Totorom2 " + nanoseconds/1000000);
 	}
 
+	@Test
 	public void testIndexPerformance() {
 
 		TinkerGraph t = TinkerGraphFactory.createTinkerGraph();
@@ -121,7 +122,7 @@ public class TestPerformance {
 		System.out.println("Iterate with index lookup Totorom2 " + nanoseconds/1000000);
 	}
 	
-	
+	@Test
 	public void testFilterPerformance() {
 
 		TinkerGraph t = TinkerGraphFactory.createTinkerGraph();

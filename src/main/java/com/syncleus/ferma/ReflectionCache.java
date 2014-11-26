@@ -18,7 +18,6 @@
  ******************************************************************************/
 package com.syncleus.ferma;
 
-import com.syncleus.ferma.annotations.Adjacency;
 import org.reflections.Reflections;
 import org.reflections.scanners.SubTypesScanner;
 import org.reflections.scanners.TypeAnnotationsScanner;
@@ -32,7 +31,8 @@ import java.util.*;
 
 public class ReflectionCache extends Reflections {
     private final Map<String, Set<String>> hierarchy;
-    private static final Map<Method, Map<Class<Annotation>, Annotation>> ANNOTATION_CACHE = new HashMap<>();
+    private final Map<Method, Map<Class<Annotation>, Annotation>> annotationCache = new HashMap<>();
+    private final Map<String, Class> classStringCache = new HashMap<>();
 
     public ReflectionCache(final Collection<? extends Class<?>> annotatedTypes) {
         super(assembleConfig(assembleClassUrls(annotatedTypes)));
@@ -49,10 +49,10 @@ public class ReflectionCache extends Reflections {
     }
 
     public <E extends Annotation> E getAnnotation(Method method, Class<E> annotationType) {
-        Map<Class<Annotation>, Annotation> annotationsPresent = ANNOTATION_CACHE.get(method);
+        Map<Class<Annotation>, Annotation> annotationsPresent = annotationCache.get(method);
         if( annotationsPresent == null ) {
             annotationsPresent = new HashMap<>();
-            ANNOTATION_CACHE.put(method, annotationsPresent);
+            annotationCache.put(method, annotationsPresent);
         }
 
         E annotation = (E) annotationsPresent.get(annotationType);
@@ -61,6 +61,20 @@ public class ReflectionCache extends Reflections {
             annotationsPresent.put((Class<Annotation>)annotationType, annotation);
         }
         return annotation;
+    }
+
+    public Class forName(final String className) {
+        Class type = this.classStringCache.get(className);
+        if(type == null) {
+            try {
+                type = Class.forName(className);
+                classStringCache.put(className, type);
+            }
+            catch (ClassNotFoundException e) {
+                throw new IllegalStateException("The class " + className + " cannot be found");
+            }
+        }
+        return type;
     }
 
     private static final ConfigurationBuilder assembleConfig(final Set<URL> toScanUrls) {

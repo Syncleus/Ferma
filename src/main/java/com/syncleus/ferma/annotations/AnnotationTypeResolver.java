@@ -39,8 +39,7 @@ import java.util.*;
 
 public class AnnotationTypeResolver implements TypeResolver {
     private final Map<Class<? extends Annotation>, MethodHandler> methodHandlers = new HashMap<>();
-    private final Map<Class, Class> classCache = new HashMap<>();
-    private final Map<String, Class> classStringCache = new HashMap<>();
+    private final Map<Class, Class> constructedClassCache = new HashMap<>();
     private final ReflectionCache reflectionCache;
 
     /**
@@ -79,16 +78,7 @@ public class AnnotationTypeResolver implements TypeResolver {
                 return (Class<T>) constructClass(element, kind);
         }
 
-        Class<T> nodeKind = (Class<T>) classStringCache.get(nodeClazz);
-        if(nodeKind == null) {
-            try {
-                nodeKind = (Class<T>) Class.forName(nodeClazz);
-            }
-            catch (ClassNotFoundException e) {
-                throw new IllegalStateException("The class " + nodeClazz + " cannot be found");
-            }
-            classStringCache.put(nodeClazz, nodeKind);
-        }
+        Class<T> nodeKind = (Class<T>) this.reflectionCache.forName(nodeClazz);
 
         Class<T> resolvedKind;
         if(kind.isAssignableFrom(nodeKind) || kind.equals(FramedVertex.class) || kind.equals(FramedEdge.class) || kind.equals(Object.class))
@@ -119,7 +109,7 @@ public class AnnotationTypeResolver implements TypeResolver {
     }
 
     private final <E> Class<? extends E> constructClass(final Element element, final Class<E> clazz) {
-        Class constructedClass = classCache.get(clazz);
+        Class constructedClass = constructedClassCache.get(clazz);
         if(constructedClass != null )
             return constructedClass;
 
@@ -157,7 +147,7 @@ public class AnnotationTypeResolver implements TypeResolver {
         }
 
         constructedClass = classBuilder.make().load(AnnotationTypeResolver.class.getClassLoader(), ClassLoadingStrategy.Default.WRAPPER).getLoaded();
-        this.classCache.put(clazz, constructedClass);
+        this.constructedClassCache.put(clazz, constructedClass);
         return constructedClass;
     }
 }

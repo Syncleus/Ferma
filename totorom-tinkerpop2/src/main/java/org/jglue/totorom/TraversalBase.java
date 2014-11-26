@@ -46,6 +46,12 @@ abstract class TraversalBase<T, Cap, SideEffect, Mark> implements Traversal<T, C
 		pipeline().V();
 		return castToVertices();
 	}
+	
+	@Override
+	public VertexTraversal V(String key, Object value) {
+		pipeline().V(key, value);
+		return castToVertices();
+	}
 
 	@Override
 	public EdgeTraversal E() {

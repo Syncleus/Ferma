@@ -34,6 +34,14 @@ public interface Traversal<T, Cap, SideEffect, Mark> extends Iterator<T>, Iterab
 	public VertexTraversal<?, ?, Mark> V();
 
 	/**
+	 * Traverse over all the vertices in the graph that have the specified key
+	 * and value.
+	 * 
+	 * @return
+	 */
+	public VertexTraversal<?, ?, Mark> V(String key, Object value);
+
+	/**
 	 * Traverse over all the edges in the graph.
 	 * 
 	 * @return
@@ -48,7 +56,7 @@ public interface Traversal<T, Cap, SideEffect, Mark> extends Iterator<T>, Iterab
 	 * @return The traversal.
 	 */
 	public VertexTraversal<?, ?, Mark> v(Object... ids);
-	
+
 	/**
 	 * Traversal over a list of vertices in the graph.
 	 * 
@@ -66,7 +74,6 @@ public interface Traversal<T, Cap, SideEffect, Mark> extends Iterator<T>, Iterab
 	 * @return The traversal.
 	 */
 	public EdgeTraversal<?, ?, Mark> e(Object... ids);
-	
 
 	/**
 	 * Traversal over a list of edges in the graph.
@@ -150,7 +157,8 @@ public interface Traversal<T, Cap, SideEffect, Mark> extends Iterator<T>, Iterab
 	public abstract Traversal<T, ?, ?, Mark> random(double bias);
 
 	/**
-	 * Analogous to a high/low index lookup. This is an open range so high is inclusive.
+	 * Analogous to a high/low index lookup. This is an open range so high is
+	 * inclusive.
 	 *
 	 * @param low
 	 *            the low end of the range
@@ -159,12 +167,12 @@ public interface Traversal<T, Cap, SideEffect, Mark> extends Iterator<T>, Iterab
 	 * @return the extended Pipeline
 	 */
 	public abstract Traversal<T, ?, ?, Mark> range(int low, int high);
-	
-	
+
 	/**
 	 * Limit the number of elements returned.
 	 *
-	 * @param limit the number of elements to return.
+	 * @param limit
+	 *            the number of elements to return.
 	 * @return the extended Pipeline
 	 */
 	public abstract Traversal<T, ?, ?, Mark> limit(int limit);
@@ -595,7 +603,8 @@ public interface Traversal<T, Cap, SideEffect, Mark> extends Iterator<T>, Iterab
 	public abstract Traversal<T, ?, ?, Mark> simplePath();
 
 	/**
-	 * The object that was seen at the topmost marked step is emitted. The mark step is removed from the stack.
+	 * The object that was seen at the topmost marked step is emitted. The mark
+	 * step is removed from the stack.
 	 *
 	 * @return the extended Pipeline
 	 */
@@ -627,7 +636,7 @@ public interface Traversal<T, Cap, SideEffect, Mark> extends Iterator<T>, Iterab
 	 *            the path function of the PathPipe
 	 * @return the extended Pipeline
 	 */
-	public abstract Traversal<Path, ? , ?, Mark> path(TraversalFunction<?, ?>... pathFunctions);
+	public abstract Traversal<Path, ?, ?, Mark> path(TraversalFunction<?, ?>... pathFunctions);
 
 	/**
 	 * The objects of the named steps (via as) previous in the pipeline are
@@ -688,8 +697,8 @@ public interface Traversal<T, Cap, SideEffect, Mark> extends Iterator<T>, Iterab
 	public abstract Cap cap();
 
 	/**
-	 * This step emits the input but also calls the sideEffectFunction
-	 * function with the side effect of the previous step when it is ready.
+	 * This step emits the input but also calls the sideEffectFunction function
+	 * with the side effect of the previous step when it is ready.
 	 *
 	 * @return the extended Pipeline
 	 */
@@ -772,8 +781,7 @@ public interface Traversal<T, Cap, SideEffect, Mark> extends Iterator<T>, Iterab
 	 * @return a list of all the objects
 	 */
 	public abstract List<T> toList();
-	
-	
+
 	/**
 	 * Return a set of all the objects in the pipeline.
 	 *
@@ -811,7 +819,8 @@ public interface Traversal<T, Cap, SideEffect, Mark> extends Iterator<T>, Iterab
 	public abstract Collection<T> fill(Collection<T> collection);
 
 	/**
-	 * The section of pipeline back to the topmost marked step is evaluated. The mark is removed from the stack.
+	 * The section of pipeline back to the topmost marked step is evaluated. The
+	 * mark is removed from the stack.
 	 *
 	 * @return the extended Pipeline
 	 */
@@ -836,8 +845,5 @@ public interface Traversal<T, Cap, SideEffect, Mark> extends Iterator<T>, Iterab
 	 * @return the extended Pipeline
 	 */
 	public abstract VertexTraversal<?, ?, Mark> idVertex(Graph graph);
-	
-	
-
 
 }

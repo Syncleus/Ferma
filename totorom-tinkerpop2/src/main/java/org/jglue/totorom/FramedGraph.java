@@ -126,7 +126,7 @@ public class FramedGraph {
 	 * @return The query.
 	 */
 	public VertexTraversal<?, ?, ?> V(String key, Object value) {
-		return new TraversalImpl(this, delegate.getVertices(key, value).iterator()).castToVertices();
+		return new TraversalImpl(this, delegate).V(key, value);
 		
 	}
 	

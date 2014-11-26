@@ -1,6 +1,8 @@
 package org.jglue.totorom;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -9,10 +11,12 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import com.google.common.collect.Sets;
 import com.tinkerpop.blueprints.Element;
 import com.tinkerpop.blueprints.Graph;
 import com.tinkerpop.blueprints.TransactionalGraph;
 import com.tinkerpop.blueprints.impls.tg.TinkerGraph;
+import com.tinkerpop.blueprints.impls.tg.TinkerGraphFactory;
 /**
  * @author Bryn Cooke (http://jglue.org)
  */
@@ -165,4 +169,12 @@ public class TestFramedGraph {
         Assert.assertEquals(1, knowsCollection.size());
     }
     
+    
+    @Test
+    public void testKeyValueTraversal() {
+        Graph g = TinkerGraphFactory.createTinkerGraph();
+        FramedGraph fg = new FramedGraph(g);
+        Assert.assertEquals(Sets.newHashSet("3", "5"),  fg.V("lang", "java").id().toSet());
+
+    }
 }

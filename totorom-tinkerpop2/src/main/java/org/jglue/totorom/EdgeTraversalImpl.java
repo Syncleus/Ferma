@@ -5,12 +5,14 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import com.tinkerpop.blueprints.Edge;
 import com.tinkerpop.blueprints.Element;
 import com.tinkerpop.blueprints.Predicate;
@@ -31,6 +33,12 @@ abstract class EdgeTraversalImpl extends TraversalBase implements EdgeTraversal 
 	@Override
 	public List toList() {
 		return toList(TEdge.class);
+	}
+	
+	
+	@Override
+	public Set toSet() {
+		return toSet(TEdge.class);
 	}
 
 	@Override
@@ -235,6 +243,11 @@ abstract class EdgeTraversalImpl extends TraversalBase implements EdgeTraversal 
 				return graph().frameElement((Element) e, kind);
 			}
 		});
+	}
+	
+	@Override
+	public Set<T> toSet(final Class kind) {
+		return Sets.newHashSet(toList(kind));
 	}
 
 	@Override

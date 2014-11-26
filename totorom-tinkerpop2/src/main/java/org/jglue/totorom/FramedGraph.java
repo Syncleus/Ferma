@@ -118,6 +118,16 @@ public class FramedGraph {
 	}
 
 	/**
+	 * Query vertices with a matching key and value
+	 * 
+	 * @return The query.
+	 */
+	public VertexTraversal<?, ?, ?> V(String key, Object value) {
+		return new TraversalImpl(this, delegate.getVertices(key, value).iterator()).castToVertices();
+		
+	}
+	
+	/**
 	 * Query over all vertices in the graph.
 	 * 
 	 * @return The query.

@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.tinkerpop.blueprints.Predicate;
 import com.tinkerpop.gremlin.Tokens;
@@ -176,6 +177,16 @@ public interface EdgeTraversal<Cap, SideEffect, Mark> extends Traversal<TEdge, C
 	 * @return a list of all the objects
 	 */
 	public <T extends FramedEdge> List<T> toList(Class<T> kind);
+	
+	
+	/**
+	 * Return a set of all the objects in the pipeline.
+	 * 
+	 * @param kind
+	 *            The kind of framed elements to return.
+	 * @return a set of all the objects
+	 */
+	public <T extends FramedEdge> Set<T> toSet(Class<T> kind);
 
 	/**
 	 * Add an LabelPipe to the end of the Pipeline. Emit the label of the

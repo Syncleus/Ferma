@@ -6,11 +6,13 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import com.tinkerpop.blueprints.Element;
 import com.tinkerpop.blueprints.Predicate;
 import com.tinkerpop.blueprints.Vertex;
@@ -406,8 +408,18 @@ abstract class VertexTraversalImpl extends TraversalBase implements VertexTraver
 	}
 
 	@Override
+	public Set toSet(final Class kind) {
+		return Sets.newHashSet(toList(kind));
+	}
+	
+	@Override
 	public List toList() {
 		return toList(TVertex.class);
+	}
+	
+	@Override
+	public Set toSet() {
+		return toSet(TVertex.class);
 	}
 
 	@Override

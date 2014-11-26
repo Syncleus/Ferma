@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.tinkerpop.blueprints.Graph;
 import com.tinkerpop.gremlin.Tokens;
@@ -771,6 +772,14 @@ public interface Traversal<T, Cap, SideEffect, Mark> extends Iterator<T>, Iterab
 	 * @return a list of all the objects
 	 */
 	public abstract List<T> toList();
+	
+	
+	/**
+	 * Return a set of all the objects in the pipeline.
+	 *
+	 * @return a set of all the objects
+	 */
+	public abstract Set<T> toSet();
 
 	/**
 	 * Enable path calculations within the Pipeline. This is typically done

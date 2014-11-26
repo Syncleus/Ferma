@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.jglue.totorom.internal.DivertPipe;
 import org.jglue.totorom.internal.TraversalFunctionPipe;
@@ -17,6 +18,7 @@ import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import com.tinkerpop.blueprints.Edge;
 import com.tinkerpop.blueprints.Element;
 import com.tinkerpop.blueprints.Graph;
@@ -24,10 +26,7 @@ import com.tinkerpop.blueprints.Predicate;
 import com.tinkerpop.blueprints.Vertex;
 import com.tinkerpop.gremlin.Tokens;
 import com.tinkerpop.gremlin.java.GremlinPipeline;
-import com.tinkerpop.pipes.Pipe;
-import com.tinkerpop.pipes.PipeFunction;
 import com.tinkerpop.pipes.branch.LoopPipe;
-import com.tinkerpop.pipes.branch.LoopPipe.LoopBundle;
 import com.tinkerpop.pipes.sideeffect.SideEffectPipe;
 import com.tinkerpop.pipes.transform.TransformPipe.Order;
 import com.tinkerpop.pipes.util.FluentUtility;
@@ -562,6 +561,13 @@ abstract class TraversalBase<T, Cap, SideEffect, Mark> implements Traversal<T, C
 				return e;
 			}
 		});
+
+	}
+	
+	@Override
+	public Set toSet() {
+
+		return Sets.newHashSet(toList());
 
 	}
 

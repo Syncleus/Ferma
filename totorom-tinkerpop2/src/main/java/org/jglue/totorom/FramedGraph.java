@@ -69,6 +69,9 @@ public class FramedGraph {
 	}
 
 	<T extends FramedElement> T frameElement(Element e, Class<T> kind) {
+		if(e == null){
+			return null;
+		}
 
 		Class<T> frameType = (kind == TVertex.class || kind == TEdge.class) ? kind : resolver.resolve(e, kind);
 

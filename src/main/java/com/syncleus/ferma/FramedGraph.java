@@ -35,11 +35,7 @@ import com.google.common.base.Function;
 import com.google.common.collect.Iterators;
 import com.syncleus.ferma.annotations.AnnotationFrameFactory;
 import com.syncleus.ferma.annotations.AnnotationTypeResolver;
-import com.tinkerpop.blueprints.Edge;
-import com.tinkerpop.blueprints.Element;
-import com.tinkerpop.blueprints.Graph;
-import com.tinkerpop.blueprints.TransactionalGraph;
-import com.tinkerpop.blueprints.Vertex;
+import com.tinkerpop.blueprints.*;
 import org.reflections.Reflections;
 import org.reflections.scanners.ResourcesScanner;
 import org.reflections.scanners.SubTypesScanner;
@@ -51,7 +47,7 @@ import org.reflections.util.ConfigurationBuilder;
  * The primary class for framing your blueprints graphs.
  */
 
-public class FramedGraph {
+public class FramedGraph implements Graph {
 	private Graph delegate;
 
 	private TypeResolver resolver;
@@ -298,4 +294,72 @@ public class FramedGraph {
 		})).castToEdges();
 	}
 
+	@Override
+	public Features getFeatures() {
+		return this.delegate.getFeatures();
+	}
+
+	@Override
+	public Vertex addVertex(Object id) {
+		return this.delegate.addVertex(id);
+	}
+
+	@Override
+	public Vertex getVertex(Object id) {
+		return this.delegate.getVertex(id);
+	}
+
+	@Override
+	public void removeVertex(Vertex vertex) {
+		this.delegate.removeVertex(vertex);
+	}
+
+	@Override
+	public Iterable<Vertex> getVertices() {
+		return this.delegate.getVertices();
+	}
+
+	@Override
+	public Iterable<Vertex> getVertices(String key, Object value) {
+		return this.delegate.getVertices(key, value);
+	}
+
+	@Override
+	public Edge addEdge(Object id, Vertex outVertex, Vertex inVertex, String label) {
+		return this.delegate.addEdge(id, outVertex, inVertex, label);
+	}
+
+	@Override
+	public Edge getEdge(Object id) {
+		return this.delegate.getEdge(id);
+	}
+
+	@Override
+	public void removeEdge(Edge edge) {
+		this.delegate.removeEdge(edge);
+	}
+
+	@Override
+	public Iterable<Edge> getEdges() {
+		return this.delegate.getEdges();
+	}
+
+	@Override
+	public Iterable<Edge> getEdges(String key, Object value) {
+		return this.delegate.getEdges(key, value);
+	}
+
+	@Override
+	public GraphQuery query() {
+		return this.delegate.query();
+	}
+
+	@Override
+	public void shutdown() {
+		this.delegate.shutdown();
+	}
+
+	protected Graph getDelegate() {
+		return delegate;
+	}
 }

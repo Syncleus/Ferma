@@ -79,6 +79,14 @@ public interface Traversal<T, Cap, SideEffect, Mark> extends Iterator<T>, Iterab
 	public VertexTraversal<?, ?, Mark> v(Collection<?> ids);
 
 	/**
+	 * Traverse over all the vertices in the graph that have the specified key
+	 * and value.
+	 *
+	 * @return
+	 */
+	public VertexTraversal<?, ?, Mark> v(String key, Object value);
+
+	/**
 	 * Traversal over a list of edges in the graph.
 	 * 
 	 * @param ids

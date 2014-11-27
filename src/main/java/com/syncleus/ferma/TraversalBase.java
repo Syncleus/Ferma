@@ -764,6 +764,12 @@ abstract class TraversalBase<T, Cap, SideEffect, Mark> implements Traversal<T, C
 	}
 
 	@Override
+	public VertexTraversal v(String key, Object value) {
+		pipeline().V(key, value);
+		return castToVertices();
+	}
+
+	@Override
 	public EdgeTraversal<?, ?, Mark> e(Collection<?> ids) {
 		return (EdgeTraversal) graph().e(ids);
 	}

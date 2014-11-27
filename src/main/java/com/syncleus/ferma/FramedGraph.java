@@ -401,7 +401,7 @@ public class FramedGraph implements Graph {
 	 * @return The query.
 	 */
 	public VertexTraversal<?, ?, ?> v(String key, Object value) {
-		return new TraversalImpl(this, delegate.getVertices(key, value).iterator()).castToVertices();
+		return new TraversalImpl(this, delegate).v(key, value);
 	}
 
 	/**

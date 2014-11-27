@@ -266,6 +266,20 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 
 	/**
 	 * Get the next object emitted from the pipeline. If no such object exists,
+	 * then a NoSuchElementException is thrown.
+	 *
+	 * This will bypass the default type resolution and use the untyped resolver
+	 * instead. This method is useful for speeding up a look up when type resolution
+	 * isn't required.
+	 *
+	 * @param kind
+	 *            The type of frame for the element.
+	 * @return the next emitted object
+	 */
+	public <N> N nextExplicit(Class<N> kind);
+
+	/**
+	 * Get the next object emitted from the pipeline. If no such object exists,
 	 * then a the default value is returned.
 	 * 
 	 * @param kind
@@ -275,6 +289,22 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	 * @return the next emitted object
 	 */
 	public <N> N nextOrDefault(Class<N> kind, N defaultValue);
+
+	/**
+	 * Get the next object emitted from the pipeline. If no such object exists,
+	 * then a the default value is returned.
+	 *
+	 * This will bypass the default type resolution and use the untyped resolver
+	 * instead. This method is useful for speeding up a look up when type resolution
+	 * isn't required.
+	 *
+	 * @param kind
+	 *            The type of frame for the element.
+	 * @param defaultValue
+	 *            The object to return if no next object exists.
+	 * @return the next emitted object
+	 */
+	public <N> N nextOrDefaultExplicit(Class<N> kind, N defaultValue);
 
 	/**
 	 * Get the next object emitted from the pipeline. If no such object exists a
@@ -287,7 +317,21 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	/**
 	 * Get the next object emitted from the pipeline. If no such object exists a
 	 * new vertex is created.
+	 *
+	 * This will bypass the default type resolution and use the untyped resolver
+	 * instead. This method is useful for speeding up a look up when type resolution
+	 * isn't required.
 	 * 
+	 * @param kind
+	 *            The type of frame for the element.
+	 * @return the next emitted object
+	 */
+	public <N> N nextOrAddExplicit(Class<N> kind);
+
+	/**
+	 * Get the next object emitted from the pipeline. If no such object exists a
+	 * new vertex is created.
+	 *
 	 * @param kind
 	 *            The type of frame for the element.
 	 * @return the next emitted object
@@ -306,6 +350,21 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	public <N> List<N> next(int amount, Class<N> kind);
 
 	/**
+	 * Return the next X objects in the traversal as a list.
+	 *
+	 * This will bypass the default type resolution and use the untyped resolver
+	 * instead. This method is useful for speeding up a look up when type resolution
+	 * isn't required.
+	 *
+	 * @param amount
+	 *            the number of objects to return
+	 * @param kind
+	 *            the type of frame to for each element.
+	 * @return a list of X objects (if X objects occur)
+	 */
+	public <N> List<N> nextExplicit(int amount, Class<N> kind);
+
+	/**
 	 * Return an iterator of framed elements.
 	 * 
 	 * @param kind
@@ -315,6 +374,19 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	public <N> Iterable<N> frame(Class<N> kind);
 
 	/**
+	 * Return an iterator of framed elements.
+	 *
+	 * This will bypass the default type resolution and use the untyped resolver
+	 * instead. This method is useful for speeding up a look up when type resolution
+	 * isn't required.
+	 *
+	 * @param kind
+	 *            The kind of framed elements to return.
+	 * @return An iterator of framed elements.
+	 */
+	public <N> Iterable<? extends N> frameExplicit(Class<N> kind);
+
+	/**
 	 * Return a list of all the objects in the pipeline.
 	 * 
 	 * @param kind
@@ -322,6 +394,19 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	 * @return a list of all the objects
 	 */
 	public <N> List<N> toList(Class<N> kind);
+
+	/**
+	 * Return a list of all the objects in the pipeline.
+	 *
+	 * This will bypass the default type resolution and use the untyped resolver
+	 * instead. This method is useful for speeding up a look up when type resolution
+	 * isn't required.
+	 *
+	 * @param kind
+	 *            The kind of framed elements to return.
+	 * @return a list of all the objects
+	 */
+	public <N> List<N> toListExplicit(Class<N> kind);
 
 	/**
 	 * Emit the incoming vertex, but have other vertex provide an outgoing edge
@@ -614,6 +699,21 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	 */
 	public abstract <N extends FramedVertex> Collection<N> fill(Collection<N> collection, Class<N> kind);
 
+	/**
+	 * Fill the provided collection with the objects in the pipeline.
+	 *
+	 * This will bypass the default type resolution and use the untyped resolver
+	 * instead. This method is useful for speeding up a look up when type resolution
+	 * isn't required.
+	 *
+	 * @param collection
+	 *            the collection to fill
+	 * @param kind
+	 *            The kind of framed elements to return.
+	 * @return the collection filled
+	 */
+	public abstract <N extends FramedVertex> Collection<N> fillExplicit(Collection<N> collection, Class<N> kind);
+
 	@Override
 	public abstract VertexTraversal<?, ?, Mark> gatherScatter();
 
@@ -621,7 +721,7 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	 * If the internal pipes all yield objects, then the object is not filtered.
 	 * The provided pipes are provided the object as their starts.
 	 *
-	 * @param pipes
+	 * @param traversals
 	 *            the internal pipes of the AndFilterPipe
 	 * @return the extended Pipeline
 	 */

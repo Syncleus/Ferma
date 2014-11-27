@@ -44,8 +44,8 @@ public class FramedElementTest {
 		MockitoAnnotations.initMocks(this);
 		Graph g = new TinkerGraph();
         fg = new FramedGraph(g);
-        p1 = fg.addVertex(Person.class);
-        p2 = fg.addVertex(Person.class);
+        p1 = fg.addFramedVertex(Person.class);
+        p2 = fg.addFramedVertex(Person.class);
         p1.setName("Bryn");
         p2.setName("Julia");
         e1 = p1.addKnows(p2);
@@ -101,6 +101,16 @@ public class FramedElementTest {
     public void teste() {
     	Assert.assertEquals(e1, p1.e(e1.getId()).next(Knows.class));
     }
+
+    @Test
+    public void testvExplicit() {
+        Assert.assertEquals(p1, p1.v(p1.getId()).nextExplicit(Person.class));
+    }
+
+    @Test
+    public void testeExplicit() {
+        Assert.assertEquals(e1, p1.e(e1.getId()).nextExplicit(Knows.class));
+    }
     
     @Test
     public void testRemove() {
@@ -112,6 +122,12 @@ public class FramedElementTest {
     public void testReframe() {
     	TVertex v1 = p1.reframe(TVertex.class);
     	Assert.assertEquals(p1.getId(), v1.getId());
+    }
+
+    @Test
+    public void testReframeExplicit() {
+        TVertex v1 = p1.reframeExplicit(TVertex.class);
+        Assert.assertEquals(p1.getId(), v1.getId());
     }
     
 }

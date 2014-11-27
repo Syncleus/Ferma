@@ -18,11 +18,13 @@
  ******************************************************************************/
 package com.syncleus.ferma;
 
+import com.tinkerpop.blueprints.Graph;
 import com.tinkerpop.blueprints.TransactionalGraph;
 
 import java.util.Collection;
 
 public class FramedTransactionalGraph extends FramedGraph implements TransactionalGraph {
+
     public FramedTransactionalGraph(TransactionalGraph delegate, FrameFactory builder, TypeResolver resolver) {
         super(delegate, builder, resolver);
     }
@@ -35,8 +37,12 @@ public class FramedTransactionalGraph extends FramedGraph implements Transaction
         super(delegate, resolver);
     }
 
-    public FramedTransactionalGraph(TransactionalGraph delegate, Collection<? extends Class<?>> annotatedTypes) {
-        super(delegate, annotatedTypes);
+    public FramedTransactionalGraph(TransactionalGraph delegate, boolean typeResolution, boolean annotationsSupported) {
+        super(delegate, typeResolution, annotationsSupported);
+    }
+
+    public FramedTransactionalGraph(TransactionalGraph delegate, boolean typeResolution, Collection<? extends Class<?>> types) {
+        super(delegate, typeResolution, types);
     }
 
     @Override

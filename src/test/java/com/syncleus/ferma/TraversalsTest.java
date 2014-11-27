@@ -508,4 +508,40 @@ public class TraversalsTest {
 		Assert.assertEquals(1, graph.v().limit(1).count());
 		Assert.assertEquals(2, graph.v().limit(2).count());
 	}
+
+	@Test
+	public void testToList() {
+		Assert.assertTrue(graph.v().limit(1).toList().iterator().next() instanceof TVertex);
+
+	}
+
+	@Test
+	public void testToListWithClass() {
+		Assert.assertTrue(graph.v().limit(1).toList(Person.class).iterator().next() instanceof Person);
+
+	}
+
+	@Test
+	public void testToListWithClassExplicit() {
+		Assert.assertTrue(graph.v().limit(1).toListExplicit(Person.class).iterator().next() instanceof Person);
+
+	}
+
+	@Test
+	public void testToSet() {
+		Assert.assertTrue(graph.v().limit(1).toSet().iterator().next() instanceof TVertex);
+
+	}
+
+	@Test
+	public void testToSetWithClass() {
+		Assert.assertTrue(graph.v().limit(1).toSet(Person.class).iterator().next() instanceof Person);
+
+	}
+
+	@Test
+	public void testToSetWithClassExplicit() {
+		Assert.assertTrue(graph.v().limit(1).toSetExplicit(Person.class).iterator().next() instanceof Person);
+
+	}
 }

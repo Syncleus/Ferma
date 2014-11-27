@@ -125,7 +125,7 @@ public class AnnotationFrameFactory implements FrameFactory {
             }
         }
 
-        constructedClass = classBuilder.make().load(AnnotationTypeResolver.class.getClassLoader(), ClassLoadingStrategy.Default.WRAPPER).getLoaded();
+        constructedClass = classBuilder.make().load(AnnotationFrameFactory.class.getClassLoader(), ClassLoadingStrategy.Default.WRAPPER).getLoaded();
         this.constructedClassCache.put(clazz, constructedClass);
         return constructedClass;
     }

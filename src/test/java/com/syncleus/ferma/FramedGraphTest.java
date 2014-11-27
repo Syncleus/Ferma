@@ -46,10 +46,10 @@ public class FramedGraphTest {
     public void testSanity() {
         Graph g = new TinkerGraph();
         FramedGraph fg = new FramedGraph(g);
-        Person p1 = fg.addVertex(Person.class);
+        Person p1 = fg.addFramedVertex(Person.class);
         p1.setName("Bryn");
 
-        Person p2 = fg.addVertex(Person.class);
+        Person p2 = fg.addFramedVertex(Person.class);
         p2.setName("Julia");
         Knows knows = p1.addKnows(p2);
         knows.setYears(15);
@@ -63,16 +63,38 @@ public class FramedGraphTest {
         Collection<Integer> knowsCollection = fg.v().has("name", "Julia").bothE().property("years", Integer.class).aggregate().cap();
         Assert.assertEquals(1, knowsCollection.size());
     }
+
+    @Test
+    public void testSanityExplicit() {
+        Graph g = new TinkerGraph();
+        FramedGraph fg = new FramedGraph(g);
+        Person p1 = fg.addFramedVertexExplicit(Person.class);
+        p1.setName("Bryn");
+
+        Person p2 = fg.addFramedVertexExplicit(Person.class);
+        p2.setName("Julia");
+        Knows knows = p1.addKnowsExplicit(p2);
+        knows.setYears(15);
+
+        Person bryn = fg.v().has("name", "Bryn").nextExplicit(Person.class);
+
+
+        Assert.assertEquals("Bryn", bryn.getName());
+        Assert.assertEquals(15, bryn.getKnowsListExplicit().get(0).getYears());
+
+        Collection<Integer> knowsCollection = fg.v().has("name", "Julia").bothE().property("years", Integer.class).aggregate().cap();
+        Assert.assertEquals(1, knowsCollection.size());
+    }
     
     @Test
     public void testJavaTyping() {
         Graph g = new TinkerGraph();
-        FramedGraph fg = new FramedGraph(g, FrameFactory.DEFAULT, TypeResolver.SIMPLE);
+        FramedGraph fg = new FramedGraph(g, true, false);
 
-        Person p1 = fg.addVertex(Programmer.class);
+        Person p1 = fg.addFramedVertex(Programmer.class);
         p1.setName("Bryn");
 
-        Person p2 = fg.addVertex(Person.class);
+        Person p2 = fg.addFramedVertex(Person.class);
         p2.setName("Julia");
 
         Person bryn = fg.v().has("name", "Bryn").next(Person.class);
@@ -81,10 +103,43 @@ public class FramedGraphTest {
         Assert.assertEquals(Programmer.class, bryn.getClass());
         Assert.assertEquals(Person.class, julia.getClass());
     }
-    
-    
-    
-    
+
+    @Test
+    public void testJavaTypingAddExplicit() {
+        Graph g = new TinkerGraph();
+        FramedGraph fg = new FramedGraph(g, true, false);
+
+        Person p1 = fg.addFramedVertexExplicit(Programmer.class);
+        p1.setName("Bryn");
+
+        Person p2 = fg.addFramedVertexExplicit(Person.class);
+        p2.setName("Julia");
+
+        Person bryn = fg.v().has("name", "Bryn").next(Person.class);
+        Person julia = fg.v().has("name", "Julia").next(Person.class);
+
+        Assert.assertEquals(Person.class, bryn.getClass());
+        Assert.assertEquals(Person.class, julia.getClass());
+    }
+
+    @Test
+    public void testJavaTypingNextExplicit() {
+        Graph g = new TinkerGraph();
+        FramedGraph fg = new FramedGraph(g, true, false);
+
+        Person p1 = fg.addFramedVertex(Programmer.class);
+        p1.setName("Bryn");
+
+        Person p2 = fg.addFramedVertex(Person.class);
+        p2.setName("Julia");
+
+        Person bryn = fg.v().has("name", "Bryn").nextExplicit(Person.class);
+        Person julia = fg.v().has("name", "Julia").nextExplicit(Person.class);
+
+        Assert.assertEquals(Person.class, bryn.getClass());
+        Assert.assertEquals(Person.class, julia.getClass());
+    }
+
     @Test
     public void testCustomFrameBuilder() {
     	final Person o = new Person();
@@ -96,8 +151,24 @@ public class FramedGraphTest {
 			public <T> T create(Element e, Class<T> kind) {
 				return (T)o;
 			}
-		}, TypeResolver.SIMPLE);
-        Person person = fg.addVertex(Person.class);
+		}, new SimpleTypeResolver());
+        Person person = fg.addFramedVertex(Person.class);
+        Assert.assertEquals(o, person);
+    }
+
+    @Test
+    public void testCustomFrameBuilderExplicit() {
+        final Person o = new Person();
+        Graph g = new TinkerGraph();
+        FramedGraph fg = new FramedGraph(g, new FrameFactory() {
+
+            @SuppressWarnings("unchecked")
+            @Override
+            public <T> T create(Element e, Class<T> kind) {
+                return (T)o;
+            }
+        }, new SimpleTypeResolver());
+        Person person = fg.addFramedVertexExplicit(Person.class);
         Assert.assertEquals(o, person);
     }
     
@@ -165,12 +236,12 @@ public class FramedGraphTest {
     public void testUntypedFrames() {
         Graph g = new TinkerGraph();
         FramedGraph fg = new FramedGraph(g);
-        TVertex p1 = fg.addVertex();
+        TVertex p1 = fg.addFramedVertex();
         p1.setProperty("name", "Bryn");
 
-        TVertex p2 = fg.addVertex();
+        TVertex p2 = fg.addFramedVertex();
         p2.setProperty("name", "Julia");
-        TEdge knows = p1.addEdge("knows", p2);
+        TEdge knows = p1.addFramedEdge("knows", p2);
         knows.setProperty("years", 15);
 
         TVertex bryn = fg.v().has("name", "Bryn").next();
@@ -179,6 +250,28 @@ public class FramedGraphTest {
         Assert.assertEquals("Bryn", bryn.getProperty("name"));
         Assert.assertEquals(15, bryn.outE("knows").toList().get(0).getProperty("years"));
    
+        Collection<Integer> knowsCollection = fg.v().has("name", "Julia").bothE().property("years", Integer.class).aggregate().cap();
+        Assert.assertEquals(1, knowsCollection.size());
+    }
+
+    @Test
+    public void testUntypedFramesExplicit() {
+        Graph g = new TinkerGraph();
+        FramedGraph fg = new FramedGraph(g);
+        TVertex p1 = fg.addFramedVertexExplicit();
+        p1.setProperty("name", "Bryn");
+
+        TVertex p2 = fg.addFramedVertexExplicit();
+        p2.setProperty("name", "Julia");
+        TEdge knows = p1.addFramedEdgeExplicit("knows", p2);
+        knows.setProperty("years", 15);
+
+        TVertex bryn = fg.v().has("name", "Bryn").next();
+
+
+        Assert.assertEquals("Bryn", bryn.getProperty("name"));
+        Assert.assertEquals(15, bryn.outE("knows").toList().get(0).getProperty("years"));
+
         Collection<Integer> knowsCollection = fg.v().has("name", "Julia").bothE().property("years", Integer.class).aggregate().cap();
         Assert.assertEquals(1, knowsCollection.size());
     }

@@ -27,7 +27,6 @@
  */
 package com.syncleus.ferma;
 
-import com.syncleus.ferma.annotations.AnnotationTypeResolver;
 import com.tinkerpop.blueprints.Element;
 
 /**
@@ -57,47 +56,4 @@ public interface TypeResolver {
 	 *            The kind of frame that was resolved.
 	 */
 	public <T> void init(Element element, Class<T> kind);
-
-	/**
-	 * This type resolver simply returns the type requested by the client.
-	 */
-	public static final TypeResolver UNTYPED = new TypeResolver() {
-		@Override
-		public <T> Class<T> resolve(Element element, Class<T> kind) {
-			return kind;
-		}
-
-		@Override
-		public <T> void init(Element element, Class<T> kind) {
-
-		}
-	};
-
-	/**
-	 * This type resolver will use the Java class stored in the 'java_class' on
-	 * the element.
-	 */
-	public static final TypeResolver SIMPLE = new TypeResolver() {
-		@SuppressWarnings("unchecked")
-		@Override
-		public <T> Class<T> resolve(Element element, Class<T> kind) {
-			String clazz = element.getProperty("java_class");
-			if (clazz != null) {
-				try {
-					return (Class<T>) Class.forName(clazz);
-				} catch (ClassNotFoundException e) {
-					throw new RuntimeException("The class " + clazz + " cannot be found");
-				}
-			}
-			return kind;
-		}
-
-		@Override
-		public <T> void init(Element element, Class<T> kind) {
-			String clazz = element.getProperty("java_class");
-			if (clazz == null) {
-				element.setProperty("java_class", kind.getName());
-			}
-		}
-	};
 }

@@ -43,8 +43,8 @@ public class FramedEdgeTest {
 		MockitoAnnotations.initMocks(this);
 		Graph g = new TinkerGraph();
         fg = new FramedGraph(g);
-        p1 = fg.addVertex(Person.class);
-        p2 = fg.addVertex(Person.class);
+        p1 = fg.addFramedVertex(Person.class);
+        p2 = fg.addFramedVertex(Person.class);
         p1.setName("Bryn");
         p2.setName("Julia");
         e1 = p1.addKnows(p2);
@@ -70,5 +70,20 @@ public class FramedEdgeTest {
     @Test
     public void testBothV() {
     	Assert.assertEquals(p1, e1.bothV().next(Person.class));
+    }
+
+    @Test
+    public void testInVExplicit() {
+        Assert.assertEquals(p2, e1.inV().nextExplicit(Person.class));
+    }
+
+    @Test
+    public void testOutVExplicit() {
+        Assert.assertEquals(p1, e1.outV().nextExplicit(Person.class));
+    }
+
+    @Test
+    public void testBothVExplicit() {
+        Assert.assertEquals(p1, e1.bothV().nextExplicit(Person.class));
     }
 }

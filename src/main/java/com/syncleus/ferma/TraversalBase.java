@@ -579,9 +579,9 @@ abstract class TraversalBase<T, Cap, SideEffect, Mark> implements Traversal<T, C
 
 			public Object apply(Object e) {
 				if (e instanceof Edge) {
-					return graph().frameElement((Element) e, TEdge.class);
+					return graph().frameElementExplicit((Element) e, TEdge.class);
 				} else if (e instanceof Vertex) {
-					return graph().frameElement((Element) e, TVertex.class);
+					return graph().frameElementExplicit((Element) e, TVertex.class);
 				}
 				return e;
 			}
@@ -610,9 +610,9 @@ abstract class TraversalBase<T, Cap, SideEffect, Mark> implements Traversal<T, C
 	public T next() {
 		Object e = pipeline().next();
 		if (e instanceof Edge) {
-			return (T) graph().frameElement((Element) e, TEdge.class);
+			return (T) graph().frameElementExplicit((Element) e, TEdge.class);
 		} else if (e instanceof Vertex) {
-			return (T) graph().frameElement((Element) e, TVertex.class);
+			return (T) graph().frameElementExplicit((Element) e, TVertex.class);
 		}
 		return (T) e;
 	}

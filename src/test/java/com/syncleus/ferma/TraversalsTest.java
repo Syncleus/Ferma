@@ -486,9 +486,21 @@ public class TraversalsTest {
 	}
 
 	@Test
+	public void testNextOrDefaultWithKindExplicit() {
+		Program defaultValue = new Program();
+		Assert.assertEquals(graph.v(3).nextExplicit(Program.class), graph.v(6).out("created").nextOrDefaultExplicit(Program.class, defaultValue));
+	}
+
+	@Test
 	public void testNextOrDefaultWithKindNoSuchElement() {
 		Person defaultValue = new Person(); 
 		Assert.assertEquals(defaultValue, graph.v(6).out("knows").nextOrDefault(Person.class, defaultValue));
+	}
+
+	@Test
+	public void testNextOrDefaultWithKindNoSuchElementExplicit() {
+		Person defaultValue = new Person();
+		Assert.assertEquals(defaultValue, graph.v(6).out("knows").nextOrDefaultExplicit(Person.class, defaultValue));
 	}
 	
 	@Test

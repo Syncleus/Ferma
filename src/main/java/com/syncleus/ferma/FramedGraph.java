@@ -57,7 +57,7 @@ public class FramedGraph implements Graph {
 	 * @param defaultResolver
 	 *            The type defaultResolver that will decide the final frame type.
 	 */
-	public FramedGraph(Graph delegate, FrameFactory builder, TypeResolver defaultResolver) {
+	public FramedGraph(final Graph delegate, final FrameFactory builder, final TypeResolver defaultResolver) {
 		this.reflections = null;
 		this.delegate = delegate;
 		this.defaultResolver = defaultResolver;
@@ -71,8 +71,24 @@ public class FramedGraph implements Graph {
 	 * @param delegate
 	 *            The graph to wrap.
 	 */
-	public FramedGraph(Graph delegate) {
+	public FramedGraph(final Graph delegate) {
 		this.reflections = new ReflectionCache();
+		this.delegate = delegate;
+		this.defaultResolver = new UntypedTypeResolver();
+		this.untypedResolver = this.defaultResolver;
+		this.builder = new DefaultFrameFactory();
+	}
+
+	/**
+	 * Construct an untyped framed graph without annotation support
+	 *
+	 * @param reflections
+	 * 			  A RefelctionCache used to determine reflection and hierarchy of classes.
+	 * @param delegate
+	 *            The graph to wrap.
+	 */
+	public FramedGraph(final Graph delegate, final ReflectionCache reflections) {
+		this.reflections = reflections;
 		this.delegate = delegate;
 		this.defaultResolver = new UntypedTypeResolver();
 		this.untypedResolver = this.defaultResolver;
@@ -103,6 +119,35 @@ public class FramedGraph implements Graph {
 	 */
 	public FramedGraph(Graph delegate, boolean typeResolution, final boolean annotationsSupported) {
 		this.reflections = new ReflectionCache();
+		this.delegate = delegate;
+		if( typeResolution) {
+			this.defaultResolver = new SimpleTypeResolver(this.reflections);
+			this.untypedResolver = new UntypedTypeResolver();
+		}
+		else {
+			this.defaultResolver = new UntypedTypeResolver();
+			this.untypedResolver = this.defaultResolver;
+		}
+		if( annotationsSupported )
+			this.builder = new AnnotationFrameFactory(this.reflections);
+		else
+			this.builder = new DefaultFrameFactory();
+	}
+
+	/**
+	 * Construct a framed graph with the specified typeResolution and annotation support
+	 *
+	 * @param delegate
+	 *            The graph to wrap.
+	 * @param reflections
+	 * 			  A RefelctionCache used to determine reflection and hierarchy of classes.
+	 * @param typeResolution
+	 * 			  True if type resolution is to be automatically handled by default, false causes explicit typing by
+	 * @param annotationsSupported
+	 * 			  True if annotated classes will be supported, false otherwise.
+	 */
+	public FramedGraph(Graph delegate, final ReflectionCache reflections, boolean typeResolution, final boolean annotationsSupported) {
+		this.reflections = reflections;
 		this.delegate = delegate;
 		if( typeResolution) {
 			this.defaultResolver = new SimpleTypeResolver(this.reflections);

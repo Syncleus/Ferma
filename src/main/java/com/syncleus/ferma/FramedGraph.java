@@ -223,6 +223,8 @@ public class FramedGraph implements Graph {
 	}
 
 	<T> T frameElement(Element e, Class<T> kind) {
+		if( e == null )
+			return null;
 
 		Class<T> frameType = (kind == TVertex.class || kind == TEdge.class) ? kind : defaultResolver.resolve(e, kind);
 
@@ -249,6 +251,8 @@ public class FramedGraph implements Graph {
 	}
 
 	<T> T frameElementExplicit(Element e, Class<T> kind) {
+		if(e == null)
+			return null;
 
 		Class<T> frameType = this.untypedResolver.resolve(e, kind);
 

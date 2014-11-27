@@ -129,5 +129,10 @@ public class FramedElementTest {
         TVertex v1 = p1.reframeExplicit(TVertex.class);
         Assert.assertEquals(p1.getId(), v1.getId());
     }
+
+    @Test
+    public void testvNull() {
+        Assert.assertNull(p1.v("noId").next());
+    }
     
 }

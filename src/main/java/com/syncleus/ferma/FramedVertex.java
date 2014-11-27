@@ -58,10 +58,33 @@ public abstract class FramedVertex extends FramedElement {
 	 *            The kind of frame.
 	 * @return The new edge.
 	 */
-	public <T extends FramedEdge> T addEdge(String label, FramedVertex inVertex, Class<T> kind) {
+	public <T extends FramedEdge> T addFramedEdge(String label, FramedVertex inVertex, Class<T> kind) {
 
 		Edge edge = element().addEdge(label, inVertex.element());
 		T framedEdge = graph().frameNewElement(edge, kind);
+		framedEdge.init();
+		return framedEdge;
+	}
+
+	/**
+	 * Add an edge using the supplied frame type.
+	 *
+	 * This will bypass the default type resolution and use the untyped resolver
+	 * instead. This method is useful for speeding up a look up when type resolution
+	 * isn't required.
+	 *
+	 * @param label
+	 *            The label for the edge
+	 * @param inVertex
+	 *            The vertex to link to.
+	 * @param kind
+	 *            The kind of frame.
+	 * @return The new edge.
+	 */
+	public <T extends FramedEdge> T addFramedEdgeExplicit(String label, FramedVertex inVertex, Class<T> kind) {
+
+		Edge edge = element().addEdge(label, inVertex.element());
+		T framedEdge = graph().frameNewElementExplicit(edge, kind);
 		framedEdge.init();
 		return framedEdge;
 	}
@@ -75,8 +98,25 @@ public abstract class FramedVertex extends FramedElement {
 	 *            The vertex to link to.
 	 * @return The added edge.
 	 */
-	public TEdge addEdge(String label, FramedVertex inVertex) {
-		return addEdge(label, inVertex, TEdge.class);
+	public TEdge addFramedEdge(String label, FramedVertex inVertex) {
+		return addFramedEdge(label, inVertex, TEdge.class);
+	}
+
+	/**
+	 * Add an edge using a frame type of {@link TEdge}.
+	 *
+	 * This will bypass the default type resolution and use the untyped resolver
+	 * instead. This method is useful for speeding up a look up when type resolution
+	 * isn't required.
+	 *
+	 * @param label
+	 *            The label for the edge
+	 * @param inVertex
+	 *            The vertex to link to.
+	 * @return The added edge.
+	 */
+	public TEdge addFramedEdgeExplicit(String label, FramedVertex inVertex) {
+		return addFramedEdgeExplicit(label, inVertex, TEdge.class);
 	}
 
 	public VertexTraversal<?, ?, ?> out(final int branchFactor, final String... labels) {
@@ -272,13 +312,32 @@ public abstract class FramedVertex extends FramedElement {
 	 * Remove all out edges with the labels and then add a single edge to a new
 	 * vertex.
 	 * 
-	 * @param vertex
-	 *            the vertex to link to.
+	 * @param kind
+	 *            the vertex type to link to.
 	 * @param labels
 	 *            The labels of the edges.
 	 */
 	public <K extends FramedVertex> FramedVertex setLinkOut(Class<K> kind, String... labels) {
-		K vertex = graph().addVertex(kind);
+		K vertex = graph().addFramedVertex(kind);
+		setLinkOut(vertex, labels);
+		return vertex;
+	}
+
+	/**
+	 * Remove all out edges with the labels and then add a single edge to a new
+	 * vertex.
+	 *
+	 * This will bypass the default type resolution and use the untyped resolver
+	 * instead. This method is useful for speeding up a look up when type resolution
+	 * isn't required.
+	 *
+	 * @param kind
+	 *            the vertex type to link to.
+	 * @param labels
+	 *            The labels of the edges.
+	 */
+	public <K extends FramedVertex> FramedVertex setLinkOutExplicit(Class<K> kind, String... labels) {
+		K vertex = graph().addFramedVertexExplicit(kind);
 		setLinkOut(vertex, labels);
 		return vertex;
 	}
@@ -287,13 +346,32 @@ public abstract class FramedVertex extends FramedElement {
 	 * Remove all out edges with the labels and then add a single edge from a
 	 * new vertex.
 	 * 
-	 * @param vertex
-	 *            the vertex to link to.
+	 * @param kind
+	 *            the vertex type to link to.
 	 * @param labels
 	 *            The labels of the edges.
 	 */
 	public <K extends FramedVertex> FramedVertex setLinkIn(Class<K> kind, String... labels) {
-		K vertex = graph().addVertex(kind);
+		K vertex = graph().addFramedVertex(kind);
+		setLinkIn(vertex, labels);
+		return vertex;
+	}
+
+	/**
+	 * Remove all out edges with the labels and then add a single edge from a
+	 * new vertex.
+	 *
+	 * This will bypass the default type resolution and use the untyped resolver
+	 * instead. This method is useful for speeding up a look up when type resolution
+	 * isn't required.
+	 *
+	 * @param kind
+	 *            the vertex type to link to.
+	 * @param labels
+	 *            The labels of the edges.
+	 */
+	public <K extends FramedVertex> FramedVertex setLinkInExplicit(Class<K> kind, String... labels) {
+		K vertex = graph().addFramedVertexExplicit(kind);
 		setLinkIn(vertex, labels);
 		return vertex;
 	}
@@ -302,13 +380,32 @@ public abstract class FramedVertex extends FramedElement {
 	 * Remove all out edges with the labels and then add edges to/from a new
 	 * vertex.
 	 * 
-	 * @param vertex
-	 *            the vertex to link to.
+	 * @param kind
+	 *            the vertex type to link to.
 	 * @param labels
 	 *            The labels of the edges.
 	 */
 	public <K extends FramedVertex> FramedVertex setLinkBoth(Class<K> kind, String... labels) {
-		K vertex = graph().addVertex(kind);
+		K vertex = graph().addFramedVertex(kind);
+		setLinkBoth(vertex, labels);
+		return vertex;
+	}
+
+	/**
+	 * Remove all out edges with the labels and then add edges to/from a new
+	 * vertex.
+	 *
+	 * This will bypass the default type resolution and use the untyped resolver
+	 * instead. This method is useful for speeding up a look up when type resolution
+	 * isn't required.
+	 *
+	 * @param kind
+	 *            the vertex type to link to.
+	 * @param labels
+	 *            The labels of the edges.
+	 */
+	public <K extends FramedVertex> FramedVertex setLinkBothExplicit(Class<K> kind, String... labels) {
+		K vertex = graph().addFramedVertexExplicit(kind);
 		setLinkBoth(vertex, labels);
 		return vertex;
 	}
@@ -356,10 +453,25 @@ public abstract class FramedVertex extends FramedElement {
 
 	/**
 	 * Reframe this element as a different type of frame.
+	 *
 	 * @param kind The new kind of frame.
 	 * @return The new frame
 	 */
 	public <T extends FramedVertex> T reframe(Class<T> kind) {
 		return graph().frameElement(element(), kind);
+	}
+
+	/**
+	 * Reframe this element as a different type of frame.
+	 *
+	 * This will bypass the default type resolution and use the untyped resolver
+	 * instead. This method is useful for speeding up a look up when type resolution
+	 * isn't required.
+	 *
+	 * @param kind The new kind of frame.
+	 * @return The new frame
+	 */
+	public <T extends FramedVertex> T reframeExplicit(Class<T> kind) {
+		return graph().frameElementExplicit(element(), kind);
 	}
 }

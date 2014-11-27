@@ -18,47 +18,14 @@
  ******************************************************************************/
 package com.syncleus.ferma;
 
-import java.util.Iterator;
-import java.util.List;
+import com.tinkerpop.blueprints.Vertex;
 
-/**
- * @author Bryn Cooke (http://jglue.org)
- */
-
-public class Person extends FramedVertex {
-
-
-
-
-    public String getName() {
-        return getProperty("name");
+public class FramingVertexIterable<T> extends FramingIterable<T, Vertex> {
+    public FramingVertexIterable(FramedGraph framedGraph, Iterable<Vertex> iterable, Class<T> kind) {
+        super(framedGraph, iterable, kind);
     }
 
-    public void setName(String name) {
-        setProperty("name", name);
+    public FramingVertexIterable(FramedGraph framedGraph, Iterable<Vertex> iterable, Class<T> kind, boolean explicit) {
+        super(framedGraph, iterable, kind, explicit);
     }
-
-    public Iterator<Person> getKnows() {
-
-        return out("knows").frame(Person.class).iterator();
-    }
-
-    public List<Knows> getKnowsList() {
-        return outE("knows").toList(Knows.class);
-    }
-    
-    public List<Person> getKnowsCollectionVertices() {
-        return out("knows").toList(Person.class);
-    }
-
-
-    public Person getFirst() {
-        return out("knows").next(Person.class);
-    }
-
-    public Knows addKnows(Person friend) {
-        return addFramedEdge("knows", friend, Knows.class);
-    }
-
-
 }

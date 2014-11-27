@@ -18,47 +18,19 @@
  ******************************************************************************/
 package com.syncleus.ferma;
 
-import java.util.Iterator;
-import java.util.List;
+import com.tinkerpop.blueprints.Element;
 
 /**
- * @author Bryn Cooke (http://jglue.org)
+ * This type resolver simply returns the type requested by the client.
  */
-
-public class Person extends FramedVertex {
-
-
-
-
-    public String getName() {
-        return getProperty("name");
+public class UntypedTypeResolver implements TypeResolver {
+    @Override
+    public <T> Class<T> resolve(Element element, Class<T> kind) {
+        return kind;
     }
 
-    public void setName(String name) {
-        setProperty("name", name);
+    @Override
+    public <T> void init(Element element, Class<T> kind) {
+
     }
-
-    public Iterator<Person> getKnows() {
-
-        return out("knows").frame(Person.class).iterator();
-    }
-
-    public List<Knows> getKnowsList() {
-        return outE("knows").toList(Knows.class);
-    }
-    
-    public List<Person> getKnowsCollectionVertices() {
-        return out("knows").toList(Person.class);
-    }
-
-
-    public Person getFirst() {
-        return out("knows").next(Person.class);
-    }
-
-    public Knows addKnows(Person friend) {
-        return addFramedEdge("knows", friend, Knows.class);
-    }
-
-
 }

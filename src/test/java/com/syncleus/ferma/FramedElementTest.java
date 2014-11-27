@@ -44,8 +44,8 @@ public class FramedElementTest {
 		MockitoAnnotations.initMocks(this);
 		Graph g = new TinkerGraph();
         fg = new FramedGraph(g);
-        p1 = fg.addVertex(Person.class);
-        p2 = fg.addVertex(Person.class);
+        p1 = fg.addFramedVertex(Person.class);
+        p2 = fg.addFramedVertex(Person.class);
         p1.setName("Bryn");
         p2.setName("Julia");
         e1 = p1.addKnows(p2);

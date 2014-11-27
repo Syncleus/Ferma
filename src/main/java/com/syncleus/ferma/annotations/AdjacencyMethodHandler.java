@@ -20,7 +20,7 @@ package com.syncleus.ferma.annotations;
 
 import com.syncleus.ferma.FramedEdge;
 import com.syncleus.ferma.FramedVertex;
-import com.syncleus.ferma.FramedVertexIterable;
+import com.syncleus.ferma.FramingVertexIterable;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.gremlin.Tokens;
 import net.bytebuddy.dynamic.DynamicType;
@@ -30,12 +30,9 @@ import net.bytebuddy.instrumentation.method.bytecode.bind.annotation.Origin;
 import net.bytebuddy.instrumentation.method.bytecode.bind.annotation.RuntimeType;
 import net.bytebuddy.instrumentation.method.bytecode.bind.annotation.This;
 import net.bytebuddy.instrumentation.method.matcher.MethodMatchers;
-import org.reflections.ReflectionUtils;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -168,7 +165,7 @@ public class AdjacencyMethodHandler implements MethodHandler {
             final Direction direction = annotation.direction();
             final String label = annotation.label();
 
-            return new FramedVertexIterable(thiz.graph(), thiz.element().getVertices(direction, label), FramedVertex.class);
+            return new FramingVertexIterable(thiz.graph(), thiz.element().getVertices(direction, label), FramedVertex.class);
         }
     }
 
@@ -244,15 +241,15 @@ public class AdjacencyMethodHandler implements MethodHandler {
 
             switch (direction) {
                 case BOTH:
-                    thiz.graph().addEdge(newVertex, thiz, label);
-                    thiz.graph().addEdge(thiz, newVertex, label);
+                    thiz.graph().addFramedEdge(newVertex, thiz, label);
+                    thiz.graph().addFramedEdge(thiz, newVertex, label);
                     break;
                 case IN:
-                    thiz.graph().addEdge(newVertex, thiz, label);
+                    thiz.graph().addFramedEdge(newVertex, thiz, label);
                     break;
                 //Assume out direction
                 default:
-                    thiz.graph().addEdge(thiz, newVertex, label);
+                    thiz.graph().addFramedEdge(thiz, newVertex, label);
             }
 
             return newVertex;
@@ -262,7 +259,7 @@ public class AdjacencyMethodHandler implements MethodHandler {
     public static final class AddVertexByTypeUntypedEdgeInterceptor {
         @RuntimeType
         public static Object addVertex(@This final FramedVertex thiz, @Origin final Method method, @RuntimeType @Argument(0) final Class vertexType) {
-            final Object newNode = thiz.graph().addVertex(vertexType);
+            final Object newNode = thiz.graph().addFramedVertex(vertexType);
             assert newNode instanceof FramedVertex;
             final FramedVertex newVertex = ((FramedVertex) newNode);
 
@@ -274,15 +271,15 @@ public class AdjacencyMethodHandler implements MethodHandler {
 
             switch (direction) {
                 case BOTH:
-                    thiz.graph().addEdge(newVertex, thiz, label);
-                    thiz.graph().addEdge(thiz, newVertex, label);
+                    thiz.graph().addFramedEdge(newVertex, thiz, label);
+                    thiz.graph().addFramedEdge(thiz, newVertex, label);
                     break;
                 case IN:
-                    thiz.graph().addEdge(newVertex, thiz, label);
+                    thiz.graph().addFramedEdge(newVertex, thiz, label);
                     break;
                 //Assume out direction
                 default:
-                    thiz.graph().addEdge(thiz, newVertex, label);
+                    thiz.graph().addFramedEdge(thiz, newVertex, label);
             }
 
             return newNode;
@@ -292,7 +289,7 @@ public class AdjacencyMethodHandler implements MethodHandler {
     public static final class AddVertexByTypeTypedEdgeInterceptor {
         @RuntimeType
         public static Object addVertex(@This final FramedVertex thiz, @Origin final Method method, @RuntimeType @Argument(0) final Class vertexType, @RuntimeType @Argument(1) final Class edgeType) {
-            final Object newNode = thiz.graph().addVertex(vertexType);
+            final Object newNode = thiz.graph().addFramedVertex(vertexType);
             assert newNode instanceof FramedVertex;
             final FramedVertex newVertex = ((FramedVertex) newNode);
 
@@ -304,15 +301,15 @@ public class AdjacencyMethodHandler implements MethodHandler {
 
             switch (direction) {
                 case BOTH:
-                    thiz.graph().addEdge(newVertex, thiz, label, edgeType);
-                    thiz.graph().addEdge(thiz, newVertex, label, edgeType);
+                    thiz.graph().addFramedEdge(newVertex, thiz, label, edgeType);
+                    thiz.graph().addFramedEdge(thiz, newVertex, label, edgeType);
                     break;
                 case IN:
-                    thiz.graph().addEdge(newVertex, thiz, label, edgeType);
+                    thiz.graph().addFramedEdge(newVertex, thiz, label, edgeType);
                     break;
                 //Assume out direction
                 default:
-                    thiz.graph().addEdge(thiz, newVertex, label, edgeType);
+                    thiz.graph().addFramedEdge(thiz, newVertex, label, edgeType);
             }
 
             return newNode;
@@ -329,15 +326,15 @@ public class AdjacencyMethodHandler implements MethodHandler {
 
             switch (direction) {
                 case BOTH:
-                    thiz.graph().addEdge(newVertex, thiz, label);
-                    thiz.graph().addEdge(thiz, newVertex, label);
+                    thiz.graph().addFramedEdge(newVertex, thiz, label);
+                    thiz.graph().addFramedEdge(thiz, newVertex, label);
                     break;
                 case IN:
-                    thiz.graph().addEdge(newVertex, thiz, label);
+                    thiz.graph().addFramedEdge(newVertex, thiz, label);
                     break;
                 //Assume out direction
                 default:
-                    thiz.graph().addEdge(thiz, newVertex, label);
+                    thiz.graph().addFramedEdge(thiz, newVertex, label);
             }
 
             return newVertex;
@@ -354,15 +351,15 @@ public class AdjacencyMethodHandler implements MethodHandler {
 
             switch (direction) {
                 case BOTH:
-                    thiz.graph().addEdge(newVertex, thiz, label, edgeType);
-                    thiz.graph().addEdge(thiz, newVertex, label, edgeType);
+                    thiz.graph().addFramedEdge(newVertex, thiz, label, edgeType);
+                    thiz.graph().addFramedEdge(thiz, newVertex, label, edgeType);
                     break;
                 case IN:
-                    thiz.graph().addEdge(newVertex, thiz, label, edgeType);
+                    thiz.graph().addFramedEdge(newVertex, thiz, label, edgeType);
                     break;
                 //Assume out direction
                 default:
-                    thiz.graph().addEdge(thiz, newVertex, label, edgeType);
+                    thiz.graph().addFramedEdge(thiz, newVertex, label, edgeType);
             }
 
             return newVertex;
@@ -383,22 +380,22 @@ public class AdjacencyMethodHandler implements MethodHandler {
                     for( final FramedEdge existingEdge : thiz.bothE(label) )
                         existingEdge.remove();
                     for( final FramedVertex newVertex : (Iterable<? extends FramedVertex>) vertexSet ) {
-                        thiz.graph().addEdge(newVertex, thiz, label);
-                        thiz.graph().addEdge(thiz, newVertex, label);
+                        thiz.graph().addFramedEdge(newVertex, thiz, label);
+                        thiz.graph().addFramedEdge(thiz, newVertex, label);
                     }
                     break;
                 case IN:
                     for( final FramedEdge existingEdge : thiz.inE(label) )
                         existingEdge.remove();
                     for( final FramedVertex newVertex : (Iterable<? extends FramedVertex>) vertexSet )
-                        thiz.graph().addEdge(newVertex, thiz, label);
+                        thiz.graph().addFramedEdge(newVertex, thiz, label);
                     break;
                 //Assume out direction
                 default:
                     for( final FramedEdge existingEdge : thiz.outE(label) )
                         existingEdge.remove();
                     for( final FramedVertex newVertex : (Iterable<? extends FramedVertex>) vertexSet )
-                        thiz.graph().addEdge(thiz, newVertex, label);
+                        thiz.graph().addFramedEdge(thiz, newVertex, label);
             }
         }
     }

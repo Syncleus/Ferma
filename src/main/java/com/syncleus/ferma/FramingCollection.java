@@ -39,16 +39,30 @@ import java.util.Iterator;
 class FramingCollection<E, K extends FramedElement> extends FrameMaker implements Collection<E> {
 
 	private Collection<E> delegate;
+	private final boolean explicit;
 
 	public FramingCollection(Collection<E> delegate, FramedGraph graph, Class<K> kind) {
 		super(graph, kind);
 		this.delegate = delegate;
-
+		this.explicit = false;
 	}
 
 	public FramingCollection(Collection<E> delegate, FramedGraph graph) {
 		super(graph);
 		this.delegate = delegate;
+		this.explicit = false;
+	}
+
+	public FramingCollection(Collection<E> delegate, FramedGraph graph, Class<K> kind, boolean explicit) {
+		super(graph, kind);
+		this.delegate = delegate;
+		this.explicit = explicit;
+	}
+
+	public FramingCollection(Collection<E> delegate, FramedGraph graph, boolean explicit) {
+		super(graph);
+		this.delegate = delegate;
+		this.explicit = explicit;
 	}
 
 	public int size() {
@@ -76,7 +90,7 @@ class FramingCollection<E, K extends FramedElement> extends FrameMaker implement
 	}
 
 	public boolean add(E e) {
-		e = makeFrame(e);
+		e = (this.explicit ? this.<E>makeFrameExplicit(e) : this.<E>makeFrame(e));
 
 		return delegate.add(e);
 	}

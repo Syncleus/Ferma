@@ -60,6 +60,16 @@ abstract class VertexTraversalImpl extends TraversalBase implements VertexTraver
 	}
 
 	@Override
+	public Iterable frameExplicit(final Class kind) {
+		return Iterables.transform(pipeline(), new Function() {
+
+			public Object apply(Object e) {
+				return graph().frameElementExplicit((Element) e, kind);
+			}
+		});
+	}
+
+	@Override
 	public VertexTraversal table() {
 		return (VertexTraversal) super.table();
 	}
@@ -384,9 +394,23 @@ abstract class VertexTraversalImpl extends TraversalBase implements VertexTraver
 	}
 
 	@Override
+	public FramedVertex nextExplicit(Class kind) {
+		return (FramedVertex) graph().frameElementExplicit((Element) pipeline().next(), kind);
+	}
+
+	@Override
 	public Object nextOrDefault(Class kind, Object defaultValue) {
 		if (pipeline().hasNext()) {
 			return next(kind);
+		} else {
+			return defaultValue;
+		}
+	}
+
+	@Override
+	public Object nextOrDefaultExplicit(Class kind, Object defaultValue) {
+		if (pipeline().hasNext()) {
+			return nextExplicit(kind);
 		} else {
 			return defaultValue;
 		}
@@ -397,7 +421,17 @@ abstract class VertexTraversalImpl extends TraversalBase implements VertexTraver
 		try {
 			return (FramedVertex) graph().frameElement((Element) pipeline().next(), kind);
 		} catch (NoSuchElementException e) {
-			return graph().addVertex(kind);
+			return graph().addFramedVertex(kind);
+		}
+
+	}
+
+	@Override
+	public Object nextOrAddExplicit(Class kind) {
+		try {
+			return (FramedVertex) graph().frameElementExplicit((Element) pipeline().next(), kind);
+		} catch (NoSuchElementException e) {
+			return graph().addFramedVertex(kind);
 		}
 
 	}
@@ -408,6 +442,16 @@ abstract class VertexTraversalImpl extends TraversalBase implements VertexTraver
 
 			public Object apply(Object e) {
 				return graph().frameElement((Element) e, kind);
+			}
+		});
+	}
+
+	@Override
+	public List nextExplicit(int amount, final Class kind) {
+		return Lists.transform(pipeline().next(amount), new Function() {
+
+			public Object apply(Object e) {
+				return graph().frameElementExplicit((Element) e, kind);
 			}
 		});
 	}
@@ -428,6 +472,16 @@ abstract class VertexTraversalImpl extends TraversalBase implements VertexTraver
 
 			public Object apply(Object e) {
 				return graph().frameElement((Element) e, kind);
+			}
+		});
+	}
+
+	@Override
+	public List toListExplicit(final Class kind) {
+		return Lists.transform(pipeline().toList(), new Function() {
+
+			public Object apply(Object e) {
+				return graph().frameElementExplicit((Element) e, kind);
 			}
 		});
 	}
@@ -540,6 +594,12 @@ abstract class VertexTraversalImpl extends TraversalBase implements VertexTraver
 	public Collection fill(Collection collection, Class clazz) {
 
 		return pipeline().fill(new FramingCollection<>(collection, graph(), clazz));
+	}
+
+	@Override
+	public Collection fillExplicit(Collection collection, Class clazz) {
+
+		return pipeline().fill(new FramingCollection<>(collection, graph(), clazz, true));
 	}
 
 	@Override

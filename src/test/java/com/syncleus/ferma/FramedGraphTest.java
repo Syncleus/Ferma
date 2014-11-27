@@ -46,10 +46,10 @@ public class FramedGraphTest {
     public void testSanity() {
         Graph g = new TinkerGraph();
         FramedGraph fg = new FramedGraph(g);
-        Person p1 = fg.addVertex(Person.class);
+        Person p1 = fg.addFramedVertex(Person.class);
         p1.setName("Bryn");
 
-        Person p2 = fg.addVertex(Person.class);
+        Person p2 = fg.addFramedVertex(Person.class);
         p2.setName("Julia");
         Knows knows = p1.addKnows(p2);
         knows.setYears(15);
@@ -67,12 +67,12 @@ public class FramedGraphTest {
     @Test
     public void testJavaTyping() {
         Graph g = new TinkerGraph();
-        FramedGraph fg = new FramedGraph(g, FrameFactory.DEFAULT, TypeResolver.SIMPLE);
+        FramedGraph fg = new FramedGraph(g, true, false);
 
-        Person p1 = fg.addVertex(Programmer.class);
+        Person p1 = fg.addFramedVertex(Programmer.class);
         p1.setName("Bryn");
 
-        Person p2 = fg.addVertex(Person.class);
+        Person p2 = fg.addFramedVertex(Person.class);
         p2.setName("Julia");
 
         Person bryn = fg.v().has("name", "Bryn").next(Person.class);
@@ -96,8 +96,8 @@ public class FramedGraphTest {
 			public <T> T create(Element e, Class<T> kind) {
 				return (T)o;
 			}
-		}, TypeResolver.SIMPLE);
-        Person person = fg.addVertex(Person.class);
+		}, new SimpleTypeResolver());
+        Person person = fg.addFramedVertex(Person.class);
         Assert.assertEquals(o, person);
     }
     
@@ -170,7 +170,7 @@ public class FramedGraphTest {
 
         TVertex p2 = fg.addVertex();
         p2.setProperty("name", "Julia");
-        TEdge knows = p1.addEdge("knows", p2);
+        TEdge knows = p1.addFramedEdge("knows", p2);
         knows.setProperty("years", 15);
 
         TVertex bryn = fg.v().has("name", "Bryn").next();

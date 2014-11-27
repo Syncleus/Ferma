@@ -174,15 +174,44 @@ public interface EdgeTraversal<Cap, SideEffect, Mark> extends Traversal<TEdge, C
 	public <T> T next(Class<T> kind);
 
 	/**
+	 * Get the next object emitted from the pipeline. If no such object exists,
+	 * then a NoSuchElementException is thrown.
+	 *
+	 * This will bypass the default type resolution and use the untyped resolver
+	 * instead. This method is useful for speeding up a look up when type resolution
+	 * isn't required.
+	 *
+	 * @param kind
+	 *            The type of frame for the element.
+	 * @return the next emitted object
+	 */
+	public <T> T nextExplicit(Class<T> kind);
+
+	/**
 	 * Return the next X objects in the traversal as a list.
 	 * 
-	 * @param number
+	 * @param amount
 	 *            the number of objects to return
 	 * @param kind
 	 *            the type of frame to for each element.
 	 * @return a list of X objects (if X objects occur)
 	 */
 	public <T> List<T> next(int amount, Class<T> kind);
+
+	/**
+	 * Return the next X objects in the traversal as a list.
+	 *
+	 * This will bypass the default type resolution and use the untyped resolver
+	 * instead. This method is useful for speeding up a look up when type resolution
+	 * isn't required.
+	 *
+	 * @param amount
+	 *            the number of objects to return
+	 * @param kind
+	 *            the type of frame to for each element.
+	 * @return a list of X objects (if X objects occur)
+	 */
+	public <T> List<T> nextExplicit(int amount, Class<T> kind);
 
 	/**
 	 * Return an iterator of framed elements.
@@ -194,6 +223,19 @@ public interface EdgeTraversal<Cap, SideEffect, Mark> extends Traversal<TEdge, C
 	public <T> Iterable<T> frame(Class<T> kind);
 
 	/**
+	 * Return an iterator of framed elements.
+	 *
+	 * This will bypass the default type resolution and use the untyped resolver
+	 * instead. This method is useful for speeding up a look up when type resolution
+	 * isn't required.
+	 *
+	 * @param kind
+	 *            The kind of framed elements to return.
+	 * @return An iterator of framed elements.
+	 */
+	public <T> Iterable<T> frameExplicit(Class<T> kind);
+
+	/**
 	 * Return a list of all the objects in the pipeline.
 	 * 
 	 * @param kind
@@ -201,6 +243,19 @@ public interface EdgeTraversal<Cap, SideEffect, Mark> extends Traversal<TEdge, C
 	 * @return a list of all the objects
 	 */
 	public <T> List<T> toList(Class<T> kind);
+
+	/**
+	 * Return a list of all the objects in the pipeline.
+	 *
+	 * This will bypass the default type resolution and use the untyped resolver
+	 * instead. This method is useful for speeding up a look up when type resolution
+	 * isn't required.
+	 *
+	 * @param kind
+	 *            The kind of framed elements to return.
+	 * @return a list of all the objects
+	 */
+	public <T> List<T> toListExplicit(Class<T> kind);
 
 	/**
 	 * Add an LabelPipe to the end of the Pipeline. Emit the label of the
@@ -380,6 +435,21 @@ public interface EdgeTraversal<Cap, SideEffect, Mark> extends Traversal<TEdge, C
 	 */
 	public abstract <N> Collection<N> fill(Collection<N> collection, Class<N> kind);
 
+	/**
+	 * Fill the provided collection with the objects in the pipeline.
+	 *
+	 * This will bypass the default type resolution and use the untyped resolver
+	 * instead. This method is useful for speeding up a look up when type resolution
+	 * isn't required.
+	 *
+	 * @param collection
+	 *            the collection to fill
+	 * @param kind
+	 *            The kind of framed elements to return.
+	 * @return the collection filled
+	 */
+	public abstract <N> Collection<N> fillExplicit(Collection<N> collection, Class<N> kind);
+
 	@Override
 	public abstract EdgeTraversal<?, ?, Mark> gatherScatter();
 
@@ -463,7 +533,7 @@ public interface EdgeTraversal<Cap, SideEffect, Mark> extends Traversal<TEdge, C
 	 * The incoming objects are copied to the provided pipes. This "split-pipe"
 	 * is used in conjunction with some type of "merge-pipe."
 	 *
-	 * @param pipes
+	 * @param traversals
 	 *            the internal pipes of the CopySplitPipe
 	 * @return the extended Pipeline
 	 */

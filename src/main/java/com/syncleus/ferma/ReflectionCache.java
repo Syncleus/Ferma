@@ -34,6 +34,12 @@ public class ReflectionCache extends Reflections {
     private final Map<Method, Map<Class<Annotation>, Annotation>> annotationCache = new HashMap<>();
     private final Map<String, Class> classStringCache = new HashMap<>();
 
+    public ReflectionCache() {
+        super();
+
+        this.hierarchy = new HashMap<>();
+    }
+
     public ReflectionCache(final Collection<? extends Class<?>> annotatedTypes) {
         super(assembleConfig(assembleClassUrls(annotatedTypes)));
 

@@ -27,11 +27,7 @@
  */
 package com.syncleus.ferma;
 
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import com.tinkerpop.blueprints.Predicate;
 import com.tinkerpop.blueprints.Vertex;
@@ -407,6 +403,28 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	 * @return a list of all the objects
 	 */
 	public <N> List<N> toListExplicit(Class<N> kind);
+
+	/**
+	 * Return a set of all the objects in the pipeline.
+	 *
+	 * @param kind
+	 *            The kind of framed elements to return.
+	 * @return a set of all the objects
+	 */
+	public <N extends FramedVertex> Set<N> toSet(Class<N> kind);
+
+	/**
+	 * Return a set of all the objects in the pipeline.
+	 *
+	 * This will bypass the default type resolution and use the untyped resolver
+	 * instead. This method is useful for speeding up a look up when type resolution
+	 * isn't required.
+	 *
+	 * @param kind
+	 *            The kind of framed elements to return.
+	 * @return a set of all the objects
+	 */
+	public <N extends FramedVertex> Set<N> toSetExplicit(Class<N> kind);
 
 	/**
 	 * Emit the incoming vertex, but have other vertex provide an outgoing edge

@@ -19,7 +19,11 @@
 package com.syncleus.ferma;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
+import com.google.common.collect.Sets;
+import com.tinkerpop.blueprints.impls.tg.TinkerGraphFactory;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -275,5 +279,26 @@ public class FramedGraphTest {
         Collection<Integer> knowsCollection = fg.v().has("name", "Julia").bothE().property("years", Integer.class).aggregate().cap();
         Assert.assertEquals(1, knowsCollection.size());
     }
-    
+
+    @Test
+    public void testKeyValueTraversal() {
+        Graph g = TinkerGraphFactory.createTinkerGraph();
+        FramedGraph fg = new FramedGraph(g);
+        final Set<Object> expectedSet = new HashSet<>();
+
+        TVertex p1 = fg.addFramedVertexExplicit();
+        p1.setProperty("name", "Bryn");
+        p1.setProperty("findme", "yes");
+        expectedSet.add(p1.getId());
+
+        TVertex p2 = fg.addFramedVertexExplicit();
+        p2.setProperty("name", "Julia");
+        p2.setProperty("findme", "yes");
+        expectedSet.add(p2.getId());
+
+        TEdge knows = p1.addFramedEdgeExplicit("knows", p2);
+        knows.setProperty("years", 15);
+
+        Assert.assertEquals(expectedSet, fg.v("findme", "yes").id().toSet());
+    }
 }

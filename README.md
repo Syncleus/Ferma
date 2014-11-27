@@ -138,8 +138,8 @@ Using TypeResolver.SIMPLE will save the type of Java class the element was creat
     public void testSimpleTyping() {
       Graph g = new TinkerGraph();
 
-      // explicitly sets simple mode
-      FramedGraph fg = new FramedGraph(g, FrameFactory.DEFAULT, TypeResolver.SIMPLE);
+      // implies simple mode
+      FramedGraph fg = new FramedGraph(g, true, false);
       
       Person p1 = fg.addVertex(Programmer.class);
       p1.setName("Jeff");
@@ -216,7 +216,7 @@ construct the byte-code for any abstract annotated methods..
       Graph g = new TinkerGraph();
 
       //implies annotated mode
-      FramedGraph fg = new FramedGraph(g, types);
+      FramedGraph fg = new FramedGraph(g, true, types);
 
       Person p1 = fg.addVertex(Programmer.class);
       p1.setName("Jeff");

@@ -16,37 +16,36 @@
  *  Philadelphia, PA 19148                                                     *
  *                                                                             *
  ******************************************************************************/
-package com.syncleus.ferma.annotations;
+package com.syncleus.ferma;
 
-import com.syncleus.ferma.FramedEdge;
-import com.syncleus.ferma.FramedVertex;
-import com.syncleus.ferma.ReflectionCache;
-import com.syncleus.ferma.TypeResolver;
-import com.tinkerpop.blueprints.Edge;
 import com.tinkerpop.blueprints.Element;
-import com.tinkerpop.blueprints.Vertex;
-import net.bytebuddy.ByteBuddy;
-import net.bytebuddy.dynamic.ClassLoadingStrategy;
-import net.bytebuddy.dynamic.DynamicType;
-import net.bytebuddy.instrumentation.FieldAccessor;
-import net.bytebuddy.modifier.FieldManifestation;
-import net.bytebuddy.modifier.Visibility;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.util.*;
-
-public class AnnotationTypeResolver implements TypeResolver {
+/**
+ * This type resolver will use the Java class stored in the 'java_class' on
+ * the element.
+ */
+public class SimpleTypeResolver implements TypeResolver {
     private final ReflectionCache reflectionCache;
+
     /**
-     * Creates a new GrailTypeResolver with a typing engine that can recognize the specified types. While these types
+     * Creates a new SimpleTypeResolver with a typing engine that can recognize the specified types. While these types
      * still need to be included in a separate TypedModule they must be created here as well to ensure proper look-ups
      * occur.
      *
      * @since 0.1
      */
-    public AnnotationTypeResolver(final ReflectionCache reflectionCache) {
+    public SimpleTypeResolver() {
+        this.reflectionCache = new ReflectionCache();
+    }
+
+    /**
+     * Creates a new SimpleTypeResolver with a typing engine that can recognize the specified types. While these types
+     * still need to be included in a separate TypedModule they must be created here as well to ensure proper look-ups
+     * occur.
+     *
+     * @since 0.1
+     */
+    public SimpleTypeResolver(final ReflectionCache reflectionCache) {
         this.reflectionCache = reflectionCache;
     }
 
@@ -54,7 +53,7 @@ public class AnnotationTypeResolver implements TypeResolver {
     public <T> Class<T> resolve(final Element element, final Class<T> kind) {
         final String nodeClazz = element.getProperty("implementation_type");
         if( nodeClazz == null )
-                return kind;
+            return kind;
 
         Class<T> nodeKind = (Class<T>) this.reflectionCache.forName(nodeClazz);
 

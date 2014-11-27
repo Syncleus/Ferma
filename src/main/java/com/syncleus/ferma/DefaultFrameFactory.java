@@ -16,47 +16,22 @@
  *  Philadelphia, PA 19148                                                     *
  *                                                                             *
  ******************************************************************************/
-
-/*
- * Part or all of this source file was forked from a third-party project, the details of which are listed below.
- *
- * Source Project: TinkerPop Frames
- * Source URL: https://github.com/tinkerpop/frames
- * Source License: BSD 3-clause
- * When: November, 25th 2014
- */
 package com.syncleus.ferma;
 
-import com.tinkerpop.blueprints.Edge;
+import com.tinkerpop.blueprints.Element;
 
-import java.util.Iterator;
-
-public class FramedEdgeIterable<T> implements Iterable<T> {
-    protected final Class<T> kind;
-    protected final Iterable<Edge> iterable;
-    protected final FramedGraph framedGraph;
-
-    public FramedEdgeIterable(final FramedGraph framedGraph, final Iterable<Edge> iterable, final Class<T> kind) {
-        this.framedGraph = framedGraph;
-        this.iterable = iterable;
-        this.kind = kind;
-    }
-
-    public Iterator<T> iterator() {
-        return new Iterator<T>() {
-            private Iterator<Edge> iterator = iterable.iterator();
-
-            public void remove() {
-                throw new UnsupportedOperationException();
-            }
-
-            public boolean hasNext() {
-                return this.iterator.hasNext();
-            }
-
-            public T next() {
-                return framedGraph.frameElement(this.iterator.next(), kind);
-            }
-        };
+/**
+ * Creates the frame using reflection.
+ */
+public class DefaultFrameFactory implements FrameFactory {
+    @Override
+    public <T> T create(Element element, Class<T> kind) {
+        try {
+            return kind.newInstance();
+        } catch (InstantiationException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

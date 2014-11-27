@@ -67,6 +67,28 @@ class FrameMaker {
 		return (N) o;
 	}
 
+	<N> N makeFrameExplicit(Object o) {
+		if (o instanceof FramingMap) {
+			o = ((FramingMap) o).getDelegate();
+		}
+		if (o instanceof Pair) {
+			Pair pair = (Pair) o;
+			o = new Pair(makeFrameExplicit(pair.getA()), makeFrameExplicit(pair.getB()));
+		}
+		if (kind == null) {
+			if (o instanceof Edge) {
+				o = graph.frameElementExplicit((Element) o, TEdge.class);
+			} else if (o instanceof Vertex) {
+				o = graph.frameElementExplicit((Element) o, TVertex.class);
+			}
+		} else {
+			if (o instanceof Element) {
+				o = graph.frameElementExplicit((Element) o, (Class<FramedElement>)kind);
+			}
+		}
+		return (N) o;
+	}
+
 	protected Object removeFrame(Object object) {
 		if (object instanceof FramedElement) {
 			return ((FramedElement) object).element();

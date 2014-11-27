@@ -16,47 +16,16 @@
  *  Philadelphia, PA 19148                                                     *
  *                                                                             *
  ******************************************************************************/
-
-/*
- * Part or all of this source file was forked from a third-party project, the details of which are listed below.
- *
- * Source Project: TinkerPop Frames
- * Source URL: https://github.com/tinkerpop/frames
- * Source License: BSD 3-clause
- * When: November, 25th 2014
- */
 package com.syncleus.ferma;
 
-import com.tinkerpop.blueprints.Vertex;
+import com.tinkerpop.blueprints.Edge;
 
-import java.util.Iterator;
-
-public class FramedVertexIterable<T> implements Iterable<T> {
-    protected final Class<T> kind;
-    protected final Iterable<Vertex> iterable;
-    protected final FramedGraph framedGraph;
-
-    public FramedVertexIterable(final FramedGraph framedGraph, final Iterable<Vertex> iterable, final Class<T> kind) {
-        this.framedGraph = framedGraph;
-        this.iterable = iterable;
-        this.kind = kind;
+public class FramingEdgeIterable<T> extends FramingIterable<T, Edge> {
+    public FramingEdgeIterable(FramedGraph framedGraph, Iterable<Edge> iterable, Class<T> kind) {
+        super(framedGraph, iterable, kind);
     }
 
-    public Iterator<T> iterator() {
-        return new Iterator<T>() {
-            private Iterator<Vertex> iterator = iterable.iterator();
-
-            public void remove() {
-                throw new UnsupportedOperationException();
-            }
-
-            public boolean hasNext() {
-                return this.iterator.hasNext();
-            }
-
-            public T next() {
-                return framedGraph.frameElement(this.iterator.next(), kind);
-            }
-        };
+    public FramingEdgeIterable(FramedGraph framedGraph, Iterable<Edge> iterable, Class<T> kind, boolean explicit) {
+        super(framedGraph, iterable, kind, explicit);
     }
 }

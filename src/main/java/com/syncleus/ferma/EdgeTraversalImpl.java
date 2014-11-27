@@ -57,7 +57,7 @@ abstract class EdgeTraversalImpl extends TraversalBase implements EdgeTraversal 
 
 	@Override
 	public List toList() {
-		return toList(TEdge.class);
+		return toListExplicit(TEdge.class);
 	}
 
 	@Override
@@ -235,11 +235,26 @@ abstract class EdgeTraversalImpl extends TraversalBase implements EdgeTraversal 
 	}
 
 	@Override
+	public Object nextExplicit(Class kind) {
+		return (FramedEdge) graph().frameElementExplicit((Element) pipeline().next(), kind);
+	}
+
+	@Override
 	public List next(int amount, final Class kind) {
 		return Lists.transform(pipeline().next(amount), new Function() {
 
 			public Object apply(Object e) {
 				return graph().frameElement((Element) e, kind);
+			}
+		});
+	}
+
+	@Override
+	public List nextExplicit(int amount, final Class kind) {
+		return Lists.transform(pipeline().next(amount), new Function() {
+
+			public Object apply(Object e) {
+				return graph().frameElementExplicit((Element) e, kind);
 			}
 		});
 	}
@@ -255,11 +270,31 @@ abstract class EdgeTraversalImpl extends TraversalBase implements EdgeTraversal 
 	}
 
 	@Override
+	public Iterable frameExplicit(final Class kind) {
+		return Iterables.transform(pipeline(), new Function() {
+
+			public Object apply(Object e) {
+				return graph().frameElementExplicit((Element) e, kind);
+			}
+		});
+	}
+
+	@Override
 	public List<T> toList(final Class kind) {
 		return Lists.transform(pipeline().toList(), new Function() {
 
 			public Object apply(Object e) {
 				return graph().frameElement((Element) e, kind);
+			}
+		});
+	}
+
+	@Override
+	public List<T> toListExplicit(final Class kind) {
+		return Lists.transform(pipeline().toList(), new Function() {
+
+			public Object apply(Object e) {
+				return graph().frameElementExplicit((Element) e, kind);
 			}
 		});
 	}
@@ -415,6 +450,12 @@ abstract class EdgeTraversalImpl extends TraversalBase implements EdgeTraversal 
 	public Collection fill(Collection collection, Class clazz) {
 
 		return pipeline().fill(new FramingCollection(collection, graph(), clazz));
+	}
+
+	@Override
+	public Collection fillExplicit(Collection collection, Class clazz) {
+
+		return pipeline().fill(new FramingCollection(collection, graph(), clazz, true));
 	}
 
 	public java.util.Iterator<TEdge> iterator() {

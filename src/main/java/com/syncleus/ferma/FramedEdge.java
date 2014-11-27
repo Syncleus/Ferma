@@ -110,10 +110,25 @@ public abstract class FramedEdge extends FramedElement {
 	
 	/**
 	 * Reframe this element as a different type of frame.
+	 *
 	 * @param kind The new kind of frame.
 	 * @return The new frame
 	 */
-	protected <T extends FramedEdge> T reframe(Class<T> kind) {
+	public <T extends FramedEdge> T reframe(Class<T> kind) {
 		return graph().frameElement(element(), kind);
+	}
+
+	/**
+	 * Reframe this element as a different type of frame.
+	 *
+	 * This will bypass the default type resolution and use the untyped resolver
+	 * instead. This method is useful for speeding up a look up when type resolution
+	 * isn't required.
+	 *
+	 * @param kind The new kind of frame.
+	 * @return The new frame
+	 */
+	public <T extends FramedEdge> T reframeExplicit(Class<T> kind) {
+		return graph().frameElementExplicit(element(), kind);
 	}
 }

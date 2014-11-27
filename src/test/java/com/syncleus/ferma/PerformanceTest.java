@@ -20,7 +20,6 @@ package com.syncleus.ferma;
 
 import com.syncleus.ferma.annotations.*;
 import com.tinkerpop.blueprints.Direction;
-import com.tinkerpop.blueprints.Graph;
 import com.tinkerpop.blueprints.Vertex;
 import com.tinkerpop.blueprints.impls.tg.TinkerGraph;
 import org.junit.Assert;
@@ -40,7 +39,7 @@ public class PerformanceTest {
 
         Date start = new Date();
         for(int i = 0; i < 10000000; i++) {
-            final Iterable<God> gods = framedGraph.getVertices("name", "saturn", God.class);
+            final Iterable<God> gods = framedGraph.getFramedVerticesExplicit("name", "saturn", God.class);
             Iterator<God> godsIterator = gods.iterator();
             Assert.assertTrue(godsIterator.hasNext());
         }
@@ -65,7 +64,7 @@ public class PerformanceTest {
 
         Date start = new Date();
         for(int i = 0; i < 5000000; i++) {
-            final Iterable<God> gods = framedGraph.getVertices("name", "saturn", God.class);
+            final Iterable<God> gods = framedGraph.getFramedVerticesExplicit("name", "saturn", God.class);
             Iterator<God> godsIterator = gods.iterator();
             Assert.assertTrue(godsIterator.hasNext());
 
@@ -94,7 +93,7 @@ public class PerformanceTest {
 
         Date start = new Date();
         for(int i = 0; i < 500000; i++) {
-            final Iterable<God> gods = framedGraph.getVertices("name", "saturn", God.class);
+            final Iterable<God> gods = framedGraph.getFramedVerticesExplicit("name", "saturn", God.class);
             Iterator<God> godsIterator = gods.iterator();
             Assert.assertTrue(godsIterator.hasNext());
 

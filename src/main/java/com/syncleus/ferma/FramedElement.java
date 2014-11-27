@@ -39,11 +39,23 @@ public abstract class FramedElement {
 	private Element element;
 	private FramedGraph graph;
 
+	/**
+	 * This method is called anytime an element is instantiated. If the element is a new element or an existing element
+	 * this method will be called.
+	 *
+	 * @param graph The graph this element exists in.
+	 * @param element The raw blueprints element.
+	 */
 	protected void init(FramedGraph graph, Element element) {
 		this.graph = graph;
 		this.element = element;
 	}
 
+	/**
+	 * This method is only called when creating new elements that don't already exist in the graph. This method should
+	 * be overridden to initalize any properties of an element on its creation. If an element is being framed that
+	 * already exists in the graph this method will not be called.
+	 */
 	protected void init() {
 
 	}

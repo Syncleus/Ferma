@@ -27,16 +27,9 @@
  */
 package com.syncleus.ferma;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+import com.google.common.collect.Sets;
 import com.syncleus.ferma.pipes.DivertPipe;
 import com.syncleus.ferma.pipes.TraversalFunctionPipe;
 
@@ -586,6 +579,13 @@ abstract class TraversalBase<T, Cap, SideEffect, Mark> implements Traversal<T, C
 				return e;
 			}
 		});
+
+	}
+
+	@Override
+	public Set toSet() {
+
+		return Sets.newHashSet(toList());
 
 	}
 

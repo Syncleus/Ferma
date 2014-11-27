@@ -392,6 +392,15 @@ public class FramedGraph implements Graph {
 	}
 
 	/**
+	 * Query vertices with a matching key and value
+	 *
+	 * @return The query.
+	 */
+	public VertexTraversal<?, ?, ?> v(String key, Object value) {
+		return new TraversalImpl(this, delegate.getVertices(key, value).iterator()).castToVertices();
+	}
+
+	/**
 	 * Query over all edges in the graph.
 	 * 
 	 * @return The query.

@@ -232,7 +232,7 @@ public abstract class FramedVertex extends FramedElement {
 	}
 
 	/**
-	 * Remove all in edges with the labels and then add a edges from the
+	 * Remove all edges with the labels and then add a edges from the
 	 * supplied vertex and to the supplied vertex.
 	 * 
 	 * @param vertex
@@ -263,7 +263,7 @@ public abstract class FramedVertex extends FramedElement {
 	}
 
 	/**
-	 * Remove all out edges with the labels and then add a single edge from a
+	 * Remove all in edges with the labels and then add a single edge from a
 	 * new vertex.
 	 * 
 	 * @param vertex
@@ -278,7 +278,7 @@ public abstract class FramedVertex extends FramedElement {
 	}
 
 	/**
-	 * Remove all out edges with the labels and then add edges to/from a new
+	 * Remove all edges with the labels and then add edges to/from a new
 	 * vertex.
 	 * 
 	 * @param vertex
@@ -335,7 +335,9 @@ public abstract class FramedVertex extends FramedElement {
 
 	/**
 	 * Reframe this element as a different type of frame.
-	 * @param kind The new kind of frame.
+	 * 
+	 * @param kind
+	 *            The new kind of frame.
 	 * @return The new frame
 	 */
 	protected <T extends FramedVertex> T reframe(Class<T> kind) {

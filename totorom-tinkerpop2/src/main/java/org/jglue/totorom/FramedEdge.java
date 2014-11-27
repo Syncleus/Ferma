@@ -82,10 +82,12 @@ public abstract class FramedEdge extends FramedElement {
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		return gson.toJson(toJson());
 	}
-	
+
 	/**
 	 * Reframe this element as a different type of frame.
-	 * @param kind The new kind of frame.
+	 * 
+	 * @param kind
+	 *            The new kind of frame.
 	 * @return The new frame
 	 */
 	protected <T extends FramedEdge> T reframe(Class<T> kind) {

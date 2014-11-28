@@ -60,7 +60,7 @@ context encoded as graph element properties which ensures the same type comes ou
 mode all the features of simple mode are provided as well as enabling the use of annotations on abstract methods to
 instruct Ferma to dynamically construct byte-code to implement the abstract methods at start up.
 
-## Untyped Mode Example
+### Untyped Mode Example
 
 In untyped mode there is no automatic typing. Whatever class is explicitly indicated is the type that will be
 instantiated when performing queries. Lets start with a simple example domain.
@@ -106,15 +106,15 @@ And here is how you interact with the framed elements:
       // implies untyped mode
       FramedGraph fg = new FramedGraph(g);
 
-      Person p1 = fg.addVertex(Person.class);
+      Person p1 = fg.addFramedVertex(Person.class);
       p1.setName("Jeff");
 
-      Person p2 = fg.addVertex(Person.class);
+      Person p2 = fg.addFramedVertex(Person.class);
       p2.setName("Julia");
       Knows knows = p1.addKnows(p2);
       knows.setYears(15);
 
-      Person jeff = fg.V().has("name", "Jeff").next(Person.class);
+      Person jeff = fg.v().has("name", "Jeff").next(Person.class);
 
 
       Assert.assertEquals("Jeff", jeff.getName());
@@ -141,14 +141,14 @@ Using TypeResolver.SIMPLE will save the type of Java class the element was creat
       // implies simple mode
       FramedGraph fg = new FramedGraph(g, true, false);
       
-      Person p1 = fg.addVertex(Programmer.class);
+      Person p1 = fg.addFramedVertex(Programmer.class);
       p1.setName("Jeff");
       
-      Person p2 = fg.addVertex(Person.class);
+      Person p2 = fg.addFramedVertex(Person.class);
       p2.setName("Julia");
       
-      Person jeff = fg.V().has("name", "Jeff").next(Person.class);
-      Person julia = fg.V().has("name", "Julia").next(Person.class);
+      Person jeff = fg.v().has("name", "Jeff").next(Person.class);
+      Person julia = fg.v().has("name", "Julia").next(Person.class);
       
       Assert.assertEquals(Programmer.class, jeff.getClass());
       Assert.assertEquals(Person.class, julia.getClass());
@@ -206,7 +206,7 @@ The same example as above done with annotations would look something like this.
 
 If we pass a collection of Class objects to the FramedGraph constructor then the annotated type resolver will be used.
 In this mode you want to tell the engine what classes you will be using so it can handle type resolution properly and
-construct the byte-code for any abstract annotated methods..
+construct the byte-code for any abstract annotated methods.
 
     public void testAnnotatedTyping() {
       Set<Class<?>> types = new HashSet<Class<?>>(Arrays.asList(new Class<?>[]{
@@ -218,14 +218,14 @@ construct the byte-code for any abstract annotated methods..
       //implies annotated mode
       FramedGraph fg = new FramedGraph(g, true, types);
 
-      Person p1 = fg.addVertex(Programmer.class);
+      Person p1 = fg.addFramedVertex(Programmer.class);
       p1.setName("Jeff");
 
-      Person p2 = fg.addVertex(Person.class);
+      Person p2 = fg.addFramedVertex(Person.class);
       p2.setName("Julia");
 
-      Person jeff = fg.V().has("name", "Jeff").next(Person.class);
-      Person julia = fg.V().has("name", "Julia").next(Person.class);
+      Person jeff = fg.v().has("name", "Jeff").next(Person.class);
+      Person julia = fg.v().has("name", "Julia").next(Person.class);
 
       Assert.assertEquals(Programmer.class, jeff.getClass());
       Assert.assertEquals(Person.class, julia.getClass());

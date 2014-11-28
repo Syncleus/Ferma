@@ -236,6 +236,7 @@ public class FramedGraph implements Graph {
 	<T> T frameNewElement(Element e, Class<T> kind) {
 		T t = frameElement(e, kind);
 		defaultResolver.init(e, kind);
+		((FramedElement)t).init();
 		return t;
 	}
 
@@ -264,6 +265,7 @@ public class FramedGraph implements Graph {
 	<T> T frameNewElementExplicit(Element e, Class<T> kind) {
 		T t = frameElement(e, kind);
 		this.untypedResolver.init(e, kind);
+		((FramedElement)t).init();
 		return t;
 	}
 
@@ -287,7 +289,6 @@ public class FramedGraph implements Graph {
 	 */
 	public <T> T addFramedVertex(Class<T> kind) {
 		T framedVertex = frameNewElement(delegate.addVertex(null), kind);
-		((FramedVertex)framedVertex).init();
 		return framedVertex;
 	}
 
@@ -304,7 +305,6 @@ public class FramedGraph implements Graph {
 	 */
 	public <T> T addFramedVertexExplicit(Class<T> kind) {
 		T framedVertex = frameNewElementExplicit(delegate.addVertex(null), kind);
-		((FramedVertex)framedVertex).init();
 		return framedVertex;
 	}
 	
@@ -341,7 +341,6 @@ public class FramedGraph implements Graph {
 	 */
 	public <T> T addFramedEdge(final FramedVertex source, final FramedVertex destination, final String label, Class<T> kind) {
 		T framedEdge = frameNewElement(this.delegate.addEdge(null, source.element(), destination.element(), label), kind);
-		((FramedEdge)framedEdge).init();
 		return framedEdge;
 	}
 
@@ -358,7 +357,6 @@ public class FramedGraph implements Graph {
 	 */
 	public <T> T addFramedEdgeExplicit(final FramedVertex source, final FramedVertex destination, final String label, Class<T> kind) {
 		T framedEdge = frameNewElementExplicit(this.delegate.addEdge(null, source.element(), destination.element(), label), kind);
-		((FramedEdge)framedEdge).init();
 		return framedEdge;
 	}
 
@@ -510,7 +508,6 @@ public class FramedGraph implements Graph {
 	@Override
 	public Vertex addVertex(Object id) {
 		FramedVertex framedVertex = frameNewElement(delegate.addVertex(null), TVertex.class);
-		framedVertex.init();
 		return framedVertex.element();
 	}
 
@@ -541,7 +538,6 @@ public class FramedGraph implements Graph {
 	@Override
 	public Edge addEdge(Object id, Vertex outVertex, Vertex inVertex, String label) {
 		FramedEdge framedEdge = frameNewElement(this.delegate.addEdge(id, outVertex, inVertex, label), TEdge.class);
-		framedEdge.init();
 		return framedEdge.element();
 	}
 

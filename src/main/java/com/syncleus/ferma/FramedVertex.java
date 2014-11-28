@@ -62,7 +62,6 @@ public abstract class FramedVertex extends FramedElement {
 
 		Edge edge = element().addEdge(label, inVertex.element());
 		T framedEdge = graph().frameNewElement(edge, kind);
-		framedEdge.init();
 		return framedEdge;
 	}
 
@@ -85,7 +84,6 @@ public abstract class FramedVertex extends FramedElement {
 
 		Edge edge = element().addEdge(label, inVertex.element());
 		T framedEdge = graph().frameNewElementExplicit(edge, kind);
-		framedEdge.init();
 		return framedEdge;
 	}
 

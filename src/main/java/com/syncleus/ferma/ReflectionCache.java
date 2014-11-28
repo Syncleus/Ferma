@@ -47,11 +47,17 @@ public class ReflectionCache extends Reflections {
     }
 
     public Set<? extends String> getSubTypeNames(final Class<?> type) {
-        return Collections.unmodifiableSet(this.hierarchy.get(type.getName()));
+        Set<String> subtypes = this.hierarchy.get(type.getName());
+        if( subtypes == null )
+            subtypes = Collections.singleton(type.getName());
+        return Collections.unmodifiableSet(subtypes);
     }
 
     public Set<? extends String> getSubTypeNames(final String typeName) {
-        return Collections.unmodifiableSet(this.hierarchy.get(typeName));
+        Set<String> subtypes = this.hierarchy.get(typeName);
+        if( subtypes == null )
+            subtypes = Collections.singleton(typeName);
+        return Collections.unmodifiableSet(subtypes);
     }
 
     public <E extends Annotation> E getAnnotation(Method method, Class<E> annotationType) {

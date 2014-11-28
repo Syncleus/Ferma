@@ -60,7 +60,7 @@ context encoded as graph element properties which ensures the same type comes ou
 mode all the features of simple mode are provided as well as enabling the use of annotations on abstract methods to
 instruct Ferma to dynamically construct byte-code to implement the abstract methods at start up.
 
-## Untyped Mode Example
+### Untyped Mode Example
 
 In untyped mode there is no automatic typing. Whatever class is explicitly indicated is the type that will be
 instantiated when performing queries. Lets start with a simple example domain.

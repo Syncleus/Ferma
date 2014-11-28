@@ -18,27 +18,38 @@
  ******************************************************************************/
 package com.syncleus.ferma;
 
-import com.tinkerpop.blueprints.Graph;
 import com.tinkerpop.blueprints.TransactionalGraph;
 
 import java.util.Collection;
 
 public class FramedTransactionalGraph extends FramedGraph implements TransactionalGraph {
 
-    public FramedTransactionalGraph(TransactionalGraph delegate, FrameFactory builder, TypeResolver resolver) {
-        super(delegate, builder, resolver);
+    public FramedTransactionalGraph(TransactionalGraph delegate, FrameFactory builder, TypeResolver defaultResolver) {
+        super(delegate, builder, defaultResolver);
     }
 
     public FramedTransactionalGraph(TransactionalGraph delegate) {
         super(delegate);
     }
 
-    public FramedTransactionalGraph(TransactionalGraph delegate, TypeResolver resolver) {
-        super(delegate, resolver);
+    public FramedTransactionalGraph(TransactionalGraph delegate, ReflectionCache reflections) {
+        super(delegate, reflections);
+    }
+
+    public FramedTransactionalGraph(TransactionalGraph delegate, TypeResolver defaultResolver) {
+        super(delegate, defaultResolver);
     }
 
     public FramedTransactionalGraph(TransactionalGraph delegate, boolean typeResolution, boolean annotationsSupported) {
         super(delegate, typeResolution, annotationsSupported);
+    }
+
+    public FramedTransactionalGraph(TransactionalGraph delegate, ReflectionCache reflections, boolean typeResolution, boolean annotationsSupported) {
+        super(delegate, reflections, typeResolution, annotationsSupported);
+    }
+
+    public FramedTransactionalGraph(TransactionalGraph delegate, Collection<? extends Class<?>> types) {
+        super(delegate, types);
     }
 
     public FramedTransactionalGraph(TransactionalGraph delegate, boolean typeResolution, Collection<? extends Class<?>> types) {

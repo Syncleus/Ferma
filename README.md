@@ -34,22 +34,8 @@ To include Ferma in your project of choice include the following maven dependenc
     <dependency>
         <groupId>com.syncleus.ferma</groupId>
         <artifactId>ferma</artifactId>
-        <version>2.0-SNAPSHOT</version>
+        <version>2.0.0</version>
     </dependency>
-
-    <repositories>
-        <repository>
-            <id>syncleus.snapshots</id>
-            <name>Syncleus Maven Snapshot Repository</name>
-            <url>http://repo.syncleus.com/repository/snapshots/</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
     
 
 ## Getting Started

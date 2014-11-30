@@ -411,16 +411,32 @@ public class FramedGraph implements Graph {
 		return new SimpleTraversal(this, delegate).e();
 	}
 
+	public <F> Iterable<F> getFramedVertices(final Class<F> kind) {
+		return new FramingVertexIterable<>(this, this.getVertices(), kind);
+	}
+
 	public <F> Iterable<F> getFramedVertices(final String key, final Object value, final Class<F> kind) {
 		return new FramingVertexIterable<>(this, this.getVertices(key, value), kind);
+	}
+
+	public <F> Iterable<F> getFramedVerticesExplicit(final Class<F> kind) {
+		return new FramingVertexIterable<>(this, this.getVertices(), kind, true);
 	}
 
 	public <F> Iterable<F> getFramedVerticesExplicit(final String key, final Object value, final Class<F> kind) {
 		return new FramingVertexIterable<>(this, this.getVertices(key, value), kind, true);
 	}
 
+	public <F> Iterable<F> getFramedEdges(final Class<F> kind) {
+		return new FramingEdgeIterable<>(this, this.getEdges(), kind);
+	}
+
 	public <F> Iterable<F> getFramedEdges(final String key, final Object value, final Class<F> kind) {
 		return new FramingEdgeIterable<>(this, this.getEdges(key, value), kind);
+	}
+
+	public <F> Iterable<F> getFramedEdgesExplicit(final Class<F> kind) {
+		return new FramingEdgeIterable<>(this, this.getEdges(), kind, true);
 	}
 
 	public <F> Iterable<F> getFramedEdgesExplicit(final String key, final Object value, final Class<F> kind) {

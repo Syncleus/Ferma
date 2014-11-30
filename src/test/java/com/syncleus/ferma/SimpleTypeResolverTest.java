@@ -16,46 +16,34 @@
  *  Philadelphia, PA 19148                                                     *
  *                                                                             *
  ******************************************************************************/
-
-/*
- * Part or all of this source file was forked from a third-party project, the details of which are listed below.
- *
- * Source Project: Totorom
- * Source URL: https://github.com/BrynCooke/totorom
- * Source License: Apache Public License v2.0
- * When: November, 20th 2014
- */
 package com.syncleus.ferma;
 
-import com.tinkerpop.blueprints.Element;
+import com.tinkerpop.blueprints.impls.tg.TinkerGraph;
+import org.junit.Assert;
+import org.junit.Test;
 
-/**
- * Type resolvers resolve the frame type from the element being requested and
- * may optionally store metadata about the frame type on the element.
- */
-public interface TypeResolver {
-	public static final String TYPE_RESOLUTION_KEY = "ferma_type";
+import java.util.*;
 
-	/**
-	 * Resolve the type of frame that a an element should be.
-	 * 
-	 * @param element
-	 *            The element that is being framed.
-	 * @param kind
-	 *            The kind of frame that is being requested by the client code.
-	 * @return The kind of frame
-	 */
-	public <T> Class<T> resolve(Element element, Class<T> kind);
+public class SimpleTypeResolverTest {
+    private static final Set<Class<?>> TEST_TYPES = new HashSet<Class<?>>(Arrays.asList(new Class<?>[]{Person.class, Programmer.class}));
 
-	/**
-	 * Called when a new element is created on the graph. Initialization can be
-	 * performed, for instance to save the Java type of the frame on the
-	 * underlying element.
-	 * 
-	 * @param element
-	 *            The element that was created.
-	 * @param kind
-	 *            The kind of frame that was resolved.
-	 */
-	public <T> void init(Element element, Class<T> kind);
+    @Test
+    public void testChangeType() {
+        final TinkerGraph godGraph = new TinkerGraph();
+        final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
+
+        //add a single node to the graph, a programmer.
+        framedGraph.addFramedVertex(Programmer.class);
+
+        //make sure the newly added node is actually a programmer
+        final Person programmer = framedGraph.v().next(Person.class);
+        Assert.assertTrue(programmer instanceof Programmer);
+
+        //change the type resolution to person
+        programmer.setTypeResolution(Person.class);
+
+        //make sure the newly added node is actually a programmer
+        final Person person = framedGraph.v().next(Person.class);
+        Assert.assertFalse(person instanceof Programmer);
+    }
 }

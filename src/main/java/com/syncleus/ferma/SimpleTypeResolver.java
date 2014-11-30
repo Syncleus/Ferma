@@ -51,7 +51,7 @@ public class SimpleTypeResolver implements TypeResolver {
 
     @Override
     public <T> Class<T> resolve(final Element element, final Class<T> kind) {
-        final String nodeClazz = element.getProperty("implementation_type");
+        final String nodeClazz = element.getProperty(TYPE_RESOLUTION_KEY);
         if( nodeClazz == null )
             return kind;
 
@@ -65,9 +65,9 @@ public class SimpleTypeResolver implements TypeResolver {
 
     @Override
     public <T> void init(final Element element, final Class<T> kind) {
-        final String clazz = element.getProperty("implementation_type");
+        final String clazz = element.getProperty(TYPE_RESOLUTION_KEY);
         if (clazz == null) {
-            element.setProperty("implementation_type", kind.getName());
+            element.setProperty(TYPE_RESOLUTION_KEY, kind.getName());
         }
     }
 }

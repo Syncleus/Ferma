@@ -21,6 +21,7 @@ package com.syncleus.ferma.annotations;
 import com.syncleus.ferma.AbstractEdgeFrame;
 import com.syncleus.ferma.AbstractVertexFrame;
 import com.syncleus.ferma.FramingVertexIterable;
+import com.syncleus.ferma.TypeResolver;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.gremlin.Tokens;
 import net.bytebuddy.dynamic.DynamicType;
@@ -180,12 +181,12 @@ public class AdjacencyMethodHandler implements MethodHandler {
 
             switch (direction) {
                 case BOTH:
-                    return thiz.both(label).has("implementation_type", Tokens.T.in, allAllowedValues).frame(type);
+                    return thiz.both(label).has(TypeResolver.TYPE_RESOLUTION_KEY, Tokens.T.in, allAllowedValues).frame(type);
                 case IN:
-                    return thiz.in(label).has("implementation_type", Tokens.T.in, allAllowedValues).frame(type);
+                    return thiz.in(label).has(TypeResolver.TYPE_RESOLUTION_KEY, Tokens.T.in, allAllowedValues).frame(type);
                 //Assume out direction
                 default:
-                    return thiz.out(label).has("implementation_type", Tokens.T.in, allAllowedValues).frame(type);
+                    return thiz.out(label).has(TypeResolver.TYPE_RESOLUTION_KEY, Tokens.T.in, allAllowedValues).frame(type);
             }
         }
     }
@@ -220,12 +221,12 @@ public class AdjacencyMethodHandler implements MethodHandler {
 
             switch (direction) {
                 case BOTH:
-                    return thiz.both(label).has("implementation_type", Tokens.T.in, allAllowedValues).next(type);
+                    return thiz.both(label).has(TypeResolver.TYPE_RESOLUTION_KEY, Tokens.T.in, allAllowedValues).next(type);
                 case IN:
-                    return thiz.in(label).has("implementation_type", Tokens.T.in, allAllowedValues).next(type);
+                    return thiz.in(label).has(TypeResolver.TYPE_RESOLUTION_KEY, Tokens.T.in, allAllowedValues).next(type);
                 //Assume out direction
                 default:
-                    return thiz.out(label).has("implementation_type", Tokens.T.in, allAllowedValues).next(type);
+                    return thiz.out(label).has(TypeResolver.TYPE_RESOLUTION_KEY, Tokens.T.in, allAllowedValues).next(type);
             }
         }
     }

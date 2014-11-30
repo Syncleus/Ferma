@@ -29,6 +29,7 @@ package com.syncleus.ferma;
 
 import java.util.Set;
 
+import com.syncleus.ferma.annotations.CachesReflection;
 import com.tinkerpop.blueprints.Element;
 
 /**
@@ -68,6 +69,34 @@ public abstract class AbstractElementFrame implements ElementFrame {
 	@Override
 	public Set<String> getPropertyKeys() {
 		return element.getPropertyKeys();
+	}
+
+	@Override
+	public Class<?> getTypeResolution() {
+		final String typeResolutionName = this.getProperty(TypeResolver.TYPE_RESOLUTION_KEY);
+		if( typeResolutionName == null )
+			return null;
+
+		if( this instanceof CachesReflection )
+			return ((CachesReflection)this).getReflectionCache().forName(typeResolutionName);
+		else {
+			try {
+				return Class.forName(typeResolutionName);
+			}
+			catch(final ClassNotFoundException caught) {
+				throw new IllegalStateException("The type resolution class specified in the element could not be found", caught);
+			}
+		}
+	}
+
+	@Override
+	public void setTypeResolution(Class<?> type) {
+		this.setProperty(TypeResolver.TYPE_RESOLUTION_KEY, type.getName());
+	}
+
+	@Override
+	public void removeTypeResolution() {
+		this.element().removeProperty(TypeResolver.TYPE_RESOLUTION_KEY);
 	}
 
 	@Override

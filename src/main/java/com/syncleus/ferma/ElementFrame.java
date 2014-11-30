@@ -80,6 +80,29 @@ public interface ElementFrame {
     public void setProperty(String name, Object value);
 
     /**
+     * Returns the type resolution currently encoded into the element.
+     *
+     * @return the current type resolution.
+     * @since 2.1.0
+     */
+    public Class<?> getTypeResolution();
+
+    /**
+     * Sets the type resolution and encodes it into the element in the graph.
+     *
+     * @param type The new type to resolve this element to.
+     * @since 2.1.0
+     */
+    public void setTypeResolution(Class<?> type);
+
+    /**
+     * Removes type resolution from this node and decodes it from the element in the graph.
+     *
+     * @since 2.1.0
+     */
+    public void removeTypeResolution();
+
+    /**
      * Query over all vertices in the graph.
      *
      * @return The query.

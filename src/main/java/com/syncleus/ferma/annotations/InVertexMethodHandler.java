@@ -18,7 +18,7 @@
  ******************************************************************************/
 package com.syncleus.ferma.annotations;
 
-import com.syncleus.ferma.FramedEdge;
+import com.syncleus.ferma.AbstractEdgeFrame;
 import net.bytebuddy.dynamic.DynamicType;
 import net.bytebuddy.instrumentation.MethodDelegation;
 import net.bytebuddy.instrumentation.method.bytecode.bind.annotation.Origin;
@@ -59,7 +59,7 @@ public class InVertexMethodHandler implements MethodHandler {
 
     public static final class getVertexInterceptor {
         @RuntimeType
-        public static Object getVertex(@This final FramedEdge thiz, @Origin final Method method) {
+        public static Object getVertex(@This final AbstractEdgeFrame thiz, @Origin final Method method) {
             return thiz.inV().next(method.getReturnType());
         }
     }

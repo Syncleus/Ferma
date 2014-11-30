@@ -436,7 +436,7 @@ public class FramedVertexTest {
 		Assert.assertTrue("An out edge of type " + label + " must exist between vertices", p3.in(label).retain(Lists.newArrayList(p4)).count() > 0);
 		
 		// tests if setLinkOut accepts null values, and only unlinks the edges
-		p3.setLinkIn((FramedVertex) null, label);
+		p3.setLinkIn((AbstractVertexFrame) null, label);
 		Assert.assertEquals(label + " edge was not unlinked", 0, p3.in(label).count());
 	}
 
@@ -470,7 +470,7 @@ public class FramedVertexTest {
 		Assert.assertTrue("An out edge of type " + label + " must exist between vertices", p3.out(label).retain(Lists.newArrayList(p4)).count() > 0);
 
 		// tests if setLinkOut accepts null values, and only unlinks the edges
-		p3.setLinkOut((FramedVertex) null, label);
+		p3.setLinkOut((AbstractVertexFrame) null, label);
 		Assert.assertEquals(label + " edge was not unlinked", 0, p3.out(label).count());
 	}
 
@@ -509,7 +509,7 @@ public class FramedVertexTest {
 		Assert.assertTrue("An out edge of type " + label + " must exist between vertices", p3.both(label).retain(Lists.newArrayList(p4)).count() > 0);
 
 		// tests if setLinkOut accepts null values, and only unlinks the edges
-		p3.setLinkBoth((FramedVertex) null, label);
+		p3.setLinkBoth((AbstractVertexFrame) null, label);
 		Assert.assertEquals(label + " edge was not unlinked", 0, p3.both(label).count());
 	}
 

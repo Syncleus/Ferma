@@ -25,7 +25,7 @@ import java.util.List;
  * @author Bryn Cooke (http://jglue.org)
  */
 
-public class Person extends FramedVertex {
+public class Person extends AbstractVertexFrame {
 
 
 

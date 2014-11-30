@@ -1,4 +1,4 @@
-/******************************************************************************
+ /******************************************************************************
  *                                                                             *
  *  Copyright: (c) Syncleus, Inc.                                              *
  *                                                                             *
@@ -16,24 +16,61 @@
  *  Philadelphia, PA 19148                                                     *
  *                                                                             *
  ******************************************************************************/
-
-/*
- * Part or all of this source file was forked from a third-party project, the details of which are listed below.
- *
- * Source Project: Totorom
- * Source URL: https://github.com/BrynCooke/totorom
- * Source License: Apache Public License v2.0
- * When: November, 20th 2014
- */
 package com.syncleus.ferma;
 
-/**
- * A framed vertex for use when you don't want to create a new frame class.
- * Typically used in traversals.
- *
- */
-public final class TVertex extends AbstractVertexFrame {
-	public <T extends AbstractVertexFrame> T reframe(Class<T> kind) {
-		return graph().frameElement(element(), kind);
-	}
+ import com.google.gson.JsonObject;
+ import com.tinkerpop.blueprints.Edge;
+
+ public interface EdgeFrame extends ElementFrame {
+  @Override
+  public Edge element();
+
+  /**
+   * @return The label associated with this edge
+   */
+  public String getLabel();
+
+  /**
+   * @return The in vertex for this edge.
+   */
+  public VertexTraversal<?, ?, ?> inV();
+
+  /**
+   * @return The out vertex of this edge.
+   */
+  public VertexTraversal<?, ?, ?> outV();
+
+  /**
+   * @return The vertices for this edge.
+   */
+  public VertexTraversal<?, ?, ?> bothV();
+
+  /**
+   * Shortcut to get frameTraversal of current element
+   *
+   * @return
+   */
+  public EdgeTraversal<?, ?, ?> traversal();
+
+  public JsonObject toJson();
+
+  /**
+   * Reframe this element as a different type of frame.
+   *
+   * @param kind The new kind of frame.
+   * @return The new frame
+   */
+  public <T extends AbstractEdgeFrame> T reframe(Class<T> kind);
+
+  /**
+   * Reframe this element as a different type of frame.
+   *
+   * This will bypass the default type resolution and use the untyped resolver
+   * instead. This method is useful for speeding up a look up when type resolution
+   * isn't required.
+   *
+   * @param kind The new kind of frame.
+   * @return The new frame
+   */
+  public <T extends AbstractEdgeFrame> T reframeExplicit(Class<T> kind);
 }

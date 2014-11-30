@@ -57,7 +57,7 @@ public class SimpleTypeResolver implements TypeResolver {
 
         Class<T> nodeKind = (Class<T>) this.reflectionCache.forName(nodeClazz);
 
-        if(kind.isAssignableFrom(nodeKind) || kind.equals(FramedVertex.class) || kind.equals(FramedEdge.class) || kind.equals(Object.class))
+        if(kind.isAssignableFrom(nodeKind) || kind.equals(VertexFrame.class) || kind.equals(EdgeFrame.class) || kind.equals(AbstractVertexFrame.class) || kind.equals(AbstractEdgeFrame.class) || kind.equals(Object.class))
             return nodeKind;
         else
             return kind;

@@ -31,7 +31,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
-class FramingMap<T extends FramedElement> extends FrameMaker implements Map {
+class FramingMap<T extends AbstractElementFrame> extends FrameMaker implements Map {
 
 	public FramingMap(Map delegate, FramedGraph graph) {
 		super(graph);

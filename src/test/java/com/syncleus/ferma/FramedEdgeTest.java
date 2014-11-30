@@ -22,12 +22,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockitoAnnotations;
-
 import com.tinkerpop.blueprints.Graph;
 import com.tinkerpop.blueprints.impls.tg.TinkerGraph;
-/**
- * @author Bryn Cooke (http://jglue.org)
- */
 
 public class FramedEdgeTest {
 

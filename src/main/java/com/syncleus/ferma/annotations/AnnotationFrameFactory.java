@@ -19,8 +19,8 @@
 package com.syncleus.ferma.annotations;
 
 import com.syncleus.ferma.FrameFactory;
-import com.syncleus.ferma.FramedEdge;
-import com.syncleus.ferma.FramedVertex;
+import com.syncleus.ferma.AbstractEdgeFrame;
+import com.syncleus.ferma.AbstractVertexFrame;
 import com.syncleus.ferma.ReflectionCache;
 import com.tinkerpop.blueprints.Edge;
 import com.tinkerpop.blueprints.Element;
@@ -95,16 +95,16 @@ public class AnnotationFrameFactory implements FrameFactory {
         DynamicType.Builder<? extends E> classBuilder;
         if( clazz.isInterface() ) {
             if( element instanceof Vertex)
-                classBuilder = (DynamicType.Builder<? extends E>) new ByteBuddy().withImplementing(clazz).subclass(FramedVertex.class);
+                classBuilder = (DynamicType.Builder<? extends E>) new ByteBuddy().withImplementing(clazz).subclass(AbstractVertexFrame.class);
             else if( element instanceof Edge)
-                classBuilder = (DynamicType.Builder<? extends E>) new ByteBuddy().withImplementing(clazz).subclass(FramedEdge.class);
+                classBuilder = (DynamicType.Builder<? extends E>) new ByteBuddy().withImplementing(clazz).subclass(AbstractEdgeFrame.class);
             else
                 throw new IllegalStateException("class is neither an Edge or a vertex!");
         }
         else {
-            if( element instanceof Vertex && ! FramedVertex.class.isAssignableFrom(clazz) )
+            if( element instanceof Vertex && ! AbstractVertexFrame.class.isAssignableFrom(clazz) )
                 throw new IllegalStateException(clazz.getName() + " Class is not a type of FramedVertex");
-            if( element instanceof Edge && ! FramedEdge.class.isAssignableFrom(clazz) )
+            if( element instanceof Edge && ! AbstractEdgeFrame.class.isAssignableFrom(clazz) )
                 throw new IllegalStateException(clazz.getName() + " Class is not a type of FramedEdge");
             classBuilder = (DynamicType.Builder<? extends E>) new ByteBuddy().subclass(clazz);
         }

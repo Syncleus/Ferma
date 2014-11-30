@@ -35,49 +35,39 @@ import com.tinkerpop.blueprints.Edge;
 /**
  * The base class that all edge frames must extend.
  */
-public abstract class FramedEdge extends FramedElement {
+public abstract class AbstractEdgeFrame extends AbstractElementFrame implements EdgeFrame {
 
+	@Override
 	public Edge element() {
 		return (Edge) super.element();
 	};
 
-	/**
-	 * @return The label associated with this edge
-	 */
+	@Override
 	public String getLabel() {
 		return element().getLabel();
 	}
 
-	/**
-	 * @return The in vertex for this edge.
-	 */
+	@Override
 	public VertexTraversal<?, ?, ?> inV() {
 		return new TraversalImpl(graph(), this).castToEdges().inV();
 	}
 
-	/**
-	 * @return The out vertex of this edge.
-	 */
+	@Override
 	public VertexTraversal<?, ?, ?> outV() {
 		return new TraversalImpl(graph(), this).castToEdges().outV();
 	}
 
-	/**
-	 * @return The vertices for this edge.
-	 */
+	@Override
 	public VertexTraversal<?, ?, ?> bothV() {
 		return new TraversalImpl(graph(), this).castToEdges().bothV();
 	}
 
-	/**
-	 * Shortcut to get frameTraversal of current element
-	 * 
-	 * @return
-	 */
+	@Override
 	public EdgeTraversal<?, ?, ?> traversal() {
 		return new TraversalImpl(graph(), this).castToEdges();
 	}
 
+	@Override
 	public JsonObject toJson() {
 		JsonObject json = new JsonObject();
 		if (getId() instanceof Number) {
@@ -108,27 +98,13 @@ public abstract class FramedEdge extends FramedElement {
 		return gson.toJson(toJson());
 	}
 	
-	/**
-	 * Reframe this element as a different type of frame.
-	 *
-	 * @param kind The new kind of frame.
-	 * @return The new frame
-	 */
-	public <T extends FramedEdge> T reframe(Class<T> kind) {
+	@Override
+	public <T extends AbstractEdgeFrame> T reframe(Class<T> kind) {
 		return graph().frameElement(element(), kind);
 	}
 
-	/**
-	 * Reframe this element as a different type of frame.
-	 *
-	 * This will bypass the default type resolution and use the untyped resolver
-	 * instead. This method is useful for speeding up a look up when type resolution
-	 * isn't required.
-	 *
-	 * @param kind The new kind of frame.
-	 * @return The new frame
-	 */
-	public <T extends FramedEdge> T reframeExplicit(Class<T> kind) {
+	@Override
+	public <T extends AbstractEdgeFrame> T reframeExplicit(Class<T> kind) {
 		return graph().frameElementExplicit(element(), kind);
 	}
 }

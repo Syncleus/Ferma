@@ -229,12 +229,12 @@ abstract class EdgeTraversalImpl extends TraversalBase implements EdgeTraversal 
 
 	@Override
 	public Object next(Class kind) {
-		return (FramedEdge) graph().frameElement((Element) pipeline().next(), kind);
+		return (AbstractEdgeFrame) graph().frameElement((Element) pipeline().next(), kind);
 	}
 
 	@Override
 	public Object nextExplicit(Class kind) {
-		return (FramedEdge) graph().frameElementExplicit((Element) pipeline().next(), kind);
+		return (AbstractEdgeFrame) graph().frameElementExplicit((Element) pipeline().next(), kind);
 	}
 
 	@Override
@@ -487,7 +487,7 @@ abstract class EdgeTraversalImpl extends TraversalBase implements EdgeTraversal 
 	}
 
 	@Override
-	public EdgeTraversal retain(FramedEdge... edges) {
+	public EdgeTraversal retain(AbstractEdgeFrame... edges) {
 
 		return (EdgeTraversal) super.retain(Arrays.asList(edges));
 	}
@@ -498,7 +498,7 @@ abstract class EdgeTraversalImpl extends TraversalBase implements EdgeTraversal 
 	}
 
 	@Override
-	public EdgeTraversal except(FramedEdge... edges) {
+	public EdgeTraversal except(AbstractEdgeFrame... edges) {
 		return (EdgeTraversal) super.retain(Arrays.asList(edges));
 	}
 

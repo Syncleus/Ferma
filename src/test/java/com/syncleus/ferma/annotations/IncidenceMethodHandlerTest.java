@@ -18,9 +18,9 @@
  ******************************************************************************/
 package com.syncleus.ferma.annotations;
 
-import com.syncleus.ferma.FramedEdge;
+import com.syncleus.ferma.AbstractEdgeFrame;
 import com.syncleus.ferma.FramedGraph;
-import com.syncleus.ferma.FramedVertex;
+import com.syncleus.ferma.AbstractVertexFrame;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.impls.tg.TinkerGraph;
 import org.junit.Assert;
@@ -41,14 +41,14 @@ public class IncidenceMethodHandlerTest {
         final List<God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
 
         final God father = gods.iterator().next();
-        Assert.assertTrue(father instanceof FramedVertex);
-        final FramedVertex fatherVertex = (FramedVertex) father;
+        Assert.assertTrue(father instanceof AbstractVertexFrame);
+        final AbstractVertexFrame fatherVertex = (AbstractVertexFrame) father;
         Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
 
-        final Iterable<? extends FramedEdge> childrenEdges = father.getSonEdges();
-        final Iterator<? extends FramedEdge> childEdgeIterator = childrenEdges.iterator();
+        final Iterable<? extends AbstractEdgeFrame> childrenEdges = father.getSonEdges();
+        final Iterator<? extends AbstractEdgeFrame> childEdgeIterator = childrenEdges.iterator();
         Assert.assertTrue(childEdgeIterator.hasNext());
-        final FramedEdge childEdge = childEdgeIterator.next();
+        final AbstractEdgeFrame childEdge = childEdgeIterator.next();
         Assert.assertEquals(childEdge.element().getVertex(Direction.OUT).getProperty("name"), "hercules");
     }
 
@@ -62,16 +62,16 @@ public class IncidenceMethodHandlerTest {
         final List<God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
 
         final God father = gods.iterator().next();
-        Assert.assertTrue(father instanceof FramedVertex);
-        final FramedVertex fatherVertex = (FramedVertex) father;
+        Assert.assertTrue(father instanceof AbstractVertexFrame);
+        final AbstractVertexFrame fatherVertex = (AbstractVertexFrame) father;
         Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
 
         final Iterable<? extends FatherEdge> childrenEdges = father.getSonEdges(FatherEdge.class);
         final Iterator<? extends FatherEdge> childEdgeIterator = childrenEdges.iterator();
         Assert.assertTrue(childEdgeIterator.hasNext());
         final FatherEdge childEdge = childEdgeIterator.next();
-        Assert.assertTrue(childEdge instanceof FramedEdge);
-        final FramedEdge edge = (FramedEdge) childEdge;
+        Assert.assertTrue(childEdge instanceof AbstractEdgeFrame);
+        final AbstractEdgeFrame edge = (AbstractEdgeFrame) childEdge;
         Assert.assertEquals(edge.element().getVertex(Direction.OUT).getProperty("name"), "hercules");
     }
 
@@ -85,8 +85,8 @@ public class IncidenceMethodHandlerTest {
         final List<God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
 
         final God father = gods.iterator().next();
-        Assert.assertTrue(father instanceof FramedVertex);
-        final FramedVertex fatherVertex = (FramedVertex) father;
+        Assert.assertTrue(father instanceof AbstractVertexFrame);
+        final AbstractVertexFrame fatherVertex = (AbstractVertexFrame) father;
         Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
 
         final Iterable<? extends FatherEdge> childrenEdges = father.getSonEdges(FatherEdgeExtended.class);
@@ -94,8 +94,8 @@ public class IncidenceMethodHandlerTest {
         Assert.assertTrue(childEdgeIterator.hasNext());
         final FatherEdge childEdge = childEdgeIterator.next();
         Assert.assertTrue(childEdge instanceof FatherEdgeExtended);
-        Assert.assertTrue(childEdge instanceof FramedEdge);
-        final FramedEdge edge = (FramedEdge) childEdge;
+        Assert.assertTrue(childEdge instanceof AbstractEdgeFrame);
+        final AbstractEdgeFrame edge = (AbstractEdgeFrame) childEdge;
         Assert.assertEquals(edge.element().getVertex(Direction.OUT).getProperty("name"), "hercules");
     }
 
@@ -109,11 +109,11 @@ public class IncidenceMethodHandlerTest {
         final List<God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
 
         final God father = gods.iterator().next();
-        Assert.assertTrue(father instanceof FramedVertex);
-        final FramedVertex fatherVertex = (FramedVertex) father;
+        Assert.assertTrue(father instanceof AbstractVertexFrame);
+        final AbstractVertexFrame fatherVertex = (AbstractVertexFrame) father;
         Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
 
-        final FramedEdge childEdge = father.getSonEdge();
+        final AbstractEdgeFrame childEdge = father.getSonEdge();
         Assert.assertEquals(childEdge.element().getVertex(Direction.OUT).getProperty("name"), "hercules");
     }
 
@@ -127,13 +127,13 @@ public class IncidenceMethodHandlerTest {
         final List<God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
 
         final God father = gods.iterator().next();
-        Assert.assertTrue(father instanceof FramedVertex);
-        final FramedVertex fatherVertex = (FramedVertex) father;
+        Assert.assertTrue(father instanceof AbstractVertexFrame);
+        final AbstractVertexFrame fatherVertex = (AbstractVertexFrame) father;
         Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
 
         final FatherEdge childEdge = father.getSonEdge(FatherEdge.class);
-        Assert.assertTrue(childEdge instanceof FramedEdge);
-        final FramedEdge edge = (FramedEdge) childEdge;
+        Assert.assertTrue(childEdge instanceof AbstractEdgeFrame);
+        final AbstractEdgeFrame edge = (AbstractEdgeFrame) childEdge;
         Assert.assertEquals(edge.element().getVertex(Direction.OUT).getProperty("name"), "hercules");
     }
 
@@ -147,14 +147,14 @@ public class IncidenceMethodHandlerTest {
         final List<God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
 
         final God father = gods.iterator().next();
-        Assert.assertTrue(father instanceof FramedVertex);
-        final FramedVertex fatherVertex = (FramedVertex) father;
+        Assert.assertTrue(father instanceof AbstractVertexFrame);
+        final AbstractVertexFrame fatherVertex = (AbstractVertexFrame) father;
         Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
 
         FatherEdge child = father.getSonEdge(FatherEdge.class);
         Assert.assertNotNull(child);
-        Assert.assertTrue(child instanceof FramedEdge);
-        final FramedEdge childEdge = (FramedEdge) child;
+        Assert.assertTrue(child instanceof AbstractEdgeFrame);
+        final AbstractEdgeFrame childEdge = (AbstractEdgeFrame) child;
         Assert.assertEquals(childEdge.outV().next().element().getProperty("name"), "hercules");
 
         father.removeSonEdge(child);

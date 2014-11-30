@@ -27,15 +27,13 @@
  */
 package com.syncleus.ferma;
 
-import java.util.Set;
-
 /**
  * A framed edge for use when you don't want to create a new frame class.
  * Typically used in traversals.
  *
  */
-public final class TEdge extends FramedEdge {
-	public <T extends FramedEdge> T reframe(Class<T> kind) {
+public final class TEdge extends AbstractEdgeFrame {
+	public <T extends AbstractEdgeFrame> T reframe(Class<T> kind) {
 		return graph().frameElement(element(), kind);
 	}
 	

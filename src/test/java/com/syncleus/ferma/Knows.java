@@ -23,7 +23,7 @@ package com.syncleus.ferma;
  * @author Bryn Cooke (http://jglue.org)
  */
 
-public class Knows extends FramedEdge {
+public class Knows extends AbstractEdgeFrame {
 
     public void setYears(int years) {
         setProperty("years", years);

@@ -18,7 +18,7 @@
  ******************************************************************************/
 package com.syncleus.ferma;
 
-public class Program extends FramedVertex {
+public class Program extends AbstractVertexFrame {
 
 	public String getName() {
 		return getProperty("name");

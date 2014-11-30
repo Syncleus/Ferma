@@ -36,7 +36,7 @@ class FrameMaker {
 	private FramedGraph graph;
 	private Class<?> kind;
 
-	public <T extends FramedElement> FrameMaker(FramedGraph graph, Class<T> kind) {
+	public <T extends AbstractElementFrame> FrameMaker(FramedGraph graph, Class<T> kind) {
 		this.graph = graph;
 		this.kind = kind;
 	}
@@ -61,7 +61,7 @@ class FrameMaker {
 			}
 		} else {
 			if (o instanceof Element) {
-				o = graph.frameElement((Element) o, (Class<FramedElement>)kind);
+				o = graph.frameElement((Element) o, (Class<AbstractElementFrame>)kind);
 			}
 		}
 		return (N) o;
@@ -83,15 +83,15 @@ class FrameMaker {
 			}
 		} else {
 			if (o instanceof Element) {
-				o = graph.frameElementExplicit((Element) o, (Class<FramedElement>)kind);
+				o = graph.frameElementExplicit((Element) o, (Class<AbstractElementFrame>)kind);
 			}
 		}
 		return (N) o;
 	}
 
 	protected Object removeFrame(Object object) {
-		if (object instanceof FramedElement) {
-			return ((FramedElement) object).element();
+		if (object instanceof AbstractElementFrame) {
+			return ((AbstractElementFrame) object).element();
 		}
 		return object;
 	}

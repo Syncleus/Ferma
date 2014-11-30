@@ -385,13 +385,13 @@ abstract class VertexTraversalImpl extends TraversalBase implements VertexTraver
 	}
 
 	@Override
-	public FramedVertex next(Class kind) {
-		return (FramedVertex) graph().frameElement((Element) pipeline().next(), kind);
+	public AbstractVertexFrame next(Class kind) {
+		return (AbstractVertexFrame) graph().frameElement((Element) pipeline().next(), kind);
 	}
 
 	@Override
-	public FramedVertex nextExplicit(Class kind) {
-		return (FramedVertex) graph().frameElementExplicit((Element) pipeline().next(), kind);
+	public AbstractVertexFrame nextExplicit(Class kind) {
+		return (AbstractVertexFrame) graph().frameElementExplicit((Element) pipeline().next(), kind);
 	}
 
 	@Override
@@ -415,7 +415,7 @@ abstract class VertexTraversalImpl extends TraversalBase implements VertexTraver
 	@Override
 	public Object nextOrAdd(Class kind) {
 		try {
-			return (FramedVertex) graph().frameElement((Element) pipeline().next(), kind);
+			return (AbstractVertexFrame) graph().frameElement((Element) pipeline().next(), kind);
 		} catch (NoSuchElementException e) {
 			return graph().addFramedVertex(kind);
 		}
@@ -425,7 +425,7 @@ abstract class VertexTraversalImpl extends TraversalBase implements VertexTraver
 	@Override
 	public Object nextOrAddExplicit(Class kind) {
 		try {
-			return (FramedVertex) graph().frameElementExplicit((Element) pipeline().next(), kind);
+			return (AbstractVertexFrame) graph().frameElementExplicit((Element) pipeline().next(), kind);
 		} catch (NoSuchElementException e) {
 			return graph().addFramedVertex(kind);
 		}
@@ -579,19 +579,19 @@ abstract class VertexTraversalImpl extends TraversalBase implements VertexTraver
 	}
 
 	@Override
-	public VertexTraversal linkOut(String label, FramedVertex other) {
+	public VertexTraversal linkOut(String label, AbstractVertexFrame other) {
 		pipeline().linkOut(label, other.element());
 		return this;
 	}
 
 	@Override
-	public VertexTraversal linkIn(String label, FramedVertex other) {
+	public VertexTraversal linkIn(String label, AbstractVertexFrame other) {
 		pipeline().linkIn(label, other.element());
 		return this;
 	}
 
 	@Override
-	public VertexTraversal linkBoth(String label, FramedVertex other) {
+	public VertexTraversal linkBoth(String label, AbstractVertexFrame other) {
 		pipeline().linkBoth(label, other.element());
 		return this;
 	}
@@ -624,13 +624,13 @@ abstract class VertexTraversalImpl extends TraversalBase implements VertexTraver
 	}
 
 	@Override
-	public VertexTraversal retain(FramedVertex... vertices) {
+	public VertexTraversal retain(AbstractVertexFrame... vertices) {
 
 		return (VertexTraversal) super.retain(Arrays.asList(vertices));
 	}
 
 	@Override
-	public VertexTraversal except(FramedVertex... vertices) {
+	public VertexTraversal except(AbstractVertexFrame... vertices) {
 
 		return (VertexTraversal) super.except(Arrays.asList(vertices));
 	}

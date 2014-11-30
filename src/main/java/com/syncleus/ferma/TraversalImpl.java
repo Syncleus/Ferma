@@ -170,7 +170,7 @@ class TraversalImpl extends TraversalBase implements Traversal {
 		this(graph, new GremlinPipeline<>(starts));
 	}
 
-	protected TraversalImpl(FramedGraph graph, FramedElement starts) {
+	protected TraversalImpl(FramedGraph graph, AbstractElementFrame starts) {
 		this(graph, new GremlinPipeline<>(starts.element()));
 	}
 

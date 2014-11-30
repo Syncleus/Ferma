@@ -34,7 +34,7 @@ import com.tinkerpop.blueprints.Element;
 /**
  * The base of all framed elements.
  */
-public abstract class FramedElement {
+public abstract class AbstractElementFrame implements ElementFrame {
 
 	private Element element;
 	private FramedGraph graph;
@@ -60,62 +60,37 @@ public abstract class FramedElement {
 
 	}
 
-	/**
-	 * @return The id of this element.
-	 */
+	@Override
 	public <N> N getId() {
 		return (N) element.getId();
 	}
 
-	/**
-	 * @return The property keys of this element.
-	 */
+	@Override
 	public Set<String> getPropertyKeys() {
 		return element.getPropertyKeys();
 	}
 
-	/**
-	 * Remove this element from the graph.
-	 */
+	@Override
 	public void remove() {
 		element.remove();
 	}
 
-	/**
-	 * @return The underlying element.
-	 */
+	@Override
 	public Element element() {
 		return element;
 	}
 
-	/**
-	 * @return The underlying graph.
-	 */
+	@Override
 	public FramedGraph graph() {
 		return graph;
 	}
 
-	/**
-	 * Return a property value.
-	 * 
-	 * @param name
-	 *            The name of the property.
-	 * @return the value of the property or null if none was present.
-	 */
+	@Override
 	public <T> T getProperty(String name) {
 		return element.getProperty(name);
 	}
 
-	/**
-	 * Return a property value.
-	 * 
-	 * @param name
-	 *            The name of the property.
-	 * @param type
-	 *            The type of the property.
-	 * 
-	 * @return the value of the property or null if none was present.
-	 */
+	@Override
 	public <T> T getProperty(String name, Class<T> type) {
 		if (type.isEnum()) {
 			return (T) Enum.valueOf((Class<Enum>) type, (String) element.getProperty(name));
@@ -124,14 +99,7 @@ public abstract class FramedElement {
 		return element.getProperty(name);
 	}
 
-	/**
-	 * Set a property value.
-	 * 
-	 * @param name
-	 *            The name of the property.
-	 * @param value
-	 *            The value of the property.
-	 */
+	@Override
 	public void setProperty(String name, Object value) {
 		if (value == null) {
 			element.removeProperty(name);
@@ -144,42 +112,22 @@ public abstract class FramedElement {
 		}
 	}
 
-	/**
-	 * Query over all vertices in the graph.
-	 * 
-	 * @return The query.
-	 */
+	@Override
 	public VertexTraversal<?, ?, ?> V() {
 		return graph.v();
 	}
 
-	/**
-	 * Query over all edges in the graph.
-	 * 
-	 * @return The query.
-	 */
+	@Override
 	public EdgeTraversal<?, ?, ?> E() {
 		return graph.e();
 	}
 
-	/**
-	 * Query over a list of vertices in the graph.
-	 * 
-	 * @param ids
-	 *            The ids of the vertices.
-	 * @return The query.
-	 */
+	@Override
 	public VertexTraversal<?, ?, ?> v(final Object... ids) {
 		return graph.v(ids);
 	}
 
-	/**
-	 * Query over a list of edges in the graph.
-	 * 
-	 * @param ids
-	 *            The ids of the edges.
-	 * @return The query.
-	 */
+	@Override
 	public EdgeTraversal<?, ?, ?> e(final Object... ids) {
 		return graph.e(ids);
 	}
@@ -197,7 +145,7 @@ public abstract class FramedElement {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		FramedElement other = (FramedElement) obj;
+		AbstractElementFrame other = (AbstractElementFrame) obj;
 		if (element == null) {
 			if (other.element != null)
 				return false;

@@ -36,12 +36,24 @@ import com.syncleus.ferma.pipes.GremlinPipeline;
 import com.tinkerpop.blueprints.Graph;
 
 @SuppressWarnings("rawtypes")
-class SimpleTraversal extends AbstractTraversal implements Traversal {
+class SimpleTraversal<T, Cap, SideEffect, Mark> extends AbstractTraversal<T, Cap, SideEffect, Mark> implements Traversal<T, Cap, SideEffect, Mark> {
 
 	private FramedGraph graph;
 	private com.tinkerpop.gremlin.java.GremlinPipeline pipeline;
 	private Deque<MarkId> marks = new ArrayDeque<>();
 	private int markId = 0;
+
+	protected SimpleTraversal(FramedGraph graph, Graph delegate) {
+		this(graph, new GremlinPipeline<>(delegate));
+	}
+
+	protected SimpleTraversal(FramedGraph graph, Iterator starts) {
+		this(graph, new GremlinPipeline<>(starts));
+	}
+
+	protected SimpleTraversal(FramedGraph graph, ElementFrame starts) {
+		this(graph, new GremlinPipeline<>(starts.element()));
+	}
 
 	public MarkId pushMark(Traversal<?, ?, ?, ?> traversal) {
 		MarkId mark = new MarkId();
@@ -53,14 +65,56 @@ class SimpleTraversal extends AbstractTraversal implements Traversal {
 	}
 
 	@Override
-	public MarkId pushMark() {
+	public <T, Cap, SideEffect, Mark> MarkId<T, Cap, SideEffect, Mark> pushMark() {
 
 		return pushMark(this);
 	}
 
 	@Override
-	public MarkId popMark() {
+	public <T, Cap, SideEffect, Mark> MarkId<T, Cap, SideEffect, Mark> popMark() {
 		return marks.pop();
+	}
+
+	private SimpleTraversal(FramedGraph graph, com.tinkerpop.gremlin.java.GremlinPipeline pipeline) {
+		this.graph = graph;
+		this.pipeline = pipeline;
+
+	}
+
+	/**
+	 * @return Cast the traversal to a {@link VertexTraversal}
+	 */
+	public VertexTraversal<Cap, SideEffect, Mark> castToVertices() {
+		return vertexTraversal;
+	}
+
+	/**
+	 * @return Cast the traversal to a {@link EdgeTraversal}
+	 */
+	public EdgeTraversal<Cap, SideEffect, Mark> castToEdges() {
+		return edgeTraversal;
+	}
+
+	@Override
+	protected <W,X,Y,Z> Traversal<W,X,Y,Z> castToTraversal() {
+		return (Traversal<W,X,Y,Z>) this;
+	}
+
+	@Override
+	protected com.tinkerpop.gremlin.java.GremlinPipeline pipeline() {
+
+		return pipeline;
+	}
+
+	@Override
+	protected FramedGraph graph() {
+
+		return graph;
+	}
+
+	@Override
+	protected <N> SplitTraversal<N> castToSplit() {
+		return splitTraversal;
 	}
 
 	private SplitTraversal splitTraversal = new SplitTraversal() {
@@ -117,6 +171,7 @@ class SimpleTraversal extends AbstractTraversal implements Traversal {
 			return splitTraversal;
 		};
 	};
+
 	private VertexTraversal vertexTraversal = new AbstractVertexTraversal() {
 		@Override
 		public VertexTraversal castToVertices() {
@@ -129,7 +184,7 @@ class SimpleTraversal extends AbstractTraversal implements Traversal {
 		}
 
 		@Override
-		protected Traversal castToTraversal() {
+		protected  Traversal castToTraversal() {
 			return SimpleTraversal.this;
 		}
 
@@ -155,59 +210,4 @@ class SimpleTraversal extends AbstractTraversal implements Traversal {
 			return splitTraversal;
 		};
 	};
-
-	private SimpleTraversal(FramedGraph graph, com.tinkerpop.gremlin.java.GremlinPipeline pipeline) {
-		this.graph = graph;
-		this.pipeline = pipeline;
-
-	}
-
-	protected SimpleTraversal(FramedGraph graph, Graph delegate) {
-		this(graph, new GremlinPipeline<>(delegate));
-	}
-
-	protected SimpleTraversal(FramedGraph graph, Iterator starts) {
-		this(graph, new GremlinPipeline<>(starts));
-	}
-
-	protected SimpleTraversal(FramedGraph graph, ElementFrame starts) {
-		this(graph, new GremlinPipeline<>(starts.element()));
-	}
-
-	/**
-	 * @return Cast the traversal to a {@link VertexTraversal}
-	 */
-	public VertexTraversal castToVertices() {
-		return vertexTraversal;
-	}
-
-	/**
-	 * @return Cast the traversal to a {@link EdgeTraversal}
-	 */
-	public EdgeTraversal castToEdges() {
-		return edgeTraversal;
-	}
-
-	@Override
-	protected Traversal castToTraversal() {
-		return this;
-	}
-
-	@Override
-	protected com.tinkerpop.gremlin.java.GremlinPipeline pipeline() {
-
-		return pipeline;
-	}
-
-	@Override
-	protected FramedGraph graph() {
-
-		return graph;
-	}
-
-	@Override
-	protected SplitTraversal castToSplit() {
-		return splitTraversal;
-	}
-
 }

@@ -36,7 +36,7 @@ public class PropertyMethodHandlerTest {
 
         final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
 
-        final List<God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
+        final List<? extends God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father instanceof VertexFrame);
@@ -52,7 +52,7 @@ public class PropertyMethodHandlerTest {
 
         final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
 
-        List<God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
+        List<? extends God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
 
         God father = gods.iterator().next();
         Assert.assertTrue(father instanceof VertexFrame);
@@ -75,7 +75,7 @@ public class PropertyMethodHandlerTest {
 
         final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
 
-        List<God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
+        List<? extends God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
 
         God father = gods.iterator().next();
         Assert.assertTrue(father instanceof VertexFrame);

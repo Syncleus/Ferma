@@ -45,7 +45,7 @@ public interface TypeResolver {
 	 *            The kind of frame that is being requested by the client code.
 	 * @return The kind of frame
 	 */
-	public <T> Class<T> resolve(Element element, Class<T> kind);
+	public <T> Class<? extends T> resolve(Element element, Class<T> kind);
 
 	/**
 	 * Called when a new element is created on the graph. Initialization can be
@@ -57,5 +57,5 @@ public interface TypeResolver {
 	 * @param kind
 	 *            The kind of frame that was resolved.
 	 */
-	public <T> void init(Element element, Class<T> kind);
+	public void init(Element element, Class<?> kind);
 }

@@ -48,19 +48,19 @@ public class Person extends AbstractVertexFrame {
         return out("knows").frame(Person.class).iterator();
     }
 
-    public List<Knows> getKnowsList() {
+    public List<? extends Knows> getKnowsList() {
         return outE("knows").toList(Knows.class);
     }
 
-    public List<Knows> getKnowsListExplicit() {
+    public List<? extends Knows> getKnowsListExplicit() {
         return outE("knows").toListExplicit(Knows.class);
     }
     
-    public List<Person> getKnowsCollectionVertices() {
+    public List<? extends Person> getKnowsCollectionVertices() {
         return out("knows").toList(Person.class);
     }
 
-    public List<Person> getKnowsCollectionVerticesExplicit() {
+    public List<? extends Person> getKnowsCollectionVerticesExplicit() {
         return out("knows").toListExplicit(Person.class);
     }
 

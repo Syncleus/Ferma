@@ -60,7 +60,7 @@ package com.syncleus.ferma;
    * @param kind The new kind of frame.
    * @return The new frame
    */
-  public <T extends EdgeFrame> T reframe(Class<T> kind);
+  public <T> T reframe(Class<T> kind);
 
   /**
    * Reframe this element as a different type of frame.
@@ -72,5 +72,5 @@ package com.syncleus.ferma;
    * @param kind The new kind of frame.
    * @return The new frame
    */
-  public <T extends EdgeFrame> T reframeExplicit(Class<T> kind);
+  public <T> T reframeExplicit(Class<T> kind);
 }

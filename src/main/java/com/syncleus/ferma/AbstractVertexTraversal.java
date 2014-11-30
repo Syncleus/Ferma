@@ -38,25 +38,28 @@ import com.tinkerpop.blueprints.Element;
 import com.tinkerpop.blueprints.Predicate;
 import com.tinkerpop.blueprints.Vertex;
 import com.tinkerpop.gremlin.Tokens.T;
+import com.tinkerpop.gremlin.java.GremlinPipeline;
 import com.tinkerpop.pipes.Pipe;
+import com.tinkerpop.pipes.branch.LoopPipe;
 import com.tinkerpop.pipes.transform.TransformPipe.Order;
+import com.tinkerpop.pipes.util.structures.Pair;
 import com.tinkerpop.pipes.util.structures.Table;
 import com.tinkerpop.pipes.util.structures.Tree;
 
-abstract class AbstractVertexTraversal extends AbstractTraversal implements VertexTraversal {
+abstract class AbstractVertexTraversal<Cap, SideEffect, Mark> extends AbstractTraversal<VertexFrame, Cap, SideEffect, Mark> implements VertexTraversal<Cap, SideEffect, Mark> {
 	@Override
-	public TVertex next() {
-		return graph().frameElement((Vertex) pipeline().next(), TVertex.class);
+	public VertexFrame next() {
+		return graph().frameElement((Vertex) pipeline().next(), VertexFrame.class);
 	}
 
 	@Override
-	public TVertex nextOrAdd() {
+	public VertexFrame nextOrAdd() {
 
-		return (TVertex) nextOrAdd(TVertex.class);
+		return (VertexFrame) nextOrAdd(VertexFrame.class);
 	}
 
 	@Override
-	public Iterable frameExplicit(final Class kind) {
+	public <N> Iterable<? extends N> frameExplicit(final Class<N> kind) {
 		return Iterables.transform(pipeline(), new Function() {
 
 			public Object apply(Object e) {
@@ -66,175 +69,174 @@ abstract class AbstractVertexTraversal extends AbstractTraversal implements Vert
 	}
 
 	@Override
-	public VertexTraversal table() {
-		return (VertexTraversal) super.table();
+	public VertexTraversal<Table, Table, Mark> table() {
+		return (VertexTraversal<Table, Table, Mark>) super.table();
 	}
 
 	@Override
-	public VertexTraversal table(TraversalFunction... columnFunctions) {
+	public VertexTraversal<Table, Table, Mark> table(TraversalFunction... columnFunctions) {
 
-		return (VertexTraversal) super.table(columnFunctions);
+		return (VertexTraversal<Table, Table, Mark>) super.table(columnFunctions);
 	}
 
 	@Override
-	public VertexTraversal table(Table table) {
+	public VertexTraversal<Table, Table, Mark> table(Table table) {
 
-		return (VertexTraversal) super.table(table);
+		return (VertexTraversal<Table, Table, Mark>) super.table(table);
 	}
 
 	@Override
-	public VertexTraversal table(Table table, Collection stepNames, TraversalFunction... columnFunctions) {
+	public VertexTraversal<Table, Table, Mark> table(Table table, Collection stepNames, TraversalFunction... columnFunctions) {
 
-		return (VertexTraversal) super.table(table, stepNames, columnFunctions);
+		return (VertexTraversal<Table, Table, Mark>) super.table(table, stepNames, columnFunctions);
 	}
 
 	@Override
-	public VertexTraversal table(Table table, TraversalFunction... columnFunctions) {
+	public VertexTraversal<Table, Table, Mark> table(Table table, TraversalFunction<?, ?>... columnFunctions) {
 		return (VertexTraversal) super.table(table, columnFunctions);
 	}
 
 	@Override
-	public VertexTraversal tree(Tree tree) {
+	public <N> VertexTraversal<Tree<N>, Tree<N>, Mark> tree(Tree<N> tree) {
 		return (VertexTraversal) super.tree(tree);
 	}
 
 	@Override
-	public VertexTraversal store() {
-		return (VertexTraversal) super.store(new FramingTraversalFunction(graph(), TVertex.class));
+	public VertexTraversal<Collection<VertexFrame>, VertexFrame, Mark> store() {
+		return (VertexTraversal<Collection<VertexFrame>, VertexFrame, Mark>) super.store(new FramingTraversalFunction(graph(), VertexFrame.class));
 	}
 
 	@Override
-	public VertexTraversal store(Collection storage) {
-		return (VertexTraversal) super.store(storage);
+	public <N> VertexTraversal<Collection<N>, N, Mark> store(Collection<N> storage) {
+		return (VertexTraversal<Collection<N>, N, Mark>) super.store(storage);
 	}
 
 	@Override
-	public VertexTraversal store(Collection storage, TraversalFunction storageFunction) {
-		return (VertexTraversal) super.store(storage);
+	public <N> VertexTraversal<Collection<N>, N, Mark> store(Collection<N> storage,
+															 TraversalFunction<VertexFrame, N> storageFunction) {
+		return (VertexTraversal<Collection<N>, N, Mark>) super.store(storage);
 	}
 
 	@Override
-	public VertexTraversal store(TraversalFunction storageFunction) {
+	public <N> VertexTraversal<Collection<N>, N, Mark> store(TraversalFunction<VertexFrame, N> storageFunction) {
 		return (VertexTraversal) super.store(storageFunction);
 	}
 
 	@Override
-	public VertexTraversal groupCount() {
+	public VertexTraversal<Map<VertexFrame, Long>, Map<VertexFrame, Long>, Mark> groupCount() {
 		return (VertexTraversal) super.groupCount();
 	}
 
 	@Override
-	public VertexTraversal groupCount(Map map) {
-		return (VertexTraversal) super.groupCount(map);
+	public VertexTraversal<Map<VertexFrame, Long>, Map<VertexFrame, Long>, Mark> groupCount(Map<VertexFrame, Long> map) {
+		return (VertexTraversal<Map<VertexFrame, Long>, Map<VertexFrame, Long>, Mark>) super.groupCount(map);
 	}
 
 	@Override
-	public VertexTraversal groupCount(Map map, TraversalFunction keyFunction) {
-		return (VertexTraversal) super.groupCount(map, keyFunction);
+	public <K> VertexTraversal<Map<K, Long>, Map<K, Long>, Mark> groupCount(Map<K, Long> map, TraversalFunction<VertexFrame, K> keyFunction) {
+		return (VertexTraversal<Map<K, Long>, Map<K, Long>, Mark>) super.groupCount(map, keyFunction);
 	}
 
 	@Override
-	public VertexTraversal groupCount(Map map, TraversalFunction keyFunction, TraversalFunction valueFunction) {
-		return (VertexTraversal) super.groupCount(map, keyFunction, valueFunction);
+	public <K> VertexTraversal<Map<K, Long>, Map<K, Long>, Mark> groupCount(Map<K, Long> map, TraversalFunction<VertexFrame, K> keyFunction, TraversalFunction<Pair<VertexFrame, Long>, Long> valueFunction) {
+		return (VertexTraversal<Map<K, Long>, Map<K, Long>, Mark>) super.groupCount(map, keyFunction, valueFunction);
 	}
 
 	@Override
-	public VertexTraversal groupCount(TraversalFunction keyFunction) {
-		return (VertexTraversal) super.groupCount(keyFunction);
+	public <K> VertexTraversal<Map<K, Long>, Map<K, Long>, Mark> groupCount(TraversalFunction<VertexFrame, K> keyFunction) {
+		return (VertexTraversal<Map<K, Long>, Map<K, Long>, Mark>) super.groupCount(keyFunction);
 	}
 
 	@Override
-	public VertexTraversal groupCount(TraversalFunction keyFunction, TraversalFunction valueFunction) {
-		return (VertexTraversal) super.groupCount(keyFunction, valueFunction);
+	public <K> VertexTraversal<Map<K, Long>, Map<K, Long>, Mark> groupCount(TraversalFunction<VertexFrame, K> keyFunction, TraversalFunction<Pair<VertexFrame, Long>, Long> valueFunction) {
+		return (VertexTraversal<Map<K, Long>, Map<K, Long>, Mark>) super.groupCount(keyFunction, valueFunction);
 	}
 
 	@Override
-	public VertexTraversal groupBy(TraversalFunction keyFunction, TraversalFunction valueFunction,
-			TraversalFunction reduceFunction) {
-		return (VertexTraversal) super.groupBy(keyFunction, valueFunction, reduceFunction);
+	public <K, V, V2> VertexTraversal<Map<K, V2>, Map<K, V2>, Mark> groupBy(TraversalFunction<VertexFrame, K> keyFunction, TraversalFunction<VertexFrame, Iterator<V>> valueFunction, TraversalFunction<List<V>, V2> reduceFunction) {
+		return (VertexTraversal<Map<K, V2>, Map<K, V2>, Mark>) super.groupBy(keyFunction, valueFunction, reduceFunction);
 	}
 
 	@Override
-	public VertexTraversal groupBy(TraversalFunction keyFunction, TraversalFunction valueFunction) {
+	public <K, V> VertexTraversal<Map<K, List<V>>, Map<K, List<V>>, Mark> groupBy(TraversalFunction<VertexFrame, K> keyFunction, TraversalFunction<VertexFrame, Iterator<V>> valueFunction) {
 
-		return (VertexTraversal) super.groupBy(keyFunction, valueFunction);
+		return (VertexTraversal<Map<K, List<V>>, Map<K, List<V>>, Mark>) super.groupBy(keyFunction, valueFunction);
 	}
 
 	@Override
-	public VertexTraversal groupBy(Map reduceMap, TraversalFunction keyFunction, TraversalFunction valueFunction,
-			TraversalFunction reduceFunction) {
-		return (VertexTraversal) super.groupBy(reduceMap, keyFunction, valueFunction, reduceFunction);
+	public <K, V, V2> VertexTraversal<Map<K, V2>, Map<K, V2>, Mark> groupBy(Map<K, V2> reduceMap, TraversalFunction<VertexFrame, K> keyFunction, TraversalFunction<VertexFrame, Iterator<V>> valueFunction, TraversalFunction<List<V>, V2> reduceFunction) {
+		return (VertexTraversal<Map<K, V2>, Map<K, V2>, Mark>) super.groupBy(reduceMap, keyFunction, valueFunction, reduceFunction);
 	}
 
 	@Override
-	public VertexTraversal groupBy(Map map, TraversalFunction keyFunction, TraversalFunction valueFunction) {
-		return (VertexTraversal) super.groupBy(map, keyFunction, valueFunction);
+	public <K, V> VertexTraversal<Map<K, List<V>>, Map<K, List<V>>, Mark> groupBy(Map<K, List<V>> map, TraversalFunction<VertexFrame, K> keyFunction, TraversalFunction<VertexFrame, Iterator<V>> valueFunction) {
+		return (VertexTraversal<Map<K, List<V>>, Map<K, List<V>>, Mark>) super.groupBy(map, keyFunction, valueFunction);
 	}
 
 	@Override
-	public VertexTraversal filter(TraversalFunction filterFunction) {
-		return (VertexTraversal) super.filter(filterFunction);
-
-	}
-
-	@Override
-	public VertexTraversal aggregate() {
-		return (VertexTraversal) super.aggregate();
+	public VertexTraversal<?, ?, Mark> filter(TraversalFunction<VertexFrame, Boolean> filterFunction) {
+		return (VertexTraversal<?, ?, Mark>) super.filter(filterFunction);
 
 	}
 
 	@Override
-	public VertexTraversal aggregate(Collection aggregate) {
-		return (VertexTraversal) super.aggregate(aggregate);
+	public VertexTraversal<Collection<? extends VertexFrame>, Collection<? extends VertexFrame>, Mark> aggregate() {
+		return (VertexTraversal<Collection<? extends VertexFrame>, Collection<? extends VertexFrame>, Mark>) super.aggregate();
 
 	}
 
 	@Override
-	public VertexTraversal aggregate(Collection aggregate, TraversalFunction aggregateFunction) {
-		return (VertexTraversal) super.aggregate(aggregate);
+	public VertexTraversal<Collection<? extends VertexFrame>, Collection<? extends VertexFrame>, Mark> aggregate(Collection<? super VertexFrame> aggregate) {
+		return (VertexTraversal<Collection<? extends VertexFrame>, Collection<? extends VertexFrame>, Mark>) super.aggregate(aggregate);
 
 	}
 
 	@Override
-	public VertexTraversal aggregate(TraversalFunction aggregateFunction) {
-		return (VertexTraversal) super.aggregate(aggregateFunction);
+	public <N> VertexTraversal<Collection<? extends N>, Collection<? extends N>, Mark> aggregate(Collection<? super N> aggregate, TraversalFunction<VertexFrame, ? extends N> aggregateFunction) {
+		return (VertexTraversal<Collection<? extends N>, Collection<? extends N>, Mark>) super.aggregate(aggregate, aggregateFunction);
 
 	}
 
 	@Override
-	public VertexTraversal sideEffect(SideEffectFunction sideEffectFunction) {
-		return (VertexTraversal) super.sideEffect(sideEffectFunction);
+	public <N> VertexTraversal<Collection<? extends N>, Collection<? extends N>, Mark> aggregate(TraversalFunction<VertexFrame, ? extends N> aggregateFunction) {
+		return (VertexTraversal<Collection<? extends N>, Collection<? extends N>, Mark>) super.aggregate(aggregateFunction);
+
 	}
 
 	@Override
-	public VertexTraversal random(double bias) {
-
-		return (VertexTraversal) super.random(bias);
+	public VertexTraversal<?, ?, Mark> sideEffect(SideEffectFunction<VertexFrame> sideEffectFunction) {
+		return (VertexTraversal<?, ?, Mark>) super.sideEffect(sideEffectFunction);
 	}
 
 	@Override
-	public VertexTraversal dedup(TraversalFunction dedupFunction) {
+	public VertexTraversal<?, ?, Mark> random(double bias) {
+
+		return (VertexTraversal<?, ?, Mark>) super.random(bias);
+	}
+
+	@Override
+	public VertexTraversal<?, ?, Mark> dedup(TraversalFunction<VertexFrame, ?> dedupFunction) {
 		return (VertexTraversal) super.dedup(dedupFunction);
 	}
 
 	@Override
-	public VertexTraversal except(String... namedSteps) {
+	public VertexTraversal<?, ?, Mark> except(String... namedSteps) {
 
-		return (VertexTraversal) super.except(namedSteps);
+		return (VertexTraversal<?, ?, Mark>) super.except(namedSteps);
 	}
 
 	@Override
-	public VertexTraversal except(Iterable collection) {
-		return (VertexTraversal) super.except(Lists.newArrayList(collection));
+	public VertexTraversal<?, ?, Mark> except(Iterable<?> collection) {
+		return (VertexTraversal<?, ?, Mark>) super.except(Lists.newArrayList(collection));
 	}
 
 	@Override
-	public VertexTraversal range(int low, int high) {
-		return (VertexTraversal) super.range(low, high);
+	public VertexTraversal<?, ?, Mark> range(int low, int high) {
+		return (VertexTraversal<?, ?, Mark>) super.range(low, high);
 	}
 
 	@Override
-	public VertexTraversal and(TraversalFunction... pipes) {
+	public VertexTraversal<?, ?, Mark> and(TraversalFunction<VertexFrame, Traversal<?, ?, ?, ?>>... pipes) {
 		Collection<Pipe> extractedPipes = Collections2.transform(Arrays.asList(pipes), new Function<TraversalFunction, Pipe>() {
 
 			@Override
@@ -247,7 +249,7 @@ abstract class AbstractVertexTraversal extends AbstractTraversal implements Vert
 	}
 
 	@Override
-	public VertexTraversal or(TraversalFunction... pipes) {
+	public VertexTraversal<?, ?, Mark> or(TraversalFunction<VertexFrame, Traversal<?, ?, ?, ?>>... pipes) {
 		Collection<Pipe> extractedPipes = Collections2.transform(Arrays.asList(pipes), new Function<TraversalFunction, Pipe>() {
 
 			@Override
@@ -260,142 +262,142 @@ abstract class AbstractVertexTraversal extends AbstractTraversal implements Vert
 	}
 
 	@Override
-	public VertexTraversal order() {
-		return (VertexTraversal) super.order();
+	public VertexTraversal<?, ?, Mark> order() {
+		return (VertexTraversal<?, ?, Mark>) super.order();
 	}
 
 	@Override
-	public VertexTraversal order(Order order) {
-		return (VertexTraversal) super.order(order);
+	public VertexTraversal<?, ?, Mark> order(Order order) {
+		return (VertexTraversal<?, ?, Mark>) super.order(order);
 	}
 
 	@Override
-	public VertexTraversal order(Comparator compareFunction) {
-		return (VertexTraversal) super.order(compareFunction);
+	public VertexTraversal<?, ?, Mark> order(Comparator<VertexFrame> compareFunction) {
+		return (VertexTraversal<?, ?, Mark>) super.order(compareFunction);
 	}
 
 	@Override
-	public VertexTraversal order(T order) {
-		return (VertexTraversal) super.order(order);
+	public VertexTraversal<?, ?, Mark> order(T order) {
+		return (VertexTraversal<?, ?, Mark>) super.order(order);
 	}
 
 	@Override
-	public VertexTraversal dedup() {
+	public VertexTraversal<?, ?, Mark> dedup() {
 
-		return (VertexTraversal) super.dedup();
+		return (VertexTraversal<?, ?, Mark>) super.dedup();
 	}
 
 	@Override
-	public VertexTraversal retain(String... namedSteps) {
-		return (VertexTraversal) super.retain(namedSteps);
+	public VertexTraversal<?, ?, Mark> retain(String... namedSteps) {
+		return (VertexTraversal<?, ?, Mark>) super.retain(namedSteps);
 	}
 
 	@Override
-	public VertexTraversal simplePath() {
-		return (VertexTraversal) super.simplePath();
+	public VertexTraversal<?, ?, Mark> simplePath() {
+		return (VertexTraversal<?, ?, Mark>) super.simplePath();
 	}
 
 	@Override
-	public VertexTraversal memoize(String namedStep) {
-		return (VertexTraversal) super.memoize(namedStep);
-
-	}
-
-	@Override
-	public VertexTraversal memoize(String namedStep, Map map) {
-		return (VertexTraversal) super.memoize(namedStep, map);
+	public VertexTraversal<?, ?, Mark> memoize(String namedStep) {
+		return (VertexTraversal<?, ?, Mark>) super.memoize(namedStep);
 
 	}
 
 	@Override
-	public VertexTraversal out(int branchFactor, String... labels) {
+	public VertexTraversal<?, ?, Mark> memoize(String namedStep, Map<?,?> map) {
+		return (VertexTraversal<?, ?, Mark>) super.memoize(namedStep, map);
+
+	}
+
+	@Override
+	public VertexTraversal<?, ?, Mark> out(int branchFactor, String... labels) {
 		pipeline().out(branchFactor, labels);
 		return this;
 	}
 
 	@Override
-	public VertexTraversal out(String... labels) {
+	public VertexTraversal<?, ?, Mark> out(String... labels) {
 		pipeline().out(labels);
 		return this;
 	}
 
 	@Override
-	public VertexTraversal in(int branchFactor, String... labels) {
+	public VertexTraversal<?, ?, Mark> in(int branchFactor, String... labels) {
 		pipeline().in(branchFactor, labels);
 		return this;
 	}
 
 	@Override
-	public VertexTraversal in(String... labels) {
+	public VertexTraversal<?, ?, Mark> in(String... labels) {
 		pipeline().in(labels);
 		return this;
 	}
 
 	@Override
-	public VertexTraversal both(int branchFactor, String... labels) {
+	public VertexTraversal<?, ?, Mark> both(int branchFactor, String... labels) {
 		pipeline().both(branchFactor, labels);
 		return this;
 	}
 
 	@Override
-	public VertexTraversal both(String... labels) {
+	public VertexTraversal<?, ?, Mark> both(String... labels) {
 		pipeline().both(labels);
 		return this;
 	}
 
 	@Override
-	public EdgeTraversal outE(int branchFactor, String... labels) {
+	public EdgeTraversal<?, ?, Mark> outE(int branchFactor, String... labels) {
 		pipeline().outE(branchFactor, labels);
 		return castToEdges();
 	}
 
 	@Override
-	public EdgeTraversal outE(String... labels) {
+	public EdgeTraversal<?, ?, Mark> outE(String... labels) {
 		pipeline().outE(labels);
 		return castToEdges();
 	}
 
 	@Override
-	public EdgeTraversal inE(int branchFactor, String... labels) {
+	public EdgeTraversal<?, ?, Mark> inE(int branchFactor, String... labels) {
 		pipeline().inE(branchFactor, labels);
 		return castToEdges();
 	}
 
 	@Override
-	public EdgeTraversal inE(String... labels) {
+	public EdgeTraversal<?, ?, Mark> inE(String... labels) {
 		pipeline().inE(labels);
 		return castToEdges();
 	}
 
 	@Override
-	public EdgeTraversal bothE(int branchFactor, String... labels) {
+	public EdgeTraversal<?, ?, Mark> bothE(int branchFactor, String... labels) {
 		pipeline().bothE(branchFactor, labels);
 		return castToEdges();
 	}
 
 	@Override
-	public EdgeTraversal bothE(String... labels) {
+	public EdgeTraversal<?, ?, Mark> bothE(String... labels) {
 		pipeline().bothE(labels);
 		return castToEdges();
 	}
 
 	@Override
-	public VertexTraversal interval(String key, Comparable startValue, Comparable endValue) {
-		return (VertexTraversal) super.interval(key, startValue, endValue);
+	public <C> VertexTraversal<?, ?, Mark> interval(String key, Comparable<C> startValue, Comparable<C> endValue) {
+		return (VertexTraversal<?, ?, Mark>) super.interval(key, startValue, endValue);
 	}
 
 	@Override
-	public VertexFrame next(Class kind) {
-		return (VertexFrame) graph().frameElement((Element) pipeline().next(), kind);
+	public <N> N next(Class<N> kind) {
+		return graph().frameElement((Element) pipeline().next(), kind);
 	}
 
 	@Override
-	public VertexFrame nextExplicit(Class kind) {
-		return (VertexFrame) graph().frameElementExplicit((Element) pipeline().next(), kind);
+	public <N> N nextExplicit(Class<N> kind) {
+		return graph().frameElementExplicit((Element) pipeline().next(), kind);
 	}
 
 	@Override
-	public Object nextOrDefault(Class kind, Object defaultValue) {
+	public <N> N nextOrDefault(Class<N> kind, N defaultValue) {
 		if (pipeline().hasNext()) {
 			return next(kind);
 		} else {
@@ -404,7 +406,7 @@ abstract class AbstractVertexTraversal extends AbstractTraversal implements Vert
 	}
 
 	@Override
-	public Object nextOrDefaultExplicit(Class kind, Object defaultValue) {
+	public <N> N nextOrDefaultExplicit(Class<N> kind, N defaultValue) {
 		if (pipeline().hasNext()) {
 			return nextExplicit(kind);
 		} else {
@@ -413,9 +415,9 @@ abstract class AbstractVertexTraversal extends AbstractTraversal implements Vert
 	}
 
 	@Override
-	public Object nextOrAdd(Class kind) {
+	public <N> N nextOrAdd(Class<N> kind) {
 		try {
-			return (VertexFrame) graph().frameElement((Element) pipeline().next(), kind);
+			return graph().frameElement((Element) pipeline().next(), kind);
 		} catch (NoSuchElementException e) {
 			return graph().addFramedVertex(kind);
 		}
@@ -423,9 +425,9 @@ abstract class AbstractVertexTraversal extends AbstractTraversal implements Vert
 	}
 
 	@Override
-	public Object nextOrAddExplicit(Class kind) {
+	public <N> N nextOrAddExplicit(Class<N> kind) {
 		try {
-			return (VertexFrame) graph().frameElementExplicit((Element) pipeline().next(), kind);
+			return graph().frameElementExplicit((Element) pipeline().next(), kind);
 		} catch (NoSuchElementException e) {
 			return graph().addFramedVertex(kind);
 		}
@@ -433,7 +435,7 @@ abstract class AbstractVertexTraversal extends AbstractTraversal implements Vert
 	}
 
 	@Override
-	public List next(int amount, final Class kind) {
+	public <N> List<N> next(int amount, final Class<N> kind) {
 		return Lists.transform(pipeline().next(amount), new Function() {
 
 			public Object apply(Object e) {
@@ -443,7 +445,7 @@ abstract class AbstractVertexTraversal extends AbstractTraversal implements Vert
 	}
 
 	@Override
-	public List nextExplicit(int amount, final Class kind) {
+	public <N> List<N> nextExplicit(int amount, final Class<N> kind) {
 		return Lists.transform(pipeline().next(amount), new Function() {
 
 			public Object apply(Object e) {
@@ -453,7 +455,7 @@ abstract class AbstractVertexTraversal extends AbstractTraversal implements Vert
 	}
 
 	@Override
-	public Iterable frame(final Class kind) {
+	public <N> Iterable<N> frame(final Class<N> kind) {
 		return Iterables.transform(pipeline(), new Function() {
 
 			public Object apply(Object e) {
@@ -463,7 +465,7 @@ abstract class AbstractVertexTraversal extends AbstractTraversal implements Vert
 	}
 
 	@Override
-	public List toList(final Class kind) {
+	public <N> List<? extends N> toList(final Class<N> kind) {
 		return Lists.transform(pipeline().toList(), new Function() {
 
 			public Object apply(Object e) {
@@ -473,7 +475,7 @@ abstract class AbstractVertexTraversal extends AbstractTraversal implements Vert
 	}
 
 	@Override
-	public List toListExplicit(final Class kind) {
+	public <N> List<? extends N> toListExplicit(final Class<N> kind) {
 		return Lists.transform(pipeline().toList(), new Function() {
 
 			public Object apply(Object e) {
@@ -483,28 +485,28 @@ abstract class AbstractVertexTraversal extends AbstractTraversal implements Vert
 	}
 
 	@Override
-	public Set toSet(final Class kind) {
+	public <N> Set<? extends N> toSet(Class<N> kind) {
 		return Sets.newHashSet(toList(kind));
 	}
 
 	@Override
-	public Set toSetExplicit(final Class kind) {
+	public <N> Set<? extends N> toSetExplicit(Class<N> kind) {
 		return Sets.newHashSet(toListExplicit(kind));
 	}
 
 	@Override
-	public List toList() {
-		return toListExplicit(TVertex.class);
+	public List<? extends VertexFrame> toList() {
+		return toListExplicit(VertexFrame.class);
 	}
 
 	@Override
-	public Set toSet() {
-		return toSetExplicit(TVertex.class);
+	public Set<? extends VertexFrame> toSet() {
+		return toSetExplicit(VertexFrame.class);
 	}
 
 	@Override
-	public VertexTraversal has(String key) {
-		return (VertexTraversal) super.has(key);
+	public VertexTraversal<?, ?, Mark> has(String key) {
+		return (VertexTraversal<?, ?, Mark>) super.has(key);
 	}
 
 	@Override
@@ -513,143 +515,138 @@ abstract class AbstractVertexTraversal extends AbstractTraversal implements Vert
 	}
 
 	@Override
-	public VertexTraversal has(String key, Predicate predicate, Object value) {
-		return (VertexTraversal) super.has(key, predicate, value);
+	public VertexTraversal<?, ?, Mark> has(String key, Predicate predicate, Object value) {
+		return (VertexTraversal<?, ?, Mark>) super.has(key, predicate, value);
 	}
 
 	@Override
-	public VertexTraversal has(String key, com.tinkerpop.gremlin.Tokens.T compareToken, Object value) {
-		return (VertexTraversal) super.has(key, compareToken, value);
+	public VertexTraversal<?, ?, Mark> has(String key, com.tinkerpop.gremlin.Tokens.T compareToken, Object value) {
+		return (VertexTraversal<?, ?, Mark>) super.has(key, compareToken, value);
 	}
 
 	@Override
-	public VertexTraversal hasNot(String key) {
-		return (VertexTraversal) super.hasNot(key);
+	public VertexTraversal<?, ?, Mark> hasNot(String key) {
+		return (VertexTraversal<?, ?, Mark>) super.hasNot(key);
 	}
 
 	@Override
-	public VertexTraversal hasNot(String key, Object value) {
-		return (VertexTraversal) super.hasNot(key, value);
+	public VertexTraversal<?, ?, Mark> hasNot(String key, Object value) {
+		return (VertexTraversal<?, ?, Mark>) super.hasNot(key, value);
 	}
 
 	@Override
-	public VertexTraversal as(String name) {
-		return (VertexTraversal) super.as(name);
+	public VertexTraversal<?, ?, Mark> as(String name) {
+		return (VertexTraversal<?, ?, Mark>) super.as(name);
 	}
 
 	@Override
-	public VertexTraversal identity() {
-		return (VertexTraversal) super.identity();
+	public VertexTraversal<?, ?, Mark> identity() {
+		return (VertexTraversal<?, ?, Mark>) super.identity();
 	}
 
 	@Override
-	public VertexTraversal linkOut(String label, String namedStep) {
+	public VertexTraversal<List<EdgeFrame>, EdgeFrame, Mark> linkOut(String label, String namedStep) {
 		pipeline().linkOut(label, namedStep);
-		return this;
+		return (VertexTraversal<List<EdgeFrame>, EdgeFrame, Mark>) this;
 	}
 
 	@Override
-	public VertexTraversal linkIn(String label, String namedStep) {
+	public VertexTraversal<List<EdgeFrame>, EdgeFrame, Mark> linkIn(String label, String namedStep) {
 		pipeline().linkIn(label, namedStep);
-		return this;
+		return (VertexTraversal<List<EdgeFrame>, EdgeFrame, Mark>) this;
 	}
 
 	@Override
-	public VertexTraversal linkBoth(String label, String namedStep) {
+	public VertexTraversal<List<EdgeFrame>, EdgeFrame, Mark> linkBoth(String label, String namedStep) {
 		pipeline().linkBoth(label, namedStep);
-		return this;
+		return (VertexTraversal<List<EdgeFrame>, EdgeFrame, Mark>) this;
 	}
 
 	@Override
-	public VertexTraversal linkOut(String label, Vertex other) {
+	public VertexTraversal<List<EdgeFrame>, EdgeFrame, Mark> linkOut(String label, Vertex other) {
 		pipeline().linkOut(label, other);
-		return this;
+		return (VertexTraversal<List<EdgeFrame>, EdgeFrame, Mark>) this;
 	}
 
 	@Override
-	public VertexTraversal linkIn(String label, Vertex other) {
+	public VertexTraversal<List<EdgeFrame>, EdgeFrame, Mark> linkIn(String label, Vertex other) {
 		pipeline().linkIn(label, other);
-		return this;
+		return (VertexTraversal<List<EdgeFrame>, EdgeFrame, Mark>) this;
 	}
 
 	@Override
-	public VertexTraversal linkBoth(String label, Vertex other) {
+	public VertexTraversal<List<EdgeFrame>, EdgeFrame, Mark> linkBoth(String label, Vertex other) {
 		pipeline().linkBoth(label, other);
-		return this;
+		return (VertexTraversal<List<EdgeFrame>, EdgeFrame, Mark>) this;
 	}
 
 	@Override
-	public VertexTraversal linkOut(String label, VertexFrame other) {
+	public VertexTraversal<List<EdgeFrame>, EdgeFrame, Mark> linkOut(String label, VertexFrame other) {
 		pipeline().linkOut(label, other.element());
-		return this;
+		return (VertexTraversal<List<EdgeFrame>, EdgeFrame, Mark>) this;
 	}
 
 	@Override
-	public VertexTraversal linkIn(String label, VertexFrame other) {
+	public VertexTraversal<List<EdgeFrame>, EdgeFrame, Mark> linkIn(String label, VertexFrame other) {
 		pipeline().linkIn(label, other.element());
-		return this;
+		return (VertexTraversal<List<EdgeFrame>, EdgeFrame, Mark>) this;
 	}
 
 	@Override
-	public VertexTraversal linkBoth(String label, VertexFrame other) {
+	public VertexTraversal<List<EdgeFrame>, EdgeFrame, Mark> linkBoth(String label, VertexFrame other) {
 		pipeline().linkBoth(label, other.element());
-		return this;
+		return (VertexTraversal<List<EdgeFrame>, EdgeFrame, Mark>) this;
 	}
 
 	@Override
-	public Collection fill(Collection collection) {
-		return super.fill(collection);
+	public <N extends VertexFrame> Collection<N> fill(Collection<? super N> collection, Class<N> kind) {
+
+		return pipeline().fill(new FramingCollection<>(collection, graph(), kind));
 	}
 
 	@Override
-	public Collection fill(Collection collection, Class clazz) {
+	public <N extends VertexFrame> Collection<N> fillExplicit(Collection<? super N> collection, Class<N> kind) {
 
-		return pipeline().fill(new FramingCollection<>(collection, graph(), clazz));
+		return pipeline().fill(new FramingCollection<>(collection, graph(), kind, true));
 	}
 
 	@Override
-	public Collection fillExplicit(Collection collection, Class clazz) {
-
-		return pipeline().fill(new FramingCollection<>(collection, graph(), clazz, true));
+	public VertexTraversal<?, ?, Mark> gatherScatter() {
+		return (VertexTraversal<?, ?, Mark>) super.gatherScatter();
 	}
 
 	@Override
-	public VertexTraversal gatherScatter() {
-		return (VertexTraversal) super.gatherScatter();
+	public VertexTraversal<?, ?, Mark> divert(SideEffectFunction<SideEffect> sideEffectFunction) {
+		return (VertexTraversal<?, ?, Mark>) super.divert(sideEffectFunction);
 	}
 
 	@Override
-	public VertexTraversal divert(SideEffectFunction sideEffect) {
-		return (VertexTraversal) super.divert(sideEffect);
+	public VertexTraversal<?, ?, Mark> retain(VertexFrame... vertices) {
+
+		return (VertexTraversal<?, ?, Mark>) super.retain(Arrays.asList(vertices));
 	}
 
 	@Override
-	public VertexTraversal retain(VertexFrame... vertices) {
+	public VertexTraversal<?, ?, Mark> except(VertexFrame... vertices) {
 
-		return (VertexTraversal) super.retain(Arrays.asList(vertices));
+		return (VertexTraversal<?, ?, Mark>) super.except(Arrays.asList(vertices));
 	}
 
 	@Override
-	public VertexTraversal except(VertexFrame... vertices) {
+	public VertexTraversal<?, ?, Mark> shuffle() {
 
-		return (VertexTraversal) super.except(Arrays.asList(vertices));
+		return (VertexTraversal<?, ?, Mark>) super.shuffle();
 	}
 
 	@Override
-	public VertexTraversal shuffle() {
-
-		return (VertexTraversal) super.shuffle();
+	public VertexTraversal<?, ?, Mark> retain(Iterable<?> vertices) {
+		return (VertexTraversal<?, ?, Mark>) super.retain(Lists.newArrayList(vertices));
 	}
 
 	@Override
-	public VertexTraversal retain(Iterable vertices) {
-		return (VertexTraversal) super.retain(Lists.newArrayList(vertices));
-	}
+	public VertexTraversal<Cap, SideEffect, ? extends VertexTraversal<Cap, SideEffect, Mark>> mark() {
 
-	@Override
-	public VertexTraversal mark() {
-
-		return (VertexTraversal) super.mark();
+		return (VertexTraversal<Cap, SideEffect, VertexTraversal<Cap, SideEffect, Mark>>) super.mark();
 	}
 
 	@Override
@@ -658,7 +655,7 @@ abstract class AbstractVertexTraversal extends AbstractTraversal implements Vert
 	}
 
 	@Override
-	public SplitTraversal copySplit(TraversalFunction... traversals) {
+	public <N> SplitTraversal<? extends Traversal<N, ?, ?, Mark>> copySplit(TraversalFunction<VertexFrame, ? extends Traversal<N, ?, ?, ?>>... traversals) {
 		Collection<Pipe> extractedPipes = Collections2.transform(Arrays.asList(traversals),
 				new Function<TraversalFunction, Pipe>() {
 
@@ -672,24 +669,29 @@ abstract class AbstractVertexTraversal extends AbstractTraversal implements Vert
 	}
 
 	@Override
-	public VertexTraversal tree() {
+	public VertexTraversal<Tree<VertexFrame>, Tree<VertexFrame>, Mark> tree() {
 
-		return (VertexTraversal) super.tree();
+		return (VertexTraversal<Tree<VertexFrame>, Tree<VertexFrame>, Mark>) super.tree();
 	}
 
 	@Override
-	public VertexTraversal loop(TraversalFunction input) {
-		return (VertexTraversal) super.loop(input);
+	public VertexTraversal<?, ?, Mark> loop(TraversalFunction<VertexFrame, ? extends VertexTraversal<?, ?, ?>> input) {
+		GremlinPipeline pipeline = ((AbstractTraversal) input.compute(new TVertex())).pipeline();
+		pipeline().add(new LoopPipe(pipeline, LoopPipe.createTrueFunction(), null));
+
+		return this;
 	}
 
 	@Override
-	public VertexTraversal loop(TraversalFunction input, int depth) {
-		return (VertexTraversal) super.loop(input, depth);
+	public VertexTraversal<?, ?, Mark> loop(TraversalFunction<VertexFrame, ? extends VertexTraversal<?, ?, ?>> input, int depth) {
+		GremlinPipeline pipeline = ((AbstractTraversal) input.compute(new TVertex())).pipeline();
+		pipeline().add(new LoopPipe(pipeline, LoopPipe.createLoopsFunction(depth), null));
 
+		return this;
 	}
 
 	@Override
-	public VertexTraversal limit(int limit) {
+	public VertexTraversal<?, ?, Mark> limit(int limit) {
 		return (VertexTraversal) super.limit(limit);
 	}
 }

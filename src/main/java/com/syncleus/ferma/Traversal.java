@@ -41,7 +41,7 @@ import com.tinkerpop.pipes.util.structures.Tree;
 /**
  * The root traversal class. Wraps a Tinkerpop {@link GremlinPipeline}
  *
- * @param <T>
+ * @param <T> The current type coming off the pipe.
  * @param <Cap>
  */
 public interface Traversal<T, Cap, SideEffect, Mark> extends Iterator<T>, Iterable<T> {
@@ -221,7 +221,7 @@ public interface Traversal<T, Cap, SideEffect, Mark> extends Iterator<T>, Iterab
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract Traversal<T, Collection<T>, Collection<T>, Mark> aggregate();
+	public abstract Traversal<T, Collection<? extends T>, Collection<? extends T>, Mark> aggregate();
 
 	/**
 	 * The objects prior to aggregate are greedily collected into the provided
@@ -231,7 +231,7 @@ public interface Traversal<T, Cap, SideEffect, Mark> extends Iterator<T>, Iterab
 	 *            the collection to aggregate results into
 	 * @return the extended Pipeline
 	 */
-	public abstract Traversal<T, Collection<T>, Collection<T>, Mark> aggregate(Collection<T> aggregate);
+	public abstract Traversal<T, Collection<? extends T>, Collection<? extends T>, Mark> aggregate(Collection<? super T> aggregate);
 
 	/**
 	 * The results of the function evaluated on the objects prior to the
@@ -244,8 +244,7 @@ public interface Traversal<T, Cap, SideEffect, Mark> extends Iterator<T>, Iterab
 	 *            the aggregate
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> Traversal<T, Collection<N>, Collection<N>, Mark> aggregate(Collection<T> aggregate,
-			TraversalFunction<T, N> aggregateFunction);
+	public abstract <N> Traversal<T, Collection<? extends N>, Collection<? extends N>, Mark> aggregate(Collection<? super N> aggregate, TraversalFunction<T, ? extends N> aggregateFunction);
 
 	/**
 	 * The results of the function evaluated on the objects prior to the
@@ -256,7 +255,7 @@ public interface Traversal<T, Cap, SideEffect, Mark> extends Iterator<T>, Iterab
 	 *            the aggregate
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> Traversal<T, Collection<N>, Collection<N>, Mark> aggregate(TraversalFunction<T, N> aggregateFunction);
+	public abstract <N> Traversal<T, Collection<? extends N>, Collection<? extends N>, Mark> aggregate(TraversalFunction<T, ? extends N> aggregateFunction);
 
 	/**
 	 * Group the objects inputted objects according to a key generated from the
@@ -422,7 +421,7 @@ public interface Traversal<T, Cap, SideEffect, Mark> extends Iterator<T>, Iterab
 	 *            the collection to store results into
 	 * @return the extended Pipeline
 	 */
-	public abstract Traversal<T, Collection<T>, T, Mark> store(Collection<T> storage);
+	public abstract <N> Traversal<T, Collection<N>, N, Mark> store(Collection<N> storage);
 
 	/**
 	 * Lazily store the object returned by the function over the incoming object
@@ -637,7 +636,7 @@ public interface Traversal<T, Cap, SideEffect, Mark> extends Iterator<T>, Iterab
 	 * 
 	 * @return the extended Pipeline
 	 */
-	public abstract <M extends Traversal<T, Cap, SideEffect, Mark>> Traversal<T, Cap, SideEffect, M> mark();
+	public abstract Traversal<T, Cap, SideEffect, ? extends Traversal<T, Cap, SideEffect, Mark>> mark();
 
 	/**
 	 * Causes the pipeline to be greedy up to this step.
@@ -731,7 +730,7 @@ public interface Traversal<T, Cap, SideEffect, Mark> extends Iterator<T>, Iterab
 	 *            the transformation function of the pipe
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> Traversal<N, ?, ?, Mark> transform(TraversalFunction<T, N> function);
+	public abstract <N> Traversal<? extends N, ?, ?, Mark> transform(TraversalFunction<T, N> function);
 
 	/**
 	 * Though, in practice, a StartPipe is usually the beginning. Moreover, the
@@ -767,6 +766,26 @@ public interface Traversal<T, Cap, SideEffect, Mark> extends Iterator<T>, Iterab
 	public abstract EdgeTraversal<?, ?, Mark> start(EdgeFrame object);
 
 	/**
+	 * Emit the respective property of the incoming element.
+	 *
+	 * @param key
+	 *            the property key
+	 * @return the extended Pipeline
+	 */
+	public abstract <N> Traversal<N, ?, ?, Mark> property(String key);
+
+	/**
+	 * Emit the respective property of the incoming element.
+	 *
+	 * @param key
+	 *            the property key
+	 * @param type
+	 *            the property type;
+	 * @return the extended Pipeline
+	 */
+	public abstract <N> Traversal<? extends N, ?, ?, Mark> property(String key, Class<N> type);
+
+	/**
 	 * Return the number of objects iterated through the pipeline.
 	 *
 	 * @return the number of objects iterated
@@ -792,21 +811,21 @@ public interface Traversal<T, Cap, SideEffect, Mark> extends Iterator<T>, Iterab
 	 *            the number of objects to return
 	 * @return a list of X objects (if X objects occur)
 	 */
-	public abstract List<T> next(int number);
+	public abstract List<? extends T> next(int number);
 
 	/**
 	 * Return a list of all the objects in the pipeline.
 	 *
 	 * @return a list of all the objects
 	 */
-	public abstract List<T> toList();
+	public abstract List<? extends T> toList();
 
 	/**
 	 * Return a set of all the objects in the pipeline.
 	 *
 	 * @return a set of all the objects
 	 */
-	public abstract Set<T> toSet();
+	public abstract Set<? extends T> toSet();
 
 	/**
 	 * Enable path calculations within the Pipeline. This is typically done
@@ -835,7 +854,7 @@ public interface Traversal<T, Cap, SideEffect, Mark> extends Iterator<T>, Iterab
 	 *            the collection to fill
 	 * @return the collection filled
 	 */
-	public abstract Collection<T> fill(Collection<T> collection);
+	public abstract Collection<T> fill(Collection<? super T> collection);
 
 	/**
 	 * The section of pipeline back to the topmost marked step is evaluated. The mark is removed from the stack.
@@ -863,8 +882,21 @@ public interface Traversal<T, Cap, SideEffect, Mark> extends Iterator<T>, Iterab
 	 * @return the extended Pipeline
 	 */
 	public abstract VertexTraversal<?, ?, Mark> idVertex(Graph graph);
-	
-	
 
+	/**
+	 * Emit the ids of the incoming objects.
+	 *
+	 * @return A traversal of the ids.
+	 * @since 2.1.0
+	 */
+	public <N> Traversal<N, ?, ?, Mark> id();
 
+	/**
+	 * Emit the ids of the incoming objects, cast to the specified class.
+	 *
+	 * @param c the class type to cast the ids to.
+	 * @return A traversal of the ids.
+	 * @since 2.1.0
+	 */
+	public <N> Traversal<? extends N, ?, ?, Mark> id(Class<N> c);
 }

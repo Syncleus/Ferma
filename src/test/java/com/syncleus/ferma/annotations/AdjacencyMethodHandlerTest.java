@@ -39,7 +39,7 @@ public class AdjacencyMethodHandlerTest {
 
         final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
 
-        final List<God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
+        final List<? extends God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father instanceof VertexFrame);
@@ -63,11 +63,11 @@ public class AdjacencyMethodHandlerTest {
 
         final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
 
-        final List<God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
+        final List<? extends God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father instanceof VertexFrame);
-        final VertexFrame fatherVertex = (VertexFrame) father;
+        final VertexFrame fatherVertex = father;
         Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
 
         final Iterable<? extends God> children = father.getSons(God.class);
@@ -87,11 +87,11 @@ public class AdjacencyMethodHandlerTest {
 
         final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
 
-        final List<God> gods = (List<God>) framedGraph.v().has("name", "jupiter").toList(God.class);
+        final List<? extends God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father instanceof VertexFrame);
-        final VertexFrame fatherVertex = (VertexFrame) father;
+        final VertexFrame fatherVertex = father;
         Assert.assertEquals(fatherVertex.element().getProperty("name"), "jupiter");
 
         final Iterable<? extends God> children = father.getSons(GodExtended.class);
@@ -111,7 +111,7 @@ public class AdjacencyMethodHandlerTest {
 
         final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
 
-        final List<GodAlternative> gods = (List<GodAlternative>) framedGraph.v().has("name", "jupiter").toList(GodAlternative.class);
+        final List<? extends GodAlternative> gods = framedGraph.v().has("name", "jupiter").toList(GodAlternative.class);
 
         final GodAlternative father = gods.iterator().next();
         Assert.assertTrue(father instanceof GodAlternative);
@@ -136,7 +136,7 @@ public class AdjacencyMethodHandlerTest {
 
         final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
 
-        final List<GodAlternative> gods = framedGraph.v().has("name", "jupiter").toList(GodAlternative.class);
+        final List<? extends GodAlternative> gods = framedGraph.v().has("name", "jupiter").toList(GodAlternative.class);
 
         final GodAlternative father = gods.iterator().next();
         Assert.assertTrue(father instanceof VertexFrame);
@@ -155,7 +155,7 @@ public class AdjacencyMethodHandlerTest {
 
         final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
 
-        final List<God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
+        final List<? extends God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father instanceof VertexFrame);
@@ -177,7 +177,7 @@ public class AdjacencyMethodHandlerTest {
 
         final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
 
-        final List<God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
+        final List<? extends God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father instanceof VertexFrame);
@@ -199,7 +199,7 @@ public class AdjacencyMethodHandlerTest {
 
         final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
 
-        final List<God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
+        final List<? extends God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father instanceof VertexFrame);
@@ -217,7 +217,7 @@ public class AdjacencyMethodHandlerTest {
 
         final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
 
-        final List<God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
+        final List<? extends God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father instanceof VertexFrame);
@@ -237,7 +237,7 @@ public class AdjacencyMethodHandlerTest {
 
         final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
 
-        final List<God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
+        final List<? extends God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father instanceof VertexFrame);
@@ -259,7 +259,7 @@ public class AdjacencyMethodHandlerTest {
 
         final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
 
-        final List<God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
+        final List<? extends God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father instanceof VertexFrame);
@@ -279,7 +279,7 @@ public class AdjacencyMethodHandlerTest {
 
         final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
 
-        final List<God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
+        final List<? extends God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father instanceof VertexFrame);
@@ -301,7 +301,7 @@ public class AdjacencyMethodHandlerTest {
 
         final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
 
-        final List<God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
+        final List<? extends God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father instanceof VertexFrame);
@@ -326,7 +326,7 @@ public class AdjacencyMethodHandlerTest {
 
         final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
 
-        final List<God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
+        final List<? extends God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father instanceof VertexFrame);
@@ -354,7 +354,7 @@ public class AdjacencyMethodHandlerTest {
 
         final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
 
-        final List<God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
+        final List<? extends God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father instanceof VertexFrame);
@@ -382,7 +382,7 @@ public class AdjacencyMethodHandlerTest {
 
         final FramedGraph framedGraph = new FramedGraph(godGraph, exceptionTypes);
 
-        final List<BadGetSonsArgumentClass> gods = framedGraph.v().has("name", "jupiter").toList(BadGetSonsArgumentClass.class);
+        final List<? extends BadGetSonsArgumentClass> gods = framedGraph.v().has("name", "jupiter").toList(BadGetSonsArgumentClass.class);
 
         final BadGetSonsArgumentClass father = gods.iterator().next();
     }
@@ -397,7 +397,7 @@ public class AdjacencyMethodHandlerTest {
 
         final FramedGraph framedGraph = new FramedGraph(godGraph, exceptionTypes);
 
-        final List<BadGetSonsArgumentInterface> gods = framedGraph.v().has("name", "jupiter").toList(BadGetSonsArgumentInterface.class);
+        final List<? extends BadGetSonsArgumentInterface> gods = framedGraph.v().has("name", "jupiter").toList(BadGetSonsArgumentInterface.class);
 
         final BadGetSonsArgumentInterface father = gods.iterator().next();
     }
@@ -412,7 +412,7 @@ public class AdjacencyMethodHandlerTest {
 
         final FramedGraph framedGraph = new FramedGraph(godGraph, exceptionTypes);
 
-        final List<BadGetSonsArgumentInterface> gods = framedGraph.v().has("name", "jupiter").toList(BadGetSonsArgumentInterface.class);
+        final List<? extends BadGetSonsArgumentInterface> gods = framedGraph.v().has("name", "jupiter").toList(BadGetSonsArgumentInterface.class);
 
         final BadGetSonsArgumentInterface father = gods.iterator().next();
     }
@@ -427,7 +427,7 @@ public class AdjacencyMethodHandlerTest {
 
         final FramedGraph framedGraph = new FramedGraph(godGraph, exceptionTypes);
 
-        final List<BadGetSonsArgumentInterface> gods = framedGraph.v().has("name", "jupiter").toList(BadGetSonsArgumentInterface.class);
+        final List<? extends BadGetSonsArgumentInterface> gods = framedGraph.v().has("name", "jupiter").toList(BadGetSonsArgumentInterface.class);
 
         final BadGetSonsArgumentInterface father = gods.iterator().next();
     }
@@ -442,7 +442,7 @@ public class AdjacencyMethodHandlerTest {
 
         final FramedGraph framedGraph = new FramedGraph(godGraph, exceptionTypes);
 
-        final List<BadGetSonsArgumentInterface> gods = framedGraph.v().has("name", "jupiter").toList(BadGetSonsArgumentInterface.class);
+        final List<? extends BadGetSonsArgumentInterface> gods = framedGraph.v().has("name", "jupiter").toList(BadGetSonsArgumentInterface.class);
 
         final BadGetSonsArgumentInterface father = gods.iterator().next();
     }
@@ -457,7 +457,7 @@ public class AdjacencyMethodHandlerTest {
 
         final FramedGraph framedGraph = new FramedGraph(godGraph, exceptionTypes);
 
-        final List<BadGetSonsArgumentInterface> gods = framedGraph.v().has("name", "jupiter").toList(BadGetSonsArgumentInterface.class);
+        final List<? extends BadGetSonsArgumentInterface> gods = framedGraph.v().has("name", "jupiter").toList(BadGetSonsArgumentInterface.class);
 
         final BadGetSonsArgumentInterface father = gods.iterator().next();
     }

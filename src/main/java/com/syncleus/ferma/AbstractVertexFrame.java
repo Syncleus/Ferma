@@ -44,7 +44,7 @@ public abstract class AbstractVertexFrame extends AbstractElementFrame implement
 	};
 
 	@Override
-	public <T extends EdgeFrame> T addFramedEdge(String label, VertexFrame inVertex, Class<T> kind) {
+	public <T> T addFramedEdge(String label, VertexFrame inVertex, Class<T> kind) {
 
 		Edge edge = element().addEdge(label, inVertex.element());
 		T framedEdge = graph().frameNewElement(edge, kind);
@@ -52,7 +52,7 @@ public abstract class AbstractVertexFrame extends AbstractElementFrame implement
 	}
 
 	@Override
-	public <T extends EdgeFrame> T addFramedEdgeExplicit(String label, VertexFrame inVertex, Class<T> kind) {
+	public <T> T addFramedEdgeExplicit(String label, VertexFrame inVertex, Class<T> kind) {
 
 		Edge edge = element().addEdge(label, inVertex.element());
 		T framedEdge = graph().frameNewElementExplicit(edge, kind);
@@ -202,44 +202,44 @@ public abstract class AbstractVertexFrame extends AbstractElementFrame implement
 	}
 
 	@Override
-	public <K extends VertexFrame> VertexFrame setLinkOut(Class<K> kind, String... labels) {
+	public <K> K setLinkOut(Class<K> kind, String... labels) {
 		K vertex = graph().addFramedVertex(kind);
-		setLinkOut(vertex, labels);
+		setLinkOut((VertexFrame)vertex, labels);
 		return vertex;
 	}
 
 	@Override
-	public <K extends VertexFrame> VertexFrame setLinkOutExplicit(Class<K> kind, String... labels) {
+	public <K> K setLinkOutExplicit(Class<K> kind, String... labels) {
 		K vertex = graph().addFramedVertexExplicit(kind);
-		setLinkOut(vertex, labels);
+		setLinkOut((VertexFrame)vertex, labels);
 		return vertex;
 	}
 
 	@Override
-	public <K extends VertexFrame> VertexFrame setLinkIn(Class<K> kind, String... labels) {
+	public <K> K setLinkIn(Class<K> kind, String... labels) {
 		K vertex = graph().addFramedVertex(kind);
-		setLinkIn(vertex, labels);
+		setLinkIn((VertexFrame)vertex, labels);
 		return vertex;
 	}
 
 	@Override
-	public <K extends VertexFrame> VertexFrame setLinkInExplicit(Class<K> kind, String... labels) {
+	public <K> K setLinkInExplicit(Class<K> kind, String... labels) {
 		K vertex = graph().addFramedVertexExplicit(kind);
-		setLinkIn(vertex, labels);
+		setLinkIn((VertexFrame)vertex, labels);
 		return vertex;
 	}
 
 	@Override
-	public <K extends VertexFrame> VertexFrame setLinkBoth(Class<K> kind, String... labels) {
+	public <K> K setLinkBoth(Class<K> kind, String... labels) {
 		K vertex = graph().addFramedVertex(kind);
-		setLinkBoth(vertex, labels);
+		setLinkBoth((VertexFrame)vertex, labels);
 		return vertex;
 	}
 
 	@Override
-	public <K extends VertexFrame> VertexFrame setLinkBothExplicit(Class<K> kind, String... labels) {
+	public <K> K setLinkBothExplicit(Class<K> kind, String... labels) {
 		K vertex = graph().addFramedVertexExplicit(kind);
-		setLinkBoth(vertex, labels);
+		setLinkBoth((VertexFrame)vertex, labels);
 		return vertex;
 	}
 
@@ -277,12 +277,12 @@ public abstract class AbstractVertexFrame extends AbstractElementFrame implement
 	}
 
 	@Override
-	public <T extends VertexFrame> T reframe(Class<T> kind) {
+	public <T> T reframe(Class<T> kind) {
 		return graph().frameElement(element(), kind);
 	}
 
 	@Override
-	public <T extends VertexFrame> T reframeExplicit(Class<T> kind) {
+	public <T> T reframeExplicit(Class<T> kind) {
 		return graph().frameElementExplicit(element(), kind);
 	}
 }

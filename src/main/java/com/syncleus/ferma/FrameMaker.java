@@ -36,7 +36,7 @@ class FrameMaker {
 	private FramedGraph graph;
 	private Class<?> kind;
 
-	public <T extends ElementFrame> FrameMaker(FramedGraph graph, Class<T> kind) {
+	public FrameMaker(FramedGraph graph, Class<? extends ElementFrame> kind) {
 		this.graph = graph;
 		this.kind = kind;
 	}

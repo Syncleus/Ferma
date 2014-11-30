@@ -226,7 +226,7 @@ public class FramedGraph implements Graph {
 		if( e == null )
 			return null;
 
-		Class<T> frameType = (kind == TVertex.class || kind == TEdge.class) ? kind : defaultResolver.resolve(e, kind);
+		Class<? extends T> frameType = (kind == TVertex.class || kind == TEdge.class) ? kind : defaultResolver.resolve(e, kind);
 
 		T framedElement = builder.create(e, frameType);
 		((AbstractElementFrame)framedElement).init(this, e);
@@ -240,7 +240,7 @@ public class FramedGraph implements Graph {
 		return t;
 	}
 
-	<T extends ElementFrame> Iterator<T> frame(Iterator<? extends Element> pipeline, final Class<T> kind) {
+	<T extends ElementFrame> Iterator<? extends T> frame(Iterator<? extends Element> pipeline, final Class<T> kind) {
 		return Iterators.transform(pipeline, new Function<Element, T>() {
 
 			@Override
@@ -255,7 +255,7 @@ public class FramedGraph implements Graph {
 		if(e == null)
 			return null;
 
-		Class<T> frameType = this.untypedResolver.resolve(e, kind);
+		Class<? extends T> frameType = this.untypedResolver.resolve(e, kind);
 
 		T framedElement = builder.create(e, frameType);
 		((AbstractElementFrame)framedElement).init(this, e);
@@ -269,7 +269,7 @@ public class FramedGraph implements Graph {
 		return t;
 	}
 
-	<T extends ElementFrame> Iterator<T> frameExplicit(Iterator<? extends Element> pipeline, final Class<T> kind) {
+	<T extends ElementFrame> Iterator<? extends T> frameExplicit(Iterator<? extends Element> pipeline, final Class<T> kind) {
 		return Iterators.transform(pipeline, new Function<Element, T>() {
 
 			@Override
@@ -411,35 +411,35 @@ public class FramedGraph implements Graph {
 		return new SimpleTraversal(this, delegate).e();
 	}
 
-	public <F> Iterable<F> getFramedVertices(final Class<F> kind) {
+	public <F> Iterable<? extends F> getFramedVertices(final Class<F> kind) {
 		return new FramingVertexIterable<>(this, this.getVertices(), kind);
 	}
 
-	public <F> Iterable<F> getFramedVertices(final String key, final Object value, final Class<F> kind) {
+	public <F> Iterable<? extends F> getFramedVertices(final String key, final Object value, final Class<F> kind) {
 		return new FramingVertexIterable<>(this, this.getVertices(key, value), kind);
 	}
 
-	public <F> Iterable<F> getFramedVerticesExplicit(final Class<F> kind) {
+	public <F> Iterable<? extends F> getFramedVerticesExplicit(final Class<F> kind) {
 		return new FramingVertexIterable<>(this, this.getVertices(), kind, true);
 	}
 
-	public <F> Iterable<F> getFramedVerticesExplicit(final String key, final Object value, final Class<F> kind) {
+	public <F> Iterable<? extends F> getFramedVerticesExplicit(final String key, final Object value, final Class<F> kind) {
 		return new FramingVertexIterable<>(this, this.getVertices(key, value), kind, true);
 	}
 
-	public <F> Iterable<F> getFramedEdges(final Class<F> kind) {
+	public <F> Iterable<? extends F> getFramedEdges(final Class<F> kind) {
 		return new FramingEdgeIterable<>(this, this.getEdges(), kind);
 	}
 
-	public <F> Iterable<F> getFramedEdges(final String key, final Object value, final Class<F> kind) {
+	public <F> Iterable<? extends F> getFramedEdges(final String key, final Object value, final Class<F> kind) {
 		return new FramingEdgeIterable<>(this, this.getEdges(key, value), kind);
 	}
 
-	public <F> Iterable<F> getFramedEdgesExplicit(final Class<F> kind) {
+	public <F> Iterable<? extends F> getFramedEdgesExplicit(final Class<F> kind) {
 		return new FramingEdgeIterable<>(this, this.getEdges(), kind, true);
 	}
 
-	public <F> Iterable<F> getFramedEdgesExplicit(final String key, final Object value, final Class<F> kind) {
+	public <F> Iterable<? extends F> getFramedEdgesExplicit(final String key, final Object value, final Class<F> kind) {
 		return new FramingEdgeIterable<>(this, this.getEdges(key, value), kind, true);
 	}
 

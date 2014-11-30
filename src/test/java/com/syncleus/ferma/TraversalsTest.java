@@ -41,30 +41,30 @@ public class TraversalsTest {
 
 	@Test
 	public void testCopySplit() {
-		List<TVertex> fair = graph.v(1).out("knows").copySplit(new TraversalFunction<TVertex, Traversal<TVertex, ?, ?, ?>>() {
+		List<? extends VertexFrame> fair = graph.v(1).out("knows").copySplit(new TraversalFunction<VertexFrame, Traversal<VertexFrame, ?, ?, ?>>() {
 
 			@Override
-			public Traversal<TVertex, ?, ?, ?> compute(TVertex v) {
+			public Traversal<VertexFrame, ?, ?, ?> compute(VertexFrame v) {
 				return v.traversal();
 			}
-		}, new TraversalFunction<TVertex, Traversal<TVertex, ?, ?, ?>>() {
+		}, new TraversalFunction<VertexFrame, Traversal<VertexFrame, ?, ?, ?>>() {
 
 			@Override
-			public Traversal<TVertex, ?, ?, ?> compute(TVertex v) {
+			public Traversal<VertexFrame, ?, ?, ?> compute(VertexFrame v) {
 				return v.out();
 			}
 		}).fairMerge().toList();
 		
-		List<TVertex> exhaust = graph.v(1).out("knows").copySplit(new TraversalFunction<TVertex, Traversal<TVertex, ?, ?, ?>>() {
+		List<? extends VertexFrame> exhaust = graph.v(1).out("knows").copySplit(new TraversalFunction<VertexFrame, Traversal<VertexFrame, ?, ?, ?>>() {
 
 			@Override
-			public Traversal<TVertex, ?, ?, ?> compute(TVertex v) {
+			public Traversal<VertexFrame, ?, ?, ?> compute(VertexFrame v) {
 				return v.traversal();
 			}
-		}, new TraversalFunction<TVertex, Traversal<TVertex, ?, ?, ?>>() {
+		}, new TraversalFunction<VertexFrame, Traversal<VertexFrame, ?, ?, ?>>() {
 
 			@Override
-			public Traversal<TVertex, ?, ?, ?> compute(TVertex v) {
+			public Traversal<VertexFrame, ?, ?, ?> compute(VertexFrame v) {
 				return v.out();
 			}
 		}).exhaustMerge().toList();
@@ -86,7 +86,7 @@ public class TraversalsTest {
 
 	@Test
 	public void testMarkOptional() {
-		List<TVertex> aggregate = new ArrayList<>();
+		List<VertexFrame> aggregate = new ArrayList<>();
 		Assert.assertEquals(6, graph.v().mark().outE("knows").inV().has("age", T.gt, 30).aggregate(aggregate).optional()
 				.property("age").count());
 		Assert.assertEquals(graph.v(4).next(), aggregate.get(0));
@@ -189,7 +189,7 @@ public class TraversalsTest {
 		Assert.assertEquals("josh", graph.v().property("name").order().next());
 		Assert.assertEquals("vadas", graph.v().property("name").order(Order.DECR).next());
 
-		Assert.assertEquals(graph.v(2).next(), graph.v().order(Comparators.<TVertex> property("name")).out("knows").next());
+		Assert.assertEquals(graph.v(2).next(), graph.v().order(Comparators.<VertexFrame> property("name")).out("knows").next());
 
 	}
 
@@ -246,10 +246,10 @@ public class TraversalsTest {
 
 	@Test
 	public void testTransform() {
-		Assert.assertEquals(new Integer(1), graph.v(1).transform(new TraversalFunction<TVertex, Integer>() {
+		Assert.assertEquals(new Integer(1), graph.v(1).transform(new TraversalFunction<VertexFrame, Integer>() {
 
 			@Override
-			public Integer compute(TVertex argument) {
+			public Integer compute(VertexFrame argument) {
 
 				return 1;
 			}
@@ -265,16 +265,16 @@ public class TraversalsTest {
 
 	@Test
 	public void testAnd() {
-		Assert.assertEquals(2, graph.v().and(new TraversalFunction<TVertex, Traversal<?, ?, ?, ?>>() {
+		Assert.assertEquals(2, graph.v().and(new TraversalFunction<VertexFrame, Traversal<?, ?, ?, ?>>() {
 
 			@Override
-			public Traversal<?, ?, ?, ?> compute(TVertex v) {
+			public Traversal<?, ?, ?, ?> compute(VertexFrame v) {
 				return v.both("knows");
 			}
-		}, new TraversalFunction<TVertex, Traversal<?, ?, ?, ?>>() {
+		}, new TraversalFunction<VertexFrame, Traversal<?, ?, ?, ?>>() {
 
 			@Override
-			public Traversal<?, ?, ?, ?> compute(TVertex v) {
+			public Traversal<?, ?, ?, ?> compute(VertexFrame v) {
 				return v.both("created");
 			}
 		}).count());
@@ -282,10 +282,10 @@ public class TraversalsTest {
 
 	@Test
 	public void testOr() {
-		Assert.assertEquals(3, graph.v().or(new TraversalFunction<TVertex, Traversal<?, ?, ?, ?>>() {
+		Assert.assertEquals(3, graph.v().or(new TraversalFunction<VertexFrame, Traversal<?, ?, ?, ?>>() {
 
 			@Override
-			public Traversal<?, ?, ?, ?> compute(TVertex argument) {
+			public Traversal<?, ?, ?, ?> compute(VertexFrame argument) {
 				return argument.out().has("name");
 			}
 		}).count());
@@ -303,10 +303,10 @@ public class TraversalsTest {
 
 	@Test
 	public void testFilter() {
-		Assert.assertEquals(2, graph.v().filter(new TraversalFunction<TVertex, Boolean>() {
+		Assert.assertEquals(2, graph.v().filter(new TraversalFunction<VertexFrame, Boolean>() {
 
 			@Override
-			public Boolean compute(TVertex argument) {
+			public Boolean compute(VertexFrame argument) {
 				return argument.getProperty("age") != null && argument.getProperty("age", Integer.class) > 29;
 			}
 		}).count());
@@ -346,7 +346,7 @@ public class TraversalsTest {
 	@Test
 	public void testAggregate() {
 
-		List<TVertex> x = new ArrayList<TVertex>();
+		List<VertexFrame> x = new ArrayList<VertexFrame>();
 		Assert.assertEquals(graph.v(3).next(), graph.v(1).out().aggregate(x).next());
 		Assert.assertEquals(3, graph.v(1).out().aggregate().cap().size());
 		Assert.assertEquals(3, x.size());
@@ -356,23 +356,23 @@ public class TraversalsTest {
 	@Test
 	public void testGroupCount() {
 
-		Map<TVertex, Long> cap = graph.v().out().groupCount().cap();
+		Map<VertexFrame, Long> cap = graph.v().out().groupCount().cap();
 		Assert.assertEquals(4, cap.size());
 		Assert.assertTrue(cap.keySet().iterator().next() instanceof TVertex);
 
-		Assert.assertEquals(4, graph.v().out().groupCount(new TraversalFunction<TVertex, String>() {
+		Assert.assertEquals(4, graph.v().out().groupCount(new TraversalFunction<VertexFrame, String>() {
 
 			@Override
-			public String compute(TVertex argument) {
+			public String compute(VertexFrame argument) {
 				return argument.getId();
 
 			}
 		}).cap().size());
 
-		Assert.assertEquals(6, graph.v().out().groupCount().divert(new SideEffectFunction<Map<TVertex, Long>>() {
+		Assert.assertEquals(6, graph.v().out().groupCount().divert(new SideEffectFunction<Map<VertexFrame, Long>>() {
 
 			@Override
-			public void execute(Map<TVertex, Long> o) {
+			public void execute(Map<VertexFrame, Long> o) {
 				Assert.assertEquals(4, o.size());
 			}
 		}).count());
@@ -382,11 +382,11 @@ public class TraversalsTest {
 	@Test
 	public void testGroupBy() {
 
-		Map<TVertex, List<TVertex>> cap = graph.v()
-				.groupBy(TraversalFunctions.<TVertex> identity(), new TraversalFunction<TVertex, Iterator<TVertex>>() {
+		Map<VertexFrame, List<VertexFrame>> cap = graph.v()
+				.groupBy(TraversalFunctions.<VertexFrame> identity(), new TraversalFunction<VertexFrame, Iterator<VertexFrame>>() {
 
 					@Override
-					public Iterator<TVertex> compute(TVertex argument) {
+					public Iterator<VertexFrame> compute(VertexFrame argument) {
 						return argument.out();
 					}
 
@@ -404,11 +404,11 @@ public class TraversalsTest {
 
 	@Test
 	public void testSideEffect() {
-		final List<TVertex> collected = new ArrayList<TVertex>();
-		graph.v(1).sideEffect(new SideEffectFunction<TVertex>() {
+		final List<VertexFrame> collected = new ArrayList<VertexFrame>();
+		graph.v(1).sideEffect(new SideEffectFunction<VertexFrame>() {
 
 			@Override
-			public void execute(TVertex o) {
+			public void execute(VertexFrame o) {
 				collected.add(o);
 
 			}
@@ -437,7 +437,7 @@ public class TraversalsTest {
 	@Test
 	public void testTree() {
 
-		Tree<TVertex> tree = graph.v(1).out().out().tree().cap();
+		Tree<VertexFrame> tree = graph.v(1).out().out().tree().cap();
 		Assert.assertEquals(1, tree.get(graph.v(1).next()).size());
 
 
@@ -447,10 +447,10 @@ public class TraversalsTest {
 	@Test
 	public void testLoop() {
 
-		List<TVertex> list = graph.v(1).loop(new TraversalFunction<TVertex, VertexTraversal<?, ?, ?>>() {
+		List<? extends VertexFrame> list = graph.v(1).loop(new TraversalFunction<VertexFrame, VertexTraversal<?, ?, ?>>() {
 			
 			@Override
-			public VertexTraversal<?, ?, ?> compute(TVertex argument) {
+			public VertexTraversal<?, ?, ?> compute(VertexFrame argument) {
 				return argument.out();
 			}
 		}, 3).toList();

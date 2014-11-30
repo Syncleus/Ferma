@@ -33,7 +33,7 @@ package com.syncleus.ferma;
  *
  */
 public final class TVertex extends AbstractVertexFrame {
-	public <T extends VertexFrame> T reframe(Class<T> kind) {
+	public <T> T reframe(Class<T> kind) {
 		return graph().frameElement(element(), kind);
 	}
 }

@@ -37,7 +37,7 @@ import com.tinkerpop.pipes.util.structures.Pair;
 import com.tinkerpop.pipes.util.structures.Table;
 import com.tinkerpop.pipes.util.structures.Tree;
 
-public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVertex, Cap, SideEffect, Mark> {
+public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<VertexFrame, Cap, SideEffect, Mark> {
 
 	/**
 	 * Check if the element has a property with provided key.
@@ -308,7 +308,7 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	 * 
 	 * @return the next emitted object
 	 */
-	public TVertex nextOrAdd();
+	public VertexFrame nextOrAdd();
 
 	/**
 	 * Get the next object emitted from the pipeline. If no such object exists a
@@ -389,7 +389,7 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	 *            The kind of framed elements to return.
 	 * @return a list of all the objects
 	 */
-	public <N> List<N> toList(Class<N> kind);
+	public <N> List<? extends N> toList(Class<N> kind);
 
 	/**
 	 * Return a list of all the objects in the pipeline.
@@ -402,7 +402,7 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	 *            The kind of framed elements to return.
 	 * @return a list of all the objects
 	 */
-	public <N> List<N> toListExplicit(Class<N> kind);
+	public <N> List<? extends N> toListExplicit(Class<N> kind);
 
 	/**
 	 * Return a set of all the objects in the pipeline.
@@ -411,7 +411,7 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	 *            The kind of framed elements to return.
 	 * @return a set of all the objects
 	 */
-	public <N extends VertexFrame> Set<N> toSet(Class<N> kind);
+	public <N> Set<? extends N> toSet(Class<N> kind);
 
 	/**
 	 * Return a set of all the objects in the pipeline.
@@ -424,7 +424,7 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	 *            The kind of framed elements to return.
 	 * @return a set of all the objects
 	 */
-	public <N extends VertexFrame> Set<N> toSetExplicit(Class<N> kind);
+	public <N> Set<? extends N> toSetExplicit(Class<N> kind);
 
 	/**
 	 * Emit the incoming vertex, but have other vertex provide an outgoing edge
@@ -436,7 +436,7 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	 *            the step name that has the other vertex to link to
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<List<TEdge>, TEdge, Mark> linkOut(String label, String namedStep);
+	public abstract VertexTraversal<List<EdgeFrame>, EdgeFrame, Mark> linkOut(String label, String namedStep);
 
 	/**
 	 * Emit the incoming vertex, but have other vertex provide an incoming edge
@@ -448,7 +448,7 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	 *            the step name that has the other vertex to link to
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<List<TEdge>, TEdge, Mark> linkIn(String label, String namedStep);
+	public abstract VertexTraversal<List<EdgeFrame>, EdgeFrame, Mark> linkIn(String label, String namedStep);
 
 	/**
 	 * Emit the incoming vertex, but have other vertex provide an incoming and
@@ -460,7 +460,7 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	 *            the step name that has the other vertex to link to
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<List<TEdge>, TEdge, Mark> linkBoth(String label, String namedStep);
+	public abstract VertexTraversal<List<EdgeFrame>, EdgeFrame, Mark> linkBoth(String label, String namedStep);
 
 	/**
 	 * Emit the incoming vertex, but have other vertex provide an outgoing edge
@@ -472,7 +472,7 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	 *            the other vertex
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<List<TEdge>, TEdge, Mark> linkOut(String label, Vertex other);
+	public abstract VertexTraversal<List<EdgeFrame>, EdgeFrame, Mark> linkOut(String label, Vertex other);
 
 	/**
 	 * Emit the incoming vertex, but have other vertex provide an outgoing edge
@@ -484,7 +484,7 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	 *            the other vertex
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<List<TEdge>, TEdge, Mark> linkOut(String label, VertexFrame other);
+	public abstract VertexTraversal<List<EdgeFrame>, EdgeFrame, Mark> linkOut(String label, VertexFrame other);
 
 	/**
 	 * Emit the incoming vertex, but have other vertex provide an incoming edge
@@ -496,7 +496,7 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	 *            the other vertex
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<List<TEdge>, TEdge, Mark> linkIn(String label, Vertex other);
+	public abstract VertexTraversal<List<EdgeFrame>, EdgeFrame, Mark> linkIn(String label, Vertex other);
 
 	/**
 	 * Emit the incoming vertex, but have other vertex provide an incoming and
@@ -508,7 +508,7 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	 *            the other vertex
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<List<TEdge>, TEdge, Mark> linkBoth(String label, Vertex other);
+	public abstract VertexTraversal<List<EdgeFrame>, EdgeFrame, Mark> linkBoth(String label, Vertex other);
 
 	/**
 	 * Emit the incoming vertex, but have other vertex provide an incoming edge
@@ -520,7 +520,7 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	 *            the other vertex
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<List<TEdge>, TEdge, Mark> linkIn(String label, VertexFrame other);
+	public abstract VertexTraversal<List<EdgeFrame>, EdgeFrame, Mark> linkIn(String label, VertexFrame other);
 
 	/**
 	 * Emit the incoming vertex, but have other vertex provide an incoming and
@@ -532,13 +532,13 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	 *            the other vertex
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<List<TEdge>, TEdge, Mark> linkBoth(String label, VertexFrame other);
+	public abstract VertexTraversal<List<EdgeFrame>, EdgeFrame, Mark> linkBoth(String label, VertexFrame other);
 
 	@Override
 	public abstract VertexTraversal<?, ?, Mark> dedup();
 
 	@Override
-	public abstract VertexTraversal<?, ?, Mark> dedup(TraversalFunction<TVertex, ?> dedupFunction);
+	public abstract VertexTraversal<?, ?, Mark> dedup(TraversalFunction<VertexFrame, ?> dedupFunction);
 
 	@Override
 	public abstract VertexTraversal<?, ?, Mark> except(Iterable<?> collection);
@@ -546,7 +546,7 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	/**
 	 * Will only emit the object if it is not in the provided collection.
 	 *
-	 * @param collection
+	 * @param vertices
 	 *            the collection except from the stream
 	 * @return the extended Pipeline
 	 */
@@ -563,7 +563,7 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	public abstract VertexTraversal<?, ?, Mark> except(String... namedSteps);
 
 	@Override
-	public abstract VertexTraversal<?, ?, Mark> filter(TraversalFunction<TVertex, Boolean> filterFunction);
+	public abstract VertexTraversal<?, ?, Mark> filter(TraversalFunction<VertexFrame, Boolean> filterFunction);
 
 	@Override
 	public abstract VertexTraversal<?, ?, Mark> random(double bias);
@@ -590,72 +590,62 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	public abstract VertexTraversal<?, ?, Mark> retain(String... namedSteps);
 
 	@Override
-	public abstract VertexTraversal<Collection<TVertex>, Collection<TVertex>, Mark> aggregate();
+	public abstract VertexTraversal<Collection<? extends VertexFrame>, Collection<? extends VertexFrame>, Mark> aggregate();
 
 	@Override
-	public abstract VertexTraversal<Collection<TVertex>, Collection<TVertex>, Mark> aggregate(Collection<TVertex> aggregate);
+	public abstract VertexTraversal<Collection<? extends VertexFrame>, Collection<? extends VertexFrame>, Mark> aggregate(Collection<? super VertexFrame> aggregate);
 
 	@Override
-	public abstract <N> VertexTraversal<Collection<N>, Collection<N>, Mark> aggregate(Collection<TVertex> aggregate,
-			TraversalFunction<TVertex, N> aggregateFunction);
+	public abstract <N> VertexTraversal<Collection<? extends N>, Collection<? extends N>, Mark> aggregate(Collection<? super N> aggregate, TraversalFunction<VertexFrame, ? extends N> aggregateFunction);
 
 	@Override
-	public abstract <N> VertexTraversal<Collection<N>, Collection<N>, Mark> aggregate(
-			TraversalFunction<TVertex, N> aggregateFunction);
+	public abstract <N> VertexTraversal<Collection<? extends N>, Collection<? extends N>, Mark> aggregate(TraversalFunction<VertexFrame, ? extends N> aggregateFunction);
 
 	@Override
-	public abstract <K, V> VertexTraversal<Map<K, List<V>>, Map<K, List<V>>, Mark> groupBy(Map<K, List<V>> map,
-			TraversalFunction<TVertex, K> keyFunction, TraversalFunction<TVertex, Iterator<V>> valueFunction);
+	public abstract <K, V> VertexTraversal<Map<K, List<V>>, Map<K, List<V>>, Mark> groupBy(Map<K, List<V>> map, TraversalFunction<VertexFrame, K> keyFunction, TraversalFunction<VertexFrame, Iterator<V>> valueFunction);
 
 	@Override
-	public abstract <K, V> VertexTraversal<Map<K, List<V>>, Map<K, List<V>>, Mark> groupBy(
-			TraversalFunction<TVertex, K> keyFunction, TraversalFunction<TVertex, Iterator<V>> valueFunction);
+	public abstract <K, V> VertexTraversal<Map<K, List<V>>, Map<K, List<V>>, Mark> groupBy(TraversalFunction<VertexFrame, K> keyFunction, TraversalFunction<VertexFrame, Iterator<V>> valueFunction);
 
 	@Override
-	public abstract <K, V, V2> VertexTraversal<Map<K, V2>, Map<K, V2>, Mark> groupBy(Map<K, V2> reduceMap,
-			TraversalFunction<TVertex, K> keyFunction, TraversalFunction<TVertex, Iterator<V>> valueFunction,
-			TraversalFunction<List<V>, V2> reduceFunction);
+	public abstract <K, V, V2> VertexTraversal<Map<K, V2>, Map<K, V2>, Mark> groupBy(Map<K, V2> reduceMap, TraversalFunction<VertexFrame, K> keyFunction, TraversalFunction<VertexFrame, Iterator<V>> valueFunction, TraversalFunction<List<V>, V2> reduceFunction);
 
 	@Override
-	public abstract <K, V, V2> VertexTraversal<Map<K, V2>, Map<K, V2>, Mark> groupBy(TraversalFunction<TVertex, K> keyFunction,
-			TraversalFunction<TVertex, Iterator<V>> valueFunction, TraversalFunction<List<V>, V2> reduceFunction);
+	public abstract <K, V, V2> VertexTraversal<Map<K, V2>, Map<K, V2>, Mark> groupBy(TraversalFunction<VertexFrame, K> keyFunction, TraversalFunction<VertexFrame, Iterator<V>> valueFunction, TraversalFunction<List<V>, V2> reduceFunction);
 
 	@Override
-	public abstract <K> VertexTraversal<Map<K, Long>, Map<K, Long>, Mark> groupCount(Map<K, Long> map,
-			TraversalFunction<TVertex, K> keyFunction, TraversalFunction<Pair<TVertex, Long>, Long> valueFunction);
+	public abstract <K> VertexTraversal<Map<K, Long>, Map<K, Long>, Mark> groupCount(Map<K, Long> map, TraversalFunction<VertexFrame, K> keyFunction, TraversalFunction<Pair<VertexFrame, Long>, Long> valueFunction);
 
 	@Override
-	public abstract <K> VertexTraversal<Map<K, Long>, Map<K, Long>, Mark> groupCount(TraversalFunction<TVertex, K> keyFunction,
-			TraversalFunction<Pair<TVertex, Long>, Long> valueFunction);
+	public abstract <K> VertexTraversal<Map<K, Long>, Map<K, Long>, Mark> groupCount(TraversalFunction<VertexFrame, K> keyFunction, TraversalFunction<Pair<VertexFrame, Long>, Long> valueFunction);
 
 	@Override
-	public abstract <K> VertexTraversal<Map<K, Long>, Map<K, Long>, Mark> groupCount(Map<K, Long> map,
-			TraversalFunction<TVertex, K> keyFunction);
+	public abstract <K> VertexTraversal<Map<K, Long>, Map<K, Long>, Mark> groupCount(Map<K, Long> map, TraversalFunction<VertexFrame, K> keyFunction);
 
 	@Override
-	public abstract <K> VertexTraversal<Map<K, Long>, Map<K, Long>, Mark> groupCount(TraversalFunction<TVertex, K> keyFunction);
+	public abstract <K> VertexTraversal<Map<K, Long>, Map<K, Long>, Mark> groupCount(TraversalFunction<VertexFrame, K> keyFunction);
 
 	@Override
-	public abstract VertexTraversal<Map<TVertex, Long>, Map<TVertex, Long>, Mark> groupCount(Map<TVertex, Long> map);
+	public abstract VertexTraversal<Map<VertexFrame, Long>, Map<VertexFrame, Long>, Mark> groupCount(Map<VertexFrame, Long> map);
 
 	@Override
-	public abstract VertexTraversal<Map<TVertex, Long>, Map<TVertex, Long>, Mark> groupCount();
+	public abstract VertexTraversal<Map<VertexFrame, Long>, Map<VertexFrame, Long>, Mark> groupCount();
 
 	@Override
-	public abstract VertexTraversal<?, ?, Mark> sideEffect(SideEffectFunction<TVertex> sideEffectFunction);
+	public abstract VertexTraversal<?, ?, Mark> sideEffect(SideEffectFunction<VertexFrame> sideEffectFunction);
 
 	@Override
-	public abstract VertexTraversal<Collection<TVertex>, TVertex, Mark> store(Collection<TVertex> storage);
+	public abstract <N> VertexTraversal<Collection<N>, N, Mark> store(Collection<N> storage);
 
 	@Override
 	public abstract <N> VertexTraversal<Collection<N>, N, Mark> store(Collection<N> storage,
-			TraversalFunction<TVertex, N> storageFunction);
+			TraversalFunction<VertexFrame, N> storageFunction);
 
 	@Override
-	public abstract VertexTraversal<Collection<TVertex>, TVertex, Mark> store();
+	public abstract VertexTraversal<Collection<VertexFrame>, VertexFrame, Mark> store();
 
 	@Override
-	public abstract <N> VertexTraversal<Collection<N>, N, Mark> store(TraversalFunction<TVertex, N> storageFunction);
+	public abstract <N> VertexTraversal<Collection<N>, N, Mark> store(TraversalFunction<VertexFrame, N> storageFunction);
 
 	@Override
 	public abstract VertexTraversal<Table, Table, Mark> table(Table table, Collection<String> stepNames,
@@ -674,7 +664,7 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	public abstract VertexTraversal<Table, Table, Mark> table();
 
 	@Override
-	public abstract VertexTraversal<Tree<TVertex>, Tree<TVertex>, Mark> tree();
+	public abstract VertexTraversal<Tree<VertexFrame>, Tree<VertexFrame>, Mark> tree();
 
 	@Override
 	public abstract <N> VertexTraversal<Tree<N>, Tree<N>, Mark> tree(Tree<N> tree);
@@ -692,7 +682,7 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	public abstract VertexTraversal<?, ?, Mark> order();
 
 	@Override
-	public abstract VertexTraversal<?, ?, Mark> order(Comparator<TVertex> compareFunction);
+	public abstract VertexTraversal<?, ?, Mark> order(Comparator<VertexFrame> compareFunction);
 
 	@Override
 	public abstract VertexTraversal<?, ?, Mark> order(TransformPipe.Order order);
@@ -715,7 +705,7 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	 *            The kind of framed elements to return.
 	 * @return the collection filled
 	 */
-	public abstract <N extends VertexFrame> Collection<N> fill(Collection<N> collection, Class<N> kind);
+	public abstract <N extends VertexFrame> Collection<N> fill(Collection<? super N> collection, Class<N> kind);
 
 	/**
 	 * Fill the provided collection with the objects in the pipeline.
@@ -730,7 +720,7 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	 *            The kind of framed elements to return.
 	 * @return the collection filled
 	 */
-	public abstract <N extends VertexFrame> Collection<N> fillExplicit(Collection<N> collection, Class<N> kind);
+	public abstract <N extends VertexFrame> Collection<N> fillExplicit(Collection<? super N> collection, Class<N> kind);
 
 	@Override
 	public abstract VertexTraversal<?, ?, Mark> gatherScatter();
@@ -743,7 +733,7 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	 *            the internal pipes of the AndFilterPipe
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<?, ?, Mark> and(TraversalFunction<TVertex, Traversal<?, ?, ?, ?>>... traversals);
+	public abstract VertexTraversal<?, ?, Mark> and(TraversalFunction<VertexFrame, Traversal<?, ?, ?, ?>>... traversals);
 
 	/**
 	 * Will only emit the object if one or more of the provides pipes yields an
@@ -753,7 +743,7 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	 *            the internal pipes of the OrFilterPipe
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<?, ?, Mark> or(TraversalFunction<TVertex, Traversal<?, ?, ?, ?>>... traversals);
+	public abstract VertexTraversal<?, ?, Mark> or(TraversalFunction<VertexFrame, Traversal<?, ?, ?, ?>>... traversals);
 
 	@Override
 	public abstract VertexTraversal<?, ?, Mark> divert(SideEffectFunction<SideEffect> sideEffectFunction);
@@ -761,43 +751,8 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	@Override
 	public VertexTraversal<?, ?, Mark> shuffle();
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public VertexTraversal<Cap, SideEffect, VertexTraversal<Cap, SideEffect, Mark>> mark();
-
-	/**
-	 * Emit the id of the incoming element.
-	 *
-	 * @return the extended Pipeline
-	 */
-	public abstract <N> Traversal<N, ?, ?, Mark> id();
-
-	/**
-	 * Emit the id of the incoming element.
-	 *
-	 * @return the extended Pipeline
-	 */
-	public abstract <N> Traversal<N, ?, ?, Mark> id(Class<N> type);
-
-	/**
-	 * Emit the respective property of the incoming element.
-	 *
-	 * @param key
-	 *            the property key
-	 * @return the extended Pipeline
-	 */
-	public abstract <N> Traversal<N, ?, ?, Mark> property(String key);
-
-	/**
-	 * Emit the respective property of the incoming element.
-	 *
-	 * @param key
-	 *            the property key
-	 * @param type
-	 *            the property type;
-	 * @return the extended Pipeline
-	 */
-	public abstract <N> Traversal<N, ?, ?, Mark> property(String key, Class<N> type);
+	public VertexTraversal<Cap, SideEffect, ? extends VertexTraversal<Cap, SideEffect, Mark>> mark();
 
 	/**
 	 * Remove every element at the end of this Pipeline.
@@ -817,8 +772,7 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	 *            the internal pipes of the CopySplitPipe
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> SplitTraversal<Traversal<N, ?, ?, Mark>> copySplit(
-			TraversalFunction<TVertex, Traversal<N, ?, ?, ?>>... traversals);
+	public abstract <N> SplitTraversal<? extends Traversal<N, ?, ?, Mark>> copySplit(TraversalFunction<VertexFrame, ? extends Traversal<N, ?, ?, ?>>... traversals);
 
 	
 	/**
@@ -826,7 +780,7 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract <T> VertexTraversal<?, ?, Mark> loop(TraversalFunction<TVertex, VertexTraversal<?, ?, ?>> traversal);
+	public abstract VertexTraversal<?, ?, Mark> loop(TraversalFunction<VertexFrame, ? extends VertexTraversal<?, ?, ?>> traversal);
 	
 	/**
 	 * The pipeline loops over the supplied traversal up to a maximum depth.
@@ -834,5 +788,5 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	 * @param depth The maximum depth to loop to
 	 * @return the extended Pipeline
 	 */
-	public abstract <T> VertexTraversal<?, ?, Mark> loop(TraversalFunction<TVertex, VertexTraversal<?, ?, ?>> traversal, int depth);
+	public abstract VertexTraversal<?, ?, Mark> loop(TraversalFunction<VertexFrame, ? extends VertexTraversal<?, ?, ?>> traversal, int depth);
 }

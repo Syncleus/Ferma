@@ -64,7 +64,7 @@ public class FramedGraphTest {
         Assert.assertEquals("Bryn", bryn.getName());
         Assert.assertEquals(15, bryn.getKnowsList().get(0).getYears());
    
-        Collection<Integer> knowsCollection = fg.v().has("name", "Julia").bothE().property("years", Integer.class).aggregate().cap();
+        Collection<? extends Integer> knowsCollection = fg.v().has("name", "Julia").bothE().property("years", Integer.class).aggregate().cap();
         Assert.assertEquals(1, knowsCollection.size());
     }
 
@@ -86,7 +86,7 @@ public class FramedGraphTest {
         Assert.assertEquals("Bryn", bryn.getName());
         Assert.assertEquals(15, bryn.getKnowsListExplicit().get(0).getYears());
 
-        Collection<Integer> knowsCollection = fg.v().has("name", "Julia").bothE().property("years", Integer.class).aggregate().cap();
+        Collection<? extends Integer> knowsCollection = fg.v().has("name", "Julia").bothE().property("years", Integer.class).aggregate().cap();
         Assert.assertEquals(1, knowsCollection.size());
     }
     
@@ -248,13 +248,13 @@ public class FramedGraphTest {
         TEdge knows = p1.addFramedEdge("knows", p2);
         knows.setProperty("years", 15);
 
-        TVertex bryn = fg.v().has("name", "Bryn").next();
+        VertexFrame bryn = fg.v().has("name", "Bryn").next();
         
         
         Assert.assertEquals("Bryn", bryn.getProperty("name"));
         Assert.assertEquals(15, bryn.outE("knows").toList().get(0).getProperty("years"));
    
-        Collection<Integer> knowsCollection = fg.v().has("name", "Julia").bothE().property("years", Integer.class).aggregate().cap();
+        Collection<? extends Integer> knowsCollection = fg.v().has("name", "Julia").bothE().property("years", Integer.class).aggregate().cap();
         Assert.assertEquals(1, knowsCollection.size());
     }
 
@@ -270,13 +270,13 @@ public class FramedGraphTest {
         TEdge knows = p1.addFramedEdgeExplicit("knows", p2);
         knows.setProperty("years", 15);
 
-        TVertex bryn = fg.v().has("name", "Bryn").next();
+        VertexFrame bryn = fg.v().has("name", "Bryn").next();
 
 
         Assert.assertEquals("Bryn", bryn.getProperty("name"));
         Assert.assertEquals(15, bryn.outE("knows").toList().get(0).getProperty("years"));
 
-        Collection<Integer> knowsCollection = fg.v().has("name", "Julia").bothE().property("years", Integer.class).aggregate().cap();
+        Collection<? extends Integer> knowsCollection = fg.v().has("name", "Julia").bothE().property("years", Integer.class).aggregate().cap();
         Assert.assertEquals(1, knowsCollection.size());
     }
 

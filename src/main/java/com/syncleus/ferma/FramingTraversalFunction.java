@@ -36,14 +36,15 @@ import com.tinkerpop.pipes.PipeFunction;
  * @param <B>
  */
 class FramingTraversalFunction<A, B, C> extends FrameMaker implements TraversalFunction<C, B> {
-	private PipeFunction<A, B> delegate;
 
-	public <T extends ElementFrame> FramingTraversalFunction(PipeFunction<A, B> delegate, FramedGraph graph, Class<T> kind) {
+	private PipeFunction<A, ? extends B> delegate;
+
+	public FramingTraversalFunction(PipeFunction<A, ? extends B> delegate, FramedGraph graph, Class<? extends ElementFrame> kind) {
 		super(graph, kind);
 		this.delegate = delegate;
 	}
 
-	public FramingTraversalFunction(PipeFunction<A, B> delegate, FramedGraph graph) {
+	public FramingTraversalFunction(PipeFunction<A, ? extends B> delegate, FramedGraph graph) {
 		super(graph);
 		this.delegate = delegate;
 	}

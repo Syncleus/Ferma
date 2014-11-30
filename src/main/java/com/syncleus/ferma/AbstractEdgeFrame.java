@@ -49,22 +49,22 @@ public abstract class AbstractEdgeFrame extends AbstractElementFrame implements 
 
 	@Override
 	public VertexTraversal<?, ?, ?> inV() {
-		return new TraversalImpl(graph(), this).castToEdges().inV();
+		return new SimpleTraversal(graph(), this).castToEdges().inV();
 	}
 
 	@Override
 	public VertexTraversal<?, ?, ?> outV() {
-		return new TraversalImpl(graph(), this).castToEdges().outV();
+		return new SimpleTraversal(graph(), this).castToEdges().outV();
 	}
 
 	@Override
 	public VertexTraversal<?, ?, ?> bothV() {
-		return new TraversalImpl(graph(), this).castToEdges().bothV();
+		return new SimpleTraversal(graph(), this).castToEdges().bothV();
 	}
 
 	@Override
 	public EdgeTraversal<?, ?, ?> traversal() {
-		return new TraversalImpl(graph(), this).castToEdges();
+		return new SimpleTraversal(graph(), this).castToEdges();
 	}
 
 	@Override

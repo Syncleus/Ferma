@@ -390,7 +390,7 @@ public class FramedGraph implements Graph {
 	 * @return The query.
 	 */
 	public VertexTraversal<?, ?, ?> v() {
-		return new TraversalImpl(this, delegate).v();
+		return new SimpleTraversal(this, delegate).v();
 	}
 
 	/**
@@ -399,7 +399,7 @@ public class FramedGraph implements Graph {
 	 * @return The query.
 	 */
 	public VertexTraversal<?, ?, ?> v(String key, Object value) {
-		return new TraversalImpl(this, delegate).v(key, value);
+		return new SimpleTraversal(this, delegate).v(key, value);
 	}
 
 	/**
@@ -408,7 +408,7 @@ public class FramedGraph implements Graph {
 	 * @return The query.
 	 */
 	public EdgeTraversal<?, ?, ?> e() {
-		return new TraversalImpl(this, delegate).e();
+		return new SimpleTraversal(this, delegate).e();
 	}
 
 	public <F> Iterable<F> getFramedVertices(final String key, final Object value, final Class<F> kind) {
@@ -435,7 +435,7 @@ public class FramedGraph implements Graph {
 	 * @return The query.
 	 */
 	public VertexTraversal<?, ?, ?> v(final Collection<?> ids) {
-		return new TraversalImpl(this, Iterators.transform(ids.iterator(), new Function<Object, Vertex>() {
+		return new SimpleTraversal(this, Iterators.transform(ids.iterator(), new Function<Object, Vertex>() {
 
 			@Override
 			public Vertex apply(Object id) {
@@ -453,7 +453,7 @@ public class FramedGraph implements Graph {
 	 * @return The query.
 	 */
 	public VertexTraversal<?, ?, ?> v(final Object... ids) {
-		return new TraversalImpl(this, Iterators.transform(Iterators.forArray(ids), new Function<Object, Vertex>() {
+		return new SimpleTraversal(this, Iterators.transform(Iterators.forArray(ids), new Function<Object, Vertex>() {
 
 			@Override
 			public Vertex apply(Object id) {
@@ -471,7 +471,7 @@ public class FramedGraph implements Graph {
 	 * @return The query.
 	 */
 	public EdgeTraversal<?, ?, ?> e(final Object... ids) {
-		return new TraversalImpl(this, Iterators.transform(Iterators.forArray(ids), new Function<Object, Edge>() {
+		return new SimpleTraversal(this, Iterators.transform(Iterators.forArray(ids), new Function<Object, Edge>() {
 
 			@Override
 			public Edge apply(Object id) {
@@ -490,7 +490,7 @@ public class FramedGraph implements Graph {
 	 * @return The query.
 	 */
 	public EdgeTraversal<?, ?, ?> e(final Collection<?> ids) {
-		return new TraversalImpl(this, Iterators.transform(ids.iterator(), new Function<Object, Edge>() {
+		return new SimpleTraversal(this, Iterators.transform(ids.iterator(), new Function<Object, Edge>() {
 
 			@Override
 			public Edge apply(Object id) {

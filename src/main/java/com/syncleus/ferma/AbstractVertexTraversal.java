@@ -43,7 +43,7 @@ import com.tinkerpop.pipes.transform.TransformPipe.Order;
 import com.tinkerpop.pipes.util.structures.Table;
 import com.tinkerpop.pipes.util.structures.Tree;
 
-abstract class VertexTraversalImpl extends TraversalBase implements VertexTraversal {
+abstract class AbstractVertexTraversal extends AbstractTraversal implements VertexTraversal {
 	@Override
 	public TVertex next() {
 		return graph().frameElement((Vertex) pipeline().next(), TVertex.class);
@@ -239,7 +239,7 @@ abstract class VertexTraversalImpl extends TraversalBase implements VertexTraver
 
 			@Override
 			public Pipe apply(TraversalFunction input) {
-				return ((TraversalBase) input.compute(new TVertex())).pipeline();
+				return ((AbstractTraversal) input.compute(new TVertex())).pipeline();
 			}
 		});
 		pipeline().and(extractedPipes.toArray(new Pipe[extractedPipes.size()]));
@@ -252,7 +252,7 @@ abstract class VertexTraversalImpl extends TraversalBase implements VertexTraver
 
 			@Override
 			public Pipe apply(TraversalFunction input) {
-				return ((TraversalBase) input.compute(new TVertex())).pipeline();
+				return ((AbstractTraversal) input.compute(new TVertex())).pipeline();
 			}
 		});
 		pipeline().or(extractedPipes.toArray(new Pipe[extractedPipes.size()]));
@@ -664,7 +664,7 @@ abstract class VertexTraversalImpl extends TraversalBase implements VertexTraver
 
 					@Override
 					public Pipe apply(TraversalFunction input) {
-						return ((TraversalBase) input.compute(new TVertex())).pipeline();
+						return ((AbstractTraversal) input.compute(new TVertex())).pipeline();
 					}
 				});
 		pipeline().copySplit(extractedPipes.toArray(new Pipe[extractedPipes.size()]));

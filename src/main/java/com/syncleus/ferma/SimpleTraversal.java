@@ -36,7 +36,7 @@ import com.syncleus.ferma.pipes.GremlinPipeline;
 import com.tinkerpop.blueprints.Graph;
 
 @SuppressWarnings("rawtypes")
-class TraversalImpl extends TraversalBase implements Traversal {
+class SimpleTraversal extends AbstractTraversal implements Traversal {
 
 	private FramedGraph graph;
 	private com.tinkerpop.gremlin.java.GremlinPipeline pipeline;
@@ -78,7 +78,7 @@ class TraversalImpl extends TraversalBase implements Traversal {
 		}
 	};
 
-	private EdgeTraversal edgeTraversal = new EdgeTraversalImpl() {
+	private EdgeTraversal edgeTraversal = new AbstractEdgeTraversal() {
 
 		@Override
 		public VertexTraversal castToVertices() {
@@ -102,22 +102,22 @@ class TraversalImpl extends TraversalBase implements Traversal {
 
 		@Override
 		protected Traversal castToTraversal() {
-			return TraversalImpl.this;
+			return SimpleTraversal.this;
 		}
 
-		public TraversalBase.MarkId pushMark() {
-			return TraversalImpl.this.pushMark(this);
+		public AbstractTraversal.MarkId pushMark() {
+			return SimpleTraversal.this.pushMark(this);
 		};
 
-		public TraversalBase.MarkId popMark() {
-			return TraversalImpl.this.popMark();
+		public AbstractTraversal.MarkId popMark() {
+			return SimpleTraversal.this.popMark();
 		};
 
 		public SplitTraversal castToSplit() {
 			return splitTraversal;
 		};
 	};
-	private VertexTraversal vertexTraversal = new VertexTraversalImpl() {
+	private VertexTraversal vertexTraversal = new AbstractVertexTraversal() {
 		@Override
 		public VertexTraversal castToVertices() {
 			return vertexTraversal;
@@ -130,7 +130,7 @@ class TraversalImpl extends TraversalBase implements Traversal {
 
 		@Override
 		protected Traversal castToTraversal() {
-			return TraversalImpl.this;
+			return SimpleTraversal.this;
 		}
 
 		@Override
@@ -143,12 +143,12 @@ class TraversalImpl extends TraversalBase implements Traversal {
 			return pipeline;
 		}
 
-		public TraversalBase.MarkId pushMark() {
-			return TraversalImpl.this.pushMark(this);
+		public AbstractTraversal.MarkId pushMark() {
+			return SimpleTraversal.this.pushMark(this);
 		};
 
-		public TraversalBase.MarkId popMark() {
-			return TraversalImpl.this.popMark();
+		public AbstractTraversal.MarkId popMark() {
+			return SimpleTraversal.this.popMark();
 		};
 
 		public SplitTraversal castToSplit() {
@@ -156,21 +156,21 @@ class TraversalImpl extends TraversalBase implements Traversal {
 		};
 	};
 
-	private TraversalImpl(FramedGraph graph, com.tinkerpop.gremlin.java.GremlinPipeline pipeline) {
+	private SimpleTraversal(FramedGraph graph, com.tinkerpop.gremlin.java.GremlinPipeline pipeline) {
 		this.graph = graph;
 		this.pipeline = pipeline;
 
 	}
 
-	protected TraversalImpl(FramedGraph graph, Graph delegate) {
+	protected SimpleTraversal(FramedGraph graph, Graph delegate) {
 		this(graph, new GremlinPipeline<>(delegate));
 	}
 
-	protected TraversalImpl(FramedGraph graph, Iterator starts) {
+	protected SimpleTraversal(FramedGraph graph, Iterator starts) {
 		this(graph, new GremlinPipeline<>(starts));
 	}
 
-	protected TraversalImpl(FramedGraph graph, AbstractElementFrame starts) {
+	protected SimpleTraversal(FramedGraph graph, AbstractElementFrame starts) {
 		this(graph, new GremlinPipeline<>(starts.element()));
 	}
 

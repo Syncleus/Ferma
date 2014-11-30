@@ -71,62 +71,62 @@ public abstract class AbstractVertexFrame extends AbstractElementFrame implement
 
 	@Override
 	public VertexTraversal<?, ?, ?> out(final int branchFactor, final String... labels) {
-		return new TraversalImpl(graph(), this).castToVertices().out(branchFactor, labels);
+		return new SimpleTraversal(graph(), this).castToVertices().out(branchFactor, labels);
 	}
 
 	@Override
 	public VertexTraversal<?, ?, ?> out(final String... labels) {
-		return new TraversalImpl(graph(), this).castToVertices().out(labels);
+		return new SimpleTraversal(graph(), this).castToVertices().out(labels);
 	}
 
 	@Override
 	public VertexTraversal<?, ?, ?> in(final int branchFactor, final String... labels) {
-		return new TraversalImpl(graph(), this).castToVertices().in(branchFactor, labels);
+		return new SimpleTraversal(graph(), this).castToVertices().in(branchFactor, labels);
 	}
 
 	@Override
 	public VertexTraversal<?, ?, ?> in(final String... labels) {
-		return new TraversalImpl(graph(), this).castToVertices().in(labels);
+		return new SimpleTraversal(graph(), this).castToVertices().in(labels);
 	}
 
 	@Override
 	public VertexTraversal<?, ?, ?> both(final int branchFactor, final String... labels) {
-		return new TraversalImpl(graph(), this).castToVertices().both(branchFactor, labels);
+		return new SimpleTraversal(graph(), this).castToVertices().both(branchFactor, labels);
 	}
 
 	@Override
 	public VertexTraversal<?, ?, ?> both(final String... labels) {
-		return new TraversalImpl(graph(), this).castToVertices().both(labels);
+		return new SimpleTraversal(graph(), this).castToVertices().both(labels);
 	}
 
 	@Override
 	public EdgeTraversal<?, ?, ?> outE(final int branchFactor, final String... labels) {
-		return new TraversalImpl(graph(), this).castToVertices().outE(branchFactor, labels);
+		return new SimpleTraversal(graph(), this).castToVertices().outE(branchFactor, labels);
 	}
 
 	@Override
 	public EdgeTraversal<?, ?, ?> outE(final String... labels) {
-		return new TraversalImpl(graph(), this).castToVertices().outE(labels);
+		return new SimpleTraversal(graph(), this).castToVertices().outE(labels);
 	}
 
 	@Override
 	public EdgeTraversal<?, ?, ?> inE(final int branchFactor, final String... labels) {
-		return new TraversalImpl(graph(), this).castToVertices().inE(branchFactor, labels);
+		return new SimpleTraversal(graph(), this).castToVertices().inE(branchFactor, labels);
 	}
 
 	@Override
 	public EdgeTraversal<?, ?, ?> inE(final String... labels) {
-		return new TraversalImpl(graph(), this).castToVertices().inE(labels);
+		return new SimpleTraversal(graph(), this).castToVertices().inE(labels);
 	}
 
 	@Override
 	public EdgeTraversal<?, ?, ?> bothE(final int branchFactor, final String... labels) {
-		return new TraversalImpl(graph(), this).castToVertices().bothE(branchFactor, labels);
+		return new SimpleTraversal(graph(), this).castToVertices().bothE(branchFactor, labels);
 	}
 
 	@Override
 	public EdgeTraversal<?, ?, ?> bothE(final String... labels) {
-		return new TraversalImpl(graph(), this).castToVertices().bothE(labels);
+		return new SimpleTraversal(graph(), this).castToVertices().bothE(labels);
 	}
 
 	@Override
@@ -245,7 +245,7 @@ public abstract class AbstractVertexFrame extends AbstractElementFrame implement
 
 	@Override
 	public VertexTraversal<?, ?, ?> traversal() {
-		return new TraversalImpl(graph(), this).castToVertices();
+		return new SimpleTraversal(graph(), this).castToVertices();
 	}
 
 	@Override

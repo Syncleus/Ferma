@@ -40,7 +40,7 @@ import com.tinkerpop.pipes.transform.TransformPipe.Order;
 import com.tinkerpop.pipes.util.structures.Table;
 import com.tinkerpop.pipes.util.structures.Tree;
 
-abstract class EdgeTraversalImpl extends TraversalBase implements EdgeTraversal {
+abstract class AbstractEdgeTraversal extends AbstractTraversal implements EdgeTraversal {
 
 	@Override
 	public TEdge next() {
@@ -349,7 +349,7 @@ abstract class EdgeTraversalImpl extends TraversalBase implements EdgeTraversal 
 
 			@Override
 			public Pipe apply(TraversalFunction input) {
-				return ((TraversalBase) input.compute(new TEdge())).pipeline();
+				return ((AbstractTraversal) input.compute(new TEdge())).pipeline();
 			}
 		});
 		pipeline().and(extractedPipes.toArray(new Pipe[extractedPipes.size()]));
@@ -362,7 +362,7 @@ abstract class EdgeTraversalImpl extends TraversalBase implements EdgeTraversal 
 
 			@Override
 			public Pipe apply(TraversalFunction input) {
-				return ((TraversalBase) input.compute(new TEdge())).pipeline();
+				return ((AbstractTraversal) input.compute(new TEdge())).pipeline();
 			}
 		});
 		pipeline().or(extractedPipes.toArray(new Pipe[extractedPipes.size()]));
@@ -526,7 +526,7 @@ abstract class EdgeTraversalImpl extends TraversalBase implements EdgeTraversal 
 
 					@Override
 					public Pipe apply(TraversalFunction input) {
-						return ((TraversalBase) input.compute(new TEdge())).pipeline();
+						return ((AbstractTraversal) input.compute(new TEdge())).pipeline();
 					}
 				});
 		pipeline().copySplit(extractedPipes.toArray(new Pipe[extractedPipes.size()]));

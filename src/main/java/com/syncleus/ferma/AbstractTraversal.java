@@ -53,7 +53,7 @@ import com.tinkerpop.pipes.util.structures.Table;
 import com.tinkerpop.pipes.util.structures.Tree;
 
 @SuppressWarnings("rawtypes")
-abstract class TraversalBase<T, Cap, SideEffect, Mark> implements Traversal<T, Cap, SideEffect, Mark> {
+abstract class AbstractTraversal<T, Cap, SideEffect, Mark> implements Traversal<T, Cap, SideEffect, Mark> {
 
 	protected abstract FramedGraph graph();
 
@@ -775,7 +775,7 @@ abstract class TraversalBase<T, Cap, SideEffect, Mark> implements Traversal<T, C
 	}
 
 	public Traversal loop(TraversalFunction input) {
-		GremlinPipeline pipeline = ((TraversalBase) input.compute(new TVertex())).pipeline();
+		GremlinPipeline pipeline = ((AbstractTraversal) input.compute(new TVertex())).pipeline();
 		pipeline().add(new LoopPipe(pipeline, LoopPipe.createTrueFunction(), null));
 
 		return this;
@@ -783,7 +783,7 @@ abstract class TraversalBase<T, Cap, SideEffect, Mark> implements Traversal<T, C
 	}
 
 	public Traversal loop(TraversalFunction input, final int depth) {
-		GremlinPipeline pipeline = ((TraversalBase) input.compute(new TVertex())).pipeline();
+		GremlinPipeline pipeline = ((AbstractTraversal) input.compute(new TVertex())).pipeline();
 		pipeline().add(new LoopPipe(pipeline, LoopPipe.createLoopsFunction(depth), null));
 
 		return this;

@@ -84,14 +84,14 @@ public interface ElementFrame {
      *
      * @return The query.
      */
-    public VertexTraversal<?, ?, ?> V();
+    public VertexTraversal<?, ?, ?> v();
 
     /**
      * Query over all edges in the graph.
      *
      * @return The query.
      */
-    public EdgeTraversal<?, ?, ?> E();
+    public EdgeTraversal<?, ?, ?> e();
 
     /**
      * Query over a list of vertices in the graph.

@@ -113,12 +113,12 @@ public abstract class AbstractElementFrame implements ElementFrame {
 	}
 
 	@Override
-	public VertexTraversal<?, ?, ?> V() {
+	public VertexTraversal<?, ?, ?> v() {
 		return graph.v();
 	}
 
 	@Override
-	public EdgeTraversal<?, ?, ?> E() {
+	public EdgeTraversal<?, ?, ?> e() {
 		return graph.e();
 	}
 

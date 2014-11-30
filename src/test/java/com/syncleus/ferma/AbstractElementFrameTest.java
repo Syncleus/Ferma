@@ -84,12 +84,12 @@ public class AbstractElementFrameTest {
     
     @Test
     public void testV() {
-    	Assert.assertEquals(2, p1.V().count());
+    	Assert.assertEquals(2, p1.v().count());
     }
     
     @Test
     public void testE() {
-    	Assert.assertEquals(1, p1.E().count());
+    	Assert.assertEquals(1, p1.e().count());
     }
     
     @Test
@@ -115,7 +115,7 @@ public class AbstractElementFrameTest {
     @Test
     public void testRemove() {
     	p1.remove();
-    	Assert.assertEquals(1, p1.V().count());
+    	Assert.assertEquals(1, p1.v().count());
     }
     
     @Test

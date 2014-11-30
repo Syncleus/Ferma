@@ -18,10 +18,7 @@
  ******************************************************************************/
 package com.syncleus.ferma.annotations;
 
-import com.syncleus.ferma.AbstractEdgeFrame;
-import com.syncleus.ferma.AbstractVertexFrame;
-import com.syncleus.ferma.FramingVertexIterable;
-import com.syncleus.ferma.TypeResolver;
+import com.syncleus.ferma.*;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.gremlin.Tokens;
 import net.bytebuddy.dynamic.DynamicType;
@@ -161,18 +158,18 @@ public class AdjacencyMethodHandler implements MethodHandler {
 
     public static final class GetVertexesDefaultInterceptor {
         @RuntimeType
-        public static Iterable getVertexes(@This final AbstractVertexFrame thiz, @Origin final Method method) {
+        public static Iterable getVertexes(@This final VertexFrame thiz, @Origin final Method method) {
             final Adjacency annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Adjacency.class);
             final Direction direction = annotation.direction();
             final String label = annotation.label();
 
-            return new FramingVertexIterable(thiz.graph(), thiz.element().getVertices(direction, label), AbstractVertexFrame.class);
+            return new FramingVertexIterable(thiz.graph(), thiz.element().getVertices(direction, label), VertexFrame.class);
         }
     }
 
     public static final class GetVertexesByTypeInterceptor {
         @RuntimeType
-        public static Iterable getVertexes(@This final AbstractVertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final Class type) {
+        public static Iterable getVertexes(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final Class type) {
             final Adjacency annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Adjacency.class);
             final Direction direction = annotation.direction();
             final String label = annotation.label();
@@ -193,26 +190,26 @@ public class AdjacencyMethodHandler implements MethodHandler {
 
     public static final class GetVertexDefaultInterceptor {
         @RuntimeType
-        public static Object getVertexes(@This final AbstractVertexFrame thiz, @Origin final Method method) {
+        public static Object getVertexes(@This final VertexFrame thiz, @Origin final Method method) {
             final Adjacency annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Adjacency.class);
             final Direction direction = annotation.direction();
             final String label = annotation.label();
 
             switch (direction) {
                 case BOTH:
-                    return thiz.both(label).next(AbstractVertexFrame.class);
+                    return thiz.both(label).next(VertexFrame.class);
                 case IN:
-                    return thiz.in(label).next(AbstractVertexFrame.class);
+                    return thiz.in(label).next(VertexFrame.class);
                 //Assume out direction
                 default:
-                    return thiz.out(label).next(AbstractVertexFrame.class);
+                    return thiz.out(label).next(VertexFrame.class);
             }
         }
     }
 
     public static final class GetVertexByTypeInterceptor {
         @RuntimeType
-        public static Object getVertex(@This final AbstractVertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final Class type) {
+        public static Object getVertex(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final Class type) {
             final Adjacency annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Adjacency.class);
             final Direction direction = annotation.direction();
             final String label = annotation.label();
@@ -233,8 +230,8 @@ public class AdjacencyMethodHandler implements MethodHandler {
 
     public static final class AddVertexDefaultInterceptor {
         @RuntimeType
-        public static Object addVertex(@This final AbstractVertexFrame thiz, @Origin final Method method) {
-            final AbstractVertexFrame newVertex = thiz.graph().addFramedVertex();
+        public static Object addVertex(@This final VertexFrame thiz, @Origin final Method method) {
+            final VertexFrame newVertex = thiz.graph().addFramedVertex();
 
             final Adjacency annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Adjacency.class);
             final Direction direction = annotation.direction();
@@ -259,10 +256,10 @@ public class AdjacencyMethodHandler implements MethodHandler {
 
     public static final class AddVertexByTypeUntypedEdgeInterceptor {
         @RuntimeType
-        public static Object addVertex(@This final AbstractVertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final Class vertexType) {
+        public static Object addVertex(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final Class vertexType) {
             final Object newNode = thiz.graph().addFramedVertex(vertexType);
-            assert newNode instanceof AbstractVertexFrame;
-            final AbstractVertexFrame newVertex = ((AbstractVertexFrame) newNode);
+            assert newNode instanceof VertexFrame;
+            final VertexFrame newVertex = ((VertexFrame) newNode);
 
             final Adjacency annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Adjacency.class);
             final Direction direction = annotation.direction();
@@ -289,10 +286,10 @@ public class AdjacencyMethodHandler implements MethodHandler {
 
     public static final class AddVertexByTypeTypedEdgeInterceptor {
         @RuntimeType
-        public static Object addVertex(@This final AbstractVertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final Class vertexType, @RuntimeType @Argument(1) final Class edgeType) {
+        public static Object addVertex(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final Class vertexType, @RuntimeType @Argument(1) final Class edgeType) {
             final Object newNode = thiz.graph().addFramedVertex(vertexType);
-            assert newNode instanceof AbstractVertexFrame;
-            final AbstractVertexFrame newVertex = ((AbstractVertexFrame) newNode);
+            assert newNode instanceof VertexFrame;
+            final VertexFrame newVertex = ((VertexFrame) newNode);
 
             final Adjacency annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Adjacency.class);
             final Direction direction = annotation.direction();
@@ -319,7 +316,7 @@ public class AdjacencyMethodHandler implements MethodHandler {
 
     public static final class AddVertexByObjectUntypedEdgeInterceptor {
         @RuntimeType
-        public static Object addVertex(@This final AbstractVertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final AbstractVertexFrame newVertex) {
+        public static Object addVertex(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final VertexFrame newVertex) {
 
             final Adjacency annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Adjacency.class);
             final Direction direction = annotation.direction();
@@ -344,7 +341,7 @@ public class AdjacencyMethodHandler implements MethodHandler {
 
     public static final class AddVertexByObjectTypedEdgeInterceptor {
         @RuntimeType
-        public static Object addVertex(@This final AbstractVertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final AbstractVertexFrame newVertex, @RuntimeType @Argument(1) final Class edgeType) {
+        public static Object addVertex(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final VertexFrame newVertex, @RuntimeType @Argument(1) final Class edgeType) {
 
             final Adjacency annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Adjacency.class);
             final Direction direction = annotation.direction();
@@ -369,7 +366,7 @@ public class AdjacencyMethodHandler implements MethodHandler {
 
     public static final class SetVertexInterceptor {
         @RuntimeType
-        public static void setVertex(@This final AbstractVertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final Iterable vertexSet) {
+        public static void setVertex(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final Iterable vertexSet) {
 
             final Adjacency annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Adjacency.class);
             final Direction direction = annotation.direction();
@@ -378,24 +375,24 @@ public class AdjacencyMethodHandler implements MethodHandler {
 
             switch (direction) {
                 case BOTH:
-                    for( final AbstractEdgeFrame existingEdge : thiz.bothE(label) )
+                    for( final EdgeFrame existingEdge : thiz.bothE(label) )
                         existingEdge.remove();
-                    for( final AbstractVertexFrame newVertex : (Iterable<? extends AbstractVertexFrame>) vertexSet ) {
+                    for( final VertexFrame newVertex : (Iterable<? extends VertexFrame>) vertexSet ) {
                         thiz.graph().addFramedEdge(newVertex, thiz, label);
                         thiz.graph().addFramedEdge(thiz, newVertex, label);
                     }
                     break;
                 case IN:
-                    for( final AbstractEdgeFrame existingEdge : thiz.inE(label) )
+                    for( final EdgeFrame existingEdge : thiz.inE(label) )
                         existingEdge.remove();
-                    for( final AbstractVertexFrame newVertex : (Iterable<? extends AbstractVertexFrame>) vertexSet )
+                    for( final VertexFrame newVertex : (Iterable<? extends VertexFrame>) vertexSet )
                         thiz.graph().addFramedEdge(newVertex, thiz, label);
                     break;
                 //Assume out direction
                 default:
-                    for( final AbstractEdgeFrame existingEdge : thiz.outE(label) )
+                    for( final EdgeFrame existingEdge : thiz.outE(label) )
                         existingEdge.remove();
-                    for( final AbstractVertexFrame newVertex : (Iterable<? extends AbstractVertexFrame>) vertexSet )
+                    for( final VertexFrame newVertex : (Iterable<? extends VertexFrame>) vertexSet )
                         thiz.graph().addFramedEdge(thiz, newVertex, label);
             }
         }
@@ -403,7 +400,7 @@ public class AdjacencyMethodHandler implements MethodHandler {
 
     public static final class RemoveVertexInterceptor {
         @RuntimeType
-        public static void removeVertex(@This final AbstractVertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final AbstractVertexFrame removeVertex) {
+        public static void removeVertex(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final VertexFrame removeVertex) {
 
             final Adjacency annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Adjacency.class);
             final Direction direction = annotation.direction();
@@ -411,20 +408,20 @@ public class AdjacencyMethodHandler implements MethodHandler {
 
             switch (direction) {
                 case BOTH:
-                    for(final AbstractEdgeFrame edge : thiz.bothE(label) ) {
+                    for(final EdgeFrame edge : thiz.bothE(label) ) {
                         if (null == removeVertex || edge.outV().next().getId().equals(removeVertex.getId()) || edge.inV().next().getId().equals(removeVertex.getId()))
                             edge.remove();
                     }
                     break;
                 case IN:
-                    for(final AbstractEdgeFrame edge : thiz.inE(label) ) {
+                    for(final EdgeFrame edge : thiz.inE(label) ) {
                         if (null == removeVertex || edge.outV().next().getId().equals(removeVertex.getId()))
                             edge.remove();
                     }
                     break;
                 //Assume out direction
                 default:
-                    for(final AbstractEdgeFrame edge : thiz.outE(label) ) {
+                    for(final EdgeFrame edge : thiz.outE(label) ) {
                         if (null == removeVertex || edge.inV().next().getId().equals(removeVertex.getId()))
                             edge.remove();
                     }

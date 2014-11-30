@@ -753,7 +753,7 @@ public interface Traversal<T, Cap, SideEffect, Mark> extends Iterator<T>, Iterab
 	 *            (iterator/iterable are unfolded)
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<?, ?, Mark> start(AbstractVertexFrame object);
+	public abstract VertexTraversal<?, ?, Mark> start(VertexFrame object);
 
 	/**
 	 * Though, in practice, a StartPipe is usually the beginning. Moreover, the
@@ -764,7 +764,7 @@ public interface Traversal<T, Cap, SideEffect, Mark> extends Iterator<T>, Iterab
 	 *            (iterator/iterable are unfolded)
 	 * @return the extended Pipeline
 	 */
-	public abstract EdgeTraversal<?, ?, Mark> start(AbstractEdgeFrame object);
+	public abstract EdgeTraversal<?, ?, Mark> start(EdgeFrame object);
 
 	/**
 	 * Return the number of objects iterated through the pipeline.

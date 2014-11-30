@@ -240,7 +240,7 @@ public class FramedGraph implements Graph {
 		return t;
 	}
 
-	<T extends AbstractElementFrame> Iterator<T> frame(Iterator<? extends Element> pipeline, final Class<T> kind) {
+	<T extends ElementFrame> Iterator<T> frame(Iterator<? extends Element> pipeline, final Class<T> kind) {
 		return Iterators.transform(pipeline, new Function<Element, T>() {
 
 			@Override
@@ -269,7 +269,7 @@ public class FramedGraph implements Graph {
 		return t;
 	}
 
-	<T extends AbstractElementFrame> Iterator<T> frameExplicit(Iterator<? extends Element> pipeline, final Class<T> kind) {
+	<T extends ElementFrame> Iterator<T> frameExplicit(Iterator<? extends Element> pipeline, final Class<T> kind) {
 		return Iterators.transform(pipeline, new Function<Element, T>() {
 
 			@Override
@@ -339,7 +339,7 @@ public class FramedGraph implements Graph {
 	 *            The kind of the frame.
 	 * @return The framed edge.
 	 */
-	public <T> T addFramedEdge(final AbstractVertexFrame source, final AbstractVertexFrame destination, final String label, Class<T> kind) {
+	public <T> T addFramedEdge(final VertexFrame source, final VertexFrame destination, final String label, Class<T> kind) {
 		T framedEdge = frameNewElement(this.delegate.addEdge(null, source.element(), destination.element(), label), kind);
 		return framedEdge;
 	}
@@ -355,7 +355,7 @@ public class FramedGraph implements Graph {
 	 *            The kind of the frame.
 	 * @return The framed edge.
 	 */
-	public <T> T addFramedEdgeExplicit(final AbstractVertexFrame source, final AbstractVertexFrame destination, final String label, Class<T> kind) {
+	public <T> T addFramedEdgeExplicit(final VertexFrame source, final VertexFrame destination, final String label, Class<T> kind) {
 		T framedEdge = frameNewElementExplicit(this.delegate.addEdge(null, source.element(), destination.element(), label), kind);
 		return framedEdge;
 	}
@@ -365,7 +365,7 @@ public class FramedGraph implements Graph {
 	 *
 	 * @return The framed edge.
 	 */
-	public TEdge addFramedEdge(final AbstractVertexFrame source, final AbstractVertexFrame destination, final String label) {
+	public TEdge addFramedEdge(final VertexFrame source, final VertexFrame destination, final String label) {
 
 		return addFramedEdge(source, destination, label, TEdge.class);
 	}
@@ -379,7 +379,7 @@ public class FramedGraph implements Graph {
 	 *
 	 * @return The framed edge.
 	 */
-	public TEdge addFramedEdgeExplicit(final AbstractVertexFrame source, final AbstractVertexFrame destination, final String label) {
+	public TEdge addFramedEdgeExplicit(final VertexFrame source, final VertexFrame destination, final String label) {
 
 		return addFramedEdgeExplicit(source, destination, label, TEdge.class);
 	}
@@ -523,7 +523,7 @@ public class FramedGraph implements Graph {
 
 	@Override
 	public Vertex addVertex(Object id) {
-		AbstractVertexFrame framedVertex = frameNewElement(delegate.addVertex(null), TVertex.class);
+		VertexFrame framedVertex = frameNewElement(delegate.addVertex(null), TVertex.class);
 		return framedVertex.element();
 	}
 
@@ -553,7 +553,7 @@ public class FramedGraph implements Graph {
 
 	@Override
 	public Edge addEdge(Object id, Vertex outVertex, Vertex inVertex, String label) {
-		AbstractEdgeFrame framedEdge = frameNewElement(this.delegate.addEdge(id, outVertex, inVertex, label), TEdge.class);
+		EdgeFrame framedEdge = frameNewElement(this.delegate.addEdge(id, outVertex, inVertex, label), TEdge.class);
 		return framedEdge.element();
 	}
 

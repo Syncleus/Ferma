@@ -247,7 +247,7 @@ public interface EdgeTraversal<Cap, SideEffect, Mark> extends Traversal<TEdge, C
 	 *            The kind of framed elements to return.
 	 * @return a set of all the objects
 	 */
-	public <T extends AbstractEdgeFrame> Set<T> toSet(Class<T> kind);
+	public <T extends EdgeFrame> Set<T> toSet(Class<T> kind);
 
 	/**
 	 * Return a set of all the objects in the pipeline.
@@ -260,7 +260,7 @@ public interface EdgeTraversal<Cap, SideEffect, Mark> extends Traversal<TEdge, C
 	 *            The kind of framed elements to return.
 	 * @return a set of all the objects
 	 */
-	public <T extends AbstractEdgeFrame> Set<T> toSetExplicit(Class<T> kind);
+	public <T extends EdgeFrame> Set<T> toSetExplicit(Class<T> kind);
 
 	/**
 	 * Return a list of all the objects in the pipeline.
@@ -300,7 +300,7 @@ public interface EdgeTraversal<Cap, SideEffect, Mark> extends Traversal<TEdge, C
 	 *            the edges to reject from the stream
 	 * @return the extended Pipeline
 	 */
-	public abstract EdgeTraversal<?, ?, Mark> except(AbstractEdgeFrame... edges);
+	public abstract EdgeTraversal<?, ?, Mark> except(EdgeFrame... edges);
 
 	@Override
 	public abstract EdgeTraversal<?, ?, Mark> except(String... namedSteps);
@@ -327,7 +327,7 @@ public interface EdgeTraversal<Cap, SideEffect, Mark> extends Traversal<TEdge, C
 	 *            the edges to retain
 	 * @return the extended Pipeline
 	 */
-	public abstract EdgeTraversal<?, ?, Mark> retain(AbstractEdgeFrame... edges);
+	public abstract EdgeTraversal<?, ?, Mark> retain(EdgeFrame... edges);
 
 	@Override
 	public abstract EdgeTraversal<?, ?, Mark> retain(String... namedSteps);

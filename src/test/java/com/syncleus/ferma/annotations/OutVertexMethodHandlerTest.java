@@ -19,7 +19,7 @@
 package com.syncleus.ferma.annotations;
 
 import com.syncleus.ferma.FramedGraph;
-import com.syncleus.ferma.AbstractVertexFrame;
+import com.syncleus.ferma.VertexFrame;
 import com.tinkerpop.blueprints.impls.tg.TinkerGraph;
 import org.junit.Assert;
 import org.junit.Test;
@@ -39,8 +39,8 @@ public class OutVertexMethodHandlerTest {
         final List<God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
 
         final God father = gods.iterator().next();
-        Assert.assertTrue(father instanceof AbstractVertexFrame);
-        final AbstractVertexFrame fatherVertex = (AbstractVertexFrame) father;
+        Assert.assertTrue(father instanceof VertexFrame);
+        final VertexFrame fatherVertex = (VertexFrame) father;
         Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
 
         final Iterable<? extends FatherEdge> childrenEdges = father.getSonEdges(FatherEdge.class);
@@ -49,8 +49,8 @@ public class OutVertexMethodHandlerTest {
         final FatherEdge childEdge = childEdgeIterator.next();
 
         final God son = childEdge.getSon();
-        Assert.assertTrue(son instanceof AbstractVertexFrame);
-        final AbstractVertexFrame sonVertex = (AbstractVertexFrame) son;
+        Assert.assertTrue(son instanceof VertexFrame);
+        final VertexFrame sonVertex = (VertexFrame) son;
         Assert.assertEquals(sonVertex.getProperty("name"), "hercules");
     }
 }

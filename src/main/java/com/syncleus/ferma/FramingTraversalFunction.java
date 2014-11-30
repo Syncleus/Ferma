@@ -38,7 +38,7 @@ import com.tinkerpop.pipes.PipeFunction;
 class FramingTraversalFunction<A, B, C> extends FrameMaker implements TraversalFunction<C, B> {
 	private PipeFunction<A, B> delegate;
 
-	public <T extends AbstractElementFrame> FramingTraversalFunction(PipeFunction<A, B> delegate, FramedGraph graph, Class<T> kind) {
+	public <T extends ElementFrame> FramingTraversalFunction(PipeFunction<A, B> delegate, FramedGraph graph, Class<T> kind) {
 		super(graph, kind);
 		this.delegate = delegate;
 	}
@@ -48,7 +48,7 @@ class FramingTraversalFunction<A, B, C> extends FrameMaker implements TraversalF
 		this.delegate = delegate;
 	}
 
-	public <T extends AbstractElementFrame> FramingTraversalFunction(FramedGraph graph, Class<T> kind) {
+	public <T extends ElementFrame> FramingTraversalFunction(FramedGraph graph, Class<T> kind) {
 		super(graph, kind);
 	}
 

@@ -229,12 +229,12 @@ abstract class AbstractEdgeTraversal extends AbstractTraversal implements EdgeTr
 
 	@Override
 	public Object next(Class kind) {
-		return (AbstractEdgeFrame) graph().frameElement((Element) pipeline().next(), kind);
+		return graph().frameElement((Element) pipeline().next(), kind);
 	}
 
 	@Override
 	public Object nextExplicit(Class kind) {
-		return (AbstractEdgeFrame) graph().frameElementExplicit((Element) pipeline().next(), kind);
+		return graph().frameElementExplicit((Element) pipeline().next(), kind);
 	}
 
 	@Override
@@ -487,7 +487,7 @@ abstract class AbstractEdgeTraversal extends AbstractTraversal implements EdgeTr
 	}
 
 	@Override
-	public EdgeTraversal retain(AbstractEdgeFrame... edges) {
+	public EdgeTraversal retain(EdgeFrame... edges) {
 
 		return (EdgeTraversal) super.retain(Arrays.asList(edges));
 	}
@@ -498,7 +498,7 @@ abstract class AbstractEdgeTraversal extends AbstractTraversal implements EdgeTr
 	}
 
 	@Override
-	public EdgeTraversal except(AbstractEdgeFrame... edges) {
+	public EdgeTraversal except(EdgeFrame... edges) {
 		return (EdgeTraversal) super.retain(Arrays.asList(edges));
 	}
 

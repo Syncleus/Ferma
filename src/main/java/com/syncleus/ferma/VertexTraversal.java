@@ -411,7 +411,7 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	 *            The kind of framed elements to return.
 	 * @return a set of all the objects
 	 */
-	public <N extends AbstractVertexFrame> Set<N> toSet(Class<N> kind);
+	public <N extends VertexFrame> Set<N> toSet(Class<N> kind);
 
 	/**
 	 * Return a set of all the objects in the pipeline.
@@ -424,7 +424,7 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	 *            The kind of framed elements to return.
 	 * @return a set of all the objects
 	 */
-	public <N extends AbstractVertexFrame> Set<N> toSetExplicit(Class<N> kind);
+	public <N extends VertexFrame> Set<N> toSetExplicit(Class<N> kind);
 
 	/**
 	 * Emit the incoming vertex, but have other vertex provide an outgoing edge
@@ -484,7 +484,7 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	 *            the other vertex
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<List<TEdge>, TEdge, Mark> linkOut(String label, AbstractVertexFrame other);
+	public abstract VertexTraversal<List<TEdge>, TEdge, Mark> linkOut(String label, VertexFrame other);
 
 	/**
 	 * Emit the incoming vertex, but have other vertex provide an incoming edge
@@ -520,7 +520,7 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	 *            the other vertex
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<List<TEdge>, TEdge, Mark> linkIn(String label, AbstractVertexFrame other);
+	public abstract VertexTraversal<List<TEdge>, TEdge, Mark> linkIn(String label, VertexFrame other);
 
 	/**
 	 * Emit the incoming vertex, but have other vertex provide an incoming and
@@ -532,7 +532,7 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	 *            the other vertex
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<List<TEdge>, TEdge, Mark> linkBoth(String label, AbstractVertexFrame other);
+	public abstract VertexTraversal<List<TEdge>, TEdge, Mark> linkBoth(String label, VertexFrame other);
 
 	@Override
 	public abstract VertexTraversal<?, ?, Mark> dedup();
@@ -550,7 +550,7 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	 *            the collection except from the stream
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<?, ?, Mark> except(AbstractVertexFrame... vertices);
+	public abstract VertexTraversal<?, ?, Mark> except(VertexFrame... vertices);
 
 	/**
 	 * Will only emit the object if it is not equal to any of the objects
@@ -581,7 +581,7 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	 *            the collection to retain
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<?, ?, Mark> retain(AbstractVertexFrame... vertices);
+	public abstract VertexTraversal<?, ?, Mark> retain(VertexFrame... vertices);
 
 	@Override
 	public abstract VertexTraversal<?, ?, Mark> retain(Iterable<?> vertices);
@@ -715,7 +715,7 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	 *            The kind of framed elements to return.
 	 * @return the collection filled
 	 */
-	public abstract <N extends AbstractVertexFrame> Collection<N> fill(Collection<N> collection, Class<N> kind);
+	public abstract <N extends VertexFrame> Collection<N> fill(Collection<N> collection, Class<N> kind);
 
 	/**
 	 * Fill the provided collection with the objects in the pipeline.
@@ -730,7 +730,7 @@ public interface VertexTraversal<Cap, SideEffect, Mark> extends Traversal<TVerte
 	 *            The kind of framed elements to return.
 	 * @return the collection filled
 	 */
-	public abstract <N extends AbstractVertexFrame> Collection<N> fillExplicit(Collection<N> collection, Class<N> kind);
+	public abstract <N extends VertexFrame> Collection<N> fillExplicit(Collection<N> collection, Class<N> kind);
 
 	@Override
 	public abstract VertexTraversal<?, ?, Mark> gatherScatter();

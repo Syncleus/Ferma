@@ -18,7 +18,9 @@
  ******************************************************************************/
 package com.syncleus.ferma.annotations;
 
-public interface FatherEdge {
+import com.syncleus.ferma.EdgeFrame;
+
+public interface FatherEdge extends EdgeFrame {
     @InVertex
     God getFather();
 

@@ -18,7 +18,7 @@
  ******************************************************************************/
 package com.syncleus.ferma.annotations;
 
-import com.syncleus.ferma.AbstractElementFrame;
+import com.syncleus.ferma.ElementFrame;
 import net.bytebuddy.dynamic.DynamicType;
 import net.bytebuddy.instrumentation.MethodDelegation;
 import net.bytebuddy.instrumentation.method.bytecode.bind.annotation.Argument;
@@ -90,7 +90,7 @@ public class PropertyMethodHandler implements MethodHandler {
 
     public static final class GetPropertyInterceptor {
         @RuntimeType
-        public static Object getProperty(@This final AbstractElementFrame thiz, @Origin final Method method) {
+        public static Object getProperty(@This final ElementFrame thiz, @Origin final Method method) {
             final Property annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Property.class);
             final String value = annotation.value();
 
@@ -104,7 +104,7 @@ public class PropertyMethodHandler implements MethodHandler {
 
     public static final class SetPropertyInterceptor {
         @RuntimeType
-        public static void setProperty(@This final AbstractElementFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final Object obj) {
+        public static void setProperty(@This final ElementFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final Object obj) {
             final Property annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Property.class);
             final String value = annotation.value();
 
@@ -118,7 +118,7 @@ public class PropertyMethodHandler implements MethodHandler {
     }
 
     public static final class RemovePropertyInterceptor {
-        public static void removeProperty(@This final AbstractElementFrame thiz, @Origin final Method method) {
+        public static void removeProperty(@This final ElementFrame thiz, @Origin final Method method) {
             final Property annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Property.class);
             final String value = annotation.value();
 

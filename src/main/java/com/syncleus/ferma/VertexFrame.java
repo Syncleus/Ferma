@@ -40,7 +40,7 @@ public interface VertexFrame extends ElementFrame {
      *            The kind of frame.
      * @return The new edge.
      */
-    public <T extends AbstractEdgeFrame> T addFramedEdge(String label, AbstractVertexFrame inVertex, Class<T> kind);
+    public <T extends EdgeFrame> T addFramedEdge(String label, VertexFrame inVertex, Class<T> kind);
 
     /**
      * Add an edge using the supplied frame type.
@@ -57,7 +57,7 @@ public interface VertexFrame extends ElementFrame {
      *            The kind of frame.
      * @return The new edge.
      */
-    public <T extends AbstractEdgeFrame> T addFramedEdgeExplicit(String label, AbstractVertexFrame inVertex, Class<T> kind);
+    public <T extends EdgeFrame> T addFramedEdgeExplicit(String label, VertexFrame inVertex, Class<T> kind);
 
     /**
      * Add an edge using a frame type of {@link TEdge}.
@@ -68,7 +68,7 @@ public interface VertexFrame extends ElementFrame {
      *            The vertex to link to.
      * @return The added edge.
      */
-    public TEdge addFramedEdge(String label, AbstractVertexFrame inVertex);
+    public TEdge addFramedEdge(String label, VertexFrame inVertex);
 
     /**
      * Add an edge using a frame type of {@link TEdge}.
@@ -83,7 +83,7 @@ public interface VertexFrame extends ElementFrame {
      *            The vertex to link to.
      * @return The added edge.
      */
-    public TEdge addFramedEdgeExplicit(String label, AbstractVertexFrame inVertex);
+    public TEdge addFramedEdgeExplicit(String label, VertexFrame inVertex);
 
     public VertexTraversal<?, ?, ?> out(final int branchFactor, final String... labels);
 
@@ -118,7 +118,7 @@ public interface VertexFrame extends ElementFrame {
      * @param labels
      *            The labels for the edges.
      */
-    public void linkOut(AbstractVertexFrame vertex, String... labels);
+    public void linkOut(VertexFrame vertex, String... labels);
 
     /**
      * Create edges from the supplied vertex to the framed vertex with the
@@ -129,7 +129,7 @@ public interface VertexFrame extends ElementFrame {
      * @param labels
      *            The labels for the edges.
      */
-    public void linkIn(AbstractVertexFrame vertex, String... labels);
+    public void linkIn(VertexFrame vertex, String... labels);
 
     /**
      * Create edges from the supplied vertex to the framed vertex and vice versa
@@ -140,7 +140,7 @@ public interface VertexFrame extends ElementFrame {
      * @param labels
      *            The labels for the edges.
      */
-    public void linkBoth(AbstractVertexFrame vertex, String... labels);
+    public void linkBoth(VertexFrame vertex, String... labels);
 
     /**
      * Remove all edges to the supplied vertex with the supplied labels.
@@ -150,7 +150,7 @@ public interface VertexFrame extends ElementFrame {
      * @param labels
      *            The labels of the edges.
      */
-    public void unlinkOut(AbstractVertexFrame vertex, String... labels);
+    public void unlinkOut(VertexFrame vertex, String... labels);
 
     /**
      * Remove all edges to the supplied vertex with the supplied labels.
@@ -160,7 +160,7 @@ public interface VertexFrame extends ElementFrame {
      * @param labels
      *            The labels of the edges.
      */
-    public void unlinkIn(AbstractVertexFrame vertex, String... labels);
+    public void unlinkIn(VertexFrame vertex, String... labels);
 
     /**
      * Remove all edges to/from the supplied vertex with the supplied labels.
@@ -170,7 +170,7 @@ public interface VertexFrame extends ElementFrame {
      * @param labels
      *            The labels of the edges.
      */
-    public void unlinkBoth(AbstractVertexFrame vertex, String... labels);
+    public void unlinkBoth(VertexFrame vertex, String... labels);
 
     /**
      * Remove all out edges with the labels and then add a single edge to the
@@ -181,7 +181,7 @@ public interface VertexFrame extends ElementFrame {
      * @param labels
      *            The labels of the edges.
      */
-    public void setLinkOut(AbstractVertexFrame vertex, String... labels);
+    public void setLinkOut(VertexFrame vertex, String... labels);
 
     /**
      * Remove all in edges with the labels and then add a single edge from the
@@ -192,7 +192,7 @@ public interface VertexFrame extends ElementFrame {
      * @param labels
      *            The labels of the edges.
      */
-    public void setLinkIn(AbstractVertexFrame vertex, String... labels);
+    public void setLinkIn(VertexFrame vertex, String... labels);
 
     /**
      * Remove all in edges with the labels and then add a edges from the
@@ -203,7 +203,7 @@ public interface VertexFrame extends ElementFrame {
      * @param labels
      *            The labels of the edges.
      */
-    public void setLinkBoth(AbstractVertexFrame vertex, String... labels);
+    public void setLinkBoth(VertexFrame vertex, String... labels);
 
     /**
      * Remove all out edges with the labels and then add a single edge to a new
@@ -214,7 +214,7 @@ public interface VertexFrame extends ElementFrame {
      * @param labels
      *            The labels of the edges.
      */
-    public <K extends AbstractVertexFrame> AbstractVertexFrame setLinkOut(Class<K> kind, String... labels);
+    public <K extends VertexFrame> VertexFrame setLinkOut(Class<K> kind, String... labels);
 
     /**
      * Remove all out edges with the labels and then add a single edge to a new
@@ -229,7 +229,7 @@ public interface VertexFrame extends ElementFrame {
      * @param labels
      *            The labels of the edges.
      */
-    public <K extends AbstractVertexFrame> AbstractVertexFrame setLinkOutExplicit(Class<K> kind, String... labels);
+    public <K extends VertexFrame> VertexFrame setLinkOutExplicit(Class<K> kind, String... labels);
 
     /**
      * Remove all out edges with the labels and then add a single edge from a
@@ -240,7 +240,7 @@ public interface VertexFrame extends ElementFrame {
      * @param labels
      *            The labels of the edges.
      */
-    public <K extends AbstractVertexFrame> AbstractVertexFrame setLinkIn(Class<K> kind, String... labels);
+    public <K extends VertexFrame> VertexFrame setLinkIn(Class<K> kind, String... labels);
 
     /**
      * Remove all out edges with the labels and then add a single edge from a
@@ -255,7 +255,7 @@ public interface VertexFrame extends ElementFrame {
      * @param labels
      *            The labels of the edges.
      */
-    public <K extends AbstractVertexFrame> AbstractVertexFrame setLinkInExplicit(Class<K> kind, String... labels);
+    public <K extends VertexFrame> VertexFrame setLinkInExplicit(Class<K> kind, String... labels);
 
     /**
      * Remove all out edges with the labels and then add edges to/from a new
@@ -266,7 +266,7 @@ public interface VertexFrame extends ElementFrame {
      * @param labels
      *            The labels of the edges.
      */
-    public <K extends AbstractVertexFrame> AbstractVertexFrame setLinkBoth(Class<K> kind, String... labels);
+    public <K extends VertexFrame> VertexFrame setLinkBoth(Class<K> kind, String... labels);
 
     /**
      * Remove all out edges with the labels and then add edges to/from a new
@@ -281,7 +281,7 @@ public interface VertexFrame extends ElementFrame {
      * @param labels
      *            The labels of the edges.
      */
-    public <K extends AbstractVertexFrame> AbstractVertexFrame setLinkBothExplicit(Class<K> kind, String... labels);
+    public <K extends VertexFrame> VertexFrame setLinkBothExplicit(Class<K> kind, String... labels);
 
     /**
      * Shortcut to get frameTraversal of current element
@@ -303,7 +303,7 @@ public interface VertexFrame extends ElementFrame {
      * @param kind The new kind of frame.
      * @return The new frame
      */
-    public <T extends AbstractVertexFrame> T reframe(Class<T> kind);
+    public <T extends VertexFrame> T reframe(Class<T> kind);
 
     /**
      * Reframe this element as a different type of frame.
@@ -315,5 +315,5 @@ public interface VertexFrame extends ElementFrame {
      * @param kind The new kind of frame.
      * @return The new frame
      */
-    public <T extends AbstractVertexFrame> T reframeExplicit(Class<T> kind);
+    public <T extends VertexFrame> T reframeExplicit(Class<T> kind);
 }

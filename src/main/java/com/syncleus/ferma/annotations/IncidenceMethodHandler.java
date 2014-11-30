@@ -18,9 +18,7 @@
  ******************************************************************************/
 package com.syncleus.ferma.annotations;
 
-import com.syncleus.ferma.AbstractEdgeFrame;
-import com.syncleus.ferma.AbstractVertexFrame;
-import com.syncleus.ferma.TypeResolver;
+import com.syncleus.ferma.*;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.gremlin.Tokens;
 import net.bytebuddy.dynamic.DynamicType;
@@ -103,19 +101,19 @@ public class IncidenceMethodHandler implements MethodHandler {
 
     public static final class GetEdgesDefaultInterceptor {
         @RuntimeType
-        public static Iterable getEdges(@This final AbstractVertexFrame thiz, @Origin final Method method) {
+        public static Iterable getEdges(@This final VertexFrame thiz, @Origin final Method method) {
             final Incidence annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Incidence.class);
             final Direction direction = annotation.direction();
             final String label = annotation.label();
 
             switch (direction) {
                 case BOTH:
-                    return thiz.bothE(label).frame(AbstractVertexFrame.class);
+                    return thiz.bothE(label).frame(VertexFrame.class);
                 case IN:
-                    return thiz.inE(label).frame(AbstractVertexFrame.class);
+                    return thiz.inE(label).frame(VertexFrame.class);
                 //Assume out direction
                 default:
-                    return thiz.outE(label).frame(AbstractVertexFrame.class);
+                    return thiz.outE(label).frame(VertexFrame.class);
             }
 
         }
@@ -123,7 +121,7 @@ public class IncidenceMethodHandler implements MethodHandler {
 
     public static final class GetEdgesByTypeInterceptor {
         @RuntimeType
-        public static Iterable getEdges(@This final AbstractVertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final Class type) {
+        public static Iterable getEdges(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final Class type) {
             final Incidence annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Incidence.class);
             final Direction direction = annotation.direction();
             final String label = annotation.label();
@@ -145,19 +143,19 @@ public class IncidenceMethodHandler implements MethodHandler {
 
     public static final class GetEdgeDefaultInterceptor {
         @RuntimeType
-        public static Object getEdges(@This final AbstractVertexFrame thiz, @Origin final Method method) {
+        public static Object getEdges(@This final VertexFrame thiz, @Origin final Method method) {
             final Incidence annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Incidence.class);
             final Direction direction = annotation.direction();
             final String label = annotation.label();
 
             switch (direction) {
                 case BOTH:
-                    return thiz.bothE(label).next(AbstractVertexFrame.class);
+                    return thiz.bothE(label).next(VertexFrame.class);
                 case IN:
-                    return thiz.inE(label).next(AbstractVertexFrame.class);
+                    return thiz.inE(label).next(VertexFrame.class);
                 //Assume out direction
                 default:
-                    return thiz.outE(label).next(AbstractVertexFrame.class);
+                    return thiz.outE(label).next(VertexFrame.class);
             }
 
         }
@@ -165,7 +163,7 @@ public class IncidenceMethodHandler implements MethodHandler {
 
     public static final class GetEdgeByTypeInterceptor {
         @RuntimeType
-        public static Object getEdge(@This final AbstractVertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final Class type) {
+        public static Object getEdge(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final Class type) {
             final Incidence annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Incidence.class);
             final Direction direction = annotation.direction();
             final String label = annotation.label();
@@ -187,7 +185,7 @@ public class IncidenceMethodHandler implements MethodHandler {
 
     public static final class RemoveEdgeInterceptor {
         @RuntimeType
-        public static void removeEdge(@This final AbstractVertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final AbstractEdgeFrame edge) {
+        public static void removeEdge(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final EdgeFrame edge) {
             edge.remove();
         }
     }

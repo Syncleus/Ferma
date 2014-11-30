@@ -385,13 +385,13 @@ abstract class AbstractVertexTraversal extends AbstractTraversal implements Vert
 	}
 
 	@Override
-	public AbstractVertexFrame next(Class kind) {
-		return (AbstractVertexFrame) graph().frameElement((Element) pipeline().next(), kind);
+	public VertexFrame next(Class kind) {
+		return (VertexFrame) graph().frameElement((Element) pipeline().next(), kind);
 	}
 
 	@Override
-	public AbstractVertexFrame nextExplicit(Class kind) {
-		return (AbstractVertexFrame) graph().frameElementExplicit((Element) pipeline().next(), kind);
+	public VertexFrame nextExplicit(Class kind) {
+		return (VertexFrame) graph().frameElementExplicit((Element) pipeline().next(), kind);
 	}
 
 	@Override
@@ -415,7 +415,7 @@ abstract class AbstractVertexTraversal extends AbstractTraversal implements Vert
 	@Override
 	public Object nextOrAdd(Class kind) {
 		try {
-			return (AbstractVertexFrame) graph().frameElement((Element) pipeline().next(), kind);
+			return (VertexFrame) graph().frameElement((Element) pipeline().next(), kind);
 		} catch (NoSuchElementException e) {
 			return graph().addFramedVertex(kind);
 		}
@@ -425,7 +425,7 @@ abstract class AbstractVertexTraversal extends AbstractTraversal implements Vert
 	@Override
 	public Object nextOrAddExplicit(Class kind) {
 		try {
-			return (AbstractVertexFrame) graph().frameElementExplicit((Element) pipeline().next(), kind);
+			return (VertexFrame) graph().frameElementExplicit((Element) pipeline().next(), kind);
 		} catch (NoSuchElementException e) {
 			return graph().addFramedVertex(kind);
 		}
@@ -579,19 +579,19 @@ abstract class AbstractVertexTraversal extends AbstractTraversal implements Vert
 	}
 
 	@Override
-	public VertexTraversal linkOut(String label, AbstractVertexFrame other) {
+	public VertexTraversal linkOut(String label, VertexFrame other) {
 		pipeline().linkOut(label, other.element());
 		return this;
 	}
 
 	@Override
-	public VertexTraversal linkIn(String label, AbstractVertexFrame other) {
+	public VertexTraversal linkIn(String label, VertexFrame other) {
 		pipeline().linkIn(label, other.element());
 		return this;
 	}
 
 	@Override
-	public VertexTraversal linkBoth(String label, AbstractVertexFrame other) {
+	public VertexTraversal linkBoth(String label, VertexFrame other) {
 		pipeline().linkBoth(label, other.element());
 		return this;
 	}
@@ -624,13 +624,13 @@ abstract class AbstractVertexTraversal extends AbstractTraversal implements Vert
 	}
 
 	@Override
-	public VertexTraversal retain(AbstractVertexFrame... vertices) {
+	public VertexTraversal retain(VertexFrame... vertices) {
 
 		return (VertexTraversal) super.retain(Arrays.asList(vertices));
 	}
 
 	@Override
-	public VertexTraversal except(AbstractVertexFrame... vertices) {
+	public VertexTraversal except(VertexFrame... vertices) {
 
 		return (VertexTraversal) super.except(Arrays.asList(vertices));
 	}

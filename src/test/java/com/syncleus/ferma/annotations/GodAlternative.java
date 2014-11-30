@@ -18,9 +18,10 @@
  ******************************************************************************/
 package com.syncleus.ferma.annotations;
 
+import com.syncleus.ferma.VertexFrame;
 import com.tinkerpop.blueprints.Direction;
 
-public interface GodAlternative {
+public interface GodAlternative extends VertexFrame {
     @Adjacency(label="father", direction= Direction.IN)
     <N extends God> Iterable<? extends N> getSons(Class<? extends N> type);
 

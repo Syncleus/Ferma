@@ -18,10 +18,7 @@
  ******************************************************************************/
 package com.syncleus.ferma.annotations;
 
-import com.syncleus.ferma.FrameFactory;
-import com.syncleus.ferma.AbstractEdgeFrame;
-import com.syncleus.ferma.AbstractVertexFrame;
-import com.syncleus.ferma.ReflectionCache;
+import com.syncleus.ferma.*;
 import com.tinkerpop.blueprints.Edge;
 import com.tinkerpop.blueprints.Element;
 import com.tinkerpop.blueprints.Vertex;
@@ -102,10 +99,10 @@ public class AnnotationFrameFactory implements FrameFactory {
                 throw new IllegalStateException("class is neither an Edge or a vertex!");
         }
         else {
-            if( element instanceof Vertex && ! AbstractVertexFrame.class.isAssignableFrom(clazz) )
-                throw new IllegalStateException(clazz.getName() + " Class is not a type of FramedVertex");
-            if( element instanceof Edge && ! AbstractEdgeFrame.class.isAssignableFrom(clazz) )
-                throw new IllegalStateException(clazz.getName() + " Class is not a type of FramedEdge");
+            if( element instanceof Vertex && ! VertexFrame.class.isAssignableFrom(clazz) )
+                throw new IllegalStateException(clazz.getName() + " Class is not a type of VertexFrame");
+            if( element instanceof Edge && ! EdgeFrame.class.isAssignableFrom(clazz) )
+                throw new IllegalStateException(clazz.getName() + " Class is not a type of EdgeFrame");
             classBuilder = (DynamicType.Builder<? extends E>) new ByteBuddy().subclass(clazz);
         }
 

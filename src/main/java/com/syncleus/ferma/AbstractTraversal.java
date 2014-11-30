@@ -627,13 +627,13 @@ abstract class AbstractTraversal<T, Cap, SideEffect, Mark> implements Traversal<
 	}
 
 	@Override
-	public EdgeTraversal start(AbstractEdgeFrame object) {
+	public EdgeTraversal start(EdgeFrame object) {
 		pipeline().start(object);
 		return castToEdges();
 	}
 
 	@Override
-	public VertexTraversal start(AbstractVertexFrame object) {
+	public VertexTraversal start(VertexFrame object) {
 		pipeline().start(object);
 		return castToVertices();
 	}
@@ -674,11 +674,11 @@ abstract class AbstractTraversal<T, Cap, SideEffect, Mark> implements Traversal<
 
 			@Override
 			public Object apply(Object o) {
-				if (o instanceof AbstractVertexFrame) {
-					return ((AbstractVertexFrame) o).element();
+				if (o instanceof VertexFrame) {
+					return ((VertexFrame) o).element();
 				}
-				if (o instanceof AbstractEdgeFrame) {
-					return ((AbstractEdgeFrame) o).element();
+				if (o instanceof EdgeFrame) {
+					return ((EdgeFrame) o).element();
 				}
 				return o;
 			}

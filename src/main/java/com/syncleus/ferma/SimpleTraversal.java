@@ -170,7 +170,7 @@ class SimpleTraversal extends AbstractTraversal implements Traversal {
 		this(graph, new GremlinPipeline<>(starts));
 	}
 
-	protected SimpleTraversal(FramedGraph graph, AbstractElementFrame starts) {
+	protected SimpleTraversal(FramedGraph graph, ElementFrame starts) {
 		this(graph, new GremlinPipeline<>(starts.element()));
 	}
 

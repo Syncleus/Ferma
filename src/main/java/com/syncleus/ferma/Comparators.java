@@ -40,7 +40,7 @@ public class Comparators {
 	 * 
 	 * @return
 	 */
-	public static <N extends AbstractElementFrame> Comparator<N> id() {
+	public static <N extends ElementFrame> Comparator<N> id() {
 		return new Comparator<N>() {
 			@Override
 			public int compare(N o1, N o2) {
@@ -57,7 +57,7 @@ public class Comparators {
 	 * 
 	 * @return
 	 */
-	public static <N extends AbstractElementFrame> Comparator<N> idAsLong() {
+	public static <N extends ElementFrame> Comparator<N> idAsLong() {
 		return new Comparator<N>() {
 			@Override
 			public int compare(N o1, N o2) {
@@ -76,7 +76,7 @@ public class Comparators {
 	 *            The property to compare by.
 	 * @return The result of comparing the property.
 	 */
-	public static <N extends AbstractElementFrame> Comparator<N> property(final String property) {
+	public static <N extends ElementFrame> Comparator<N> property(final String property) {
 		return new Comparator<N>() {
 			@Override
 			public int compare(N o1, N o2) {

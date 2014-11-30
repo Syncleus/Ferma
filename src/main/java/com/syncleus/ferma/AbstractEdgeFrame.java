@@ -99,12 +99,12 @@ public abstract class AbstractEdgeFrame extends AbstractElementFrame implements 
 	}
 	
 	@Override
-	public <T extends AbstractEdgeFrame> T reframe(Class<T> kind) {
+	public <T extends EdgeFrame> T reframe(Class<T> kind) {
 		return graph().frameElement(element(), kind);
 	}
 
 	@Override
-	public <T extends AbstractEdgeFrame> T reframeExplicit(Class<T> kind) {
+	public <T extends EdgeFrame> T reframeExplicit(Class<T> kind) {
 		return graph().frameElementExplicit(element(), kind);
 	}
 }

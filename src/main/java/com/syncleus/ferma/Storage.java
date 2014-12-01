@@ -65,7 +65,7 @@ public class Storage<T> implements Collection<T> {
 	}
 
 	@Override
-	public <T> T[] toArray(final T[] a) {
+	public <Z> Z[] toArray(final Z[] a) {
 		throw new UnsupportedOperationException();
 	}
 

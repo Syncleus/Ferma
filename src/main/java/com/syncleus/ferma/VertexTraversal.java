@@ -133,7 +133,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
 	 *            the end of the interval (exclusive)
 	 * @return the extended Pipeline
 	 */
-	<C> VertexTraversal<?, ?, M> interval(String key, Comparable<C> startValue, Comparable<C> endValue);
+	<Z> VertexTraversal<?, ?, M> interval(String key, Comparable<Z> startValue, Comparable<Z> endValue);
 
 	/**
 	 * Emit the adjacent outgoing vertices of the incoming vertex.

@@ -285,7 +285,7 @@ public class GlobalVertexTraversal implements VertexTraversal {
 	}
 
 	public FramedVertex next(Class kind) {
-		return graph.frameElement((Element) simpleIterator().next(), kind);
+		return (FramedVertex) graph.frameElement((Element) simpleIterator().next(), kind);
 	}
 
 	public FramedVertex nextOrDefault(Class kind, FramedVertex defaultValue) {

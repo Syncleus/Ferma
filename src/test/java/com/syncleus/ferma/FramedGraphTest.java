@@ -22,7 +22,6 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.google.common.collect.Sets;
 import com.tinkerpop.blueprints.impls.tg.TinkerGraphFactory;
 import org.junit.Assert;
 import org.junit.Before;

@@ -19,7 +19,6 @@
 package com.syncleus.ferma.annotations;
 
 import com.syncleus.ferma.*;
-import com.syncleus.ferma.VertexFrame;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.impls.tg.TinkerGraph;
 import org.junit.Assert;

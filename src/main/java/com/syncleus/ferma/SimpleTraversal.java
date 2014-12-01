@@ -72,13 +72,13 @@ class SimpleTraversal<T, C, S, M> extends AbstractTraversal<T, C, S, M> implemen
 	}
 
 	@Override
-	public <T, Cap, SideEffect, Mark> MarkId<T, Cap, SideEffect, Mark> pushMark() {
+	public <W,X,Y,Z> MarkId<W,X,Y,Z> pushMark() {
 
 		return pushMark(this);
 	}
 
 	@Override
-	public <T, Cap, SideEffect, Mark> MarkId<T, Cap, SideEffect, Mark> popMark() {
+	public <W,X,Y,Z> MarkId<W,X,Y,Z> popMark() {
 		return marks.pop();
 	}
 

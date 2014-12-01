@@ -136,7 +136,7 @@ public interface EdgeTraversal<C, S, M> extends Traversal<EdgeFrame, C, S, M> {
 	 *            the end of the interval (exclusive)
 	 * @return the extended Pipeline
 	 */
-	public <C> EdgeTraversal<?, ?, M> interval(String key, Comparable<C> startValue, Comparable<C> endValue);
+	public <Z> EdgeTraversal<?, ?, M> interval(String key, Comparable<Z> startValue, Comparable<Z> endValue);
 
 	/**
 	 * Add an InVertexPipe to the end of the Pipeline. Emit the head vertex of

@@ -19,8 +19,6 @@
 package com.syncleus.ferma;
 
 
-import com.google.common.base.Function;
-import com.google.common.collect.Iterators;
 import com.tinkerpop.blueprints.*;
 
 import java.util.Collection;

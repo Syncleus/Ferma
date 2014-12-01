@@ -389,7 +389,7 @@ abstract class AbstractVertexTraversal<C, S, M> extends AbstractTraversal<Vertex
 	}
 
 	@Override
-	public <C> VertexTraversal<?, ?, M> interval(final String key, final Comparable<C> startValue, final Comparable<C> endValue) {
+	public <Z> VertexTraversal<?, ?, M> interval(String key, Comparable<Z> startValue, Comparable<Z> endValue) {
 		return (VertexTraversal<?, ?, M>) super.interval(key, startValue, endValue);
 	}
 

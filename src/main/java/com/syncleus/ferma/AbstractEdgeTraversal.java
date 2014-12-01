@@ -34,7 +34,7 @@ import com.google.common.collect.*;
 import com.tinkerpop.blueprints.Edge;
 import com.tinkerpop.blueprints.Element;
 import com.tinkerpop.blueprints.Predicate;
-import com.tinkerpop.gremlin.Tokens.T;
+import com.tinkerpop.gremlin.Tokens;
 import com.tinkerpop.gremlin.java.GremlinPipeline;
 import com.tinkerpop.pipes.Pipe;
 import com.tinkerpop.pipes.branch.LoopPipe;
@@ -426,7 +426,7 @@ abstract class AbstractEdgeTraversal<C, S, M> extends AbstractTraversal<EdgeFram
 	}
 
 	@Override
-	public EdgeTraversal<?, ?, M> order(final T order) {
+	public EdgeTraversal<?, ?, M> order(Tokens.T order) {
 		return (EdgeTraversal<?, ?, M>) super.order(order);
 	}
 

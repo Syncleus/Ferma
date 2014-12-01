@@ -146,7 +146,7 @@ abstract class AbstractTraversal<T, C, S, M> implements Traversal<T, C, S, M> {
 		return this;
 	}
 
-	protected <C> Traversal<T, ?, ?, M> interval(final String key, final Comparable<C> startValue, final Comparable<C> endValue) {
+	protected <Z> Traversal<T, ?, ?, M> interval(String key, Comparable<Z> startValue, Comparable<Z> endValue) {
 		Comparable pipelineStart = startValue;
 		if(startValue instanceof Enum)
 			pipelineStart = startValue.toString();
@@ -754,12 +754,12 @@ abstract class AbstractTraversal<T, C, S, M> implements Traversal<T, C, S, M> {
 	 */
 	protected abstract EdgeTraversal<C, S, M> castToEdges();
 
-	protected abstract <T, Cap, SideEffect, Mark> MarkId<T, Cap, SideEffect, Mark> pushMark();
+	protected abstract <W,X,Y,Z> MarkId<W,X,Y,Z> pushMark();
 
-	protected abstract <T, Cap, SideEffect, Mark> MarkId<T, Cap, SideEffect, Mark> popMark();
+	protected abstract <W,X,Y,Z> MarkId<W,X,Y,Z> popMark();
 
-	protected static class MarkId<T, Cap, SideEffect, Mark> {
-		Traversal<T, Cap, SideEffect, Mark> traversal;
+	protected static class MarkId<T, C, S, M> {
+		Traversal<T, C, S, M> traversal;
 		String id;
 	}
 

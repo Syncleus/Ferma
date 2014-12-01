@@ -551,12 +551,12 @@ abstract class AbstractTraversal<T, C, S, M> implements Traversal<T, C, S, M> {
     public List<? extends T> next(final int number) {
         return Lists.transform(pipeline().next(number), new Function() {
 
-            public Object apply(final Object e) {
-                if (e instanceof Edge)
-                    return graph().frameElement((Element) e, TEdge.class);
-                else if (e instanceof Vertex)
-                    return graph().frameElement((Element) e, TVertex.class);
-                return e;
+            public Object apply(final Object input) {
+                if (input instanceof Edge)
+                    return graph().frameElement((Element) input, TEdge.class);
+                else if (input instanceof Vertex)
+                    return graph().frameElement((Element) input, TVertex.class);
+                return input;
             }
         });
 
@@ -567,12 +567,12 @@ abstract class AbstractTraversal<T, C, S, M> implements Traversal<T, C, S, M> {
 
         return Lists.transform(pipeline().toList(), new Function() {
 
-            public Object apply(final Object e) {
-                if (e instanceof Edge)
-                    return graph().frameElementExplicit((Element) e, TEdge.class);
-                else if (e instanceof Vertex)
-                    return graph().frameElementExplicit((Element) e, TVertex.class);
-                return e;
+            public Object apply(final Object input) {
+                if (input instanceof Edge)
+                    return graph().frameElementExplicit((Element) input, TEdge.class);
+                else if (input instanceof Vertex)
+                    return graph().frameElementExplicit((Element) input, TVertex.class);
+                return input;
             }
         });
 
@@ -655,11 +655,11 @@ abstract class AbstractTraversal<T, C, S, M> implements Traversal<T, C, S, M> {
     public Iterator<T> iterator() {
         return Iterators.transform(pipeline(), new Function() {
 
-            public Object apply(final Object e) {
-                if (e instanceof Element)
-                    return graph().frameElement((Element) e, TVertex.class);
+            public Object apply(final Object input) {
+                if (input instanceof Element)
+                    return graph().frameElement((Element) input, TVertex.class);
 
-                return e;
+                return input;
             }
         });
     }
@@ -668,12 +668,12 @@ abstract class AbstractTraversal<T, C, S, M> implements Traversal<T, C, S, M> {
         final HashSet unwrapped = new HashSet(Collections2.transform(collection, new Function<Object, Object>() {
 
             @Override
-            public Object apply(final Object o) {
-                if (o instanceof VertexFrame)
-                    return ((VertexFrame) o).element();
-                if (o instanceof EdgeFrame)
-                    return ((EdgeFrame) o).element();
-                return o;
+            public Object apply(final Object input) {
+                if (input instanceof VertexFrame)
+                    return ((VertexFrame) input).element();
+                if (input instanceof EdgeFrame)
+                    return ((EdgeFrame) input).element();
+                return input;
             }
         }));
         return unwrapped;

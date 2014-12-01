@@ -239,8 +239,8 @@ public class DelegatingFramedGraph implements FramedGraph {
         return Iterators.transform(pipeline, new Function<Element, T>() {
 
             @Override
-            public T apply(final Element element) {
-                return frameElement(element, kind);
+            public T apply(final Element input) {
+                return frameElement(input, kind);
             }
 
         });
@@ -268,8 +268,8 @@ public class DelegatingFramedGraph implements FramedGraph {
         return Iterators.transform(pipeline, new Function<Element, T>() {
 
             @Override
-            public T apply(final Element element) {
-                return frameElementExplicit(element, kind);
+            public T apply(final Element input) {
+                return frameElementExplicit(input, kind);
             }
 
         });
@@ -469,8 +469,8 @@ public class DelegatingFramedGraph implements FramedGraph {
         return new SimpleTraversal(this, Iterators.transform(ids.iterator(), new Function<Object, Vertex>() {
 
             @Override
-            public Vertex apply(final Object id) {
-                return delegate.getVertex(id);
+            public Vertex apply(final Object input) {
+                return delegate.getVertex(input);
             }
 
         })).castToVertices();
@@ -488,8 +488,8 @@ public class DelegatingFramedGraph implements FramedGraph {
         return new SimpleTraversal(this, Iterators.transform(Iterators.forArray(ids), new Function<Object, Vertex>() {
 
             @Override
-            public Vertex apply(final Object id) {
-                return delegate.getVertex(id);
+            public Vertex apply(final Object input) {
+                return delegate.getVertex(input);
             }
 
         })).castToVertices();
@@ -507,8 +507,8 @@ public class DelegatingFramedGraph implements FramedGraph {
         return new SimpleTraversal(this, Iterators.transform(Iterators.forArray(ids), new Function<Object, Edge>() {
 
             @Override
-            public Edge apply(final Object id) {
-                return delegate.getEdge(id);
+            public Edge apply(final Object input) {
+                return delegate.getEdge(input);
             }
 
         })).castToEdges();
@@ -526,8 +526,8 @@ public class DelegatingFramedGraph implements FramedGraph {
         return new SimpleTraversal(this, Iterators.transform(ids.iterator(), new Function<Object, Edge>() {
 
             @Override
-            public Edge apply(final Object id) {
-                return delegate.getEdge(id);
+            public Edge apply(final Object input) {
+                return delegate.getEdge(input);
             }
 
         })).castToEdges();

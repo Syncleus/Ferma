@@ -591,7 +591,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
     VertexTraversal<?, ?, M> retain(VertexFrame... vertices);
 
     @Override
-    VertexTraversal<?, ?, M> retain(Iterable<?> vertices);
+    VertexTraversal<?, ?, M> retain(Iterable<?> collection);
 
     @Override
     VertexTraversal<?, ?, M> retain(String... namedSteps);

@@ -254,8 +254,8 @@ abstract class AbstractEdgeTraversal<C, S, M> extends AbstractTraversal<EdgeFram
     public <T> List<T> next(final int amount, final Class<T> kind) {
         return Lists.transform(pipeline().next(amount), new Function() {
 
-            public Object apply(final Object e) {
-                return graph().frameElement((Element) e, kind);
+            public Object apply(final Object input) {
+                return graph().frameElement((Element) input, kind);
             }
         });
     }
@@ -264,8 +264,8 @@ abstract class AbstractEdgeTraversal<C, S, M> extends AbstractTraversal<EdgeFram
     public <T> List<T> nextExplicit(final int amount, final Class<T> kind) {
         return Lists.transform(pipeline().next(amount), new Function() {
 
-            public Object apply(final Object e) {
-                return graph().frameElementExplicit((Element) e, kind);
+            public Object apply(final Object input) {
+                return graph().frameElementExplicit((Element) input, kind);
             }
         });
     }
@@ -274,8 +274,8 @@ abstract class AbstractEdgeTraversal<C, S, M> extends AbstractTraversal<EdgeFram
     public <T> Iterable<T> frame(final Class<T> kind) {
         return Iterables.transform(pipeline(), new Function() {
 
-            public Object apply(final Object e) {
-                return graph().frameElement((Element) e, kind);
+            public Object apply(final Object input) {
+                return graph().frameElement((Element) input, kind);
             }
         });
     }
@@ -284,8 +284,8 @@ abstract class AbstractEdgeTraversal<C, S, M> extends AbstractTraversal<EdgeFram
     public <T> Iterable<T> frameExplicit(final Class<T> kind) {
         return Iterables.transform(pipeline(), new Function() {
 
-            public Object apply(final Object e) {
-                return graph().frameElementExplicit((Element) e, kind);
+            public Object apply(final Object input) {
+                return graph().frameElementExplicit((Element) input, kind);
             }
         });
     }
@@ -294,8 +294,8 @@ abstract class AbstractEdgeTraversal<C, S, M> extends AbstractTraversal<EdgeFram
     public <T> List<? extends T> toList(final Class<T> kind) {
         return Lists.transform(pipeline().toList(), new Function() {
 
-            public Object apply(final Object e) {
-                return graph().frameElement((Element) e, kind);
+            public Object apply(final Object input) {
+                return graph().frameElement((Element) input, kind);
             }
         });
     }
@@ -304,8 +304,8 @@ abstract class AbstractEdgeTraversal<C, S, M> extends AbstractTraversal<EdgeFram
     public <T> List<? extends T> toListExplicit(final Class<T> kind) {
         return Lists.transform(pipeline().toList(), new Function() {
 
-            public Object apply(final Object e) {
-                return graph().frameElementExplicit((Element) e, kind);
+            public Object apply(final Object input) {
+                return graph().frameElementExplicit((Element) input, kind);
             }
         });
     }
@@ -482,8 +482,8 @@ abstract class AbstractEdgeTraversal<C, S, M> extends AbstractTraversal<EdgeFram
     public java.util.Iterator<EdgeFrame> iterator() {
         return Iterators.transform(pipeline(), new Function() {
 
-            public Object apply(final Object e) {
-                return graph().frameElement((Element) e, EdgeFrame.class);
+            public Object apply(final Object input) {
+                return graph().frameElement((Element) input, EdgeFrame.class);
             }
         });
     }
@@ -495,8 +495,8 @@ abstract class AbstractEdgeTraversal<C, S, M> extends AbstractTraversal<EdgeFram
     }
 
     @Override
-    public EdgeTraversal<?, ?, M> divert(final SideEffectFunction<S> sideEffect) {
-        return (EdgeTraversal<?, ?, M>) super.divert(sideEffect);
+    public EdgeTraversal<?, ?, M> divert(final SideEffectFunction<S> sideEffectFunction) {
+        return (EdgeTraversal<?, ?, M>) super.divert(sideEffectFunction);
     }
 
     @Override
@@ -553,16 +553,16 @@ abstract class AbstractEdgeTraversal<C, S, M> extends AbstractTraversal<EdgeFram
     }
 
     @Override
-    public EdgeTraversal<?, ?, M> loop(final TraversalFunction<EdgeFrame, ? extends EdgeTraversal<?, ?, ?>> input) {
-        final GremlinPipeline pipeline = ((AbstractTraversal) input.compute(new TEdge())).pipeline();
+    public EdgeTraversal<?, ?, M> loop(final TraversalFunction<EdgeFrame, ? extends EdgeTraversal<?, ?, ?>> traversal) {
+        final GremlinPipeline pipeline = ((AbstractTraversal) traversal.compute(new TEdge())).pipeline();
         pipeline().add(new LoopPipe(pipeline, LoopPipe.createTrueFunction(), null));
 
         return this;
     }
 
     @Override
-    public EdgeTraversal<?, ?, M> loop(final TraversalFunction<EdgeFrame, ? extends EdgeTraversal<?, ?, ?>> input, final int depth) {
-        final GremlinPipeline pipeline = ((AbstractTraversal) input.compute(new TEdge())).pipeline();
+    public EdgeTraversal<?, ?, M> loop(final TraversalFunction<EdgeFrame, ? extends EdgeTraversal<?, ?, ?>> traversal, final int depth) {
+        final GremlinPipeline pipeline = ((AbstractTraversal) traversal.compute(new TEdge())).pipeline();
         pipeline().add(new LoopPipe(pipeline, LoopPipe.createLoopsFunction(depth), null));
 
         return this;

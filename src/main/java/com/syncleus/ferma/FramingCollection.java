@@ -85,7 +85,7 @@ class FramingCollection<E, K extends ElementFrame> extends FrameMaker implements
         throw new UnsupportedOperationException();
     }
 
-    public <T> T[] toArray(final T[] a) {
+    public <T> T[] toArray(final T[] ts) {
         throw new UnsupportedOperationException();
     }
 
@@ -99,22 +99,22 @@ class FramingCollection<E, K extends ElementFrame> extends FrameMaker implements
         throw new UnsupportedOperationException();
     }
 
-    public boolean containsAll(final Collection<?> c) {
+    public boolean containsAll(final Collection<?> collection) {
         throw new UnsupportedOperationException();
     }
 
-    public boolean addAll(final Collection<? extends E> c) {
+    public boolean addAll(final Collection<? extends E> collection) {
         boolean modified = false;
-        for (final E e : c)
+        for (final E e : collection)
             modified |= add(e);
         return modified;
     }
 
-    public boolean removeAll(final Collection<?> c) {
+    public boolean removeAll(final Collection<?> collection) {
         throw new UnsupportedOperationException();
     }
 
-    public boolean retainAll(final Collection<?> c) {
+    public boolean retainAll(final Collection<?> collection) {
         throw new UnsupportedOperationException();
     }
 

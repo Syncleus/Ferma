@@ -65,7 +65,7 @@ public class Storage<T> implements Collection<T> {
     }
 
     @Override
-    public <Z> Z[] toArray(final Z[] a) {
+    public <Z> Z[] toArray(final Z[] ts) {
         throw new UnsupportedOperationException();
     }
 
@@ -81,22 +81,22 @@ public class Storage<T> implements Collection<T> {
     }
 
     @Override
-    public boolean containsAll(final Collection<?> c) {
+    public boolean containsAll(final Collection<?> collection) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean addAll(final Collection<? extends T> c) {
+    public boolean addAll(final Collection<? extends T> collection) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean removeAll(final Collection<?> c) {
+    public boolean removeAll(final Collection<?> collection) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean retainAll(final Collection<?> c) {
+    public boolean retainAll(final Collection<?> collection) {
         throw new UnsupportedOperationException();
     }
 

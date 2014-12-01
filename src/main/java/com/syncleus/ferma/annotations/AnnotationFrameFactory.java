@@ -60,11 +60,11 @@ public class AnnotationFrameFactory implements FrameFactory {
     }
 
     @Override
-    public <T> T create(final Element element, final Class<T> kind) {
+    public <T> T create(final Element e, final Class<T> kind) {
 
         Class<? extends T> resolvedKind = kind;
         if (isAbstract(resolvedKind))
-            resolvedKind = constructClass(element, kind);
+            resolvedKind = constructClass(e, kind);
         try {
             final T object = resolvedKind.newInstance();
             if (object instanceof CachesReflection)

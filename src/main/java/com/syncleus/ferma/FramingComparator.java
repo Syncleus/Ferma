@@ -50,12 +50,12 @@ class FramingComparator<T, K extends ElementFrame> extends FrameMaker implements
     }
 
     @Override
-    public int compare(T o1, T o2) {
+    public int compare(T t, T t1) {
 
-        o1 = makeFrame(o1);
-        o2 = makeFrame(o2);
+        t = makeFrame(t);
+        t1 = makeFrame(t1);
 
-        return delegate.compare(o1, o2);
+        return delegate.compare(t, t1);
     }
 
 }

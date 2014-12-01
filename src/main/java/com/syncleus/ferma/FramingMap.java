@@ -55,32 +55,32 @@ class FramingMap<T extends ElementFrame> extends FrameMaker implements Map {
     }
 
     @Override
-    public boolean containsKey(final Object key) {
+    public boolean containsKey(final Object o) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean containsValue(final Object value) {
+    public boolean containsValue(final Object o) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Object get(final Object key) {
-        return removeFrame(delegate.get(makeFrame(key)));
+    public Object get(final Object o) {
+        return removeFrame(delegate.get(makeFrame(o)));
     }
 
     @Override
-    public Object put(final Object key, final Object value) {
-        return delegate.put(makeFrame(key), makeFrame(value));
+    public Object put(final Object k, final Object v) {
+        return delegate.put(makeFrame(k), makeFrame(v));
     }
 
     @Override
-    public Object remove(final Object key) {
+    public Object remove(final Object o) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void putAll(final Map m) {
+    public void putAll(final Map map) {
         throw new UnsupportedOperationException();
     }
 

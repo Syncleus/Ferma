@@ -162,14 +162,14 @@ public abstract class AbstractElementFrame implements ElementFrame {
     }
 
     @Override
-    public boolean equals(final Object obj) {
-        if (this == obj)
+    public boolean equals(final Object o) {
+        if (this == o)
             return true;
-        if (obj == null)
+        if (o == null)
             return false;
-        if (getClass() != obj.getClass())
+        if (getClass() != o.getClass())
             return false;
-        final AbstractElementFrame other = (AbstractElementFrame) obj;
+        final AbstractElementFrame other = (AbstractElementFrame) o;
         if (element == null) {
             if (other.element != null)
                 return false;

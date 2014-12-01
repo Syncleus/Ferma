@@ -49,10 +49,10 @@ class FramingSideEffectFunction<T, K extends ElementFrame> extends FrameMaker im
     }
 
     @Override
-    public void execute(T argument) {
-        argument = makeFrame(argument);
+    public void execute(T o) {
+        o = makeFrame(o);
 
-        delegate.execute(argument);
+        delegate.execute(o);
     }
 
 }

@@ -492,7 +492,7 @@ public interface EdgeTraversal<C, S, M> extends Traversal<EdgeFrame, C, S, M> {
     EdgeTraversal<?, ?, M> or(TraversalFunction<EdgeFrame, Traversal<?, ?, ?, ?>>... pipes);
 
     @Override
-    EdgeTraversal<?, ?, M> divert(SideEffectFunction<S> sideEffect);
+    EdgeTraversal<?, ?, M> divert(SideEffectFunction<S> sideEffectFunction);
 
     @Override
     EdgeTraversal<?, ?, M> shuffle();

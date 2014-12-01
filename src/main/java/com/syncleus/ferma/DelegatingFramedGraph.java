@@ -235,7 +235,7 @@ public class DelegatingFramedGraph implements FramedGraph {
         return t;
     }
 
-    public <T extends ElementFrame> Iterator<? extends T> frame(final Iterator<? extends Element> pipeline, final Class<T> kind) {
+    public <T> Iterator<? extends T> frame(final Iterator<? extends Element> pipeline, final Class<T> kind) {
         return Iterators.transform(pipeline, new Function<Element, T>() {
 
             @Override
@@ -264,7 +264,7 @@ public class DelegatingFramedGraph implements FramedGraph {
         return t;
     }
 
-    public <T extends ElementFrame> Iterator<? extends T> frameExplicit(final Iterator<? extends Element> pipeline, final Class<T> kind) {
+    public <T> Iterator<? extends T> frameExplicit(final Iterator<? extends Element> pipeline, final Class<T> kind) {
         return Iterators.transform(pipeline, new Function<Element, T>() {
 
             @Override

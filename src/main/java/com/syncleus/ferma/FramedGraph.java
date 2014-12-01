@@ -192,7 +192,7 @@ public interface FramedGraph extends Graph {
 
     Edge addEdgeExplicit(Object id, Vertex outVertex, Vertex inVertex, String label);
 
-    <T extends ElementFrame> Iterator<? extends T> frame(Iterator<? extends Element> pipeline, final Class<T> kind);
+    <T> Iterator<? extends T> frame(Iterator<? extends Element> pipeline, final Class<T> kind);
 
     <T> T frameNewElement(Element e, Class<T> kind);
 
@@ -202,5 +202,5 @@ public interface FramedGraph extends Graph {
 
     <T> T frameElementExplicit(Element e, Class<T> kind);
 
-    <T extends ElementFrame> Iterator<? extends T> frameExplicit(Iterator<? extends Element> pipeline, final Class<T> kind);
+    <T> Iterator<? extends T> frameExplicit(Iterator<? extends Element> pipeline, final Class<T> kind);
 }

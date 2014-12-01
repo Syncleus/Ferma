@@ -90,7 +90,7 @@ And here is how you interact with the framed elements:
       Graph g = new TinkerGraph();
 
       // implies untyped mode
-      FramedGraph fg = new FramedGraph(g);
+      FramedGraph fg = new DelegatingFramedGraph(g);
 
       Person p1 = fg.addFramedVertex(Person.class);
       p1.setName("Jeff");
@@ -125,7 +125,7 @@ Using TypeResolver.SIMPLE will save the type of Java class the element was creat
       Graph g = new TinkerGraph();
 
       // implies simple mode
-      FramedGraph fg = new FramedGraph(g, true, false);
+      FramedGraph fg = new DelegatingFramedGraph(g, true, false);
       
       Person p1 = fg.addFramedVertex(Programmer.class);
       p1.setName("Jeff");
@@ -202,7 +202,7 @@ construct the byte-code for any abstract annotated methods.
       Graph g = new TinkerGraph();
 
       //implies annotated mode
-      FramedGraph fg = new FramedGraph(g, true, types);
+      FramedGraph fg = new DelegatingFramedGraph(g, true, types);
 
       Person p1 = fg.addFramedVertex(Programmer.class);
       p1.setName("Jeff");

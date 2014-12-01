@@ -32,20 +32,18 @@ import com.tinkerpop.blueprints.impls.tg.TinkerGraph;
 
 public class AbstractElementFrameTest {
 
-	
-	private FramedGraph fg;
-	private Person p1;
-	private Person p2;
-	private Knows e1;
+
+    private Person p1;
+    private Knows e1;
     
 	
 	@Before
 	public void init() {
 		MockitoAnnotations.initMocks(this);
 		final Graph g = new TinkerGraph();
-        fg = new DelegatingFramedGraph(g);
+        FramedGraph fg = new DelegatingFramedGraph(g);
         p1 = fg.addFramedVertex(Person.class);
-        p2 = fg.addFramedVertex(Person.class);
+        Person p2 = fg.addFramedVertex(Person.class);
         p1.setName("Bryn");
         p2.setName("Julia");
         e1 = p1.addKnows(p2);

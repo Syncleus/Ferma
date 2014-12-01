@@ -76,15 +76,15 @@ public class AnnotationFrameFactory implements FrameFactory {
         }
     }
 
-    private static final boolean isAbstract(final Class<?> clazz) {
+    private static boolean isAbstract(final Class<?> clazz) {
         return Modifier.isAbstract(clazz.getModifiers());
     }
 
-    private static final boolean isAbstract(final Method method) {
+    private static boolean isAbstract(final Method method) {
         return Modifier.isAbstract(method.getModifiers());
     }
 
-    private final <E> Class<? extends E> constructClass(final Element element, final Class<E> clazz) {
+    private <E> Class<? extends E> constructClass(final Element element, final Class<E> clazz) {
         Class constructedClass = constructedClassCache.get(clazz);
         if(constructedClass != null )
             return constructedClass;

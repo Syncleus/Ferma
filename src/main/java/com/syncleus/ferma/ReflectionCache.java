@@ -89,21 +89,21 @@ public class ReflectionCache extends Reflections {
         return type;
     }
 
-    private static final ConfigurationBuilder assembleConfig(final Set<URL> toScanUrls) {
+    private static ConfigurationBuilder assembleConfig(final Set<URL> toScanUrls) {
         final ConfigurationBuilder reflectionConfig = new ConfigurationBuilder();
         reflectionConfig.addUrls(toScanUrls);
         reflectionConfig.setScanners(new TypeAnnotationsScanner(), new SubTypesScanner());
         return reflectionConfig;
     }
 
-    private static final Set<URL> assembleClassUrls(final Collection<? extends Class<?>> annotatedTypes) {
+    private static Set<URL> assembleClassUrls(final Collection<? extends Class<?>> annotatedTypes) {
         final Set<URL> toScanUrls = new HashSet<>();
         for(final Class<?> annotatedType : annotatedTypes)
             toScanUrls.add(ClasspathHelper.forClass(annotatedType));
         return toScanUrls;
     }
 
-    private static final Set<URL> assembleClassUrls(final Collection<? extends Class<?>> annotatedTypes, final Collection<?> packages) {
+    private static Set<URL> assembleClassUrls(final Collection<? extends Class<?>> annotatedTypes, final Collection<?> packages) {
         final Set<URL> toScanUrls = new HashSet<>();
         for(final Class<?> annotatedType : annotatedTypes)
             toScanUrls.add(ClasspathHelper.forClass(annotatedType));

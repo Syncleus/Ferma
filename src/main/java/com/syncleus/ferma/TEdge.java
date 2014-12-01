@@ -33,8 +33,4 @@ package com.syncleus.ferma;
  *
  */
 public final class TEdge extends AbstractEdgeFrame {
-	public <T> T reframe(Class<T> kind) {
-		return graph().frameElement(element(), kind);
-	}
-	
 }

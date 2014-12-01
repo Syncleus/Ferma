@@ -26,27 +26,27 @@ public interface ElementFrame {
     /**
      * @return The id of this element.
      */
-    public <N> N getId();
+    <N> N getId();
 
     /**
      * @return The property keys of this element.
      */
-    public Set<String> getPropertyKeys();
+    Set<String> getPropertyKeys();
 
     /**
      * Remove this element from the graph.
      */
-    public void remove();
+    void remove();
 
     /**
      * @return The underlying element.
      */
-    public Element element();
+    Element element();
 
     /**
      * @return The underlying graph.
      */
-    public FramedGraph graph();
+    FramedGraph graph();
 
     /**
      * Return a property value.
@@ -55,7 +55,7 @@ public interface ElementFrame {
      *            The name of the property.
      * @return the value of the property or null if none was present.
      */
-    public <T> T getProperty(String name);
+    <T> T getProperty(String name);
 
     /**
      * Return a property value.
@@ -67,7 +67,7 @@ public interface ElementFrame {
      *
      * @return the value of the property or null if none was present.
      */
-    public <T> T getProperty(String name, Class<T> type);
+    <T> T getProperty(String name, Class<T> type);
 
     /**
      * Set a property value.
@@ -77,7 +77,7 @@ public interface ElementFrame {
      * @param value
      *            The value of the property.
      */
-    public void setProperty(String name, Object value);
+    void setProperty(String name, Object value);
 
     /**
      * Returns the type resolution currently encoded into the element.
@@ -85,7 +85,7 @@ public interface ElementFrame {
      * @return the current type resolution.
      * @since 2.1.0
      */
-    public Class<?> getTypeResolution();
+    Class<?> getTypeResolution();
 
     /**
      * Sets the type resolution and encodes it into the element in the graph.
@@ -93,28 +93,28 @@ public interface ElementFrame {
      * @param type The new type to resolve this element to.
      * @since 2.1.0
      */
-    public void setTypeResolution(Class<?> type);
+    void setTypeResolution(Class<?> type);
 
     /**
      * Removes type resolution from this node and decodes it from the element in the graph.
      *
      * @since 2.1.0
      */
-    public void removeTypeResolution();
+    void removeTypeResolution();
 
     /**
      * Query over all vertices in the graph.
      *
      * @return The query.
      */
-    public VertexTraversal<?, ?, ?> v();
+    VertexTraversal<?, ?, ?> v();
 
     /**
      * Query over all edges in the graph.
      *
      * @return The query.
      */
-    public EdgeTraversal<?, ?, ?> e();
+    EdgeTraversal<?, ?, ?> e();
 
     /**
      * Query over a list of vertices in the graph.
@@ -123,7 +123,7 @@ public interface ElementFrame {
      *            The ids of the vertices.
      * @return The query.
      */
-    public VertexTraversal<?, ?, ?> v(final Object... ids);
+    VertexTraversal<?, ?, ?> v(final Object... ids);
 
     /**
      * Query over a list of edges in the graph.
@@ -132,5 +132,5 @@ public interface ElementFrame {
      *            The ids of the edges.
      * @return The query.
      */
-    public EdgeTraversal<?, ?, ?> e(final Object... ids);
+    EdgeTraversal<?, ?, ?> e(final Object... ids);
 }

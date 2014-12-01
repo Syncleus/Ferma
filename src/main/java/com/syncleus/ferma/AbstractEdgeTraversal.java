@@ -482,7 +482,7 @@ abstract class AbstractEdgeTraversal<C, S, M> extends AbstractTraversal<EdgeFram
 				return graph().frameElement((Element) e, EdgeFrame.class);
 			}
 		});
-	};
+	}
 
 	@Override
 	public EdgeTraversal<?, ?, M> gatherScatter() {

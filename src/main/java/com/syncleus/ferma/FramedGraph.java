@@ -30,12 +30,12 @@ import java.util.Iterator;
 
 public interface FramedGraph extends Graph {
 
-	public Transaction tx();
+	Transaction tx();
 
 	/**
 	 * Close the delegate graph.
 	 */
-	public void close();
+	void close();
 
 	/**
 	 * Add a vertex to the graph
@@ -44,7 +44,7 @@ public interface FramedGraph extends Graph {
 	 *            The kind of the frame.
 	 * @return The framed vertex.
 	 */
-	public <T> T addFramedVertex(Class<T> kind);
+	<T> T addFramedVertex(Class<T> kind);
 
 	/**
 	 * Add a vertex to the graph
@@ -57,14 +57,14 @@ public interface FramedGraph extends Graph {
 	 *            The kind of the frame.
 	 * @return The framed vertex.
 	 */
-	public <T> T addFramedVertexExplicit(Class<T> kind);
+	<T> T addFramedVertexExplicit(Class<T> kind);
 
 	/**
 	 * Add a vertex to the graph using a frame type of {@link TVertex}.
 	 *
 	 * @return The framed vertex.
 	 */
-	public TVertex addFramedVertex();
+	TVertex addFramedVertex();
 
 	/**
 	 * Add a vertex to the graph using a frame type of {@link TVertex}.
@@ -75,7 +75,7 @@ public interface FramedGraph extends Graph {
 	 *
 	 * @return The framed vertex.
 	 */
-	public TVertex addFramedVertexExplicit();
+	TVertex addFramedVertexExplicit();
 
 	/**
 	 * Add a edge to the graph
@@ -84,7 +84,7 @@ public interface FramedGraph extends Graph {
 	 *            The kind of the frame.
 	 * @return The framed edge.
 	 */
-	public <T> T addFramedEdge(final VertexFrame source, final VertexFrame destination, final String label, Class<T> kind);
+	<T> T addFramedEdge(final VertexFrame source, final VertexFrame destination, final String label, Class<T> kind);
 
 	/**
 	 * Add a edge to the graph
@@ -97,14 +97,14 @@ public interface FramedGraph extends Graph {
 	 *            The kind of the frame.
 	 * @return The framed edge.
 	 */
-	public <T> T addFramedEdgeExplicit(final VertexFrame source, final VertexFrame destination, final String label, Class<T> kind);
+	<T> T addFramedEdgeExplicit(final VertexFrame source, final VertexFrame destination, final String label, Class<T> kind);
 
 	/**
 	 * Add a edge to the graph using a frame type of {@link TEdge}.
 	 *
 	 * @return The framed edge.
 	 */
-	public TEdge addFramedEdge(final VertexFrame source, final VertexFrame destination, final String label);
+	TEdge addFramedEdge(final VertexFrame source, final VertexFrame destination, final String label);
 
 	/**
 	 * Add a edge to the graph using a frame type of {@link TEdge}.
@@ -115,53 +115,44 @@ public interface FramedGraph extends Graph {
 	 *
 	 * @return The framed edge.
 	 */
-	public TEdge addFramedEdgeExplicit(final VertexFrame source, final VertexFrame destination, final String label);
+	TEdge addFramedEdgeExplicit(final VertexFrame source, final VertexFrame destination, final String label);
 
 	/**
 	 * Query over all vertices in the graph.
 	 *
 	 * @return The query.
 	 */
-	public VertexTraversal<?, ?, ?> v();
+	VertexTraversal<?, ?, ?> v();
 
 	/**
 	 * Query vertices with a matching key and value
 	 *
 	 * @return The query.
 	 */
-	public VertexTraversal<?, ?, ?> v(String key, Object value);
+	VertexTraversal<?, ?, ?> v(String key, Object value);
 
 	/**
 	 * Query over all edges in the graph.
 	 *
 	 * @return The query.
 	 */
-	public EdgeTraversal<?, ?, ?> e();
+	EdgeTraversal<?, ?, ?> e();
 
-	public <F> Iterable<? extends F> getFramedVertices(final Class<F> kind);
+	<F> Iterable<? extends F> getFramedVertices(final Class<F> kind);
 
-	public <F> Iterable<? extends F> getFramedVertices(final String key, final Object value, final Class<F> kind);
+	<F> Iterable<? extends F> getFramedVertices(final String key, final Object value, final Class<F> kind);
 
-	public <F> Iterable<? extends F> getFramedVerticesExplicit(final Class<F> kind);
+	<F> Iterable<? extends F> getFramedVerticesExplicit(final Class<F> kind);
 
-	public <F> Iterable<? extends F> getFramedVerticesExplicit(final String key, final Object value, final Class<F> kind);
+	<F> Iterable<? extends F> getFramedVerticesExplicit(final String key, final Object value, final Class<F> kind);
 
-	public <F> Iterable<? extends F> getFramedEdges(final Class<F> kind);
+	<F> Iterable<? extends F> getFramedEdges(final Class<F> kind);
 
-	public <F> Iterable<? extends F> getFramedEdges(final String key, final Object value, final Class<F> kind);
+	<F> Iterable<? extends F> getFramedEdges(final String key, final Object value, final Class<F> kind);
 
-	public <F> Iterable<? extends F> getFramedEdgesExplicit(final Class<F> kind);
+	<F> Iterable<? extends F> getFramedEdgesExplicit(final Class<F> kind);
 
-	public <F> Iterable<? extends F> getFramedEdgesExplicit(final String key, final Object value, final Class<F> kind);
-
-	/**
-	 * Query over a list of vertices in the graph.
-	 *
-	 * @param ids
-	 *            The ids of the vertices.
-	 * @return The query.
-	 */
-	public VertexTraversal<?, ?, ?> v(final Collection<?> ids);
+	<F> Iterable<? extends F> getFramedEdgesExplicit(final String key, final Object value, final Class<F> kind);
 
 	/**
 	 * Query over a list of vertices in the graph.
@@ -170,7 +161,16 @@ public interface FramedGraph extends Graph {
 	 *            The ids of the vertices.
 	 * @return The query.
 	 */
-	public VertexTraversal<?, ?, ?> v(final Object... ids);
+	VertexTraversal<?, ?, ?> v(final Collection<?> ids);
+
+	/**
+	 * Query over a list of vertices in the graph.
+	 *
+	 * @param ids
+	 *            The ids of the vertices.
+	 * @return The query.
+	 */
+	VertexTraversal<?, ?, ?> v(final Object... ids);
 
 	/**
 	 * Query over a list of edges in the graph.
@@ -179,7 +179,7 @@ public interface FramedGraph extends Graph {
 	 *            The ids of the edges.
 	 * @return The query.
 	 */
-	public EdgeTraversal<?, ?, ?> e(final Object... ids);
+	EdgeTraversal<?, ?, ?> e(final Object... ids);
 
 
 	/**
@@ -189,11 +189,11 @@ public interface FramedGraph extends Graph {
 	 *            The ids of the edges.
 	 * @return The query.
 	 */
-	public EdgeTraversal<?, ?, ?> e(final Collection<?> ids);
+	EdgeTraversal<?, ?, ?> e(final Collection<?> ids);
 
-	public Vertex addVertexExplicit(Object id);
+	Vertex addVertexExplicit(Object id);
 
-	public Edge addEdgeExplicit(Object id, Vertex outVertex, Vertex inVertex, String label);
+	Edge addEdgeExplicit(Object id, Vertex outVertex, Vertex inVertex, String label);
 
 	<T extends ElementFrame> Iterator<? extends T> frame(Iterator<? extends Element> pipeline, final Class<T> kind);
 

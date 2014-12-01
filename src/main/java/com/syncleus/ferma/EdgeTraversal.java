@@ -51,7 +51,7 @@ public interface EdgeTraversal<C, S, M> extends Traversal<EdgeFrame, C, S, M> {
 	 *            the property key to check
 	 * @return the extended Pipeline
 	 */
-	public EdgeTraversal<?, ?, M> has(String key);
+	EdgeTraversal<?, ?, M> has(String key);
 
 	/**
 	 * Add an IdFilterPipe, LabelFilterPipe, or PropertyFilterPipe to the end of
@@ -65,7 +65,7 @@ public interface EdgeTraversal<C, S, M> extends Traversal<EdgeFrame, C, S, M> {
 	 *            the object to filter on (in an OR manner)
 	 * @return the extended Pipeline
 	 */
-	public EdgeTraversal<?, ?, M> has(String key, Object value);
+	EdgeTraversal<?, ?, M> has(String key, Object value);
 
 	/**
 	 * Add an IdFilterPipe, LabelFilterPipe, or PropertyFilterPipe to the end of
@@ -81,7 +81,7 @@ public interface EdgeTraversal<C, S, M> extends Traversal<EdgeFrame, C, S, M> {
 	 *            the object to filter on
 	 * @return the extended Pipeline
 	 */
-	public EdgeTraversal<?, ?, M> has(String key, Tokens.T compareToken, Object value);
+	EdgeTraversal<?, ?, M> has(String key, Tokens.T compareToken, Object value);
 
 	/**
 	 * Add an IdFilterPipe, LabelFilterPipe, or PropertyFilterPipe to the end of
@@ -97,7 +97,7 @@ public interface EdgeTraversal<C, S, M> extends Traversal<EdgeFrame, C, S, M> {
 	 *            the object to filter on
 	 * @return the extended Pipeline
 	 */
-	public EdgeTraversal<?, ?, M> has(String key, Predicate predicate, Object value);
+	EdgeTraversal<?, ?, M> has(String key, Predicate predicate, Object value);
 
 	/**
 	 * Check if the element does not have a property with provided key.
@@ -106,7 +106,7 @@ public interface EdgeTraversal<C, S, M> extends Traversal<EdgeFrame, C, S, M> {
 	 *            the property key to check
 	 * @return the extended Pipeline
 	 */
-	public EdgeTraversal<?, ?, M> hasNot(String key);
+	EdgeTraversal<?, ?, M> hasNot(String key);
 
 	/**
 	 * Add an IdFilterPipe, LabelFilterPipe, or PropertyFilterPipe to the end of
@@ -120,7 +120,7 @@ public interface EdgeTraversal<C, S, M> extends Traversal<EdgeFrame, C, S, M> {
 	 *            the objects to filter on (in an OR manner)
 	 * @return the extended Pipeline
 	 */
-	public EdgeTraversal<?, ?, M> hasNot(String key, Object value);
+	EdgeTraversal<?, ?, M> hasNot(String key, Object value);
 
 	/**
 	 * Add an IntervalFilterPipe to the end of the Pipeline. If the incoming
@@ -136,7 +136,7 @@ public interface EdgeTraversal<C, S, M> extends Traversal<EdgeFrame, C, S, M> {
 	 *            the end of the interval (exclusive)
 	 * @return the extended Pipeline
 	 */
-	public <Z> EdgeTraversal<?, ?, M> interval(String key, Comparable<Z> startValue, Comparable<Z> endValue);
+	<Z> EdgeTraversal<?, ?, M> interval(String key, Comparable<Z> startValue, Comparable<Z> endValue);
 
 	/**
 	 * Add an InVertexPipe to the end of the Pipeline. Emit the head vertex of
@@ -144,7 +144,7 @@ public interface EdgeTraversal<C, S, M> extends Traversal<EdgeFrame, C, S, M> {
 	 *
 	 * @return the extended Pipeline
 	 */
-	public VertexTraversal<?, ?, M> inV();
+	VertexTraversal<?, ?, M> inV();
 
 	/**
 	 * Add an OutVertexPipe to the end of the Pipeline. Emit the tail vertex of
@@ -152,14 +152,14 @@ public interface EdgeTraversal<C, S, M> extends Traversal<EdgeFrame, C, S, M> {
 	 *
 	 * @return the extended Pipeline
 	 */
-	public VertexTraversal<?, ?, M> outV();
+	VertexTraversal<?, ?, M> outV();
 
 	/**
 	 * Emit both the tail and head vertices of the incoming edge.
 	 *
 	 * @return the extended Pipeline
 	 */
-	public VertexTraversal<?, ?, M> bothV();
+	VertexTraversal<?, ?, M> bothV();
 
 	/**
 	 * Get the next object emitted from the pipeline. If no such object exists,
@@ -169,7 +169,7 @@ public interface EdgeTraversal<C, S, M> extends Traversal<EdgeFrame, C, S, M> {
 	 *            The type of frame for the element.
 	 * @return the next emitted object
 	 */
-	public <T> T next(Class<T> kind);
+	<T> T next(Class<T> kind);
 
 	/**
 	 * Get the next object emitted from the pipeline. If no such object exists,
@@ -183,7 +183,7 @@ public interface EdgeTraversal<C, S, M> extends Traversal<EdgeFrame, C, S, M> {
 	 *            The type of frame for the element.
 	 * @return the next emitted object
 	 */
-	public <T> T nextExplicit(Class<T> kind);
+	<T> T nextExplicit(Class<T> kind);
 
 	/**
 	 * Return the next X objects in the traversal as a list.
@@ -194,7 +194,7 @@ public interface EdgeTraversal<C, S, M> extends Traversal<EdgeFrame, C, S, M> {
 	 *            the type of frame to for each element.
 	 * @return a list of X objects (if X objects occur)
 	 */
-	public <T> List<T> next(int amount, Class<T> kind);
+	<T> List<T> next(int amount, Class<T> kind);
 
 	/**
 	 * Return the next X objects in the traversal as a list.
@@ -209,7 +209,7 @@ public interface EdgeTraversal<C, S, M> extends Traversal<EdgeFrame, C, S, M> {
 	 *            the type of frame to for each element.
 	 * @return a list of X objects (if X objects occur)
 	 */
-	public <T> List<T> nextExplicit(int amount, Class<T> kind);
+	<T> List<T> nextExplicit(int amount, Class<T> kind);
 
 	/**
 	 * Return an iterator of framed elements.
@@ -218,7 +218,7 @@ public interface EdgeTraversal<C, S, M> extends Traversal<EdgeFrame, C, S, M> {
 	 *            The kind of framed elements to return.
 	 * @return An iterator of framed elements.
 	 */
-	public <T> Iterable<T> frame(Class<T> kind);
+	<T> Iterable<T> frame(Class<T> kind);
 
 	/**
 	 * Return an iterator of framed elements.
@@ -231,7 +231,7 @@ public interface EdgeTraversal<C, S, M> extends Traversal<EdgeFrame, C, S, M> {
 	 *            The kind of framed elements to return.
 	 * @return An iterator of framed elements.
 	 */
-	public <T> Iterable<T> frameExplicit(Class<T> kind);
+	<T> Iterable<T> frameExplicit(Class<T> kind);
 
 	/**
 	 * Return a list of all the objects in the pipeline.
@@ -240,7 +240,7 @@ public interface EdgeTraversal<C, S, M> extends Traversal<EdgeFrame, C, S, M> {
 	 *            The kind of framed elements to return.
 	 * @return a list of all the objects
 	 */
-	public <T> List<? extends T> toList(Class<T> kind);
+	<T> List<? extends T> toList(Class<T> kind);
 
 	/**
 	 * Return a set of all the objects in the pipeline.
@@ -249,7 +249,7 @@ public interface EdgeTraversal<C, S, M> extends Traversal<EdgeFrame, C, S, M> {
 	 *            The kind of framed elements to return.
 	 * @return a set of all the objects
 	 */
-	public <T> Set<? extends T> toSet(Class<T> kind);
+	<T> Set<? extends T> toSet(Class<T> kind);
 
 	/**
 	 * Return a set of all the objects in the pipeline.
@@ -262,7 +262,7 @@ public interface EdgeTraversal<C, S, M> extends Traversal<EdgeFrame, C, S, M> {
 	 *            The kind of framed elements to return.
 	 * @return a set of all the objects
 	 */
-	public <T> Set<? extends T> toSetExplicit(Class<T> kind);
+	<T> Set<? extends T> toSetExplicit(Class<T> kind);
 
 	/**
 	 * Return a list of all the objects in the pipeline.
@@ -275,7 +275,7 @@ public interface EdgeTraversal<C, S, M> extends Traversal<EdgeFrame, C, S, M> {
 	 *            The kind of framed elements to return.
 	 * @return a list of all the objects
 	 */
-	public <T> List<? extends T> toListExplicit(Class<T> kind);
+	<T> List<? extends T> toListExplicit(Class<T> kind);
 
 	/**
 	 * Add an LabelPipe to the end of the Pipeline. Emit the label of the
@@ -283,16 +283,16 @@ public interface EdgeTraversal<C, S, M> extends Traversal<EdgeFrame, C, S, M> {
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract Traversal<String, ?, ?, M> label();
+	Traversal<String, ?, ?, M> label();
 
 	@Override
-	public abstract EdgeTraversal<?, ?, M> dedup();
+	EdgeTraversal<?, ?, M> dedup();
 
 	@Override
-	public abstract EdgeTraversal<?, ?, M> dedup(TraversalFunction<EdgeFrame, ?> dedupFunction);
+	EdgeTraversal<?, ?, M> dedup(TraversalFunction<EdgeFrame, ?> dedupFunction);
 
 	@Override
-	public abstract EdgeTraversal<?, ?, M> except(Iterable<?> collection);
+	EdgeTraversal<?, ?, M> except(Iterable<?> collection);
 
 	/**
 	 * Add an ExceptFilterPipe to the end of the Pipeline. Will only emit the
@@ -302,25 +302,25 @@ public interface EdgeTraversal<C, S, M> extends Traversal<EdgeFrame, C, S, M> {
 	 *            the edges to reject from the stream
 	 * @return the extended Pipeline
 	 */
-	public abstract EdgeTraversal<?, ?, M> except(EdgeFrame... edges);
+	EdgeTraversal<?, ?, M> except(EdgeFrame... edges);
 
 	@Override
-	public abstract EdgeTraversal<?, ?, M> except(String... namedSteps);
+	EdgeTraversal<?, ?, M> except(String... namedSteps);
 
 	@Override
-	public abstract EdgeTraversal<?, ?, M> filter(TraversalFunction<EdgeFrame, Boolean> filterFunction);
+	EdgeTraversal<?, ?, M> filter(TraversalFunction<EdgeFrame, Boolean> filterFunction);
 
 	@Override
-	public abstract EdgeTraversal<?, ?, M> random(double bias);
+	EdgeTraversal<?, ?, M> random(double bias);
 
 	@Override
-	public abstract EdgeTraversal<?, ?, M> range(int low, int high);
+	EdgeTraversal<?, ?, M> range(int low, int high);
 	
 	@Override
-	public abstract EdgeTraversal<?, ?, M> limit(int limit);
+	EdgeTraversal<?, ?, M> limit(int limit);
 
 	@Override
-	public abstract EdgeTraversal<?, ?, M> retain(Iterable<?> collection);
+	EdgeTraversal<?, ?, M> retain(Iterable<?> collection);
 
 	/**
 	 * Will emit the object only if it is in the provided array.
@@ -329,113 +329,113 @@ public interface EdgeTraversal<C, S, M> extends Traversal<EdgeFrame, C, S, M> {
 	 *            the edges to retain
 	 * @return the extended Pipeline
 	 */
-	public abstract EdgeTraversal<?, ?, M> retain(EdgeFrame... edges);
+	EdgeTraversal<?, ?, M> retain(EdgeFrame... edges);
 
 	@Override
-	public abstract EdgeTraversal<?, ?, M> retain(String... namedSteps);
+	EdgeTraversal<?, ?, M> retain(String... namedSteps);
 
 	@Override
-	public abstract EdgeTraversal<Collection<? extends EdgeFrame>, Collection<? extends EdgeFrame>, M> aggregate();
+	EdgeTraversal<Collection<? extends EdgeFrame>, Collection<? extends EdgeFrame>, M> aggregate();
 
 	@Override
-	public abstract EdgeTraversal<Collection<? extends EdgeFrame>, Collection<? extends EdgeFrame>, M> aggregate(Collection<? super EdgeFrame> aggregate);
+	EdgeTraversal<Collection<? extends EdgeFrame>, Collection<? extends EdgeFrame>, M> aggregate(Collection<? super EdgeFrame> aggregate);
 
 	@Override
-	public abstract <N> EdgeTraversal<Collection<? extends N>, Collection<? extends N>, M> aggregate(Collection<? super N> aggregate, TraversalFunction<EdgeFrame, ? extends N> aggregateFunction);
+	<N> EdgeTraversal<Collection<? extends N>, Collection<? extends N>, M> aggregate(Collection<? super N> aggregate, TraversalFunction<EdgeFrame, ? extends N> aggregateFunction);
 
 	@Override
-	public abstract <N> EdgeTraversal<Collection<? extends N>, Collection<? extends N>, M> aggregate(TraversalFunction<EdgeFrame, ? extends N> aggregateFunction);
+	<N> EdgeTraversal<Collection<? extends N>, Collection<? extends N>, M> aggregate(TraversalFunction<EdgeFrame, ? extends N> aggregateFunction);
 
 	@Override
-	public abstract <K, V> EdgeTraversal<Map<K, List<V>>, Map<K, List<V>>, M> groupBy(Map<K, List<V>> map, TraversalFunction<EdgeFrame, K> keyFunction, TraversalFunction<EdgeFrame, Iterator<V>> valueFunction);
+	<K, V> EdgeTraversal<Map<K, List<V>>, Map<K, List<V>>, M> groupBy(Map<K, List<V>> map, TraversalFunction<EdgeFrame, K> keyFunction, TraversalFunction<EdgeFrame, Iterator<V>> valueFunction);
 
 	@Override
-	public abstract <K, V> EdgeTraversal<Map<K, List<V>>, Map<K, List<V>>, M> groupBy(TraversalFunction<EdgeFrame, K> keyFunction, TraversalFunction<EdgeFrame, Iterator<V>> valueFunction);
+	<K, V> EdgeTraversal<Map<K, List<V>>, Map<K, List<V>>, M> groupBy(TraversalFunction<EdgeFrame, K> keyFunction, TraversalFunction<EdgeFrame, Iterator<V>> valueFunction);
 
 	@Override
-	public abstract <K, V, V2> EdgeTraversal<Map<K, V2>, Map<K, V2>, M> groupBy(Map<K, V2> reduceMap, TraversalFunction<EdgeFrame, K> keyFunction, TraversalFunction<EdgeFrame, Iterator<V>> valueFunction, TraversalFunction<List<V>, V2> reduceFunction);
+	<K, V, V2> EdgeTraversal<Map<K, V2>, Map<K, V2>, M> groupBy(Map<K, V2> reduceMap, TraversalFunction<EdgeFrame, K> keyFunction, TraversalFunction<EdgeFrame, Iterator<V>> valueFunction, TraversalFunction<List<V>, V2> reduceFunction);
 
 	@Override
-	public abstract <K, V, V2> EdgeTraversal<Map<K, V2>, Map<K, V2>, M> groupBy(TraversalFunction<EdgeFrame, K> keyFunction, TraversalFunction<EdgeFrame, Iterator<V>> valueFunction, TraversalFunction<List<V>, V2> reduceFunction);
+	<K, V, V2> EdgeTraversal<Map<K, V2>, Map<K, V2>, M> groupBy(TraversalFunction<EdgeFrame, K> keyFunction, TraversalFunction<EdgeFrame, Iterator<V>> valueFunction, TraversalFunction<List<V>, V2> reduceFunction);
 
 	@Override
-	public abstract <K> EdgeTraversal<Map<K, Long>, Map<K, Long>, M> groupCount(Map<K, Long> map,
-			TraversalFunction<EdgeFrame, K> keyFunction, TraversalFunction<Pair<EdgeFrame, Long>, Long> valueFunction);
+	<K> EdgeTraversal<Map<K, Long>, Map<K, Long>, M> groupCount(Map<K, Long> map,
+																TraversalFunction<EdgeFrame, K> keyFunction, TraversalFunction<Pair<EdgeFrame, Long>, Long> valueFunction);
 
 	@Override
-	public abstract <K> EdgeTraversal<Map<K, Long>, Map<K, Long>, M> groupCount(TraversalFunction<EdgeFrame, K> keyFunction, TraversalFunction<Pair<EdgeFrame, Long>, Long> valueFunction);
+	<K> EdgeTraversal<Map<K, Long>, Map<K, Long>, M> groupCount(TraversalFunction<EdgeFrame, K> keyFunction, TraversalFunction<Pair<EdgeFrame, Long>, Long> valueFunction);
 
 	@Override
-	public abstract <K> EdgeTraversal<Map<K, Long>, Map<K, Long>, M> groupCount(Map<K, Long> map,
-			TraversalFunction<EdgeFrame, K> keyFunction);
+	<K> EdgeTraversal<Map<K, Long>, Map<K, Long>, M> groupCount(Map<K, Long> map,
+																TraversalFunction<EdgeFrame, K> keyFunction);
 
 	@Override
-	public abstract <K> EdgeTraversal<Map<K, Long>, Map<K, Long>, M> groupCount(TraversalFunction<EdgeFrame, K> keyFunction);
+	<K> EdgeTraversal<Map<K, Long>, Map<K, Long>, M> groupCount(TraversalFunction<EdgeFrame, K> keyFunction);
 
 	@Override
-	public abstract EdgeTraversal<Map<EdgeFrame, Long>, Map<EdgeFrame, Long>, M> groupCount(Map<EdgeFrame, Long> map);
+	EdgeTraversal<Map<EdgeFrame, Long>, Map<EdgeFrame, Long>, M> groupCount(Map<EdgeFrame, Long> map);
 
 	@Override
-	public abstract EdgeTraversal<Map<EdgeFrame, Long>, Map<EdgeFrame, Long>, M> groupCount();
+	EdgeTraversal<Map<EdgeFrame, Long>, Map<EdgeFrame, Long>, M> groupCount();
 
 	@Override
-	public abstract EdgeTraversal<?, ?, M> sideEffect(SideEffectFunction<EdgeFrame> sideEffectFunction);
+	EdgeTraversal<?, ?, M> sideEffect(SideEffectFunction<EdgeFrame> sideEffectFunction);
 
 	@Override
-	public abstract <N> EdgeTraversal<Collection<N>, N, M> store(Collection<N> storage);
+	<N> EdgeTraversal<Collection<N>, N, M> store(Collection<N> storage);
 
 	@Override
-	public abstract <N> EdgeTraversal<Collection<N>, N, M> store(Collection<N> storage,
-			TraversalFunction<EdgeFrame, N> storageFunction);
+	<N> EdgeTraversal<Collection<N>, N, M> store(Collection<N> storage,
+												 TraversalFunction<EdgeFrame, N> storageFunction);
 
 	@Override
-	public abstract EdgeTraversal<Collection<EdgeFrame>, EdgeFrame, M> store();
+	EdgeTraversal<Collection<EdgeFrame>, EdgeFrame, M> store();
 
 	@Override
-	public abstract <N> EdgeTraversal<Collection<N>, N, M> store(TraversalFunction<EdgeFrame, N> storageFunction);
+	<N> EdgeTraversal<Collection<N>, N, M> store(TraversalFunction<EdgeFrame, N> storageFunction);
 
 	@Override
-	public abstract EdgeTraversal<Table, Table, M> table(Table table, Collection<String> stepNames,
-			TraversalFunction<?, ?>... columnFunctions);
+	EdgeTraversal<Table, Table, M> table(Table table, Collection<String> stepNames,
+										 TraversalFunction<?, ?>... columnFunctions);
 
 	@Override
-	public abstract EdgeTraversal<Table, Table, M> table(Table table, TraversalFunction<?, ?>... columnFunctions);
+	EdgeTraversal<Table, Table, M> table(Table table, TraversalFunction<?, ?>... columnFunctions);
 
 	@Override
-	public abstract EdgeTraversal<Table, Table, M> table(TraversalFunction<?, ?>... columnFunctions);
+	EdgeTraversal<Table, Table, M> table(TraversalFunction<?, ?>... columnFunctions);
 
 	@Override
-	public abstract EdgeTraversal<Table, Table, M> table(Table table);
+	EdgeTraversal<Table, Table, M> table(Table table);
 
 	@Override
-	public abstract EdgeTraversal<Table, Table, M> table();
+	EdgeTraversal<Table, Table, M> table();
 
 	@Override
-	public abstract <N> EdgeTraversal<Tree<N>, Tree<N>, M> tree(Tree<N> tree);
+	<N> EdgeTraversal<Tree<N>, Tree<N>, M> tree(Tree<N> tree);
 
 	@Override
-	public abstract EdgeTraversal<?, ?, M> identity();
+	EdgeTraversal<?, ?, M> identity();
 
 	@Override
-	public abstract EdgeTraversal<?, ?, M> memoize(String namedStep);
+	EdgeTraversal<?, ?, M> memoize(String namedStep);
 
 	@Override
-	public abstract EdgeTraversal<?, ?, M> memoize(String namedStep, Map<?, ?> map);
+	EdgeTraversal<?, ?, M> memoize(String namedStep, Map<?, ?> map);
 
 	@Override
-	public abstract EdgeTraversal<?, ?, M> order();
+	EdgeTraversal<?, ?, M> order();
 
 	@Override
-	public abstract EdgeTraversal<?, ?, M> order(TransformPipe.Order order);
+	EdgeTraversal<?, ?, M> order(TransformPipe.Order order);
 
 	@Override
-	public abstract EdgeTraversal<?, ?, M> order(Comparator<EdgeFrame> compareFunction);
+	EdgeTraversal<?, ?, M> order(Comparator<EdgeFrame> compareFunction);
 
 	@Override
-	public abstract EdgeTraversal<?, ?, M> as(String name);
+	EdgeTraversal<?, ?, M> as(String name);
 
 	@Override
-	public abstract EdgeTraversal<?, ?, M> simplePath();
+	EdgeTraversal<?, ?, M> simplePath();
 
 	/**
 	 * Fill the provided collection with the objects in the pipeline.
@@ -446,7 +446,7 @@ public interface EdgeTraversal<C, S, M> extends Traversal<EdgeFrame, C, S, M> {
 	 *            The kind of framed elements to return.
 	 * @return the collection filled
 	 */
-	public abstract <N> Collection<N> fill(Collection<? super N> collection, Class<N> kind);
+	<N> Collection<N> fill(Collection<? super N> collection, Class<N> kind);
 
 	/**
 	 * Fill the provided collection with the objects in the pipeline.
@@ -461,10 +461,10 @@ public interface EdgeTraversal<C, S, M> extends Traversal<EdgeFrame, C, S, M> {
 	 *            The kind of framed elements to return.
 	 * @return the collection filled
 	 */
-	public abstract <N> Collection<N> fillExplicit(Collection<? super N> collection, Class<N> kind);
+	<N> Collection<N> fillExplicit(Collection<? super N> collection, Class<N> kind);
 
 	@Override
-	public abstract EdgeTraversal<?, ?, M> gatherScatter();
+	EdgeTraversal<?, ?, M> gatherScatter();
 
 	/**
 	 * Add an AndFilterPipe to the end the Pipeline. If the internal pipes all
@@ -475,7 +475,7 @@ public interface EdgeTraversal<C, S, M> extends Traversal<EdgeFrame, C, S, M> {
 	 *            the internal pipes of the AndFilterPipe
 	 * @return the extended Pipeline
 	 */
-	public abstract EdgeTraversal<?, ?, M> and(TraversalFunction<EdgeFrame, Traversal<?, ?, ?, ?>>... pipes);
+	EdgeTraversal<?, ?, M> and(TraversalFunction<EdgeFrame, Traversal<?, ?, ?, ?>>... pipes);
 
 	/**
 	 * Add an OrFilterPipe to the end the Pipeline. Will only emit the object if
@@ -486,21 +486,21 @@ public interface EdgeTraversal<C, S, M> extends Traversal<EdgeFrame, C, S, M> {
 	 *            the internal pipes of the OrFilterPipe
 	 * @return the extended Pipeline
 	 */
-	public abstract EdgeTraversal<?, ?, M> or(TraversalFunction<EdgeFrame, Traversal<?, ?, ?, ?>>... pipes);
+	EdgeTraversal<?, ?, M> or(TraversalFunction<EdgeFrame, Traversal<?, ?, ?, ?>>... pipes);
 
 	@Override
-	public abstract EdgeTraversal<?, ?, M> divert(SideEffectFunction<S> sideEffect);
+	EdgeTraversal<?, ?, M> divert(SideEffectFunction<S> sideEffect);
 
 	@Override
-	public EdgeTraversal<?, ?, M> shuffle();
+	EdgeTraversal<?, ?, M> shuffle();
 
 	@Override
-	public EdgeTraversal<C, S, ? extends EdgeTraversal<C, S, M>> mark();
+	EdgeTraversal<C, S, ? extends EdgeTraversal<C, S, M>> mark();
 
 	/**
 	 * Remove every element at the end of this Pipeline.
 	 */
-	public abstract void removeAll();
+	void removeAll();
 
 	// /**
 	// * Remove the current element at the end of this Pipeline.
@@ -515,14 +515,14 @@ public interface EdgeTraversal<C, S, M> extends Traversal<EdgeFrame, C, S, M> {
 	 *            the internal pipes of the CopySplitPipe
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> SplitTraversal<? extends Traversal<N, ?, ?, M>> copySplit(TraversalFunction<EdgeFrame, ? extends Traversal<N, ?, ?, ?>>... traversals);
+	<N> SplitTraversal<? extends Traversal<N, ?, ?, M>> copySplit(TraversalFunction<EdgeFrame, ? extends Traversal<N, ?, ?, ?>>... traversals);
 	
 	/**
 	 * The pipeline loops over the supplied traversal.
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract EdgeTraversal<?, ?, M> loop(TraversalFunction<EdgeFrame, ? extends EdgeTraversal<?, ?, ?>> traversal);
+	EdgeTraversal<?, ?, M> loop(TraversalFunction<EdgeFrame, ? extends EdgeTraversal<?, ?, ?>> traversal);
 	
 	/**
 	 * The pipeline loops over the supplied traversal up to a maximum depth.
@@ -530,5 +530,5 @@ public interface EdgeTraversal<C, S, M> extends Traversal<EdgeFrame, C, S, M> {
 	 * @param depth The maximum depth to loop to
 	 * @return the extended Pipeline
 	 */
-	public abstract EdgeTraversal<?, ?, M> loop(TraversalFunction<EdgeFrame, ? extends EdgeTraversal<?, ?, ?>> traversal, int depth);
+	EdgeTraversal<?, ?, M> loop(TraversalFunction<EdgeFrame, ? extends EdgeTraversal<?, ?, ?>> traversal, int depth);
 }

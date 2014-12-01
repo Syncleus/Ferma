@@ -43,7 +43,7 @@ import com.tinkerpop.blueprints.Graph;
  * @param <S> The SideEffect of the current pipe.
  * @param <M> The current mark'ed type for the current pipe.
  */
-class SimpleTraversal<T, C, S, M> extends AbstractTraversal<T, C, S, M> implements Traversal<T, C, S, M> {
+class SimpleTraversal<T, C, S, M> extends AbstractTraversal<T, C, S, M> {
 
 	private final FramedGraph graph;
 	private final com.tinkerpop.gremlin.java.GremlinPipeline pipeline;
@@ -168,15 +168,15 @@ class SimpleTraversal<T, C, S, M> extends AbstractTraversal<T, C, S, M> implemen
 
 		public AbstractTraversal.MarkId pushMark() {
 			return SimpleTraversal.this.pushMark(this);
-		};
+		}
 
 		public AbstractTraversal.MarkId popMark() {
 			return SimpleTraversal.this.popMark();
-		};
+		}
 
 		public SplitTraversal castToSplit() {
 			return splitTraversal;
-		};
+		}
 	};
 
 	private final VertexTraversal vertexTraversal = new AbstractVertexTraversal() {
@@ -207,14 +207,14 @@ class SimpleTraversal<T, C, S, M> extends AbstractTraversal<T, C, S, M> implemen
 
 		public AbstractTraversal.MarkId pushMark() {
 			return SimpleTraversal.this.pushMark(this);
-		};
+		}
 
 		public AbstractTraversal.MarkId popMark() {
 			return SimpleTraversal.this.popMark();
-		};
+		}
 
 		public SplitTraversal castToSplit() {
 			return splitTraversal;
-		};
+		}
 	};
 }

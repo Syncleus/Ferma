@@ -34,7 +34,7 @@ import com.tinkerpop.blueprints.Element;
  * may optionally store metadata about the frame type on the element.
  */
 public interface TypeResolver {
-	public static final String TYPE_RESOLUTION_KEY = "ferma_type";
+	String TYPE_RESOLUTION_KEY = "ferma_type";
 
 	/**
 	 * Resolve the type of frame that a an element should be.
@@ -45,7 +45,7 @@ public interface TypeResolver {
 	 *            The kind of frame that is being requested by the client code.
 	 * @return The kind of frame
 	 */
-	public <T> Class<? extends T> resolve(Element element, Class<T> kind);
+	<T> Class<? extends T> resolve(Element element, Class<T> kind);
 
 	/**
 	 * Called when a new element is created on the graph. Initialization can be
@@ -57,5 +57,5 @@ public interface TypeResolver {
 	 * @param kind
 	 *            The kind of frame that was resolved.
 	 */
-	public void init(Element element, Class<?> kind);
+	void init(Element element, Class<?> kind);
 }

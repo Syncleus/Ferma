@@ -40,7 +40,7 @@ public abstract class AbstractEdgeFrame extends AbstractElementFrame implements 
 	@Override
 	public Edge element() {
 		return (Edge) super.element();
-	};
+	}
 
 	@Override
 	public String getLabel() {

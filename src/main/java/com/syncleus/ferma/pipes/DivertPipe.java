@@ -40,7 +40,7 @@ import com.tinkerpop.pipes.util.FastNoSuchElementException;
 import com.tinkerpop.pipes.util.MetaPipe;
 import com.tinkerpop.pipes.util.PipeHelper;
 
-public class DivertPipe<S, T> extends AbstractMetaPipe<S, S> implements MetaPipe {
+public class DivertPipe<S, T> extends AbstractMetaPipe<S, S> {
 
 	private final SideEffectPipe<S, T> pipeToCap;
 	

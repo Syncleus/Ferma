@@ -31,7 +31,7 @@ public interface MethodHandler {
     /**
      * @return The annotation type that this handler responds to.
      */
-    public Class<? extends Annotation> getAnnotationType();
+    Class<? extends Annotation> getAnnotationType();
 
     /**
      * @param method The method being called on the frame.
@@ -39,5 +39,5 @@ public interface MethodHandler {
      * @param builder ByteBuddy Builder class to expand.
      * @return A return value for the method.
      */
-    public <E> DynamicType.Builder<E> processMethod(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation);
+    <E> DynamicType.Builder<E> processMethod(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation);
 }

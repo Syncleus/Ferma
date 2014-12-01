@@ -23,36 +23,36 @@ package com.syncleus.ferma;
 
  public interface EdgeFrame extends ElementFrame {
   @Override
-  public Edge element();
+  Edge element();
 
   /**
    * @return The label associated with this edge
    */
-  public String getLabel();
+  String getLabel();
 
   /**
    * @return The in vertex for this edge.
    */
-  public VertexTraversal<?, ?, ?> inV();
+  VertexTraversal<?, ?, ?> inV();
 
   /**
    * @return The out vertex of this edge.
    */
-  public VertexTraversal<?, ?, ?> outV();
+  VertexTraversal<?, ?, ?> outV();
 
   /**
    * @return The vertices for this edge.
    */
-  public VertexTraversal<?, ?, ?> bothV();
+  VertexTraversal<?, ?, ?> bothV();
 
   /**
    * Shortcut to get frameTraversal of current element
    *
    * @return
    */
-  public EdgeTraversal<?, ?, ?> traversal();
+  EdgeTraversal<?, ?, ?> traversal();
 
-  public JsonObject toJson();
+  JsonObject toJson();
 
   /**
    * Reframe this element as a different type of frame.
@@ -60,7 +60,7 @@ package com.syncleus.ferma;
    * @param kind The new kind of frame.
    * @return The new frame
    */
-  public <T> T reframe(Class<T> kind);
+  <T> T reframe(Class<T> kind);
 
   /**
    * Reframe this element as a different type of frame.
@@ -72,5 +72,5 @@ package com.syncleus.ferma;
    * @param kind The new kind of frame.
    * @return The new frame
    */
-  public <T> T reframeExplicit(Class<T> kind);
+  <T> T reframeExplicit(Class<T> kind);
 }

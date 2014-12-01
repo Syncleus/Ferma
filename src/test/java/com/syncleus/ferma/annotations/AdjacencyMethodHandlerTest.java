@@ -459,22 +459,22 @@ public class AdjacencyMethodHandlerTest {
         final BadGetSonsArgumentInterface father = gods.iterator().next();
     }
 
-    public static interface BadSonMethodName extends VertexFrame {
+    public interface BadSonMethodName extends VertexFrame {
         @Adjacency(label="Father", direction = Direction.IN)
         <N extends God> Iterable<? extends N> badSons(Class<? extends N> type);
     }
 
-    public static interface BadAddSonExtraArgument extends VertexFrame {
+    public interface BadAddSonExtraArgument extends VertexFrame {
         @Adjacency(label="father", direction=Direction.IN)
         <N extends God> N addSon(String badArg, String worseArg);
     }
 
-    public static interface BadAddSonArgument extends VertexFrame {
+    public interface BadAddSonArgument extends VertexFrame {
         @Adjacency(label="father", direction=Direction.IN)
         <N extends God> N addSon(String badArg);
     }
 
-    public static interface BadAddSonNoArguments extends VertexFrame {
+    public interface BadAddSonNoArguments extends VertexFrame {
         @Adjacency(label="father", direction=Direction.IN)
         <N extends God> N addSon();
     }
@@ -484,8 +484,8 @@ public class AdjacencyMethodHandlerTest {
         public abstract <N extends God> Iterable<? extends N> getSons(String badStuff);
     }
 
-    public static interface BadGetSonsArgumentInterface extends VertexFrame {
+    public interface BadGetSonsArgumentInterface extends VertexFrame {
         @Adjacency(label="Father", direction = Direction.IN)
-        abstract <N extends God> Iterable<? extends N> getSons(String badStuff);
+        <N extends God> Iterable<? extends N> getSons(String badStuff);
     }
 }

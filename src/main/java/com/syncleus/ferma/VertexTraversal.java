@@ -53,7 +53,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
 	 *            the property key to check
 	 * @return the extended Pipeline
 	 */
-	public VertexTraversal<?, ?, M> has(String key);
+	VertexTraversal<?, ?, M> has(String key);
 
 	/**
 	 * If the incoming element has the provided key/value as check with
@@ -66,7 +66,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
 	 *            the object to filter on (in an OR manner)
 	 * @return the extended Pipeline
 	 */
-	public VertexTraversal<?, ?, M> has(String key, Object value);
+	VertexTraversal<?, ?, M> has(String key, Object value);
 
 	/**
 	 * If the incoming element has the provided key/value as check with
@@ -81,7 +81,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
 	 *            the object to filter on
 	 * @return the extended Pipeline
 	 */
-	public VertexTraversal<?, ?, M> has(String key, Tokens.T compareToken, Object value);
+	VertexTraversal<?, ?, M> has(String key, Tokens.T compareToken, Object value);
 
 	/**
 	 * If the incoming element has the provided key/value as check with
@@ -96,7 +96,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
 	 *            the object to filter on
 	 * @return the extended Pipeline
 	 */
-	public VertexTraversal<?, ?, M> has(String key, Predicate predicate, Object value);
+	VertexTraversal<?, ?, M> has(String key, Predicate predicate, Object value);
 
 	/**
 	 * Check if the element does not have a property with provided key.
@@ -105,7 +105,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
 	 *            the property key to check
 	 * @return the extended Pipeline
 	 */
-	public VertexTraversal<?, ?, M> hasNot(String key);
+	VertexTraversal<?, ?, M> hasNot(String key);
 
 	/**
 	 * If the incoming element has the provided key/value as check with
@@ -118,7 +118,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
 	 *            the objects to filter on (in an OR manner)
 	 * @return the extended Pipeline
 	 */
-	public VertexTraversal<?, ?, M> hasNot(String key, Object value);
+	VertexTraversal<?, ?, M> hasNot(String key, Object value);
 
 	/**
 	 * If the incoming element has a value that is within the interval value
@@ -133,7 +133,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
 	 *            the end of the interval (exclusive)
 	 * @return the extended Pipeline
 	 */
-	public <C> VertexTraversal<?, ?, M> interval(String key, Comparable<C> startValue, Comparable<C> endValue);
+	<C> VertexTraversal<?, ?, M> interval(String key, Comparable<C> startValue, Comparable<C> endValue);
 
 	/**
 	 * Emit the adjacent outgoing vertices of the incoming vertex.
@@ -144,7 +144,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
 	 *            the edge labels to traverse
 	 * @return the extended Pipeline
 	 */
-	public VertexTraversal<?, ?, M> out(int branchFactor, String... labels);
+	VertexTraversal<?, ?, M> out(int branchFactor, String... labels);
 
 	/**
 	 * Emit the adjacent outgoing vertices of the incoming vertex.
@@ -153,7 +153,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
 	 *            the edge labels to traverse
 	 * @return the extended Pipeline
 	 */
-	public VertexTraversal<?, ?, M> out(String... labels);
+	VertexTraversal<?, ?, M> out(String... labels);
 
 	/**
 	 * Emit the adjacent incoming vertices for the incoming vertex.
@@ -164,7 +164,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
 	 *            the edge labels to traverse
 	 * @return the extended Pipeline
 	 */
-	public VertexTraversal<?, ?, M> in(int branchFactor, String... labels);
+	VertexTraversal<?, ?, M> in(int branchFactor, String... labels);
 
 	/**
 	 * Emit the adjacent incoming vertices for the incoming vertex.
@@ -173,7 +173,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
 	 *            the edge labels to traverse
 	 * @return the extended Pipeline
 	 */
-	public VertexTraversal<?, ?, M> in(String... labels);
+	VertexTraversal<?, ?, M> in(String... labels);
 
 	/**
 	 * Emit both the incoming and outgoing adjacent vertices for the incoming
@@ -185,7 +185,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
 	 *            the edge labels to traverse
 	 * @return the extended Pipeline
 	 */
-	public VertexTraversal<?, ?, M> both(int branchFactor, String... labels);
+	VertexTraversal<?, ?, M> both(int branchFactor, String... labels);
 
 	/**
 	 * Emit both the incoming and outgoing adjacent vertices for the incoming
@@ -195,7 +195,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
 	 *            the edge labels to traverse
 	 * @return the extended Pipeline
 	 */
-	public VertexTraversal<?, ?, M> both(String... labels);
+	VertexTraversal<?, ?, M> both(String... labels);
 
 	/**
 	 * Emit the outgoing edges for the incoming vertex.
@@ -206,7 +206,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
 	 *            the edge labels to traverse
 	 * @return the extended Pipeline
 	 */
-	public EdgeTraversal<?, ?, M> outE(int branchFactor, String... labels);
+	EdgeTraversal<?, ?, M> outE(int branchFactor, String... labels);
 
 	/**
 	 * Emit the outgoing edges for the incoming vertex.
@@ -215,7 +215,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
 	 *            the edge labels to traverse
 	 * @return the extended Pipeline
 	 */
-	public EdgeTraversal<?, ?, M> outE(String... labels);
+	EdgeTraversal<?, ?, M> outE(String... labels);
 
 	/**
 	 * Emit the incoming edges for the incoming vertex.
@@ -226,7 +226,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
 	 *            the edge labels to traverse
 	 * @return the extended Pipeline
 	 */
-	public EdgeTraversal<?, ?, M> inE(int branchFactor, String... labels);
+	EdgeTraversal<?, ?, M> inE(int branchFactor, String... labels);
 
 	/**
 	 * Emit the incoming edges for the incoming vertex.
@@ -235,7 +235,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
 	 *            the edge labels to traverse
 	 * @return the extended Pipeline
 	 */
-	public EdgeTraversal<?, ?, M> inE(String... labels);
+	EdgeTraversal<?, ?, M> inE(String... labels);
 
 	/**
 	 * Emit both incoming and outgoing edges for the incoming vertex.
@@ -246,7 +246,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
 	 *            the edge labels to traverse
 	 * @return the extended Pipeline
 	 */
-	public EdgeTraversal<?, ?, M> bothE(int branchFactor, String... labels);
+	EdgeTraversal<?, ?, M> bothE(int branchFactor, String... labels);
 
 	/**
 	 * Emit both incoming and outgoing edges for the incoming vertex.
@@ -255,7 +255,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
 	 *            the edge labels to traverse
 	 * @return the extended Pipeline
 	 */
-	public EdgeTraversal<?, ?, M> bothE(String... labels);
+	EdgeTraversal<?, ?, M> bothE(String... labels);
 
 	/**
 	 * Get the next object emitted from the pipeline. If no such object exists,
@@ -265,7 +265,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
 	 *            The type of frame for the element.
 	 * @return the next emitted object
 	 */
-	public <N> N next(Class<N> kind);
+	<N> N next(Class<N> kind);
 
 	/**
 	 * Get the next object emitted from the pipeline. If no such object exists,
@@ -279,7 +279,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
 	 *            The type of frame for the element.
 	 * @return the next emitted object
 	 */
-	public <N> N nextExplicit(Class<N> kind);
+	<N> N nextExplicit(Class<N> kind);
 
 	/**
 	 * Get the next object emitted from the pipeline. If no such object exists,
@@ -291,7 +291,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
 	 *            The object to return if no next object exists.
 	 * @return the next emitted object
 	 */
-	public <N> N nextOrDefault(Class<N> kind, N defaultValue);
+	<N> N nextOrDefault(Class<N> kind, N defaultValue);
 
 	/**
 	 * Get the next object emitted from the pipeline. If no such object exists,
@@ -307,7 +307,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
 	 *            The object to return if no next object exists.
 	 * @return the next emitted object
 	 */
-	public <N> N nextOrDefaultExplicit(Class<N> kind, N defaultValue);
+	<N> N nextOrDefaultExplicit(Class<N> kind, N defaultValue);
 
 	/**
 	 * Get the next object emitted from the pipeline. If no such object exists a
@@ -315,7 +315,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
 	 * 
 	 * @return the next emitted object
 	 */
-	public VertexFrame nextOrAdd();
+	VertexFrame nextOrAdd();
 
 	/**
 	 * Get the next object emitted from the pipeline. If no such object exists a
@@ -329,7 +329,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
 	 *            The type of frame for the element.
 	 * @return the next emitted object
 	 */
-	public <N> N nextOrAddExplicit(Class<N> kind);
+	<N> N nextOrAddExplicit(Class<N> kind);
 
 	/**
 	 * Get the next object emitted from the pipeline. If no such object exists a
@@ -339,7 +339,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
 	 *            The type of frame for the element.
 	 * @return the next emitted object
 	 */
-	public <N> N nextOrAdd(Class<N> kind);
+	<N> N nextOrAdd(Class<N> kind);
 
 	/**
 	 * Return the next X objects in the traversal as a list.
@@ -350,7 +350,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
 	 *            the type of frame to for each element.
 	 * @return a list of X objects (if X objects occur)
 	 */
-	public <N> List<N> next(int amount, Class<N> kind);
+	<N> List<N> next(int amount, Class<N> kind);
 
 	/**
 	 * Return the next X objects in the traversal as a list.
@@ -365,7 +365,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
 	 *            the type of frame to for each element.
 	 * @return a list of X objects (if X objects occur)
 	 */
-	public <N> List<N> nextExplicit(int amount, Class<N> kind);
+	<N> List<N> nextExplicit(int amount, Class<N> kind);
 
 	/**
 	 * Return an iterator of framed elements.
@@ -374,7 +374,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
 	 *            The kind of framed elements to return.
 	 * @return An iterator of framed elements.
 	 */
-	public <N> Iterable<N> frame(Class<N> kind);
+	<N> Iterable<N> frame(Class<N> kind);
 
 	/**
 	 * Return an iterator of framed elements.
@@ -387,7 +387,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
 	 *            The kind of framed elements to return.
 	 * @return An iterator of framed elements.
 	 */
-	public <N> Iterable<? extends N> frameExplicit(Class<N> kind);
+	<N> Iterable<? extends N> frameExplicit(Class<N> kind);
 
 	/**
 	 * Return a list of all the objects in the pipeline.
@@ -396,7 +396,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
 	 *            The kind of framed elements to return.
 	 * @return a list of all the objects
 	 */
-	public <N> List<? extends N> toList(Class<N> kind);
+	<N> List<? extends N> toList(Class<N> kind);
 
 	/**
 	 * Return a list of all the objects in the pipeline.
@@ -409,7 +409,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
 	 *            The kind of framed elements to return.
 	 * @return a list of all the objects
 	 */
-	public <N> List<? extends N> toListExplicit(Class<N> kind);
+	<N> List<? extends N> toListExplicit(Class<N> kind);
 
 	/**
 	 * Return a set of all the objects in the pipeline.
@@ -418,7 +418,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
 	 *            The kind of framed elements to return.
 	 * @return a set of all the objects
 	 */
-	public <N> Set<? extends N> toSet(Class<N> kind);
+	<N> Set<? extends N> toSet(Class<N> kind);
 
 	/**
 	 * Return a set of all the objects in the pipeline.
@@ -431,7 +431,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
 	 *            The kind of framed elements to return.
 	 * @return a set of all the objects
 	 */
-	public <N> Set<? extends N> toSetExplicit(Class<N> kind);
+	<N> Set<? extends N> toSetExplicit(Class<N> kind);
 
 	/**
 	 * Emit the incoming vertex, but have other vertex provide an outgoing edge
@@ -443,7 +443,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
 	 *            the step name that has the other vertex to link to
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<List<EdgeFrame>, EdgeFrame, M> linkOut(String label, String namedStep);
+	VertexTraversal<List<EdgeFrame>, EdgeFrame, M> linkOut(String label, String namedStep);
 
 	/**
 	 * Emit the incoming vertex, but have other vertex provide an incoming edge
@@ -455,7 +455,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
 	 *            the step name that has the other vertex to link to
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<List<EdgeFrame>, EdgeFrame, M> linkIn(String label, String namedStep);
+	VertexTraversal<List<EdgeFrame>, EdgeFrame, M> linkIn(String label, String namedStep);
 
 	/**
 	 * Emit the incoming vertex, but have other vertex provide an incoming and
@@ -467,7 +467,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
 	 *            the step name that has the other vertex to link to
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<List<EdgeFrame>, EdgeFrame, M> linkBoth(String label, String namedStep);
+	VertexTraversal<List<EdgeFrame>, EdgeFrame, M> linkBoth(String label, String namedStep);
 
 	/**
 	 * Emit the incoming vertex, but have other vertex provide an outgoing edge
@@ -479,7 +479,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
 	 *            the other vertex
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<List<EdgeFrame>, EdgeFrame, M> linkOut(String label, Vertex other);
+	VertexTraversal<List<EdgeFrame>, EdgeFrame, M> linkOut(String label, Vertex other);
 
 	/**
 	 * Emit the incoming vertex, but have other vertex provide an outgoing edge
@@ -491,7 +491,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
 	 *            the other vertex
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<List<EdgeFrame>, EdgeFrame, M> linkOut(String label, VertexFrame other);
+	VertexTraversal<List<EdgeFrame>, EdgeFrame, M> linkOut(String label, VertexFrame other);
 
 	/**
 	 * Emit the incoming vertex, but have other vertex provide an incoming edge
@@ -503,7 +503,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
 	 *            the other vertex
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<List<EdgeFrame>, EdgeFrame, M> linkIn(String label, Vertex other);
+	VertexTraversal<List<EdgeFrame>, EdgeFrame, M> linkIn(String label, Vertex other);
 
 	/**
 	 * Emit the incoming vertex, but have other vertex provide an incoming and
@@ -515,7 +515,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
 	 *            the other vertex
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<List<EdgeFrame>, EdgeFrame, M> linkBoth(String label, Vertex other);
+	VertexTraversal<List<EdgeFrame>, EdgeFrame, M> linkBoth(String label, Vertex other);
 
 	/**
 	 * Emit the incoming vertex, but have other vertex provide an incoming edge
@@ -527,7 +527,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
 	 *            the other vertex
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<List<EdgeFrame>, EdgeFrame, M> linkIn(String label, VertexFrame other);
+	VertexTraversal<List<EdgeFrame>, EdgeFrame, M> linkIn(String label, VertexFrame other);
 
 	/**
 	 * Emit the incoming vertex, but have other vertex provide an incoming and
@@ -539,16 +539,16 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
 	 *            the other vertex
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<List<EdgeFrame>, EdgeFrame, M> linkBoth(String label, VertexFrame other);
+	VertexTraversal<List<EdgeFrame>, EdgeFrame, M> linkBoth(String label, VertexFrame other);
 
 	@Override
-	public abstract VertexTraversal<?, ?, M> dedup();
+	VertexTraversal<?, ?, M> dedup();
 
 	@Override
-	public abstract VertexTraversal<?, ?, M> dedup(TraversalFunction<VertexFrame, ?> dedupFunction);
+	VertexTraversal<?, ?, M> dedup(TraversalFunction<VertexFrame, ?> dedupFunction);
 
 	@Override
-	public abstract VertexTraversal<?, ?, M> except(Iterable<?> collection);
+	VertexTraversal<?, ?, M> except(Iterable<?> collection);
 
 	/**
 	 * Will only emit the object if it is not in the provided collection.
@@ -557,7 +557,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
 	 *            the collection except from the stream
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<?, ?, M> except(VertexFrame... vertices);
+	VertexTraversal<?, ?, M> except(VertexFrame... vertices);
 
 	/**
 	 * Will only emit the object if it is not equal to any of the objects
@@ -567,19 +567,19 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
 	 *            the named steps in the pipeline
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<?, ?, M> except(String... namedSteps);
+	VertexTraversal<?, ?, M> except(String... namedSteps);
 
 	@Override
-	public abstract VertexTraversal<?, ?, M> filter(TraversalFunction<VertexFrame, Boolean> filterFunction);
+	VertexTraversal<?, ?, M> filter(TraversalFunction<VertexFrame, Boolean> filterFunction);
 
 	@Override
-	public abstract VertexTraversal<?, ?, M> random(double bias);
+	VertexTraversal<?, ?, M> random(double bias);
 
 	@Override
-	public abstract VertexTraversal<?, ?, M> range(int low, int high);
+	VertexTraversal<?, ?, M> range(int low, int high);
 	
 	@Override
-	public abstract VertexTraversal<?, ?, M> limit(int limit);
+	VertexTraversal<?, ?, M> limit(int limit);
 
 	/**
 	 * Will emit the object only if it is in the provided collection.
@@ -588,120 +588,120 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
 	 *            the collection to retain
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<?, ?, M> retain(VertexFrame... vertices);
+	VertexTraversal<?, ?, M> retain(VertexFrame... vertices);
 
 	@Override
-	public abstract VertexTraversal<?, ?, M> retain(Iterable<?> vertices);
+	VertexTraversal<?, ?, M> retain(Iterable<?> vertices);
 
 	@Override
-	public abstract VertexTraversal<?, ?, M> retain(String... namedSteps);
+	VertexTraversal<?, ?, M> retain(String... namedSteps);
 
 	@Override
-	public abstract VertexTraversal<Collection<? extends VertexFrame>, Collection<? extends VertexFrame>, M> aggregate();
+	VertexTraversal<Collection<? extends VertexFrame>, Collection<? extends VertexFrame>, M> aggregate();
 
 	@Override
-	public abstract VertexTraversal<Collection<? extends VertexFrame>, Collection<? extends VertexFrame>, M> aggregate(Collection<? super VertexFrame> aggregate);
+	VertexTraversal<Collection<? extends VertexFrame>, Collection<? extends VertexFrame>, M> aggregate(Collection<? super VertexFrame> aggregate);
 
 	@Override
-	public abstract <N> VertexTraversal<Collection<? extends N>, Collection<? extends N>, M> aggregate(Collection<? super N> aggregate, TraversalFunction<VertexFrame, ? extends N> aggregateFunction);
+	<N> VertexTraversal<Collection<? extends N>, Collection<? extends N>, M> aggregate(Collection<? super N> aggregate, TraversalFunction<VertexFrame, ? extends N> aggregateFunction);
 
 	@Override
-	public abstract <N> VertexTraversal<Collection<? extends N>, Collection<? extends N>, M> aggregate(TraversalFunction<VertexFrame, ? extends N> aggregateFunction);
+	<N> VertexTraversal<Collection<? extends N>, Collection<? extends N>, M> aggregate(TraversalFunction<VertexFrame, ? extends N> aggregateFunction);
 
 	@Override
-	public abstract <K, V> VertexTraversal<Map<K, List<V>>, Map<K, List<V>>, M> groupBy(Map<K, List<V>> map, TraversalFunction<VertexFrame, K> keyFunction, TraversalFunction<VertexFrame, Iterator<V>> valueFunction);
+	<K, V> VertexTraversal<Map<K, List<V>>, Map<K, List<V>>, M> groupBy(Map<K, List<V>> map, TraversalFunction<VertexFrame, K> keyFunction, TraversalFunction<VertexFrame, Iterator<V>> valueFunction);
 
 	@Override
-	public abstract <K, V> VertexTraversal<Map<K, List<V>>, Map<K, List<V>>, M> groupBy(TraversalFunction<VertexFrame, K> keyFunction, TraversalFunction<VertexFrame, Iterator<V>> valueFunction);
+	<K, V> VertexTraversal<Map<K, List<V>>, Map<K, List<V>>, M> groupBy(TraversalFunction<VertexFrame, K> keyFunction, TraversalFunction<VertexFrame, Iterator<V>> valueFunction);
 
 	@Override
-	public abstract <K, V, V2> VertexTraversal<Map<K, V2>, Map<K, V2>, M> groupBy(Map<K, V2> reduceMap, TraversalFunction<VertexFrame, K> keyFunction, TraversalFunction<VertexFrame, Iterator<V>> valueFunction, TraversalFunction<List<V>, V2> reduceFunction);
+	<K, V, V2> VertexTraversal<Map<K, V2>, Map<K, V2>, M> groupBy(Map<K, V2> reduceMap, TraversalFunction<VertexFrame, K> keyFunction, TraversalFunction<VertexFrame, Iterator<V>> valueFunction, TraversalFunction<List<V>, V2> reduceFunction);
 
 	@Override
-	public abstract <K, V, V2> VertexTraversal<Map<K, V2>, Map<K, V2>, M> groupBy(TraversalFunction<VertexFrame, K> keyFunction, TraversalFunction<VertexFrame, Iterator<V>> valueFunction, TraversalFunction<List<V>, V2> reduceFunction);
+	<K, V, V2> VertexTraversal<Map<K, V2>, Map<K, V2>, M> groupBy(TraversalFunction<VertexFrame, K> keyFunction, TraversalFunction<VertexFrame, Iterator<V>> valueFunction, TraversalFunction<List<V>, V2> reduceFunction);
 
 	@Override
-	public abstract <K> VertexTraversal<Map<K, Long>, Map<K, Long>, M> groupCount(Map<K, Long> map, TraversalFunction<VertexFrame, K> keyFunction, TraversalFunction<Pair<VertexFrame, Long>, Long> valueFunction);
+	<K> VertexTraversal<Map<K, Long>, Map<K, Long>, M> groupCount(Map<K, Long> map, TraversalFunction<VertexFrame, K> keyFunction, TraversalFunction<Pair<VertexFrame, Long>, Long> valueFunction);
 
 	@Override
-	public abstract <K> VertexTraversal<Map<K, Long>, Map<K, Long>, M> groupCount(TraversalFunction<VertexFrame, K> keyFunction, TraversalFunction<Pair<VertexFrame, Long>, Long> valueFunction);
+	<K> VertexTraversal<Map<K, Long>, Map<K, Long>, M> groupCount(TraversalFunction<VertexFrame, K> keyFunction, TraversalFunction<Pair<VertexFrame, Long>, Long> valueFunction);
 
 	@Override
-	public abstract <K> VertexTraversal<Map<K, Long>, Map<K, Long>, M> groupCount(Map<K, Long> map, TraversalFunction<VertexFrame, K> keyFunction);
+	<K> VertexTraversal<Map<K, Long>, Map<K, Long>, M> groupCount(Map<K, Long> map, TraversalFunction<VertexFrame, K> keyFunction);
 
 	@Override
-	public abstract <K> VertexTraversal<Map<K, Long>, Map<K, Long>, M> groupCount(TraversalFunction<VertexFrame, K> keyFunction);
+	<K> VertexTraversal<Map<K, Long>, Map<K, Long>, M> groupCount(TraversalFunction<VertexFrame, K> keyFunction);
 
 	@Override
-	public abstract VertexTraversal<Map<VertexFrame, Long>, Map<VertexFrame, Long>, M> groupCount(Map<VertexFrame, Long> map);
+	VertexTraversal<Map<VertexFrame, Long>, Map<VertexFrame, Long>, M> groupCount(Map<VertexFrame, Long> map);
 
 	@Override
-	public abstract VertexTraversal<Map<VertexFrame, Long>, Map<VertexFrame, Long>, M> groupCount();
+	VertexTraversal<Map<VertexFrame, Long>, Map<VertexFrame, Long>, M> groupCount();
 
 	@Override
-	public abstract VertexTraversal<?, ?, M> sideEffect(SideEffectFunction<VertexFrame> sideEffectFunction);
+	VertexTraversal<?, ?, M> sideEffect(SideEffectFunction<VertexFrame> sideEffectFunction);
 
 	@Override
-	public abstract <N> VertexTraversal<Collection<N>, N, M> store(Collection<N> storage);
+	<N> VertexTraversal<Collection<N>, N, M> store(Collection<N> storage);
 
 	@Override
-	public abstract <N> VertexTraversal<Collection<N>, N, M> store(Collection<N> storage,
-			TraversalFunction<VertexFrame, N> storageFunction);
+	<N> VertexTraversal<Collection<N>, N, M> store(Collection<N> storage,
+												   TraversalFunction<VertexFrame, N> storageFunction);
 
 	@Override
-	public abstract VertexTraversal<Collection<VertexFrame>, VertexFrame, M> store();
+	VertexTraversal<Collection<VertexFrame>, VertexFrame, M> store();
 
 	@Override
-	public abstract <N> VertexTraversal<Collection<N>, N, M> store(TraversalFunction<VertexFrame, N> storageFunction);
+	<N> VertexTraversal<Collection<N>, N, M> store(TraversalFunction<VertexFrame, N> storageFunction);
 
 	@Override
-	public abstract VertexTraversal<Table, Table, M> table(Table table, Collection<String> stepNames,
-			TraversalFunction<?, ?>... columnFunctions);
+	VertexTraversal<Table, Table, M> table(Table table, Collection<String> stepNames,
+										   TraversalFunction<?, ?>... columnFunctions);
 
 	@Override
-	public abstract VertexTraversal<Table, Table, M> table(Table table, TraversalFunction<?, ?>... columnFunctions);
+	VertexTraversal<Table, Table, M> table(Table table, TraversalFunction<?, ?>... columnFunctions);
 
 	@Override
-	public abstract VertexTraversal<Table, Table, M> table(TraversalFunction<?, ?>... columnFunctions);
+	VertexTraversal<Table, Table, M> table(TraversalFunction<?, ?>... columnFunctions);
 
 	@Override
-	public abstract VertexTraversal<Table, Table, M> table(Table table);
+	VertexTraversal<Table, Table, M> table(Table table);
 
 	@Override
-	public abstract VertexTraversal<Table, Table, M> table();
+	VertexTraversal<Table, Table, M> table();
 
 	@Override
-	public abstract VertexTraversal<Tree<VertexFrame>, Tree<VertexFrame>, M> tree();
+	VertexTraversal<Tree<VertexFrame>, Tree<VertexFrame>, M> tree();
 
 	@Override
-	public abstract <N> VertexTraversal<Tree<N>, Tree<N>, M> tree(Tree<N> tree);
+	<N> VertexTraversal<Tree<N>, Tree<N>, M> tree(Tree<N> tree);
 
 	@Override
-	public abstract VertexTraversal<?, ?, M> identity();
+	VertexTraversal<?, ?, M> identity();
 
 	@Override
-	public abstract VertexTraversal<?, ?, M> memoize(String namedStep);
+	VertexTraversal<?, ?, M> memoize(String namedStep);
 
 	@Override
-	public abstract VertexTraversal<?, ?, M> memoize(String namedStep, Map<?, ?> map);
+	VertexTraversal<?, ?, M> memoize(String namedStep, Map<?, ?> map);
 
 	@Override
-	public abstract VertexTraversal<?, ?, M> order();
+	VertexTraversal<?, ?, M> order();
 
 	@Override
-	public abstract VertexTraversal<?, ?, M> order(Comparator<VertexFrame> compareFunction);
+	VertexTraversal<?, ?, M> order(Comparator<VertexFrame> compareFunction);
 
 	@Override
-	public abstract VertexTraversal<?, ?, M> order(TransformPipe.Order order);
+	VertexTraversal<?, ?, M> order(TransformPipe.Order order);
 
 	@Override
-	public abstract VertexTraversal<?, ?, M> order(Tokens.T order);
+	VertexTraversal<?, ?, M> order(Tokens.T order);
 
 	@Override
-	public abstract VertexTraversal<?, ?, M> as(String name);
+	VertexTraversal<?, ?, M> as(String name);
 
 	@Override
-	public abstract VertexTraversal<?, ?, M> simplePath();
+	VertexTraversal<?, ?, M> simplePath();
 
 	/**
 	 * Fill the provided collection with the objects in the pipeline.
@@ -712,7 +712,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
 	 *            The kind of framed elements to return.
 	 * @return the collection filled
 	 */
-	public abstract <N extends VertexFrame> Collection<N> fill(Collection<? super N> collection, Class<N> kind);
+	<N extends VertexFrame> Collection<N> fill(Collection<? super N> collection, Class<N> kind);
 
 	/**
 	 * Fill the provided collection with the objects in the pipeline.
@@ -727,10 +727,10 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
 	 *            The kind of framed elements to return.
 	 * @return the collection filled
 	 */
-	public abstract <N extends VertexFrame> Collection<N> fillExplicit(Collection<? super N> collection, Class<N> kind);
+	<N extends VertexFrame> Collection<N> fillExplicit(Collection<? super N> collection, Class<N> kind);
 
 	@Override
-	public abstract VertexTraversal<?, ?, M> gatherScatter();
+	VertexTraversal<?, ?, M> gatherScatter();
 
 	/**
 	 * If the internal pipes all yield objects, then the object is not filtered.
@@ -740,7 +740,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
 	 *            the internal pipes of the AndFilterPipe
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<?, ?, M> and(TraversalFunction<VertexFrame, Traversal<?, ?, ?, ?>>... traversals);
+	VertexTraversal<?, ?, M> and(TraversalFunction<VertexFrame, Traversal<?, ?, ?, ?>>... traversals);
 
 	/**
 	 * Will only emit the object if one or more of the provides pipes yields an
@@ -750,21 +750,21 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
 	 *            the internal pipes of the OrFilterPipe
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<?, ?, M> or(TraversalFunction<VertexFrame, Traversal<?, ?, ?, ?>>... traversals);
+	VertexTraversal<?, ?, M> or(TraversalFunction<VertexFrame, Traversal<?, ?, ?, ?>>... traversals);
 
 	@Override
-	public abstract VertexTraversal<?, ?, M> divert(SideEffectFunction<S> sideEffectFunction);
+	VertexTraversal<?, ?, M> divert(SideEffectFunction<S> sideEffectFunction);
 
 	@Override
-	public VertexTraversal<?, ?, M> shuffle();
+	VertexTraversal<?, ?, M> shuffle();
 
 	@Override
-	public VertexTraversal<C, S, ? extends VertexTraversal<C, S, M>> mark();
+	VertexTraversal<C, S, ? extends VertexTraversal<C, S, M>> mark();
 
 	/**
 	 * Remove every element at the end of this Pipeline.
 	 */
-	public abstract void removeAll();
+	void removeAll();
 
 	// /**
 	// * Remove the current element at the end of this Pipeline.
@@ -779,7 +779,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
 	 *            the internal pipes of the CopySplitPipe
 	 * @return the extended Pipeline
 	 */
-	public abstract <N> SplitTraversal<? extends Traversal<N, ?, ?, M>> copySplit(TraversalFunction<VertexFrame, ? extends Traversal<N, ?, ?, ?>>... traversals);
+	<N> SplitTraversal<? extends Traversal<N, ?, ?, M>> copySplit(TraversalFunction<VertexFrame, ? extends Traversal<N, ?, ?, ?>>... traversals);
 
 	
 	/**
@@ -787,7 +787,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<?, ?, M> loop(TraversalFunction<VertexFrame, ? extends VertexTraversal<?, ?, ?>> traversal);
+	VertexTraversal<?, ?, M> loop(TraversalFunction<VertexFrame, ? extends VertexTraversal<?, ?, ?>> traversal);
 	
 	/**
 	 * The pipeline loops over the supplied traversal up to a maximum depth.
@@ -795,5 +795,5 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
 	 * @param depth The maximum depth to loop to
 	 * @return the extended Pipeline
 	 */
-	public abstract VertexTraversal<?, ?, M> loop(TraversalFunction<VertexFrame, ? extends VertexTraversal<?, ?, ?>> traversal, int depth);
+	VertexTraversal<?, ?, M> loop(TraversalFunction<VertexFrame, ? extends VertexTraversal<?, ?, ?>> traversal, int depth);
 }

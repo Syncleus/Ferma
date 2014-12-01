@@ -37,7 +37,7 @@ public interface SplitTraversal<T> {
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract T exhaustMerge();
+	T exhaustMerge();
 
 	/**
 	 * Add a FairMergePipe to the end of the Pipeline. The one-step previous
@@ -46,6 +46,6 @@ public interface SplitTraversal<T> {
 	 *
 	 * @return the extended Pipeline
 	 */
-	public abstract T fairMerge();
+	T fairMerge();
 
 }

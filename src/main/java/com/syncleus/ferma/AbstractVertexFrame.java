@@ -41,7 +41,7 @@ public abstract class AbstractVertexFrame extends AbstractElementFrame implement
 	@Override
 	public Vertex element() {
 		return (Vertex) super.element();
-	};
+	}
 
 	@Override
 	public <T> T addFramedEdge(final String label, final VertexFrame inVertex, final Class<T> kind) {

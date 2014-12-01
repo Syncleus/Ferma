@@ -644,17 +644,17 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
     VertexTraversal<?, ?, M> sideEffect(SideEffectFunction<VertexFrame> sideEffectFunction);
 
     @Override
-    <N> VertexTraversal<Collection<N>, N, M> store(Collection<N> storage);
+    <N> Traversal<VertexFrame, Collection<? extends N>, N, M> store(Collection<? super N> storage);
 
     @Override
-    <N> VertexTraversal<Collection<N>, N, M> store(Collection<N> storage,
-                                                   TraversalFunction<VertexFrame, N> storageFunction);
+    <N> Traversal<VertexFrame, Collection<? extends N>, N, M> store(Collection<? super N> storage,
+                                                                    TraversalFunction<VertexFrame, N> storageFunction);
 
     @Override
-    VertexTraversal<Collection<VertexFrame>, VertexFrame, M> store();
+    Traversal<VertexFrame, Collection<? extends VertexFrame>, VertexFrame, M> store();
 
     @Override
-    <N> VertexTraversal<Collection<N>, N, M> store(TraversalFunction<VertexFrame, N> storageFunction);
+    <N> Traversal<VertexFrame, Collection<? extends N>, N, M> store(TraversalFunction<VertexFrame, N> storageFunction);
 
     @Override
     VertexTraversal<Table, Table, M> table(Table table, Collection<String> stepNames,

@@ -102,22 +102,22 @@ abstract class AbstractEdgeTraversal<C, S, M> extends AbstractTraversal<EdgeFram
     }
 
     @Override
-    public EdgeTraversal<Collection<EdgeFrame>, EdgeFrame, M> store() {
+    public Traversal<EdgeFrame, Collection<? extends EdgeFrame>, EdgeFrame, M> store() {
         return (EdgeTraversal) super.store();
     }
 
     @Override
-    public <N> EdgeTraversal<Collection<N>, N, M> store(final Collection<N> storage) {
+    public <N> Traversal<EdgeFrame, Collection<? extends N>, N, M> store(final Collection<? super N> storage) {
         return (EdgeTraversal) super.store(storage);
     }
 
     @Override
-    public <N> EdgeTraversal<Collection<N>, N, M> store(final Collection<N> storage, final TraversalFunction<EdgeFrame, N> storageFunction) {
+    public <N> Traversal<EdgeFrame, Collection<? extends N>, N, M> store(final Collection<? super N> storage, final TraversalFunction<EdgeFrame, N> storageFunction) {
         return (EdgeTraversal) super.store(storage, storageFunction);
     }
 
     @Override
-    public <N> EdgeTraversal<Collection<N>, N, M> store(final TraversalFunction<EdgeFrame, N> storageFunction) {
+    public <N> Traversal<EdgeFrame, Collection<? extends N>, N, M> store(final TraversalFunction<EdgeFrame, N> storageFunction) {
         return (EdgeTraversal) super.store(storageFunction);
     }
 

@@ -110,23 +110,23 @@ abstract class AbstractVertexTraversal<C, S, M> extends AbstractTraversal<Vertex
     }
 
     @Override
-    public VertexTraversal<Collection<VertexFrame>, VertexFrame, M> store() {
-        return (VertexTraversal<Collection<VertexFrame>, VertexFrame, M>) super.store(new FramingTraversalFunction(graph(), VertexFrame.class));
+    public Traversal<VertexFrame, Collection<? extends VertexFrame>, VertexFrame, M> store() {
+        return super.store(new FramingTraversalFunction(graph(), VertexFrame.class));
     }
 
     @Override
-    public <N> VertexTraversal<Collection<N>, N, M> store(final Collection<N> storage) {
-        return (VertexTraversal<Collection<N>, N, M>) super.store(storage);
+    public <N> Traversal<VertexFrame, Collection<? extends N>, N, M> store(final Collection<? super N> storage) {
+        return super.store(storage);
     }
 
     @Override
-    public <N> VertexTraversal<Collection<N>, N, M> store(final Collection<N> storage,
-                                                          final TraversalFunction<VertexFrame, N> storageFunction) {
-        return (VertexTraversal<Collection<N>, N, M>) super.store(storage);
+    public <N> Traversal<VertexFrame, Collection<? extends N>, N, M> store(final Collection<? super N> storage,
+																		   final TraversalFunction<VertexFrame, N> storageFunction) {
+        return super.store(storage);
     }
 
     @Override
-    public <N> VertexTraversal<Collection<N>, N, M> store(final TraversalFunction<VertexFrame, N> storageFunction) {
+    public <N> Traversal<VertexFrame, Collection<? extends N>, N, M> store(final TraversalFunction<VertexFrame, N> storageFunction) {
         return (VertexTraversal) super.store(storageFunction);
     }
 

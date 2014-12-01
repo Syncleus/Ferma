@@ -421,7 +421,7 @@ public interface Traversal<T, C, S, M> extends Iterator<T>, Iterable<T> {
      *            the collection to store results into
      * @return the extended Pipeline
      */
-    <N> Traversal<T, Collection<N>, N, M> store(Collection<N> storage);
+    <N> Traversal<T, Collection<? extends N>, N, M> store(Collection<? super N> storage);
 
     /**
      * Lazily store the object returned by the function over the incoming object
@@ -434,7 +434,7 @@ public interface Traversal<T, C, S, M> extends Iterator<T>, Iterable<T> {
      *            the storage collection
      * @return the extended Pipeline
      */
-    <N> Traversal<T, Collection<N>, N, M> store(Collection<N> storage, TraversalFunction<T, N> storageFunction);
+    <N> Traversal<T, Collection<? extends N>, N, M> store(Collection<? super N> storage, TraversalFunction<T, N> storageFunction);
 
     /**
      * An ArrayList storage collection is provided and filled lazily with
@@ -442,7 +442,7 @@ public interface Traversal<T, C, S, M> extends Iterator<T>, Iterable<T> {
      *
      * @return the extended Pipeline
      */
-    Traversal<T, Collection<T>, T, M> store();
+    Traversal<T, Collection<? extends T>, T, M> store();
 
     /**
      * An ArrayList storage collection is provided and filled lazily with the
@@ -453,7 +453,7 @@ public interface Traversal<T, C, S, M> extends Iterator<T>, Iterable<T> {
      *            the storage collection
      * @return the extended Pipeline
      */
-    <N> Traversal<T, Collection<N>, N, M> store(TraversalFunction<T, N> storageFunction);
+    <N> Traversal<T, Collection<? extends N>, N, M> store(TraversalFunction<T, N> storageFunction);
 
     /**
      * This step is used for grabbing previously seen objects the pipeline as

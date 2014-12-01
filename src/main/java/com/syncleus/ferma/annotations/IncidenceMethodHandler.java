@@ -130,12 +130,12 @@ public class IncidenceMethodHandler implements MethodHandler {
 
             switch (direction) {
             case BOTH:
-                return thiz.bothE(label).has(TypeResolver.TYPE_RESOLUTION_KEY, Tokens.T.in, allAllowedValues).frame(type);
+                return thiz.bothE(label).has(TypeResolver.SYSTEM_DEFAULT_TYPE_KEY, Tokens.T.in, allAllowedValues).frame(type);
             case IN:
-                return thiz.inE(label).has(TypeResolver.TYPE_RESOLUTION_KEY, Tokens.T.in, allAllowedValues).frame(type);
+                return thiz.inE(label).has(TypeResolver.SYSTEM_DEFAULT_TYPE_KEY, Tokens.T.in, allAllowedValues).frame(type);
             //Assume out direction
             default:
-                return thiz.outE(label).has(TypeResolver.TYPE_RESOLUTION_KEY, Tokens.T.in, allAllowedValues).frame(type);
+                return thiz.outE(label).has(TypeResolver.SYSTEM_DEFAULT_TYPE_KEY, Tokens.T.in, allAllowedValues).frame(type);
             }
 
         }
@@ -174,12 +174,12 @@ public class IncidenceMethodHandler implements MethodHandler {
 
             switch (direction) {
             case BOTH:
-                return thiz.bothE(label).has(TypeResolver.TYPE_RESOLUTION_KEY, Tokens.T.in, allAllowedValues).next(type);
+                return thiz.bothE(label).has(TypeResolver.SYSTEM_DEFAULT_TYPE_KEY, Tokens.T.in, allAllowedValues).next(type);
             case IN:
-                return thiz.inE(label).has(TypeResolver.TYPE_RESOLUTION_KEY, Tokens.T.in, allAllowedValues).next(type);
+                return thiz.inE(label).has(TypeResolver.SYSTEM_DEFAULT_TYPE_KEY, Tokens.T.in, allAllowedValues).next(type);
             //Assume out direction
             default:
-                return thiz.outE(label).has(TypeResolver.TYPE_RESOLUTION_KEY, Tokens.T.in, allAllowedValues).next(type);
+                return thiz.outE(label).has(TypeResolver.SYSTEM_DEFAULT_TYPE_KEY, Tokens.T.in, allAllowedValues).next(type);
             }
 
         }

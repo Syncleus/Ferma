@@ -18,6 +18,7 @@
  ******************************************************************************/
 package com.syncleus.ferma;
 
+import com.syncleus.ferma.annotations.AnnotationFrameFactory;
 import com.tinkerpop.blueprints.impls.tg.TinkerGraph;
 import org.junit.Assert;
 import org.junit.Test;
@@ -32,6 +33,29 @@ public class SimpleTypeResolverTest {
     public void testChangeType() {
         final TinkerGraph godGraph = new TinkerGraph();
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
+
+        //add a single node to the graph, a programmer.
+        framedGraph.addFramedVertex(Programmer.class);
+
+        //make sure the newly added node is actually a programmer
+        final Person programmer = framedGraph.v().next(Person.class);
+        Assert.assertTrue(programmer instanceof Programmer);
+
+        //change the type resolution to person
+        programmer.setTypeResolution(Person.class);
+
+        //make sure the newly added node is actually a programmer
+        final Person person = framedGraph.v().next(Person.class);
+        Assert.assertFalse(person instanceof Programmer);
+    }
+
+    @Test
+    public void testChangeTypeNonStandardKey() {
+        final TinkerGraph godGraph = new TinkerGraph();
+        final ReflectionCache reflections = new ReflectionCache(TEST_TYPES);
+        final TypeResolver simpleResolver = new SimpleTypeResolver(reflections, "someNewTypeKey");
+        final FrameFactory annotationFactory = new AnnotationFrameFactory(reflections);
+        final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, annotationFactory, simpleResolver);
 
         //add a single node to the graph, a programmer.
         framedGraph.addFramedVertex(Programmer.class);

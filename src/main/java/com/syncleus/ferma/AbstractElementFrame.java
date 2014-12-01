@@ -73,7 +73,7 @@ public abstract class AbstractElementFrame implements ElementFrame {
 
     @Override
     public Class<?> getTypeResolution() {
-        final String typeResolutionName = this.getProperty(TypeResolver.TYPE_RESOLUTION_KEY);
+        final String typeResolutionName = this.getProperty(TypeResolver.SYSTEM_DEFAULT_TYPE_KEY);
         if (typeResolutionName == null)
             return null;
 
@@ -90,12 +90,12 @@ public abstract class AbstractElementFrame implements ElementFrame {
 
     @Override
     public void setTypeResolution(final Class<?> type) {
-        this.setProperty(TypeResolver.TYPE_RESOLUTION_KEY, type.getName());
+        this.setProperty(TypeResolver.SYSTEM_DEFAULT_TYPE_KEY, type.getName());
     }
 
     @Override
     public void removeTypeResolution() {
-        this.element().removeProperty(TypeResolver.TYPE_RESOLUTION_KEY);
+        this.element().removeProperty(TypeResolver.SYSTEM_DEFAULT_TYPE_KEY);
     }
 
     @Override

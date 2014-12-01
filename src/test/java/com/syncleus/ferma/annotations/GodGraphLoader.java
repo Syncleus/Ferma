@@ -37,7 +37,7 @@ public class GodGraphLoader {
         saturn.setProperty("name", "saturn");
         saturn.setProperty("age", 10000);
         saturn.setProperty("type", "titan");
-        saturn.setProperty(TypeResolver.TYPE_RESOLUTION_KEY, God.class.getName());
+        saturn.setProperty(TypeResolver.SYSTEM_DEFAULT_TYPE_KEY, God.class.getName());
 
         final Vertex sky = graph.addVertex(null);
         ElementHelper.setProperties(sky, "name", "sky", "type", "location", "other", "more useless info");
@@ -46,51 +46,51 @@ public class GodGraphLoader {
         ElementHelper.setProperties(sea, "name", "sea", "type", "location");
 
         final Vertex jupiter = graph.addVertex(null);
-        ElementHelper.setProperties(jupiter, "name", "jupiter", "age", 5000, "type", "god", TypeResolver.TYPE_RESOLUTION_KEY, God.class.getName());
+        ElementHelper.setProperties(jupiter, "name", "jupiter", "age", 5000, "type", "god", TypeResolver.SYSTEM_DEFAULT_TYPE_KEY, God.class.getName());
 
         final Vertex neptune = graph.addVertex(null);
-        ElementHelper.setProperties(neptune, "name", "neptune", "age", 4500, "type", "god", TypeResolver.TYPE_RESOLUTION_KEY, God.class.getName());
+        ElementHelper.setProperties(neptune, "name", "neptune", "age", 4500, "type", "god", TypeResolver.SYSTEM_DEFAULT_TYPE_KEY, God.class.getName());
 
         final Vertex hercules = graph.addVertex(null);
-        ElementHelper.setProperties(hercules, "name", "hercules", "age", 30, "type", "demigod", TypeResolver.TYPE_RESOLUTION_KEY, GodExtended.class.getName());
+        ElementHelper.setProperties(hercules, "name", "hercules", "age", 30, "type", "demigod", TypeResolver.SYSTEM_DEFAULT_TYPE_KEY, GodExtended.class.getName());
 
         final Vertex alcmene = graph.addVertex(null);
-        ElementHelper.setProperties(alcmene, "name", "alcmene", "age", 45, "type", "human", TypeResolver.TYPE_RESOLUTION_KEY, God.class.getName());
+        ElementHelper.setProperties(alcmene, "name", "alcmene", "age", 45, "type", "human", TypeResolver.SYSTEM_DEFAULT_TYPE_KEY, God.class.getName());
 
         final Vertex pluto = graph.addVertex(null);
-        ElementHelper.setProperties(pluto, "name", "pluto", "age", 4000, "type", "god", TypeResolver.TYPE_RESOLUTION_KEY, God.class.getName());
+        ElementHelper.setProperties(pluto, "name", "pluto", "age", 4000, "type", "god", TypeResolver.SYSTEM_DEFAULT_TYPE_KEY, God.class.getName());
 
         final Vertex nemean = graph.addVertex(null);
-        ElementHelper.setProperties(nemean, "name", "nemean", "type", "monster", TypeResolver.TYPE_RESOLUTION_KEY, God.class.getName());
+        ElementHelper.setProperties(nemean, "name", "nemean", "type", "monster", TypeResolver.SYSTEM_DEFAULT_TYPE_KEY, God.class.getName());
 
         final Vertex hydra = graph.addVertex(null);
-        ElementHelper.setProperties(hydra, "name", "hydra", "type", "monster", TypeResolver.TYPE_RESOLUTION_KEY, God.class.getName());
+        ElementHelper.setProperties(hydra, "name", "hydra", "type", "monster", TypeResolver.SYSTEM_DEFAULT_TYPE_KEY, God.class.getName());
 
         final Vertex cerberus = graph.addVertex(null);
-        ElementHelper.setProperties(cerberus, "name", "cerberus", "type", "monster", TypeResolver.TYPE_RESOLUTION_KEY, God.class.getName());
+        ElementHelper.setProperties(cerberus, "name", "cerberus", "type", "monster", TypeResolver.SYSTEM_DEFAULT_TYPE_KEY, God.class.getName());
 
         final Vertex tartarus = graph.addVertex(null);
-        ElementHelper.setProperties(tartarus, "name", "tartarus", "type", "location", TypeResolver.TYPE_RESOLUTION_KEY, God.class.getName());
+        ElementHelper.setProperties(tartarus, "name", "tartarus", "type", "location", TypeResolver.SYSTEM_DEFAULT_TYPE_KEY, God.class.getName());
 
         // edges
 
-        ElementHelper.setProperties(jupiter.addEdge("father", saturn), TypeResolver.TYPE_RESOLUTION_KEY, FatherEdge.class.getName());
+        ElementHelper.setProperties(jupiter.addEdge("father", saturn), TypeResolver.SYSTEM_DEFAULT_TYPE_KEY, FatherEdge.class.getName());
         jupiter.addEdge("lives", sky).setProperty("reason", "loves fresh breezes");
         jupiter.addEdge("brother", neptune);
         jupiter.addEdge("brother", pluto);
 
-        ElementHelper.setProperties(neptune.addEdge("father", saturn), TypeResolver.TYPE_RESOLUTION_KEY, FatherEdge.class.getName());
+        ElementHelper.setProperties(neptune.addEdge("father", saturn), TypeResolver.SYSTEM_DEFAULT_TYPE_KEY, FatherEdge.class.getName());
         neptune.addEdge("lives", sea).setProperty("reason", "loves waves");
         neptune.addEdge("brother", jupiter);
         neptune.addEdge("brother", pluto);
 
-        ElementHelper.setProperties(hercules.addEdge("father", jupiter), TypeResolver.TYPE_RESOLUTION_KEY, FatherEdgeExtended.class.getName());
+        ElementHelper.setProperties(hercules.addEdge("father", jupiter), TypeResolver.SYSTEM_DEFAULT_TYPE_KEY, FatherEdgeExtended.class.getName());
         hercules.addEdge("lives", sky).setProperty("reason", "loves heights");
         ElementHelper.setProperties(hercules.addEdge("battled", nemean), "time", 1);
         ElementHelper.setProperties(hercules.addEdge("battled", hydra), "time", 2);
         ElementHelper.setProperties(hercules.addEdge("battled", cerberus), "time", 12);
 
-        ElementHelper.setProperties(pluto.addEdge("father", saturn), TypeResolver.TYPE_RESOLUTION_KEY, FatherEdge.class.getName());
+        ElementHelper.setProperties(pluto.addEdge("father", saturn), TypeResolver.SYSTEM_DEFAULT_TYPE_KEY, FatherEdge.class.getName());
         pluto.addEdge("brother", jupiter);
         pluto.addEdge("brother", neptune);
         pluto.addEdge("lives", tartarus).setProperty("reason", "no fear of death");

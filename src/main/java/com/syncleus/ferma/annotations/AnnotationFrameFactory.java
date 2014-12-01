@@ -101,7 +101,7 @@ public class AnnotationFrameFactory implements FrameFactory {
                 throw new IllegalStateException(clazz.getName() + " Class is not a type of VertexFrame");
             if( element instanceof Edge && ! EdgeFrame.class.isAssignableFrom(clazz) )
                 throw new IllegalStateException(clazz.getName() + " Class is not a type of EdgeFrame");
-            classBuilder = (DynamicType.Builder<? extends E>) new ByteBuddy().subclass(clazz);
+            classBuilder = new ByteBuddy().subclass(clazz);
         }
 
         classBuilder = classBuilder.defineField("reflectionCache", ReflectionCache.class, Visibility.PRIVATE, FieldManifestation.PLAIN).implement(CachesReflection.class).intercept(FieldAccessor.ofBeanProperty());

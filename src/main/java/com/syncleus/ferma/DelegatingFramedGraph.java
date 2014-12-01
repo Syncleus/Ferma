@@ -205,7 +205,7 @@ public class DelegatingFramedGraph implements FramedGraph {
         if (delegate instanceof TransactionalGraph) {
             return new Transaction((TransactionalGraph) delegate);
         } else {
-            return new Transaction((TransactionalGraph) null);
+            return new Transaction(null);
         }
     }
 

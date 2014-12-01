@@ -41,7 +41,7 @@ public class PropertyMethodHandlerTest {
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father != null);
-        final VertexFrame fatherVertex = (VertexFrame) father;
+        final VertexFrame fatherVertex = father;
         Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
         Assert.assertEquals("jupiter", father.getName());
     }
@@ -57,7 +57,7 @@ public class PropertyMethodHandlerTest {
 
         God father = gods.iterator().next();
         Assert.assertTrue(father != null);
-        VertexFrame fatherVertex = (VertexFrame) father;
+        VertexFrame fatherVertex = father;
         Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
         father.setName("joopiter");
 
@@ -65,7 +65,7 @@ public class PropertyMethodHandlerTest {
 
         father = gods.iterator().next();
         Assert.assertTrue(father != null);
-        fatherVertex = (VertexFrame) father;
+        fatherVertex = father;
         Assert.assertEquals(fatherVertex.getProperty("name"), "joopiter");
     }
 
@@ -80,7 +80,7 @@ public class PropertyMethodHandlerTest {
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father != null);
-        final VertexFrame fatherVertex = (VertexFrame) father;
+        final VertexFrame fatherVertex = father;
         Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
         father.removeName();
 

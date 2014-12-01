@@ -396,7 +396,7 @@ abstract class AbstractTraversal<T, C, S, M> implements Traversal<T, C, S, M> {
 
 	@Override
 	public Traversal<T, Table, Table, M> table(final Table table, final Collection<String> stepNames, final TraversalFunction<?, ?>... columnFunctions) {
-		pipeline().table(table, stepNames, this.<Object, Object, Object>wrap(columnFunctions));
+		pipeline().table(table, stepNames, this.wrap(columnFunctions));
 		return (Traversal<T, Table, Table, M>) this;
 	}
 
@@ -693,7 +693,7 @@ abstract class AbstractTraversal<T, C, S, M> implements Traversal<T, C, S, M> {
 	}
 
 	private <X,Y,Z> TraversalFunction<? extends Z, ? extends Y>[] wrap(final TraversalFunction<? extends X,? extends Y>... branchFunctions) {
-		final Collection<TraversalFunction<Z,Y>> wrapped = Collections2.transform(Arrays.<TraversalFunction<? extends X, ? extends Y>>asList(branchFunctions),
+		final Collection<TraversalFunction<Z,Y>> wrapped = Collections2.transform(Arrays.asList(branchFunctions),
 				new Function<TraversalFunction<? extends X, ? extends Y>, TraversalFunction<Z, Y>>() {
 
 					@Override

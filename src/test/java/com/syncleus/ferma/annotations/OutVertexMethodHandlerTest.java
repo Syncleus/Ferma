@@ -41,7 +41,7 @@ public class OutVertexMethodHandlerTest {
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father != null);
-        final VertexFrame fatherVertex = (VertexFrame) father;
+        final VertexFrame fatherVertex = father;
         Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
 
         final Iterable<? extends FatherEdge> childrenEdges = father.getSonEdges(FatherEdge.class);
@@ -51,7 +51,7 @@ public class OutVertexMethodHandlerTest {
 
         final God son = childEdge.getSon();
         Assert.assertTrue(son != null);
-        final VertexFrame sonVertex = (VertexFrame) son;
+        final VertexFrame sonVertex = son;
         Assert.assertEquals(sonVertex.getProperty("name"), "hercules");
     }
 }

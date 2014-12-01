@@ -519,7 +519,7 @@ public class FramedVertexTest {
 
         Assert.assertTrue("An out edge of type "+label+" must exist between vertices", p3.in(label).retain(Lists.newArrayList(p4)).count() > 0);
 
-        final Person p5 = (Person)p3.setLinkIn(Person.class, label);
+        final Person p5 = p3.setLinkIn(Person.class, label);
 
         //Make sure old edge was deleted
         Assert.assertEquals("old " + label + " edge was not removed", 0, p3.in(label).retain(Lists.newArrayList(p4)).count());
@@ -540,7 +540,7 @@ public class FramedVertexTest {
 
         Assert.assertTrue("An out edge of type "+label+" must exist between vertices", p3.out(label).retain(Lists.newArrayList(p4)).count() > 0);
 
-        final Person p5 = (Person)p3.setLinkOut(Person.class, label);
+        final Person p5 = p3.setLinkOut(Person.class, label);
 
         //Make sure old edge was deleted
         Assert.assertEquals("old " + label + " edge was not removed", 0, p3.out(label).retain(Lists.newArrayList(p4)).count());
@@ -563,7 +563,7 @@ public class FramedVertexTest {
         Assert.assertTrue("An in edge of type "+label+" must exist between vertices", p3.in(label).retain(Lists.newArrayList(p4)).count() > 0);
         Assert.assertTrue("An out edge of type "+label+" must exist between vertices", p3.out(label).retain(Lists.newArrayList(p4)).count() > 0);
 
-        final Person p5 = (Person)p3.setLinkBoth(Person.class, label);
+        final Person p5 = p3.setLinkBoth(Person.class, label);
 
         //Make sure old edge was deleted
         Assert.assertEquals("old " + label + " edge was not removed", 0, p3.both(label).retain(Lists.newArrayList(p4)).count());

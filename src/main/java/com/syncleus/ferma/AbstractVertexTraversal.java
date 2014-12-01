@@ -62,7 +62,7 @@ abstract class AbstractVertexTraversal<C, S, M> extends AbstractTraversal<Vertex
 	@Override
 	public VertexFrame nextOrAdd() {
 
-		return (VertexFrame) nextOrAdd(VertexFrame.class);
+		return nextOrAdd(VertexFrame.class);
 	}
 
 	@Override

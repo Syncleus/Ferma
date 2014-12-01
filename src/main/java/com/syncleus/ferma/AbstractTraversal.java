@@ -52,6 +52,14 @@ import com.tinkerpop.pipes.util.structures.Row;
 import com.tinkerpop.pipes.util.structures.Table;
 import com.tinkerpop.pipes.util.structures.Tree;
 
+/**
+ * The root traversal class. Wraps a Tinkerpop {@link GremlinPipeline}
+ *
+ * @param <T> The type of the objects coming off the pipe.
+ * @param <C> The cap of the current pipe.
+ * @param <S> The SideEffect of the current pipe.
+ * @param <M> The current mark'ed type for the current pipe.
+ */
 abstract class AbstractTraversal<T, C, S, M> implements Traversal<T, C, S, M> {
 
 	protected abstract FramedGraph graph();

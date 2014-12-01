@@ -42,6 +42,13 @@ import com.tinkerpop.pipes.transform.TransformPipe.Order;
 import com.tinkerpop.pipes.util.structures.Table;
 import com.tinkerpop.pipes.util.structures.Tree;
 
+/**
+ * Edge specific traversal.
+ * 
+ * @param <C> The cap of the current pipe.
+ * @param <S> The SideEffect of the current pipe.
+ * @param <M> The current mark'ed type for the current pipe.
+ */
 abstract class AbstractEdgeTraversal<C, S, M> extends AbstractTraversal<EdgeFrame, C, S, M> implements EdgeTraversal<C, S, M> {
 
 	@Override

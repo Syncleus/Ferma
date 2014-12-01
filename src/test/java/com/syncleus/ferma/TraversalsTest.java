@@ -340,7 +340,7 @@ public class TraversalsTest {
 	@Test
 	public void testAggregate() {
 
-		final List<VertexFrame> x = new ArrayList<VertexFrame>();
+		final List<VertexFrame> x = new ArrayList<>();
 		Assert.assertEquals(graph.v(3).next(), graph.v(1).out().aggregate(x).next());
 		Assert.assertEquals(3, graph.v(1).out().aggregate().cap().size());
 		Assert.assertEquals(3, x.size());
@@ -393,7 +393,7 @@ public class TraversalsTest {
 
 	@Test
 	public void testSideEffect() {
-		final List<VertexFrame> collected = new ArrayList<VertexFrame>();
+		final List<VertexFrame> collected = new ArrayList<>();
 		graph.v(1).sideEffect(new SideEffectFunction<VertexFrame>() {
 
 			@Override

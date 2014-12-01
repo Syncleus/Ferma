@@ -28,7 +28,7 @@ import org.junit.Test;
 import java.util.*;
 
 public class PropertyMethodHandlerTest {
-    private static final Set<Class<?>> TEST_TYPES = new HashSet<Class<?>>(Arrays.asList(new Class<?>[]{God.class, FatherEdge.class, GodExtended.class, GodAlternative.class}));
+    private static final Set<Class<?>> TEST_TYPES = new HashSet<>(Arrays.asList(new Class<?>[]{God.class, FatherEdge.class, GodExtended.class, GodAlternative.class}));
 
     @Test
     public void testGetName() {

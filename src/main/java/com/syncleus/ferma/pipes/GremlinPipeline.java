@@ -49,6 +49,6 @@ public class GremlinPipeline<S, E> extends com.tinkerpop.gremlin.java.GremlinPip
 	@Override
 	public com.tinkerpop.gremlin.java.GremlinPipeline<S, List> path(final PipeFunction... pathFunctions) {
 	
-		return this.add(new PathPipe<Object>(FluentUtility.prepareFunctions(this.asMap, pathFunctions)));
+		return this.add(new PathPipe<>(FluentUtility.prepareFunctions(this.asMap, pathFunctions)));
 	}
 }

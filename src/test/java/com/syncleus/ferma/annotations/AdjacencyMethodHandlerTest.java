@@ -27,7 +27,7 @@ import org.junit.Test;
 import java.util.*;
 
 public class AdjacencyMethodHandlerTest {
-    private static final Set<Class<?>> TEST_TYPES = new HashSet<Class<?>>(Arrays.asList(new Class<?>[]{God.class, FatherEdge.class, GodExtended.class, GodAlternative.class}));
+    private static final Set<Class<?>> TEST_TYPES = new HashSet<>(Arrays.asList(new Class<?>[]{God.class, FatherEdge.class, GodExtended.class, GodAlternative.class}));
 
     @Test
     public void testGetSonsDefault() {
@@ -372,7 +372,7 @@ public class AdjacencyMethodHandlerTest {
     @Test(expected = IllegalStateException.class)
     public void testGetSonsNoArgumentGetClass() {
 
-        final Set<Class<?>> exceptionTypes = new HashSet<Class<?>>(Arrays.asList(new Class<?>[]{BadGetSonsArgumentClass.class}));
+        final Set<Class<?>> exceptionTypes = new HashSet<>(Arrays.asList(new Class<?>[]{BadGetSonsArgumentClass.class}));
 
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
@@ -387,7 +387,7 @@ public class AdjacencyMethodHandlerTest {
     @Test(expected = IllegalStateException.class)
     public void testGetSonsNoArgumentGetInterface() {
 
-        final Set<Class<?>> exceptionTypes = new HashSet<Class<?>>(Arrays.asList(new Class<?>[]{BadGetSonsArgumentInterface.class}));
+        final Set<Class<?>> exceptionTypes = new HashSet<>(Arrays.asList(new Class<?>[]{BadGetSonsArgumentInterface.class}));
 
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
@@ -402,7 +402,7 @@ public class AdjacencyMethodHandlerTest {
     @Test(expected = IllegalStateException.class)
     public void testAddSonNoArgument() {
 
-        final Set<Class<?>> exceptionTypes = new HashSet<Class<?>>(Arrays.asList(new Class<?>[]{BadAddSonNoArguments.class}));
+        final Set<Class<?>> exceptionTypes = new HashSet<>(Arrays.asList(new Class<?>[]{BadAddSonNoArguments.class}));
 
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
@@ -417,7 +417,7 @@ public class AdjacencyMethodHandlerTest {
     @Test(expected = IllegalStateException.class)
     public void testAddSonBadArgument() {
 
-        final Set<Class<?>> exceptionTypes = new HashSet<Class<?>>(Arrays.asList(new Class<?>[]{BadAddSonArgument.class}));
+        final Set<Class<?>> exceptionTypes = new HashSet<>(Arrays.asList(new Class<?>[]{BadAddSonArgument.class}));
 
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
@@ -432,7 +432,7 @@ public class AdjacencyMethodHandlerTest {
     @Test(expected = IllegalStateException.class)
     public void testAddSonExtraArgument() {
 
-        final Set<Class<?>> exceptionTypes = new HashSet<Class<?>>(Arrays.asList(new Class<?>[]{BadAddSonExtraArgument.class}));
+        final Set<Class<?>> exceptionTypes = new HashSet<>(Arrays.asList(new Class<?>[]{BadAddSonExtraArgument.class}));
 
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
@@ -447,7 +447,7 @@ public class AdjacencyMethodHandlerTest {
     @Test(expected = IllegalStateException.class)
     public void testBadSonMethodName() {
 
-        final Set<Class<?>> exceptionTypes = new HashSet<Class<?>>(Arrays.asList(new Class<?>[]{BadSonMethodName.class}));
+        final Set<Class<?>> exceptionTypes = new HashSet<>(Arrays.asList(new Class<?>[]{BadSonMethodName.class}));
 
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);

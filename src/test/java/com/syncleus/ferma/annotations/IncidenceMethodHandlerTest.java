@@ -42,7 +42,7 @@ public class IncidenceMethodHandlerTest {
         final List<? extends God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
 
         final God father = gods.iterator().next();
-        Assert.assertTrue(father instanceof VertexFrame);
+        Assert.assertTrue(father != null);
         final VertexFrame fatherVertex = (VertexFrame) father;
         Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
 
@@ -63,7 +63,7 @@ public class IncidenceMethodHandlerTest {
         final List<? extends God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
 
         final God father = gods.iterator().next();
-        Assert.assertTrue(father instanceof VertexFrame);
+        Assert.assertTrue(father != null);
         final VertexFrame fatherVertex = (VertexFrame) father;
         Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
 
@@ -71,7 +71,7 @@ public class IncidenceMethodHandlerTest {
         final Iterator<? extends FatherEdge> childEdgeIterator = childrenEdges.iterator();
         Assert.assertTrue(childEdgeIterator.hasNext());
         final FatherEdge childEdge = childEdgeIterator.next();
-        Assert.assertTrue(childEdge instanceof EdgeFrame);
+        Assert.assertTrue(childEdge != null);
         final EdgeFrame edge = (EdgeFrame) childEdge;
         Assert.assertEquals(edge.element().getVertex(Direction.OUT).getProperty("name"), "hercules");
     }
@@ -86,7 +86,7 @@ public class IncidenceMethodHandlerTest {
         final List<? extends God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
 
         final God father = gods.iterator().next();
-        Assert.assertTrue(father instanceof VertexFrame);
+        Assert.assertTrue(father != null);
         final VertexFrame fatherVertex = (VertexFrame) father;
         Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
 
@@ -110,7 +110,7 @@ public class IncidenceMethodHandlerTest {
         final List<? extends God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
 
         final God father = gods.iterator().next();
-        Assert.assertTrue(father instanceof VertexFrame);
+        Assert.assertTrue(father != null);
         final VertexFrame fatherVertex = (VertexFrame) father;
         Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
 
@@ -128,12 +128,12 @@ public class IncidenceMethodHandlerTest {
         final List<? extends God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
 
         final God father = gods.iterator().next();
-        Assert.assertTrue(father instanceof VertexFrame);
+        Assert.assertTrue(father != null);
         final VertexFrame fatherVertex = (VertexFrame) father;
         Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
 
         final FatherEdge childEdge = father.getSonEdge(FatherEdge.class);
-        Assert.assertTrue(childEdge instanceof EdgeFrame);
+        Assert.assertTrue(childEdge != null);
         final EdgeFrame edge = (EdgeFrame) childEdge;
         Assert.assertEquals(edge.element().getVertex(Direction.OUT).getProperty("name"), "hercules");
     }
@@ -148,7 +148,7 @@ public class IncidenceMethodHandlerTest {
         final List<? extends God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
 
         final God father = gods.iterator().next();
-        Assert.assertTrue(father instanceof VertexFrame);
+        Assert.assertTrue(father != null);
         final VertexFrame fatherVertex = (VertexFrame) father;
         Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
 

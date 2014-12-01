@@ -217,8 +217,8 @@ public class TraversalsTest {
 		final Path path = graph.v(1).out().path().next();
 
 		Assert.assertEquals(2, path.size());
-		Assert.assertTrue(path.get(0, TVertex.class) instanceof TVertex);
-		Assert.assertTrue(path.get(1, TVertex.class) instanceof TVertex);
+		Assert.assertTrue(path.get(0, TVertex.class) != null);
+		Assert.assertTrue(path.get(1, TVertex.class) != null);
 
 	}
 
@@ -506,13 +506,13 @@ public class TraversalsTest {
 
 	@Test
 	public void testToListWithClass() {
-		Assert.assertTrue(graph.v().limit(1).toList(Person.class).iterator().next() instanceof Person);
+		Assert.assertTrue(graph.v().limit(1).toList(Person.class).iterator().next() != null);
 
 	}
 
 	@Test
 	public void testToListWithClassExplicit() {
-		Assert.assertTrue(graph.v().limit(1).toListExplicit(Person.class).iterator().next() instanceof Person);
+		Assert.assertTrue(graph.v().limit(1).toListExplicit(Person.class).iterator().next() != null);
 
 	}
 
@@ -524,13 +524,13 @@ public class TraversalsTest {
 
 	@Test
 	public void testToSetWithClass() {
-		Assert.assertTrue(graph.v().limit(1).toSet(Person.class).iterator().next() instanceof Person);
+		Assert.assertTrue(graph.v().limit(1).toSet(Person.class).iterator().next() != null);
 
 	}
 
 	@Test
 	public void testToSetWithClassExplicit() {
-		Assert.assertTrue(graph.v().limit(1).toSetExplicit(Person.class).iterator().next() instanceof Person);
+		Assert.assertTrue(graph.v().limit(1).toSetExplicit(Person.class).iterator().next() != null);
 
 	}
 }

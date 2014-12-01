@@ -40,7 +40,7 @@ public class OutVertexMethodHandlerTest {
         final List<? extends God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
 
         final God father = gods.iterator().next();
-        Assert.assertTrue(father instanceof VertexFrame);
+        Assert.assertTrue(father != null);
         final VertexFrame fatherVertex = (VertexFrame) father;
         Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
 
@@ -50,7 +50,7 @@ public class OutVertexMethodHandlerTest {
         final FatherEdge childEdge = childEdgeIterator.next();
 
         final God son = childEdge.getSon();
-        Assert.assertTrue(son instanceof VertexFrame);
+        Assert.assertTrue(son != null);
         final VertexFrame sonVertex = (VertexFrame) son;
         Assert.assertEquals(sonVertex.getProperty("name"), "hercules");
     }

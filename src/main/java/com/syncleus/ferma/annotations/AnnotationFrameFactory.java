@@ -69,9 +69,7 @@ public class AnnotationFrameFactory implements FrameFactory {
             if (object instanceof CachesReflection)
                 ((CachesReflection) object).setReflectionCache(this.reflectionCache);
             return object;
-        } catch (final InstantiationException caught) {
-            throw new IllegalArgumentException("kind could not be instantiated", caught);
-        } catch (final IllegalAccessException caught) {
+        } catch (final InstantiationException | IllegalAccessException caught) {
             throw new IllegalArgumentException("kind could not be instantiated", caught);
         }
     }

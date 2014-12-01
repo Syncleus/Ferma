@@ -28,10 +28,8 @@ public class DefaultFrameFactory implements FrameFactory {
     public <T> T create(final Element element, final Class<T> kind) {
         try {
             return kind.newInstance();
-        } catch (final InstantiationException e) {
-            throw new RuntimeException(e);
-        } catch (final IllegalAccessException e) {
-            throw new RuntimeException(e);
+        } catch (final InstantiationException | IllegalAccessException e) {
+            throw new IllegalStateException("Could not instantiate kind", e);
         }
     }
 }

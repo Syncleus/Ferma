@@ -18,6 +18,7 @@
  ******************************************************************************/
 package com.syncleus.ferma.annotations;
 
+import com.syncleus.ferma.DelegatingFramedGraph;
 import com.syncleus.ferma.EdgeFrame;
 import com.syncleus.ferma.FramedGraph;
 import com.syncleus.ferma.VertexFrame;
@@ -36,7 +37,7 @@ public class IncidenceMethodHandlerTest {
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
 
-        final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
+        final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
         final List<? extends God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
 
@@ -57,7 +58,7 @@ public class IncidenceMethodHandlerTest {
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
 
-        final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
+        final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
         final List<? extends God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
 
@@ -80,7 +81,7 @@ public class IncidenceMethodHandlerTest {
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
 
-        final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
+        final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
         final List<? extends God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
 
@@ -104,7 +105,7 @@ public class IncidenceMethodHandlerTest {
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
 
-        final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
+        final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
         final List<? extends God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
 
@@ -122,7 +123,7 @@ public class IncidenceMethodHandlerTest {
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
 
-        final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
+        final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
         final List<? extends God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
 
@@ -142,7 +143,7 @@ public class IncidenceMethodHandlerTest {
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
 
-        final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
+        final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
         final List<? extends God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
 

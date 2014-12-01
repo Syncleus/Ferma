@@ -49,7 +49,7 @@ public class FramedGraphTest {
     @Test
     public void testSanity() {
         Graph g = new TinkerGraph();
-        FramedGraph fg = new FramedGraph(g);
+        FramedGraph fg = new DelegatingFramedGraph(g);
         Person p1 = fg.addFramedVertex(Person.class);
         p1.setName("Bryn");
 
@@ -71,7 +71,7 @@ public class FramedGraphTest {
     @Test
     public void testSanityExplicit() {
         Graph g = new TinkerGraph();
-        FramedGraph fg = new FramedGraph(g);
+        FramedGraph fg = new DelegatingFramedGraph(g);
         Person p1 = fg.addFramedVertexExplicit(Person.class);
         p1.setName("Bryn");
 
@@ -93,7 +93,7 @@ public class FramedGraphTest {
     @Test
     public void testJavaTyping() {
         Graph g = new TinkerGraph();
-        FramedGraph fg = new FramedGraph(g, true, false);
+        FramedGraph fg = new DelegatingFramedGraph(g, true, false);
 
         Person p1 = fg.addFramedVertex(Programmer.class);
         p1.setName("Bryn");
@@ -111,7 +111,7 @@ public class FramedGraphTest {
     @Test
     public void testJavaTypingAddExplicit() {
         Graph g = new TinkerGraph();
-        FramedGraph fg = new FramedGraph(g, true, false);
+        FramedGraph fg = new DelegatingFramedGraph(g, true, false);
 
         Person p1 = fg.addFramedVertexExplicit(Programmer.class);
         p1.setName("Bryn");
@@ -129,7 +129,7 @@ public class FramedGraphTest {
     @Test
     public void testJavaTypingNextExplicit() {
         Graph g = new TinkerGraph();
-        FramedGraph fg = new FramedGraph(g, true, false);
+        FramedGraph fg = new DelegatingFramedGraph(g, true, false);
 
         Person p1 = fg.addFramedVertex(Programmer.class);
         p1.setName("Bryn");
@@ -148,7 +148,7 @@ public class FramedGraphTest {
     public void testCustomFrameBuilder() {
     	final Person o = new Person();
         Graph g = new TinkerGraph();
-        FramedGraph fg = new FramedGraph(g, new FrameFactory() {
+        FramedGraph fg = new DelegatingFramedGraph(g, new FrameFactory() {
 			
 			@SuppressWarnings("unchecked")
 			@Override
@@ -164,7 +164,7 @@ public class FramedGraphTest {
     public void testCustomFrameBuilderExplicit() {
         final Person o = new Person();
         Graph g = new TinkerGraph();
-        FramedGraph fg = new FramedGraph(g, new FrameFactory() {
+        FramedGraph fg = new DelegatingFramedGraph(g, new FrameFactory() {
 
             @SuppressWarnings("unchecked")
             @Override
@@ -181,7 +181,7 @@ public class FramedGraphTest {
     
     public void testTransactionUnsupported() {
         Graph g = new TinkerGraph();
-        FramedGraph fg = new FramedGraph(g);
+        FramedGraph fg = new DelegatingFramedGraph(g);
         try(Transaction t = fg.tx()) {
         	
         }
@@ -191,7 +191,7 @@ public class FramedGraphTest {
     @Test
     public void testTransactionCommitted() {
         
-        FramedGraph fg = new FramedGraph(transactionalGraph);
+        FramedGraph fg = new DelegatingFramedGraph(transactionalGraph);
         try(Transaction t = fg.tx()) {
         	t.commit();
         }
@@ -202,7 +202,7 @@ public class FramedGraphTest {
     @Test
     public void testTransactionRolledBack() {
         
-        FramedGraph fg = new FramedGraph(transactionalGraph);
+        FramedGraph fg = new DelegatingFramedGraph(transactionalGraph);
         try(Transaction t = fg.tx()) {
         	t.rollback();
         }
@@ -213,7 +213,7 @@ public class FramedGraphTest {
     @Test
     public void testTransactionNotComitted() {
         
-        FramedGraph fg = new FramedGraph(transactionalGraph);
+        FramedGraph fg = new DelegatingFramedGraph(transactionalGraph);
         try(Transaction t = fg.tx()) {
         	
         }
@@ -224,7 +224,7 @@ public class FramedGraphTest {
     @Test
     public void testTransactionException() {
         
-        FramedGraph fg = new FramedGraph(transactionalGraph);
+        FramedGraph fg = new DelegatingFramedGraph(transactionalGraph);
         
         try(Transaction t = fg.tx()) {
         	throw new Exception();
@@ -239,7 +239,7 @@ public class FramedGraphTest {
     @Test
     public void testUntypedFrames() {
         Graph g = new TinkerGraph();
-        FramedGraph fg = new FramedGraph(g);
+        FramedGraph fg = new DelegatingFramedGraph(g);
         TVertex p1 = fg.addFramedVertex();
         p1.setProperty("name", "Bryn");
 
@@ -261,7 +261,7 @@ public class FramedGraphTest {
     @Test
     public void testUntypedFramesExplicit() {
         Graph g = new TinkerGraph();
-        FramedGraph fg = new FramedGraph(g);
+        FramedGraph fg = new DelegatingFramedGraph(g);
         TVertex p1 = fg.addFramedVertexExplicit();
         p1.setProperty("name", "Bryn");
 
@@ -283,7 +283,7 @@ public class FramedGraphTest {
     @Test
     public void testKeyValueTraversal() {
         Graph g = TinkerGraphFactory.createTinkerGraph();
-        FramedGraph fg = new FramedGraph(g);
+        FramedGraph fg = new DelegatingFramedGraph(g);
         final Set<Object> expectedSet = new HashSet<>();
 
         TVertex p1 = fg.addFramedVertexExplicit();

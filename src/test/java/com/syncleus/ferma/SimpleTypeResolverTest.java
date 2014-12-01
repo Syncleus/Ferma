@@ -30,7 +30,7 @@ public class SimpleTypeResolverTest {
     @Test
     public void testChangeType() {
         final TinkerGraph godGraph = new TinkerGraph();
-        final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
+        final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
         //add a single node to the graph, a programmer.
         framedGraph.addFramedVertex(Programmer.class);

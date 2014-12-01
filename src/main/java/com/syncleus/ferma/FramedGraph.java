@@ -16,281 +16,37 @@
  *  Philadelphia, PA 19148                                                     *
  *                                                                             *
  ******************************************************************************/
-
-/*
- * Part or all of this source file was forked from a third-party project, the details of which are listed below.
- *
- * Source Project: Totorom
- * Source URL: https://github.com/BrynCooke/totorom
- * Source License: Apache Public License v2.0
- * When: November, 20th 2014
- */
 package com.syncleus.ferma;
 
-import java.io.Closeable;
-import java.util.*;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Iterators;
-import com.syncleus.ferma.annotations.AnnotationFrameFactory;
 import com.tinkerpop.blueprints.*;
+
+import java.util.Collection;
+import java.util.Iterator;
 
 /**
  * The primary class for framing your blueprints graphs.
  */
 
-public class FramedGraph implements Graph {
-	private Graph delegate;
+public interface FramedGraph extends Graph {
 
-	private final TypeResolver defaultResolver;
-	private final TypeResolver untypedResolver;
-	private final FrameFactory builder;
-	private final ReflectionCache reflections;
-
-	/**
-	 * Construct a framed graph.
-	 * 
-	 * @param delegate
-	 *            The graph to wrap.
-	 * @param builder
-	 *            The builder that will construct frames.
-	 * @param defaultResolver
-	 *            The type defaultResolver that will decide the final frame type.
-	 */
-	public FramedGraph(final Graph delegate, final FrameFactory builder, final TypeResolver defaultResolver) {
-		this.reflections = null;
-		this.delegate = delegate;
-		this.defaultResolver = defaultResolver;
-		this.untypedResolver = new UntypedTypeResolver();
-		this.builder = builder;
-	}
-
-	/**
-	 * Construct an untyped framed graph without annotation support
-	 * 
-	 * @param delegate
-	 *            The graph to wrap.
-	 */
-	public FramedGraph(final Graph delegate) {
-		this.reflections = new ReflectionCache();
-		this.delegate = delegate;
-		this.defaultResolver = new UntypedTypeResolver();
-		this.untypedResolver = this.defaultResolver;
-		this.builder = new DefaultFrameFactory();
-	}
-
-	/**
-	 * Construct an untyped framed graph without annotation support
-	 *
-	 * @param reflections
-	 * 			  A RefelctionCache used to determine reflection and hierarchy of classes.
-	 * @param delegate
-	 *            The graph to wrap.
-	 */
-	public FramedGraph(final Graph delegate, final ReflectionCache reflections) {
-		this.reflections = reflections;
-		this.delegate = delegate;
-		this.defaultResolver = new UntypedTypeResolver();
-		this.untypedResolver = this.defaultResolver;
-		this.builder = new DefaultFrameFactory();
-	}
-
-	/**
-	 * Construct a framed graph without annotation support.
-	 *
-	 * @param delegate
-	 *            The graph to wrap.
-	 * @param defaultResolver
-	 *            The type defaultResolver that will decide the final frame type.
-	 */
-	public FramedGraph(Graph delegate, final TypeResolver defaultResolver) {
-		this(delegate, new DefaultFrameFactory(), defaultResolver);
-	}
-
-	/**
-	 * Construct a framed graph with the specified typeResolution and annotation support
-	 *
-	 * @param delegate
-	 *            The graph to wrap.
-	 * @param typeResolution
-	 * 			  True if type resolution is to be automatically handled by default, false causes explicit typing by
-	 * @param annotationsSupported
-	 * 			  True if annotated classes will be supported, false otherwise.
-	 */
-	public FramedGraph(Graph delegate, boolean typeResolution, final boolean annotationsSupported) {
-		this.reflections = new ReflectionCache();
-		this.delegate = delegate;
-		if( typeResolution) {
-			this.defaultResolver = new SimpleTypeResolver(this.reflections);
-			this.untypedResolver = new UntypedTypeResolver();
-		}
-		else {
-			this.defaultResolver = new UntypedTypeResolver();
-			this.untypedResolver = this.defaultResolver;
-		}
-		if( annotationsSupported )
-			this.builder = new AnnotationFrameFactory(this.reflections);
-		else
-			this.builder = new DefaultFrameFactory();
-	}
-
-	/**
-	 * Construct a framed graph with the specified typeResolution and annotation support
-	 *
-	 * @param delegate
-	 *            The graph to wrap.
-	 * @param reflections
-	 * 			  A RefelctionCache used to determine reflection and hierarchy of classes.
-	 * @param typeResolution
-	 * 			  True if type resolution is to be automatically handled by default, false causes explicit typing by
-	 * @param annotationsSupported
-	 * 			  True if annotated classes will be supported, false otherwise.
-	 */
-	public FramedGraph(Graph delegate, final ReflectionCache reflections, boolean typeResolution, final boolean annotationsSupported) {
-		this.reflections = reflections;
-		this.delegate = delegate;
-		if( typeResolution) {
-			this.defaultResolver = new SimpleTypeResolver(this.reflections);
-			this.untypedResolver = new UntypedTypeResolver();
-		}
-		else {
-			this.defaultResolver = new UntypedTypeResolver();
-			this.untypedResolver = this.defaultResolver;
-		}
-		if( annotationsSupported )
-			this.builder = new AnnotationFrameFactory(this.reflections);
-		else
-			this.builder = new DefaultFrameFactory();
-	}
-
-	/**
-	 * Construct a Typed framed graph with the specified type resolution and with annotation support
-	 *
-	 * @param delegate
-	 *            The graph to wrap.
-	 * @param types
-	 *            The types to be consider for type resolution.
-	 */
-	public FramedGraph(Graph delegate, final Collection<? extends Class<?>> types) {
-		this.reflections = new ReflectionCache(types);
-		this.delegate = delegate;
-		this.defaultResolver = new SimpleTypeResolver(this.reflections);
-		this.untypedResolver = new UntypedTypeResolver();
-		this.builder = new AnnotationFrameFactory(this.reflections);
-	}
-
-	/**
-	 * Construct an framed graph with the specified type resolution and with annotation support
-	 *
-	 * @param delegate
-	 *            The graph to wrap.
-	 * @param typeResolution
-	 * 			  True if type resolution is to be automatically handled by default, false causes explicit typing by
-	 * 			  default.
-	 * @param types
-	 *            The types to be consider for type resolution.
-	 */
-	public FramedGraph(Graph delegate, boolean typeResolution, final Collection<? extends Class<?>> types) {
-		this.reflections = new ReflectionCache(types);
-		this.delegate = delegate;
-		if( typeResolution) {
-			this.defaultResolver = new SimpleTypeResolver(this.reflections);
-			this.untypedResolver = new UntypedTypeResolver();
-		}
-		else {
-			this.defaultResolver = new UntypedTypeResolver();
-			this.untypedResolver = this.defaultResolver;
-		}
-		this.builder = new AnnotationFrameFactory(this.reflections);
-	}
-
-	/**
-	 * @return A transaction object that is {@link Closeable}.
-	 */
-	public Transaction tx() {
-		if (delegate instanceof TransactionalGraph) {
-			return new Transaction((TransactionalGraph) delegate);
-		} else {
-			return new Transaction((TransactionalGraph) null);
-		}
-	}
+	public Transaction tx();
 
 	/**
 	 * Close the delegate graph.
 	 */
-	public void close() {
-		delegate.shutdown();
-	}
-
-	<T> T frameElement(Element e, Class<T> kind) {
-		if( e == null )
-			return null;
-
-		Class<? extends T> frameType = (kind == TVertex.class || kind == TEdge.class) ? kind : defaultResolver.resolve(e, kind);
-
-		T framedElement = builder.create(e, frameType);
-		((AbstractElementFrame)framedElement).init(this, e);
-		return framedElement;
-	}
-
-	<T> T frameNewElement(Element e, Class<T> kind) {
-		T t = frameElement(e, kind);
-		defaultResolver.init(e, kind);
-		((AbstractElementFrame)t).init();
-		return t;
-	}
-
-	<T extends ElementFrame> Iterator<? extends T> frame(Iterator<? extends Element> pipeline, final Class<T> kind) {
-		return Iterators.transform(pipeline, new Function<Element, T>() {
-
-			@Override
-			public T apply(Element element) {
-				return frameElement(element, kind);
-			}
-
-		});
-	}
-
-	<T> T frameElementExplicit(Element e, Class<T> kind) {
-		if(e == null)
-			return null;
-
-		Class<? extends T> frameType = this.untypedResolver.resolve(e, kind);
-
-		T framedElement = builder.create(e, frameType);
-		((AbstractElementFrame)framedElement).init(this, e);
-		return framedElement;
-	}
-
-	<T> T frameNewElementExplicit(Element e, Class<T> kind) {
-		T t = frameElement(e, kind);
-		this.untypedResolver.init(e, kind);
-		((AbstractElementFrame)t).init();
-		return t;
-	}
-
-	<T extends ElementFrame> Iterator<? extends T> frameExplicit(Iterator<? extends Element> pipeline, final Class<T> kind) {
-		return Iterators.transform(pipeline, new Function<Element, T>() {
-
-			@Override
-			public T apply(Element element) {
-				return frameElementExplicit(element, kind);
-			}
-
-		});
-	}
+	public void close();
 
 	/**
 	 * Add a vertex to the graph
-	 * 
+	 *
 	 * @param kind
 	 *            The kind of the frame.
 	 * @return The framed vertex.
 	 */
-	public <T> T addFramedVertex(Class<T> kind) {
-		T framedVertex = frameNewElement(delegate.addVertex(null), kind);
-		return framedVertex;
-	}
+	public <T> T addFramedVertex(Class<T> kind);
 
 	/**
 	 * Add a vertex to the graph
@@ -303,20 +59,14 @@ public class FramedGraph implements Graph {
 	 *            The kind of the frame.
 	 * @return The framed vertex.
 	 */
-	public <T> T addFramedVertexExplicit(Class<T> kind) {
-		T framedVertex = frameNewElementExplicit(delegate.addVertex(null), kind);
-		return framedVertex;
-	}
-	
+	public <T> T addFramedVertexExplicit(Class<T> kind);
+
 	/**
 	 * Add a vertex to the graph using a frame type of {@link TVertex}.
-	 * 
+	 *
 	 * @return The framed vertex.
 	 */
-	public TVertex addFramedVertex() {
-		
-		return addFramedVertex(TVertex.class);
-	}
+	public TVertex addFramedVertex();
 
 	/**
 	 * Add a vertex to the graph using a frame type of {@link TVertex}.
@@ -327,10 +77,7 @@ public class FramedGraph implements Graph {
 	 *
 	 * @return The framed vertex.
 	 */
-	public TVertex addFramedVertexExplicit() {
-
-		return addFramedVertexExplicit(TVertex.class);
-	}
+	public TVertex addFramedVertexExplicit();
 
 	/**
 	 * Add a edge to the graph
@@ -339,10 +86,7 @@ public class FramedGraph implements Graph {
 	 *            The kind of the frame.
 	 * @return The framed edge.
 	 */
-	public <T> T addFramedEdge(final VertexFrame source, final VertexFrame destination, final String label, Class<T> kind) {
-		T framedEdge = frameNewElement(this.delegate.addEdge(null, source.element(), destination.element(), label), kind);
-		return framedEdge;
-	}
+	public <T> T addFramedEdge(final VertexFrame source, final VertexFrame destination, final String label, Class<T> kind);
 
 	/**
 	 * Add a edge to the graph
@@ -355,20 +99,14 @@ public class FramedGraph implements Graph {
 	 *            The kind of the frame.
 	 * @return The framed edge.
 	 */
-	public <T> T addFramedEdgeExplicit(final VertexFrame source, final VertexFrame destination, final String label, Class<T> kind) {
-		T framedEdge = frameNewElementExplicit(this.delegate.addEdge(null, source.element(), destination.element(), label), kind);
-		return framedEdge;
-	}
+	public <T> T addFramedEdgeExplicit(final VertexFrame source, final VertexFrame destination, final String label, Class<T> kind);
 
 	/**
 	 * Add a edge to the graph using a frame type of {@link TEdge}.
 	 *
 	 * @return The framed edge.
 	 */
-	public TEdge addFramedEdge(final VertexFrame source, final VertexFrame destination, final String label) {
-
-		return addFramedEdge(source, destination, label, TEdge.class);
-	}
+	public TEdge addFramedEdge(final VertexFrame source, final VertexFrame destination, final String label);
 
 	/**
 	 * Add a edge to the graph using a frame type of {@link TEdge}.
@@ -379,219 +117,95 @@ public class FramedGraph implements Graph {
 	 *
 	 * @return The framed edge.
 	 */
-	public TEdge addFramedEdgeExplicit(final VertexFrame source, final VertexFrame destination, final String label) {
-
-		return addFramedEdgeExplicit(source, destination, label, TEdge.class);
-	}
+	public TEdge addFramedEdgeExplicit(final VertexFrame source, final VertexFrame destination, final String label);
 
 	/**
 	 * Query over all vertices in the graph.
-	 * 
+	 *
 	 * @return The query.
 	 */
-	public VertexTraversal<?, ?, ?> v() {
-		return new SimpleTraversal(this, delegate).v();
-	}
+	public VertexTraversal<?, ?, ?> v();
 
 	/**
 	 * Query vertices with a matching key and value
 	 *
 	 * @return The query.
 	 */
-	public VertexTraversal<?, ?, ?> v(String key, Object value) {
-		return new SimpleTraversal(this, delegate).v(key, value);
-	}
+	public VertexTraversal<?, ?, ?> v(String key, Object value);
 
 	/**
 	 * Query over all edges in the graph.
-	 * 
+	 *
 	 * @return The query.
 	 */
-	public EdgeTraversal<?, ?, ?> e() {
-		return new SimpleTraversal(this, delegate).e();
-	}
+	public EdgeTraversal<?, ?, ?> e();
 
-	public <F> Iterable<? extends F> getFramedVertices(final Class<F> kind) {
-		return new FramingVertexIterable<>(this, this.getVertices(), kind);
-	}
+	public <F> Iterable<? extends F> getFramedVertices(final Class<F> kind);
 
-	public <F> Iterable<? extends F> getFramedVertices(final String key, final Object value, final Class<F> kind) {
-		return new FramingVertexIterable<>(this, this.getVertices(key, value), kind);
-	}
+	public <F> Iterable<? extends F> getFramedVertices(final String key, final Object value, final Class<F> kind);
 
-	public <F> Iterable<? extends F> getFramedVerticesExplicit(final Class<F> kind) {
-		return new FramingVertexIterable<>(this, this.getVertices(), kind, true);
-	}
+	public <F> Iterable<? extends F> getFramedVerticesExplicit(final Class<F> kind);
 
-	public <F> Iterable<? extends F> getFramedVerticesExplicit(final String key, final Object value, final Class<F> kind) {
-		return new FramingVertexIterable<>(this, this.getVertices(key, value), kind, true);
-	}
+	public <F> Iterable<? extends F> getFramedVerticesExplicit(final String key, final Object value, final Class<F> kind);
 
-	public <F> Iterable<? extends F> getFramedEdges(final Class<F> kind) {
-		return new FramingEdgeIterable<>(this, this.getEdges(), kind);
-	}
+	public <F> Iterable<? extends F> getFramedEdges(final Class<F> kind);
 
-	public <F> Iterable<? extends F> getFramedEdges(final String key, final Object value, final Class<F> kind) {
-		return new FramingEdgeIterable<>(this, this.getEdges(key, value), kind);
-	}
+	public <F> Iterable<? extends F> getFramedEdges(final String key, final Object value, final Class<F> kind);
 
-	public <F> Iterable<? extends F> getFramedEdgesExplicit(final Class<F> kind) {
-		return new FramingEdgeIterable<>(this, this.getEdges(), kind, true);
-	}
+	public <F> Iterable<? extends F> getFramedEdgesExplicit(final Class<F> kind);
 
-	public <F> Iterable<? extends F> getFramedEdgesExplicit(final String key, final Object value, final Class<F> kind) {
-		return new FramingEdgeIterable<>(this, this.getEdges(key, value), kind, true);
-	}
+	public <F> Iterable<? extends F> getFramedEdgesExplicit(final String key, final Object value, final Class<F> kind);
 
 	/**
 	 * Query over a list of vertices in the graph.
-	 * 
+	 *
 	 * @param ids
 	 *            The ids of the vertices.
 	 * @return The query.
 	 */
-	public VertexTraversal<?, ?, ?> v(final Collection<?> ids) {
-		return new SimpleTraversal(this, Iterators.transform(ids.iterator(), new Function<Object, Vertex>() {
+	public VertexTraversal<?, ?, ?> v(final Collection<?> ids);
 
-			@Override
-			public Vertex apply(Object id) {
-				return delegate.getVertex(id);
-			}
-
-		})).castToVertices();
-	}
-	
 	/**
 	 * Query over a list of vertices in the graph.
-	 * 
+	 *
 	 * @param ids
 	 *            The ids of the vertices.
 	 * @return The query.
 	 */
-	public VertexTraversal<?, ?, ?> v(final Object... ids) {
-		return new SimpleTraversal(this, Iterators.transform(Iterators.forArray(ids), new Function<Object, Vertex>() {
-
-			@Override
-			public Vertex apply(Object id) {
-				return delegate.getVertex(id);
-			}
-
-		})).castToVertices();
-	}
+	public VertexTraversal<?, ?, ?> v(final Object... ids);
 
 	/**
 	 * Query over a list of edges in the graph.
-	 * 
+	 *
 	 * @param ids
 	 *            The ids of the edges.
 	 * @return The query.
 	 */
-	public EdgeTraversal<?, ?, ?> e(final Object... ids) {
-		return new SimpleTraversal(this, Iterators.transform(Iterators.forArray(ids), new Function<Object, Edge>() {
+	public EdgeTraversal<?, ?, ?> e(final Object... ids);
 
-			@Override
-			public Edge apply(Object id) {
-				return delegate.getEdge(id);
-			}
 
-		})).castToEdges();
-	}
-	
-	
 	/**
 	 * Query over a list of edges in the graph.
-	 * 
+	 *
 	 * @param ids
 	 *            The ids of the edges.
 	 * @return The query.
 	 */
-	public EdgeTraversal<?, ?, ?> e(final Collection<?> ids) {
-		return new SimpleTraversal(this, Iterators.transform(ids.iterator(), new Function<Object, Edge>() {
+	public EdgeTraversal<?, ?, ?> e(final Collection<?> ids);
 
-			@Override
-			public Edge apply(Object id) {
-				return delegate.getEdge(id);
-			}
+	public Vertex addVertexExplicit(Object id);
 
-		})).castToEdges();
-	}
+	public Edge addEdgeExplicit(Object id, Vertex outVertex, Vertex inVertex, String label);
 
-	@Override
-	public Features getFeatures() {
-		return this.delegate.getFeatures();
-	}
+	<T extends ElementFrame> Iterator<? extends T> frame(Iterator<? extends Element> pipeline, final Class<T> kind);
 
-	@Override
-	public Vertex addVertex(Object id) {
-		VertexFrame framedVertex = frameNewElement(delegate.addVertex(null), TVertex.class);
-		return framedVertex.element();
-	}
+	<T> T frameNewElement(Element e, Class<T> kind);
 
-	public Vertex addVertexExplicit(Object id) {
-		return delegate.addVertex(null);
-	}
+	<T> T frameElement(Element e, Class<T> kind);
 
-	@Override
-	public Vertex getVertex(Object id) {
-		return this.delegate.getVertex(id);
-	}
+	<T> T frameNewElementExplicit(Element e, Class<T> kind);
 
-	@Override
-	public void removeVertex(Vertex vertex) {
-		this.delegate.removeVertex(vertex);
-	}
+	<T> T frameElementExplicit(Element e, Class<T> kind);
 
-	@Override
-	public Iterable<Vertex> getVertices() {
-		return this.delegate.getVertices();
-	}
-
-	@Override
-	public Iterable<Vertex> getVertices(String key, Object value) {
-		return this.delegate.getVertices(key, value);
-	}
-
-	@Override
-	public Edge addEdge(Object id, Vertex outVertex, Vertex inVertex, String label) {
-		EdgeFrame framedEdge = frameNewElement(this.delegate.addEdge(id, outVertex, inVertex, label), TEdge.class);
-		return framedEdge.element();
-	}
-
-	public Edge addEdgeExplicit(Object id, Vertex outVertex, Vertex inVertex, String label) {
-		return this.delegate.addEdge(id, outVertex, inVertex, label);
-	}
-
-	@Override
-	public Edge getEdge(Object id) {
-		return this.delegate.getEdge(id);
-	}
-
-	@Override
-	public void removeEdge(Edge edge) {
-		this.delegate.removeEdge(edge);
-	}
-
-	@Override
-	public Iterable<Edge> getEdges() {
-		return this.delegate.getEdges();
-	}
-
-	@Override
-	public Iterable<Edge> getEdges(String key, Object value) {
-		return this.delegate.getEdges(key, value);
-	}
-
-	@Override
-	public GraphQuery query() {
-		return this.delegate.query();
-	}
-
-	@Override
-	public void shutdown() {
-		this.delegate.shutdown();
-	}
-
-	protected Graph getDelegate() {
-		return delegate;
-	}
+	<T extends ElementFrame> Iterator<? extends T> frameExplicit(Iterator<? extends Element> pipeline, final Class<T> kind);
 }

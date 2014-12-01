@@ -18,9 +18,7 @@
  ******************************************************************************/
 package com.syncleus.ferma.annotations;
 
-import com.syncleus.ferma.AbstractVertexFrame;
-import com.syncleus.ferma.FramedGraph;
-import com.syncleus.ferma.VertexFrame;
+import com.syncleus.ferma.*;
 import com.syncleus.ferma.VertexFrame;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.impls.tg.TinkerGraph;
@@ -37,7 +35,7 @@ public class AdjacencyMethodHandlerTest {
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
 
-        final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
+        final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
         final List<? extends God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
 
@@ -61,7 +59,7 @@ public class AdjacencyMethodHandlerTest {
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
 
-        final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
+        final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
         final List<? extends God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
 
@@ -85,7 +83,7 @@ public class AdjacencyMethodHandlerTest {
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
 
-        final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
+        final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
         final List<? extends God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
 
@@ -109,7 +107,7 @@ public class AdjacencyMethodHandlerTest {
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
 
-        final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
+        final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
         final List<? extends GodAlternative> gods = framedGraph.v().has("name", "jupiter").toList(GodAlternative.class);
 
@@ -134,7 +132,7 @@ public class AdjacencyMethodHandlerTest {
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
 
-        final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
+        final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
         final List<? extends GodAlternative> gods = framedGraph.v().has("name", "jupiter").toList(GodAlternative.class);
 
@@ -153,7 +151,7 @@ public class AdjacencyMethodHandlerTest {
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
 
-        final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
+        final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
         final List<? extends God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
 
@@ -175,7 +173,7 @@ public class AdjacencyMethodHandlerTest {
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
 
-        final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
+        final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
         final List<? extends God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
 
@@ -197,7 +195,7 @@ public class AdjacencyMethodHandlerTest {
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
 
-        final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
+        final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
         final List<? extends God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
 
@@ -215,7 +213,7 @@ public class AdjacencyMethodHandlerTest {
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
 
-        final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
+        final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
         final List<? extends God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
 
@@ -235,7 +233,7 @@ public class AdjacencyMethodHandlerTest {
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
 
-        final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
+        final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
         final List<? extends God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
 
@@ -257,7 +255,7 @@ public class AdjacencyMethodHandlerTest {
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
 
-        final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
+        final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
         final List<? extends God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
 
@@ -277,7 +275,7 @@ public class AdjacencyMethodHandlerTest {
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
 
-        final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
+        final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
         final List<? extends God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
 
@@ -299,7 +297,7 @@ public class AdjacencyMethodHandlerTest {
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
 
-        final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
+        final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
         final List<? extends God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
 
@@ -324,7 +322,7 @@ public class AdjacencyMethodHandlerTest {
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
 
-        final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
+        final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
         final List<? extends God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
 
@@ -352,7 +350,7 @@ public class AdjacencyMethodHandlerTest {
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
 
-        final FramedGraph framedGraph = new FramedGraph(godGraph, TEST_TYPES);
+        final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
         final List<? extends God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
 
@@ -380,7 +378,7 @@ public class AdjacencyMethodHandlerTest {
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
 
-        final FramedGraph framedGraph = new FramedGraph(godGraph, exceptionTypes);
+        final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, exceptionTypes);
 
         final List<? extends BadGetSonsArgumentClass> gods = framedGraph.v().has("name", "jupiter").toList(BadGetSonsArgumentClass.class);
 
@@ -395,7 +393,7 @@ public class AdjacencyMethodHandlerTest {
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
 
-        final FramedGraph framedGraph = new FramedGraph(godGraph, exceptionTypes);
+        final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, exceptionTypes);
 
         final List<? extends BadGetSonsArgumentInterface> gods = framedGraph.v().has("name", "jupiter").toList(BadGetSonsArgumentInterface.class);
 
@@ -410,7 +408,7 @@ public class AdjacencyMethodHandlerTest {
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
 
-        final FramedGraph framedGraph = new FramedGraph(godGraph, exceptionTypes);
+        final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, exceptionTypes);
 
         final List<? extends BadGetSonsArgumentInterface> gods = framedGraph.v().has("name", "jupiter").toList(BadGetSonsArgumentInterface.class);
 
@@ -425,7 +423,7 @@ public class AdjacencyMethodHandlerTest {
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
 
-        final FramedGraph framedGraph = new FramedGraph(godGraph, exceptionTypes);
+        final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, exceptionTypes);
 
         final List<? extends BadGetSonsArgumentInterface> gods = framedGraph.v().has("name", "jupiter").toList(BadGetSonsArgumentInterface.class);
 
@@ -440,7 +438,7 @@ public class AdjacencyMethodHandlerTest {
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
 
-        final FramedGraph framedGraph = new FramedGraph(godGraph, exceptionTypes);
+        final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, exceptionTypes);
 
         final List<? extends BadGetSonsArgumentInterface> gods = framedGraph.v().has("name", "jupiter").toList(BadGetSonsArgumentInterface.class);
 
@@ -455,7 +453,7 @@ public class AdjacencyMethodHandlerTest {
         final TinkerGraph godGraph = new TinkerGraph();
         GodGraphLoader.load(godGraph);
 
-        final FramedGraph framedGraph = new FramedGraph(godGraph, exceptionTypes);
+        final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, exceptionTypes);
 
         final List<? extends BadGetSonsArgumentInterface> gods = framedGraph.v().has("name", "jupiter").toList(BadGetSonsArgumentInterface.class);
 

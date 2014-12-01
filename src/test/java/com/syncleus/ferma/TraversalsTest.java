@@ -37,7 +37,7 @@ import com.tinkerpop.pipes.util.structures.Table;
 import com.tinkerpop.pipes.util.structures.Tree;
 
 public class TraversalsTest {
-	private FramedGraph graph = new FramedGraph(TinkerGraphFactory.createTinkerGraph());
+	private FramedGraph graph = new DelegatingFramedGraph(TinkerGraphFactory.createTinkerGraph());
 
 	@Test
 	public void testCopySplit() {

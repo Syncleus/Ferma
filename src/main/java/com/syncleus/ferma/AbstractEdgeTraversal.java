@@ -42,7 +42,7 @@ import com.tinkerpop.pipes.transform.TransformPipe.Order;
 import com.tinkerpop.pipes.util.structures.Table;
 import com.tinkerpop.pipes.util.structures.Tree;
 
-abstract class AbstractEdgeTraversal<Cap, SideEffect, Mark> extends AbstractTraversal<EdgeFrame, Cap, SideEffect, Mark> implements EdgeTraversal<Cap, SideEffect, Mark> {
+abstract class AbstractEdgeTraversal<C, S, M> extends AbstractTraversal<EdgeFrame, C, S, M> implements EdgeTraversal<C, S, M> {
 
 	@Override
 	public EdgeFrame next() {
@@ -310,43 +310,43 @@ abstract class AbstractEdgeTraversal<Cap, SideEffect, Mark> extends AbstractTrav
 	}
 
 	@Override
-	public Traversal<String, ?, ?, Mark> label() {
+	public Traversal<String, ?, ?, M> label() {
 		pipeline().label();
 		return castToTraversal();
 	}
 
 	@Override
-	public EdgeTraversal<?, ?, Mark> filter(TraversalFunction<EdgeFrame, Boolean> filterFunction) {
-		return (EdgeTraversal<?, ?, Mark>) super.filter(filterFunction);
+	public EdgeTraversal<?, ?, M> filter(TraversalFunction<EdgeFrame, Boolean> filterFunction) {
+		return (EdgeTraversal<?, ?, M>) super.filter(filterFunction);
 
 	}
 
 	@Override
-	public EdgeTraversal<Collection<? extends EdgeFrame>, Collection<? extends EdgeFrame>, Mark> aggregate() {
-		return (EdgeTraversal<Collection<? extends EdgeFrame>, Collection<? extends EdgeFrame>, Mark>) super.aggregate();
+	public EdgeTraversal<Collection<? extends EdgeFrame>, Collection<? extends EdgeFrame>, M> aggregate() {
+		return (EdgeTraversal<Collection<? extends EdgeFrame>, Collection<? extends EdgeFrame>, M>) super.aggregate();
 
 	}
 
 	@Override
-	public EdgeTraversal<Collection<? extends EdgeFrame>, Collection<? extends EdgeFrame>, Mark> aggregate(Collection<? super EdgeFrame> aggregate) {
-		return (EdgeTraversal<Collection<? extends EdgeFrame>, Collection<? extends EdgeFrame>, Mark>) super.aggregate(aggregate);
+	public EdgeTraversal<Collection<? extends EdgeFrame>, Collection<? extends EdgeFrame>, M> aggregate(Collection<? super EdgeFrame> aggregate) {
+		return (EdgeTraversal<Collection<? extends EdgeFrame>, Collection<? extends EdgeFrame>, M>) super.aggregate(aggregate);
 
 	}
 
 	@Override
-	public <N> EdgeTraversal<Collection<? extends N>, Collection<? extends N>, Mark> aggregate(Collection<? super N> aggregate, TraversalFunction<EdgeFrame, ? extends N> aggregateFunction) {
-		return (EdgeTraversal<Collection<? extends N>, Collection<? extends N>, Mark>) super.aggregate(aggregate, aggregateFunction);
+	public <N> EdgeTraversal<Collection<? extends N>, Collection<? extends N>, M> aggregate(Collection<? super N> aggregate, TraversalFunction<EdgeFrame, ? extends N> aggregateFunction) {
+		return (EdgeTraversal<Collection<? extends N>, Collection<? extends N>, M>) super.aggregate(aggregate, aggregateFunction);
 
 	}
 
 	@Override
-	public <N> EdgeTraversal<Collection<? extends N>, Collection<? extends N>, Mark> aggregate(TraversalFunction<EdgeFrame, ? extends N> aggregateFunction) {
-		return (EdgeTraversal<Collection<? extends N>, Collection<? extends N>, Mark>) super.aggregate(aggregateFunction);
+	public <N> EdgeTraversal<Collection<? extends N>, Collection<? extends N>, M> aggregate(TraversalFunction<EdgeFrame, ? extends N> aggregateFunction) {
+		return (EdgeTraversal<Collection<? extends N>, Collection<? extends N>, M>) super.aggregate(aggregateFunction);
 
 	}
 
 	@Override
-	public EdgeTraversal<?, ?, Mark> and(TraversalFunction<EdgeFrame, Traversal<?, ?, ?, ?>>... pipes) {
+	public EdgeTraversal<?, ?, M> and(TraversalFunction<EdgeFrame, Traversal<?, ?, ?, ?>>... pipes) {
 		Collection<Pipe> extractedPipes = Collections2.transform(Arrays.asList(pipes), new Function<TraversalFunction, Pipe>() {
 
 			@Override
@@ -359,7 +359,7 @@ abstract class AbstractEdgeTraversal<Cap, SideEffect, Mark> extends AbstractTrav
 	}
 
 	@Override
-	public EdgeTraversal<?, ?, Mark> or(TraversalFunction<EdgeFrame, Traversal<?, ?, ?, ?>>... pipes) {
+	public EdgeTraversal<?, ?, M> or(TraversalFunction<EdgeFrame, Traversal<?, ?, ?, ?>>... pipes) {
 		Collection<Pipe> extractedPipes = Collections2.transform(Arrays.asList(pipes), new Function<TraversalFunction, Pipe>() {
 
 			@Override
@@ -372,82 +372,82 @@ abstract class AbstractEdgeTraversal<Cap, SideEffect, Mark> extends AbstractTrav
 	}
 
 	@Override
-	public EdgeTraversal<?, ?, Mark> sideEffect(SideEffectFunction<EdgeFrame> sideEffectFunction) {
-		return (EdgeTraversal<?, ?, Mark>) super.sideEffect(sideEffectFunction);
+	public EdgeTraversal<?, ?, M> sideEffect(SideEffectFunction<EdgeFrame> sideEffectFunction) {
+		return (EdgeTraversal<?, ?, M>) super.sideEffect(sideEffectFunction);
 	}
 
 	@Override
-	public EdgeTraversal<?, ?, Mark> random(double bias) {
+	public EdgeTraversal<?, ?, M> random(double bias) {
 
-		return (EdgeTraversal<?, ?, Mark>) super.random(bias);
+		return (EdgeTraversal<?, ?, M>) super.random(bias);
 	}
 
 	@Override
-	public EdgeTraversal<?, ?, Mark> dedup(TraversalFunction<EdgeFrame, ?> dedupFunction) {
-		return (EdgeTraversal<?, ?, Mark>) super.dedup(dedupFunction);
+	public EdgeTraversal<?, ?, M> dedup(TraversalFunction<EdgeFrame, ?> dedupFunction) {
+		return (EdgeTraversal<?, ?, M>) super.dedup(dedupFunction);
 	}
 
 	@Override
-	public EdgeTraversal<?, ?, Mark> except(String... namedSteps) {
+	public EdgeTraversal<?, ?, M> except(String... namedSteps) {
 
-		return (EdgeTraversal<?, ?, Mark>) super.except(namedSteps);
+		return (EdgeTraversal<?, ?, M>) super.except(namedSteps);
 	}
 
 	@Override
-	public EdgeTraversal<?, ?, Mark> except(Iterable<?> collection) {
+	public EdgeTraversal<?, ?, M> except(Iterable<?> collection) {
 		return (EdgeTraversal) super.except(Lists.newArrayList(collection));
 	}
 
 	@Override
-	public EdgeTraversal<?, ?, Mark> range(int low, int high) {
-		return (EdgeTraversal<?, ?, Mark>) super.range(low, high);
+	public EdgeTraversal<?, ?, M> range(int low, int high) {
+		return (EdgeTraversal<?, ?, M>) super.range(low, high);
 	}
 
 	@Override
-	public EdgeTraversal<?, ?, Mark> order() {
-		return (EdgeTraversal<?, ?, Mark>) super.order();
+	public EdgeTraversal<?, ?, M> order() {
+		return (EdgeTraversal<?, ?, M>) super.order();
 	}
 
 	@Override
-	public EdgeTraversal<?, ?, Mark> order(Order order) {
-		return (EdgeTraversal<?, ?, Mark>) super.order(order);
+	public EdgeTraversal<?, ?, M> order(Order order) {
+		return (EdgeTraversal<?, ?, M>) super.order(order);
 	}
 
 	@Override
-	public EdgeTraversal<?, ?, Mark> order(Comparator<EdgeFrame> compareFunction) {
-		return (EdgeTraversal<?, ?, Mark>) super.order(compareFunction);
+	public EdgeTraversal<?, ?, M> order(Comparator<EdgeFrame> compareFunction) {
+		return (EdgeTraversal<?, ?, M>) super.order(compareFunction);
 	}
 
 	@Override
-	public EdgeTraversal<?, ?, Mark> order(T order) {
-		return (EdgeTraversal<?, ?, Mark>) super.order(order);
+	public EdgeTraversal<?, ?, M> order(T order) {
+		return (EdgeTraversal<?, ?, M>) super.order(order);
 	}
 
 	@Override
-	public EdgeTraversal<?, ?, Mark> dedup() {
+	public EdgeTraversal<?, ?, M> dedup() {
 
-		return (EdgeTraversal<?, ?, Mark>) super.dedup();
+		return (EdgeTraversal<?, ?, M>) super.dedup();
 	}
 
 	@Override
-	public EdgeTraversal<?, ?, Mark> retain(String... namedSteps) {
-		return (EdgeTraversal<?, ?, Mark>) super.retain(namedSteps);
+	public EdgeTraversal<?, ?, M> retain(String... namedSteps) {
+		return (EdgeTraversal<?, ?, M>) super.retain(namedSteps);
 	}
 
 	@Override
-	public EdgeTraversal<?, ?, Mark> simplePath() {
-		return (EdgeTraversal<?, ?, Mark>) super.simplePath();
+	public EdgeTraversal<?, ?, M> simplePath() {
+		return (EdgeTraversal<?, ?, M>) super.simplePath();
 	}
 
 	@Override
-	public EdgeTraversal<?, ?, Mark> memoize(String namedStep) {
-		return (EdgeTraversal<?, ?, Mark>) super.memoize(namedStep);
+	public EdgeTraversal<?, ?, M> memoize(String namedStep) {
+		return (EdgeTraversal<?, ?, M>) super.memoize(namedStep);
 
 	}
 
 	@Override
-	public EdgeTraversal<?, ?, Mark> memoize(String namedStep, Map<?,?> map) {
-		return (EdgeTraversal<?, ?, Mark>) super.memoize(namedStep, map);
+	public EdgeTraversal<?, ?, M> memoize(String namedStep, Map<?,?> map) {
+		return (EdgeTraversal<?, ?, M>) super.memoize(namedStep, map);
 
 	}
 
@@ -478,42 +478,42 @@ abstract class AbstractEdgeTraversal<Cap, SideEffect, Mark> extends AbstractTrav
 	};
 
 	@Override
-	public EdgeTraversal<?, ?, Mark> gatherScatter() {
+	public EdgeTraversal<?, ?, M> gatherScatter() {
 
-		return (EdgeTraversal<?, ?, Mark>) super.gatherScatter();
+		return (EdgeTraversal<?, ?, M>) super.gatherScatter();
 	}
 
 	@Override
-	public EdgeTraversal<?, ?, Mark> divert(SideEffectFunction<SideEffect> sideEffect) {
-		return (EdgeTraversal<?, ?, Mark>) super.divert(sideEffect);
+	public EdgeTraversal<?, ?, M> divert(SideEffectFunction<S> sideEffect) {
+		return (EdgeTraversal<?, ?, M>) super.divert(sideEffect);
 	}
 
 	@Override
-	public EdgeTraversal<?, ?, Mark> retain(EdgeFrame... edges) {
+	public EdgeTraversal<?, ?, M> retain(EdgeFrame... edges) {
 
-		return (EdgeTraversal<?, ?, Mark>) super.retain(Arrays.asList(edges));
+		return (EdgeTraversal<?, ?, M>) super.retain(Arrays.asList(edges));
 	}
 
 	@Override
-	public EdgeTraversal<?, ?, Mark> shuffle() {
-		return (EdgeTraversal<?, ?, Mark>) super.shuffle();
+	public EdgeTraversal<?, ?, M> shuffle() {
+		return (EdgeTraversal<?, ?, M>) super.shuffle();
 	}
 
 	@Override
-	public EdgeTraversal<?, ?, Mark> except(EdgeFrame... edges) {
-		return (EdgeTraversal<?, ?, Mark>) super.retain(Arrays.asList(edges));
+	public EdgeTraversal<?, ?, M> except(EdgeFrame... edges) {
+		return (EdgeTraversal<?, ?, M>) super.retain(Arrays.asList(edges));
 	}
 
 	@Override
-	public EdgeTraversal<?, ?, Mark> retain(Iterable<?> collection) {
+	public EdgeTraversal<?, ?, M> retain(Iterable<?> collection) {
 
-		return (EdgeTraversal<?, ?, Mark>) super.retain(Lists.newArrayList(collection));
+		return (EdgeTraversal<?, ?, M>) super.retain(Lists.newArrayList(collection));
 	}
 
 	@Override
-	public EdgeTraversal<Cap, SideEffect, ? extends EdgeTraversal<Cap, SideEffect, Mark>> mark() {
+	public EdgeTraversal<C, S, ? extends EdgeTraversal<C, S, M>> mark() {
 
-		return (EdgeTraversal<Cap, SideEffect, ? extends EdgeTraversal<Cap, SideEffect, Mark>>) super.mark();
+		return (EdgeTraversal<C, S, ? extends EdgeTraversal<C, S, M>>) super.mark();
 	}
 
 	@Override
@@ -522,7 +522,7 @@ abstract class AbstractEdgeTraversal<Cap, SideEffect, Mark> extends AbstractTrav
 	}
 
 	@Override
-	public <N> SplitTraversal<? extends Traversal<N, ?, ?, Mark>> copySplit(TraversalFunction<EdgeFrame, ? extends Traversal<N, ?, ?, ?>>... traversals) {
+	public <N> SplitTraversal<? extends Traversal<N, ?, ?, M>> copySplit(TraversalFunction<EdgeFrame, ? extends Traversal<N, ?, ?, ?>>... traversals) {
 		Collection<Pipe> extractedPipes = Collections2.transform(Arrays.asList(traversals),
 				new Function<TraversalFunction, Pipe>() {
 
@@ -536,13 +536,13 @@ abstract class AbstractEdgeTraversal<Cap, SideEffect, Mark> extends AbstractTrav
 	}
 
 	@Override
-	public EdgeTraversal<Tree<EdgeFrame>, Tree<EdgeFrame>, Mark> tree() {
+	public EdgeTraversal<Tree<EdgeFrame>, Tree<EdgeFrame>, M> tree() {
 
-		return (EdgeTraversal<Tree<EdgeFrame>, Tree<EdgeFrame>, Mark>) super.tree();
+		return (EdgeTraversal<Tree<EdgeFrame>, Tree<EdgeFrame>, M>) super.tree();
 	}
 	
 	@Override
-	public EdgeTraversal<?, ?, Mark> loop(TraversalFunction<EdgeFrame, ? extends EdgeTraversal<?, ?, ?>> input) {
+	public EdgeTraversal<?, ?, M> loop(TraversalFunction<EdgeFrame, ? extends EdgeTraversal<?, ?, ?>> input) {
 		GremlinPipeline pipeline = ((AbstractTraversal) input.compute(new TEdge())).pipeline();
 		pipeline().add(new LoopPipe(pipeline, LoopPipe.createTrueFunction(), null));
 
@@ -550,7 +550,7 @@ abstract class AbstractEdgeTraversal<Cap, SideEffect, Mark> extends AbstractTrav
 	}
 
 	@Override
-	public EdgeTraversal<?, ?, Mark> loop(TraversalFunction<EdgeFrame, ? extends EdgeTraversal<?, ?, ?>> input, int depth) {
+	public EdgeTraversal<?, ?, M> loop(TraversalFunction<EdgeFrame, ? extends EdgeTraversal<?, ?, ?>> input, int depth) {
 		GremlinPipeline pipeline = ((AbstractTraversal) input.compute(new TEdge())).pipeline();
 		pipeline().add(new LoopPipe(pipeline, LoopPipe.createLoopsFunction(depth), null));
 
@@ -558,7 +558,7 @@ abstract class AbstractEdgeTraversal<Cap, SideEffect, Mark> extends AbstractTrav
 	}
 	
 	@Override
-	public EdgeTraversal<?, ?, Mark> limit(int limit) {
-		return (EdgeTraversal<?, ?, Mark>) super.limit(limit);
+	public EdgeTraversal<?, ?, M> limit(int limit) {
+		return (EdgeTraversal<?, ?, M>) super.limit(limit);
 	}
 }

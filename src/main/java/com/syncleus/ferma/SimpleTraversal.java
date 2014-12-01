@@ -36,7 +36,7 @@ import com.syncleus.ferma.pipes.GremlinPipeline;
 import com.tinkerpop.blueprints.Graph;
 
 @SuppressWarnings("rawtypes")
-class SimpleTraversal<T, Cap, SideEffect, Mark> extends AbstractTraversal<T, Cap, SideEffect, Mark> implements Traversal<T, Cap, SideEffect, Mark> {
+class SimpleTraversal<T, C, S, M> extends AbstractTraversal<T, C, S, M> implements Traversal<T, C, S, M> {
 
 	private FramedGraph graph;
 	private com.tinkerpop.gremlin.java.GremlinPipeline pipeline;
@@ -84,14 +84,14 @@ class SimpleTraversal<T, Cap, SideEffect, Mark> extends AbstractTraversal<T, Cap
 	/**
 	 * @return Cast the traversal to a {@link VertexTraversal}
 	 */
-	public VertexTraversal<Cap, SideEffect, Mark> castToVertices() {
+	public VertexTraversal<C, S, M> castToVertices() {
 		return vertexTraversal;
 	}
 
 	/**
 	 * @return Cast the traversal to a {@link EdgeTraversal}
 	 */
-	public EdgeTraversal<Cap, SideEffect, Mark> castToEdges() {
+	public EdgeTraversal<C, S, M> castToEdges() {
 		return edgeTraversal;
 	}
 

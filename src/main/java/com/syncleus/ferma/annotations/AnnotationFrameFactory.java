@@ -116,7 +116,7 @@ public class AnnotationFrameFactory implements FrameFactory {
                     final MethodHandler handler = methodHandlers.get(annotation.annotationType());
                     if (handler != null) {
                         classBuilder = handler.processMethod(classBuilder, method, annotation);
-                        break annotation_loop;
+                        break;
                     }
                 }
             }

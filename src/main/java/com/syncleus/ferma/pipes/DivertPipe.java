@@ -89,8 +89,4 @@ public class DivertPipe<S, T> extends AbstractMetaPipe<S, S> {
 	public List<Pipe> getPipes() {
 		return Arrays.asList((Pipe) this.pipeToCap);
 	}
-
-	public void reset() {
-		super.reset();
-	}
 }

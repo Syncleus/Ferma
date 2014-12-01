@@ -328,12 +328,6 @@ public class TraversalsTest {
 	}
 
 	@Test
-	public void testRandom() {
-		// Assert.assertEquals(3, graph.v().random(0.5).count()); //Can't test
-		// this :)
-	}
-
-	@Test
 	public void testRetain() {
 		Assert.assertEquals(1, graph.v().retain(graph.v(1)).count());
 	}
@@ -394,11 +388,6 @@ public class TraversalsTest {
 		Assert.assertEquals(6, cap.size());
 		Assert.assertEquals(3, cap.get(graph.v(1).next()).size());
 		Assert.assertTrue(cap.get(graph.v(1).next()).iterator().next() instanceof TVertex);
-
-	}
-
-	@Test
-	public void testOptional() {
 
 	}
 

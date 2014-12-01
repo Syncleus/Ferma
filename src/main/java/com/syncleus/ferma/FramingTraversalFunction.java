@@ -39,21 +39,21 @@ class FramingTraversalFunction<A, B, C> extends FrameMaker implements TraversalF
 
 	private PipeFunction<A, ? extends B> delegate;
 
-	public FramingTraversalFunction(PipeFunction<A, ? extends B> delegate, FramedGraph graph, Class<? extends ElementFrame> kind) {
+	public FramingTraversalFunction(final PipeFunction<A, ? extends B> delegate, final FramedGraph graph, final Class<? extends ElementFrame> kind) {
 		super(graph, kind);
 		this.delegate = delegate;
 	}
 
-	public FramingTraversalFunction(PipeFunction<A, ? extends B> delegate, FramedGraph graph) {
+	public FramingTraversalFunction(final PipeFunction<A, ? extends B> delegate, final FramedGraph graph) {
 		super(graph);
 		this.delegate = delegate;
 	}
 
-	public <T extends ElementFrame> FramingTraversalFunction(FramedGraph graph, Class<T> kind) {
+	public <T extends ElementFrame> FramingTraversalFunction(final FramedGraph graph, final Class<T> kind) {
 		super(graph, kind);
 	}
 
-	public FramingTraversalFunction(FramedGraph graph) {
+	public FramingTraversalFunction(final FramedGraph graph) {
 		super(graph);
 	}
 

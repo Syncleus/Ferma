@@ -53,7 +53,7 @@ public abstract class FramingIterable<T, E extends Element> implements Iterable<
 
     public Iterator<T> iterator() {
         return new Iterator<T>() {
-            private Iterator<E> iterator = iterable.iterator();
+            private final Iterator<E> iterator = iterable.iterator();
 
             public void remove() {
                 throw new UnsupportedOperationException();

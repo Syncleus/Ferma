@@ -42,7 +42,7 @@ public class AbstractElementFrameTest {
 	@Before
 	public void init() {
 		MockitoAnnotations.initMocks(this);
-		Graph g = new TinkerGraph();
+		final Graph g = new TinkerGraph();
         fg = new DelegatingFramedGraph(g);
         p1 = fg.addFramedVertex(Person.class);
         p2 = fg.addFramedVertex(Person.class);
@@ -120,13 +120,13 @@ public class AbstractElementFrameTest {
     
     @Test
     public void testReframe() {
-    	TVertex v1 = p1.reframe(TVertex.class);
+    	final TVertex v1 = p1.reframe(TVertex.class);
     	Assert.assertEquals(p1.getId(), v1.getId());
     }
 
     @Test
     public void testReframeExplicit() {
-        TVertex v1 = p1.reframeExplicit(TVertex.class);
+        final TVertex v1 = p1.reframeExplicit(TVertex.class);
         Assert.assertEquals(p1.getId(), v1.getId());
     }
 

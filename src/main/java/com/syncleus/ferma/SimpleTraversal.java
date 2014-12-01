@@ -45,25 +45,25 @@ import com.tinkerpop.blueprints.Graph;
  */
 class SimpleTraversal<T, C, S, M> extends AbstractTraversal<T, C, S, M> implements Traversal<T, C, S, M> {
 
-	private FramedGraph graph;
-	private com.tinkerpop.gremlin.java.GremlinPipeline pipeline;
-	private Deque<MarkId> marks = new ArrayDeque<>();
+	private final FramedGraph graph;
+	private final com.tinkerpop.gremlin.java.GremlinPipeline pipeline;
+	private final Deque<MarkId> marks = new ArrayDeque<>();
 	private int markId = 0;
 
-	protected SimpleTraversal(FramedGraph graph, Graph delegate) {
+	protected SimpleTraversal(final FramedGraph graph, final Graph delegate) {
 		this(graph, new GremlinPipeline<>(delegate));
 	}
 
-	protected SimpleTraversal(FramedGraph graph, Iterator starts) {
+	protected SimpleTraversal(final FramedGraph graph, final Iterator starts) {
 		this(graph, new GremlinPipeline<>(starts));
 	}
 
-	protected SimpleTraversal(FramedGraph graph, ElementFrame starts) {
+	protected SimpleTraversal(final FramedGraph graph, final ElementFrame starts) {
 		this(graph, new GremlinPipeline<>(starts.element()));
 	}
 
-	public MarkId pushMark(Traversal<?, ?, ?, ?> traversal) {
-		MarkId mark = new MarkId();
+	public MarkId pushMark(final Traversal<?, ?, ?, ?> traversal) {
+		final MarkId mark = new MarkId();
 		mark.id = "traversalMark" + markId++;
 		mark.traversal = traversal;
 		marks.push(mark);
@@ -82,7 +82,7 @@ class SimpleTraversal<T, C, S, M> extends AbstractTraversal<T, C, S, M> implemen
 		return marks.pop();
 	}
 
-	private SimpleTraversal(FramedGraph graph, com.tinkerpop.gremlin.java.GremlinPipeline pipeline) {
+	private SimpleTraversal(final FramedGraph graph, final com.tinkerpop.gremlin.java.GremlinPipeline pipeline) {
 		this.graph = graph;
 		this.pipeline = pipeline;
 
@@ -124,7 +124,7 @@ class SimpleTraversal<T, C, S, M> extends AbstractTraversal<T, C, S, M> implemen
 		return splitTraversal;
 	}
 
-	private SplitTraversal splitTraversal = new SplitTraversal() {
+	private final SplitTraversal splitTraversal = new SplitTraversal() {
 
 		@Override
 		public Traversal exhaustMerge() {
@@ -139,7 +139,7 @@ class SimpleTraversal<T, C, S, M> extends AbstractTraversal<T, C, S, M> implemen
 		}
 	};
 
-	private EdgeTraversal edgeTraversal = new AbstractEdgeTraversal() {
+	private final EdgeTraversal edgeTraversal = new AbstractEdgeTraversal() {
 
 		@Override
 		public VertexTraversal castToVertices() {
@@ -179,7 +179,7 @@ class SimpleTraversal<T, C, S, M> extends AbstractTraversal<T, C, S, M> implemen
 		};
 	};
 
-	private VertexTraversal vertexTraversal = new AbstractVertexTraversal() {
+	private final VertexTraversal vertexTraversal = new AbstractVertexTraversal() {
 		@Override
 		public VertexTraversal castToVertices() {
 			return vertexTraversal;

@@ -44,28 +44,28 @@ public abstract class AbstractVertexFrame extends AbstractElementFrame implement
 	};
 
 	@Override
-	public <T> T addFramedEdge(String label, VertexFrame inVertex, Class<T> kind) {
+	public <T> T addFramedEdge(final String label, final VertexFrame inVertex, final Class<T> kind) {
 
-		Edge edge = element().addEdge(label, inVertex.element());
-		T framedEdge = graph().frameNewElement(edge, kind);
+		final Edge edge = element().addEdge(label, inVertex.element());
+		final T framedEdge = graph().frameNewElement(edge, kind);
 		return framedEdge;
 	}
 
 	@Override
-	public <T> T addFramedEdgeExplicit(String label, VertexFrame inVertex, Class<T> kind) {
+	public <T> T addFramedEdgeExplicit(final String label, final VertexFrame inVertex, final Class<T> kind) {
 
-		Edge edge = element().addEdge(label, inVertex.element());
-		T framedEdge = graph().frameNewElementExplicit(edge, kind);
+		final Edge edge = element().addEdge(label, inVertex.element());
+		final T framedEdge = graph().frameNewElementExplicit(edge, kind);
 		return framedEdge;
 	}
 
 	@Override
-	public TEdge addFramedEdge(String label, VertexFrame inVertex) {
+	public TEdge addFramedEdge(final String label, final VertexFrame inVertex) {
 		return addFramedEdge(label, inVertex, TEdge.class);
 	}
 
 	@Override
-	public TEdge addFramedEdgeExplicit(String label, VertexFrame inVertex) {
+	public TEdge addFramedEdgeExplicit(final String label, final VertexFrame inVertex) {
 		return addFramedEdgeExplicit(label, inVertex, TEdge.class);
 	}
 
@@ -130,28 +130,28 @@ public abstract class AbstractVertexFrame extends AbstractElementFrame implement
 	}
 
 	@Override
-	public void linkOut(VertexFrame vertex, String... labels) {
-		for (String label : labels) {
+	public void linkOut(final VertexFrame vertex, final String... labels) {
+		for (final String label : labels) {
 			traversal().linkOut(label, vertex).iterate();
 		}
 	}
 
 	@Override
-	public void linkIn(VertexFrame vertex, String... labels) {
-		for (String label : labels) {
+	public void linkIn(final VertexFrame vertex, final String... labels) {
+		for (final String label : labels) {
 			traversal().linkIn(label, vertex).iterate();
 		}
 	}
 
 	@Override
-	public void linkBoth(VertexFrame vertex, String... labels) {
-		for (String label : labels) {
+	public void linkBoth(final VertexFrame vertex, final String... labels) {
+		for (final String label : labels) {
 			traversal().linkBoth(label, vertex).iterate();
 		}
 	}
 
 	@Override
-	public void unlinkOut(VertexFrame vertex, String... labels) {
+	public void unlinkOut(final VertexFrame vertex, final String... labels) {
 		if (vertex != null) {
 			outE(labels).mark().inV().retain(vertex).back().removeAll();
 		} else {
@@ -160,7 +160,7 @@ public abstract class AbstractVertexFrame extends AbstractElementFrame implement
 	}
 
 	@Override
-	public void unlinkIn(VertexFrame vertex, String... labels) {
+	public void unlinkIn(final VertexFrame vertex, final String... labels) {
 		if (vertex != null) {
 			inE(labels).mark().outV().retain(vertex).back().removeAll();
 		} else {
@@ -169,7 +169,7 @@ public abstract class AbstractVertexFrame extends AbstractElementFrame implement
 	}
 
 	@Override
-	public void unlinkBoth(VertexFrame vertex, String... labels) {
+	public void unlinkBoth(final VertexFrame vertex, final String... labels) {
 		if (vertex != null) {
 			bothE(labels).mark().bothV().retain(vertex).back().removeAll();
 		} else {
@@ -178,7 +178,7 @@ public abstract class AbstractVertexFrame extends AbstractElementFrame implement
 	}
 
 	@Override
-	public void setLinkOut(VertexFrame vertex, String... labels) {
+	public void setLinkOut(final VertexFrame vertex, final String... labels) {
 		unlinkOut(null, labels);
 		if (vertex != null) {
 			linkOut(vertex, labels);
@@ -186,7 +186,7 @@ public abstract class AbstractVertexFrame extends AbstractElementFrame implement
 	}
 
 	@Override
-	public void setLinkIn(VertexFrame vertex, String... labels) {
+	public void setLinkIn(final VertexFrame vertex, final String... labels) {
 		unlinkIn(null, labels);
 		if (vertex != null) {
 			linkIn(vertex, labels);
@@ -194,7 +194,7 @@ public abstract class AbstractVertexFrame extends AbstractElementFrame implement
 	}
 
 	@Override
-	public void setLinkBoth(VertexFrame vertex, String... labels) {
+	public void setLinkBoth(final VertexFrame vertex, final String... labels) {
 		unlinkBoth(null, labels);
 		if (vertex != null) {
 			linkBoth(vertex, labels);
@@ -202,43 +202,43 @@ public abstract class AbstractVertexFrame extends AbstractElementFrame implement
 	}
 
 	@Override
-	public <K> K setLinkOut(Class<K> kind, String... labels) {
-		K vertex = graph().addFramedVertex(kind);
+	public <K> K setLinkOut(final Class<K> kind, final String... labels) {
+		final K vertex = graph().addFramedVertex(kind);
 		setLinkOut((VertexFrame)vertex, labels);
 		return vertex;
 	}
 
 	@Override
-	public <K> K setLinkOutExplicit(Class<K> kind, String... labels) {
-		K vertex = graph().addFramedVertexExplicit(kind);
+	public <K> K setLinkOutExplicit(final Class<K> kind, final String... labels) {
+		final K vertex = graph().addFramedVertexExplicit(kind);
 		setLinkOut((VertexFrame)vertex, labels);
 		return vertex;
 	}
 
 	@Override
-	public <K> K setLinkIn(Class<K> kind, String... labels) {
-		K vertex = graph().addFramedVertex(kind);
+	public <K> K setLinkIn(final Class<K> kind, final String... labels) {
+		final K vertex = graph().addFramedVertex(kind);
 		setLinkIn((VertexFrame)vertex, labels);
 		return vertex;
 	}
 
 	@Override
-	public <K> K setLinkInExplicit(Class<K> kind, String... labels) {
-		K vertex = graph().addFramedVertexExplicit(kind);
+	public <K> K setLinkInExplicit(final Class<K> kind, final String... labels) {
+		final K vertex = graph().addFramedVertexExplicit(kind);
 		setLinkIn((VertexFrame)vertex, labels);
 		return vertex;
 	}
 
 	@Override
-	public <K> K setLinkBoth(Class<K> kind, String... labels) {
-		K vertex = graph().addFramedVertex(kind);
+	public <K> K setLinkBoth(final Class<K> kind, final String... labels) {
+		final K vertex = graph().addFramedVertex(kind);
 		setLinkBoth((VertexFrame)vertex, labels);
 		return vertex;
 	}
 
 	@Override
-	public <K> K setLinkBothExplicit(Class<K> kind, String... labels) {
-		K vertex = graph().addFramedVertexExplicit(kind);
+	public <K> K setLinkBothExplicit(final Class<K> kind, final String... labels) {
+		final K vertex = graph().addFramedVertexExplicit(kind);
 		setLinkBoth((VertexFrame)vertex, labels);
 		return vertex;
 	}
@@ -250,7 +250,7 @@ public abstract class AbstractVertexFrame extends AbstractElementFrame implement
 
 	@Override
 	public JsonObject toJson() {
-		JsonObject json = new JsonObject();
+		final JsonObject json = new JsonObject();
 		if (getId() instanceof Number) {
 			json.addProperty("id", getId(Number.class));
 		}
@@ -258,9 +258,9 @@ public abstract class AbstractVertexFrame extends AbstractElementFrame implement
 			json.addProperty("id", getId(String.class));
 		}
 		json.addProperty("elementClass", "vertex");
-		for (String key : getPropertyKeys()) {
+		for (final String key : getPropertyKeys()) {
 
-			Object value = getProperty(key);
+			final Object value = getProperty(key);
 			if (value instanceof Number) {
 				json.addProperty(key, (Number) value);
 			} else if (value instanceof String) {
@@ -272,17 +272,17 @@ public abstract class AbstractVertexFrame extends AbstractElementFrame implement
 
 	@Override
 	public String toString() {
-		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		return gson.toJson(toJson());
 	}
 
 	@Override
-	public <T> T reframe(Class<T> kind) {
+	public <T> T reframe(final Class<T> kind) {
 		return graph().frameElement(element(), kind);
 	}
 
 	@Override
-	public <T> T reframeExplicit(Class<T> kind) {
+	public <T> T reframeExplicit(final Class<T> kind) {
 		return graph().frameElementExplicit(element(), kind);
 	}
 }

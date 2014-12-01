@@ -60,7 +60,7 @@ public class ReflectionCache extends Reflections {
         return Collections.unmodifiableSet(subtypes);
     }
 
-    public <E extends Annotation> E getAnnotation(Method method, Class<E> annotationType) {
+    public <E extends Annotation> E getAnnotation(final Method method, final Class<E> annotationType) {
         Map<Class<Annotation>, Annotation> annotationsPresent = annotationCache.get(method);
         if( annotationsPresent == null ) {
             annotationsPresent = new HashMap<>();
@@ -82,7 +82,7 @@ public class ReflectionCache extends Reflections {
                 type = Class.forName(className);
                 classStringCache.put(className, type);
             }
-            catch (ClassNotFoundException e) {
+            catch (final ClassNotFoundException e) {
                 throw new IllegalStateException("The class " + className + " cannot be found");
             }
         }

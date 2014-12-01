@@ -33,7 +33,7 @@ public class ReflectionUtility {
     private static final String CAN = "can";
 
     public static boolean isGetMethod(final Method method) {
-        Class<?> returnType = method.getReturnType();
+        final Class<?> returnType = method.getReturnType();
         return (method.getName().startsWith(GET) || (returnType == Boolean.class || returnType == Boolean.TYPE) && (method.getName().startsWith(IS) || method.getName().startsWith(CAN)));
     }
 
@@ -65,14 +65,14 @@ public class ReflectionUtility {
         return method.getName().startsWith(ADD);
     }
 
-    public static Type getType(Type[] types, int pos) {
+    public static Type getType(final Type[] types, final int pos) {
         if (pos >= types.length) {
             throw new RuntimeException("No type can be found at position "
                     + pos);
         }
         return types[pos];
     }
-    public static Class<?> getActualType(Type genericType, int pos) {
+    public static Class<?> getActualType(Type genericType, final int pos) {
 
         if (genericType == null) {
             return null;
@@ -81,7 +81,7 @@ public class ReflectionUtility {
             if (genericType instanceof TypeVariable) {
                 genericType = getType(((TypeVariable<?>) genericType).getBounds(), pos);
             } else if (genericType instanceof WildcardType) {
-                WildcardType wildcardType = (WildcardType) genericType;
+                final WildcardType wildcardType = (WildcardType) genericType;
                 Type[] bounds = wildcardType.getLowerBounds();
                 if (bounds.length == 0) {
                     bounds = wildcardType.getUpperBounds();
@@ -89,11 +89,11 @@ public class ReflectionUtility {
                 genericType = getType(bounds, pos);
             }
 
-            Class<?> cls = (Class<?>) genericType;
+            final Class<?> cls = (Class<?>) genericType;
             return cls.isArray() ? cls.getComponentType() : cls;
         }
-        ParameterizedType paramType = (ParameterizedType) genericType;
-        Type t = getType(paramType.getActualTypeArguments(), pos);
+        final ParameterizedType paramType = (ParameterizedType) genericType;
+        final Type t = getType(paramType.getActualTypeArguments(), pos);
         return t instanceof Class ? (Class<?>) t : getActualType(t, pos);
     }
 

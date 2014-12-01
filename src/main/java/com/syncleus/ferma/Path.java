@@ -31,9 +31,9 @@ import java.util.ArrayList;
 
 public class Path extends ArrayList<Object> {
 
-	public <T> T get(int index, Class<T> clazz) {
+	public <T> T get(final int index, final Class<T> clazz) {
 		
-		T object = (T) get(index);
+		final T object = (T) get(index);
 		if(object instanceof TVertex) {
 			return (T) ((TVertex) object).reframe((Class)clazz);
 		}

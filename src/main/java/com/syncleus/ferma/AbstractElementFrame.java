@@ -47,7 +47,7 @@ public abstract class AbstractElementFrame implements ElementFrame {
 	 * @param graph The graph this element exists in.
 	 * @param element The raw blueprints element.
 	 */
-	protected void init(FramedGraph graph, Element element) {
+	protected void init(final FramedGraph graph, final Element element) {
 		this.graph = graph;
 		this.element = element;
 	}
@@ -90,7 +90,7 @@ public abstract class AbstractElementFrame implements ElementFrame {
 	}
 
 	@Override
-	public void setTypeResolution(Class<?> type) {
+	public void setTypeResolution(final Class<?> type) {
 		this.setProperty(TypeResolver.TYPE_RESOLUTION_KEY, type.getName());
 	}
 
@@ -115,12 +115,12 @@ public abstract class AbstractElementFrame implements ElementFrame {
 	}
 
 	@Override
-	public <T> T getProperty(String name) {
+	public <T> T getProperty(final String name) {
 		return element.getProperty(name);
 	}
 
 	@Override
-	public <T> T getProperty(String name, Class<T> type) {
+	public <T> T getProperty(final String name, final Class<T> type) {
 		if (type.isEnum()) {
 			return (T) Enum.valueOf((Class<Enum>) type, (String) element.getProperty(name));
 		}
@@ -129,7 +129,7 @@ public abstract class AbstractElementFrame implements ElementFrame {
 	}
 
 	@Override
-	public void setProperty(String name, Object value) {
+	public void setProperty(final String name, final Object value) {
 		if (value == null) {
 			element.removeProperty(name);
 		} else {
@@ -167,14 +167,14 @@ public abstract class AbstractElementFrame implements ElementFrame {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		AbstractElementFrame other = (AbstractElementFrame) obj;
+		final AbstractElementFrame other = (AbstractElementFrame) obj;
 		if (element == null) {
 			if (other.element != null)
 				return false;
@@ -183,7 +183,7 @@ public abstract class AbstractElementFrame implements ElementFrame {
 		return true;
 	}
 
-	protected <N> N getId(Class<N> clazz) {
+	protected <N> N getId(final Class<N> clazz) {
 
 		return (N) getId();
 	}

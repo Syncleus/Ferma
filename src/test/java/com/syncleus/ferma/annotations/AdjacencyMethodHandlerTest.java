@@ -306,7 +306,7 @@ public class AdjacencyMethodHandlerTest {
         final VertexFrame fatherVertex = (VertexFrame) father;
         Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
 
-        God child = father.getSon(God.class);
+        final God child = father.getSon(God.class);
         Assert.assertNotNull(child);
         Assert.assertTrue(child instanceof VertexFrame);
         final VertexFrame childVertex = (VertexFrame) child;
@@ -359,7 +359,7 @@ public class AdjacencyMethodHandlerTest {
         final VertexFrame fatherVertex = (VertexFrame) father;
         Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
 
-        God child = father.getSon(God.class);
+        final God child = father.getSon(God.class);
         Assert.assertNotNull(child);
         Assert.assertTrue(child instanceof VertexFrame);
         final VertexFrame childVertex = (VertexFrame) child;

@@ -21,11 +21,11 @@ package com.syncleus.ferma;
 import com.tinkerpop.blueprints.Edge;
 
 public class FramingEdgeIterable<T> extends FramingIterable<T, Edge> {
-    public FramingEdgeIterable(FramedGraph framedGraph, Iterable<Edge> iterable, Class<T> kind) {
+    public FramingEdgeIterable(final FramedGraph framedGraph, final Iterable<Edge> iterable, final Class<T> kind) {
         super(framedGraph, iterable, kind);
     }
 
-    public FramingEdgeIterable(FramedGraph framedGraph, Iterable<Edge> iterable, Class<T> kind, boolean explicit) {
+    public FramingEdgeIterable(final FramedGraph framedGraph, final Iterable<Edge> iterable, final Class<T> kind, final boolean explicit) {
         super(framedGraph, iterable, kind, explicit);
     }
 }

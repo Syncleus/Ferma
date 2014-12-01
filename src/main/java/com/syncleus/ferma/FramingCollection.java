@@ -38,28 +38,28 @@ import java.util.Iterator;
  */
 class FramingCollection<E, K extends ElementFrame> extends FrameMaker implements Collection<E> {
 
-	private Collection<E> delegate;
+	private final Collection<E> delegate;
 	private final boolean explicit;
 
-	public FramingCollection(Collection<E> delegate, FramedGraph graph, Class<K> kind) {
+	public FramingCollection(final Collection<E> delegate, final FramedGraph graph, final Class<K> kind) {
 		super(graph, kind);
 		this.delegate = delegate;
 		this.explicit = false;
 	}
 
-	public FramingCollection(Collection<E> delegate, FramedGraph graph) {
+	public FramingCollection(final Collection<E> delegate, final FramedGraph graph) {
 		super(graph);
 		this.delegate = delegate;
 		this.explicit = false;
 	}
 
-	public FramingCollection(Collection<E> delegate, FramedGraph graph, Class<K> kind, boolean explicit) {
+	public FramingCollection(final Collection<E> delegate, final FramedGraph graph, final Class<K> kind, final boolean explicit) {
 		super(graph, kind);
 		this.delegate = delegate;
 		this.explicit = explicit;
 	}
 
-	public FramingCollection(Collection<E> delegate, FramedGraph graph, boolean explicit) {
+	public FramingCollection(final Collection<E> delegate, final FramedGraph graph, final boolean explicit) {
 		super(graph);
 		this.delegate = delegate;
 		this.explicit = explicit;
@@ -73,7 +73,7 @@ class FramingCollection<E, K extends ElementFrame> extends FrameMaker implements
 		throw new UnsupportedOperationException();
 	}
 
-	public boolean contains(Object o) {
+	public boolean contains(final Object o) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -85,7 +85,7 @@ class FramingCollection<E, K extends ElementFrame> extends FrameMaker implements
 		throw new UnsupportedOperationException();
 	}
 
-	public <T> T[] toArray(T[] a) {
+	public <T> T[] toArray(final T[] a) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -95,27 +95,27 @@ class FramingCollection<E, K extends ElementFrame> extends FrameMaker implements
 		return delegate.add(e);
 	}
 
-	public boolean remove(Object o) {
+	public boolean remove(final Object o) {
 		throw new UnsupportedOperationException();
 	}
 
-	public boolean containsAll(Collection<?> c) {
+	public boolean containsAll(final Collection<?> c) {
 		throw new UnsupportedOperationException();
 	}
 
-	public boolean addAll(Collection<? extends E> c) {
+	public boolean addAll(final Collection<? extends E> c) {
 		boolean modified = false;
-		for (E e : c) {
+		for (final E e : c) {
 			modified |= add(e);
 		}
 		return modified;
 	}
 
-	public boolean removeAll(Collection<?> c) {
+	public boolean removeAll(final Collection<?> c) {
 		throw new UnsupportedOperationException();
 	}
 
-	public boolean retainAll(Collection<?> c) {
+	public boolean retainAll(final Collection<?> c) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -123,7 +123,7 @@ class FramingCollection<E, K extends ElementFrame> extends FrameMaker implements
 		throw new UnsupportedOperationException();
 	}
 
-	public boolean equals(Object o) {
+	public boolean equals(final Object o) {
 		throw new UnsupportedOperationException();
 	}
 

@@ -36,15 +36,15 @@ import java.util.Comparator;
  */
 class FramingComparator<T, K extends ElementFrame> extends FrameMaker implements Comparator<T> {
 
-	private Comparator<T> delegate;
+	private final Comparator<T> delegate;
 
-	public FramingComparator(Comparator<T> delegate, FramedGraph graph) {
+	public FramingComparator(final Comparator<T> delegate, final FramedGraph graph) {
 		super(graph);
 		this.delegate = delegate;
 
 	}
 
-	public FramingComparator(Comparator<T> delegate, FramedGraph graph, Class<K> kind) {
+	public FramingComparator(final Comparator<T> delegate, final FramedGraph graph, final Class<K> kind) {
 		super(graph, kind);
 		this.delegate = delegate;
 	}

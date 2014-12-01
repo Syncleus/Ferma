@@ -44,7 +44,7 @@ public class DivertPipe<S, T> extends AbstractMetaPipe<S, S> implements MetaPipe
 
 	private final SideEffectPipe<S, T> pipeToCap;
 	
-	private PipeFunction<T, ?> sideEffectFunction;
+	private final PipeFunction<T, ?> sideEffectFunction;
 
 	public DivertPipe(final SideEffectPipe<S, T> pipeToCap, final PipeFunction<T, ?> sideEffectFunction) {
 		this.pipeToCap = pipeToCap;
@@ -57,7 +57,7 @@ public class DivertPipe<S, T> extends AbstractMetaPipe<S, S> implements MetaPipe
 
 	protected S processNextStart() {
 		if (this.pipeToCap instanceof SideEffectPipe.LazySideEffectPipe) {
-			S next = this.pipeToCap.next();
+			final S next = this.pipeToCap.next();
 			sideEffectFunction.compute(this.pipeToCap.getSideEffect());
 			return next;
 		} else {

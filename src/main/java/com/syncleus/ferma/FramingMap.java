@@ -33,12 +33,12 @@ import java.util.Set;
 
 class FramingMap<T extends ElementFrame> extends FrameMaker implements Map {
 
-	public FramingMap(Map delegate, FramedGraph graph) {
+	public FramingMap(final Map delegate, final FramedGraph graph) {
 		super(graph);
 		this.delegate = delegate;
 	}
 
-	private Map delegate;
+	private final Map delegate;
 
 	public Map getDelegate() {
 		return delegate;
@@ -55,32 +55,32 @@ class FramingMap<T extends ElementFrame> extends FrameMaker implements Map {
 	}
 
 	@Override
-	public boolean containsKey(Object key) {
+	public boolean containsKey(final Object key) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public boolean containsValue(Object value) {
+	public boolean containsValue(final Object value) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public Object get(Object key) {
+	public Object get(final Object key) {
 		return removeFrame(delegate.get(makeFrame(key)));
 	}
 
 	@Override
-	public Object put(Object key, Object value) {
+	public Object put(final Object key, final Object value) {
 		return delegate.put(makeFrame(key), makeFrame(value));
 	}
 
 	@Override
-	public Object remove(Object key) {
+	public Object remove(final Object key) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public void putAll(Map m) {
+	public void putAll(final Map m) {
 		throw new UnsupportedOperationException();
 	}
 

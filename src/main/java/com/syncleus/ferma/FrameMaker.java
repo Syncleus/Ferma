@@ -33,15 +33,15 @@ import com.tinkerpop.blueprints.Vertex;
 import com.tinkerpop.pipes.util.structures.Pair;
 
 class FrameMaker {
-	private FramedGraph graph;
-	private Class<?> kind;
+	private final FramedGraph graph;
+	private final Class<?> kind;
 
-	public FrameMaker(FramedGraph graph, Class<? extends ElementFrame> kind) {
+	public FrameMaker(final FramedGraph graph, final Class<? extends ElementFrame> kind) {
 		this.graph = graph;
 		this.kind = kind;
 	}
 
-	public FrameMaker(FramedGraph graph) {
+	public FrameMaker(final FramedGraph graph) {
 		this(graph, null);
 	}
 
@@ -50,7 +50,7 @@ class FrameMaker {
 			o = ((FramingMap) o).getDelegate();
 		}
 		if (o instanceof Pair) {
-			Pair pair = (Pair) o;
+			final Pair pair = (Pair) o;
 			o = new Pair(makeFrame(pair.getA()), makeFrame(pair.getB()));
 		}
 		if (kind == null) {
@@ -72,7 +72,7 @@ class FrameMaker {
 			o = ((FramingMap) o).getDelegate();
 		}
 		if (o instanceof Pair) {
-			Pair pair = (Pair) o;
+			final Pair pair = (Pair) o;
 			o = new Pair(makeFrameExplicit(pair.getA()), makeFrameExplicit(pair.getB()));
 		}
 		if (kind == null) {
@@ -89,7 +89,7 @@ class FrameMaker {
 		return (N) o;
 	}
 
-	protected Object removeFrame(Object object) {
+	protected Object removeFrame(final Object object) {
 		if (object instanceof ElementFrame) {
 			return ((ElementFrame) object).element();
 		}

@@ -38,16 +38,16 @@ public class GremlinPipeline<S, E> extends com.tinkerpop.gremlin.java.GremlinPip
 		super();
 	}
 
-	public GremlinPipeline(Object starts, boolean doQueryOptimization) {
+	public GremlinPipeline(final Object starts, final boolean doQueryOptimization) {
 		super(starts, doQueryOptimization);
 	}
 
-	public GremlinPipeline(Object starts) {
+	public GremlinPipeline(final Object starts) {
 		super(starts);
 	}
 
 	@Override
-	public com.tinkerpop.gremlin.java.GremlinPipeline<S, List> path(PipeFunction... pathFunctions) {
+	public com.tinkerpop.gremlin.java.GremlinPipeline<S, List> path(final PipeFunction... pathFunctions) {
 	
 		return this.add(new PathPipe<Object>(FluentUtility.prepareFunctions(this.asMap, pathFunctions)));
 	}

@@ -37,11 +37,11 @@ import com.tinkerpop.blueprints.TransactionalGraph;
  */
 public class Transaction implements AutoCloseable {
 
-	private TransactionalGraph graph;
+	private final TransactionalGraph graph;
 	private boolean comitted;
 	private boolean rolledBack;
 
-	Transaction(TransactionalGraph graph) {
+	Transaction(final TransactionalGraph graph) {
 		this.graph = graph;
 
 	}

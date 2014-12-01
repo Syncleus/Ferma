@@ -32,7 +32,7 @@ public class TraversalFunctions {
 		return new TraversalFunction<A, A>() {
 
 			@Override
-			public A compute(A argument) {
+			public A compute(final A argument) {
 				return argument;
 			}
 		};

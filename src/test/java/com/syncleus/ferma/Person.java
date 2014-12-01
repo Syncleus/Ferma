@@ -34,7 +34,7 @@ public class Person extends AbstractVertexFrame {
         return getProperty("name");
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         setProperty("name", name);
     }
 
@@ -73,11 +73,11 @@ public class Person extends AbstractVertexFrame {
         return out("knows").nextExplicit(Person.class);
     }
 
-    public Knows addKnows(Person friend) {
+    public Knows addKnows(final Person friend) {
         return addFramedEdge("knows", friend, Knows.class);
     }
 
-    public Knows addKnowsExplicit(Person friend) {
+    public Knows addKnowsExplicit(final Person friend) {
         return addFramedEdgeExplicit("knows", friend, Knows.class);
     }
 

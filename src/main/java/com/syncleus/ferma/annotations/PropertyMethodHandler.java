@@ -81,7 +81,7 @@ public class PropertyMethodHandler implements MethodHandler {
     }
 
     private static Enum getValueAsEnum(final Method method, final Object value) {
-        Class<Enum> en = (Class<Enum>) method.getReturnType();
+        final Class<Enum> en = (Class<Enum>) method.getReturnType();
         if (value != null)
             return Enum.valueOf(en, value.toString());
 

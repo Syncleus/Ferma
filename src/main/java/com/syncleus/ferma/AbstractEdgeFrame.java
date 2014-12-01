@@ -69,7 +69,7 @@ public abstract class AbstractEdgeFrame extends AbstractElementFrame implements 
 
 	@Override
 	public JsonObject toJson() {
-		JsonObject json = new JsonObject();
+		final JsonObject json = new JsonObject();
 		if (getId() instanceof Number) {
 			json.addProperty("id", getId(Number.class));
 		}
@@ -78,9 +78,9 @@ public abstract class AbstractEdgeFrame extends AbstractElementFrame implements 
 		}
 		json.addProperty("elementClass", "edge");
 		json.addProperty("label", getLabel());
-		for (String key : getPropertyKeys()) {
+		for (final String key : getPropertyKeys()) {
 
-			Object value = getProperty(key);
+			final Object value = getProperty(key);
 			if (value instanceof Number) {
 				json.addProperty(key, (Number) value);
 			} else if (value instanceof String) {
@@ -94,17 +94,17 @@ public abstract class AbstractEdgeFrame extends AbstractElementFrame implements 
 
 	@Override
 	public String toString() {
-		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		return gson.toJson(toJson());
 	}
 	
 	@Override
-	public <T> T reframe(Class<T> kind) {
+	public <T> T reframe(final Class<T> kind) {
 		return graph().frameElement(element(), kind);
 	}
 
 	@Override
-	public <T> T reframeExplicit(Class<T> kind) {
+	public <T> T reframeExplicit(final Class<T> kind) {
 		return graph().frameElementExplicit(element(), kind);
 	}
 }

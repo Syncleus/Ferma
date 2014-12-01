@@ -25,7 +25,7 @@ import com.tinkerpop.blueprints.Element;
  */
 public class UntypedTypeResolver implements TypeResolver {
     @Override
-    public <T> Class<? extends T> resolve(Element element, Class<T> kind) {
+    public <T> Class<? extends T> resolve(final Element element, final Class<T> kind) {
         if(VertexFrame.class.equals(kind) || AbstractVertexFrame.class.equals(kind))
             return (Class<? extends T>) TVertex.class;
         else if(EdgeFrame.class.equals(kind) || AbstractEdgeFrame.class.equals(kind))
@@ -34,7 +34,7 @@ public class UntypedTypeResolver implements TypeResolver {
     }
 
     @Override
-    public void init(Element element, Class<?> kind) {
+    public void init(final Element element, final Class<?> kind) {
 
     }
 }

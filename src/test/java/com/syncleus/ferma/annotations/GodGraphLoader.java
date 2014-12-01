@@ -34,43 +34,43 @@ public class GodGraphLoader {
 
         // vertices
 
-        Vertex saturn = graph.addVertex(null);
+        final Vertex saturn = graph.addVertex(null);
         saturn.setProperty("name", "saturn");
         saturn.setProperty("age", 10000);
         saturn.setProperty("type", "titan");
         saturn.setProperty(TypeResolver.TYPE_RESOLUTION_KEY, God.class.getName());
 
-        Vertex sky = graph.addVertex(null);
+        final Vertex sky = graph.addVertex(null);
         ElementHelper.setProperties(sky, "name", "sky", "type", "location", "other", "more useless info");
 
-        Vertex sea = graph.addVertex(null);
+        final Vertex sea = graph.addVertex(null);
         ElementHelper.setProperties(sea, "name", "sea", "type", "location");
 
-        Vertex jupiter = graph.addVertex(null);
+        final Vertex jupiter = graph.addVertex(null);
         ElementHelper.setProperties(jupiter, "name", "jupiter", "age", 5000, "type", "god", TypeResolver.TYPE_RESOLUTION_KEY, God.class.getName());
 
-        Vertex neptune = graph.addVertex(null);
+        final Vertex neptune = graph.addVertex(null);
         ElementHelper.setProperties(neptune, "name", "neptune", "age", 4500, "type", "god", TypeResolver.TYPE_RESOLUTION_KEY, God.class.getName());
 
-        Vertex hercules = graph.addVertex(null);
+        final Vertex hercules = graph.addVertex(null);
         ElementHelper.setProperties(hercules, "name", "hercules", "age", 30, "type", "demigod", TypeResolver.TYPE_RESOLUTION_KEY, GodExtended.class.getName());
 
-        Vertex alcmene = graph.addVertex(null);
+        final Vertex alcmene = graph.addVertex(null);
         ElementHelper.setProperties(alcmene, "name", "alcmene", "age", 45, "type", "human", TypeResolver.TYPE_RESOLUTION_KEY, God.class.getName());
 
-        Vertex pluto = graph.addVertex(null);
+        final Vertex pluto = graph.addVertex(null);
         ElementHelper.setProperties(pluto, "name", "pluto", "age", 4000, "type", "god", TypeResolver.TYPE_RESOLUTION_KEY, God.class.getName());
 
-        Vertex nemean = graph.addVertex(null);
+        final Vertex nemean = graph.addVertex(null);
         ElementHelper.setProperties(nemean, "name", "nemean", "type", "monster", TypeResolver.TYPE_RESOLUTION_KEY, God.class.getName());
 
-        Vertex hydra = graph.addVertex(null);
+        final Vertex hydra = graph.addVertex(null);
         ElementHelper.setProperties(hydra, "name", "hydra", "type", "monster", TypeResolver.TYPE_RESOLUTION_KEY, God.class.getName());
 
-        Vertex cerberus = graph.addVertex(null);
+        final Vertex cerberus = graph.addVertex(null);
         ElementHelper.setProperties(cerberus, "name", "cerberus", "type", "monster", TypeResolver.TYPE_RESOLUTION_KEY, God.class.getName());
 
-        Vertex tartarus = graph.addVertex(null);
+        final Vertex tartarus = graph.addVertex(null);
         ElementHelper.setProperties(tartarus, "name", "tartarus", "type", "location", TypeResolver.TYPE_RESOLUTION_KEY, God.class.getName());
 
         // edges

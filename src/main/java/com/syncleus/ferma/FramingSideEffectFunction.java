@@ -34,15 +34,15 @@ package com.syncleus.ferma;
  * @param <T>
  */
 class FramingSideEffectFunction<T, K extends ElementFrame> extends FrameMaker implements SideEffectFunction<T> {
-	private SideEffectFunction<T> delegate;
+	private final SideEffectFunction<T> delegate;
 
-	public FramingSideEffectFunction(SideEffectFunction<T> delegate, FramedGraph graph, Class<K> kind) {
+	public FramingSideEffectFunction(final SideEffectFunction<T> delegate, final FramedGraph graph, final Class<K> kind) {
 		super(graph, kind);
 		this.delegate = delegate;
 
 	}
 
-	public FramingSideEffectFunction(SideEffectFunction<T> delegate, FramedGraph graph) {
+	public FramingSideEffectFunction(final SideEffectFunction<T> delegate, final FramedGraph graph) {
 		super(graph);
 		this.delegate = delegate;
 

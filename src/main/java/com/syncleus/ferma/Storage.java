@@ -50,7 +50,7 @@ public class Storage<T> implements Collection<T> {
 	}
 
 	@Override
-	public boolean contains(Object o) {
+	public boolean contains(final Object o) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -65,38 +65,38 @@ public class Storage<T> implements Collection<T> {
 	}
 
 	@Override
-	public <T> T[] toArray(T[] a) {
+	public <T> T[] toArray(final T[] a) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public boolean add(T e) {
+	public boolean add(final T e) {
 		this.e = e;
 		return true;
 	}
 
 	@Override
-	public boolean remove(Object o) {
+	public boolean remove(final Object o) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public boolean containsAll(Collection<?> c) {
+	public boolean containsAll(final Collection<?> c) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public boolean addAll(Collection<? extends T> c) {
+	public boolean addAll(final Collection<? extends T> c) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public boolean removeAll(Collection<?> c) {
+	public boolean removeAll(final Collection<?> c) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public boolean retainAll(Collection<?> c) {
+	public boolean retainAll(final Collection<?> c) {
 		throw new UnsupportedOperationException();
 	}
 

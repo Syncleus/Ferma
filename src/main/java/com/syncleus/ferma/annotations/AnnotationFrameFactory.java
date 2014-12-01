@@ -65,13 +65,13 @@ public class AnnotationFrameFactory implements FrameFactory {
         if( isAbstract(resolvedKind) )
             resolvedKind = constructClass(element, kind);
         try {
-            T object = resolvedKind.newInstance();
+            final T object = resolvedKind.newInstance();
             if (object instanceof CachesReflection)
                 ((CachesReflection) object).setReflectionCache(this.reflectionCache);
             return object;
-        } catch (InstantiationException caught) {
+        } catch (final InstantiationException caught) {
             throw new IllegalArgumentException("kind could not be instantiated", caught);
-        } catch (IllegalAccessException caught) {
+        } catch (final IllegalAccessException caught) {
             throw new IllegalArgumentException("kind could not be instantiated", caught);
         }
     }

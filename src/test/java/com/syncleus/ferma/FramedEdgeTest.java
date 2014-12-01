@@ -37,7 +37,7 @@ public class FramedEdgeTest {
 	@Before
 	public void init() {
 		MockitoAnnotations.initMocks(this);
-		Graph g = new TinkerGraph();
+		final Graph g = new TinkerGraph();
         fg = new DelegatingFramedGraph(g);
         p1 = fg.addFramedVertex(Person.class);
         p2 = fg.addFramedVertex(Person.class);

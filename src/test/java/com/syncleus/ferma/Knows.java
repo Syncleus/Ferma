@@ -25,7 +25,7 @@ package com.syncleus.ferma;
 
 public class Knows extends AbstractEdgeFrame {
 
-    public void setYears(int years) {
+    public void setYears(final int years) {
         setProperty("years", years);
     }
 

@@ -36,15 +36,15 @@ import com.tinkerpop.pipes.Pipe;
 
 public class TraversalFunctionPipe implements TraversalFunction {
 
-	private TraversalFunction delegate;
+	private final TraversalFunction delegate;
 
-	public TraversalFunctionPipe(TraversalFunction delegate) {
+	public TraversalFunctionPipe(final TraversalFunction delegate) {
 		this.delegate = delegate;
 	}
 
 	@Override
-	public Object compute(Object argument) {
-		Object result = delegate.compute(argument);
+	public Object compute(final Object argument) {
+		final Object result = delegate.compute(argument);
 		if(result instanceof Iterator) {
 			final Iterator i = (Iterator) result; 
 			return new Pipe() {
@@ -65,12 +65,12 @@ public class TraversalFunctionPipe implements TraversalFunction {
 				}
 
 				@Override
-				public void setStarts(Iterator starts) {
+				public void setStarts(final Iterator starts) {
 					
 				}
 
 				@Override
-				public void setStarts(Iterable starts) {
+				public void setStarts(final Iterable starts) {
 					
 				}
 
@@ -80,7 +80,7 @@ public class TraversalFunctionPipe implements TraversalFunction {
 				}
 
 				@Override
-				public void enablePath(boolean enable) {
+				public void enablePath(final boolean enable) {
 					
 				}
 

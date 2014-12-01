@@ -48,61 +48,61 @@ public class FramedGraphTest {
 	
     @Test
     public void testSanity() {
-        Graph g = new TinkerGraph();
-        FramedGraph fg = new DelegatingFramedGraph(g);
-        Person p1 = fg.addFramedVertex(Person.class);
+        final Graph g = new TinkerGraph();
+        final FramedGraph fg = new DelegatingFramedGraph(g);
+        final Person p1 = fg.addFramedVertex(Person.class);
         p1.setName("Bryn");
 
-        Person p2 = fg.addFramedVertex(Person.class);
+        final Person p2 = fg.addFramedVertex(Person.class);
         p2.setName("Julia");
-        Knows knows = p1.addKnows(p2);
+        final Knows knows = p1.addKnows(p2);
         knows.setYears(15);
 
-        Person bryn = fg.v().has("name", "Bryn").next(Person.class);
+        final Person bryn = fg.v().has("name", "Bryn").next(Person.class);
         
         
         Assert.assertEquals("Bryn", bryn.getName());
         Assert.assertEquals(15, bryn.getKnowsList().get(0).getYears());
    
-        Collection<? extends Integer> knowsCollection = fg.v().has("name", "Julia").bothE().property("years", Integer.class).aggregate().cap();
+        final Collection<? extends Integer> knowsCollection = fg.v().has("name", "Julia").bothE().property("years", Integer.class).aggregate().cap();
         Assert.assertEquals(1, knowsCollection.size());
     }
 
     @Test
     public void testSanityExplicit() {
-        Graph g = new TinkerGraph();
-        FramedGraph fg = new DelegatingFramedGraph(g);
-        Person p1 = fg.addFramedVertexExplicit(Person.class);
+        final Graph g = new TinkerGraph();
+        final FramedGraph fg = new DelegatingFramedGraph(g);
+        final Person p1 = fg.addFramedVertexExplicit(Person.class);
         p1.setName("Bryn");
 
-        Person p2 = fg.addFramedVertexExplicit(Person.class);
+        final Person p2 = fg.addFramedVertexExplicit(Person.class);
         p2.setName("Julia");
-        Knows knows = p1.addKnowsExplicit(p2);
+        final Knows knows = p1.addKnowsExplicit(p2);
         knows.setYears(15);
 
-        Person bryn = fg.v().has("name", "Bryn").nextExplicit(Person.class);
+        final Person bryn = fg.v().has("name", "Bryn").nextExplicit(Person.class);
 
 
         Assert.assertEquals("Bryn", bryn.getName());
         Assert.assertEquals(15, bryn.getKnowsListExplicit().get(0).getYears());
 
-        Collection<? extends Integer> knowsCollection = fg.v().has("name", "Julia").bothE().property("years", Integer.class).aggregate().cap();
+        final Collection<? extends Integer> knowsCollection = fg.v().has("name", "Julia").bothE().property("years", Integer.class).aggregate().cap();
         Assert.assertEquals(1, knowsCollection.size());
     }
     
     @Test
     public void testJavaTyping() {
-        Graph g = new TinkerGraph();
-        FramedGraph fg = new DelegatingFramedGraph(g, true, false);
+        final Graph g = new TinkerGraph();
+        final FramedGraph fg = new DelegatingFramedGraph(g, true, false);
 
-        Person p1 = fg.addFramedVertex(Programmer.class);
+        final Person p1 = fg.addFramedVertex(Programmer.class);
         p1.setName("Bryn");
 
-        Person p2 = fg.addFramedVertex(Person.class);
+        final Person p2 = fg.addFramedVertex(Person.class);
         p2.setName("Julia");
 
-        Person bryn = fg.v().has("name", "Bryn").next(Person.class);
-        Person julia = fg.v().has("name", "Julia").next(Person.class);
+        final Person bryn = fg.v().has("name", "Bryn").next(Person.class);
+        final Person julia = fg.v().has("name", "Julia").next(Person.class);
 
         Assert.assertEquals(Programmer.class, bryn.getClass());
         Assert.assertEquals(Person.class, julia.getClass());
@@ -110,17 +110,17 @@ public class FramedGraphTest {
 
     @Test
     public void testJavaTypingAddExplicit() {
-        Graph g = new TinkerGraph();
-        FramedGraph fg = new DelegatingFramedGraph(g, true, false);
+        final Graph g = new TinkerGraph();
+        final FramedGraph fg = new DelegatingFramedGraph(g, true, false);
 
-        Person p1 = fg.addFramedVertexExplicit(Programmer.class);
+        final Person p1 = fg.addFramedVertexExplicit(Programmer.class);
         p1.setName("Bryn");
 
-        Person p2 = fg.addFramedVertexExplicit(Person.class);
+        final Person p2 = fg.addFramedVertexExplicit(Person.class);
         p2.setName("Julia");
 
-        Person bryn = fg.v().has("name", "Bryn").next(Person.class);
-        Person julia = fg.v().has("name", "Julia").next(Person.class);
+        final Person bryn = fg.v().has("name", "Bryn").next(Person.class);
+        final Person julia = fg.v().has("name", "Julia").next(Person.class);
 
         Assert.assertEquals(Person.class, bryn.getClass());
         Assert.assertEquals(Person.class, julia.getClass());
@@ -128,17 +128,17 @@ public class FramedGraphTest {
 
     @Test
     public void testJavaTypingNextExplicit() {
-        Graph g = new TinkerGraph();
-        FramedGraph fg = new DelegatingFramedGraph(g, true, false);
+        final Graph g = new TinkerGraph();
+        final FramedGraph fg = new DelegatingFramedGraph(g, true, false);
 
-        Person p1 = fg.addFramedVertex(Programmer.class);
+        final Person p1 = fg.addFramedVertex(Programmer.class);
         p1.setName("Bryn");
 
-        Person p2 = fg.addFramedVertex(Person.class);
+        final Person p2 = fg.addFramedVertex(Person.class);
         p2.setName("Julia");
 
-        Person bryn = fg.v().has("name", "Bryn").nextExplicit(Person.class);
-        Person julia = fg.v().has("name", "Julia").nextExplicit(Person.class);
+        final Person bryn = fg.v().has("name", "Bryn").nextExplicit(Person.class);
+        final Person julia = fg.v().has("name", "Julia").nextExplicit(Person.class);
 
         Assert.assertEquals(Person.class, bryn.getClass());
         Assert.assertEquals(Person.class, julia.getClass());
@@ -147,32 +147,32 @@ public class FramedGraphTest {
     @Test
     public void testCustomFrameBuilder() {
     	final Person o = new Person();
-        Graph g = new TinkerGraph();
-        FramedGraph fg = new DelegatingFramedGraph(g, new FrameFactory() {
+        final Graph g = new TinkerGraph();
+        final FramedGraph fg = new DelegatingFramedGraph(g, new FrameFactory() {
 			
 			@SuppressWarnings("unchecked")
 			@Override
-			public <T> T create(Element e, Class<T> kind) {
+			public <T> T create(final Element e, final Class<T> kind) {
 				return (T)o;
 			}
 		}, new SimpleTypeResolver());
-        Person person = fg.addFramedVertex(Person.class);
+        final Person person = fg.addFramedVertex(Person.class);
         Assert.assertEquals(o, person);
     }
 
     @Test
     public void testCustomFrameBuilderExplicit() {
         final Person o = new Person();
-        Graph g = new TinkerGraph();
-        FramedGraph fg = new DelegatingFramedGraph(g, new FrameFactory() {
+        final Graph g = new TinkerGraph();
+        final FramedGraph fg = new DelegatingFramedGraph(g, new FrameFactory() {
 
             @SuppressWarnings("unchecked")
             @Override
-            public <T> T create(Element e, Class<T> kind) {
+            public <T> T create(final Element e, final Class<T> kind) {
                 return (T)o;
             }
         }, new SimpleTypeResolver());
-        Person person = fg.addFramedVertexExplicit(Person.class);
+        final Person person = fg.addFramedVertexExplicit(Person.class);
         Assert.assertEquals(o, person);
     }
     
@@ -180,8 +180,8 @@ public class FramedGraphTest {
     private TransactionalGraph transactionalGraph;
     
     public void testTransactionUnsupported() {
-        Graph g = new TinkerGraph();
-        FramedGraph fg = new DelegatingFramedGraph(g);
+        final Graph g = new TinkerGraph();
+        final FramedGraph fg = new DelegatingFramedGraph(g);
         try(Transaction t = fg.tx()) {
         	
         }
@@ -191,7 +191,7 @@ public class FramedGraphTest {
     @Test
     public void testTransactionCommitted() {
         
-        FramedGraph fg = new DelegatingFramedGraph(transactionalGraph);
+        final FramedGraph fg = new DelegatingFramedGraph(transactionalGraph);
         try(Transaction t = fg.tx()) {
         	t.commit();
         }
@@ -202,7 +202,7 @@ public class FramedGraphTest {
     @Test
     public void testTransactionRolledBack() {
         
-        FramedGraph fg = new DelegatingFramedGraph(transactionalGraph);
+        final FramedGraph fg = new DelegatingFramedGraph(transactionalGraph);
         try(Transaction t = fg.tx()) {
         	t.rollback();
         }
@@ -213,7 +213,7 @@ public class FramedGraphTest {
     @Test
     public void testTransactionNotComitted() {
         
-        FramedGraph fg = new DelegatingFramedGraph(transactionalGraph);
+        final FramedGraph fg = new DelegatingFramedGraph(transactionalGraph);
         try(Transaction t = fg.tx()) {
         	
         }
@@ -224,12 +224,12 @@ public class FramedGraphTest {
     @Test
     public void testTransactionException() {
         
-        FramedGraph fg = new DelegatingFramedGraph(transactionalGraph);
+        final FramedGraph fg = new DelegatingFramedGraph(transactionalGraph);
         
         try(Transaction t = fg.tx()) {
         	throw new Exception();
         }
-        catch(Exception e) {
+        catch(final Exception e) {
         }
 
         Mockito.verify(transactionalGraph).rollback();
@@ -238,65 +238,65 @@ public class FramedGraphTest {
 
     @Test
     public void testUntypedFrames() {
-        Graph g = new TinkerGraph();
-        FramedGraph fg = new DelegatingFramedGraph(g);
-        TVertex p1 = fg.addFramedVertex();
+        final Graph g = new TinkerGraph();
+        final FramedGraph fg = new DelegatingFramedGraph(g);
+        final TVertex p1 = fg.addFramedVertex();
         p1.setProperty("name", "Bryn");
 
-        TVertex p2 = fg.addFramedVertex();
+        final TVertex p2 = fg.addFramedVertex();
         p2.setProperty("name", "Julia");
-        TEdge knows = p1.addFramedEdge("knows", p2);
+        final TEdge knows = p1.addFramedEdge("knows", p2);
         knows.setProperty("years", 15);
 
-        VertexFrame bryn = fg.v().has("name", "Bryn").next();
+        final VertexFrame bryn = fg.v().has("name", "Bryn").next();
         
         
         Assert.assertEquals("Bryn", bryn.getProperty("name"));
         Assert.assertEquals(15, bryn.outE("knows").toList().get(0).getProperty("years"));
    
-        Collection<? extends Integer> knowsCollection = fg.v().has("name", "Julia").bothE().property("years", Integer.class).aggregate().cap();
+        final Collection<? extends Integer> knowsCollection = fg.v().has("name", "Julia").bothE().property("years", Integer.class).aggregate().cap();
         Assert.assertEquals(1, knowsCollection.size());
     }
 
     @Test
     public void testUntypedFramesExplicit() {
-        Graph g = new TinkerGraph();
-        FramedGraph fg = new DelegatingFramedGraph(g);
-        TVertex p1 = fg.addFramedVertexExplicit();
+        final Graph g = new TinkerGraph();
+        final FramedGraph fg = new DelegatingFramedGraph(g);
+        final TVertex p1 = fg.addFramedVertexExplicit();
         p1.setProperty("name", "Bryn");
 
-        TVertex p2 = fg.addFramedVertexExplicit();
+        final TVertex p2 = fg.addFramedVertexExplicit();
         p2.setProperty("name", "Julia");
-        TEdge knows = p1.addFramedEdgeExplicit("knows", p2);
+        final TEdge knows = p1.addFramedEdgeExplicit("knows", p2);
         knows.setProperty("years", 15);
 
-        VertexFrame bryn = fg.v().has("name", "Bryn").next();
+        final VertexFrame bryn = fg.v().has("name", "Bryn").next();
 
 
         Assert.assertEquals("Bryn", bryn.getProperty("name"));
         Assert.assertEquals(15, bryn.outE("knows").toList().get(0).getProperty("years"));
 
-        Collection<? extends Integer> knowsCollection = fg.v().has("name", "Julia").bothE().property("years", Integer.class).aggregate().cap();
+        final Collection<? extends Integer> knowsCollection = fg.v().has("name", "Julia").bothE().property("years", Integer.class).aggregate().cap();
         Assert.assertEquals(1, knowsCollection.size());
     }
 
     @Test
     public void testKeyValueTraversal() {
-        Graph g = TinkerGraphFactory.createTinkerGraph();
-        FramedGraph fg = new DelegatingFramedGraph(g);
+        final Graph g = TinkerGraphFactory.createTinkerGraph();
+        final FramedGraph fg = new DelegatingFramedGraph(g);
         final Set<Object> expectedSet = new HashSet<>();
 
-        TVertex p1 = fg.addFramedVertexExplicit();
+        final TVertex p1 = fg.addFramedVertexExplicit();
         p1.setProperty("name", "Bryn");
         p1.setProperty("findme", "yes");
         expectedSet.add(p1.getId());
 
-        TVertex p2 = fg.addFramedVertexExplicit();
+        final TVertex p2 = fg.addFramedVertexExplicit();
         p2.setProperty("name", "Julia");
         p2.setProperty("findme", "yes");
         expectedSet.add(p2.getId());
 
-        TEdge knows = p1.addFramedEdgeExplicit("knows", p2);
+        final TEdge knows = p1.addFramedEdgeExplicit("knows", p2);
         knows.setProperty("years", 15);
 
         Assert.assertEquals(expectedSet, fg.v("findme", "yes").id().toSet());

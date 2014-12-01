@@ -24,7 +24,7 @@ public class Program extends AbstractVertexFrame {
 		return getProperty("name");
 	}
 
-	public void setName(String name) {
+	public void setName(final String name) {
 		setProperty("name", name);
 	}
 	
@@ -32,7 +32,7 @@ public class Program extends AbstractVertexFrame {
 		return getProperty("lang");
 	}
 
-	public void setLang(String lang) {
+	public void setLang(final String lang) {
 		setProperty("lang", lang);
 	}
 

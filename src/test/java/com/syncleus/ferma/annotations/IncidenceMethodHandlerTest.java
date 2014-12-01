@@ -152,7 +152,7 @@ public class IncidenceMethodHandlerTest {
         final VertexFrame fatherVertex = (VertexFrame) father;
         Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
 
-        FatherEdge child = father.getSonEdge(FatherEdge.class);
+        final FatherEdge child = father.getSonEdge(FatherEdge.class);
         Assert.assertNotNull(child);
         Assert.assertTrue(child instanceof EdgeFrame);
         final EdgeFrame childEdge = (EdgeFrame) child;

@@ -24,40 +24,40 @@ import java.util.Collection;
 
 public class DelegatingFramedTransactionalGraph extends DelegatingFramedGraph implements FramedTransactionalGraph {
 
-    public DelegatingFramedTransactionalGraph(TransactionalGraph delegate, FrameFactory builder, TypeResolver defaultResolver) {
+    public DelegatingFramedTransactionalGraph(final TransactionalGraph delegate, final FrameFactory builder, final TypeResolver defaultResolver) {
         super(delegate, builder, defaultResolver);
     }
 
-    public DelegatingFramedTransactionalGraph(TransactionalGraph delegate) {
+    public DelegatingFramedTransactionalGraph(final TransactionalGraph delegate) {
         super(delegate);
     }
 
-    public DelegatingFramedTransactionalGraph(TransactionalGraph delegate, ReflectionCache reflections) {
+    public DelegatingFramedTransactionalGraph(final TransactionalGraph delegate, final ReflectionCache reflections) {
         super(delegate, reflections);
     }
 
-    public DelegatingFramedTransactionalGraph(TransactionalGraph delegate, TypeResolver defaultResolver) {
+    public DelegatingFramedTransactionalGraph(final TransactionalGraph delegate, final TypeResolver defaultResolver) {
         super(delegate, defaultResolver);
     }
 
-    public DelegatingFramedTransactionalGraph(TransactionalGraph delegate, boolean typeResolution, boolean annotationsSupported) {
+    public DelegatingFramedTransactionalGraph(final TransactionalGraph delegate, final boolean typeResolution, final boolean annotationsSupported) {
         super(delegate, typeResolution, annotationsSupported);
     }
 
-    public DelegatingFramedTransactionalGraph(TransactionalGraph delegate, ReflectionCache reflections, boolean typeResolution, boolean annotationsSupported) {
+    public DelegatingFramedTransactionalGraph(final TransactionalGraph delegate, final ReflectionCache reflections, final boolean typeResolution, final boolean annotationsSupported) {
         super(delegate, reflections, typeResolution, annotationsSupported);
     }
 
-    public DelegatingFramedTransactionalGraph(TransactionalGraph delegate, Collection<? extends Class<?>> types) {
+    public DelegatingFramedTransactionalGraph(final TransactionalGraph delegate, final Collection<? extends Class<?>> types) {
         super(delegate, types);
     }
 
-    public DelegatingFramedTransactionalGraph(TransactionalGraph delegate, boolean typeResolution, Collection<? extends Class<?>> types) {
+    public DelegatingFramedTransactionalGraph(final TransactionalGraph delegate, final boolean typeResolution, final Collection<? extends Class<?>> types) {
         super(delegate, typeResolution, types);
     }
 
     @Override
-    public void stopTransaction(TransactionalGraph.Conclusion conclusion) {
+    public void stopTransaction(final TransactionalGraph.Conclusion conclusion) {
         ((TransactionalGraph)this.getDelegate()).stopTransaction(conclusion);
     }
 

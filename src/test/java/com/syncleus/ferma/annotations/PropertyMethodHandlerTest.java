@@ -76,11 +76,11 @@ public class PropertyMethodHandlerTest {
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
-        List<? extends God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
+        final List<? extends God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
 
-        God father = gods.iterator().next();
+        final God father = gods.iterator().next();
         Assert.assertTrue(father instanceof VertexFrame);
-        VertexFrame fatherVertex = (VertexFrame) father;
+        final VertexFrame fatherVertex = (VertexFrame) father;
         Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
         father.removeName();
 

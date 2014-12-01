@@ -37,7 +37,6 @@ import com.tinkerpop.pipes.PipeFunction;
 import com.tinkerpop.pipes.sideeffect.SideEffectPipe;
 import com.tinkerpop.pipes.util.AbstractMetaPipe;
 import com.tinkerpop.pipes.util.FastNoSuchElementException;
-import com.tinkerpop.pipes.util.MetaPipe;
 import com.tinkerpop.pipes.util.PipeHelper;
 
 public class DivertPipe<S, T> extends AbstractMetaPipe<S, S> {

@@ -105,3 +105,7 @@ Using TypeResolver.Java will save the type of Java class the element was created
 
 This project uses code derived from the [Tinkerpop](http://www.tinkerpop.com/) project under the apache licence and or tinkerpop licence.
      
+     
+Copyright 2014-Infinity Bryn Cooke
+
+http://opensource.org/licenses/Artistic-2.0

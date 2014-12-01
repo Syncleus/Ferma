@@ -21,10 +21,6 @@ package com.syncleus.ferma;
 import java.util.Iterator;
 import java.util.List;
 
-/**
- * @author Bryn Cooke (http://jglue.org)
- */
-
 public class Person extends AbstractVertexFrame {
 
 

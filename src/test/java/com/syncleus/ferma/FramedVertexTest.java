@@ -30,10 +30,6 @@ import com.google.common.collect.Lists;
 import com.tinkerpop.blueprints.Graph;
 import com.tinkerpop.blueprints.impls.tg.TinkerGraph;
 
-/**
- * @author Bryn Cooke (http://jglue.org)
- */
-
 public class FramedVertexTest {
 
 	

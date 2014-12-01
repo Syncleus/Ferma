@@ -23,8 +23,8 @@ import com.tinkerpop.blueprints.Vertex;
 import java.lang.reflect.*;
 import java.util.Map;
 
-
 public class ReflectionUtility {
+
     private static final String SET = "set";
     private static final String GET = "get";
     private static final String REMOVE = "remove";
@@ -66,26 +66,24 @@ public class ReflectionUtility {
     }
 
     public static Type getType(final Type[] types, final int pos) {
-        if (pos >= types.length) {
+        if (pos >= types.length)
             throw new RuntimeException("No type can be found at position "
-                    + pos);
-        }
+                                             + pos);
         return types[pos];
     }
+
     public static Class<?> getActualType(Type genericType, final int pos) {
 
-        if (genericType == null) {
+        if (genericType == null)
             return null;
-        }
         if (!ParameterizedType.class.isAssignableFrom(genericType.getClass())) {
-            if (genericType instanceof TypeVariable) {
+            if (genericType instanceof TypeVariable)
                 genericType = getType(((TypeVariable<?>) genericType).getBounds(), pos);
-            } else if (genericType instanceof WildcardType) {
+            else if (genericType instanceof WildcardType) {
                 final WildcardType wildcardType = (WildcardType) genericType;
                 Type[] bounds = wildcardType.getLowerBounds();
-                if (bounds.length == 0) {
+                if (bounds.length == 0)
                     bounds = wildcardType.getUpperBounds();
-                }
                 genericType = getType(bounds, pos);
             }
 
@@ -100,7 +98,7 @@ public class ReflectionUtility {
     @SuppressWarnings("rawtypes")
     public static Class getGenericClass(final Method method) {
         final Type returnType = method.getGenericReturnType();
-        return getActualType(returnType,0);
+        return getActualType(returnType, 0);
 
     }
 }

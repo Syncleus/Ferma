@@ -31,7 +31,8 @@ import com.tinkerpop.blueprints.Element;
 
 import java.util.Iterator;
 
-public abstract class FramingIterable<T, E extends Element> implements Iterable<T>  {
+public abstract class FramingIterable<T, E extends Element> implements Iterable<T> {
+
     private final Class<T> kind;
     private final Iterable<E> iterable;
     private final FramedGraph framedGraph;
@@ -64,7 +65,7 @@ public abstract class FramingIterable<T, E extends Element> implements Iterable<
             }
 
             public T next() {
-                if( explicit )
+                if (explicit)
                     return framedGraph.frameElementExplicit(this.iterator.next(), kind);
                 else
                     return framedGraph.frameElement(this.iterator.next(), kind);

@@ -33,81 +33,81 @@ import java.util.Set;
 
 class FramingMap<T extends ElementFrame> extends FrameMaker implements Map {
 
-	public FramingMap(final Map delegate, final FramedGraph graph) {
-		super(graph);
-		this.delegate = delegate;
-	}
+    public FramingMap(final Map delegate, final FramedGraph graph) {
+        super(graph);
+        this.delegate = delegate;
+    }
 
-	private final Map delegate;
+    private final Map delegate;
 
-	public Map getDelegate() {
-		return delegate;
-	}
+    public Map getDelegate() {
+        return delegate;
+    }
 
-	@Override
-	public int size() {
-		throw new UnsupportedOperationException();
-	}
+    @Override
+    public int size() {
+        throw new UnsupportedOperationException();
+    }
 
-	@Override
-	public boolean isEmpty() {
-		throw new UnsupportedOperationException();
-	}
+    @Override
+    public boolean isEmpty() {
+        throw new UnsupportedOperationException();
+    }
 
-	@Override
-	public boolean containsKey(final Object key) {
-		throw new UnsupportedOperationException();
-	}
+    @Override
+    public boolean containsKey(final Object key) {
+        throw new UnsupportedOperationException();
+    }
 
-	@Override
-	public boolean containsValue(final Object value) {
-		throw new UnsupportedOperationException();
-	}
+    @Override
+    public boolean containsValue(final Object value) {
+        throw new UnsupportedOperationException();
+    }
 
-	@Override
-	public Object get(final Object key) {
-		return removeFrame(delegate.get(makeFrame(key)));
-	}
+    @Override
+    public Object get(final Object key) {
+        return removeFrame(delegate.get(makeFrame(key)));
+    }
 
-	@Override
-	public Object put(final Object key, final Object value) {
-		return delegate.put(makeFrame(key), makeFrame(value));
-	}
+    @Override
+    public Object put(final Object key, final Object value) {
+        return delegate.put(makeFrame(key), makeFrame(value));
+    }
 
-	@Override
-	public Object remove(final Object key) {
-		throw new UnsupportedOperationException();
-	}
+    @Override
+    public Object remove(final Object key) {
+        throw new UnsupportedOperationException();
+    }
 
-	@Override
-	public void putAll(final Map m) {
-		throw new UnsupportedOperationException();
-	}
+    @Override
+    public void putAll(final Map m) {
+        throw new UnsupportedOperationException();
+    }
 
-	@Override
-	public void clear() {
-		throw new UnsupportedOperationException();
-	}
+    @Override
+    public void clear() {
+        throw new UnsupportedOperationException();
+    }
 
-	@Override
-	public Set keySet() {
-		throw new UnsupportedOperationException();
-	}
+    @Override
+    public Set keySet() {
+        throw new UnsupportedOperationException();
+    }
 
-	@Override
-	public Collection values() {
-		throw new UnsupportedOperationException();
-	}
+    @Override
+    public Collection values() {
+        throw new UnsupportedOperationException();
+    }
 
-	@Override
-	public Set entrySet() {
-		return delegate.entrySet();
-	}
+    @Override
+    public Set entrySet() {
+        return delegate.entrySet();
+    }
 
-	@Override
-	public String toString() {
+    @Override
+    public String toString() {
 
-		return delegate.toString();
-	}
+        return delegate.toString();
+    }
 
 }

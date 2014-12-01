@@ -35,57 +35,57 @@ import java.util.Comparator;
  */
 public class Comparators {
 
-	/**
-	 * Compare by Id.
-	 * 
-	 * @return
-	 */
-	public static <N extends ElementFrame> Comparator<N> id() {
-		return new Comparator<N>() {
-			@Override
-			public int compare(final N o1, final N o2) {
-				final Comparable c1 = o1.getId();
-				final Comparable c2 = o2.getId();
+    /**
+     * Compare by Id.
+     * 
+     * @return
+     */
+    public static <N extends ElementFrame> Comparator<N> id() {
+        return new Comparator<N>() {
+            @Override
+            public int compare(final N o1, final N o2) {
+                final Comparable c1 = o1.getId();
+                final Comparable c2 = o2.getId();
 
-				return c1.compareTo(c2);
-			}
-		};
-	}
+                return c1.compareTo(c2);
+            }
+        };
+    }
 
-	/**
-	 * Compare by id parsed as a long (Useful for tinkergraph)
-	 * 
-	 * @return
-	 */
-	public static <N extends ElementFrame> Comparator<N> idAsLong() {
-		return new Comparator<N>() {
-			@Override
-			public int compare(final N o1, final N o2) {
-				final Long c1 = Long.parseLong((String) o1.getId());
-				final Long c2 = Long.parseLong((String) o2.getId());
+    /**
+     * Compare by id parsed as a long (Useful for tinkergraph)
+     * 
+     * @return
+     */
+    public static <N extends ElementFrame> Comparator<N> idAsLong() {
+        return new Comparator<N>() {
+            @Override
+            public int compare(final N o1, final N o2) {
+                final Long c1 = Long.parseLong((String) o1.getId());
+                final Long c2 = Long.parseLong((String) o2.getId());
 
-				return c1.compareTo(c2);
-			}
-		};
-	}
+                return c1.compareTo(c2);
+            }
+        };
+    }
 
-	/**
-	 * Compare by property. Note that no value may be null.
-	 * 
-	 * @param property
-	 *            The property to compare by.
-	 * @return The result of comparing the property.
-	 */
-	public static <N extends ElementFrame> Comparator<N> property(final String property) {
-		return new Comparator<N>() {
-			@Override
-			public int compare(final N o1, final N o2) {
-				final Comparable c1 = o1.getProperty(property);
-				final Comparable c2 = o2.getProperty(property);
+    /**
+     * Compare by property. Note that no value may be null.
+     * 
+     * @param property
+     *            The property to compare by.
+     * @return The result of comparing the property.
+     */
+    public static <N extends ElementFrame> Comparator<N> property(final String property) {
+        return new Comparator<N>() {
+            @Override
+            public int compare(final N o1, final N o2) {
+                final Comparable c1 = o1.getProperty(property);
+                final Comparable c2 = o2.getProperty(property);
 
-				return c1.compareTo(c2);
-			}
-		};
-	}
+                return c1.compareTo(c2);
+            }
+        };
+    }
 
 }

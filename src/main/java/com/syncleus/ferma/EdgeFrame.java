@@ -1,4 +1,4 @@
- /******************************************************************************
+/******************************************************************************
  *                                                                             *
  *  Copyright: (c) Syncleus, Inc.                                              *
  *                                                                             *
@@ -18,59 +18,60 @@
  ******************************************************************************/
 package com.syncleus.ferma;
 
- import com.google.gson.JsonObject;
- import com.tinkerpop.blueprints.Edge;
+import com.google.gson.JsonObject;
+import com.tinkerpop.blueprints.Edge;
 
- public interface EdgeFrame extends ElementFrame {
-  @Override
-  Edge element();
+public interface EdgeFrame extends ElementFrame {
 
-  /**
-   * @return The label associated with this edge
-   */
-  String getLabel();
+    @Override
+    Edge element();
 
-  /**
-   * @return The in vertex for this edge.
-   */
-  VertexTraversal<?, ?, ?> inV();
+    /**
+     * @return The label associated with this edge
+     */
+    String getLabel();
 
-  /**
-   * @return The out vertex of this edge.
-   */
-  VertexTraversal<?, ?, ?> outV();
+    /**
+     * @return The in vertex for this edge.
+     */
+    VertexTraversal<?, ?, ?> inV();
 
-  /**
-   * @return The vertices for this edge.
-   */
-  VertexTraversal<?, ?, ?> bothV();
+    /**
+     * @return The out vertex of this edge.
+     */
+    VertexTraversal<?, ?, ?> outV();
 
-  /**
-   * Shortcut to get frameTraversal of current element
-   *
-   * @return
-   */
-  EdgeTraversal<?, ?, ?> traversal();
+    /**
+     * @return The vertices for this edge.
+     */
+    VertexTraversal<?, ?, ?> bothV();
 
-  JsonObject toJson();
+    /**
+     * Shortcut to get frameTraversal of current element
+     *
+     * @return
+     */
+    EdgeTraversal<?, ?, ?> traversal();
 
-  /**
-   * Reframe this element as a different type of frame.
-   *
-   * @param kind The new kind of frame.
-   * @return The new frame
-   */
-  <T> T reframe(Class<T> kind);
+    JsonObject toJson();
 
-  /**
-   * Reframe this element as a different type of frame.
-   *
-   * This will bypass the default type resolution and use the untyped resolver
-   * instead. This method is useful for speeding up a look up when type resolution
-   * isn't required.
-   *
-   * @param kind The new kind of frame.
-   * @return The new frame
-   */
-  <T> T reframeExplicit(Class<T> kind);
+    /**
+     * Reframe this element as a different type of frame.
+     *
+     * @param kind The new kind of frame.
+     * @return The new frame
+     */
+    <T> T reframe(Class<T> kind);
+
+    /**
+     * Reframe this element as a different type of frame.
+     *
+     * This will bypass the default type resolution and use the untyped resolver
+     * instead. This method is useful for speeding up a look up when type resolution
+     * isn't required.
+     *
+     * @param kind The new kind of frame.
+     * @return The new frame
+     */
+    <T> T reframeExplicit(Class<T> kind);
 }

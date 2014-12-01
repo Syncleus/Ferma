@@ -37,46 +37,43 @@ import com.tinkerpop.blueprints.TransactionalGraph;
  */
 public class Transaction implements AutoCloseable {
 
-	private final TransactionalGraph graph;
-	private boolean comitted;
-	private boolean rolledBack;
+    private final TransactionalGraph graph;
+    private boolean comitted;
+    private boolean rolledBack;
 
-	Transaction(final TransactionalGraph graph) {
-		this.graph = graph;
+    Transaction(final TransactionalGraph graph) {
+        this.graph = graph;
 
-	}
+    }
 
-	/**
-	 * Commit the transaction.
-	 */
-	public void commit() {
-		if (graph != null) {
-			graph.commit();
-		}
-		comitted = true;
-	}
+    /**
+     * Commit the transaction.
+     */
+    public void commit() {
+        if (graph != null)
+            graph.commit();
+        comitted = true;
+    }
 
-	/**
-	 * Rollback the transaction.
-	 */
-	public void rollback() {
-		if (graph != null) {
-			graph.rollback();
-		}
-		rolledBack = true;
-	}
+    /**
+     * Rollback the transaction.
+     */
+    public void rollback() {
+        if (graph != null)
+            graph.rollback();
+        rolledBack = true;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.io.Closeable#close()
-	 */
-	@Override
-	public void close() {
-		if (!comitted && !rolledBack) {
-			rollback();
-		}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.io.Closeable#close()
+     */
+    @Override
+    public void close() {
+        if (!comitted && !rolledBack)
+            rollback();
 
-	}
+    }
 
 }

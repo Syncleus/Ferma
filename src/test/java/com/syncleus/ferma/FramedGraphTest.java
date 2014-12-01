@@ -36,12 +36,12 @@ import com.tinkerpop.blueprints.TransactionalGraph;
 import com.tinkerpop.blueprints.impls.tg.TinkerGraph;
 
 public class FramedGraphTest {
-	
-	@Before
-	public void init() {
-		MockitoAnnotations.initMocks(this);
-	}
-	
+
+    @Before
+    public void init() {
+        MockitoAnnotations.initMocks(this);
+    }
+
     @Test
     public void testSanity() {
         final Graph g = new TinkerGraph();
@@ -55,11 +55,11 @@ public class FramedGraphTest {
         knows.setYears(15);
 
         final Person bryn = fg.v().has("name", "Bryn").next(Person.class);
-        
-        
+
+
         Assert.assertEquals("Bryn", bryn.getName());
         Assert.assertEquals(15, bryn.getKnowsList().get(0).getYears());
-   
+
         final Collection<? extends Integer> knowsCollection = fg.v().has("name", "Julia").bothE().property("years", Integer.class).aggregate().cap();
         Assert.assertEquals(1, knowsCollection.size());
     }
@@ -85,7 +85,7 @@ public class FramedGraphTest {
         final Collection<? extends Integer> knowsCollection = fg.v().has("name", "Julia").bothE().property("years", Integer.class).aggregate().cap();
         Assert.assertEquals(1, knowsCollection.size());
     }
-    
+
     @Test
     public void testJavaTyping() {
         final Graph g = new TinkerGraph();
@@ -142,16 +142,16 @@ public class FramedGraphTest {
 
     @Test
     public void testCustomFrameBuilder() {
-    	final Person o = new Person();
+        final Person o = new Person();
         final Graph g = new TinkerGraph();
         final FramedGraph fg = new DelegatingFramedGraph(g, new FrameFactory() {
-			
-			@SuppressWarnings("unchecked")
-			@Override
-			public <T> T create(final Element e, final Class<T> kind) {
-				return (T)o;
-			}
-		}, new SimpleTypeResolver());
+
+            @SuppressWarnings("unchecked")
+            @Override
+            public <T> T create(final Element e, final Class<T> kind) {
+                return (T) o;
+            }
+        }, new SimpleTypeResolver());
         final Person person = fg.addFramedVertex(Person.class);
         Assert.assertEquals(o, person);
     }
@@ -165,72 +165,71 @@ public class FramedGraphTest {
             @SuppressWarnings("unchecked")
             @Override
             public <T> T create(final Element e, final Class<T> kind) {
-                return (T)o;
+                return (T) o;
             }
         }, new SimpleTypeResolver());
         final Person person = fg.addFramedVertexExplicit(Person.class);
         Assert.assertEquals(o, person);
     }
-    
+
     @Mock
     private TransactionalGraph transactionalGraph;
-    
+
     public void testTransactionUnsupported() {
         final Graph g = new TinkerGraph();
         final FramedGraph fg = new DelegatingFramedGraph(g);
-        try(Transaction t = fg.tx()) {
-        	
+        try (Transaction t = fg.tx()) {
+
         }
 
     }
-    
+
     @Test
     public void testTransactionCommitted() {
-        
+
         final FramedGraph fg = new DelegatingFramedGraph(transactionalGraph);
-        try(Transaction t = fg.tx()) {
-        	t.commit();
+        try (Transaction t = fg.tx()) {
+            t.commit();
         }
 
         Mockito.verify(transactionalGraph).commit();
     }
-    
+
     @Test
     public void testTransactionRolledBack() {
-        
+
         final FramedGraph fg = new DelegatingFramedGraph(transactionalGraph);
-        try(Transaction t = fg.tx()) {
-        	t.rollback();
+        try (Transaction t = fg.tx()) {
+            t.rollback();
         }
 
         Mockito.verify(transactionalGraph).rollback();
     }
-    
+
     @Test
     public void testTransactionNotComitted() {
-        
+
         final FramedGraph fg = new DelegatingFramedGraph(transactionalGraph);
-        try(Transaction t = fg.tx()) {
-        	
+        try (Transaction t = fg.tx()) {
+
         }
 
         Mockito.verify(transactionalGraph).rollback();
     }
-    
+
     @Test
     public void testTransactionException() {
-        
+
         final FramedGraph fg = new DelegatingFramedGraph(transactionalGraph);
-        
-        try(Transaction t = fg.tx()) {
-        	throw new Exception();
+
+        try (Transaction t = fg.tx()) {
+            throw new Exception();
         }
-        catch(final Exception e) {
+        catch (final Exception e) {
         }
 
         Mockito.verify(transactionalGraph).rollback();
     }
-    
 
     @Test
     public void testUntypedFrames() {
@@ -245,11 +244,11 @@ public class FramedGraphTest {
         knows.setProperty("years", 15);
 
         final VertexFrame bryn = fg.v().has("name", "Bryn").next();
-        
-        
+
+
         Assert.assertEquals("Bryn", bryn.getProperty("name"));
         Assert.assertEquals(15, bryn.outE("knows").toList().get(0).getProperty("years"));
-   
+
         final Collection<? extends Integer> knowsCollection = fg.v().has("name", "Julia").bothE().property("years", Integer.class).aggregate().cap();
         Assert.assertEquals(1, knowsCollection.size());
     }

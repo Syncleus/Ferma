@@ -45,176 +45,176 @@ import com.tinkerpop.blueprints.Graph;
  */
 class SimpleTraversal<T, C, S, M> extends AbstractTraversal<T, C, S, M> {
 
-	private final FramedGraph graph;
-	private final com.tinkerpop.gremlin.java.GremlinPipeline pipeline;
-	private final Deque<MarkId> marks = new ArrayDeque<>();
-	private int markId = 0;
+    private final FramedGraph graph;
+    private final com.tinkerpop.gremlin.java.GremlinPipeline pipeline;
+    private final Deque<MarkId> marks = new ArrayDeque<>();
+    private int markId = 0;
 
-	protected SimpleTraversal(final FramedGraph graph, final Graph delegate) {
-		this(graph, new GremlinPipeline<>(delegate));
-	}
+    protected SimpleTraversal(final FramedGraph graph, final Graph delegate) {
+        this(graph, new GremlinPipeline<>(delegate));
+    }
 
-	protected SimpleTraversal(final FramedGraph graph, final Iterator starts) {
-		this(graph, new GremlinPipeline<>(starts));
-	}
+    protected SimpleTraversal(final FramedGraph graph, final Iterator starts) {
+        this(graph, new GremlinPipeline<>(starts));
+    }
 
-	protected SimpleTraversal(final FramedGraph graph, final ElementFrame starts) {
-		this(graph, new GremlinPipeline<>(starts.element()));
-	}
+    protected SimpleTraversal(final FramedGraph graph, final ElementFrame starts) {
+        this(graph, new GremlinPipeline<>(starts.element()));
+    }
 
-	public MarkId pushMark(final Traversal<?, ?, ?, ?> traversal) {
-		final MarkId mark = new MarkId();
-		mark.id = "traversalMark" + markId++;
-		mark.traversal = traversal;
-		marks.push(mark);
+    public MarkId pushMark(final Traversal<?, ?, ?, ?> traversal) {
+        final MarkId mark = new MarkId();
+        mark.id = "traversalMark" + markId++;
+        mark.traversal = traversal;
+        marks.push(mark);
 
-		return mark;
-	}
+        return mark;
+    }
 
-	@Override
-	public <W,X,Y,Z> MarkId<W,X,Y,Z> pushMark() {
+    @Override
+    public <W, X, Y, Z> MarkId<W, X, Y, Z> pushMark() {
 
-		return pushMark(this);
-	}
+        return pushMark(this);
+    }
 
-	@Override
-	public <W,X,Y,Z> MarkId<W,X,Y,Z> popMark() {
-		return marks.pop();
-	}
+    @Override
+    public <W, X, Y, Z> MarkId<W, X, Y, Z> popMark() {
+        return marks.pop();
+    }
 
-	private SimpleTraversal(final FramedGraph graph, final com.tinkerpop.gremlin.java.GremlinPipeline pipeline) {
-		this.graph = graph;
-		this.pipeline = pipeline;
+    private SimpleTraversal(final FramedGraph graph, final com.tinkerpop.gremlin.java.GremlinPipeline pipeline) {
+        this.graph = graph;
+        this.pipeline = pipeline;
 
-	}
+    }
 
-	/**
-	 * @return Cast the traversal to a {@link VertexTraversal}
-	 */
-	public VertexTraversal<C, S, M> castToVertices() {
-		return vertexTraversal;
-	}
+    /**
+     * @return Cast the traversal to a {@link VertexTraversal}
+     */
+    public VertexTraversal<C, S, M> castToVertices() {
+        return vertexTraversal;
+    }
 
-	/**
-	 * @return Cast the traversal to a {@link EdgeTraversal}
-	 */
-	public EdgeTraversal<C, S, M> castToEdges() {
-		return edgeTraversal;
-	}
+    /**
+     * @return Cast the traversal to a {@link EdgeTraversal}
+     */
+    public EdgeTraversal<C, S, M> castToEdges() {
+        return edgeTraversal;
+    }
 
-	@Override
-	protected <W,X,Y,Z> Traversal<W,X,Y,Z> castToTraversal() {
-		return (Traversal<W,X,Y,Z>) this;
-	}
+    @Override
+    protected <W, X, Y, Z> Traversal<W, X, Y, Z> castToTraversal() {
+        return (Traversal<W, X, Y, Z>) this;
+    }
 
-	@Override
-	protected com.tinkerpop.gremlin.java.GremlinPipeline pipeline() {
+    @Override
+    protected com.tinkerpop.gremlin.java.GremlinPipeline pipeline() {
 
-		return pipeline;
-	}
+        return pipeline;
+    }
 
-	@Override
-	protected FramedGraph graph() {
+    @Override
+    protected FramedGraph graph() {
 
-		return graph;
-	}
+        return graph;
+    }
 
-	@Override
-	protected <N> SplitTraversal<N> castToSplit() {
-		return splitTraversal;
-	}
+    @Override
+    protected <N> SplitTraversal<N> castToSplit() {
+        return splitTraversal;
+    }
 
-	private final SplitTraversal splitTraversal = new SplitTraversal() {
+    private final SplitTraversal splitTraversal = new SplitTraversal() {
 
-		@Override
-		public Traversal exhaustMerge() {
-			pipeline().exhaustMerge();
-			return castToTraversal();
-		}
+        @Override
+        public Traversal exhaustMerge() {
+            pipeline().exhaustMerge();
+            return castToTraversal();
+        }
 
-		@Override
-		public Traversal fairMerge() {
-			pipeline().fairMerge();
-			return castToTraversal();
-		}
-	};
+        @Override
+        public Traversal fairMerge() {
+            pipeline().fairMerge();
+            return castToTraversal();
+        }
+    };
 
-	private final EdgeTraversal edgeTraversal = new AbstractEdgeTraversal() {
+    private final EdgeTraversal edgeTraversal = new AbstractEdgeTraversal() {
 
-		@Override
-		public VertexTraversal castToVertices() {
-			return vertexTraversal;
-		}
+        @Override
+        public VertexTraversal castToVertices() {
+            return vertexTraversal;
+        }
 
-		@Override
-		public EdgeTraversal castToEdges() {
-			return edgeTraversal;
-		}
+        @Override
+        public EdgeTraversal castToEdges() {
+            return edgeTraversal;
+        }
 
-		@Override
-		protected FramedGraph graph() {
-			return graph;
-		}
+        @Override
+        protected FramedGraph graph() {
+            return graph;
+        }
 
-		@Override
-		protected com.tinkerpop.gremlin.java.GremlinPipeline pipeline() {
-			return pipeline;
-		}
+        @Override
+        protected com.tinkerpop.gremlin.java.GremlinPipeline pipeline() {
+            return pipeline;
+        }
 
-		@Override
-		protected Traversal castToTraversal() {
-			return SimpleTraversal.this;
-		}
+        @Override
+        protected Traversal castToTraversal() {
+            return SimpleTraversal.this;
+        }
 
-		public AbstractTraversal.MarkId pushMark() {
-			return SimpleTraversal.this.pushMark(this);
-		}
+        public AbstractTraversal.MarkId pushMark() {
+            return SimpleTraversal.this.pushMark(this);
+        }
 
-		public AbstractTraversal.MarkId popMark() {
-			return SimpleTraversal.this.popMark();
-		}
+        public AbstractTraversal.MarkId popMark() {
+            return SimpleTraversal.this.popMark();
+        }
 
-		public SplitTraversal castToSplit() {
-			return splitTraversal;
-		}
-	};
+        public SplitTraversal castToSplit() {
+            return splitTraversal;
+        }
+    };
 
-	private final VertexTraversal vertexTraversal = new AbstractVertexTraversal() {
-		@Override
-		public VertexTraversal castToVertices() {
-			return vertexTraversal;
-		}
+    private final VertexTraversal vertexTraversal = new AbstractVertexTraversal() {
+        @Override
+        public VertexTraversal castToVertices() {
+            return vertexTraversal;
+        }
 
-		@Override
-		public EdgeTraversal castToEdges() {
-			return edgeTraversal;
-		}
+        @Override
+        public EdgeTraversal castToEdges() {
+            return edgeTraversal;
+        }
 
-		@Override
-		protected  Traversal castToTraversal() {
-			return SimpleTraversal.this;
-		}
+        @Override
+        protected Traversal castToTraversal() {
+            return SimpleTraversal.this;
+        }
 
-		@Override
-		protected FramedGraph graph() {
-			return graph;
-		}
+        @Override
+        protected FramedGraph graph() {
+            return graph;
+        }
 
-		@Override
-		protected com.tinkerpop.gremlin.java.GremlinPipeline pipeline() {
-			return pipeline;
-		}
+        @Override
+        protected com.tinkerpop.gremlin.java.GremlinPipeline pipeline() {
+            return pipeline;
+        }
 
-		public AbstractTraversal.MarkId pushMark() {
-			return SimpleTraversal.this.pushMark(this);
-		}
+        public AbstractTraversal.MarkId pushMark() {
+            return SimpleTraversal.this.pushMark(this);
+        }
 
-		public AbstractTraversal.MarkId popMark() {
-			return SimpleTraversal.this.popMark();
-		}
+        public AbstractTraversal.MarkId popMark() {
+            return SimpleTraversal.this.popMark();
+        }
 
-		public SplitTraversal castToSplit() {
-			return splitTraversal;
-		}
-	};
+        public SplitTraversal castToSplit() {
+            return splitTraversal;
+        }
+    };
 }

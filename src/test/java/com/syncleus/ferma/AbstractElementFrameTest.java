@@ -29,15 +29,13 @@ import com.tinkerpop.blueprints.impls.tg.TinkerGraph;
 
 public class AbstractElementFrameTest {
 
-
     private Person p1;
     private Knows e1;
-    
-	
-	@Before
-	public void init() {
-		MockitoAnnotations.initMocks(this);
-		final Graph g = new TinkerGraph();
+
+    @Before
+    public void init() {
+        MockitoAnnotations.initMocks(this);
+        final Graph g = new TinkerGraph();
         FramedGraph fg = new DelegatingFramedGraph(g);
         p1 = fg.addFramedVertex(Person.class);
         Person p2 = fg.addFramedVertex(Person.class);
@@ -46,55 +44,54 @@ public class AbstractElementFrameTest {
         e1 = p1.addKnows(p2);
         e1.setYears(15);
 
-	}
-	
+    }
+
     @Test
     public void testGetId() {
-    	Assert.assertEquals("0", p1.getId());
-        
+        Assert.assertEquals("0", p1.getId());
+
     }
-    
+
     @Test
     public void testGetPropertyKeys() {
-    	Assert.assertEquals(Sets.newHashSet("name"), p1.getPropertyKeys());
+        Assert.assertEquals(Sets.newHashSet("name"), p1.getPropertyKeys());
     }
-    
+
     @Test
     public void testGetProperty() {
-    	Assert.assertEquals("Bryn", p1.getProperty("name"));
+        Assert.assertEquals("Bryn", p1.getProperty("name"));
     }
-    
+
     @Test
     public void testSetProperty() {
-    	p1.setProperty("name", "Bryn Cooke");
-    	Assert.assertEquals("Bryn Cooke", p1.getProperty("name"));
+        p1.setProperty("name", "Bryn Cooke");
+        Assert.assertEquals("Bryn Cooke", p1.getProperty("name"));
     }
-    
+
     @Test
     public void testSetPropertyNull() {
-    	p1.setProperty("name", null);
-    	Assert.assertNull(p1.getProperty("name"));
+        p1.setProperty("name", null);
+        Assert.assertNull(p1.getProperty("name"));
     }
-    
-    
+
     @Test
     public void testV() {
-    	Assert.assertEquals(2, p1.v().count());
+        Assert.assertEquals(2, p1.v().count());
     }
-    
+
     @Test
     public void testE() {
-    	Assert.assertEquals(1, p1.e().count());
+        Assert.assertEquals(1, p1.e().count());
     }
-    
+
     @Test
     public void testv() {
-    	Assert.assertEquals(p1, p1.v(p1.getId()).next(Person.class));
+        Assert.assertEquals(p1, p1.v(p1.getId()).next(Person.class));
     }
-    
+
     @Test
     public void teste() {
-    	Assert.assertEquals(e1, p1.e(e1.getId()).next(Knows.class));
+        Assert.assertEquals(e1, p1.e(e1.getId()).next(Knows.class));
     }
 
     @Test
@@ -106,17 +103,17 @@ public class AbstractElementFrameTest {
     public void testeExplicit() {
         Assert.assertEquals(e1, p1.e(e1.getId()).nextExplicit(Knows.class));
     }
-    
+
     @Test
     public void testRemove() {
-    	p1.remove();
-    	Assert.assertEquals(1, p1.v().count());
+        p1.remove();
+        Assert.assertEquals(1, p1.v().count());
     }
-    
+
     @Test
     public void testReframe() {
-    	final TVertex v1 = p1.reframe(TVertex.class);
-    	Assert.assertEquals(p1.getId(), v1.getId());
+        final TVertex v1 = p1.reframe(TVertex.class);
+        Assert.assertEquals(p1.getId(), v1.getId());
     }
 
     @Test
@@ -129,5 +126,5 @@ public class AbstractElementFrameTest {
     public void testvNull() {
         Assert.assertNull(p1.v("noId").next());
     }
-    
+
 }

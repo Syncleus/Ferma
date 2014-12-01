@@ -35,6 +35,7 @@ import java.lang.reflect.Modifier;
 import java.util.*;
 
 public class AnnotationFrameFactory implements FrameFactory {
+
     private final Map<Class<? extends Annotation>, MethodHandler> methodHandlers = new HashMap<>();
     private final Map<Class, Class> constructedClassCache = new HashMap<>();
     private final ReflectionCache reflectionCache;
@@ -62,14 +63,15 @@ public class AnnotationFrameFactory implements FrameFactory {
     public <T> T create(final Element element, final Class<T> kind) {
 
         Class<? extends T> resolvedKind = kind;
-        if( isAbstract(resolvedKind) )
+        if (isAbstract(resolvedKind))
             resolvedKind = constructClass(element, kind);
         try {
             final T object = resolvedKind.newInstance();
             if (object instanceof CachesReflection)
                 ((CachesReflection) object).setReflectionCache(this.reflectionCache);
             return object;
-        } catch (final InstantiationException | IllegalAccessException caught) {
+        }
+        catch (final InstantiationException | IllegalAccessException caught) {
             throw new IllegalArgumentException("kind could not be instantiated", caught);
         }
     }
@@ -84,31 +86,31 @@ public class AnnotationFrameFactory implements FrameFactory {
 
     private <E> Class<? extends E> constructClass(final Element element, final Class<E> clazz) {
         Class constructedClass = constructedClassCache.get(clazz);
-        if(constructedClass != null )
+        if (constructedClass != null)
             return constructedClass;
 
         DynamicType.Builder<? extends E> classBuilder;
-        if( clazz.isInterface() ) {
-            if( element instanceof Vertex)
+        if (clazz.isInterface())
+            if (element instanceof Vertex)
                 classBuilder = (DynamicType.Builder<? extends E>) new ByteBuddy().withImplementing(clazz).subclass(AbstractVertexFrame.class);
-            else if( element instanceof Edge)
+            else if (element instanceof Edge)
                 classBuilder = (DynamicType.Builder<? extends E>) new ByteBuddy().withImplementing(clazz).subclass(AbstractEdgeFrame.class);
             else
                 throw new IllegalStateException("class is neither an Edge or a vertex!");
-        }
         else {
-            if( element instanceof Vertex && ! VertexFrame.class.isAssignableFrom(clazz) )
+            if (element instanceof Vertex && !VertexFrame.class.isAssignableFrom(clazz))
                 throw new IllegalStateException(clazz.getName() + " Class is not a type of VertexFrame");
-            if( element instanceof Edge && ! EdgeFrame.class.isAssignableFrom(clazz) )
+            if (element instanceof Edge && !EdgeFrame.class.isAssignableFrom(clazz))
                 throw new IllegalStateException(clazz.getName() + " Class is not a type of EdgeFrame");
             classBuilder = new ByteBuddy().subclass(clazz);
         }
 
-        classBuilder = classBuilder.defineField("reflectionCache", ReflectionCache.class, Visibility.PRIVATE, FieldManifestation.PLAIN).implement(CachesReflection.class).intercept(FieldAccessor.ofBeanProperty());
+        classBuilder = classBuilder.defineField("reflectionCache", ReflectionCache.class, Visibility.PRIVATE, FieldManifestation.PLAIN).implement(CachesReflection.class).intercept(FieldAccessor.
+              ofBeanProperty());
 
         //try and construct any abstract methods that are left
-        for(final Method method : clazz.getMethods() ) {
-            if( isAbstract(method) ) {
+        for (final Method method : clazz.getMethods())
+            if (isAbstract(method))
                 annotation_loop:
                 for (final Annotation annotation : method.getAnnotations()) {
                     final MethodHandler handler = methodHandlers.get(annotation.annotationType());
@@ -117,8 +119,6 @@ public class AnnotationFrameFactory implements FrameFactory {
                         break;
                     }
                 }
-            }
-        }
 
         constructedClass = classBuilder.make().load(AnnotationFrameFactory.class.getClassLoader(), ClassLoadingStrategy.Default.WRAPPER).getLoaded();
         this.constructedClassCache.put(clazz, constructedClass);

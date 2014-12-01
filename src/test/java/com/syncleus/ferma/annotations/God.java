@@ -24,15 +24,15 @@ import com.tinkerpop.blueprints.Direction;
 
 public interface God extends VertexFrame {
     /*
-        @Adjacency(label="father")
-        God getFather();
+     @Adjacency(label="father")
+     God getFather();
 
-        @Adjacency(label="father", direction= Direction.IN)
-        Iterable<? extends God> getSons();
+     @Adjacency(label="father", direction= Direction.IN)
+     Iterable<? extends God> getSons();
 
-        @Adjacency(label="lives")
-        Location getHome();
-    */
+     @Adjacency(label="lives")
+     Location getHome();
+     */
 
     @Property("name")
     String getName();
@@ -49,54 +49,54 @@ public interface God extends VertexFrame {
     @Property("type")
     String getType();
 
-    @Adjacency(label="father", direction= Direction.IN)
+    @Adjacency(label = "father", direction = Direction.IN)
     Iterable<? extends God> getSons();
 
-    @Adjacency(label="father", direction= Direction.IN)
+    @Adjacency(label = "father", direction = Direction.IN)
     God getSon();
 
-    @Adjacency(label="father", direction= Direction.IN)
+    @Adjacency(label = "father", direction = Direction.IN)
     <N extends God> Iterable<? extends N> getSons(Class<? extends N> type);
 
-    @Adjacency(label="father", direction= Direction.OUT)
+    @Adjacency(label = "father", direction = Direction.OUT)
     <N extends God> Iterable<? extends N> getParents();
 
-    @Adjacency(label="father", direction= Direction.IN)
+    @Adjacency(label = "father", direction = Direction.IN)
     <N extends God> N getSon(Class<? extends N> type);
 
-    @Adjacency(label="father", direction= Direction.IN)
+    @Adjacency(label = "father", direction = Direction.IN)
     <N extends God> N addSon(Class<? extends N> type);
 
-    @Adjacency(label="father", direction= Direction.IN)
+    @Adjacency(label = "father", direction = Direction.IN)
     <N extends God> N addSon(Class<? extends N> type, Class<? extends FatherEdge> edge);
 
-    @Adjacency(label="father", direction= Direction.IN)
+    @Adjacency(label = "father", direction = Direction.IN)
     God addSon(God son);
 
-    @Adjacency(label="father", direction= Direction.IN)
+    @Adjacency(label = "father", direction = Direction.IN)
     VertexFrame addSon();
 
-    @Adjacency(label="father", direction= Direction.IN)
+    @Adjacency(label = "father", direction = Direction.IN)
     God addSon(God son, Class<? extends FatherEdge> edge);
 
-    @Adjacency(label="father", direction= Direction.IN)
+    @Adjacency(label = "father", direction = Direction.IN)
     void setSons(Iterable<? extends God> vertexSet);
 
-    @Adjacency(label="father", direction= Direction.IN)
+    @Adjacency(label = "father", direction = Direction.IN)
     void removeSon(God son);
 
-    @Incidence(label="father", direction= Direction.IN)
+    @Incidence(label = "father", direction = Direction.IN)
     Iterable<? extends EdgeFrame> getSonEdges();
 
-    @Incidence(label="father", direction= Direction.IN)
+    @Incidence(label = "father", direction = Direction.IN)
     <N extends FatherEdge> Iterable<? extends N> getSonEdges(Class<? extends N> type);
 
-    @Incidence(label="father", direction= Direction.IN)
+    @Incidence(label = "father", direction = Direction.IN)
     EdgeFrame getSonEdge();
 
-    @Incidence(label="father", direction= Direction.IN)
+    @Incidence(label = "father", direction = Direction.IN)
     <N extends FatherEdge> N getSonEdge(Class<? extends N> type);
 
-    @Incidence(label="father", direction= Direction.IN)
+    @Incidence(label = "father", direction = Direction.IN)
     void removeSonEdge(FatherEdge edge);
 }

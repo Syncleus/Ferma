@@ -37,77 +37,77 @@ import java.util.Iterator;
  */
 public class Storage<T> implements Collection<T> {
 
-	private T e;
+    private T e;
 
-	@Override
-	public int size() {
-		throw new UnsupportedOperationException();
-	}
+    @Override
+    public int size() {
+        throw new UnsupportedOperationException();
+    }
 
-	@Override
-	public boolean isEmpty() {
-		throw new UnsupportedOperationException();
-	}
+    @Override
+    public boolean isEmpty() {
+        throw new UnsupportedOperationException();
+    }
 
-	@Override
-	public boolean contains(final Object o) {
-		throw new UnsupportedOperationException();
-	}
+    @Override
+    public boolean contains(final Object o) {
+        throw new UnsupportedOperationException();
+    }
 
-	@Override
-	public Iterator<T> iterator() {
-		throw new UnsupportedOperationException();
-	}
+    @Override
+    public Iterator<T> iterator() {
+        throw new UnsupportedOperationException();
+    }
 
-	@Override
-	public Object[] toArray() {
-		throw new UnsupportedOperationException();
-	}
+    @Override
+    public Object[] toArray() {
+        throw new UnsupportedOperationException();
+    }
 
-	@Override
-	public <Z> Z[] toArray(final Z[] a) {
-		throw new UnsupportedOperationException();
-	}
+    @Override
+    public <Z> Z[] toArray(final Z[] a) {
+        throw new UnsupportedOperationException();
+    }
 
-	@Override
-	public boolean add(final T e) {
-		this.e = e;
-		return true;
-	}
+    @Override
+    public boolean add(final T e) {
+        this.e = e;
+        return true;
+    }
 
-	@Override
-	public boolean remove(final Object o) {
-		throw new UnsupportedOperationException();
-	}
+    @Override
+    public boolean remove(final Object o) {
+        throw new UnsupportedOperationException();
+    }
 
-	@Override
-	public boolean containsAll(final Collection<?> c) {
-		throw new UnsupportedOperationException();
-	}
+    @Override
+    public boolean containsAll(final Collection<?> c) {
+        throw new UnsupportedOperationException();
+    }
 
-	@Override
-	public boolean addAll(final Collection<? extends T> c) {
-		throw new UnsupportedOperationException();
-	}
+    @Override
+    public boolean addAll(final Collection<? extends T> c) {
+        throw new UnsupportedOperationException();
+    }
 
-	@Override
-	public boolean removeAll(final Collection<?> c) {
-		throw new UnsupportedOperationException();
-	}
+    @Override
+    public boolean removeAll(final Collection<?> c) {
+        throw new UnsupportedOperationException();
+    }
 
-	@Override
-	public boolean retainAll(final Collection<?> c) {
-		throw new UnsupportedOperationException();
-	}
+    @Override
+    public boolean retainAll(final Collection<?> c) {
+        throw new UnsupportedOperationException();
+    }
 
-	@Override
-	public void clear() {
-		throw new UnsupportedOperationException();
-	}
+    @Override
+    public void clear() {
+        throw new UnsupportedOperationException();
+    }
 
-	public T get() {
+    public T get() {
 
-		return e;
-	}
+        return e;
+    }
 
 }

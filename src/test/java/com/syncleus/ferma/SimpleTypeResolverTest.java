@@ -25,6 +25,7 @@ import org.junit.Test;
 import java.util.*;
 
 public class SimpleTypeResolverTest {
+
     private static final Set<Class<?>> TEST_TYPES = new HashSet<>(Arrays.asList(new Class<?>[]{Person.class, Programmer.class}));
 
     @Test

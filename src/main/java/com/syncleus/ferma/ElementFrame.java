@@ -23,6 +23,7 @@ import com.tinkerpop.blueprints.Element;
 import java.util.Set;
 
 public interface ElementFrame {
+
     /**
      * @return The id of this element.
      */

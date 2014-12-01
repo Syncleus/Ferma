@@ -37,74 +37,71 @@ import com.tinkerpop.blueprints.Edge;
  */
 public abstract class AbstractEdgeFrame extends AbstractElementFrame implements EdgeFrame {
 
-	@Override
-	public Edge element() {
-		return (Edge) super.element();
-	}
+    @Override
+    public Edge element() {
+        return (Edge) super.element();
+    }
 
-	@Override
-	public String getLabel() {
-		return element().getLabel();
-	}
+    @Override
+    public String getLabel() {
+        return element().getLabel();
+    }
 
-	@Override
-	public VertexTraversal<?, ?, ?> inV() {
-		return new SimpleTraversal(graph(), this).castToEdges().inV();
-	}
+    @Override
+    public VertexTraversal<?, ?, ?> inV() {
+        return new SimpleTraversal(graph(), this).castToEdges().inV();
+    }
 
-	@Override
-	public VertexTraversal<?, ?, ?> outV() {
-		return new SimpleTraversal(graph(), this).castToEdges().outV();
-	}
+    @Override
+    public VertexTraversal<?, ?, ?> outV() {
+        return new SimpleTraversal(graph(), this).castToEdges().outV();
+    }
 
-	@Override
-	public VertexTraversal<?, ?, ?> bothV() {
-		return new SimpleTraversal(graph(), this).castToEdges().bothV();
-	}
+    @Override
+    public VertexTraversal<?, ?, ?> bothV() {
+        return new SimpleTraversal(graph(), this).castToEdges().bothV();
+    }
 
-	@Override
-	public EdgeTraversal<?, ?, ?> traversal() {
-		return new SimpleTraversal(graph(), this).castToEdges();
-	}
+    @Override
+    public EdgeTraversal<?, ?, ?> traversal() {
+        return new SimpleTraversal(graph(), this).castToEdges();
+    }
 
-	@Override
-	public JsonObject toJson() {
-		final JsonObject json = new JsonObject();
-		if (getId() instanceof Number) {
-			json.addProperty("id", getId(Number.class));
-		}
-		if (getId() instanceof String) {
-			json.addProperty("id", getId(String.class));
-		}
-		json.addProperty("elementClass", "edge");
-		json.addProperty("label", getLabel());
-		for (final String key : getPropertyKeys()) {
+    @Override
+    public JsonObject toJson() {
+        final JsonObject json = new JsonObject();
+        if (getId() instanceof Number)
+            json.addProperty("id", getId(Number.class));
+        if (getId() instanceof String)
+            json.addProperty("id", getId(String.class));
+        json.addProperty("elementClass", "edge");
+        json.addProperty("label", getLabel());
+        for (final String key : getPropertyKeys()) {
 
-			final Object value = getProperty(key);
-			if (value instanceof Number) {
-				json.addProperty(key, (Number) value);
-			} else if (value instanceof String) {
-				json.addProperty(key, (String) value);
-			}
-		}
-		json.add("outV", outV().next().toJson());
-		json.add("inV", inV().next().toJson());
-		return json;
-	}
+            final Object value = getProperty(key);
+            if (value instanceof Number)
+                json.addProperty(key, (Number) value);
+            else if (value instanceof String)
+                json.addProperty(key, (String) value);
+        }
+        json.add("outV", outV().next().toJson());
+        json.add("inV", inV().next().toJson());
+        return json;
+    }
 
-	@Override
-	public String toString() {
-		final Gson gson = new GsonBuilder().setPrettyPrinting().create();
-		return gson.toJson(toJson());
-	}
-	
-	@Override
-	public <T> T reframe(final Class<T> kind) {
-		return graph().frameElement(element(), kind);
-	}
+    @Override
+    public String toString() {
+        final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        return gson.toJson(toJson());
+    }
 
-	@Override
-	public <T> T reframeExplicit(final Class<T> kind) {
-		return graph().frameElementExplicit(element(), kind);
-	}
+    @Override
+    public <T> T reframe(final Class<T> kind) {
+        return graph().frameElement(element(), kind);
+    }
+
+    @Override
+    public <T> T reframeExplicit(final Class<T> kind) {
+        return graph().frameElementExplicit(element(), kind);
+    }
 }

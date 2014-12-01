@@ -43,11 +43,10 @@ public class PathPipe<S> extends AbstractPipe<S, List> implements TransformPipe<
     private final PipeFunction[] pathFunctions;
 
     public PathPipe(final PipeFunction... pathFunctions) {
-        if (pathFunctions.length == 0) {
+        if (pathFunctions.length == 0)
             this.pathFunctions = null;
-        } else {
+        else
             this.pathFunctions = pathFunctions;
-        }
     }
 
     public void setStarts(final Iterator<S> starts) {
@@ -59,9 +58,9 @@ public class PathPipe<S> extends AbstractPipe<S, List> implements TransformPipe<
         if (this.starts instanceof Pipe) {
             this.starts.next();
             final List path = ((Pipe) this.starts).getCurrentPath();
-            if (null == this.pathFunctions) {
+            if (null == this.pathFunctions)
                 return path;
-            } else {
+            else {
                 final List closedPath = new Path();
                 int nextFunction = 0;
                 for (final Object object : path) {
@@ -70,10 +69,9 @@ public class PathPipe<S> extends AbstractPipe<S, List> implements TransformPipe<
                 }
                 return closedPath;
             }
-        } else {
-            throw new NoSuchElementException("The start of this pipe was not a pipe");
         }
+        else
+            throw new NoSuchElementException("The start of this pipe was not a pipe");
     }
-
 
 }

@@ -34,6 +34,7 @@ import java.lang.reflect.Method;
  * @since 0.1
  */
 public class InVertexMethodHandler implements MethodHandler {
+
     @Override
     public Class<InVertex> getAnnotationType() {
         return InVertex.class;
@@ -43,12 +44,11 @@ public class InVertexMethodHandler implements MethodHandler {
     public <E> DynamicType.Builder<E> processMethod(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
         final java.lang.reflect.Parameter[] arguments = method.getParameters();
 
-        if (ReflectionUtility.isGetMethod(method)) {
+        if (ReflectionUtility.isGetMethod(method))
             if (arguments == null || arguments.length == 0)
                 return this.getNode(builder, method, annotation);
             else
                 throw new IllegalStateException(method.getName() + " was annotated with @InVertex but had arguments.");
-        }
         else
             throw new IllegalStateException(method.getName() + " was annotated with @InVertex but did not begin with: get");
     }
@@ -58,6 +58,7 @@ public class InVertexMethodHandler implements MethodHandler {
     }
 
     public static final class getVertexInterceptor {
+
         @RuntimeType
         public static Object getVertex(@This final EdgeFrame thiz, @Origin final Method method) {
             return thiz.inV().next(method.getReturnType());

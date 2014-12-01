@@ -34,28 +34,29 @@ import com.tinkerpop.blueprints.Element;
  * may optionally store metadata about the frame type on the element.
  */
 public interface TypeResolver {
-	String TYPE_RESOLUTION_KEY = "ferma_type";
 
-	/**
-	 * Resolve the type of frame that a an element should be.
-	 * 
-	 * @param element
-	 *            The element that is being framed.
-	 * @param kind
-	 *            The kind of frame that is being requested by the client code.
-	 * @return The kind of frame
-	 */
-	<T> Class<? extends T> resolve(Element element, Class<T> kind);
+    String TYPE_RESOLUTION_KEY = "ferma_type";
 
-	/**
-	 * Called when a new element is created on the graph. Initialization can be
-	 * performed, for instance to save the Java type of the frame on the
-	 * underlying element.
-	 * 
-	 * @param element
-	 *            The element that was created.
-	 * @param kind
-	 *            The kind of frame that was resolved.
-	 */
-	void init(Element element, Class<?> kind);
+    /**
+     * Resolve the type of frame that a an element should be.
+     * 
+     * @param element
+     *            The element that is being framed.
+     * @param kind
+     *            The kind of frame that is being requested by the client code.
+     * @return The kind of frame
+     */
+    <T> Class<? extends T> resolve(Element element, Class<T> kind);
+
+    /**
+     * Called when a new element is created on the graph. Initialization can be
+     * performed, for instance to save the Java type of the frame on the
+     * underlying element.
+     * 
+     * @param element
+     *            The element that was created.
+     * @param kind
+     *            The kind of frame that was resolved.
+     */
+    void init(Element element, Class<?> kind);
 }

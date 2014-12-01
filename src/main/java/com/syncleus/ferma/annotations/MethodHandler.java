@@ -28,6 +28,7 @@ import java.lang.reflect.Method;
  * Instances of this class should be threadsafe.
  */
 public interface MethodHandler {
+
     /**
      * @return The annotation type that this handler responds to.
      */

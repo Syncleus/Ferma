@@ -27,32 +27,32 @@
  */
 package com.syncleus.ferma;
 
-
 /**
  * Frames the argument before delegation.
  *
  * @param <T>
  */
 class FramingSideEffectFunction<T, K extends ElementFrame> extends FrameMaker implements SideEffectFunction<T> {
-	private final SideEffectFunction<T> delegate;
 
-	public FramingSideEffectFunction(final SideEffectFunction<T> delegate, final FramedGraph graph, final Class<K> kind) {
-		super(graph, kind);
-		this.delegate = delegate;
+    private final SideEffectFunction<T> delegate;
 
-	}
+    public FramingSideEffectFunction(final SideEffectFunction<T> delegate, final FramedGraph graph, final Class<K> kind) {
+        super(graph, kind);
+        this.delegate = delegate;
 
-	public FramingSideEffectFunction(final SideEffectFunction<T> delegate, final FramedGraph graph) {
-		super(graph);
-		this.delegate = delegate;
+    }
 
-	}
+    public FramingSideEffectFunction(final SideEffectFunction<T> delegate, final FramedGraph graph) {
+        super(graph);
+        this.delegate = delegate;
 
-	@Override
-	public void execute(T argument) {
-		argument = makeFrame(argument);
+    }
 
-		delegate.execute(argument);
-	}
+    @Override
+    public void execute(T argument) {
+        argument = makeFrame(argument);
+
+        delegate.execute(argument);
+    }
 
 }

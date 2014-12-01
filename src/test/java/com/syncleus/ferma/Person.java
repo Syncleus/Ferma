@@ -23,9 +23,6 @@ import java.util.List;
 
 public class Person extends AbstractVertexFrame {
 
-
-
-
     public String getName() {
         return getProperty("name");
     }
@@ -51,7 +48,7 @@ public class Person extends AbstractVertexFrame {
     public List<? extends Knows> getKnowsListExplicit() {
         return outE("knows").toListExplicit(Knows.class);
     }
-    
+
     public List<? extends Person> getKnowsCollectionVertices() {
         return out("knows").toList(Person.class);
     }
@@ -59,7 +56,6 @@ public class Person extends AbstractVertexFrame {
     public List<? extends Person> getKnowsCollectionVerticesExplicit() {
         return out("knows").toListExplicit(Person.class);
     }
-
 
     public Person getFirst() {
         return out("knows").next(Person.class);
@@ -76,6 +72,5 @@ public class Person extends AbstractVertexFrame {
     public Knows addKnowsExplicit(final Person friend) {
         return addFramedEdgeExplicit("knows", friend, Knows.class);
     }
-
 
 }

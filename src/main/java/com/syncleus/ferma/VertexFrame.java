@@ -27,6 +27,7 @@ public interface VertexFrame extends ElementFrame {
      *
      * @see FramedElement#element()
      */
+
     Vertex element();
 
     /**

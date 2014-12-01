@@ -35,6 +35,6 @@ package com.syncleus.ferma;
  */
 public interface SideEffectFunction<T> {
 
-	void execute(T o);
+    void execute(T o);
 
 }

@@ -21,6 +21,7 @@ package com.syncleus.ferma;
 import com.tinkerpop.blueprints.Vertex;
 
 public class FramingVertexIterable<T> extends FramingIterable<T, Vertex> {
+
     public FramingVertexIterable(final FramedGraph framedGraph, final Iterable<Vertex> iterable, final Class<T> kind) {
         super(framedGraph, iterable, kind);
     }

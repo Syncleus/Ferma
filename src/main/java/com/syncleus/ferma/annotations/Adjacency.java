@@ -41,6 +41,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface Adjacency {
+
     /**
      * The label of the edges making the adjacency between the vertices.
      *

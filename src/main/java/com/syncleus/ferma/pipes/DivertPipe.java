@@ -41,51 +41,50 @@ import com.tinkerpop.pipes.util.PipeHelper;
 
 public class DivertPipe<S, T> extends AbstractMetaPipe<S, S> {
 
-	private final SideEffectPipe<S, T> pipeToCap;
-	
-	private final PipeFunction<T, ?> sideEffectFunction;
+    private final SideEffectPipe<S, T> pipeToCap;
 
-	public DivertPipe(final SideEffectPipe<S, T> pipeToCap, final PipeFunction<T, ?> sideEffectFunction) {
-		this.pipeToCap = pipeToCap;
-		this.sideEffectFunction = sideEffectFunction;
-	}
+    private final PipeFunction<T, ?> sideEffectFunction;
 
-	public void setStarts(final Iterator<S> starts) {
-		this.pipeToCap.setStarts(starts);
-	}
+    public DivertPipe(final SideEffectPipe<S, T> pipeToCap, final PipeFunction<T, ?> sideEffectFunction) {
+        this.pipeToCap = pipeToCap;
+        this.sideEffectFunction = sideEffectFunction;
+    }
 
-	protected S processNextStart() {
-		if (this.pipeToCap instanceof SideEffectPipe.LazySideEffectPipe) {
-			final S next = this.pipeToCap.next();
-			sideEffectFunction.compute(this.pipeToCap.getSideEffect());
-			return next;
-		} else {
+    public void setStarts(final Iterator<S> starts) {
+        this.pipeToCap.setStarts(starts);
+    }
 
-			try {
-				return this.pipeToCap.next();
-			} catch (final NoSuchElementException e) {
-				sideEffectFunction.compute(this.pipeToCap.getSideEffect());
-				throw FastNoSuchElementException.instance();
-			}
-		
-		}
-	}
+    protected S processNextStart() {
+        if (this.pipeToCap instanceof SideEffectPipe.LazySideEffectPipe) {
+            final S next = this.pipeToCap.next();
+            sideEffectFunction.compute(this.pipeToCap.getSideEffect());
+            return next;
+        }
+        else
+            try {
+                return this.pipeToCap.next();
+            }
+            catch (final NoSuchElementException e) {
+                sideEffectFunction.compute(this.pipeToCap.getSideEffect());
+                throw FastNoSuchElementException.instance();
+            }
+    }
 
-	public List getCurrentPath() {
-		if (this.pathEnabled) {
-			final List list = this.pipeToCap.getCurrentPath();
-			list.add(this.currentEnd);
-			return list;
-		} else {
-			throw new RuntimeException(Pipe.NO_PATH_MESSAGE);
-		}
-	}
+    public List getCurrentPath() {
+        if (this.pathEnabled) {
+            final List list = this.pipeToCap.getCurrentPath();
+            list.add(this.currentEnd);
+            return list;
+        }
+        else
+            throw new RuntimeException(Pipe.NO_PATH_MESSAGE);
+    }
 
-	public String toString() {
-		return PipeHelper.makePipeString(this, this.pipeToCap);
-	}
+    public String toString() {
+        return PipeHelper.makePipeString(this, this.pipeToCap);
+    }
 
-	public List<Pipe> getPipes() {
-		return Arrays.asList((Pipe) this.pipeToCap);
-	}
+    public List<Pipe> getPipes() {
+        return Arrays.asList((Pipe) this.pipeToCap);
+    }
 }

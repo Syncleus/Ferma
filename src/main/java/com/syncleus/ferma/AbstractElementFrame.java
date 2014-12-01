@@ -37,162 +37,157 @@ import com.tinkerpop.blueprints.Element;
  */
 public abstract class AbstractElementFrame implements ElementFrame {
 
-	private Element element;
-	private FramedGraph graph;
+    private Element element;
+    private FramedGraph graph;
 
-	/**
-	 * This method is called anytime an element is instantiated. If the element is a new element or an existing element
-	 * this method will be called.
-	 *
-	 * @param graph The graph this element exists in.
-	 * @param element The raw blueprints element.
-	 */
-	protected void init(final FramedGraph graph, final Element element) {
-		this.graph = graph;
-		this.element = element;
-	}
+    /**
+     * This method is called anytime an element is instantiated. If the element is a new element or an existing element
+     * this method will be called.
+     *
+     * @param graph The graph this element exists in.
+     * @param element The raw blueprints element.
+     */
+    protected void init(final FramedGraph graph, final Element element) {
+        this.graph = graph;
+        this.element = element;
+    }
 
-	/**
-	 * This method is only called when creating new elements that don't already exist in the graph. This method should
-	 * be overridden to initalize any properties of an element on its creation. If an element is being framed that
-	 * already exists in the graph this method will not be called.
-	 */
-	protected void init() {
+    /**
+     * This method is only called when creating new elements that don't already exist in the graph. This method should
+     * be overridden to initalize any properties of an element on its creation. If an element is being framed that
+     * already exists in the graph this method will not be called.
+     */
+    protected void init() {
 
-	}
+    }
 
-	@Override
-	public <N> N getId() {
-		return (N) element.getId();
-	}
+    @Override
+    public <N> N getId() {
+        return (N) element.getId();
+    }
 
-	@Override
-	public Set<String> getPropertyKeys() {
-		return element.getPropertyKeys();
-	}
+    @Override
+    public Set<String> getPropertyKeys() {
+        return element.getPropertyKeys();
+    }
 
-	@Override
-	public Class<?> getTypeResolution() {
-		final String typeResolutionName = this.getProperty(TypeResolver.TYPE_RESOLUTION_KEY);
-		if( typeResolutionName == null )
-			return null;
+    @Override
+    public Class<?> getTypeResolution() {
+        final String typeResolutionName = this.getProperty(TypeResolver.TYPE_RESOLUTION_KEY);
+        if (typeResolutionName == null)
+            return null;
 
-		if( this instanceof CachesReflection )
-			return ((CachesReflection)this).getReflectionCache().forName(typeResolutionName);
-		else {
-			try {
-				return Class.forName(typeResolutionName);
-			}
-			catch(final ClassNotFoundException caught) {
-				throw new IllegalStateException("The type resolution class specified in the element could not be found", caught);
-			}
-		}
-	}
+        if (this instanceof CachesReflection)
+            return ((CachesReflection) this).getReflectionCache().forName(typeResolutionName);
+        else
+            try {
+                return Class.forName(typeResolutionName);
+            }
+            catch (final ClassNotFoundException caught) {
+                throw new IllegalStateException("The type resolution class specified in the element could not be found", caught);
+            }
+    }
 
-	@Override
-	public void setTypeResolution(final Class<?> type) {
-		this.setProperty(TypeResolver.TYPE_RESOLUTION_KEY, type.getName());
-	}
+    @Override
+    public void setTypeResolution(final Class<?> type) {
+        this.setProperty(TypeResolver.TYPE_RESOLUTION_KEY, type.getName());
+    }
 
-	@Override
-	public void removeTypeResolution() {
-		this.element().removeProperty(TypeResolver.TYPE_RESOLUTION_KEY);
-	}
+    @Override
+    public void removeTypeResolution() {
+        this.element().removeProperty(TypeResolver.TYPE_RESOLUTION_KEY);
+    }
 
-	@Override
-	public void remove() {
-		element.remove();
-	}
+    @Override
+    public void remove() {
+        element.remove();
+    }
 
-	@Override
-	public Element element() {
-		return element;
-	}
+    @Override
+    public Element element() {
+        return element;
+    }
 
-	@Override
-	public FramedGraph graph() {
-		return graph;
-	}
+    @Override
+    public FramedGraph graph() {
+        return graph;
+    }
 
-	@Override
-	public <T> T getProperty(final String name) {
-		return element.getProperty(name);
-	}
+    @Override
+    public <T> T getProperty(final String name) {
+        return element.getProperty(name);
+    }
 
-	@Override
-	public <T> T getProperty(final String name, final Class<T> type) {
-		if (type.isEnum()) {
-			return (T) Enum.valueOf((Class<Enum>) type, (String) element.getProperty(name));
-		}
+    @Override
+    public <T> T getProperty(final String name, final Class<T> type) {
+        if (type.isEnum())
+            return (T) Enum.valueOf((Class<Enum>) type, (String) element.getProperty(name));
 
-		return element.getProperty(name);
-	}
+        return element.getProperty(name);
+    }
 
-	@Override
-	public void setProperty(final String name, final Object value) {
-		if (value == null) {
-			element.removeProperty(name);
-		} else {
-			if (value instanceof Enum) {
-				element.setProperty(name, value.toString());
-			} else {
-				element.setProperty(name, value);
-			}
-		}
-	}
+    @Override
+    public void setProperty(final String name, final Object value) {
+        if (value == null)
+            element.removeProperty(name);
+        else if (value instanceof Enum)
+            element.setProperty(name, value.toString());
+        else
+            element.setProperty(name, value);
+    }
 
-	@Override
-	public VertexTraversal<?, ?, ?> v() {
-		return graph.v();
-	}
+    @Override
+    public VertexTraversal<?, ?, ?> v() {
+        return graph.v();
+    }
 
-	@Override
-	public EdgeTraversal<?, ?, ?> e() {
-		return graph.e();
-	}
+    @Override
+    public EdgeTraversal<?, ?, ?> e() {
+        return graph.e();
+    }
 
-	@Override
-	public VertexTraversal<?, ?, ?> v(final Object... ids) {
-		return graph.v(ids);
-	}
+    @Override
+    public VertexTraversal<?, ?, ?> v(final Object... ids) {
+        return graph.v(ids);
+    }
 
-	@Override
-	public EdgeTraversal<?, ?, ?> e(final Object... ids) {
-		return graph.e(ids);
-	}
+    @Override
+    public EdgeTraversal<?, ?, ?> e(final Object... ids) {
+        return graph.e(ids);
+    }
 
-	@Override
-	public int hashCode() {
-		return element.hashCode();
-	}
+    @Override
+    public int hashCode() {
+        return element.hashCode();
+    }
 
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		final AbstractElementFrame other = (AbstractElementFrame) obj;
-		if (element == null) {
-			if (other.element != null)
-				return false;
-		} else if (!element.equals(other.element))
-			return false;
-		return true;
-	}
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        final AbstractElementFrame other = (AbstractElementFrame) obj;
+        if (element == null) {
+            if (other.element != null)
+                return false;
+        }
+        else if (!element.equals(other.element))
+            return false;
+        return true;
+    }
 
-	protected <N> N getId(final Class<N> clazz) {
+    protected <N> N getId(final Class<N> clazz) {
 
-		return (N) getId();
-	}
+        return (N) getId();
+    }
 
-	@Override
-	public String toString() {
+    @Override
+    public String toString() {
 
-		return element().toString();
-	}
-	
-	
+        return element().toString();
+    }
+
 }

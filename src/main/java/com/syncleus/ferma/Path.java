@@ -31,16 +31,14 @@ import java.util.ArrayList;
 
 public class Path extends ArrayList<Object> {
 
-	public <T> T get(final int index, final Class<T> clazz) {
-		
-		final T object = (T) get(index);
-		if(object instanceof TVertex) {
-			return (T) ((TVertex) object).reframe((Class)clazz);
-		}
-		if(object instanceof TEdge) {
-			return (T) ((TEdge) object).reframe((Class)clazz);
-		}
-		return object;
-	}
+    public <T> T get(final int index, final Class<T> clazz) {
+
+        final T object = (T) get(index);
+        if (object instanceof TVertex)
+            return (T) ((TVertex) object).reframe((Class) clazz);
+        if (object instanceof TEdge)
+            return (T) ((TEdge) object).reframe((Class) clazz);
+        return object;
+    }
 
 }

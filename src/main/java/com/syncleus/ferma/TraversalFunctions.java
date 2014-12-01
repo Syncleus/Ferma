@@ -28,13 +28,14 @@
 package com.syncleus.ferma;
 
 public class TraversalFunctions {
-	public static <A> TraversalFunction<A, A> identity() {
-		return new TraversalFunction<A, A>() {
 
-			@Override
-			public A compute(final A argument) {
-				return argument;
-			}
-		};
-	}
+    public static <A> TraversalFunction<A, A> identity() {
+        return new TraversalFunction<A, A>() {
+
+            @Override
+            public A compute(final A argument) {
+                return argument;
+            }
+        };
+    }
 }

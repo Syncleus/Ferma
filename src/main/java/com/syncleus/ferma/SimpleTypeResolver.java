@@ -25,6 +25,7 @@ import com.tinkerpop.blueprints.Element;
  * the element.
  */
 public class SimpleTypeResolver implements TypeResolver {
+
     private final ReflectionCache reflectionCache;
 
     /**
@@ -52,12 +53,13 @@ public class SimpleTypeResolver implements TypeResolver {
     @Override
     public <T> Class<? extends T> resolve(final Element element, final Class<T> kind) {
         final String nodeClazz = element.getProperty(TYPE_RESOLUTION_KEY);
-        if( nodeClazz == null )
+        if (nodeClazz == null)
             return kind;
 
         final Class<T> nodeKind = (Class<T>) this.reflectionCache.forName(nodeClazz);
 
-        if(kind.isAssignableFrom(nodeKind) || kind.equals(VertexFrame.class) || kind.equals(EdgeFrame.class) || kind.equals(AbstractVertexFrame.class) || kind.equals(AbstractEdgeFrame.class) || kind.equals(Object.class))
+        if (kind.isAssignableFrom(nodeKind) || kind.equals(VertexFrame.class) || kind.equals(EdgeFrame.class) || kind.equals(AbstractVertexFrame.class) || kind.equals(AbstractEdgeFrame.class) || kind.
+              equals(Object.class))
             return nodeKind;
         else
             return kind;
@@ -66,8 +68,7 @@ public class SimpleTypeResolver implements TypeResolver {
     @Override
     public void init(final Element element, final Class<?> kind) {
         final String clazz = element.getProperty(TYPE_RESOLUTION_KEY);
-        if (clazz == null) {
+        if (clazz == null)
             element.setProperty(TYPE_RESOLUTION_KEY, kind.getName());
-        }
     }
 }

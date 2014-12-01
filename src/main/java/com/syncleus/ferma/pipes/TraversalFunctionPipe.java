@@ -36,61 +36,61 @@ import com.tinkerpop.pipes.Pipe;
 
 public class TraversalFunctionPipe implements TraversalFunction {
 
-	private final TraversalFunction delegate;
+    private final TraversalFunction delegate;
 
-	public TraversalFunctionPipe(final TraversalFunction delegate) {
-		this.delegate = delegate;
-	}
+    public TraversalFunctionPipe(final TraversalFunction delegate) {
+        this.delegate = delegate;
+    }
 
-	@Override
-	public Object compute(final Object argument) {
-		final Object result = delegate.compute(argument);
-		if(result instanceof Iterator) {
-			final Iterator i = (Iterator) result; 
-			return new Pipe() {
+    @Override
+    public Object compute(final Object argument) {
+        final Object result = delegate.compute(argument);
+        if (result instanceof Iterator) {
+            final Iterator i = (Iterator) result;
+            return new Pipe() {
 
-				@Override
-				public boolean hasNext() {
-					return i.hasNext();
-				}
+                @Override
+                public boolean hasNext() {
+                    return i.hasNext();
+                }
 
-				@Override
-				public Object next() {
-					return i.next();
-				}
+                @Override
+                public Object next() {
+                    return i.next();
+                }
 
-				@Override
-				public Iterator iterator() {
-					return null;
-				}
+                @Override
+                public Iterator iterator() {
+                    return null;
+                }
 
-				@Override
-				public void setStarts(final Iterator starts) {
-					
-				}
+                @Override
+                public void setStarts(final Iterator starts) {
 
-				@Override
-				public void setStarts(final Iterable starts) {
-					
-				}
+                }
 
-				@Override
-				public List getCurrentPath() {
-					return null;
-				}
+                @Override
+                public void setStarts(final Iterable starts) {
 
-				@Override
-				public void enablePath(final boolean enable) {
-					
-				}
+                }
 
-				@Override
-				public void reset() {
-					
-				}
-			};
-		}
-		return result;
-	}
+                @Override
+                public List getCurrentPath() {
+                    return null;
+                }
+
+                @Override
+                public void enablePath(final boolean enable) {
+
+                }
+
+                @Override
+                public void reset() {
+
+                }
+            };
+        }
+        return result;
+    }
 
 }

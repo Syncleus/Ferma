@@ -39,6 +39,7 @@ import java.util.Set;
  * @since 0.1
  */
 public class IncidenceMethodHandler implements MethodHandler {
+
     @Override
     public Class<Incidence> getAnnotationType() {
         return Incidence.class;
@@ -48,13 +49,13 @@ public class IncidenceMethodHandler implements MethodHandler {
     public <E> DynamicType.Builder<E> processMethod(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
         final java.lang.reflect.Parameter[] arguments = method.getParameters();
 
-        if( ReflectionUtility.isGetMethod(method) ) {
-            if( arguments == null  || arguments.length == 0 )
+        if (ReflectionUtility.isGetMethod(method))
+            if (arguments == null || arguments.length == 0)
                 if (Iterable.class.isAssignableFrom(method.getReturnType()))
                     return this.getEdgesDefault(builder, method, annotation);
                 else
                     return this.getEdgeDefault(builder, method, annotation);
-            else if( arguments.length == 1 ) {
+            else if (arguments.length == 1) {
                 if (!(Class.class.isAssignableFrom(arguments[0].getType())))
                     throw new IllegalStateException(method.getName() + " was annotated with @Incidence, had a single argument, but that argument was not of the type Class");
 
@@ -65,16 +66,13 @@ public class IncidenceMethodHandler implements MethodHandler {
             }
             else
                 throw new IllegalStateException(method.getName() + " was annotated with @Incidence but had more than 1 arguments.");
-        }
-        else if( ReflectionUtility.isRemoveMethod(method) ) {
-            if( arguments == null  || arguments.length == 0 )
+        else if (ReflectionUtility.isRemoveMethod(method))
+            if (arguments == null || arguments.length == 0)
                 throw new IllegalStateException(method.getName() + " was annotated with @Incidence but had no arguments.");
-            else if( arguments.length == 1 ) {
+            else if (arguments.length == 1)
                 return this.removeEdge(builder, method, annotation);
-            }
             else
                 throw new IllegalStateException(method.getName() + " was annotated with @Incidence but had more than 1 arguments.");
-        }
         else
             throw new IllegalStateException(method.getName() + " was annotated with @Incidence but did not begin with: get, remove");
     }
@@ -100,6 +98,7 @@ public class IncidenceMethodHandler implements MethodHandler {
     }
 
     public static final class GetEdgesDefaultInterceptor {
+
         @RuntimeType
         public static Iterable getEdges(@This final VertexFrame thiz, @Origin final Method method) {
             final Incidence annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Incidence.class);
@@ -107,41 +106,43 @@ public class IncidenceMethodHandler implements MethodHandler {
             final String label = annotation.label();
 
             switch (direction) {
-                case BOTH:
-                    return thiz.bothE(label).frame(VertexFrame.class);
-                case IN:
-                    return thiz.inE(label).frame(VertexFrame.class);
-                //Assume out direction
-                default:
-                    return thiz.outE(label).frame(VertexFrame.class);
+            case BOTH:
+                return thiz.bothE(label).frame(VertexFrame.class);
+            case IN:
+                return thiz.inE(label).frame(VertexFrame.class);
+            //Assume out direction
+            default:
+                return thiz.outE(label).frame(VertexFrame.class);
             }
 
         }
     }
 
     public static final class GetEdgesByTypeInterceptor {
+
         @RuntimeType
         public static Iterable getEdges(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final Class type) {
             final Incidence annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Incidence.class);
             final Direction direction = annotation.direction();
             final String label = annotation.label();
             final String typeName = type.getName();
-            final Set<? extends String> allAllowedValues = ((CachesReflection)thiz).getReflectionCache().getSubTypeNames(typeName);
+            final Set<? extends String> allAllowedValues = ((CachesReflection) thiz).getReflectionCache().getSubTypeNames(typeName);
 
             switch (direction) {
-                case BOTH:
-                    return thiz.bothE(label).has(TypeResolver.TYPE_RESOLUTION_KEY, Tokens.T.in, allAllowedValues).frame(type);
-                case IN:
-                    return thiz.inE(label).has(TypeResolver.TYPE_RESOLUTION_KEY, Tokens.T.in, allAllowedValues).frame(type);
-                //Assume out direction
-                default:
-                    return thiz.outE(label).has(TypeResolver.TYPE_RESOLUTION_KEY, Tokens.T.in, allAllowedValues).frame(type);
+            case BOTH:
+                return thiz.bothE(label).has(TypeResolver.TYPE_RESOLUTION_KEY, Tokens.T.in, allAllowedValues).frame(type);
+            case IN:
+                return thiz.inE(label).has(TypeResolver.TYPE_RESOLUTION_KEY, Tokens.T.in, allAllowedValues).frame(type);
+            //Assume out direction
+            default:
+                return thiz.outE(label).has(TypeResolver.TYPE_RESOLUTION_KEY, Tokens.T.in, allAllowedValues).frame(type);
             }
 
         }
     }
 
     public static final class GetEdgeDefaultInterceptor {
+
         @RuntimeType
         public static Object getEdges(@This final VertexFrame thiz, @Origin final Method method) {
             final Incidence annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Incidence.class);
@@ -149,41 +150,43 @@ public class IncidenceMethodHandler implements MethodHandler {
             final String label = annotation.label();
 
             switch (direction) {
-                case BOTH:
-                    return thiz.bothE(label).next(VertexFrame.class);
-                case IN:
-                    return thiz.inE(label).next(VertexFrame.class);
-                //Assume out direction
-                default:
-                    return thiz.outE(label).next(VertexFrame.class);
+            case BOTH:
+                return thiz.bothE(label).next(VertexFrame.class);
+            case IN:
+                return thiz.inE(label).next(VertexFrame.class);
+            //Assume out direction
+            default:
+                return thiz.outE(label).next(VertexFrame.class);
             }
 
         }
     }
 
     public static final class GetEdgeByTypeInterceptor {
+
         @RuntimeType
         public static Object getEdge(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final Class type) {
             final Incidence annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Incidence.class);
             final Direction direction = annotation.direction();
             final String label = annotation.label();
             final String typeName = type.getName();
-            final Set<? extends String> allAllowedValues = ((CachesReflection)thiz).getReflectionCache().getSubTypeNames(typeName);
+            final Set<? extends String> allAllowedValues = ((CachesReflection) thiz).getReflectionCache().getSubTypeNames(typeName);
 
             switch (direction) {
-                case BOTH:
-                    return thiz.bothE(label).has(TypeResolver.TYPE_RESOLUTION_KEY, Tokens.T.in, allAllowedValues).next(type);
-                case IN:
-                    return thiz.inE(label).has(TypeResolver.TYPE_RESOLUTION_KEY, Tokens.T.in, allAllowedValues).next(type);
-                //Assume out direction
-                default:
-                    return thiz.outE(label).has(TypeResolver.TYPE_RESOLUTION_KEY, Tokens.T.in, allAllowedValues).next(type);
+            case BOTH:
+                return thiz.bothE(label).has(TypeResolver.TYPE_RESOLUTION_KEY, Tokens.T.in, allAllowedValues).next(type);
+            case IN:
+                return thiz.inE(label).has(TypeResolver.TYPE_RESOLUTION_KEY, Tokens.T.in, allAllowedValues).next(type);
+            //Assume out direction
+            default:
+                return thiz.outE(label).has(TypeResolver.TYPE_RESOLUTION_KEY, Tokens.T.in, allAllowedValues).next(type);
             }
 
         }
     }
 
     public static final class RemoveEdgeInterceptor {
+
         @RuntimeType
         public static void removeEdge(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final EdgeFrame edge) {
             edge.remove();

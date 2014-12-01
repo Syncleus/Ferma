@@ -36,6 +36,7 @@ import java.util.Collection;
 import java.util.Iterator;
 
 public class DelegatingFramedGraph implements FramedGraph {
+
     private final Graph delegate;
 
     private final TypeResolver defaultResolver;
@@ -116,7 +117,7 @@ public class DelegatingFramedGraph implements FramedGraph {
     public DelegatingFramedGraph(final Graph delegate, final boolean typeResolution, final boolean annotationsSupported) {
         this.reflections = new ReflectionCache();
         this.delegate = delegate;
-        if( typeResolution) {
+        if (typeResolution) {
             this.defaultResolver = new SimpleTypeResolver(this.reflections);
             this.untypedResolver = new UntypedTypeResolver();
         }
@@ -124,7 +125,7 @@ public class DelegatingFramedGraph implements FramedGraph {
             this.defaultResolver = new UntypedTypeResolver();
             this.untypedResolver = this.defaultResolver;
         }
-        if( annotationsSupported )
+        if (annotationsSupported)
             this.builder = new AnnotationFrameFactory(this.reflections);
         else
             this.builder = new DefaultFrameFactory();
@@ -145,7 +146,7 @@ public class DelegatingFramedGraph implements FramedGraph {
     public DelegatingFramedGraph(final Graph delegate, final ReflectionCache reflections, final boolean typeResolution, final boolean annotationsSupported) {
         this.reflections = reflections;
         this.delegate = delegate;
-        if( typeResolution) {
+        if (typeResolution) {
             this.defaultResolver = new SimpleTypeResolver(this.reflections);
             this.untypedResolver = new UntypedTypeResolver();
         }
@@ -153,7 +154,7 @@ public class DelegatingFramedGraph implements FramedGraph {
             this.defaultResolver = new UntypedTypeResolver();
             this.untypedResolver = this.defaultResolver;
         }
-        if( annotationsSupported )
+        if (annotationsSupported)
             this.builder = new AnnotationFrameFactory(this.reflections);
         else
             this.builder = new DefaultFrameFactory();
@@ -189,7 +190,7 @@ public class DelegatingFramedGraph implements FramedGraph {
     public DelegatingFramedGraph(final Graph delegate, final boolean typeResolution, final Collection<? extends Class<?>> types) {
         this.reflections = new ReflectionCache(types);
         this.delegate = delegate;
-        if( typeResolution) {
+        if (typeResolution) {
             this.defaultResolver = new SimpleTypeResolver(this.reflections);
             this.untypedResolver = new UntypedTypeResolver();
         }
@@ -202,11 +203,10 @@ public class DelegatingFramedGraph implements FramedGraph {
 
     @Override
     public Transaction tx() {
-        if (delegate instanceof TransactionalGraph) {
+        if (delegate instanceof TransactionalGraph)
             return new Transaction((TransactionalGraph) delegate);
-        } else {
+        else
             return new Transaction(null);
-        }
     }
 
     /**
@@ -218,20 +218,20 @@ public class DelegatingFramedGraph implements FramedGraph {
     }
 
     public <T> T frameElement(final Element e, final Class<T> kind) {
-        if( e == null )
+        if (e == null)
             return null;
 
         final Class<? extends T> frameType = (kind == TVertex.class || kind == TEdge.class) ? kind : defaultResolver.resolve(e, kind);
 
         final T framedElement = builder.create(e, frameType);
-        ((AbstractElementFrame)framedElement).init(this, e);
+        ((AbstractElementFrame) framedElement).init(this, e);
         return framedElement;
     }
 
     public <T> T frameNewElement(final Element e, final Class<T> kind) {
         final T t = frameElement(e, kind);
         defaultResolver.init(e, kind);
-        ((AbstractElementFrame)t).init();
+        ((AbstractElementFrame) t).init();
         return t;
     }
 
@@ -247,20 +247,20 @@ public class DelegatingFramedGraph implements FramedGraph {
     }
 
     public <T> T frameElementExplicit(final Element e, final Class<T> kind) {
-        if(e == null)
+        if (e == null)
             return null;
 
         final Class<? extends T> frameType = this.untypedResolver.resolve(e, kind);
 
         final T framedElement = builder.create(e, frameType);
-        ((AbstractElementFrame)framedElement).init(this, e);
+        ((AbstractElementFrame) framedElement).init(this, e);
         return framedElement;
     }
 
     public <T> T frameNewElementExplicit(final Element e, final Class<T> kind) {
         final T t = frameElement(e, kind);
         this.untypedResolver.init(e, kind);
-        ((AbstractElementFrame)t).init();
+        ((AbstractElementFrame) t).init();
         return t;
     }
 
@@ -513,7 +513,6 @@ public class DelegatingFramedGraph implements FramedGraph {
 
         })).castToEdges();
     }
-
 
     /**
      * Query over a list of edges in the graph.

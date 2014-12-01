@@ -27,6 +27,7 @@ import org.junit.Test;
 import java.util.*;
 
 public class AdjacencyMethodHandlerTest {
+
     private static final Set<Class<?>> TEST_TYPES = new HashSet<>(Arrays.asList(new Class<?>[]{God.class, FatherEdge.class, GodExtended.class, GodAlternative.class}));
 
     @Test
@@ -460,32 +461,38 @@ public class AdjacencyMethodHandlerTest {
     }
 
     public interface BadSonMethodName extends VertexFrame {
-        @Adjacency(label="Father", direction = Direction.IN)
+
+        @Adjacency(label = "Father", direction = Direction.IN)
         <N extends God> Iterable<? extends N> badSons(Class<? extends N> type);
     }
 
     public interface BadAddSonExtraArgument extends VertexFrame {
-        @Adjacency(label="father", direction=Direction.IN)
+
+        @Adjacency(label = "father", direction = Direction.IN)
         <N extends God> N addSon(String badArg, String worseArg);
     }
 
     public interface BadAddSonArgument extends VertexFrame {
-        @Adjacency(label="father", direction=Direction.IN)
+
+        @Adjacency(label = "father", direction = Direction.IN)
         <N extends God> N addSon(String badArg);
     }
 
     public interface BadAddSonNoArguments extends VertexFrame {
-        @Adjacency(label="father", direction=Direction.IN)
+
+        @Adjacency(label = "father", direction = Direction.IN)
         <N extends God> N addSon();
     }
 
     public static abstract class BadGetSonsArgumentClass extends AbstractVertexFrame {
-        @Adjacency(label="Father", direction = Direction.IN)
+
+        @Adjacency(label = "Father", direction = Direction.IN)
         public abstract <N extends God> Iterable<? extends N> getSons(String badStuff);
     }
 
     public interface BadGetSonsArgumentInterface extends VertexFrame {
-        @Adjacency(label="Father", direction = Direction.IN)
+
+        @Adjacency(label = "Father", direction = Direction.IN)
         <N extends God> Iterable<? extends N> getSons(String badStuff);
     }
 }

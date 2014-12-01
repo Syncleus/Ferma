@@ -19,6 +19,7 @@
 package com.syncleus.ferma.annotations;
 
 public interface GodExtended extends GodIntermediate {
+
     @Property("nickname")
     String getNickName();
 }

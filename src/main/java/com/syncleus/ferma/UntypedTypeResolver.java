@@ -24,11 +24,12 @@ import com.tinkerpop.blueprints.Element;
  * This type resolver simply returns the type requested by the client.
  */
 public class UntypedTypeResolver implements TypeResolver {
+
     @Override
     public <T> Class<? extends T> resolve(final Element element, final Class<T> kind) {
-        if(VertexFrame.class.equals(kind) || AbstractVertexFrame.class.equals(kind))
+        if (VertexFrame.class.equals(kind) || AbstractVertexFrame.class.equals(kind))
             return (Class<? extends T>) TVertex.class;
-        else if(EdgeFrame.class.equals(kind) || AbstractEdgeFrame.class.equals(kind))
+        else if (EdgeFrame.class.equals(kind) || AbstractEdgeFrame.class.equals(kind))
             return (Class<? extends T>) TEdge.class;
         return kind;
     }

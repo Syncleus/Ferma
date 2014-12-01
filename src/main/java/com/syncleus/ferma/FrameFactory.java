@@ -33,5 +33,6 @@ import com.tinkerpop.blueprints.Element;
  * Does the actual work of constructing the frame. Implementations
  */
 public interface FrameFactory {
-	<T> T create(Element e, Class<T> kind);
+
+    <T> T create(Element e, Class<T> kind);
 }

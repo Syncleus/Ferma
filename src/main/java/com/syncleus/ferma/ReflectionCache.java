@@ -30,6 +30,7 @@ import java.net.URL;
 import java.util.*;
 
 public class ReflectionCache extends Reflections {
+
     private final Map<String, Set<String>> hierarchy;
     private final Map<Method, Map<Class<Annotation>, Annotation>> annotationCache = new HashMap<>();
     private final Map<String, Class> classStringCache = new HashMap<>();
@@ -48,36 +49,36 @@ public class ReflectionCache extends Reflections {
 
     public Set<? extends String> getSubTypeNames(final Class<?> type) {
         Set<String> subtypes = this.hierarchy.get(type.getName());
-        if( subtypes == null )
+        if (subtypes == null)
             subtypes = Collections.singleton(type.getName());
         return Collections.unmodifiableSet(subtypes);
     }
 
     public Set<? extends String> getSubTypeNames(final String typeName) {
         Set<String> subtypes = this.hierarchy.get(typeName);
-        if( subtypes == null )
+        if (subtypes == null)
             subtypes = Collections.singleton(typeName);
         return Collections.unmodifiableSet(subtypes);
     }
 
     public <E extends Annotation> E getAnnotation(final Method method, final Class<E> annotationType) {
         Map<Class<Annotation>, Annotation> annotationsPresent = annotationCache.get(method);
-        if( annotationsPresent == null ) {
+        if (annotationsPresent == null) {
             annotationsPresent = new HashMap<>();
             annotationCache.put(method, annotationsPresent);
         }
 
         E annotation = (E) annotationsPresent.get(annotationType);
-        if( annotation == null ) {
+        if (annotation == null) {
             annotation = method.getAnnotation(annotationType);
-            annotationsPresent.put((Class<Annotation>)annotationType, annotation);
+            annotationsPresent.put((Class<Annotation>) annotationType, annotation);
         }
         return annotation;
     }
 
     public Class forName(final String className) {
         Class type = this.classStringCache.get(className);
-        if(type == null) {
+        if (type == null)
             try {
                 type = Class.forName(className);
                 classStringCache.put(className, type);
@@ -85,7 +86,6 @@ public class ReflectionCache extends Reflections {
             catch (final ClassNotFoundException e) {
                 throw new IllegalStateException("The class " + className + " cannot be found");
             }
-        }
         return type;
     }
 
@@ -98,16 +98,16 @@ public class ReflectionCache extends Reflections {
 
     private static Set<URL> assembleClassUrls(final Collection<? extends Class<?>> annotatedTypes) {
         final Set<URL> toScanUrls = new HashSet<>();
-        for(final Class<?> annotatedType : annotatedTypes)
+        for (final Class<?> annotatedType : annotatedTypes)
             toScanUrls.add(ClasspathHelper.forClass(annotatedType));
         return toScanUrls;
     }
 
     private static Set<URL> assembleClassUrls(final Collection<? extends Class<?>> annotatedTypes, final Collection<?> packages) {
         final Set<URL> toScanUrls = new HashSet<>();
-        for(final Class<?> annotatedType : annotatedTypes)
+        for (final Class<?> annotatedType : annotatedTypes)
             toScanUrls.add(ClasspathHelper.forClass(annotatedType));
-        for(final Object packageObj : packages)
+        for (final Object packageObj : packages)
             toScanUrls.addAll(ClasspathHelper.forPackage(packageObj.toString()));
         return toScanUrls;
     }
@@ -122,11 +122,9 @@ public class ReflectionCache extends Reflections {
                 hierarchy.put(parentType.getName(), children);
             }
 
-            for (final Class<?> childType : types) {
-                if (parentType.isAssignableFrom(childType)) {
+            for (final Class<?> childType : types)
+                if (parentType.isAssignableFrom(childType))
                     children.add(childType.getName());
-                }
-            }
         }
 
         return hierarchy;

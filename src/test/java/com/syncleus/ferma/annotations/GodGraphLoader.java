@@ -24,11 +24,11 @@ import com.tinkerpop.blueprints.TransactionalGraph;
 import com.tinkerpop.blueprints.Vertex;
 import com.tinkerpop.blueprints.util.ElementHelper;
 
-
 /**
  * Example Graph factory that creates a graph based on roman mythology.
  */
 public class GodGraphLoader {
+
     public static void load(final Graph graph) {
 
         // vertices
@@ -100,7 +100,7 @@ public class GodGraphLoader {
         ElementHelper.setProperties(cerberus.addEdge("battled", alcmene), "time", 5);
 
         // commit the transaction to disk
-        if( graph instanceof TransactionalGraph )
-            ((TransactionalGraph)graph).commit();
+        if (graph instanceof TransactionalGraph)
+            ((TransactionalGraph) graph).commit();
     }
 }

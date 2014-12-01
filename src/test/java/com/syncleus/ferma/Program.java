@@ -20,20 +20,20 @@ package com.syncleus.ferma;
 
 public class Program extends AbstractVertexFrame {
 
-	public String getName() {
-		return getProperty("name");
-	}
+    public String getName() {
+        return getProperty("name");
+    }
 
-	public void setName(final String name) {
-		setProperty("name", name);
-	}
-	
-	public String getLang() {
-		return getProperty("lang");
-	}
+    public void setName(final String name) {
+        setProperty("name", name);
+    }
 
-	public void setLang(final String lang) {
-		setProperty("lang", lang);
-	}
+    public String getLang() {
+        return getProperty("lang");
+    }
+
+    public void setLang(final String lang) {
+        setProperty("lang", lang);
+    }
 
 }

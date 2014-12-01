@@ -38,102 +38,101 @@ import java.util.Iterator;
  */
 class FramingCollection<E, K extends ElementFrame> extends FrameMaker implements Collection<E> {
 
-	private final Collection<E> delegate;
-	private final boolean explicit;
+    private final Collection<E> delegate;
+    private final boolean explicit;
 
-	public FramingCollection(final Collection<E> delegate, final FramedGraph graph, final Class<K> kind) {
-		super(graph, kind);
-		this.delegate = delegate;
-		this.explicit = false;
-	}
+    public FramingCollection(final Collection<E> delegate, final FramedGraph graph, final Class<K> kind) {
+        super(graph, kind);
+        this.delegate = delegate;
+        this.explicit = false;
+    }
 
-	public FramingCollection(final Collection<E> delegate, final FramedGraph graph) {
-		super(graph);
-		this.delegate = delegate;
-		this.explicit = false;
-	}
+    public FramingCollection(final Collection<E> delegate, final FramedGraph graph) {
+        super(graph);
+        this.delegate = delegate;
+        this.explicit = false;
+    }
 
-	public FramingCollection(final Collection<E> delegate, final FramedGraph graph, final Class<K> kind, final boolean explicit) {
-		super(graph, kind);
-		this.delegate = delegate;
-		this.explicit = explicit;
-	}
+    public FramingCollection(final Collection<E> delegate, final FramedGraph graph, final Class<K> kind, final boolean explicit) {
+        super(graph, kind);
+        this.delegate = delegate;
+        this.explicit = explicit;
+    }
 
-	public FramingCollection(final Collection<E> delegate, final FramedGraph graph, final boolean explicit) {
-		super(graph);
-		this.delegate = delegate;
-		this.explicit = explicit;
-	}
+    public FramingCollection(final Collection<E> delegate, final FramedGraph graph, final boolean explicit) {
+        super(graph);
+        this.delegate = delegate;
+        this.explicit = explicit;
+    }
 
-	public int size() {
-		throw new UnsupportedOperationException();
-	}
+    public int size() {
+        throw new UnsupportedOperationException();
+    }
 
-	public boolean isEmpty() {
-		throw new UnsupportedOperationException();
-	}
+    public boolean isEmpty() {
+        throw new UnsupportedOperationException();
+    }
 
-	public boolean contains(final Object o) {
-		throw new UnsupportedOperationException();
-	}
+    public boolean contains(final Object o) {
+        throw new UnsupportedOperationException();
+    }
 
-	public Iterator<E> iterator() {
-		throw new UnsupportedOperationException();
-	}
+    public Iterator<E> iterator() {
+        throw new UnsupportedOperationException();
+    }
 
-	public Object[] toArray() {
-		throw new UnsupportedOperationException();
-	}
+    public Object[] toArray() {
+        throw new UnsupportedOperationException();
+    }
 
-	public <T> T[] toArray(final T[] a) {
-		throw new UnsupportedOperationException();
-	}
+    public <T> T[] toArray(final T[] a) {
+        throw new UnsupportedOperationException();
+    }
 
-	public boolean add(E e) {
-		e = (this.explicit ? this.<E>makeFrameExplicit(e) : this.<E>makeFrame(e));
+    public boolean add(E e) {
+        e = (this.explicit ? this.<E>makeFrameExplicit(e) : this.<E>makeFrame(e));
 
-		return delegate.add(e);
-	}
+        return delegate.add(e);
+    }
 
-	public boolean remove(final Object o) {
-		throw new UnsupportedOperationException();
-	}
+    public boolean remove(final Object o) {
+        throw new UnsupportedOperationException();
+    }
 
-	public boolean containsAll(final Collection<?> c) {
-		throw new UnsupportedOperationException();
-	}
+    public boolean containsAll(final Collection<?> c) {
+        throw new UnsupportedOperationException();
+    }
 
-	public boolean addAll(final Collection<? extends E> c) {
-		boolean modified = false;
-		for (final E e : c) {
-			modified |= add(e);
-		}
-		return modified;
-	}
+    public boolean addAll(final Collection<? extends E> c) {
+        boolean modified = false;
+        for (final E e : c)
+            modified |= add(e);
+        return modified;
+    }
 
-	public boolean removeAll(final Collection<?> c) {
-		throw new UnsupportedOperationException();
-	}
+    public boolean removeAll(final Collection<?> c) {
+        throw new UnsupportedOperationException();
+    }
 
-	public boolean retainAll(final Collection<?> c) {
-		throw new UnsupportedOperationException();
-	}
+    public boolean retainAll(final Collection<?> c) {
+        throw new UnsupportedOperationException();
+    }
 
-	public void clear() {
-		throw new UnsupportedOperationException();
-	}
+    public void clear() {
+        throw new UnsupportedOperationException();
+    }
 
-	public boolean equals(final Object o) {
-		throw new UnsupportedOperationException();
-	}
+    public boolean equals(final Object o) {
+        throw new UnsupportedOperationException();
+    }
 
-	public int hashCode() {
-		throw new UnsupportedOperationException();
-	}
+    public int hashCode() {
+        throw new UnsupportedOperationException();
+    }
 
-	public Collection<E> getDelegate() {
+    public Collection<E> getDelegate() {
 
-		return delegate;
-	}
+        return delegate;
+    }
 
 }

@@ -24,11 +24,13 @@ import com.tinkerpop.blueprints.Element;
  * Creates the frame using reflection.
  */
 public class DefaultFrameFactory implements FrameFactory {
+
     @Override
     public <T> T create(final Element element, final Class<T> kind) {
         try {
             return kind.newInstance();
-        } catch (final InstantiationException | IllegalAccessException e) {
+        }
+        catch (final InstantiationException | IllegalAccessException e) {
             throw new IllegalStateException("Could not instantiate kind", e);
         }
     }

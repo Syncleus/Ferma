@@ -347,29 +347,23 @@ public interface EdgeTraversal<C, S, M> extends Traversal<EdgeFrame, C, S, M> {
 	public abstract <N> EdgeTraversal<Collection<? extends N>, Collection<? extends N>, M> aggregate(TraversalFunction<EdgeFrame, ? extends N> aggregateFunction);
 
 	@Override
-	public abstract <K, V> EdgeTraversal<Map<K, List<V>>, Map<K, List<V>>, M> groupBy(Map<K, List<V>> map,
-			TraversalFunction<EdgeFrame, K> keyFunction, TraversalFunction<EdgeFrame, Iterator<V>> valueFunction);
+	public abstract <K, V> EdgeTraversal<Map<K, List<V>>, Map<K, List<V>>, M> groupBy(Map<K, List<V>> map, TraversalFunction<EdgeFrame, K> keyFunction, TraversalFunction<EdgeFrame, Iterator<V>> valueFunction);
 
 	@Override
-	public abstract <K, V> EdgeTraversal<Map<K, List<V>>, Map<K, List<V>>, M> groupBy(TraversalFunction<EdgeFrame, K> keyFunction,
-			TraversalFunction<EdgeFrame, Iterator<V>> valueFunction);
+	public abstract <K, V> EdgeTraversal<Map<K, List<V>>, Map<K, List<V>>, M> groupBy(TraversalFunction<EdgeFrame, K> keyFunction, TraversalFunction<EdgeFrame, Iterator<V>> valueFunction);
 
 	@Override
-	public abstract <K, V, V2> EdgeTraversal<Map<K, V2>, Map<K, V2>, M> groupBy(Map<K, V2> reduceMap,
-			TraversalFunction<EdgeFrame, K> keyFunction, TraversalFunction<EdgeFrame, Iterator<V>> valueFunction,
-			TraversalFunction<List<V>, V2> reduceFunction);
+	public abstract <K, V, V2> EdgeTraversal<Map<K, V2>, Map<K, V2>, M> groupBy(Map<K, V2> reduceMap, TraversalFunction<EdgeFrame, K> keyFunction, TraversalFunction<EdgeFrame, Iterator<V>> valueFunction, TraversalFunction<List<V>, V2> reduceFunction);
 
 	@Override
-	public abstract <K, V, V2> EdgeTraversal<Map<K, V2>, Map<K, V2>, M> groupBy(TraversalFunction<EdgeFrame, K> keyFunction,
-			TraversalFunction<EdgeFrame, Iterator<V>> valueFunction, TraversalFunction<List<V>, V2> reduceFunction);
+	public abstract <K, V, V2> EdgeTraversal<Map<K, V2>, Map<K, V2>, M> groupBy(TraversalFunction<EdgeFrame, K> keyFunction, TraversalFunction<EdgeFrame, Iterator<V>> valueFunction, TraversalFunction<List<V>, V2> reduceFunction);
 
 	@Override
 	public abstract <K> EdgeTraversal<Map<K, Long>, Map<K, Long>, M> groupCount(Map<K, Long> map,
 			TraversalFunction<EdgeFrame, K> keyFunction, TraversalFunction<Pair<EdgeFrame, Long>, Long> valueFunction);
 
 	@Override
-	public abstract <K> EdgeTraversal<Map<K, Long>, Map<K, Long>, M> groupCount(TraversalFunction<EdgeFrame, K> keyFunction,
-			TraversalFunction<Pair<EdgeFrame, Long>, Long> valueFunction);
+	public abstract <K> EdgeTraversal<Map<K, Long>, Map<K, Long>, M> groupCount(TraversalFunction<EdgeFrame, K> keyFunction, TraversalFunction<Pair<EdgeFrame, Long>, Long> valueFunction);
 
 	@Override
 	public abstract <K> EdgeTraversal<Map<K, Long>, Map<K, Long>, M> groupCount(Map<K, Long> map,

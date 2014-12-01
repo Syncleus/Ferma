@@ -146,7 +146,7 @@ abstract class AbstractTraversal<T, C, S, M> implements Traversal<T, C, S, M> {
 		return this;
 	}
 
-	protected <Z> Traversal<T, ?, ?, M> interval(String key, Comparable<Z> startValue, Comparable<Z> endValue) {
+	protected <Z> Traversal<T, ?, ?, M> interval(final String key, final Comparable<Z> startValue, final Comparable<Z> endValue) {
 		Comparable pipelineStart = startValue;
 		if(startValue instanceof Enum)
 			pipelineStart = startValue.toString();

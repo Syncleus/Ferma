@@ -39,6 +39,7 @@ import com.tinkerpop.gremlin.java.GremlinPipeline;
 import com.tinkerpop.pipes.Pipe;
 import com.tinkerpop.pipes.branch.LoopPipe;
 import com.tinkerpop.pipes.transform.TransformPipe.Order;
+import com.tinkerpop.pipes.util.structures.Pair;
 import com.tinkerpop.pipes.util.structures.Table;
 import com.tinkerpop.pipes.util.structures.Tree;
 
@@ -63,191 +64,190 @@ abstract class AbstractEdgeTraversal<C, S, M> extends AbstractTraversal<EdgeFram
 	}
 
 	@Override
-	public Set toSet() {
+	public Set<? extends EdgeFrame> toSet() {
 		return toSetExplicit(EdgeFrame.class);
 	}
 
 	@Override
-	public EdgeTraversal table() {
+	public EdgeTraversal<Table, Table, M> table() {
 		return (EdgeTraversal) super.table();
 	}
 
 	@Override
-	public EdgeTraversal table(final TraversalFunction... columnFunctions) {
+	public EdgeTraversal<Table, Table, M> table(final TraversalFunction... columnFunctions) {
 
 		return (EdgeTraversal) super.table(columnFunctions);
 	}
 
 	@Override
-	public EdgeTraversal table(final Table table) {
+	public EdgeTraversal<Table, Table, M> table(final Table table) {
 
 		return (EdgeTraversal) super.table(table);
 	}
 
 	@Override
-	public EdgeTraversal table(final Table table, final Collection stepNames, final TraversalFunction... columnFunctions) {
+	public EdgeTraversal<Table, Table, M> table(final Table table, final Collection stepNames, final TraversalFunction... columnFunctions) {
 
 		return (EdgeTraversal) super.table(table, stepNames, columnFunctions);
 	}
 
 	@Override
-	public EdgeTraversal table(final Table table, final TraversalFunction... columnFunctions) {
+	public EdgeTraversal<Table, Table, M> table(final Table table, final TraversalFunction... columnFunctions) {
 		return (EdgeTraversal) super.table(table, columnFunctions);
 	}
 
 	@Override
-	public EdgeTraversal tree(final Tree tree) {
+	public <N> EdgeTraversal<Tree<N>, Tree<N>, M> tree(final Tree<N> tree) {
 		return (EdgeTraversal) super.tree(tree);
 	}
 
 	@Override
-	public EdgeTraversal store() {
+	public EdgeTraversal<Collection<EdgeFrame>, EdgeFrame, M> store() {
 		return (EdgeTraversal) super.store();
 	}
 
 	@Override
-	public EdgeTraversal store(final Collection storage) {
+	public <N> EdgeTraversal<Collection<N>, N, M> store(final Collection<N> storage) {
 		return (EdgeTraversal) super.store(storage);
 	}
 
 	@Override
-	public EdgeTraversal store(final Collection storage, final TraversalFunction storageFunction) {
+	public <N> EdgeTraversal<Collection<N>, N, M> store(final Collection<N> storage, final TraversalFunction<EdgeFrame, N> storageFunction) {
 		return (EdgeTraversal) super.store(storage, storageFunction);
 	}
 
 	@Override
-	public EdgeTraversal store(final TraversalFunction storageFunction) {
+	public <N> EdgeTraversal<Collection<N>, N, M> store(final TraversalFunction<EdgeFrame, N> storageFunction) {
 		return (EdgeTraversal) super.store(storageFunction);
 	}
 
 	@Override
-	public EdgeTraversal groupCount() {
+	public EdgeTraversal<Map<EdgeFrame, Long>, Map<EdgeFrame, Long>, M> groupCount() {
 		return (EdgeTraversal) super.groupCount();
 	}
 
 	@Override
-	public EdgeTraversal groupCount(final Map map) {
+	public EdgeTraversal<Map<EdgeFrame, Long>, Map<EdgeFrame, Long>, M> groupCount(final Map<EdgeFrame, Long> map) {
 		return (EdgeTraversal) super.groupCount(map);
 	}
 
 	@Override
-	public EdgeTraversal groupCount(final Map map, final TraversalFunction keyFunction) {
+	public <K> EdgeTraversal<Map<K, Long>, Map<K, Long>, M> groupCount(final Map<K,Long> map, final TraversalFunction<EdgeFrame, K> keyFunction) {
 		return (EdgeTraversal) super.groupCount(map, keyFunction);
 	}
 
 	@Override
-	public EdgeTraversal groupCount(final Map map, final TraversalFunction keyFunction, final TraversalFunction valueFunction) {
+	public <K> EdgeTraversal<Map<K, Long>, Map<K, Long>, M> groupCount(final Map<K,Long> map, final TraversalFunction<EdgeFrame, K> keyFunction, final TraversalFunction<Pair<EdgeFrame, Long>, Long> valueFunction) {
 		return (EdgeTraversal) super.groupCount(map, keyFunction, valueFunction);
 	}
 
 	@Override
-	public EdgeTraversal groupCount(final TraversalFunction keyFunction) {
+	public <K> EdgeTraversal<Map<K, Long>, Map<K, Long>, M> groupCount(final TraversalFunction<EdgeFrame, K> keyFunction) {
 		return (EdgeTraversal) super.groupCount(keyFunction);
 	}
 
 	@Override
-	public EdgeTraversal groupCount(final TraversalFunction keyFunction, final TraversalFunction valueFunction) {
+	public <K> EdgeTraversal<Map<K, Long>, Map<K, Long>, M> groupCount(final TraversalFunction<EdgeFrame, K> keyFunction, final TraversalFunction<Pair<EdgeFrame, Long>, Long> valueFunction) {
 		return (EdgeTraversal) super.groupCount(keyFunction, valueFunction);
 	}
 
 	@Override
-	public EdgeTraversal groupBy(final TraversalFunction keyFunction, final TraversalFunction valueFunction, final TraversalFunction reduceFunction) {
+	public <K, V, V2> EdgeTraversal<Map<K, V2>, Map<K, V2>, M> groupBy(final TraversalFunction<EdgeFrame, K> keyFunction, final TraversalFunction<EdgeFrame, Iterator<V>> valueFunction, final TraversalFunction<List<V>, V2> reduceFunction) {
 		return (EdgeTraversal) super.groupBy(keyFunction, valueFunction, reduceFunction);
 	}
 
 	@Override
-	public EdgeTraversal groupBy(final TraversalFunction keyFunction, final TraversalFunction valueFunction) {
+	public <K, V> EdgeTraversal<Map<K, List<V>>, Map<K, List<V>>, M> groupBy(final TraversalFunction<EdgeFrame, K> keyFunction, final TraversalFunction<EdgeFrame, Iterator<V>> valueFunction) {
 
 		return (EdgeTraversal) super.groupBy(keyFunction, valueFunction);
 	}
 
 	@Override
-	public EdgeTraversal groupBy(final Map reduceMap, final TraversalFunction keyFunction, final TraversalFunction valueFunction,
-			final TraversalFunction reduceFunction) {
+	public <K, V, V2> EdgeTraversal<Map<K, V2>, Map<K, V2>, M> groupBy(final Map<K, V2> reduceMap, final TraversalFunction<EdgeFrame, K> keyFunction, final TraversalFunction<EdgeFrame, Iterator<V>> valueFunction, final TraversalFunction<List<V>, V2> reduceFunction) {
 		return (EdgeTraversal) super.groupBy(reduceMap, keyFunction, valueFunction, reduceFunction);
 	}
 
 	@Override
-	public EdgeTraversal groupBy(final Map map, final TraversalFunction keyFunction, final TraversalFunction valueFunction) {
+	public <K, V> EdgeTraversal<Map<K, List<V>>, Map<K, List<V>>, M> groupBy(final Map<K, List<V>> map, final TraversalFunction<EdgeFrame, K> keyFunction, final TraversalFunction<EdgeFrame, Iterator<V>> valueFunction) {
 		return (EdgeTraversal) super.groupBy(map, keyFunction, valueFunction);
 	}
 
 	@Override
-	public EdgeTraversal has(final String key) {
+	public EdgeTraversal<?, ?, M> has(final String key) {
 		return (EdgeTraversal) super.has(key);
 	}
 
 	@Override
-	public EdgeTraversal has(final String key, final Object value) {
+	public EdgeTraversal<?, ?, M> has(final String key, final Object value) {
 		return (EdgeTraversal) super.has(key, value);
 	}
 
 	@Override
-	public EdgeTraversal has(final String key, final Predicate predicate, final Object value) {
+	public EdgeTraversal<?, ?, M> has(final String key, final Predicate predicate, final Object value) {
 		return (EdgeTraversal) super.has(key, predicate, value);
 	}
 
 	@Override
-	public EdgeTraversal has(final String key, final com.tinkerpop.gremlin.Tokens.T compareToken, final Object value) {
+	public EdgeTraversal<?, ?, M> has(final String key, final com.tinkerpop.gremlin.Tokens.T compareToken, final Object value) {
 		return (EdgeTraversal) super.has(key, compareToken, value);
 	}
 
 	@Override
-	public EdgeTraversal hasNot(final String key) {
+	public EdgeTraversal<?, ?, M> hasNot(final String key) {
 		return (EdgeTraversal) super.hasNot(key);
 	}
 
 	@Override
-	public EdgeTraversal hasNot(final String key, final Object value) {
+	public EdgeTraversal<?, ?, M> hasNot(final String key, final Object value) {
 		return (EdgeTraversal) super.hasNot(key, value);
 	}
 
 	@Override
-	public EdgeTraversal as(final String name) {
+	public EdgeTraversal<?, ?, M> as(final String name) {
 		return (EdgeTraversal) super.as(name);
 	}
 
 	@Override
-	public EdgeTraversal identity() {
+	public EdgeTraversal<?, ?, M> identity() {
 
 		return (EdgeTraversal) super.identity();
 	}
 
 	@Override
-	public EdgeTraversal interval(final String key, final Comparable startValue, final Comparable endValue) {
+	public EdgeTraversal<?, ?, M> interval(final String key, final Comparable startValue, final Comparable endValue) {
 		return (EdgeTraversal) super.interval(key, startValue, endValue);
 	}
 
 	@Override
-	public VertexTraversal inV() {
+	public VertexTraversal<?, ?, M> inV() {
 		pipeline().inV();
 		return castToVertices();
 	}
 
 	@Override
-	public VertexTraversal outV() {
+	public VertexTraversal<?, ?, M> outV() {
 		pipeline().outV();
 		return castToVertices();
 	}
 
 	@Override
-	public VertexTraversal bothV() {
+	public VertexTraversal<?, ?, M> bothV() {
 		pipeline().bothV();
 		return castToVertices();
 	}
 
 	@Override
-	public Object next(final Class kind) {
+	public <T> T next(final Class<T> kind) {
 		return graph().frameElement((Element) pipeline().next(), kind);
 	}
 
 	@Override
-	public Object nextExplicit(final Class kind) {
+	public <T> T nextExplicit(final Class<T> kind) {
 		return graph().frameElementExplicit((Element) pipeline().next(), kind);
 	}
 
 	@Override
-	public List next(final int amount, final Class kind) {
+	public <T> List<T> next(final int amount, final Class<T> kind) {
 		return Lists.transform(pipeline().next(amount), new Function() {
 
 			public Object apply(final Object e) {
@@ -257,7 +257,7 @@ abstract class AbstractEdgeTraversal<C, S, M> extends AbstractTraversal<EdgeFram
 	}
 
 	@Override
-	public List nextExplicit(final int amount, final Class kind) {
+	public <T> List<T> nextExplicit(final int amount, final Class<T> kind) {
 		return Lists.transform(pipeline().next(amount), new Function() {
 
 			public Object apply(final Object e) {
@@ -267,7 +267,7 @@ abstract class AbstractEdgeTraversal<C, S, M> extends AbstractTraversal<EdgeFram
 	}
 
 	@Override
-	public Iterable frame(final Class kind) {
+	public <T> Iterable<T> frame(final Class<T> kind) {
 		return Iterables.transform(pipeline(), new Function() {
 
 			public Object apply(final Object e) {
@@ -277,7 +277,7 @@ abstract class AbstractEdgeTraversal<C, S, M> extends AbstractTraversal<EdgeFram
 	}
 
 	@Override
-	public Iterable frameExplicit(final Class kind) {
+	public <T> Iterable<T> frameExplicit(final Class<T> kind) {
 		return Iterables.transform(pipeline(), new Function() {
 
 			public Object apply(final Object e) {
@@ -426,7 +426,7 @@ abstract class AbstractEdgeTraversal<C, S, M> extends AbstractTraversal<EdgeFram
 	}
 
 	@Override
-	public EdgeTraversal<?, ?, M> order(Tokens.T order) {
+	public EdgeTraversal<?, ?, M> order(final Tokens.T order) {
 		return (EdgeTraversal<?, ?, M>) super.order(order);
 	}
 

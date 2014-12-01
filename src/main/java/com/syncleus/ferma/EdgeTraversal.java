@@ -385,17 +385,17 @@ public interface EdgeTraversal<C, S, M> extends Traversal<EdgeFrame, C, S, M> {
     EdgeTraversal<?, ?, M> sideEffect(SideEffectFunction<EdgeFrame> sideEffectFunction);
 
     @Override
-    <N> EdgeTraversal<Collection<N>, N, M> store(Collection<N> storage);
+    <N> Traversal<EdgeFrame, Collection<? extends N>, N, M> store(Collection<? super N> storage);
 
     @Override
-    <N> EdgeTraversal<Collection<N>, N, M> store(Collection<N> storage,
-                                                 TraversalFunction<EdgeFrame, N> storageFunction);
+    <N> Traversal<EdgeFrame, Collection<? extends N>, N, M> store(Collection<? super N> storage,
+                                                                  TraversalFunction<EdgeFrame, N> storageFunction);
 
     @Override
-    EdgeTraversal<Collection<EdgeFrame>, EdgeFrame, M> store();
+    Traversal<EdgeFrame, Collection<? extends EdgeFrame>, EdgeFrame, M> store();
 
     @Override
-    <N> EdgeTraversal<Collection<N>, N, M> store(TraversalFunction<EdgeFrame, N> storageFunction);
+    <N> Traversal<EdgeFrame, Collection<? extends N>, N, M> store(TraversalFunction<EdgeFrame, N> storageFunction);
 
     @Override
     EdgeTraversal<Table, Table, M> table(Table table, Collection<String> stepNames,

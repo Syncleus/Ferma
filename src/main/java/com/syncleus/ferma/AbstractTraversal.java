@@ -369,26 +369,26 @@ abstract class AbstractTraversal<T, C, S, M> implements Traversal<T, C, S, M> {
     }
 
     @Override
-    public <N> Traversal<T, Collection<N>, N, M> store(final Collection<N> storage) {
+    public <N> Traversal<T, Collection<? extends N>, N, M> store(final Collection<? super N> storage) {
         pipeline().store(storage, new FramingTraversalFunction<>(graph()));
-        return (Traversal<T, Collection<N>, N, M>) this;
+        return (Traversal<T, Collection<? extends N>, N, M>) this;
     }
 
     @Override
-    public <N> Traversal<T, Collection<N>, N, M> store(final Collection<N> storage, final TraversalFunction<T, N> storageFunction) {
+    public <N> Traversal<T, Collection<? extends N>, N, M> store(final Collection<? super N> storage, final TraversalFunction<T, N> storageFunction) {
         pipeline().store(storage, new FramingTraversalFunction<>(storageFunction, graph()));
-        return (Traversal<T, Collection<N>, N, M>) this;
+        return (Traversal<T, Collection<? extends N>, N, M>) this;
     }
 
     @Override
-    public Traversal<T, Collection<T>, T, M> store() {
+    public Traversal<T, Collection<? extends T>, T, M> store() {
         return this.store(new ArrayList<T>());
     }
 
     @Override
-    public <N> Traversal<T, Collection<N>, N, M> store(final TraversalFunction<T, N> storageFunction) {
+    public <N> Traversal<T, Collection<? extends N>, N, M> store(final TraversalFunction<T, N> storageFunction) {
         pipeline().store(new FramingTraversalFunction<>(storageFunction, graph()));
-        return (Traversal<T, Collection<N>, N, M>) this;
+        return (Traversal<T, Collection<? extends N>, N, M>) this;
     }
 
     @Override

@@ -38,7 +38,6 @@ import java.util.Iterator;
 public class DelegatingFramedGraph implements FramedGraph {
 
     private final Graph delegate;
-
     private final TypeResolver defaultResolver;
     private final TypeResolver untypedResolver;
     private final FrameFactory builder;

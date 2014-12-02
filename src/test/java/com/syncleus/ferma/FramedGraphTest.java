@@ -274,26 +274,4 @@ public class FramedGraphTest {
         final Collection<? extends Integer> knowsCollection = fg.v().has("name", "Julia").bothE().property("years", Integer.class).aggregate().cap();
         Assert.assertEquals(1, knowsCollection.size());
     }
-
-    @Test
-    public void testKeyValueTraversal() {
-        final Graph g = TinkerGraphFactory.createTinkerGraph();
-        final FramedGraph fg = new DelegatingFramedGraph(g);
-        final Set<Object> expectedSet = new HashSet<>();
-
-        final TVertex p1 = fg.addFramedVertexExplicit();
-        p1.setProperty("name", "Bryn");
-        p1.setProperty("findme", "yes");
-        expectedSet.add(p1.getId());
-
-        final TVertex p2 = fg.addFramedVertexExplicit();
-        p2.setProperty("name", "Julia");
-        p2.setProperty("findme", "yes");
-        expectedSet.add(p2.getId());
-
-        final TEdge knows = p1.addFramedEdgeExplicit("knows", p2);
-        knows.setProperty("years", 15);
-
-        Assert.assertEquals(expectedSet, fg.v("findme", "yes").id().toSet());
-    }
 }

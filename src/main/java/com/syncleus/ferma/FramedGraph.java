@@ -123,13 +123,6 @@ public interface FramedGraph extends Graph {
     VertexTraversal<?, ?, ?> v();
 
     /**
-     * Query vertices with a matching key and value
-     *
-     * @return The query.
-     */
-    VertexTraversal<?, ?, ?> v(String key, Object value);
-
-    /**
      * Query over all edges in the graph.
      *
      * @return The query.

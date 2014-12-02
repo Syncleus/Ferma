@@ -397,16 +397,6 @@ public class DelegatingFramedGraph implements FramedGraph {
     }
 
     /**
-     * Query vertices with a matching key and value
-     *
-     * @return The query.
-     */
-    @Override
-    public VertexTraversal<?, ?, ?> v(final String key, final Object value) {
-        return new SimpleTraversal(this, delegate).v(key, value);
-    }
-
-    /**
      * Query over all edges in the graph.
      *
      * @return The query.

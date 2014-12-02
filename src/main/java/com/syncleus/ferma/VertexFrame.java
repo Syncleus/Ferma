@@ -144,7 +144,7 @@ public interface VertexFrame extends ElementFrame {
     void linkBoth(VertexFrame vertex, String... labels);
 
     /**
-     * Remove all edges to the supplied vertex with the supplied labels.
+     * Remove all out edges to the supplied vertex with the supplied labels.
      *
      * @param vertex
      *            The vertex to removed the edges to.
@@ -154,7 +154,7 @@ public interface VertexFrame extends ElementFrame {
     void unlinkOut(VertexFrame vertex, String... labels);
 
     /**
-     * Remove all edges to the supplied vertex with the supplied labels.
+     * Remove all in edges to the supplied vertex with the supplied labels.
      *
      * @param vertex
      *            The vertex to removed the edges from.
@@ -196,7 +196,7 @@ public interface VertexFrame extends ElementFrame {
     void setLinkIn(VertexFrame vertex, String... labels);
 
     /**
-     * Remove all in edges with the labels and then add a edges from the
+     * Remove all edges with the labels and then add a edges from the
      * supplied vertex and to the supplied vertex.
      *
      * @param vertex
@@ -233,7 +233,7 @@ public interface VertexFrame extends ElementFrame {
     <K> K setLinkOutExplicit(Class<K> kind, String... labels);
 
     /**
-     * Remove all out edges with the labels and then add a single edge from a
+     * Remove all in edges with the labels and then add a single edge from a
      * new vertex.
      *
      * @param kind
@@ -244,7 +244,7 @@ public interface VertexFrame extends ElementFrame {
     <K> K setLinkIn(Class<K> kind, String... labels);
 
     /**
-     * Remove all out edges with the labels and then add a single edge from a
+     * Remove all in edges with the labels and then add a single edge from a
      * new vertex.
      *
      * This will bypass the default type resolution and use the untyped resolver
@@ -259,7 +259,7 @@ public interface VertexFrame extends ElementFrame {
     <K> K setLinkInExplicit(Class<K> kind, String... labels);
 
     /**
-     * Remove all out edges with the labels and then add edges to/from a new
+     * Remove all edges with the labels and then add edges to/from a new
      * vertex.
      *
      * @param kind
@@ -270,7 +270,7 @@ public interface VertexFrame extends ElementFrame {
     <K> K setLinkBoth(Class<K> kind, String... labels);
 
     /**
-     * Remove all out edges with the labels and then add edges to/from a new
+     * Remove all edges with the labels and then add edges to/from a new
      * vertex.
      *
      * This will bypass the default type resolution and use the untyped resolver

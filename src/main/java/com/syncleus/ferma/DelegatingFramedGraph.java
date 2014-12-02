@@ -393,7 +393,7 @@ public class DelegatingFramedGraph implements FramedGraph {
      */
     @Override
     public VertexTraversal<?, ?, ?> v() {
-        return new SimpleTraversal(this, delegate).v();
+        return new GlobalVertexTraversal(this, delegate);
     }
 
     /**

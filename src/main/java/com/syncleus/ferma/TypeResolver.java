@@ -35,7 +35,7 @@ import com.tinkerpop.blueprints.Element;
  */
 public interface TypeResolver {
 
-    String SYSTEM_DEFAULT_TYPE_KEY = "ferma_type";
+    String TYPE_RESOLUTION_KEY = "ferma_type";
 
     /**
      * Resolve the type of frame that a an element should be.

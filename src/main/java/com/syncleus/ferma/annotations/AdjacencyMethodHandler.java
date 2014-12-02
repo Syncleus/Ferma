@@ -176,12 +176,12 @@ public class AdjacencyMethodHandler implements MethodHandler {
 
             switch (direction) {
             case BOTH:
-                return thiz.both(label).has(TypeResolver.SYSTEM_DEFAULT_TYPE_KEY, Tokens.T.in, allAllowedValues).frame(type);
+                return thiz.both(label).has(TypeResolver.TYPE_RESOLUTION_KEY, Tokens.T.in, allAllowedValues).frame(type);
             case IN:
-                return thiz.in(label).has(TypeResolver.SYSTEM_DEFAULT_TYPE_KEY, Tokens.T.in, allAllowedValues).frame(type);
+                return thiz.in(label).has(TypeResolver.TYPE_RESOLUTION_KEY, Tokens.T.in, allAllowedValues).frame(type);
             //Assume out direction
             default:
-                return thiz.out(label).has(TypeResolver.SYSTEM_DEFAULT_TYPE_KEY, Tokens.T.in, allAllowedValues).frame(type);
+                return thiz.out(label).has(TypeResolver.TYPE_RESOLUTION_KEY, Tokens.T.in, allAllowedValues).frame(type);
             }
         }
     }
@@ -218,12 +218,12 @@ public class AdjacencyMethodHandler implements MethodHandler {
 
             switch (direction) {
             case BOTH:
-                return thiz.both(label).has(TypeResolver.SYSTEM_DEFAULT_TYPE_KEY, Tokens.T.in, allAllowedValues).next(type);
+                return thiz.both(label).has(TypeResolver.TYPE_RESOLUTION_KEY, Tokens.T.in, allAllowedValues).next(type);
             case IN:
-                return thiz.in(label).has(TypeResolver.SYSTEM_DEFAULT_TYPE_KEY, Tokens.T.in, allAllowedValues).next(type);
+                return thiz.in(label).has(TypeResolver.TYPE_RESOLUTION_KEY, Tokens.T.in, allAllowedValues).next(type);
             //Assume out direction
             default:
-                return thiz.out(label).has(TypeResolver.SYSTEM_DEFAULT_TYPE_KEY, Tokens.T.in, allAllowedValues).next(type);
+                return thiz.out(label).has(TypeResolver.TYPE_RESOLUTION_KEY, Tokens.T.in, allAllowedValues).next(type);
             }
         }
     }

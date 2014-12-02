@@ -31,7 +31,7 @@ public class DefaultFrameFactory implements FrameFactory {
             return kind.newInstance();
         }
         catch (final InstantiationException | IllegalAccessException e) {
-            throw new IllegalStateException("Could not instantiate kind", e);
+            throw new IllegalStateException("Could not instantiate kind: " + kind.getName(), e);
         }
     }
 }

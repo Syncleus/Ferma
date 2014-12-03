@@ -95,7 +95,7 @@ public abstract class AbstractElementFrame implements ElementFrame {
 
     @Override
     public void removeTypeResolution() {
-        this.element().removeProperty(TypeResolver.TYPE_RESOLUTION_KEY);
+        this.getElement().removeProperty(TypeResolver.TYPE_RESOLUTION_KEY);
     }
 
     @Override
@@ -104,12 +104,12 @@ public abstract class AbstractElementFrame implements ElementFrame {
     }
 
     @Override
-    public Element element() {
+    public Element getElement() {
         return element;
     }
 
     @Override
-    public FramedGraph graph() {
+    public FramedGraph getGraph() {
         return graph;
     }
 
@@ -187,7 +187,7 @@ public abstract class AbstractElementFrame implements ElementFrame {
     @Override
     public String toString() {
 
-        return element().toString();
+        return getElement().toString();
     }
 
 }

@@ -59,7 +59,7 @@ class SimpleTraversal<T, C, S, M> extends AbstractTraversal<T, C, S, M> {
     }
 
     protected SimpleTraversal(final FramedGraph graph, final ElementFrame starts) {
-        this(graph, new GremlinPipeline<>(starts.element()));
+        this(graph, new GremlinPipeline<>(starts.getElement()));
     }
 
     public MarkId pushMark(final Traversal<?, ?, ?, ?> traversal) {

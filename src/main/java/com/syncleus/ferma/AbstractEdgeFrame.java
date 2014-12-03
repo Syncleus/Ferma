@@ -38,33 +38,33 @@ import com.tinkerpop.blueprints.Edge;
 public abstract class AbstractEdgeFrame extends AbstractElementFrame implements EdgeFrame {
 
     @Override
-    public Edge element() {
-        return (Edge) super.element();
+    public Edge getElement() {
+        return (Edge) super.getElement();
     }
 
     @Override
     public String getLabel() {
-        return element().getLabel();
+        return getElement().getLabel();
     }
 
     @Override
     public VertexTraversal<?, ?, ?> inV() {
-        return new SimpleTraversal(graph(), this).castToEdges().inV();
+        return new SimpleTraversal(getGraph(), this).castToEdges().inV();
     }
 
     @Override
     public VertexTraversal<?, ?, ?> outV() {
-        return new SimpleTraversal(graph(), this).castToEdges().outV();
+        return new SimpleTraversal(getGraph(), this).castToEdges().outV();
     }
 
     @Override
     public VertexTraversal<?, ?, ?> bothV() {
-        return new SimpleTraversal(graph(), this).castToEdges().bothV();
+        return new SimpleTraversal(getGraph(), this).castToEdges().bothV();
     }
 
     @Override
     public EdgeTraversal<?, ?, ?> traversal() {
-        return new SimpleTraversal(graph(), this).castToEdges();
+        return new SimpleTraversal(getGraph(), this).castToEdges();
     }
 
     @Override
@@ -97,11 +97,11 @@ public abstract class AbstractEdgeFrame extends AbstractElementFrame implements 
 
     @Override
     public <T> T reframe(final Class<T> kind) {
-        return graph().frameElement(element(), kind);
+        return getGraph().frameElement(getElement(), kind);
     }
 
     @Override
     public <T> T reframeExplicit(final Class<T> kind) {
-        return graph().frameElementExplicit(element(), kind);
+        return getGraph().frameElementExplicit(getElement(), kind);
     }
 }

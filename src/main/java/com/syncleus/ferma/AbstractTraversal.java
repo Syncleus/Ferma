@@ -670,9 +670,9 @@ abstract class AbstractTraversal<T, C, S, M> implements Traversal<T, C, S, M> {
             @Override
             public Object apply(final Object input) {
                 if (input instanceof VertexFrame)
-                    return ((VertexFrame) input).element();
+                    return ((VertexFrame) input).getElement();
                 if (input instanceof EdgeFrame)
-                    return ((EdgeFrame) input).element();
+                    return ((EdgeFrame) input).getElement();
                 return input;
             }
         }));

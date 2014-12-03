@@ -84,7 +84,7 @@ class FrameMaker {
 
     protected Object removeFrame(final Object object) {
         if (object instanceof ElementFrame)
-            return ((ElementFrame) object).element();
+            return ((ElementFrame) object).getElement();
         return object;
     }
 

@@ -50,7 +50,7 @@ public class AdjacencyMethodHandlerTest {
         final God child = childIterator.next();
         Assert.assertTrue(child != null);
         final VertexFrame childVertex = child;
-        Assert.assertEquals(childVertex.element().getProperty("name"), "hercules");
+        Assert.assertEquals(childVertex.getElement().getProperty("name"), "hercules");
         Assert.assertTrue(child instanceof GodExtended);
     }
 
@@ -74,7 +74,7 @@ public class AdjacencyMethodHandlerTest {
         final God child = childIterator.next();
         Assert.assertTrue(child != null);
         final VertexFrame childVertex = child;
-        Assert.assertEquals(childVertex.element().getProperty("name"), "hercules");
+        Assert.assertEquals(childVertex.getElement().getProperty("name"), "hercules");
         Assert.assertTrue(child instanceof GodExtended);
     }
 
@@ -90,7 +90,7 @@ public class AdjacencyMethodHandlerTest {
         final God father = gods.iterator().next();
         Assert.assertTrue(father != null);
         final VertexFrame fatherVertex = father;
-        Assert.assertEquals(fatherVertex.element().getProperty("name"), "jupiter");
+        Assert.assertEquals(fatherVertex.getElement().getProperty("name"), "jupiter");
 
         final Iterable<? extends God> children = father.getSons(GodExtended.class);
         final Iterator<? extends God> childIterator = children.iterator();
@@ -98,7 +98,7 @@ public class AdjacencyMethodHandlerTest {
         final God child = childIterator.next();
         Assert.assertTrue(child != null);
         final VertexFrame childVertex = child;
-        Assert.assertEquals(childVertex.element().getProperty("name"), "hercules");
+        Assert.assertEquals(childVertex.getElement().getProperty("name"), "hercules");
         Assert.assertTrue(child instanceof GodExtended);
     }
 
@@ -115,7 +115,7 @@ public class AdjacencyMethodHandlerTest {
         Assert.assertTrue(father != null);
         Assert.assertTrue(father instanceof VertexFrame);
         final VertexFrame fatherVertex = father;
-        Assert.assertEquals(fatherVertex.element().getProperty("name"), "jupiter");
+        Assert.assertEquals(fatherVertex.getElement().getProperty("name"), "jupiter");
 
         final Iterable<? extends God> children = father.getSons(God.class);
         final Iterator<? extends God> childIterator = children.iterator();
@@ -123,7 +123,7 @@ public class AdjacencyMethodHandlerTest {
         final God child = childIterator.next();
         Assert.assertTrue(child != null);
         final VertexFrame childVertex = child;
-        Assert.assertEquals(childVertex.element().getProperty("name"), "hercules");
+        Assert.assertEquals(childVertex.getElement().getProperty("name"), "hercules");
         Assert.assertTrue(child instanceof GodExtended);
     }
 
@@ -139,7 +139,7 @@ public class AdjacencyMethodHandlerTest {
         final GodAlternative father = gods.iterator().next();
         Assert.assertTrue(father != null);
         final VertexFrame fatherVertex = father;
-        Assert.assertEquals(fatherVertex.element().getProperty("name"), "jupiter");
+        Assert.assertEquals(fatherVertex.getElement().getProperty("name"), "jupiter");
 
         final Iterable<? extends God> children = father.getNoLabel(God.class);
         final Iterator<? extends God> childIterator = children.iterator();
@@ -164,7 +164,7 @@ public class AdjacencyMethodHandlerTest {
         Assert.assertNotNull(child);
         Assert.assertTrue(child instanceof VertexFrame);
         final VertexFrame childVertex = child;
-        Assert.assertEquals(childVertex.element().getProperty("name"), "hercules");
+        Assert.assertEquals(childVertex.getElement().getProperty("name"), "hercules");
         Assert.assertTrue(child instanceof GodExtended);
     }
 
@@ -186,7 +186,7 @@ public class AdjacencyMethodHandlerTest {
         Assert.assertNotNull(child);
         Assert.assertTrue(child instanceof VertexFrame);
         final VertexFrame childVertex = child;
-        Assert.assertEquals(childVertex.element().getProperty("name"), "hercules");
+        Assert.assertEquals(childVertex.getElement().getProperty("name"), "hercules");
         Assert.assertTrue(child instanceof GodExtended);
     }
 
@@ -205,7 +205,7 @@ public class AdjacencyMethodHandlerTest {
         Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
 
         final VertexFrame childVertex = father.addSon();
-        Assert.assertNull(childVertex.element().getProperty("name"));
+        Assert.assertNull(childVertex.getElement().getProperty("name"));
     }
 
     @Test
@@ -225,7 +225,7 @@ public class AdjacencyMethodHandlerTest {
         final God child = father.addSon(God.class);
         Assert.assertTrue(child != null);
         final VertexFrame childVertex = child;
-        Assert.assertNull(childVertex.element().getProperty("name"));
+        Assert.assertNull(childVertex.getElement().getProperty("name"));
     }
 
     @Test
@@ -247,7 +247,7 @@ public class AdjacencyMethodHandlerTest {
 
         Assert.assertTrue(child != null);
         final VertexFrame childVertex = child;
-        Assert.assertNull(childVertex.element().getProperty("name"));
+        Assert.assertNull(childVertex.getElement().getProperty("name"));
     }
 
     @Test
@@ -267,7 +267,7 @@ public class AdjacencyMethodHandlerTest {
         final God child = father.addSon(God.class, FatherEdge.class);
         Assert.assertTrue(child != null);
         final VertexFrame childVertex = child;
-        Assert.assertNull(childVertex.element().getProperty("name"));
+        Assert.assertNull(childVertex.getElement().getProperty("name"));
     }
 
     @Test
@@ -289,7 +289,7 @@ public class AdjacencyMethodHandlerTest {
 
         Assert.assertTrue(child != null);
         final VertexFrame childVertex = child;
-        Assert.assertNull(childVertex.element().getProperty("name"));
+        Assert.assertNull(childVertex.getElement().getProperty("name"));
     }
 
     @Test
@@ -310,7 +310,7 @@ public class AdjacencyMethodHandlerTest {
         Assert.assertNotNull(child);
         Assert.assertTrue(child instanceof VertexFrame);
         final VertexFrame childVertex = child;
-        Assert.assertEquals(childVertex.element().getProperty("name"), "hercules");
+        Assert.assertEquals(childVertex.getElement().getProperty("name"), "hercules");
         Assert.assertTrue(child instanceof GodExtended);
 
         father.setSons(Collections.<God>emptySet());
@@ -335,7 +335,7 @@ public class AdjacencyMethodHandlerTest {
         Assert.assertNotNull(child);
         Assert.assertTrue(child instanceof VertexFrame);
         final VertexFrame childVertex = child;
-        Assert.assertEquals(childVertex.element().getProperty("name"), "hercules");
+        Assert.assertEquals(childVertex.getElement().getProperty("name"), "hercules");
         Assert.assertTrue(child instanceof GodExtended);
 
         father.setSons(Arrays.asList(framedGraph.addFramedVertex(God.class)));
@@ -363,7 +363,7 @@ public class AdjacencyMethodHandlerTest {
         Assert.assertNotNull(child);
         Assert.assertTrue(child instanceof VertexFrame);
         final VertexFrame childVertex = child;
-        Assert.assertEquals(childVertex.element().getProperty("name"), "hercules");
+        Assert.assertEquals(childVertex.getElement().getProperty("name"), "hercules");
         Assert.assertTrue(child instanceof GodExtended);
 
         father.removeSon(child);

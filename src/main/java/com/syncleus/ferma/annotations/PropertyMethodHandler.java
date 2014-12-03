@@ -121,7 +121,7 @@ public class PropertyMethodHandler implements MethodHandler {
             final Property annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Property.class);
             final String value = annotation.value();
 
-            thiz.element().removeProperty(value);
+            thiz.getElement().removeProperty(value);
         }
     }
 }

@@ -51,7 +51,7 @@ public class IncidenceMethodHandlerTest {
         final Iterator<? extends EdgeFrame> childEdgeIterator = childrenEdges.iterator();
         Assert.assertTrue(childEdgeIterator.hasNext());
         final EdgeFrame childEdge = childEdgeIterator.next();
-        Assert.assertEquals(childEdge.element().getVertex(Direction.OUT).getProperty("name"), "hercules");
+        Assert.assertEquals(childEdge.getElement().getVertex(Direction.OUT).getProperty("name"), "hercules");
     }
 
     @Test
@@ -74,7 +74,7 @@ public class IncidenceMethodHandlerTest {
         final FatherEdge childEdge = childEdgeIterator.next();
         Assert.assertTrue(childEdge != null);
         final EdgeFrame edge = childEdge;
-        Assert.assertEquals(edge.element().getVertex(Direction.OUT).getProperty("name"), "hercules");
+        Assert.assertEquals(edge.getElement().getVertex(Direction.OUT).getProperty("name"), "hercules");
     }
 
     @Test
@@ -98,7 +98,7 @@ public class IncidenceMethodHandlerTest {
         Assert.assertTrue(childEdge instanceof FatherEdgeExtended);
         Assert.assertTrue(childEdge instanceof EdgeFrame);
         final EdgeFrame edge = childEdge;
-        Assert.assertEquals(edge.element().getVertex(Direction.OUT).getProperty("name"), "hercules");
+        Assert.assertEquals(edge.getElement().getVertex(Direction.OUT).getProperty("name"), "hercules");
     }
 
     @Test
@@ -116,7 +116,7 @@ public class IncidenceMethodHandlerTest {
         Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
 
         final EdgeFrame childEdge = father.getSonEdge();
-        Assert.assertEquals(childEdge.element().getVertex(Direction.OUT).getProperty("name"), "hercules");
+        Assert.assertEquals(childEdge.getElement().getVertex(Direction.OUT).getProperty("name"), "hercules");
     }
 
     @Test
@@ -136,7 +136,7 @@ public class IncidenceMethodHandlerTest {
         final FatherEdge childEdge = father.getSonEdge(FatherEdge.class);
         Assert.assertTrue(childEdge != null);
         final EdgeFrame edge = childEdge;
-        Assert.assertEquals(edge.element().getVertex(Direction.OUT).getProperty("name"), "hercules");
+        Assert.assertEquals(edge.getElement().getVertex(Direction.OUT).getProperty("name"), "hercules");
     }
 
     @Test
@@ -157,7 +157,7 @@ public class IncidenceMethodHandlerTest {
         Assert.assertNotNull(child);
         Assert.assertTrue(child instanceof EdgeFrame);
         final EdgeFrame childEdge = child;
-        Assert.assertEquals(childEdge.outV().next().element().getProperty("name"), "hercules");
+        Assert.assertEquals(childEdge.outV().next().getElement().getProperty("name"), "hercules");
 
         father.removeSonEdge(child);
 

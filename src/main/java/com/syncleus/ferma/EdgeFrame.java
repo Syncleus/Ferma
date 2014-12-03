@@ -24,7 +24,7 @@ import com.tinkerpop.blueprints.Edge;
 public interface EdgeFrame extends ElementFrame {
 
     @Override
-    Edge element();
+    Edge getElement();
 
     /**
      * @return The label associated with this edge

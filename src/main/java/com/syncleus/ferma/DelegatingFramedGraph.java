@@ -339,7 +339,7 @@ public class DelegatingFramedGraph implements FramedGraph {
      */
     @Override
     public <T> T addFramedEdge(final VertexFrame source, final VertexFrame destination, final String label, final Class<T> kind) {
-        final T framedEdge = frameNewElement(this.delegate.addEdge(null, source.element(), destination.element(), label), kind);
+        final T framedEdge = frameNewElement(this.delegate.addEdge(null, source.getElement(), destination.getElement(), label), kind);
         return framedEdge;
     }
 
@@ -356,7 +356,7 @@ public class DelegatingFramedGraph implements FramedGraph {
      */
     @Override
     public <T> T addFramedEdgeExplicit(final VertexFrame source, final VertexFrame destination, final String label, final Class<T> kind) {
-        final T framedEdge = frameNewElementExplicit(this.delegate.addEdge(null, source.element(), destination.element(), label), kind);
+        final T framedEdge = frameNewElementExplicit(this.delegate.addEdge(null, source.getElement(), destination.getElement(), label), kind);
         return framedEdge;
     }
 
@@ -530,7 +530,7 @@ public class DelegatingFramedGraph implements FramedGraph {
     @Override
     public Vertex addVertex(final Object id) {
         final VertexFrame framedVertex = frameNewElement(delegate.addVertex(null), TVertex.class);
-        return framedVertex.element();
+        return framedVertex.getElement();
     }
 
     @Override
@@ -561,7 +561,7 @@ public class DelegatingFramedGraph implements FramedGraph {
     @Override
     public Edge addEdge(final Object id, final Vertex outVertex, final Vertex inVertex, final String label) {
         final EdgeFrame framedEdge = frameNewElement(this.delegate.addEdge(id, outVertex, inVertex, label), TEdge.class);
-        return framedEdge.element();
+        return framedEdge.getElement();
     }
 
     @Override

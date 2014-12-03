@@ -28,7 +28,7 @@ public interface VertexFrame extends ElementFrame {
      * @see FramedElement#element()
      */
 
-    Vertex element();
+    Vertex getElement();
 
     /**
      * Add an edge using the supplied frame type.

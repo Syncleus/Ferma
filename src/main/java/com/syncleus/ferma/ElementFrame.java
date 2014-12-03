@@ -42,12 +42,12 @@ public interface ElementFrame {
     /**
      * @return The underlying element.
      */
-    Element element();
+    Element getElement();
 
     /**
      * @return The underlying graph.
      */
-    FramedGraph graph();
+    FramedGraph getGraph();
 
     /**
      * Return a property value.

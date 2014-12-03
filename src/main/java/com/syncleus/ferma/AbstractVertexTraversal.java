@@ -594,19 +594,19 @@ abstract class AbstractVertexTraversal<C, S, M> extends AbstractTraversal<Vertex
 
     @Override
     public VertexTraversal<List<EdgeFrame>, EdgeFrame, M> linkOut(final String label, final VertexFrame other) {
-        pipeline().linkOut(label, other.element());
+        pipeline().linkOut(label, other.getElement());
         return (VertexTraversal<List<EdgeFrame>, EdgeFrame, M>) this;
     }
 
     @Override
     public VertexTraversal<List<EdgeFrame>, EdgeFrame, M> linkIn(final String label, final VertexFrame other) {
-        pipeline().linkIn(label, other.element());
+        pipeline().linkIn(label, other.getElement());
         return (VertexTraversal<List<EdgeFrame>, EdgeFrame, M>) this;
     }
 
     @Override
     public VertexTraversal<List<EdgeFrame>, EdgeFrame, M> linkBoth(final String label, final VertexFrame other) {
-        pipeline().linkBoth(label, other.element());
+        pipeline().linkBoth(label, other.getElement());
         return (VertexTraversal<List<EdgeFrame>, EdgeFrame, M>) this;
     }
 

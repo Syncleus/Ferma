@@ -277,6 +277,7 @@ public class DelegatingFramedGraph implements FramedGraph {
     /**
      * Add a vertex to the graph
      *
+     * @param <T> The type used to frame the element.
      * @param kind
      *            The kind of the frame.
      * @return The framed vertex.
@@ -294,6 +295,7 @@ public class DelegatingFramedGraph implements FramedGraph {
      * instead. This method is useful for speeding up a look up when type resolution
      * isn't required.
      *
+     * @param <T> The type used to frame the element.
      * @param kind
      *            The kind of the frame.
      * @return The framed vertex.
@@ -333,6 +335,10 @@ public class DelegatingFramedGraph implements FramedGraph {
     /**
      * Add a edge to the graph
      *
+     * @param <T> The type used to frame the element.
+     * @param source The source vertex
+     * @param destination The destination vertex
+     * @param label The label for the edge
      * @param kind
      *            The kind of the frame.
      * @return The framed edge.
@@ -350,6 +356,10 @@ public class DelegatingFramedGraph implements FramedGraph {
      * instead. This method is useful for speeding up a look up when type resolution
      * isn't required.
      *
+     * @param <T> The type used to frame the element.
+     * @param source The source vertex
+     * @param destination The destination vertex
+     * @param label The label for the edge
      * @param kind
      *            The kind of the frame.
      * @return The framed edge.
@@ -363,6 +373,9 @@ public class DelegatingFramedGraph implements FramedGraph {
     /**
      * Add a edge to the graph using a frame type of {@link TEdge}.
      *
+     * @param source The source vertex
+     * @param destination The destination vertex
+     * @param label The label for the edge
      * @return The framed edge.
      */
     @Override
@@ -378,6 +391,9 @@ public class DelegatingFramedGraph implements FramedGraph {
      * instead. This method is useful for speeding up a look up when type resolution
      * isn't required.
      *
+     * @param source The source vertex
+     * @param destination The destination vertex
+     * @param label The label for the edge
      * @return The framed edge.
      */
     @Override

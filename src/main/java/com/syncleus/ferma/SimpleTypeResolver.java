@@ -44,7 +44,8 @@ public class SimpleTypeResolver implements TypeResolver {
      * still need to be included in a separate TypedModule they must be created here as well to ensure proper look-ups
      * occur.
      *
-     * @since 0.1
+     * @param reflectionCache the ReflectionCache used to examine the type hierarchy and do general reflection.
+     * @since 2.0.0
      */
     public SimpleTypeResolver(final ReflectionCache reflectionCache) {
         this.reflectionCache = reflectionCache;

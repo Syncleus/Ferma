@@ -25,6 +25,7 @@ import java.util.Set;
 public interface ElementFrame {
 
     /**
+     * @param <N> The ID's type.
      * @return The id of this element.
      */
     <N> N getId();
@@ -52,6 +53,7 @@ public interface ElementFrame {
     /**
      * Return a property value.
      *
+     * @param <T> The type of the property value.
      * @param name
      *            The name of the property.
      * @return the value of the property or null if none was present.
@@ -61,6 +63,7 @@ public interface ElementFrame {
     /**
      * Return a property value.
      *
+     * @param <T> The type of the property value.
      * @param name
      *            The name of the property.
      * @param type

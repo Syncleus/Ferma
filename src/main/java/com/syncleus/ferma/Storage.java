@@ -33,7 +33,7 @@ import java.util.Iterator;
 /**
  * Used to store a single value. Useful for the store step.
  *
- * @param <T>
+ * @param <T> The type of the value stored in this collection.
  */
 public class Storage<T> implements Collection<T> {
 

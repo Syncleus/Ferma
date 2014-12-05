@@ -33,6 +33,7 @@ public interface VertexFrame extends ElementFrame {
     /**
      * Add an edge using the supplied frame type.
      *
+     * @param <T> The type for the framed edge.
      * @param label
      *            The label for the edge
      * @param inVertex
@@ -50,6 +51,7 @@ public interface VertexFrame extends ElementFrame {
      * instead. This method is useful for speeding up a look up when type resolution
      * isn't required.
      *
+     * @param <T> The type for the framed edge.
      * @param label
      *            The label for the edge
      * @param inVertex
@@ -210,10 +212,12 @@ public interface VertexFrame extends ElementFrame {
      * Remove all out edges with the labels and then add a single edge to a new
      * vertex.
      *
+     * @param <K> The type used to frame the edge.
      * @param kind
      *            the vertex type to link to.
      * @param labels
      *            The labels of the edges.
+     * @return The newly created edge.
      */
     <K> K setLinkOut(Class<K> kind, String... labels);
 
@@ -225,10 +229,12 @@ public interface VertexFrame extends ElementFrame {
      * instead. This method is useful for speeding up a look up when type resolution
      * isn't required.
      *
+     * @param <K> The type used to frame the edge.
      * @param kind
      *            the vertex type to link to.
      * @param labels
      *            The labels of the edges.
+     * @return The newly created edge.
      */
     <K> K setLinkOutExplicit(Class<K> kind, String... labels);
 
@@ -236,10 +242,12 @@ public interface VertexFrame extends ElementFrame {
      * Remove all in edges with the labels and then add a single edge from a
      * new vertex.
      *
+     * @param <K> The type used to frame the edge.
      * @param kind
      *            the vertex type to link to.
      * @param labels
      *            The labels of the edges.
+     * @return The newly created edge.
      */
     <K> K setLinkIn(Class<K> kind, String... labels);
 
@@ -251,10 +259,12 @@ public interface VertexFrame extends ElementFrame {
      * instead. This method is useful for speeding up a look up when type resolution
      * isn't required.
      *
+     * @param <K> The type used to frame the edge.
      * @param kind
      *            the vertex type to link to.
      * @param labels
      *            The labels of the edges.
+     * @return The newly created edge.
      */
     <K> K setLinkInExplicit(Class<K> kind, String... labels);
 
@@ -262,10 +272,12 @@ public interface VertexFrame extends ElementFrame {
      * Remove all edges with the labels and then add edges to/from a new
      * vertex.
      *
+     * @param <K> The type used to frame the edge.
      * @param kind
      *            the vertex type to link to.
      * @param labels
      *            The labels of the edges.
+     * @return The newly created edge.
      */
     <K> K setLinkBoth(Class<K> kind, String... labels);
 
@@ -277,30 +289,33 @@ public interface VertexFrame extends ElementFrame {
      * instead. This method is useful for speeding up a look up when type resolution
      * isn't required.
      *
+     * @param <K> The type used to frame the edge.
      * @param kind
      *            the vertex type to link to.
      * @param labels
      *            The labels of the edges.
+     * @return The newly created edge.
      */
     <K> K setLinkBothExplicit(Class<K> kind, String... labels);
 
     /**
-     * Shortcut to get frameTraversal of current element
+     * Shortcut to get frame Traversal of current element
      *
-     * @return
+     * @return The traversal for the current element.
      */
     VertexTraversal<?, ?, ?> traversal();
 
     /**
      * Output the vertex as json.
      *
-     * @return
+     * @return A JsonObject representing this frame.
      */
     JsonObject toJson();
 
     /**
      * Reframe this element as a different type of frame.
      *
+     * @param <T> The type used to frame the element.
      * @param kind The new kind of frame.
      * @return The new frame
      */
@@ -313,6 +328,7 @@ public interface VertexFrame extends ElementFrame {
      * instead. This method is useful for speeding up a look up when type resolution
      * isn't required.
      *
+     * @param <T> The type used to frame the element.
      * @param kind The new kind of frame.
      * @return The new frame
      */

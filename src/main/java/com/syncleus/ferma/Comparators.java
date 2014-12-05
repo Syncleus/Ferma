@@ -36,9 +36,10 @@ import java.util.Comparator;
 public class Comparators {
 
     /**
-     * Compare by Id.
+     * Creates a comparator that compares by ID.
      * 
-     * @return
+     * @param <N> The type of framed element this comparator can compare.
+     * @return The comparator.
      */
     public static <N extends ElementFrame> Comparator<N> id() {
         return new Comparator<N>() {
@@ -55,7 +56,8 @@ public class Comparators {
     /**
      * Compare by id parsed as a long (Useful for tinkergraph)
      * 
-     * @return
+     * @param <N> The type of framed element this comparator can compare.
+     * @return The comparator.
      */
     public static <N extends ElementFrame> Comparator<N> idAsLong() {
         return new Comparator<N>() {
@@ -72,6 +74,7 @@ public class Comparators {
     /**
      * Compare by property. Note that no value may be null.
      * 
+     * @param <N> The type of framed element this comparator can compare.
      * @param property
      *            The property to compare by.
      * @return The result of comparing the property.

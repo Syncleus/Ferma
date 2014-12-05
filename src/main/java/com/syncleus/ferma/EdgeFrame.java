@@ -47,9 +47,9 @@ public interface EdgeFrame extends ElementFrame {
     VertexTraversal<?, ?, ?> bothV();
 
     /**
-     * Shortcut to get frameTraversal of current element
+     * Shortcut to get Traversal of current element
      *
-     * @return
+     * @return the EdgeTraversal of the current element
      */
     EdgeTraversal<?, ?, ?> traversal();
 
@@ -58,6 +58,7 @@ public interface EdgeFrame extends ElementFrame {
     /**
      * Reframe this element as a different type of frame.
      *
+     * @param <T> The type to frame as.
      * @param kind The new kind of frame.
      * @return The new frame
      */
@@ -70,6 +71,7 @@ public interface EdgeFrame extends ElementFrame {
      * instead. This method is useful for speeding up a look up when type resolution
      * isn't required.
      *
+     * @param <T> The type to frame as.
      * @param kind The new kind of frame.
      * @return The new frame
      */

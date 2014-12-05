@@ -174,7 +174,7 @@
                 <version>2.9.1</version>
                 <configuration>
                     <!-- This is temporary until we get the javadocs to compile -->
-                    <sourcepath>src/test/java/</sourcepath>
+                    <sourcepath>src/main/java/</sourcepath>
                     <show>public</show>
                 </configuration>
                 <executions>

@@ -38,6 +38,7 @@ public interface FramedGraph extends Graph {
     /**
      * Add a vertex to the graph
      *
+     * @param <T> The type used to frame the element.
      * @param kind
      *            The kind of the frame.
      * @return The framed vertex.
@@ -51,6 +52,7 @@ public interface FramedGraph extends Graph {
      * instead. This method is useful for speeding up a look up when type resolution
      * isn't required.
      *
+     * @param <T> The type used to frame the element.
      * @param kind
      *            The kind of the frame.
      * @return The framed vertex.
@@ -78,6 +80,10 @@ public interface FramedGraph extends Graph {
     /**
      * Add a edge to the graph
      *
+     * @param <T> The type used to frame the element.
+     * @param source The source vertex
+     * @param destination the destination vertex
+     * @param label the label.
      * @param kind
      *            The kind of the frame.
      * @return The framed edge.
@@ -91,6 +97,10 @@ public interface FramedGraph extends Graph {
      * instead. This method is useful for speeding up a look up when type resolution
      * isn't required.
      *
+     * @param <T> The type used to frame the element.
+     * @param source The source vertex
+     * @param destination the destination vertex
+     * @param label the label.
      * @param kind
      *            The kind of the frame.
      * @return The framed edge.
@@ -100,6 +110,9 @@ public interface FramedGraph extends Graph {
     /**
      * Add a edge to the graph using a frame type of {@link TEdge}.
      *
+     * @param source The source vertex
+     * @param destination the destination vertex
+     * @param label the label.
      * @return The framed edge.
      */
     TEdge addFramedEdge(final VertexFrame source, final VertexFrame destination, final String label);
@@ -111,6 +124,9 @@ public interface FramedGraph extends Graph {
      * instead. This method is useful for speeding up a look up when type resolution
      * isn't required.
      *
+     * @param source The source vertex
+     * @param destination the destination vertex
+     * @param label the label.
      * @return The framed edge.
      */
     TEdge addFramedEdgeExplicit(final VertexFrame source, final VertexFrame destination, final String label);

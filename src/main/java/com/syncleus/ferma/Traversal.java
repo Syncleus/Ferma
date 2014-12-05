@@ -51,14 +51,14 @@ public interface Traversal<T, C, S, M> extends Iterator<T>, Iterable<T> {
     /**
      * Traverse over all the vertices in the graph.
      * 
-     * @return
+     * @return The traversal representing all vertices in the graph.
      */
     VertexTraversal<?, ?, M> v();
 
     /**
      * Traverse over all the edges in the graph.
      * 
-     * @return
+     * @return The traversal representing all the edges in the graph.
      */
     EdgeTraversal<?, ?, M> e();
 
@@ -84,7 +84,9 @@ public interface Traversal<T, C, S, M> extends Iterator<T>, Iterable<T> {
      * Traverse over all the vertices in the graph that have the specified key
      * and value.
      *
-     * @return
+     * @param key The property key to filter for.
+     * @param value The property value to filter for.
+     * @return the traversal
      */
     VertexTraversal<?, ?, M> v(String key, Object value);
 
@@ -237,6 +239,7 @@ public interface Traversal<T, C, S, M> extends Iterator<T>, Iterable<T> {
      * The results of the function evaluated on the objects prior to the
      * aggregate are greedily collected into the provided collection.
      *
+     * @param <N> The type resulting from the aggregation.
      * @param aggregate
      *            the collection to aggregate results into
      * @param aggregateFunction
@@ -250,6 +253,7 @@ public interface Traversal<T, C, S, M> extends Iterator<T>, Iterable<T> {
      * The results of the function evaluated on the objects prior to the
      * aggregate are greedily collected into an ArrayList.
      *
+     * @param <N> The type resulting from the aggregation.
      * @param aggregateFunction
      *            the function to run over each object prior to insertion into
      *            the aggregate
@@ -262,6 +266,8 @@ public interface Traversal<T, C, S, M> extends Iterator<T>, Iterable<T> {
      * object and a value generated from the object. The grouping map has values
      * that are Lists.
      *
+     * @param <K> The key type
+     * @param <V> The value type
      * @param map
      *            the map to store the grouping in
      * @param keyFunction
@@ -278,6 +284,8 @@ public interface Traversal<T, C, S, M> extends Iterator<T>, Iterable<T> {
      * object and a value generated from the object. The grouping map has values
      * that are Lists.
      *
+     * @param <K> The key type
+     * @param <V> The value type
      * @param keyFunction
      *            the function that generates the key from the object
      * @param valueFunction
@@ -294,6 +302,9 @@ public interface Traversal<T, C, S, M> extends Iterator<T>, Iterable<T> {
      * reduce function to the keyed Lists. The sideEffect is only fully
      * available when the pipe is empty.
      *
+     * @param <K> The key type
+     * @param <V> The value type
+     * @param <V2> The reduced value type
      * @param reduceMap
      *            a map to perform the reduce operation on (good for having a
      *            later reference)
@@ -316,6 +327,9 @@ public interface Traversal<T, C, S, M> extends Iterator<T>, Iterable<T> {
      * reduce function to the keyed Lists. The sideEffect is only fully
      * available when the pipe is empty.
      *
+     * @param <K> The key type
+     * @param <V> The value type
+     * @param <V2> The reduced value type
      * @param keyFunction
      *            the function that generates the key from the object
      * @param valueFunction
@@ -333,6 +347,7 @@ public interface Traversal<T, C, S, M> extends Iterator<T>, Iterable<T> {
      * the function on the incoming object. The map values are determined by the
      * function on the incoming object (getA()) and the previous value (getB()).
      *
+     * @param <K> The key type
      * @param map
      *            a provided count map
      * @param keyFunction
@@ -350,6 +365,7 @@ public interface Traversal<T, C, S, M> extends Iterator<T>, Iterable<T> {
      * function on the incoming object. The map values are determined by the
      * function on the incoming object (getA()) and the previous value (getB()).
      *
+     * @param <K> The key type
      * @param keyFunction
      *            the key function to determine map key
      * @param valueFunction
@@ -365,6 +381,7 @@ public interface Traversal<T, C, S, M> extends Iterator<T>, Iterable<T> {
      * the function on the incoming object. The map values are 1 plus the
      * previous value for that key.
      *
+     * @param <K> The key type
      * @param map
      *            a provided count map
      * @param keyFunction
@@ -380,6 +397,7 @@ public interface Traversal<T, C, S, M> extends Iterator<T>, Iterable<T> {
      * the function on the incoming object. The map values are 1 plus the
      * previous value for that key.
      *
+     * @param <K> The key type
      * @param keyFunction
      *            the key function to determine map key
      * @return the extended Pipeline
@@ -417,6 +435,7 @@ public interface Traversal<T, C, S, M> extends Iterator<T>, Iterable<T> {
     /**
      * Lazily store the incoming objects into the provided collection.
      *
+     * @param <N> The type of the object to be stored.
      * @param storage
      *            the collection to store results into
      * @return the extended Pipeline
@@ -427,6 +446,7 @@ public interface Traversal<T, C, S, M> extends Iterator<T>, Iterable<T> {
      * Lazily store the object returned by the function over the incoming object
      * into the provided collection.
      *
+     * @param <N> The type of the object to be stored.
      * @param storage
      *            the collection to store results into
      * @param storageFunction
@@ -448,6 +468,7 @@ public interface Traversal<T, C, S, M> extends Iterator<T>, Iterable<T> {
      * An ArrayList storage collection is provided and filled lazily with the
      * return of the function evaluated over the incoming objects.
      *
+     * @param <N> The type of the object to be stored.
      * @param storageFunction
      *            the function to run over each object prior to insertion into
      *            the storage collection
@@ -514,6 +535,7 @@ public interface Traversal<T, C, S, M> extends Iterator<T>, Iterable<T> {
      * Add a TreePipe to the end of the Pipeline This step maintains an internal
      * tree representation of the paths that have flowed through the step.
      *
+     * @param <N> The type of the values stored in the tree.
      * @param tree
      *            an embedded Map data structure to store the tree
      *            representation in
@@ -718,6 +740,7 @@ public interface Traversal<T, C, S, M> extends Iterator<T>, Iterable<T> {
      * This step emits the input but also calls the sideEffectFunction
      * function with the side effect of the previous step when it is ready.
      *
+     * @param sideEffectFunction The SideEffectFunction to be called.
      * @return the extended Pipeline
      */
     Traversal<T, ?, ?, M> divert(SideEffectFunction<S> sideEffectFunction);
@@ -726,6 +749,7 @@ public interface Traversal<T, C, S, M> extends Iterator<T>, Iterable<T> {
      * Given an input, the provided function is computed on the input and the
      * output of that function is emitted.
      *
+     * @param <N> The type to transform into.
      * @param function
      *            the transformation function of the pipe
      * @return the extended Pipeline
@@ -736,6 +760,7 @@ public interface Traversal<T, C, S, M> extends Iterator<T>, Iterable<T> {
      * Though, in practice, a StartPipe is usually the beginning. Moreover, the
      * constructor of the Pipeline will internally use StartPipe.
      *
+     * @param <N> The type of the object flowing through this pipe
      * @param object
      *            the object that serves as the start of the pipeline
      *            (iterator/iterable are unfolded)
@@ -768,6 +793,7 @@ public interface Traversal<T, C, S, M> extends Iterator<T>, Iterable<T> {
     /**
      * Emit the respective property of the incoming element.
      *
+     * @param <N> The type of the property value
      * @param key
      *            the property key
      * @return the extended Pipeline
@@ -777,6 +803,7 @@ public interface Traversal<T, C, S, M> extends Iterator<T>, Iterable<T> {
     /**
      * Emit the respective property of the incoming element.
      *
+     * @param <N> The type of the property value
      * @param key
      *            the property key
      * @param type
@@ -801,6 +828,8 @@ public interface Traversal<T, C, S, M> extends Iterator<T>, Iterable<T> {
     /**
      * Return the next object in the pipeline.
      *
+     * @param defaultValue The value to be returned if there is no next object in the pipeline.
+     * @return returns the next object in the pipeline, if there are no more objects then defaultValue is returned.
      */
     T nextOrDefault(T defaultValue);
 
@@ -886,6 +915,7 @@ public interface Traversal<T, C, S, M> extends Iterator<T>, Iterable<T> {
     /**
      * Emit the ids of the incoming objects.
      *
+     * @param <N> The type of the id objects.
      * @return A traversal of the ids.
      * @since 2.1.0
      */
@@ -894,6 +924,7 @@ public interface Traversal<T, C, S, M> extends Iterator<T>, Iterable<T> {
     /**
      * Emit the ids of the incoming objects, cast to the specified class.
      *
+     * @param <N> The type of the id objects.
      * @param c the class type to cast the ids to.
      * @return A traversal of the ids.
      * @since 2.1.0

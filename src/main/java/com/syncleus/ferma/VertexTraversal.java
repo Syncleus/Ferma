@@ -125,6 +125,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
      * range specified, then the element is allows to pass. If hte incoming
      * element's value for the key is null, the element is filtered.
      *
+     * @param <Z> The type for the property values
      * @param key
      *            the property key to check
      * @param startValue
@@ -261,6 +262,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
      * Get the next object emitted from the pipeline. If no such object exists,
      * then a NoSuchElementException is thrown.
      * 
+     * @param <N> The type used to frame the element
      * @param kind
      *            The type of frame for the element.
      * @return the next emitted object
@@ -275,6 +277,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
      * instead. This method is useful for speeding up a look up when type resolution
      * isn't required.
      *
+     * @param <N> The type used to frame the element
      * @param kind
      *            The type of frame for the element.
      * @return the next emitted object
@@ -285,6 +288,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
      * Get the next object emitted from the pipeline. If no such object exists,
      * then a the default value is returned.
      * 
+     * @param <N> The type used to frame the element
      * @param kind
      *            The type of frame for the element.
      * @param defaultValue
@@ -301,6 +305,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
      * instead. This method is useful for speeding up a look up when type resolution
      * isn't required.
      *
+     * @param <N> The type used to frame the element
      * @param kind
      *            The type of frame for the element.
      * @param defaultValue
@@ -325,6 +330,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
      * instead. This method is useful for speeding up a look up when type resolution
      * isn't required.
      * 
+     * @param <N> The type used to frame the element
      * @param kind
      *            The type of frame for the element.
      * @return the next emitted object
@@ -335,6 +341,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
      * Get the next object emitted from the pipeline. If no such object exists a
      * new vertex is created.
      *
+     * @param <N> The type used to frame the element
      * @param kind
      *            The type of frame for the element.
      * @return the next emitted object
@@ -344,6 +351,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
     /**
      * Return the next X objects in the traversal as a list.
      * 
+     * @param <N> The type used to frame the element
      * @param amount
      *            the number of objects to return
      * @param kind
@@ -359,6 +367,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
      * instead. This method is useful for speeding up a look up when type resolution
      * isn't required.
      *
+     * @param <N> The type used to frame the element
      * @param amount
      *            the number of objects to return
      * @param kind
@@ -370,6 +379,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
     /**
      * Return an iterator of framed elements.
      * 
+     * @param <N> The type used to frame the element
      * @param kind
      *            The kind of framed elements to return.
      * @return An iterator of framed elements.
@@ -383,6 +393,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
      * instead. This method is useful for speeding up a look up when type resolution
      * isn't required.
      *
+     * @param <N> The type used to frame the element
      * @param kind
      *            The kind of framed elements to return.
      * @return An iterator of framed elements.
@@ -392,6 +403,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
     /**
      * Return a list of all the objects in the pipeline.
      * 
+     * @param <N> The type used to frame the element
      * @param kind
      *            The kind of framed elements to return.
      * @return a list of all the objects
@@ -405,6 +417,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
      * instead. This method is useful for speeding up a look up when type resolution
      * isn't required.
      *
+     * @param <N> The type used to frame the element
      * @param kind
      *            The kind of framed elements to return.
      * @return a list of all the objects
@@ -414,6 +427,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
     /**
      * Return a set of all the objects in the pipeline.
      *
+     * @param <N> The type used to frame the element
      * @param kind
      *            The kind of framed elements to return.
      * @return a set of all the objects
@@ -427,6 +441,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
      * instead. This method is useful for speeding up a look up when type resolution
      * isn't required.
      *
+     * @param <N> The type used to frame the element
      * @param kind
      *            The kind of framed elements to return.
      * @return a set of all the objects
@@ -708,6 +723,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
     /**
      * Fill the provided collection with the objects in the pipeline.
      *
+     * @param <N> The type used to frame the element
      * @param collection
      *            the collection to fill
      * @param kind
@@ -723,6 +739,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
      * instead. This method is useful for speeding up a look up when type resolution
      * isn't required.
      *
+     * @param <N> The type used to frame the element
      * @param collection
      *            the collection to fill
      * @param kind
@@ -776,6 +793,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
      * The incoming objects are copied to the provided pipes. This "split-pipe"
      * is used in conjunction with some type of "merge-pipe."
      *
+     * @param <N> The type of the objects through the traversal.
      * @param traversals
      *            the internal pipes of the CopySplitPipe
      * @return the extended Pipeline
@@ -785,6 +803,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
     /**
      * The pipeline loops over the supplied traversal.
      *
+     * @param traversal the traversal to look over.
      * @return the extended Pipeline
      */
     VertexTraversal<?, ?, M> loop(TraversalFunction<VertexFrame, ? extends VertexTraversal<?, ?, ?>> traversal);
@@ -792,6 +811,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
     /**
      * The pipeline loops over the supplied traversal up to a maximum depth.
      *
+     * @param traversal the traversal to look over.
      * @param depth The maximum depth to loop to
      * @return the extended Pipeline
      */

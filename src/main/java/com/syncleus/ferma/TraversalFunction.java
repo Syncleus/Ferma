@@ -32,8 +32,8 @@ import com.tinkerpop.pipes.PipeFunction;
 /**
  * Takes a value and returns another value.
  *
- * @param <A>
- * @param <B>
+ * The A type is the argument type of the compute() method.
+ * The B type is the return type of the compute() method.
  */
 public interface TraversalFunction<A, B> extends PipeFunction<A, B> {
 

@@ -40,6 +40,7 @@ public interface TypeResolver {
     /**
      * Resolve the type of frame that a an element should be.
      * 
+     * @param <T> The type used to frame the element.
      * @param element
      *            The element that is being framed.
      * @param kind

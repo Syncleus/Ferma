@@ -35,6 +35,7 @@ public interface MethodHandler {
     Class<? extends Annotation> getAnnotationType();
 
     /**
+     * @param <E> The loaded type of the Byte Buddy Builder
      * @param method The method being called on the frame.
      * @param annotation The annotation
      * @param builder ByteBuddy Builder class to expand.

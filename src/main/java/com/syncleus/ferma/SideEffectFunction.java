@@ -31,7 +31,7 @@ package com.syncleus.ferma;
  * 
  * Takes a value but does not return anything.
  *
- * @param <T>
+ * @param <T> The type of input processed by this function.
  */
 public interface SideEffectFunction<T> {
 

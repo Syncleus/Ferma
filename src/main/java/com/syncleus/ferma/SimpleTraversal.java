@@ -41,7 +41,7 @@ import com.tinkerpop.blueprints.Graph;
  * @param <T> The type of the objects coming off the pipe.
  * @param <C> The cap of the current pipe.
  * @param <S> The SideEffect of the current pipe.
- * @param <M> The current mark'ed type for the current pipe.
+ * @param <M> The current marked type for the current pipe.
  */
 class SimpleTraversal<T, C, S, M> extends AbstractTraversal<T, C, S, M> {
 

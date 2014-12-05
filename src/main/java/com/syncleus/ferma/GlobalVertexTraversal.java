@@ -578,7 +578,7 @@ public class GlobalVertexTraversal<C, S, M> implements VertexTraversal<C, S, M> 
     }
 
     @Override
-    public VertexTraversal<?, ?, M> order(final Comparator<VertexFrame> compareFunction) {
+    public VertexTraversal<?, ?, M> order(final Comparator<? super VertexFrame> compareFunction) {
         return this.simpleDelegate().order(compareFunction);
     }
 

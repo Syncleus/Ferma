@@ -621,7 +621,7 @@ public interface Traversal<T, C, S, M> extends Iterator<T>, Iterable<T> {
      *            a comparator function of two objects of type e
      * @return the extended Pipeline
      */
-    Traversal<T, ?, ?, M> order(Comparator<T> compareFunction);
+    Traversal<T, ?, ?, M> order(Comparator<? super T> compareFunction);
 
     /**
      * Wrap the previous step in an AsPipe. Useful for naming steps and is used

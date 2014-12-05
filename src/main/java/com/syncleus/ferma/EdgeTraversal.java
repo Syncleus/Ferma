@@ -443,7 +443,7 @@ public interface EdgeTraversal<C, S, M> extends Traversal<EdgeFrame, C, S, M> {
     EdgeTraversal<?, ?, M> order(TransformPipe.Order order);
 
     @Override
-    EdgeTraversal<?, ?, M> order(Comparator<EdgeFrame> compareFunction);
+    EdgeTraversal<?, ?, M> order(Comparator<? super EdgeFrame> compareFunction);
 
     @Override
     EdgeTraversal<?, ?, M> as(String name);

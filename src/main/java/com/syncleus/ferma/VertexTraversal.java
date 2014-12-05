@@ -706,7 +706,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
     VertexTraversal<?, ?, M> order();
 
     @Override
-    VertexTraversal<?, ?, M> order(Comparator<VertexFrame> compareFunction);
+    VertexTraversal<?, ?, M> order(Comparator<? super VertexFrame> compareFunction);
 
     @Override
     VertexTraversal<?, ?, M> order(TransformPipe.Order order);

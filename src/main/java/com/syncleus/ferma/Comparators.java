@@ -34,41 +34,26 @@ import java.util.Comparator;
  *
  */
 public class Comparators {
+    
+    private static final IdComparator ID_COMPARATOR = new IdComparator();
+    private static final IdAsLongComparator ID_AS_LONG_COMPARATOR = new IdAsLongComparator();
 
     /**
      * Creates a comparator that compares by ID.
      * 
-     * @param <N> The type of framed element this comparator can compare.
      * @return The comparator.
      */
-    public static <N extends ElementFrame> Comparator<N> id() {
-        return new Comparator<N>() {
-            @Override
-            public int compare(final N t, final N t1) {
-                final Comparable c1 = t.getId();
-                final Comparable c2 = t1.getId();
-
-                return c1.compareTo(c2);
-            }
-        };
+    public static Comparator<ElementFrame> id() {
+        return ID_COMPARATOR;
     }
 
     /**
      * Compare by id parsed as a long (Useful for tinkergraph)
      * 
-     * @param <N> The type of framed element this comparator can compare.
      * @return The comparator.
      */
-    public static <N extends ElementFrame> Comparator<N> idAsLong() {
-        return new Comparator<N>() {
-            @Override
-            public int compare(final N t, final N t1) {
-                final Long c1 = Long.parseLong((String) t.getId());
-                final Long c2 = Long.parseLong((String) t1.getId());
-
-                return c1.compareTo(c2);
-            }
-        };
+    public static Comparator<ElementFrame> idAsLong() {
+        return ID_AS_LONG_COMPARATOR;
     }
 
     /**
@@ -79,10 +64,10 @@ public class Comparators {
      *            The property to compare by.
      * @return The result of comparing the property.
      */
-    public static <N extends ElementFrame> Comparator<N> property(final String property) {
-        return new Comparator<N>() {
+    public static Comparator<ElementFrame> property(final String property) {
+        return new Comparator<ElementFrame>() {
             @Override
-            public int compare(final N t, final N t1) {
+            public int compare(final ElementFrame t, final ElementFrame t1) {
                 final Comparable c1 = t.getProperty(property);
                 final Comparable c2 = t1.getProperty(property);
 
@@ -91,4 +76,23 @@ public class Comparators {
         };
     }
 
+    private static final class IdComparator implements Comparator<ElementFrame> {
+        @Override
+        public int compare(final ElementFrame t, final ElementFrame t1) {
+            final Comparable c1 = t.getId();
+            final Comparable c2 = t1.getId();
+
+            return c1.compareTo(c2);
+        }
+    }
+    
+    private static final class IdAsLongComparator implements Comparator<ElementFrame> {
+        @Override
+        public int compare(final ElementFrame t, final ElementFrame t1) {
+            final Long c1 = Long.parseLong((String) t.getId());
+            final Long c2 = Long.parseLong((String) t1.getId());
+
+            return c1.compareTo(c2);
+        }
+    }
 }

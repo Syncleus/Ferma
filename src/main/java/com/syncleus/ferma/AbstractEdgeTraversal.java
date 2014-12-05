@@ -48,7 +48,7 @@ import com.tinkerpop.pipes.util.structures.Tree;
  * 
  * @param <C> The cap of the current pipe.
  * @param <S> The SideEffect of the current pipe.
- * @param <M> The current mark'ed type for the current pipe.
+ * @param <M> The current marked type for the current pipe.
  */
 abstract class AbstractEdgeTraversal<C, S, M> extends AbstractTraversal<EdgeFrame, C, S, M> implements EdgeTraversal<C, S, M> {
 
@@ -425,7 +425,7 @@ abstract class AbstractEdgeTraversal<C, S, M> extends AbstractTraversal<EdgeFram
     }
 
     @Override
-    public EdgeTraversal<?, ?, M> order(final Comparator<EdgeFrame> compareFunction) {
+    public EdgeTraversal<?, ?, M> order(final Comparator<? super EdgeFrame> compareFunction) {
         return (EdgeTraversal<?, ?, M>) super.order(compareFunction);
     }
 

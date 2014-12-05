@@ -284,7 +284,7 @@ abstract class AbstractVertexTraversal<C, S, M> extends AbstractTraversal<Vertex
     }
 
     @Override
-    public VertexTraversal<?, ?, M> order(final Comparator<VertexFrame> compareFunction) {
+    public VertexTraversal<?, ?, M> order(final Comparator<? super VertexFrame> compareFunction) {
         return (VertexTraversal<?, ?, M>) super.order(compareFunction);
     }
 

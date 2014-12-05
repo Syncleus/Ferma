@@ -462,7 +462,7 @@ abstract class AbstractTraversal<T, C, S, M> implements Traversal<T, C, S, M> {
     }
 
     @Override
-    public Traversal<T, ?, ?, M> order(final Comparator<T> compareFunction) {
+    public Traversal<T, ?, ?, M> order(final Comparator<? super T> compareFunction) {
         final FramingComparator framingComparator = new FramingComparator(compareFunction, graph());
         pipeline().order(new TraversalFunction<Pair<Object, Object>, Integer>() {
 

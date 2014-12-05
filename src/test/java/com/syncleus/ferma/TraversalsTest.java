@@ -190,7 +190,7 @@ public class TraversalsTest {
         Assert.assertEquals("josh", graph.v().property("name").order().next());
         Assert.assertEquals("vadas", graph.v().property("name").order(Order.DECR).next());
 
-        Assert.assertEquals(graph.v(2).next(), graph.v().order(Comparators.<VertexFrame>property("name")).out("knows").next());
+        Assert.assertEquals(graph.v(2).next(), graph.v().order(Comparators.property("name")).out("knows").next());
 
     }
 

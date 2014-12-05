@@ -199,7 +199,7 @@ public interface EdgeTraversal<C, S, M> extends Traversal<EdgeFrame, C, S, M> {
      *            the type of frame to for each element.
      * @return a list of X objects (if X objects occur)
      */
-    <T> List<T> next(int amount, Class<T> kind);
+    <T> List<? extends T> next(int amount, Class<T> kind);
 
     /**
      * Return the next X objects in the traversal as a list.
@@ -215,7 +215,7 @@ public interface EdgeTraversal<C, S, M> extends Traversal<EdgeFrame, C, S, M> {
      *            the type of frame to for each element.
      * @return a list of X objects (if X objects occur)
      */
-    <T> List<T> nextExplicit(int amount, Class<T> kind);
+    <T> List<? extends T> nextExplicit(int amount, Class<T> kind);
 
     /**
      * Return an iterator of framed elements.

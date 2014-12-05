@@ -358,7 +358,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
      *            the type of frame to for each element.
      * @return a list of X objects (if X objects occur)
      */
-    <N> List<N> next(int amount, Class<N> kind);
+    <N> List<? extends N> next(int amount, Class<N> kind);
 
     /**
      * Return the next X objects in the traversal as a list.
@@ -374,7 +374,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
      *            the type of frame to for each element.
      * @return a list of X objects (if X objects occur)
      */
-    <N> List<N> nextExplicit(int amount, Class<N> kind);
+    <N> List<? extends N> nextExplicit(int amount, Class<N> kind);
 
     /**
      * Return an iterator of framed elements.

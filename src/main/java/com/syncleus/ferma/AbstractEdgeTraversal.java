@@ -251,7 +251,7 @@ abstract class AbstractEdgeTraversal<C, S, M> extends AbstractTraversal<EdgeFram
     }
 
     @Override
-    public <T> List<T> next(final int amount, final Class<T> kind) {
+    public <T> List<? extends T> next(final int amount, final Class<T> kind) {
         return Lists.transform(pipeline().next(amount), new Function() {
 
             public Object apply(final Object input) {
@@ -261,7 +261,7 @@ abstract class AbstractEdgeTraversal<C, S, M> extends AbstractTraversal<EdgeFram
     }
 
     @Override
-    public <T> List<T> nextExplicit(final int amount, final Class<T> kind) {
+    public <T> List<? extends T> nextExplicit(final int amount, final Class<T> kind) {
         return Lists.transform(pipeline().next(amount), new Function() {
 
             public Object apply(final Object input) {

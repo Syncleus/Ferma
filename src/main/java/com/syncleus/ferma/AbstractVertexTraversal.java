@@ -447,7 +447,7 @@ abstract class AbstractVertexTraversal<C, S, M> extends AbstractTraversal<Vertex
     }
 
     @Override
-    public <N> List<N> next(final int amount, final Class<N> kind) {
+    public <N> List<? extends N> next(final int amount, final Class<N> kind) {
         return Lists.transform(pipeline().next(amount), new Function() {
 
             public Object apply(final Object input) {
@@ -457,7 +457,7 @@ abstract class AbstractVertexTraversal<C, S, M> extends AbstractTraversal<Vertex
     }
 
     @Override
-    public <N> List<N> nextExplicit(final int amount, final Class<N> kind) {
+    public <N> List<? extends N> nextExplicit(final int amount, final Class<N> kind) {
         return Lists.transform(pipeline().next(amount), new Function() {
 
             public Object apply(final Object input) {

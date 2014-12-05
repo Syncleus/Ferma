@@ -883,7 +883,7 @@ public interface Traversal<T, C, S, M> extends Iterator<T>, Iterable<T> {
      *            the collection to fill
      * @return the collection filled
      */
-    Collection<T> fill(Collection<? super T> collection);
+    Collection<? extends T> fill(Collection<? super T> collection);
 
     /**
      * The section of pipeline back to the topmost marked step is evaluated. The mark is removed from the stack.

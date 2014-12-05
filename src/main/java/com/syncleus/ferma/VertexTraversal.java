@@ -730,7 +730,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
      *            The kind of framed elements to return.
      * @return the collection filled
      */
-    <N extends VertexFrame> Collection<N> fill(Collection<? super N> collection, Class<N> kind);
+    <N> Collection<? extends N> fill(Collection<? super N> collection, Class<N> kind);
 
     /**
      * Fill the provided collection with the objects in the pipeline.
@@ -746,7 +746,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
      *            The kind of framed elements to return.
      * @return the collection filled
      */
-    <N extends VertexFrame> Collection<N> fillExplicit(Collection<? super N> collection, Class<N> kind);
+    <N> Collection<? extends N> fillExplicit(Collection<? super N> collection, Class<N> kind);
 
     @Override
     VertexTraversal<?, ?, M> gatherScatter();

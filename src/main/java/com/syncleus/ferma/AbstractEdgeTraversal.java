@@ -463,7 +463,7 @@ abstract class AbstractEdgeTraversal<C, S, M> extends AbstractTraversal<EdgeFram
     }
 
     @Override
-    public Collection<EdgeFrame> fill(final Collection<? super EdgeFrame> collection) {
+    public Collection<? extends EdgeFrame> fill(final Collection<? super EdgeFrame> collection) {
         return super.fill(collection);
     }
 
@@ -479,9 +479,11 @@ abstract class AbstractEdgeTraversal<C, S, M> extends AbstractTraversal<EdgeFram
         return pipeline().fill(new FramingCollection(collection, graph(), kind, true));
     }
 
+    @Override
     public java.util.Iterator<EdgeFrame> iterator() {
         return Iterators.transform(pipeline(), new Function() {
 
+            @Override
             public Object apply(final Object input) {
                 return graph().frameElement((Element) input, EdgeFrame.class);
             }

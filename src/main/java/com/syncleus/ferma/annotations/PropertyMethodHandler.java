@@ -32,7 +32,7 @@ import java.lang.reflect.Method;
 /**
  * A method handler that implemented the Property Annotation.
  *
- * @since 0.1
+ * @since 2.0.0
  */
 public class PropertyMethodHandler implements MethodHandler {
 

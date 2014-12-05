@@ -36,7 +36,7 @@ import java.lang.annotation.Target;
  * When annotating a get* class it ensures it only returns nodes of the specified type (including sub-classes). Any
  * Nodes which are not of this type will not be returned.
  *
- * @since 0.1
+ * @since 2.0.0
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
@@ -46,7 +46,7 @@ public @interface Adjacency {
      * The label of the edges making the adjacency between the vertices.
      *
      * @return the edge label
-     * @since 0.1
+     * @since 2.0.0
      */
     String label();
 
@@ -54,7 +54,7 @@ public @interface Adjacency {
      * The edge direction of the adjacency.
      *
      * @return the direction of the edges composing the adjacency
-     * @since 0.1
+     * @since 2.0.0
      */
     Direction direction() default Direction.OUT;
 }

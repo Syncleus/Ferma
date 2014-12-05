@@ -36,7 +36,7 @@ import java.util.Set;
 /**
  * A method handler that implemented the Adjacency Annotation.
  *
- * @since 0.1
+ * @since 2.0.0
  */
 public class AdjacencyMethodHandler implements MethodHandler {
 

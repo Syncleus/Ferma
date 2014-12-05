@@ -33,7 +33,7 @@ public class SimpleTypeResolver implements TypeResolver {
      * still need to be included in a separate TypedModule they must be created here as well to ensure proper look-ups
      * occur.
      *
-     * @since 0.1
+     * @since 2.0.0
      */
     public SimpleTypeResolver() {
         this.reflectionCache = new ReflectionCache();

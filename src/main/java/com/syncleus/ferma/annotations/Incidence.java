@@ -37,7 +37,7 @@ import java.lang.annotation.Target;
  * When annotating a get* class it ensures it only returns nodes of the specified type (including sub-classes). Any
  * Nodes which are not of this type will not be returned.
  *
- * @since 0.1
+ * @since 2.0.0
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
@@ -47,7 +47,7 @@ public @interface Incidence {
      * The labels of the edges that are incident to the vertex.
      *
      * @return the edge label
-     * @since 0.1
+     * @since 2.0.0
      */
     String label();
 
@@ -55,7 +55,7 @@ public @interface Incidence {
      * The direction of the edges.
      *
      * @return the edge direction
-     * @since 0.1
+     * @since 2.0.0
      */
     Direction direction() default Direction.OUT;
 }

@@ -36,7 +36,7 @@ import java.util.Set;
 /**
  * A TinkerPop method handler that implemented the Incidence Annotation.
  *
- * @since 0.1
+ * @since 2.0.0
  */
 public class IncidenceMethodHandler implements MethodHandler {
 

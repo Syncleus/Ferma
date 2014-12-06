@@ -44,7 +44,7 @@ import com.tinkerpop.pipes.util.structures.Tree;
  * @param <T> The type of the objects coming off the pipe.
  * @param <C> The cap of the current pipe.
  * @param <S> The SideEffect of the current pipe.
- * @param <M> The current mark'ed type for the current pipe.
+ * @param <M> The current marked type for the current pipe.
  */
 public interface Traversal<T, C, S, M> extends Iterator<T>, Iterable<T> {
 
@@ -75,7 +75,7 @@ public interface Traversal<T, C, S, M> extends Iterator<T>, Iterable<T> {
      * Traversal over a list of vertices in the graph.
      * 
      * @param ids
-     *            The ids of the vertices.
+     *            The IDs of the vertices.
      * @return The traversal.
      */
     VertexTraversal<?, ?, M> v(Collection<?> ids);
@@ -94,7 +94,7 @@ public interface Traversal<T, C, S, M> extends Iterator<T>, Iterable<T> {
      * Traversal over a list of edges in the graph.
      * 
      * @param ids
-     *            The ids of the edges.
+     *            The IDs of the edges.
      * @return The traversal.
      */
     EdgeTraversal<?, ?, M> e(Object... ids);
@@ -103,7 +103,7 @@ public interface Traversal<T, C, S, M> extends Iterator<T>, Iterable<T> {
      * Traversal over a list of edges in the graph.
      * 
      * @param ids
-     *            The ids of the edges.
+     *            The IDs of the edges.
      * @return The traversal.
      */
     EdgeTraversal<?, ?, M> e(Collection<?> ids);

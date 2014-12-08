@@ -24,9 +24,9 @@ import net.bytebuddy.instrumentation.MethodDelegation;
 import net.bytebuddy.instrumentation.method.bytecode.bind.annotation.Origin;
 import net.bytebuddy.instrumentation.method.bytecode.bind.annotation.RuntimeType;
 import net.bytebuddy.instrumentation.method.bytecode.bind.annotation.This;
-import net.bytebuddy.instrumentation.method.matcher.MethodMatchers;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import net.bytebuddy.matcher.ElementMatchers;
 
 /**
  * A method handler that implemented the OutVertex Annotation.
@@ -54,7 +54,7 @@ public class OutVertexMethodHandler implements MethodHandler {
     }
 
     private <E> DynamicType.Builder<E> getNode(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
-        return builder.method(MethodMatchers.is(method)).intercept(MethodDelegation.to(getVertexInterceptor.class));
+        return builder.method(ElementMatchers.is(method)).intercept(MethodDelegation.to(getVertexInterceptor.class));
     }
 
     public static final class getVertexInterceptor {

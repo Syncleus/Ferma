@@ -25,9 +25,9 @@ import net.bytebuddy.instrumentation.method.bytecode.bind.annotation.Argument;
 import net.bytebuddy.instrumentation.method.bytecode.bind.annotation.Origin;
 import net.bytebuddy.instrumentation.method.bytecode.bind.annotation.RuntimeType;
 import net.bytebuddy.instrumentation.method.bytecode.bind.annotation.This;
-import net.bytebuddy.instrumentation.method.matcher.MethodMatchers;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import net.bytebuddy.matcher.ElementMatchers;
 
 /**
  * A method handler that implemented the Property Annotation.
@@ -67,15 +67,15 @@ public class PropertyMethodHandler implements MethodHandler {
     }
 
     private <E> DynamicType.Builder<E> setProperty(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
-        return builder.method(MethodMatchers.is(method)).intercept(MethodDelegation.to(SetPropertyInterceptor.class));
+        return builder.method(ElementMatchers.is(method)).intercept(MethodDelegation.to(SetPropertyInterceptor.class));
     }
 
     private <E> DynamicType.Builder<E> getProperty(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
-        return builder.method(MethodMatchers.is(method)).intercept(MethodDelegation.to(GetPropertyInterceptor.class));
+        return builder.method(ElementMatchers.is(method)).intercept(MethodDelegation.to(GetPropertyInterceptor.class));
     }
 
     private <E> DynamicType.Builder<E> removeProperty(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
-        return builder.method(MethodMatchers.is(method)).intercept(MethodDelegation.to(RemovePropertyInterceptor.class));
+        return builder.method(ElementMatchers.is(method)).intercept(MethodDelegation.to(RemovePropertyInterceptor.class));
     }
 
     private static Enum getValueAsEnum(final Method method, final Object value) {

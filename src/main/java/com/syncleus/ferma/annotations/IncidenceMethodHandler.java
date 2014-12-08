@@ -27,11 +27,11 @@ import net.bytebuddy.instrumentation.method.bytecode.bind.annotation.Argument;
 import net.bytebuddy.instrumentation.method.bytecode.bind.annotation.Origin;
 import net.bytebuddy.instrumentation.method.bytecode.bind.annotation.RuntimeType;
 import net.bytebuddy.instrumentation.method.bytecode.bind.annotation.This;
-import net.bytebuddy.instrumentation.method.matcher.MethodMatchers;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.Set;
+import net.bytebuddy.matcher.ElementMatchers;
 
 /**
  * A TinkerPop method handler that implemented the Incidence Annotation.
@@ -78,23 +78,23 @@ public class IncidenceMethodHandler implements MethodHandler {
     }
 
     private <E> DynamicType.Builder<E> getEdgesDefault(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
-        return builder.method(MethodMatchers.is(method)).intercept(MethodDelegation.to(GetEdgesDefaultInterceptor.class));
+        return builder.method(ElementMatchers.is(method)).intercept(MethodDelegation.to(GetEdgesDefaultInterceptor.class));
     }
 
     private <E> DynamicType.Builder<E> getEdgesByType(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
-        return builder.method(MethodMatchers.is(method)).intercept(MethodDelegation.to(GetEdgesByTypeInterceptor.class));
+        return builder.method(ElementMatchers.is(method)).intercept(MethodDelegation.to(GetEdgesByTypeInterceptor.class));
     }
 
     private <E> DynamicType.Builder<E> getEdgeDefault(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
-        return builder.method(MethodMatchers.is(method)).intercept(MethodDelegation.to(GetEdgeDefaultInterceptor.class));
+        return builder.method(ElementMatchers.is(method)).intercept(MethodDelegation.to(GetEdgeDefaultInterceptor.class));
     }
 
     private <E> DynamicType.Builder<E> getEdgeByType(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
-        return builder.method(MethodMatchers.is(method)).intercept(MethodDelegation.to(GetEdgeByTypeInterceptor.class));
+        return builder.method(ElementMatchers.is(method)).intercept(MethodDelegation.to(GetEdgeByTypeInterceptor.class));
     }
 
     private <E> DynamicType.Builder<E> removeEdge(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
-        return builder.method(MethodMatchers.is(method)).intercept(MethodDelegation.to(RemoveEdgeInterceptor.class));
+        return builder.method(ElementMatchers.is(method)).intercept(MethodDelegation.to(RemoveEdgeInterceptor.class));
     }
 
     public static final class GetEdgesDefaultInterceptor {

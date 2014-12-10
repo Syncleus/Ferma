@@ -47,11 +47,11 @@ import com.tinkerpop.pipes.util.structures.Table;
 import com.tinkerpop.pipes.util.structures.Tree;
 
 /**
- * Vertex specific traversal.
+ * Vertex specific traversal. This class is abstract and as such is never instantiated directly.
  *
  * @param <C> The cap of the current pipe.
  * @param <S> The SideEffect of the current pipe.
- * @param <M> The current mark'ed type for the current pipe.
+ * @param <M> The current marked type for the current pipe.
  */
 abstract class AbstractVertexTraversal<C, S, M> extends AbstractTraversal<VertexFrame, C, S, M> implements VertexTraversal<C, S, M> {
 

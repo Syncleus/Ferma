@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jglue.totorom</groupId>
 	<artifactId>totorom-parent</artifactId>
-	<version>0.5.4</version>
+	<version>0.5.5-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<parent>
 		<groupId>org.sonatype.oss</groupId>
@@ -131,7 +131,7 @@
 		<developerConnection>scm:git:git@github.com:BrynCooke/totorom.git</developerConnection>
 		<url>https://github.com/BrynCooke/totorom</url>
 
-    <tag>totorom-parent-0.5.4</tag>
+    <tag>HEAD</tag>
   </scm>
 
 

@@ -614,7 +614,7 @@ abstract class VertexTraversalImpl extends TraversalBase implements VertexTraver
 
 	@Override
 	public void removeAll() {
-		pipeline().remove();
+		pipeline().removeAll();
 	}
 
 	@Override

@@ -65,7 +65,7 @@ import com.tinkerpop.gremlin.java.GremlinPipeline;
 class TraversalImpl extends TraversalBase implements Traversal {
 
 	private FramedGraph graph;
-	private GremlinPipeline pipeline;
+	private TotoromGremlinPipeline pipeline;
 	private Deque<MarkId> marks = new ArrayDeque<>();
 	private int markId = 0;
 
@@ -122,7 +122,7 @@ class TraversalImpl extends TraversalBase implements Traversal {
 		}
 
 		@Override
-		protected GremlinPipeline pipeline() {
+		protected TotoromGremlinPipeline pipeline() {
 			return pipeline;
 		}
 
@@ -165,7 +165,7 @@ class TraversalImpl extends TraversalBase implements Traversal {
 		}
 
 		@Override
-		protected GremlinPipeline pipeline() {
+		protected TotoromGremlinPipeline pipeline() {
 			return pipeline;
 		}
 
@@ -182,7 +182,7 @@ class TraversalImpl extends TraversalBase implements Traversal {
 		};
 	};
 
-	private TraversalImpl(FramedGraph graph, GremlinPipeline pipeline) {
+	private TraversalImpl(FramedGraph graph, TotoromGremlinPipeline pipeline) {
 		this.graph = graph;
 		this.pipeline = pipeline;
 
@@ -220,7 +220,7 @@ class TraversalImpl extends TraversalBase implements Traversal {
 	}
 
 	@Override
-	protected GremlinPipeline pipeline() {
+	protected TotoromGremlinPipeline pipeline() {
 
 		return pipeline;
 	}

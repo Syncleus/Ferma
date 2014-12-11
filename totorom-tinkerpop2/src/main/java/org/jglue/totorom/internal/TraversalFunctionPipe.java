@@ -107,6 +107,11 @@ public class TraversalFunctionPipe implements TraversalFunction {
 				public void reset() {
 					
 				}
+				
+				@Override
+				public void remove() {
+					
+				}
 			};
 		}
 		return result;

@@ -499,7 +499,7 @@ abstract class EdgeTraversalImpl extends TraversalBase implements EdgeTraversal 
 
 	@Override
 	public void removeAll() {
-		pipeline().remove();
+		pipeline().removeAll();
 	}
 
 	@Override

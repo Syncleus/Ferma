@@ -58,6 +58,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.jglue.totorom.internal.DivertPipe;
+import org.jglue.totorom.internal.TotoromGremlinPipeline;
 import org.jglue.totorom.internal.TraversalFunctionPipe;
 
 import com.google.common.base.Function;
@@ -85,7 +86,7 @@ abstract class TraversalBase<T, Cap, SideEffect, Mark> implements Traversal<T, C
 
 	protected abstract FramedGraph graph();
 
-	protected abstract GremlinPipeline pipeline();
+	protected abstract TotoromGremlinPipeline pipeline();
 
 	@Override
 	public VertexTraversal V() {
@@ -815,5 +816,10 @@ abstract class TraversalBase<T, Cap, SideEffect, Mark> implements Traversal<T, C
 	@Override
 	public Traversal<T, ?, ?, Mark> limit(int limit) {
 		return range(0, limit - 1);
+	}
+	
+	@Override
+	public void remove() {
+		pipeline().remove();
 	}
 }

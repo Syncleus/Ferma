@@ -300,7 +300,7 @@ public class TestTraversals {
 
 	@Test
 	public void testRange() {
-		Assert.assertEquals(graph.v(2).next(), graph.v(1).out().range(1, 1).next());
+		Assert.assertEquals(graph.v(4).next(), graph.v(1).out().range(1, 1).next());
 
 	}
 
@@ -388,7 +388,7 @@ public class TestTraversals {
 	public void testAggregate() {
 
 		List<TVertex> x = new ArrayList<TVertex>();
-		Assert.assertEquals(graph.v(3).next(), graph.v(1).out().aggregate(x).next());
+		Assert.assertEquals(graph.v(2).next(), graph.v(1).out().aggregate(x).next());
 		Assert.assertEquals(3, graph.v(1).out().aggregate().cap().size());
 		Assert.assertEquals(3, x.size());
 		Assert.assertTrue(x.get(0) instanceof TVertex);
@@ -570,5 +570,13 @@ public class TestTraversals {
 	@Test
 	public void testHasCount() {
 		Assert.assertEquals(2, graph.V().has("lang", "java").count());
+	}
+	
+	@Test
+	public void testRemove() {
+		VertexTraversal<?, ?, ?> traversal = graph.V().has("lang", "java");
+		traversal.next();
+		traversal.remove();
+		Assert.assertEquals(5, graph.V().count());
 	}
 }

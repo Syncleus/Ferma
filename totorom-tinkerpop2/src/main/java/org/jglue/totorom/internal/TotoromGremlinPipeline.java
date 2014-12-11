@@ -63,7 +63,7 @@ public class TotoromGremlinPipeline<S, E> extends GremlinPipeline<S, E> {
 
 	private String key;
 	private Object value;
-
+	private E current;
 
 	public TotoromGremlinPipeline() {
 		super();
@@ -80,8 +80,42 @@ public class TotoromGremlinPipeline<S, E> extends GremlinPipeline<S, E> {
 
 	@Override
 	public GremlinPipeline<S, List> path(PipeFunction... pathFunctions) {
-	
+
 		return this.add(new PathPipe<Object>(FluentUtility.prepareFunctions(this.asMap, pathFunctions)));
 	}
-	
+
+	@Override
+	public void remove() {
+		if (current instanceof Element) {
+			((Element) current).remove();
+			current = null;
+		}
+		else {
+			throw new UnsupportedOperationException("Current must be an element to remove");
+		}
+	}
+
+	@Override
+	public E next() {
+
+		current = super.next();
+		return current;
+	}
+
+	@Override
+	public GremlinPipeline<S, E> _() {
+		return super._();
+	}
+
+	@Override
+	public List<E> next(int number) {
+		current = null;
+		return super.next(number);
+	}
+
+	public void removeAll() {
+
+		super.remove();
+	}
+
 }

@@ -354,7 +354,7 @@ public class GlobalVertexTraversal implements VertexTraversal {
 	}
 
 	public VertexTraversal linkIn(String label, Vertex other) {
-		return delegate().linkIn(label, other);
+		return simpleDelegate().linkIn(label, other);
 	}
 
 	public VertexTraversal linkBoth(String label, Vertex other) {
@@ -705,6 +705,11 @@ public class GlobalVertexTraversal implements VertexTraversal {
 
 	public VertexTraversal idVertex(Graph graph) {
 		return simpleDelegate().idVertex(graph);
+	}
+
+	@Override
+	public void remove() {
+		
 	}
 
 }

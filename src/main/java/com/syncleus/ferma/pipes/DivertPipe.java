@@ -50,10 +50,12 @@ public class DivertPipe<S, T> extends AbstractMetaPipe<S, S> {
         this.sideEffectFunction = sideEffectFunction;
     }
 
+    @Override
     public void setStarts(final Iterator<S> starts) {
         this.pipeToCap.setStarts(starts);
     }
 
+    @Override
     protected S processNextStart() {
         if (this.pipeToCap instanceof SideEffectPipe.LazySideEffectPipe) {
             final S next = this.pipeToCap.next();
@@ -70,6 +72,7 @@ public class DivertPipe<S, T> extends AbstractMetaPipe<S, S> {
             }
     }
 
+    @Override
     public List getCurrentPath() {
         if (this.pathEnabled) {
             final List list = this.pipeToCap.getCurrentPath();
@@ -80,10 +83,12 @@ public class DivertPipe<S, T> extends AbstractMetaPipe<S, S> {
             throw new RuntimeException(Pipe.NO_PATH_MESSAGE);
     }
 
+    @Override
     public String toString() {
         return PipeHelper.makePipeString(this, this.pipeToCap);
     }
 
+    @Override
     public List<Pipe> getPipes() {
         return Arrays.asList((Pipe) this.pipeToCap);
     }

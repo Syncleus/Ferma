@@ -216,6 +216,7 @@ public class DelegatingFramedGraph implements FramedGraph {
         delegate.shutdown();
     }
 
+    @Override
     public <T> T frameElement(final Element e, final Class<T> kind) {
         if (e == null)
             return null;
@@ -227,6 +228,7 @@ public class DelegatingFramedGraph implements FramedGraph {
         return framedElement;
     }
 
+    @Override
     public <T> T frameNewElement(final Element e, final Class<T> kind) {
         final T t = frameElement(e, kind);
         defaultResolver.init(e, kind);
@@ -234,6 +236,7 @@ public class DelegatingFramedGraph implements FramedGraph {
         return t;
     }
 
+    @Override
     public <T> Iterator<? extends T> frame(final Iterator<? extends Element> pipeline, final Class<T> kind) {
         return Iterators.transform(pipeline, new Function<Element, T>() {
 
@@ -245,6 +248,7 @@ public class DelegatingFramedGraph implements FramedGraph {
         });
     }
 
+    @Override
     public <T> T frameElementExplicit(final Element e, final Class<T> kind) {
         if (e == null)
             return null;
@@ -256,6 +260,7 @@ public class DelegatingFramedGraph implements FramedGraph {
         return framedElement;
     }
 
+    @Override
     public <T> T frameNewElementExplicit(final Element e, final Class<T> kind) {
         final T t = frameElement(e, kind);
         this.untypedResolver.init(e, kind);
@@ -263,6 +268,7 @@ public class DelegatingFramedGraph implements FramedGraph {
         return t;
     }
 
+    @Override
     public <T> Iterator<? extends T> frameExplicit(final Iterator<? extends Element> pipeline, final Class<T> kind) {
         return Iterators.transform(pipeline, new Function<Element, T>() {
 

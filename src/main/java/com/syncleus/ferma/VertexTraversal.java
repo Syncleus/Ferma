@@ -582,6 +582,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
      *            the named steps in the pipeline
      * @return the extended Pipeline
      */
+    @Override
     VertexTraversal<?, ?, M> except(String... namedSteps);
 
     @Override

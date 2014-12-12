@@ -114,9 +114,11 @@ public class GlobalVertexTraversal<C, S, M> implements VertexTraversal<C, S, M> 
         return iterator;
     }
 
+    @Override
     public Iterator<VertexFrame> iterator() {
         return Iterators.transform(simpleIterator(), new Function() {
 
+            @Override
             public Object apply(final Object e) {
                 return graph.frameElement((Element) e, VertexFrame.class);
             }
@@ -279,6 +281,7 @@ public class GlobalVertexTraversal<C, S, M> implements VertexTraversal<C, S, M> 
     public <N> Iterable<N> frame(final Class<N> kind) {
         final Iterator transform = Iterators.transform(simpleIterator(), new Function() {
 
+            @Override
             public Object apply(final Object e) {
                 return graph.frameElement((Element) e, kind);
             }

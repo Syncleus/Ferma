@@ -161,6 +161,7 @@ abstract class AbstractTraversal<T, C, S, M> implements Traversal<T, C, S, M> {
         return this;
     }
 
+    @Override
     public Traversal<T, ?, ?, M> except(final Iterable<?> collection) {
         pipeline().except(unwrap(Lists.newArrayList(collection)));
         return this;
@@ -410,11 +411,13 @@ abstract class AbstractTraversal<T, C, S, M> implements Traversal<T, C, S, M> {
         return (Traversal<T, Table, Table, M>) this;
     }
 
+    @Override
     public <N> Traversal<T, Tree<N>, Tree<N>, M> tree(final Tree<N> tree) {
         pipeline().tree(tree, new FramingTraversalFunction<>(graph()));
         return (Traversal<T, Tree<N>, Tree<N>, M>) this;
     }
 
+    @Override
     public Traversal<T, Tree<T>, Tree<T>, M> tree() {
         pipeline().tree(new FramingTraversalFunction<>(graph()));
         return (Traversal<T, Tree<T>, Tree<T>, M>) this;
@@ -540,6 +543,7 @@ abstract class AbstractTraversal<T, C, S, M> implements Traversal<T, C, S, M> {
     public List<? extends T> next(final int number) {
         return Lists.transform(pipeline().next(number), new Function() {
 
+            @Override
             public Object apply(final Object input) {
                 if (input instanceof Edge)
                     return graph().frameElement((Element) input, TEdge.class);

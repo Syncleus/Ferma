@@ -52,18 +52,22 @@ public abstract class FramingIterable<T, E extends Element> implements Iterable<
         this.explicit = explicit;
     }
 
+    @Override
     public Iterator<T> iterator() {
         return new Iterator<T>() {
             private final Iterator<E> iterator = iterable.iterator();
 
+            @Override
             public void remove() {
                 throw new UnsupportedOperationException();
             }
 
+            @Override
             public boolean hasNext() {
                 return this.iterator.hasNext();
             }
 
+            @Override
             public T next() {
                 if (explicit)
                     return framedGraph.frameElementExplicit(this.iterator.next(), kind);

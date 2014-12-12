@@ -451,6 +451,7 @@ abstract class AbstractVertexTraversal<C, S, M> extends AbstractTraversal<Vertex
     public <N> List<? extends N> next(final int amount, final Class<N> kind) {
         return Lists.transform(pipeline().next(amount), new Function() {
 
+            @Override
             public Object apply(final Object input) {
                 return graph().frameElement((Element) input, kind);
             }
@@ -461,6 +462,7 @@ abstract class AbstractVertexTraversal<C, S, M> extends AbstractTraversal<Vertex
     public <N> List<? extends N> nextExplicit(final int amount, final Class<N> kind) {
         return Lists.transform(pipeline().next(amount), new Function() {
 
+            @Override
             public Object apply(final Object input) {
                 return graph().frameElementExplicit((Element) input, kind);
             }
@@ -471,6 +473,7 @@ abstract class AbstractVertexTraversal<C, S, M> extends AbstractTraversal<Vertex
     public <N> Iterable<N> frame(final Class<N> kind) {
         return Iterables.transform(pipeline(), new Function() {
 
+            @Override
             public Object apply(final Object input) {
                 return graph().frameElement((Element) input, kind);
             }
@@ -481,6 +484,7 @@ abstract class AbstractVertexTraversal<C, S, M> extends AbstractTraversal<Vertex
     public <N> List<? extends N> toList(final Class<N> kind) {
         return Lists.transform(pipeline().toList(), new Function() {
 
+            @Override
             public Object apply(final Object input) {
                 return graph().frameElement((Element) input, kind);
             }
@@ -491,6 +495,7 @@ abstract class AbstractVertexTraversal<C, S, M> extends AbstractTraversal<Vertex
     public <N> List<? extends N> toListExplicit(final Class<N> kind) {
         return Lists.transform(pipeline().toList(), new Function() {
 
+            @Override
             public Object apply(final Object input) {
                 return graph().frameElementExplicit((Element) input, kind);
             }

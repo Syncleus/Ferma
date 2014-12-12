@@ -49,11 +49,13 @@ public class PathPipe<S> extends AbstractPipe<S, List> implements TransformPipe<
             this.pathFunctions = pathFunctions;
     }
 
+    @Override
     public void setStarts(final Iterator<S> starts) {
         super.setStarts(starts);
         this.enablePath(true);
     }
 
+    @Override
     public List processNextStart() {
         if (this.starts instanceof Pipe) {
             this.starts.next();

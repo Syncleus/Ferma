@@ -823,6 +823,7 @@ public interface Traversal<T, C, S, M> extends Iterator<T>, Iterable<T> {
      * Return the next object in the pipeline.
      *
      */
+    @Override
     T next();
 
     /**

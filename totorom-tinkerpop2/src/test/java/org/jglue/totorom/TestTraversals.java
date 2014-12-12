@@ -573,10 +573,23 @@ public class TestTraversals {
 	}
 	
 	@Test
-	public void testRemove() {
+	public void testRemove1() {
 		VertexTraversal<?, ?, ?> traversal = graph.V().has("lang", "java");
 		traversal.next();
 		traversal.remove();
 		Assert.assertEquals(5, graph.V().count());
+		
+		
+	}
+	
+	@Test
+	public void testRemove2() {
+		
+		
+		VertexTraversal<?, ?, ?> traversal = graph.V().has("lang", "java").in();
+		traversal.next();
+		traversal.remove();
+		Assert.assertEquals(5, graph.V().count());
+		
 	}
 }

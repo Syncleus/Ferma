@@ -172,17 +172,6 @@ abstract class AbstractTraversal<T, C, S, M> implements Traversal<T, C, S, M> {
         return castToTraversal();
     }
 
-    // @Override
-    // public Traversal back(String namedStep) {
-    // pipeline().back(namedStep);
-    // return asTraversal();
-    // }
-    //
-    // @Override
-    // public Traversal back(String namedStep, Class clazz) {
-    // pipeline().back(namedStep);
-    // return asTraversal();
-    // }
     @Override
     public Traversal<T, ?, ?, M> dedup() {
         pipeline().dedup();
@@ -567,6 +556,7 @@ abstract class AbstractTraversal<T, C, S, M> implements Traversal<T, C, S, M> {
 
         return Lists.transform(pipeline().toList(), new Function() {
 
+            @Override
             public Object apply(final Object input) {
                 if (input instanceof Edge)
                     return graph().frameElementExplicit((Element) input, TEdge.class);
@@ -655,6 +645,7 @@ abstract class AbstractTraversal<T, C, S, M> implements Traversal<T, C, S, M> {
     public Iterator<T> iterator() {
         return Iterators.transform(pipeline(), new Function() {
 
+            @Override
             public Object apply(final Object input) {
                 if (input instanceof Element)
                     return graph().frameElement((Element) input, TVertex.class);

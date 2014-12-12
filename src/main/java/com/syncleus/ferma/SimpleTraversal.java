@@ -91,6 +91,7 @@ class SimpleTraversal<T, C, S, M> extends AbstractTraversal<T, C, S, M> {
     /**
      * @return Cast the traversal to a {@link VertexTraversal}
      */
+    @Override
     public VertexTraversal<C, S, M> castToVertices() {
         return vertexTraversal;
     }
@@ -98,6 +99,7 @@ class SimpleTraversal<T, C, S, M> extends AbstractTraversal<T, C, S, M> {
     /**
      * @return Cast the traversal to a {@link EdgeTraversal}
      */
+    @Override
     public EdgeTraversal<C, S, M> castToEdges() {
         return edgeTraversal;
     }
@@ -166,14 +168,17 @@ class SimpleTraversal<T, C, S, M> extends AbstractTraversal<T, C, S, M> {
             return SimpleTraversal.this;
         }
 
+        @Override
         public AbstractTraversal.MarkId pushMark() {
             return SimpleTraversal.this.pushMark(this);
         }
 
+        @Override
         public AbstractTraversal.MarkId popMark() {
             return SimpleTraversal.this.popMark();
         }
 
+        @Override
         public SplitTraversal castToSplit() {
             return splitTraversal;
         }
@@ -205,14 +210,17 @@ class SimpleTraversal<T, C, S, M> extends AbstractTraversal<T, C, S, M> {
             return pipeline;
         }
 
+        @Override
         public AbstractTraversal.MarkId pushMark() {
             return SimpleTraversal.this.pushMark(this);
         }
 
+        @Override
         public AbstractTraversal.MarkId popMark() {
             return SimpleTraversal.this.popMark();
         }
 
+        @Override
         public SplitTraversal castToSplit() {
             return splitTraversal;
         }

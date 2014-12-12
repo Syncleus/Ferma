@@ -42,7 +42,7 @@ import com.tinkerpop.pipes.util.structures.Tree;
  *
  * @param <C> The cap of the current pipe.
  * @param <S> The SideEffect of the current pipe.
- * @param <M> The current mark'ed type for the current pipe.
+ * @param <M> The current marked type for the current pipe.
  */
 public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M> {
 

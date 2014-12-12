@@ -70,6 +70,7 @@ abstract class AbstractVertexTraversal<C, S, M> extends AbstractTraversal<Vertex
     public <N> Iterable<? extends N> frameExplicit(final Class<N> kind) {
         return Iterables.transform(pipeline(), new Function() {
 
+            @Override
             public Object apply(final Object input) {
                 return graph().frameElementExplicit((Element) input, kind);
             }

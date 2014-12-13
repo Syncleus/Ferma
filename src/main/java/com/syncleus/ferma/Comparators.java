@@ -33,10 +33,14 @@ import java.util.Comparator;
  * Useful comparators when dealing with framed elements
  *
  */
-public class Comparators {
+public abstract class Comparators {
     
     private static final IdComparator ID_COMPARATOR = new IdComparator();
     private static final IdAsLongComparator ID_AS_LONG_COMPARATOR = new IdAsLongComparator();
+    
+    //this is a utility class, so we don't want it instantiated.
+    private Comparators() {
+    }
 
     /**
      * Creates a comparator that compares by ID.

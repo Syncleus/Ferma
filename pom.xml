@@ -57,6 +57,30 @@
         <system>JIRA</system>
         <url>http://bugs.syncleus.com/browse/Ferma/</url>
     </issueManagement>
+    
+    <mailingLists>
+        <mailingList>
+            <name>Syncleus Announcements</name>
+            <subscribe>syncleus-announce-list+subscribe@syncleus.com</subscribe>
+            <unsubscribe>syncleus-announce-list+unsubscribe@syncleus.com</unsubscribe>
+            <post>syncleus-announce-list@syncleus.com</post>
+            <archive>https://groups.google.com/a/syncleus.com/forum/#!forum/syncleus-announce-list</archive>
+        </mailingList>
+        <mailingList>
+            <name>Syncleus Development</name>
+            <subscribe>syncleus-dev-list+subscribe@syncleus.com</subscribe>
+            <unsubscribe>syncleus-dev-list+unsubscribe@syncleus.com</unsubscribe>
+            <post>syncleus-dev-list@syncleus.com</post>
+            <archive>https://groups.google.com/a/syncleus.com/forum/#!forum/syncleus-dev-list</archive>
+        </mailingList>
+        <mailingList>
+            <name>Ferma</name>
+            <subscribe>ferma-list+subscribe@syncleus.com</subscribe>
+            <unsubscribe>ferma-list+unsubscribe@syncleus.com</unsubscribe>
+            <post>ferma-list@syncleus.com</post>
+            <archive>https://groups.google.com/a/syncleus.com/forum/#!forum/ferma-list</archive>
+        </mailingList>
+    </mailingLists>
 
     <developers>
         <developer>

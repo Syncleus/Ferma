@@ -27,6 +27,8 @@ Ferma also supports any of the many databases compatible with TinkerPop includin
  * [Oracle NoSQL](http://www.oracle.com/us/products/database/nosql/overview/index.html)
  * [TinkerGraph](https://github.com/tinkerpop/blueprints/wiki/TinkerGraph)
 
+For support please use the [Official Ferma Mailing List](https://groups.google.com/a/syncleus.com/forum/#!forum/ferma-list).
+
 ## Dependency
 
 To include Ferma in your project of choice include the following maven dependency into your build.

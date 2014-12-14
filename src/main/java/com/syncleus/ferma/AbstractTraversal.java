@@ -37,6 +37,7 @@ import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
+import com.syncleus.ferma.pipes.*;
 import com.tinkerpop.blueprints.Edge;
 import com.tinkerpop.blueprints.Element;
 import com.tinkerpop.blueprints.Graph;
@@ -58,13 +59,13 @@ import com.tinkerpop.pipes.util.structures.Tree;
  * @param <T> The type of the objects coming off the pipe.
  * @param <C> The cap of the current pipe.
  * @param <S> The SideEffect of the current pipe.
- * @param <M> The current mark'ed type for the current pipe.
+ * @param <M> The current marked type for the current pipe.
  */
 abstract class AbstractTraversal<T, C, S, M> implements Traversal<T, C, S, M> {
 
     protected abstract FramedGraph graph();
 
-    protected abstract GremlinPipeline pipeline();
+    protected abstract FermaGremlinPipeline pipeline();
 
     @Override
     public VertexTraversal<?, ?, M> v() {
@@ -765,5 +766,10 @@ abstract class AbstractTraversal<T, C, S, M> implements Traversal<T, C, S, M> {
     @Override
     public Traversal<T, ?, ?, M> limit(final int limit) {
         return range(0, limit - 1);
+    }
+
+    @Override
+    public void remove() {
+        pipeline().remove();
     }
 }

@@ -66,12 +66,10 @@ public class TraversalFunctionPipe implements TraversalFunction {
 
                 @Override
                 public void setStarts(final Iterator starts) {
-
                 }
 
                 @Override
                 public void setStarts(final Iterable starts) {
-
                 }
 
                 @Override
@@ -81,12 +79,14 @@ public class TraversalFunctionPipe implements TraversalFunction {
 
                 @Override
                 public void enablePath(final boolean enable) {
-
                 }
 
                 @Override
                 public void reset() {
+                }
 
+                @Override
+                public void remove() {
                 }
             };
         }

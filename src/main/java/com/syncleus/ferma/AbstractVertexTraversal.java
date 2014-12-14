@@ -122,7 +122,7 @@ abstract class AbstractVertexTraversal<C, S, M> extends AbstractTraversal<Vertex
 
     @Override
     public <N> Traversal<VertexFrame, Collection<? extends N>, N, M> store(final Collection<? super N> storage,
-																		   final TraversalFunction<VertexFrame, N> storageFunction) {
+                                                                           final TraversalFunction<VertexFrame, N> storageFunction) {
         return super.store(storage);
     }
 
@@ -669,7 +669,7 @@ abstract class AbstractVertexTraversal<C, S, M> extends AbstractTraversal<Vertex
 
     @Override
     public void removeAll() {
-        pipeline().remove();
+        pipeline().removeAll();
     }
 
     @Override

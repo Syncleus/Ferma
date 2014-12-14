@@ -41,6 +41,11 @@ import com.tinkerpop.pipes.util.structures.Tree;
 import java.util.*;
 import java.util.function.Consumer;
 
+/**
+ * Specialized global vertex traversal that bypasses gremlin pipeline for simple
+ * key value lookups. As soon as a more complex traversal is detected then it
+ * delegates to a full gremlin pipeline.
+ */
 public class GlobalVertexTraversal<C, S, M> implements VertexTraversal<C, S, M> {
 
     private final FramedGraph graph;
@@ -59,7 +64,7 @@ public class GlobalVertexTraversal<C, S, M> implements VertexTraversal<C, S, M> 
     }
 
     /**
-     * We've dropped out of what can be optimized. Time to create a propper
+     * We've dropped out of what can be optimized. Time to create a proper
      * traversal.
      *
      * @return
@@ -80,8 +85,12 @@ public class GlobalVertexTraversal<C, S, M> implements VertexTraversal<C, S, M> 
      * @return
      */
     private VertexTraversal<C, S, M> simpleDelegate() {
-        if (traversal == null)
+        if (traversal == null) {
+            if (iterator != null)
+                throw new IllegalStateException("Traversal cannot be modified after iteration has started");
+
             traversal = new SimpleTraversal<VertexFrame, C, S, M>(graph, simpleIterator()).castToVertices();
+        }
         return traversal;
     }
 
@@ -91,26 +100,53 @@ public class GlobalVertexTraversal<C, S, M> implements VertexTraversal<C, S, M> 
      * @return
      */
     private Iterator<VertexFrame> simpleIterator() {
-        if (iterator == null)
+        if (iterator == null) {
+            final Iterator delegateIterator;
             if (key != null)
                 if (delegate instanceof TinkerGraph)
-                    //Tinker graph will do it's own check to see if it supports the key
-                    iterator = delegate.getVertices(key, value).iterator();
+                    // Tinker graph will do it's own check to see if it supports
+                    // the key
+                    delegateIterator = delegate.getVertices(key, value).iterator();
                 else if (delegate instanceof KeyIndexableGraph)
                     if (((KeyIndexableGraph) delegate).getIndexedKeys(Vertex.class).contains(key))
                         // This graph supports lookups for this key
-                        iterator = delegate.getVertices(key, value).iterator();
+                        delegateIterator = delegate.getVertices(key, value).iterator();
                     else
                         // This graph does not support lookup of this key, but
                         // it may still be supported via the query interface.
-                        iterator = delegate.query().has(key, value).vertices().iterator();
+                        delegateIterator = delegate.query().has(key, value).vertices().iterator();
                 else
                     // This graph does not support lookup of this key, but it
                     // may still be supported via the query interface.
-                    iterator = delegate.query().has(key, value).vertices().iterator();
+                    delegateIterator = delegate.query().has(key, value).vertices().iterator();
             else
-                //There is no key so it is a full traversal.
-                iterator = delegate.getVertices().iterator();
+                // There is no key so it is a full traversal.
+                delegateIterator = delegate.getVertices().iterator();
+            iterator = new Iterator() {
+                private Element current;
+
+                @Override
+                public boolean hasNext() {
+                    return delegateIterator.hasNext();
+                }
+
+                @Override
+                public Object next() {
+                    current = (Element) delegateIterator.next();
+                    return current;
+                }
+
+                @Override
+                public void remove() {
+                    if (current != null) {
+                        current.remove();
+                        current = null;
+                    }
+                    else
+                        throw new IllegalStateException();
+                }
+            };
+        }
         return iterator;
     }
 
@@ -847,7 +883,7 @@ public class GlobalVertexTraversal<C, S, M> implements VertexTraversal<C, S, M> 
 
     @Override
     public void remove() {
-        this.simpleDelegate().remove();
+        this.simpleIterator().remove();
     }
 
     @Override

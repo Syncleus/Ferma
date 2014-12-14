@@ -31,8 +31,7 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Iterator;
 
-import com.syncleus.ferma.pipes.GremlinPipeline;
-
+import com.syncleus.ferma.pipes.FermaGremlinPipeline;
 import com.tinkerpop.blueprints.Graph;
 
 /**
@@ -46,20 +45,20 @@ import com.tinkerpop.blueprints.Graph;
 class SimpleTraversal<T, C, S, M> extends AbstractTraversal<T, C, S, M> {
 
     private final FramedGraph graph;
-    private final com.tinkerpop.gremlin.java.GremlinPipeline pipeline;
+    private final FermaGremlinPipeline pipeline;
     private final Deque<MarkId> marks = new ArrayDeque<>();
     private int markId = 0;
 
     protected SimpleTraversal(final FramedGraph graph, final Graph delegate) {
-        this(graph, new GremlinPipeline<>(delegate));
+        this(graph, new FermaGremlinPipeline<>(delegate));
     }
 
     protected SimpleTraversal(final FramedGraph graph, final Iterator starts) {
-        this(graph, new GremlinPipeline<>(starts));
+        this(graph, new FermaGremlinPipeline<>(starts));
     }
 
     protected SimpleTraversal(final FramedGraph graph, final ElementFrame starts) {
-        this(graph, new GremlinPipeline<>(starts.getElement()));
+        this(graph, new FermaGremlinPipeline<>(starts.getElement()));
     }
 
     public MarkId pushMark(final Traversal<?, ?, ?, ?> traversal) {
@@ -82,7 +81,7 @@ class SimpleTraversal<T, C, S, M> extends AbstractTraversal<T, C, S, M> {
         return marks.pop();
     }
 
-    private SimpleTraversal(final FramedGraph graph, final com.tinkerpop.gremlin.java.GremlinPipeline pipeline) {
+    private SimpleTraversal(final FramedGraph graph, final FermaGremlinPipeline pipeline) {
         this.graph = graph;
         this.pipeline = pipeline;
 
@@ -110,7 +109,7 @@ class SimpleTraversal<T, C, S, M> extends AbstractTraversal<T, C, S, M> {
     }
 
     @Override
-    protected com.tinkerpop.gremlin.java.GremlinPipeline pipeline() {
+    protected FermaGremlinPipeline pipeline() {
 
         return pipeline;
     }
@@ -159,7 +158,7 @@ class SimpleTraversal<T, C, S, M> extends AbstractTraversal<T, C, S, M> {
         }
 
         @Override
-        protected com.tinkerpop.gremlin.java.GremlinPipeline pipeline() {
+        protected FermaGremlinPipeline pipeline() {
             return pipeline;
         }
 
@@ -206,7 +205,7 @@ class SimpleTraversal<T, C, S, M> extends AbstractTraversal<T, C, S, M> {
         }
 
         @Override
-        protected com.tinkerpop.gremlin.java.GremlinPipeline pipeline() {
+        protected FermaGremlinPipeline pipeline() {
             return pipeline;
         }
 

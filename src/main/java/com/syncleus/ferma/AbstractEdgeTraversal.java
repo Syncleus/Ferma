@@ -537,7 +537,7 @@ abstract class AbstractEdgeTraversal<C, S, M> extends AbstractTraversal<EdgeFram
 
     @Override
     public void removeAll() {
-        pipeline().remove();
+        pipeline().removeAll();
     }
 
     @Override

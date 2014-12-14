@@ -27,22 +27,25 @@
  */
 package com.syncleus.ferma.pipes;
 
+import com.tinkerpop.blueprints.Element;
 import java.util.List;
 
 import com.tinkerpop.pipes.PipeFunction;
 import com.tinkerpop.pipes.util.FluentUtility;
 
-public class GremlinPipeline<S, E> extends com.tinkerpop.gremlin.java.GremlinPipeline<S, E> {
+public class FermaGremlinPipeline<S, E> extends com.tinkerpop.gremlin.java.GremlinPipeline<S, E> {
 
-    public GremlinPipeline() {
+    private E current;
+
+    public FermaGremlinPipeline() {
         super();
     }
 
-    public GremlinPipeline(final Object starts, final boolean doQueryOptimization) {
+    public FermaGremlinPipeline(final Object starts, final boolean doQueryOptimization) {
         super(starts, doQueryOptimization);
     }
 
-    public GremlinPipeline(final Object starts) {
+    public FermaGremlinPipeline(final Object starts) {
         super(starts);
     }
 
@@ -50,5 +53,32 @@ public class GremlinPipeline<S, E> extends com.tinkerpop.gremlin.java.GremlinPip
     public com.tinkerpop.gremlin.java.GremlinPipeline<S, List> path(final PipeFunction... pathFunctions) {
 
         return this.add(new PathPipe<>(FluentUtility.prepareFunctions(this.asMap, pathFunctions)));
+    }
+
+    @Override
+    public void remove() {
+        if (this.current instanceof Element) {
+            ((Element) this.current).remove();
+            this.current = null;
+        }
+        else
+            throw new UnsupportedOperationException("Current must be an element to remove");
+    }
+
+    @Override
+    public E next() {
+
+        this.current = super.next();
+        return this.current;
+    }
+
+    @Override
+    public List<E> next(int number) {
+        this.current = null;
+        return super.next(number);
+    }
+
+    public void removeAll() {
+        super.remove();
     }
 }

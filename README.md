@@ -10,7 +10,7 @@ addition to those provided by TinkerPop Frames. Ferma is designed to easily repl
 as such, the annotations provided by Ferma are a super-set of those provided by TinkerPop Frames.
 
 Ferma is built directly on TinkerPop Blueprints with no dependency on TinkerPop Frames. This ensures all the TinkerPop
-features and compatabilies are preserved, but with a high-performance drop-in replacement for Frames. The TinkerPop
+features and compatibilities are preserved, but with a high-performance drop-in replacement for Frames. The TinkerPop
 suite provides several tools which can be used to work with the Ferma engine.
 
 * **Furnace** - Graph analysis utilities
@@ -31,7 +31,7 @@ For support please use the [official Ferma mailing list](https://groups.google.c
 
 ## Dependency
 
-To include Ferma in your project of choice include the following maven dependency into your build.
+To include Ferma in your project of choice include the following Maven dependency into your build.
 
     <dependency>
         <groupId>com.syncleus.ferma</groupId>
@@ -42,7 +42,7 @@ To include Ferma in your project of choice include the following maven dependenc
 
 ## Getting Started
 
-Ferma provides three levels of type resolution: untyped, simple, and annotated. In untyped mode Ferma doesnt handle
+Ferma provides three levels of type resolution: untyped, simple, and annotated. In untyped mode Ferma doesn't handle
 typing at all, instead the type must be explicitly indicated whenever querying. In simple mode Ferma provides type
 context encoded as graph element properties which ensures the same type comes out that goes in to a graph. In annotated
 mode all the features of simple mode are provided as well as enabling the use of annotations on abstract methods to

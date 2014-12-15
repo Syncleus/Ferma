@@ -19,5 +19,5 @@
 package com.syncleus.ferma;
 
 public class Programmer extends Person {
-
+    static final ClassInitializer<Programmer> DEFAULT_INITIALIZER = new DefaultClassInitializer(Programmer.class);
 }

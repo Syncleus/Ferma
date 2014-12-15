@@ -22,6 +22,7 @@ import com.google.gson.JsonObject;
 import com.tinkerpop.blueprints.Edge;
 
 public interface EdgeFrame extends ElementFrame {
+    static final ClassInitializer<EdgeFrame> DEFAULT_INITIALIZER = new DefaultClassInitializer(EdgeFrame.class);
 
     @Override
     Edge getElement();

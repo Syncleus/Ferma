@@ -53,7 +53,10 @@ instruct Ferma to dynamically construct byte-code to implement the abstract meth
 In untyped mode there is no automatic typing. Whatever class is explicitly indicated is the type that will be
 instantiated when performing queries. Lets start with a simple example domain.
 
-    public class Person extends FramedVertex {
+    public class Person extends VertexFrame {
+      static final ClassInitializer<Person> DEFAULT_INITIALIZER =
+        new DefaultClassInitializer(Person.class);
+
       public String getName() {
         return getProperty("name");
       }
@@ -71,11 +74,13 @@ instantiated when performing queries. Lets start with a simple example domain.
       }
 
       public Knows addKnows(Person friend) {
-        return addEdge("knows", friend, Knows.class);
+        return addEdge("knows", friend, Knows.DEFAULT_INITIALIZER);
       }
     }
 
-    public class Knows extends FramedEdge {
+    public class Knows extends EdgeFrame {
+      static final ClassInitializer<Knows> DEFAULT_INITIALIZER =
+        new DefaultClassInitializer(Knows.class);
 
       public void setYears(int years) {
         setProperty("years", years);
@@ -94,10 +99,10 @@ And here is how you interact with the framed elements:
       // implies untyped mode
       FramedGraph fg = new DelegatingFramedGraph(g);
 
-      Person p1 = fg.addFramedVertex(Person.class);
+      Person p1 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
       p1.setName("Jeff");
 
-      Person p2 = fg.addFramedVertex(Person.class);
+      Person p2 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
       p2.setName("Julia");
       Knows knows = p1.addKnows(p2);
       knows.setYears(15);
@@ -119,6 +124,8 @@ reading from the graph.
 Say we extend the Person class with the Programmer class.
     
     public class Programmer extends Person {
+      static final ClassInitializer<Programmer> DEFAULT_INITIALIZER =
+        new DefaultClassInitializer(Programmer.class);
     }
     
 Using TypeResolver.SIMPLE will save the type of Java class the element was created with for use later:
@@ -129,10 +136,10 @@ Using TypeResolver.SIMPLE will save the type of Java class the element was creat
       // implies simple mode
       FramedGraph fg = new DelegatingFramedGraph(g, true, false);
       
-      Person p1 = fg.addFramedVertex(Programmer.class);
+      Person p1 = fg.addFramedVertex(Programmer.DEFAULT_INITIALIZER);
       p1.setName("Jeff");
       
-      Person p2 = fg.addFramedVertex(Person.class);
+      Person p2 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
       p2.setName("Julia");
       
       Person jeff = fg.v().has("name", "Jeff").next(Person.class);
@@ -152,7 +159,10 @@ power to determine parent-child relationships at runtime.
 
 The same example as above done with annotations would look something like this.
 
-    public abstract class Person extends FramedVertex {
+    public abstract class Person extends VertexFrame {
+      static final ClassInitializer<Person> DEFAULT_INITIALIZER =
+        new DefaultClassInitializer(Person.class);
+
       @Property("name")
       public abstract String getName();
 
@@ -173,7 +183,9 @@ The same example as above done with annotations would look something like this.
       }
     }
 
-    public abstract class Knows extends FramedEdge {
+    public abstract class Knows extends EdgeFrame {
+      static final ClassInitializer<Knows> DEFAULT_INITIALIZER =
+        new DefaultClassInitializer(Knows.class);
 
       @Property("years")
       public abstract void setYears(int years);
@@ -190,6 +202,8 @@ The same example as above done with annotations would look something like this.
 
 
     public abstract class Programmer extends Person {
+      static final ClassInitializer<Programmer> DEFAULT_INITIALIZER =
+        new DefaultClassInitializer(Programmer.class);
     }
 
 If we pass a collection of Class objects to the FramedGraph constructor then the annotated type resolver will be used.
@@ -206,10 +220,10 @@ construct the byte-code for any abstract annotated methods.
       //implies annotated mode
       FramedGraph fg = new DelegatingFramedGraph(g, true, types);
 
-      Person p1 = fg.addFramedVertex(Programmer.class);
+      Person p1 = fg.addFramedVertex(Programmer.DEFAULT_INITIALIZER);
       p1.setName("Jeff");
 
-      Person p2 = fg.addFramedVertex(Person.class);
+      Person p2 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
       p2.setName("Julia");
 
       Person jeff = fg.v().has("name", "Jeff").next(Person.class);

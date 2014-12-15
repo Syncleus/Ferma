@@ -294,13 +294,13 @@ public class GlobalVertexTraversal<C, S, M> implements VertexTraversal<C, S, M> 
     }
 
     @Override
-    public <N> N nextOrAddExplicit(final Class<N> kind) {
-        return this.simpleDelegate().nextOrAddExplicit(kind);
+    public <N> N nextOrAddExplicit(final ClassInitializer<N> initializer) {
+        return this.simpleDelegate().nextOrAddExplicit(initializer);
     }
 
     @Override
-    public <N> N nextOrAdd(final Class<N> kind) {
-        return this.delegate().nextOrAdd(kind);
+    public <N> N nextOrAdd(final ClassInitializer<N> initializer) {
+        return this.delegate().nextOrAdd(initializer);
     }
 
     @Override

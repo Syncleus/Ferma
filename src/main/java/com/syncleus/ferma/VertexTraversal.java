@@ -331,22 +331,22 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
      * isn't required.
      * 
      * @param <N> The type used to frame the element
-     * @param kind
-     *            The type of frame for the element.
+     * @param initializer
+     *            the initializer for the frame which defines its type and may initialize properties
      * @return the next emitted object
      */
-    <N> N nextOrAddExplicit(Class<N> kind);
+    <N> N nextOrAddExplicit(ClassInitializer<N> initializer);
 
     /**
      * Get the next object emitted from the pipeline. If no such object exists a
      * new vertex is created.
      *
      * @param <N> The type used to frame the element
-     * @param kind
-     *            The type of frame for the element.
+     * @param initializer
+     *            the initializer for the frame which defines its type and may initialize properties
      * @return the next emitted object
      */
-    <N> N nextOrAdd(Class<N> kind);
+    <N> N nextOrAdd(ClassInitializer<N> initializer);
 
     /**
      * Return the next X objects in the traversal as a list.

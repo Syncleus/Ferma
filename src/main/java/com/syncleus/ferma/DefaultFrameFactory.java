@@ -26,12 +26,12 @@ import com.tinkerpop.blueprints.Element;
 public class DefaultFrameFactory implements FrameFactory {
 
     @Override
-    public <T> T create(final Element element, final Class<T> kind) {
+    public <T> T create(final Element e, final Class<T> kind) {
         try {
             return kind.newInstance();
         }
-        catch (final InstantiationException | IllegalAccessException e) {
-            throw new IllegalStateException("Could not instantiate kind: " + kind.getName(), e);
+        catch (final InstantiationException | IllegalAccessException caught) {
+            throw new IllegalStateException("Could not instantiate kind: " + kind.getName(), caught);
         }
     }
 }

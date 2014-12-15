@@ -222,7 +222,7 @@ public class AdjacencyMethodHandlerTest {
         final VertexFrame fatherVertex = father;
         Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
 
-        final God child = father.addSon(God.class);
+        final God child = father.addSon(God.DEFAULT_INITIALIZER);
         Assert.assertTrue(child != null);
         final VertexFrame childVertex = child;
         Assert.assertNull(childVertex.getElement().getProperty("name"));
@@ -242,7 +242,7 @@ public class AdjacencyMethodHandlerTest {
         final VertexFrame fatherVertex = father;
         Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
 
-        final God child = framedGraph.addFramedVertex(God.class);
+        final God child = framedGraph.addFramedVertex(God.DEFAULT_INITIALIZER);
         father.addSon(child);
 
         Assert.assertTrue(child != null);
@@ -264,7 +264,7 @@ public class AdjacencyMethodHandlerTest {
         final VertexFrame fatherVertex = father;
         Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
 
-        final God child = father.addSon(God.class, FatherEdge.class);
+        final God child = father.addSon(God.DEFAULT_INITIALIZER, FatherEdge.DEFAULT_INITIALIZER);
         Assert.assertTrue(child != null);
         final VertexFrame childVertex = child;
         Assert.assertNull(childVertex.getElement().getProperty("name"));
@@ -284,8 +284,8 @@ public class AdjacencyMethodHandlerTest {
         final VertexFrame fatherVertex = father;
         Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
 
-        final God child = framedGraph.addFramedVertex(God.class);
-        father.addSon(child, FatherEdge.class);
+        final God child = framedGraph.addFramedVertex(God.DEFAULT_INITIALIZER);
+        father.addSon(child, FatherEdge.DEFAULT_INITIALIZER);
 
         Assert.assertTrue(child != null);
         final VertexFrame childVertex = child;
@@ -338,7 +338,7 @@ public class AdjacencyMethodHandlerTest {
         Assert.assertEquals(childVertex.getElement().getProperty("name"), "hercules");
         Assert.assertTrue(child instanceof GodExtended);
 
-        father.setSons(Arrays.asList(framedGraph.addFramedVertex(God.class)));
+        father.setSons(Arrays.asList(framedGraph.addFramedVertex(God.DEFAULT_INITIALIZER)));
 
         child = father.getSon(God.class);
         Assert.assertNotNull(child);

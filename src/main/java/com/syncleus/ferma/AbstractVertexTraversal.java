@@ -63,7 +63,7 @@ abstract class AbstractVertexTraversal<C, S, M> extends AbstractTraversal<Vertex
     @Override
     public VertexFrame nextOrAdd() {
 
-        return nextOrAdd(VertexFrame.class);
+        return nextOrAdd(VertexFrame.DEFAULT_INITIALIZER);
     }
 
     @Override
@@ -426,23 +426,23 @@ abstract class AbstractVertexTraversal<C, S, M> extends AbstractTraversal<Vertex
     }
 
     @Override
-    public <N> N nextOrAdd(final Class<N> kind) {
+    public <N> N nextOrAdd(final ClassInitializer<N> initializer) {
         try {
-            return graph().frameElement((Element) pipeline().next(), kind);
+            return graph().frameElement((Element) pipeline().next(), initializer.getInitializationType());
         }
         catch (final NoSuchElementException e) {
-            return graph().addFramedVertex(kind);
+            return graph().addFramedVertex(initializer);
         }
 
     }
 
     @Override
-    public <N> N nextOrAddExplicit(final Class<N> kind) {
+    public <N> N nextOrAddExplicit(final ClassInitializer<N> initializer) {
         try {
-            return graph().frameElementExplicit((Element) pipeline().next(), kind);
+            return graph().frameElementExplicit((Element) pipeline().next(), initializer.getInitializationType());
         }
         catch (final NoSuchElementException e) {
-            return graph().addFramedVertex(kind);
+            return graph().addFramedVertex(initializer);
         }
 
     }

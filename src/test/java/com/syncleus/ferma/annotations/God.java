@@ -18,21 +18,11 @@
  ******************************************************************************/
 package com.syncleus.ferma.annotations;
 
-import com.syncleus.ferma.EdgeFrame;
-import com.syncleus.ferma.VertexFrame;
+import com.syncleus.ferma.*;
 import com.tinkerpop.blueprints.Direction;
 
 public interface God extends VertexFrame {
-    /*
-     @Adjacency(label="father")
-     God getFather();
-
-     @Adjacency(label="father", direction= Direction.IN)
-     Iterable<? extends God> getSons();
-
-     @Adjacency(label="lives")
-     Location getHome();
-     */
+    static final ClassInitializer<God> DEFAULT_INITIALIZER = new DefaultClassInitializer(God.class);
 
     @Property("name")
     String getName();
@@ -65,10 +55,10 @@ public interface God extends VertexFrame {
     <N extends God> N getSon(Class<? extends N> type);
 
     @Adjacency(label = "father", direction = Direction.IN)
-    <N extends God> N addSon(Class<? extends N> type);
+    <N extends God> N addSon(ClassInitializer<? extends N> type);
 
     @Adjacency(label = "father", direction = Direction.IN)
-    <N extends God> N addSon(Class<? extends N> type, Class<? extends FatherEdge> edge);
+    <N extends God> N addSon(ClassInitializer<? extends N> type, ClassInitializer<? extends FatherEdge> edge);
 
     @Adjacency(label = "father", direction = Direction.IN)
     God addSon(God son);
@@ -77,7 +67,7 @@ public interface God extends VertexFrame {
     VertexFrame addSon();
 
     @Adjacency(label = "father", direction = Direction.IN)
-    God addSon(God son, Class<? extends FatherEdge> edge);
+    God addSon(God son, ClassInitializer<? extends FatherEdge> edge);
 
     @Adjacency(label = "father", direction = Direction.IN)
     void setSons(Iterable<? extends God> vertexSet);

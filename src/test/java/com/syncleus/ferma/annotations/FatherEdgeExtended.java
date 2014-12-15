@@ -18,5 +18,9 @@
  ******************************************************************************/
 package com.syncleus.ferma.annotations;
 
+import com.syncleus.ferma.ClassInitializer;
+import com.syncleus.ferma.DefaultClassInitializer;
+
 public interface FatherEdgeExtended extends FatherEdge {
+    static final ClassInitializer<FatherEdgeExtended> DEFAULT_INITIALIZER = new DefaultClassInitializer(FatherEdgeExtended.class);
 }

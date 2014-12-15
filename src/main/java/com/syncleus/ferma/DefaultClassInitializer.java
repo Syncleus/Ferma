@@ -18,20 +18,20 @@
  ******************************************************************************/
 package com.syncleus.ferma;
 
-import com.tinkerpop.blueprints.Element;
+public class DefaultClassInitializer<C> implements ClassInitializer<C> {
+    private final Class<C> type;
 
-/**
- * Creates the frame using reflection.
- */
-public class DefaultFrameFactory implements FrameFactory {
+    public DefaultClassInitializer(final Class<C> type) {
+        this.type = type;
+    }
 
     @Override
-    public <T> T create(final Element e, final ClassInitializer<T> kind) {
-        try {
-            return kind.newInstance();
-        }
-        catch (final InstantiationException | IllegalAccessException e) {
-            throw new IllegalStateException("Could not instantiate kind: " + kind.getName(), e);
-        }
+    public Class<C> getInitializationType() {
+        return this.type;
     }
+
+    @Override
+    public void initalize(C frame) {
+    }
+
 }

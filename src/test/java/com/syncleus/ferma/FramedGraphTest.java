@@ -148,7 +148,7 @@ public class FramedGraphTest {
 
             @SuppressWarnings("unchecked")
             @Override
-            public <T> T create(final Element e, final Class<T> kind) {
+            public <T> T create(final Element e, final ClassInitializer<T> kind) {
                 return (T) o;
             }
         }, new SimpleTypeResolver());
@@ -164,7 +164,7 @@ public class FramedGraphTest {
 
             @SuppressWarnings("unchecked")
             @Override
-            public <T> T create(final Element e, final Class<T> kind) {
+            public <T> T create(final Element e, final ClassInitializer<T> kind) {
                 return (T) o;
             }
         }, new SimpleTypeResolver());

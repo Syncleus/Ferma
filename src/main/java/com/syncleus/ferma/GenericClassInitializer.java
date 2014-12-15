@@ -18,20 +18,32 @@
  ******************************************************************************/
 package com.syncleus.ferma;
 
-import com.tinkerpop.blueprints.Element;
+import java.util.*;
 
-/**
- * Creates the frame using reflection.
- */
-public class DefaultFrameFactory implements FrameFactory {
+public class GenericClassInitializer<C> implements ClassInitializer<C> {
+    private final Class<C> type;
+    private final Map<String, Object> properties;
+
+    public GenericClassInitializer(final Class<C> type, final Map<String, Object> properties) {
+        this.type = type;
+        this.properties = Collections.unmodifiableMap(new HashMap<>(properties));
+    }
 
     @Override
-    public <T> T create(final Element e, final ClassInitializer<T> kind) {
-        try {
-            return kind.newInstance();
-        }
-        catch (final InstantiationException | IllegalAccessException e) {
-            throw new IllegalStateException("Could not instantiate kind: " + kind.getName(), e);
-        }
+    public Class<C> getInitializationType() {
+        return this.type;
+    }
+    
+    protected Map<String, Object> getProperties() {
+        return properties;
+    }
+    
+    @Override
+    public void initalize(C frame) {
+        if( !(frame instanceof ElementFrame) )
+            throw new IllegalArgumentException("frame was not an instance of an ElementFrame");
+        final ElementFrame elementFrame = (ElementFrame) frame;
+        for(final Map.Entry<String, Object> property : this.properties.entrySet() )
+            elementFrame.setProperty(property.getKey(), property.getValue());
     }
 }

@@ -18,20 +18,7 @@
  ******************************************************************************/
 package com.syncleus.ferma;
 
-import com.tinkerpop.blueprints.Element;
-
-/**
- * Creates the frame using reflection.
- */
-public class DefaultFrameFactory implements FrameFactory {
-
-    @Override
-    public <T> T create(final Element e, final ClassInitializer<T> kind) {
-        try {
-            return kind.newInstance();
-        }
-        catch (final InstantiationException | IllegalAccessException e) {
-            throw new IllegalStateException("Could not instantiate kind: " + kind.getName(), e);
-        }
-    }
+public interface ClassInitializer<C> {
+    Class<C> getInitializationType();
+    void initalize(C frame);
 }

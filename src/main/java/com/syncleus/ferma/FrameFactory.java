@@ -34,5 +34,5 @@ import com.tinkerpop.blueprints.Element;
  */
 public interface FrameFactory {
 
-    <T> T create(Element e, Class<T> kind);
+    <T> T create(Element e, ClassInitializer<T> kind);
 }

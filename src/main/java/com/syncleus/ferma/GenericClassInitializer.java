@@ -18,23 +18,32 @@
  ******************************************************************************/
 package com.syncleus.ferma;
 
-public class Program extends AbstractVertexFrame {
-    static final ClassInitializer<Program> DEFAULT_INITIALIZER = new DefaultClassInitializer(Program.class);
+import java.util.*;
 
-    public String getName() {
-        return getProperty("name");
+public class GenericClassInitializer<C> implements ClassInitializer<C> {
+    private final Class<C> type;
+    private final Map<String, Object> properties;
+
+    public GenericClassInitializer(final Class<C> type, final Map<String, Object> properties) {
+        this.type = type;
+        this.properties = Collections.unmodifiableMap(new HashMap<>(properties));
     }
 
-    public void setName(final String name) {
-        setProperty("name", name);
+    @Override
+    public Class<C> getInitializationType() {
+        return this.type;
     }
-
-    public String getLang() {
-        return getProperty("lang");
+    
+    protected Map<String, Object> getProperties() {
+        return properties;
     }
-
-    public void setLang(final String lang) {
-        setProperty("lang", lang);
+    
+    @Override
+    public void initalize(C frame) {
+        if( !(frame instanceof ElementFrame) )
+            throw new IllegalArgumentException("frame was not an instance of an ElementFrame");
+        final ElementFrame elementFrame = (ElementFrame) frame;
+        for(final Map.Entry<String, Object> property : this.properties.entrySet() )
+            elementFrame.setProperty(property.getKey(), property.getValue());
     }
-
 }

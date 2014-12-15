@@ -53,15 +53,15 @@ public class AdjacencyMethodHandler implements MethodHandler {
             if (arguments == null || arguments.length == 0)
                 return this.addVertexDefault(builder, method, annotation);
             else if (arguments.length == 1)
-                if (Class.class.isAssignableFrom(arguments[0].getType()))
+                if (ClassInitializer.class.isAssignableFrom(arguments[0].getType()))
                     return this.addVertexByTypeUntypedEdge(builder, method, annotation);
                 else
                     return this.addVertexByObjectUntypedEdge(builder, method, annotation);
             else if (arguments.length == 2) {
-                if (!(Class.class.isAssignableFrom(arguments[1].getType())))
-                    throw new IllegalStateException(method.getName() + " was annotated with @Adjacency, had two arguments, but the second argument was not of the type Class");
+                if (!(ClassInitializer.class.isAssignableFrom(arguments[1].getType())))
+                    throw new IllegalStateException(method.getName() + " was annotated with @Adjacency, had two arguments, but the second argument was not of the type ClassInitializer");
 
-                if (Class.class.isAssignableFrom(arguments[0].getType()))
+                if (ClassInitializer.class.isAssignableFrom(arguments[0].getType()))
                     return this.addVertexByTypeTypedEdge(builder, method, annotation);
                 else
                     return this.addVertexByObjectTypedEdge(builder, method, annotation);
@@ -258,7 +258,7 @@ public class AdjacencyMethodHandler implements MethodHandler {
     public static final class AddVertexByTypeUntypedEdgeInterceptor {
 
         @RuntimeType
-        public static Object addVertex(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final Class vertexType) {
+        public static Object addVertex(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(value = 0) final ClassInitializer vertexType) {
             final Object newNode = thiz.getGraph().addFramedVertex(vertexType);
             assert newNode instanceof VertexFrame;
             final VertexFrame newVertex = ((VertexFrame) newNode);
@@ -267,7 +267,7 @@ public class AdjacencyMethodHandler implements MethodHandler {
             final Direction direction = annotation.direction();
             final String label = annotation.label();
 
-            assert vertexType.isInstance(newNode);
+            assert vertexType.getInitializationType().isInstance(newNode);
 
             switch (direction) {
             case BOTH:
@@ -289,7 +289,7 @@ public class AdjacencyMethodHandler implements MethodHandler {
     public static final class AddVertexByTypeTypedEdgeInterceptor {
 
         @RuntimeType
-        public static Object addVertex(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final Class vertexType, @RuntimeType @Argument(1) final Class edgeType) {
+        public static Object addVertex(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final ClassInitializer vertexType, @RuntimeType @Argument(1) final ClassInitializer edgeType) {
             final Object newNode = thiz.getGraph().addFramedVertex(vertexType);
             assert newNode instanceof VertexFrame;
             final VertexFrame newVertex = ((VertexFrame) newNode);
@@ -298,7 +298,7 @@ public class AdjacencyMethodHandler implements MethodHandler {
             final Direction direction = annotation.direction();
             final String label = annotation.label();
 
-            assert vertexType.isInstance(newNode);
+            assert vertexType.getInitializationType().isInstance(newNode);
 
             switch (direction) {
             case BOTH:
@@ -346,7 +346,7 @@ public class AdjacencyMethodHandler implements MethodHandler {
     public static final class AddVertexByObjectTypedEdgeInterceptor {
 
         @RuntimeType
-        public static Object addVertex(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final VertexFrame newVertex, @RuntimeType @Argument(1) final Class edgeType) {
+        public static Object addVertex(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final VertexFrame newVertex, @RuntimeType @Argument(1) final ClassInitializer edgeType) {
 
             final Adjacency annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Adjacency.class);
             final Direction direction = annotation.direction();

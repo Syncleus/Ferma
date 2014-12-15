@@ -42,8 +42,8 @@ public class FramedVertexTest {
         MockitoAnnotations.initMocks(this);
         final Graph g = new TinkerGraph();
         fg = new DelegatingFramedGraph(g);
-        p1 = fg.addFramedVertex(Person.class);
-        p2 = fg.addFramedVertex(Person.class);
+        p1 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
+        p2 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
         p1.setName("Bryn");
         p2.setName("Julia");
         e1 = p1.addKnows(p2);
@@ -133,7 +133,7 @@ public class FramedVertexTest {
 
     @Test
     public void testLinkOutSingleLabel() {
-        final Person p3 = fg.addFramedVertex(Person.class);
+        final Person p3 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
         p3.setName("Tjad");
 
         final String label = "knows";
@@ -153,7 +153,7 @@ public class FramedVertexTest {
 
         final String[] newLabels = new String[]{"knows", "friends_with"};
 
-        final Person p3 = fg.addFramedVertex(Person.class);
+        final Person p3 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
         p3.setName("Tjad");
 
         final Map<String, Number> expectedCounts = new HashMap<>();
@@ -177,7 +177,7 @@ public class FramedVertexTest {
 
     @Test
     public void testLinkInSingleLabel() {
-        final Person p3 = fg.addFramedVertex(Person.class);
+        final Person p3 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
         p3.setName("Tjad");
 
         final String label = "knows";
@@ -197,7 +197,7 @@ public class FramedVertexTest {
 
         final String[] newLabels = new String[]{"knows", "friends_with"};
 
-        final Person p3 = fg.addFramedVertex(Person.class);
+        final Person p3 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
         p3.setName("Tjad");
 
         final Map<String, Number> expectedCounts = new HashMap<>();
@@ -222,7 +222,7 @@ public class FramedVertexTest {
 
     @Test
     public void testLinkBothSingleLabel() {
-        final Person p3 = fg.addFramedVertex(Person.class);
+        final Person p3 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
         p3.setName("Tjad");
 
         final String label = "knows";
@@ -244,7 +244,7 @@ public class FramedVertexTest {
 
         final String[] newLabels = new String[]{"knows", "friends_with"};
 
-        final Person p3 = fg.addFramedVertex(Person.class);
+        final Person p3 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
         p3.setName("Tjad");
 
         final Map<String, Number> expectedCounts = new HashMap<>();
@@ -272,12 +272,12 @@ public class FramedVertexTest {
     @Test
     public void testUnlinkInWithNull() {
         final String label = "knows";
-        final Person p3 = fg.addFramedVertex(Person.class);
-        final Person p4 = fg.addFramedVertex(Person.class);
-        final Person p5 = fg.addFramedVertex(Person.class);
+        final Person p3 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
+        final Person p4 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
+        final Person p5 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
 
-        p4.addFramedEdge(label, p3, Knows.class);
-        p5.addFramedEdge(label, p3, Knows.class);
+        p4.addFramedEdge(label, p3, Knows.DEFAULT_INITIALIZER);
+        p5.addFramedEdge(label, p3, Knows.DEFAULT_INITIALIZER);
 
         Assert.assertTrue("Multiple edges(in) of type " + label + " must exist for vertice", p3.in(label).count() > 1);
 
@@ -290,12 +290,12 @@ public class FramedVertexTest {
     @Test
     public void testUnlinkOutWithNull() {
         final String label = "knows";
-        final Person p3 = fg.addFramedVertex(Person.class);
-        final Person p4 = fg.addFramedVertex(Person.class);
-        final Person p5 = fg.addFramedVertex(Person.class);
+        final Person p3 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
+        final Person p4 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
+        final Person p5 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
 
-        p3.addFramedEdge(label, p4, Knows.class);
-        p3.addFramedEdge(label, p5, Knows.class);
+        p3.addFramedEdge(label, p4, Knows.DEFAULT_INITIALIZER);
+        p3.addFramedEdge(label, p5, Knows.DEFAULT_INITIALIZER);
 
         Assert.assertTrue("Multiple edges(out) of type " + label + " must exist for vertice", p3.out(label).count() > 1);
 
@@ -309,17 +309,17 @@ public class FramedVertexTest {
     @Test
     public void testUnlinkBothWithNull() {
         final String label = "knows";
-        final Person p3 = fg.addFramedVertex(Person.class);
-        final Person p4 = fg.addFramedVertex(Person.class);
-        final Person p5 = fg.addFramedVertex(Person.class);
+        final Person p3 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
+        final Person p4 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
+        final Person p5 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
 
-        p3.addFramedEdge(label, p4, Knows.class);
-        p3.addFramedEdge(label, p5, Knows.class);
+        p3.addFramedEdge(label, p4, Knows.DEFAULT_INITIALIZER);
+        p3.addFramedEdge(label, p5, Knows.DEFAULT_INITIALIZER);
 
         Assert.assertTrue("Multiple edges(out) of type " + label + " must exist for vertice", p3.out(label).count() > 1);
 
-        p4.addFramedEdge(label, p3, Knows.class);
-        p5.addFramedEdge(label, p3, Knows.class);
+        p4.addFramedEdge(label, p3, Knows.DEFAULT_INITIALIZER);
+        p5.addFramedEdge(label, p3, Knows.DEFAULT_INITIALIZER);
 
         Assert.assertTrue("Multiple edges(in) of type " + label + " must exist for vertice", p3.in(label).count() > 1);
 
@@ -333,12 +333,12 @@ public class FramedVertexTest {
     @Test
     public void testUnlinkIn() {
         final String label = "knows";
-        final Person p3 = fg.addFramedVertex(Person.class);
-        final Person p4 = fg.addFramedVertex(Person.class);
-        final Person p5 = fg.addFramedVertex(Person.class);
+        final Person p3 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
+        final Person p4 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
+        final Person p5 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
 
-        p4.addFramedEdge(label, p3, Knows.class);
-        p5.addFramedEdge(label, p3, Knows.class);
+        p4.addFramedEdge(label, p3, Knows.DEFAULT_INITIALIZER);
+        p5.addFramedEdge(label, p3, Knows.DEFAULT_INITIALIZER);
         final long allInEdgesCount = p3.in(label).count();
         final Long targetVertex_InEdgeCount = p3.in(label).mark().retain(Lists.newArrayList(p4)).back().count();
 
@@ -355,12 +355,12 @@ public class FramedVertexTest {
     @Test
     public void testUnlinkOut() {
         final String label = "knows";
-        final Person p3 = fg.addFramedVertex(Person.class);
-        final Person p4 = fg.addFramedVertex(Person.class);
-        final Person p5 = fg.addFramedVertex(Person.class);
+        final Person p3 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
+        final Person p4 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
+        final Person p5 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
 
-        p3.addFramedEdge(label, p4, Knows.class);
-        p3.addFramedEdge(label, p5, Knows.class);
+        p3.addFramedEdge(label, p4, Knows.DEFAULT_INITIALIZER);
+        p3.addFramedEdge(label, p5, Knows.DEFAULT_INITIALIZER);
         final long allInEdgesCount = p3.out(label).count();
         final Long targetVertex_OutEdgeCount = p3.out(label).mark().retain(Lists.newArrayList(p4)).back().count();
 
@@ -377,14 +377,14 @@ public class FramedVertexTest {
     @Test
     public void testUnlinkBoth() {
         final String label = "knows";
-        final Person p3 = fg.addFramedVertex(Person.class);
-        final Person p4 = fg.addFramedVertex(Person.class);
-        final Person p5 = fg.addFramedVertex(Person.class);
+        final Person p3 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
+        final Person p4 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
+        final Person p5 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
 
-        p4.addFramedEdge(label, p3, Knows.class);
-        p5.addFramedEdge(label, p3, Knows.class);
-        p3.addFramedEdge(label, p4, Knows.class);
-        p3.addFramedEdge(label, p5, Knows.class);
+        p4.addFramedEdge(label, p3, Knows.DEFAULT_INITIALIZER);
+        p5.addFramedEdge(label, p3, Knows.DEFAULT_INITIALIZER);
+        p3.addFramedEdge(label, p4, Knows.DEFAULT_INITIALIZER);
+        p3.addFramedEdge(label, p5, Knows.DEFAULT_INITIALIZER);
 
         final long allInEdgesCount = p3.both(label).count();
         final Long targetVertex_EdgeCount = p3.both(label).mark().retain(Lists.newArrayList(p4)).back().count();
@@ -402,11 +402,11 @@ public class FramedVertexTest {
     @Test
     public void testSetLinkIn() {
         final String label = "knows";
-        final Person p3 = fg.addFramedVertex(Person.class);
-        final Person p4 = fg.addFramedVertex(Person.class);
-        final Person p5 = fg.addFramedVertex(Person.class);
+        final Person p3 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
+        final Person p4 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
+        final Person p5 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
 
-        p4.addFramedEdge(label, p3, Knows.class);
+        p4.addFramedEdge(label, p3, Knows.DEFAULT_INITIALIZER);
 
         Assert.assertTrue("An edge(in) of type " + label + " must exist between vertices", p3.in(label).retain(Lists.newArrayList(p4)).count() > 0);
 
@@ -423,8 +423,8 @@ public class FramedVertexTest {
     @Test
     public void testSetLinkInNull() {
         final String label = "knows";
-        final Person p3 = fg.addFramedVertex(Person.class);
-        final Person p4 = fg.addFramedVertex(Person.class);
+        final Person p3 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
+        final Person p4 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
         p3.setLinkIn(p4, label);
         Assert.assertTrue("An out edge of type " + label + " must exist between vertices", p3.in(label).retain(Lists.newArrayList(p4)).count() > 0);
 
@@ -436,11 +436,11 @@ public class FramedVertexTest {
     @Test
     public void testSetLinkOut() {
         final String label = "knows";
-        final Person p3 = fg.addFramedVertex(Person.class);
-        final Person p4 = fg.addFramedVertex(Person.class);
-        final Person p5 = fg.addFramedVertex(Person.class);
+        final Person p3 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
+        final Person p4 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
+        final Person p5 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
 
-        p3.addFramedEdge(label, p4, Knows.class);
+        p3.addFramedEdge(label, p4, Knows.DEFAULT_INITIALIZER);
 
         Assert.assertTrue("An out edge of type " + label + " must exist between vertices", p3.out(label).retain(Lists.newArrayList(p4)).count() > 0);
 
@@ -457,8 +457,8 @@ public class FramedVertexTest {
     @Test
     public void testSetLinkOutNull() {
         final String label = "knows";
-        final Person p3 = fg.addFramedVertex(Person.class);
-        final Person p4 = fg.addFramedVertex(Person.class);
+        final Person p3 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
+        final Person p4 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
         p3.setLinkOut(p4, label);
         Assert.assertTrue("An out edge of type " + label + " must exist between vertices", p3.out(label).retain(Lists.newArrayList(p4)).count() > 0);
 
@@ -470,12 +470,12 @@ public class FramedVertexTest {
     @Test
     public void testSetLinkBoth() {
         final String label = "knows";
-        final Person p3 = fg.addFramedVertex(Person.class);
-        final Person p4 = fg.addFramedVertex(Person.class);
-        final Person p5 = fg.addFramedVertex(Person.class);
+        final Person p3 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
+        final Person p4 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
+        final Person p5 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
 
-        p4.addFramedEdge(label, p3, Knows.class);
-        p3.addFramedEdge(label, p4, Knows.class);
+        p4.addFramedEdge(label, p3, Knows.DEFAULT_INITIALIZER);
+        p3.addFramedEdge(label, p4, Knows.DEFAULT_INITIALIZER);
 
         Assert.assertTrue("An in edge of type " + label + " must exist between vertices", p3.in(label).retain(Lists.newArrayList(p4)).count() > 0);
         Assert.assertTrue("An out edge of type " + label + " must exist between vertices", p3.out(label).retain(Lists.newArrayList(p4)).count() > 0);
@@ -496,8 +496,8 @@ public class FramedVertexTest {
     @Test
     public void testSetLinkBothNull() {
         final String label = "knows";
-        final Person p3 = fg.addFramedVertex(Person.class);
-        final Person p4 = fg.addFramedVertex(Person.class);
+        final Person p3 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
+        final Person p4 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
         p3.setLinkBoth(p4, label);
         Assert.assertTrue("An out edge of type " + label + " must exist between vertices", p3.both(label).retain(Lists.newArrayList(p4)).count() > 0);
 
@@ -509,14 +509,14 @@ public class FramedVertexTest {
     @Test
     public void testSetNewLinkIn() {
         final String label = "knows";
-        final Person p3 = fg.addFramedVertex(Person.class);
-        final Person p4 = fg.addFramedVertex(Person.class);
+        final Person p3 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
+        final Person p4 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
 
-        p4.addFramedEdge(label, p3, Knows.class);
+        p4.addFramedEdge(label, p3, Knows.DEFAULT_INITIALIZER);
 
         Assert.assertTrue("An out edge of type " + label + " must exist between vertices", p3.in(label).retain(Lists.newArrayList(p4)).count() > 0);
 
-        final Person p5 = p3.setLinkIn(Person.class, label);
+        final Person p5 = p3.setLinkIn(Person.DEFAULT_INITIALIZER, label);
 
         //Make sure old edge was deleted
         Assert.assertEquals("old " + label + " edge was not removed", 0, p3.in(label).retain(Lists.newArrayList(p4)).count());
@@ -530,14 +530,14 @@ public class FramedVertexTest {
     @Test
     public void testSetNewLinkOut() {
         final String label = "knows";
-        final Person p3 = fg.addFramedVertex(Person.class);
-        final Person p4 = fg.addFramedVertex(Person.class);
+        final Person p3 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
+        final Person p4 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
 
-        p3.addFramedEdge(label, p4, Knows.class);
+        p3.addFramedEdge(label, p4, Knows.DEFAULT_INITIALIZER);
 
         Assert.assertTrue("An out edge of type " + label + " must exist between vertices", p3.out(label).retain(Lists.newArrayList(p4)).count() > 0);
 
-        final Person p5 = p3.setLinkOut(Person.class, label);
+        final Person p5 = p3.setLinkOut(Person.DEFAULT_INITIALIZER, label);
 
         //Make sure old edge was deleted
         Assert.assertEquals("old " + label + " edge was not removed", 0, p3.out(label).retain(Lists.newArrayList(p4)).count());
@@ -551,16 +551,16 @@ public class FramedVertexTest {
     @Test
     public void testSetNewLinkBoth() {
         final String label = "knows";
-        final Person p3 = fg.addFramedVertex(Person.class);
-        final Person p4 = fg.addFramedVertex(Person.class);
+        final Person p3 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
+        final Person p4 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
 
-        p3.addFramedEdge(label, p4, Knows.class);
-        p4.addFramedEdge(label, p3, Knows.class);
+        p3.addFramedEdge(label, p4, Knows.DEFAULT_INITIALIZER);
+        p4.addFramedEdge(label, p3, Knows.DEFAULT_INITIALIZER);
 
         Assert.assertTrue("An in edge of type " + label + " must exist between vertices", p3.in(label).retain(Lists.newArrayList(p4)).count() > 0);
         Assert.assertTrue("An out edge of type " + label + " must exist between vertices", p3.out(label).retain(Lists.newArrayList(p4)).count() > 0);
 
-        final Person p5 = p3.setLinkBoth(Person.class, label);
+        final Person p5 = p3.setLinkBoth(Person.DEFAULT_INITIALIZER, label);
 
         //Make sure old edge was deleted
         Assert.assertEquals("old " + label + " edge was not removed", 0, p3.both(label).retain(Lists.newArrayList(p4)).count());

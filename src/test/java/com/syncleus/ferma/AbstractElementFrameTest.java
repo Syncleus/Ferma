@@ -37,8 +37,8 @@ public class AbstractElementFrameTest {
         MockitoAnnotations.initMocks(this);
         final Graph g = new TinkerGraph();
         final FramedGraph fg = new DelegatingFramedGraph(g);
-        p1 = fg.addFramedVertex(Person.class);
-        final Person p2 = fg.addFramedVertex(Person.class);
+        p1 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
+        final Person p2 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
         p1.setName("Bryn");
         p2.setName("Julia");
         e1 = p1.addKnows(p2);

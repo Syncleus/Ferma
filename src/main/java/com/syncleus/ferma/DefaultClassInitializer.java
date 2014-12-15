@@ -18,23 +18,20 @@
  ******************************************************************************/
 package com.syncleus.ferma;
 
-public class Program extends AbstractVertexFrame {
-    static final ClassInitializer<Program> DEFAULT_INITIALIZER = new DefaultClassInitializer(Program.class);
+public class DefaultClassInitializer<C> implements ClassInitializer<C> {
+    private final Class<C> type;
 
-    public String getName() {
-        return getProperty("name");
+    public DefaultClassInitializer(final Class<C> type) {
+        this.type = type;
     }
 
-    public void setName(final String name) {
-        setProperty("name", name);
+    @Override
+    public Class<C> getInitializationType() {
+        return this.type;
     }
 
-    public String getLang() {
-        return getProperty("lang");
-    }
-
-    public void setLang(final String lang) {
-        setProperty("lang", lang);
+    @Override
+    public void initalize(C frame) {
     }
 
 }

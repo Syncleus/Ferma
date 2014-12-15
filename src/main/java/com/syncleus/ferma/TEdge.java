@@ -33,4 +33,5 @@ package com.syncleus.ferma;
  *
  */
 public final class TEdge extends AbstractEdgeFrame {
+    static final ClassInitializer<TEdge> DEFAULT_INITIALIZER = new DefaultClassInitializer(TEdge.class);
 }

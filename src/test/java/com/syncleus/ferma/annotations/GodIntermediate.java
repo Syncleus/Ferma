@@ -18,5 +18,9 @@
  ******************************************************************************/
 package com.syncleus.ferma.annotations;
 
+import com.syncleus.ferma.ClassInitializer;
+import com.syncleus.ferma.DefaultClassInitializer;
+
 public interface GodIntermediate extends God {
+    static final ClassInitializer<GodIntermediate> DEFAULT_INITIALIZER = new DefaultClassInitializer(GodIntermediate.class);
 }

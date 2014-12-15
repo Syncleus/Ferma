@@ -22,6 +22,7 @@ import java.util.Iterator;
 import java.util.List;
 
 public class Person extends AbstractVertexFrame {
+    static final ClassInitializer<Person> DEFAULT_INITIALIZER = new DefaultClassInitializer(Person.class);
 
     public String getName() {
         return getProperty("name");
@@ -66,11 +67,11 @@ public class Person extends AbstractVertexFrame {
     }
 
     public Knows addKnows(final Person friend) {
-        return addFramedEdge("knows", friend, Knows.class);
+        return addFramedEdge("knows", friend, Knows.DEFAULT_INITIALIZER);
     }
 
     public Knows addKnowsExplicit(final Person friend) {
-        return addFramedEdgeExplicit("knows", friend, Knows.class);
+        return addFramedEdgeExplicit("knows", friend, Knows.DEFAULT_INITIALIZER);
     }
 
 }

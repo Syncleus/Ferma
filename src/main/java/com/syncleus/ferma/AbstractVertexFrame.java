@@ -44,29 +44,29 @@ public abstract class AbstractVertexFrame extends AbstractElementFrame implement
     }
 
     @Override
-    public <T> T addFramedEdge(final String label, final VertexFrame inVertex, final Class<T> kind) {
+    public <T> T addFramedEdge(final String label, final VertexFrame inVertex, final ClassInitializer<T> initializer) {
 
         final Edge edge = getElement().addEdge(label, inVertex.getElement());
-        final T framedEdge = getGraph().frameNewElement(edge, kind);
+        final T framedEdge = getGraph().frameNewElement(edge, initializer);
         return framedEdge;
     }
 
     @Override
-    public <T> T addFramedEdgeExplicit(final String label, final VertexFrame inVertex, final Class<T> kind) {
+    public <T> T addFramedEdgeExplicit(final String label, final VertexFrame inVertex, final ClassInitializer<T> initializer) {
 
         final Edge edge = getElement().addEdge(label, inVertex.getElement());
-        final T framedEdge = getGraph().frameNewElementExplicit(edge, kind);
+        final T framedEdge = getGraph().frameNewElementExplicit(edge, initializer);
         return framedEdge;
     }
 
     @Override
     public TEdge addFramedEdge(final String label, final VertexFrame inVertex) {
-        return addFramedEdge(label, inVertex, TEdge.class);
+        return addFramedEdge(label, inVertex, TEdge.DEFAULT_INITIALIZER);
     }
 
     @Override
     public TEdge addFramedEdgeExplicit(final String label, final VertexFrame inVertex) {
-        return addFramedEdgeExplicit(label, inVertex, TEdge.class);
+        return addFramedEdgeExplicit(label, inVertex, TEdge.DEFAULT_INITIALIZER);
     }
 
     @Override
@@ -193,43 +193,43 @@ public abstract class AbstractVertexFrame extends AbstractElementFrame implement
     }
 
     @Override
-    public <K> K setLinkOut(final Class<K> kind, final String... labels) {
-        final K vertex = getGraph().addFramedVertex(kind);
+    public <K> K setLinkOut(final ClassInitializer<K> initializer, final String... labels) {
+        final K vertex = getGraph().addFramedVertex(initializer);
         setLinkOut((VertexFrame) vertex, labels);
         return vertex;
     }
 
     @Override
-    public <K> K setLinkOutExplicit(final Class<K> kind, final String... labels) {
-        final K vertex = getGraph().addFramedVertexExplicit(kind);
+    public <K> K setLinkOutExplicit(final ClassInitializer<K> initializer, final String... labels) {
+        final K vertex = getGraph().addFramedVertexExplicit(initializer);
         setLinkOut((VertexFrame) vertex, labels);
         return vertex;
     }
 
     @Override
-    public <K> K setLinkIn(final Class<K> kind, final String... labels) {
-        final K vertex = getGraph().addFramedVertex(kind);
+    public <K> K setLinkIn(final ClassInitializer<K> initializer, final String... labels) {
+        final K vertex = getGraph().addFramedVertex(initializer);
         setLinkIn((VertexFrame) vertex, labels);
         return vertex;
     }
 
     @Override
-    public <K> K setLinkInExplicit(final Class<K> kind, final String... labels) {
-        final K vertex = getGraph().addFramedVertexExplicit(kind);
+    public <K> K setLinkInExplicit(final ClassInitializer<K> initializer, final String... labels) {
+        final K vertex = getGraph().addFramedVertexExplicit(initializer);
         setLinkIn((VertexFrame) vertex, labels);
         return vertex;
     }
 
     @Override
-    public <K> K setLinkBoth(final Class<K> kind, final String... labels) {
-        final K vertex = getGraph().addFramedVertex(kind);
+    public <K> K setLinkBoth(final ClassInitializer<K> initializer, final String... labels) {
+        final K vertex = getGraph().addFramedVertex(initializer);
         setLinkBoth((VertexFrame) vertex, labels);
         return vertex;
     }
 
     @Override
-    public <K> K setLinkBothExplicit(final Class<K> kind, final String... labels) {
-        final K vertex = getGraph().addFramedVertexExplicit(kind);
+    public <K> K setLinkBothExplicit(final ClassInitializer<K> initializer, final String... labels) {
+        final K vertex = getGraph().addFramedVertexExplicit(initializer);
         setLinkBoth((VertexFrame) vertex, labels);
         return vertex;
     }

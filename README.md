@@ -3,11 +3,12 @@
 An ORM / OGM for the TinkerPop graph stack.
 
 The Ferma project has been created as an alternative to the TinkerPop Frames project. Redesigned for performance and
-additional features. Unlike with Frames, annotated classes in Ferma have their abstract methods implemented using code
-generation during start-up with Byte Buddy, avoiding the need for proxy classes. This in turn significantly
-improves performance when compared with TinkerPop Frames. Ferma offers several new annotated method types in
-addition to those provided by TinkerPop Frames. Ferma is designed to easily replace TinkerPop Frames in existing code,
-as such, the annotations provided by Ferma are a super-set of those provided by TinkerPop Frames.
+additional features. Unlike with TinkerPop Frames, annotated classes in Ferma have their abstract methods implemented
+using code generation during start-up with Byte Buddy, avoiding the need for proxy classes. This in turn significantly
+improves performance when compared with TinkerPop Frames. Ferma offers many new features including several
+annotated method types supplementing those provided by TinkerPop Frames. Ferma is designed to easily replace TinkerPop
+Frames in existing code, as such, the annotations provided by Ferma are a super-set of those provided by TinkerPop
+Frames.
 
 Ferma is built directly on TinkerPop Blueprints with no dependency on TinkerPop Frames. This ensures all the TinkerPop
 features and compatibilities are preserved, but with a high-performance drop-in replacement for Frames. The TinkerPop

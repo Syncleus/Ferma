@@ -29,6 +29,8 @@ Ferma also supports any of the many databases compatible with TinkerPop includin
 
 For support please use the [official Ferma mailing list](https://groups.google.com/a/syncleus.com/forum/#!forum/ferma-list).
 
+Please file bugs and feature requests on [the official Syncleus issue tracker](http://bugs.syncleus.com/browse/FMA/).
+
 ## Dependency
 
 To include Ferma in your project of choice include the following Maven dependency into your build.

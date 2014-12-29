@@ -22,7 +22,7 @@
     <groupId>com.syncleus.ferma</groupId>
     <artifactId>ferma</artifactId>
     <packaging>jar</packaging>
-    <version>2.0.3-SNAPSHOT</version>
+    <version>2.0.4-SNAPSHOT</version>
 
 
     <name>Ferma</name>
@@ -152,7 +152,7 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-all</artifactId>
-            <version>1.10.8</version>
+            <version>1.10.17</version>
             <scope>test</scope>
         </dependency>
         <dependency>

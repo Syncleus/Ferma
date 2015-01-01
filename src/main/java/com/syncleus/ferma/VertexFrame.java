@@ -21,12 +21,24 @@ package com.syncleus.ferma;
 import com.google.gson.JsonObject;
 import com.tinkerpop.blueprints.Vertex;
 
-public interface VertexFrame extends ElementFrame {
-    static final ClassInitializer<VertexFrame> DEFAULT_INITIALIZER = new DefaultClassInitializer(VertexFrame.class);
-    
+public interface VertexFrame extends ElementFrame {    
     @Override
     Vertex getElement();
 
+    /**
+     * Add an edge using the supplied frame type.
+     *
+     * @param <T> The type for the framed edge.
+     * @param label
+     *            The label for the edge
+     * @param inVertex
+     *            The vertex to link to.
+     * @param initializer
+     *            the initializer for the frame which defines its type and may initialize properties
+     * @return The new edge.
+     */
+    <T> T addFramedEdge(String label, VertexFrame inVertex, ClassInitializer<T> initializer);
+    
     /**
      * Add an edge using the supplied frame type.
      *
@@ -39,8 +51,26 @@ public interface VertexFrame extends ElementFrame {
      *            The kind of frame.
      * @return The new edge.
      */
-    <T> T addFramedEdge(String label, VertexFrame inVertex, ClassInitializer<T> kind);
+    <T> T addFramedEdge(String label, VertexFrame inVertex, Class<T> kind);
 
+    /**
+     * Add an edge using the supplied frame type.
+     *
+     * This will bypass the default type resolution and use the untyped resolver
+     * instead. This method is useful for speeding up a look up when type resolution
+     * isn't required.
+     *
+     * @param <T> The type for the framed edge.
+     * @param label
+     *            The label for the edge
+     * @param inVertex
+     *            The vertex to link to.
+     * @param initializer
+     *            the initializer for the frame which defines its type and may initialize properties
+     * @return The new edge.
+     */
+    <T> T addFramedEdgeExplicit(String label, VertexFrame inVertex, ClassInitializer<T> initializer);
+    
     /**
      * Add an edge using the supplied frame type.
      *
@@ -57,7 +87,7 @@ public interface VertexFrame extends ElementFrame {
      *            The kind of frame.
      * @return The new edge.
      */
-    <T> T addFramedEdgeExplicit(String label, VertexFrame inVertex, ClassInitializer<T> kind);
+    <T> T addFramedEdgeExplicit(String label, VertexFrame inVertex, Class<T> kind);
 
     /**
      * Add an edge using a frame type of {@link TEdge}.
@@ -217,6 +247,19 @@ public interface VertexFrame extends ElementFrame {
      * @return The newly created edge.
      */
     <K> K setLinkOut(ClassInitializer<K> initializer, String... labels);
+    
+    /**
+     * Remove all out edges with the labels and then add a single edge to a new
+     * vertex.
+     *
+     * @param <K> The type used to frame the edge.
+     * @param kind
+     *            The kind of frame.
+     * @param labels
+     *            The labels of the edges.
+     * @return The newly created edge.
+     */
+    <K> K setLinkOut(Class<K> kind, String... labels);
 
     /**
      * Remove all out edges with the labels and then add a single edge to a new
@@ -234,6 +277,23 @@ public interface VertexFrame extends ElementFrame {
      * @return The newly created edge.
      */
     <K> K setLinkOutExplicit(ClassInitializer<K> initializer, String... labels);
+    
+    /**
+     * Remove all out edges with the labels and then add a single edge to a new
+     * vertex.
+     *
+     * This will bypass the default type resolution and use the untyped resolver
+     * instead. This method is useful for speeding up a look up when type resolution
+     * isn't required.
+     *
+     * @param <K> The type used to frame the edge.
+     * @param kind
+     *            The kind of frame.
+     * @param labels
+     *            The labels of the edges.
+     * @return The newly created edge.
+     */
+    <K> K setLinkOutExplicit(Class<K> kind, String... labels);
 
     /**
      * Remove all in edges with the labels and then add a single edge from a
@@ -247,6 +307,19 @@ public interface VertexFrame extends ElementFrame {
      * @return The newly created edge.
      */
     <K> K setLinkIn(ClassInitializer<K> initializer, String... labels);
+    
+    /**
+     * Remove all in edges with the labels and then add a single edge from a
+     * new vertex.
+     *
+     * @param <K> The type used to frame the edge.
+     * @param kind
+     *            The kind of frame.
+     * @param labels
+     *            The labels of the edges.
+     * @return The newly created edge.
+     */
+    <K> K setLinkIn(Class<K> kind, String... labels);
 
     /**
      * Remove all in edges with the labels and then add a single edge from a
@@ -264,6 +337,23 @@ public interface VertexFrame extends ElementFrame {
      * @return The newly created edge.
      */
     <K> K setLinkInExplicit(ClassInitializer<K> initializer, String... labels);
+    
+    /**
+     * Remove all in edges with the labels and then add a single edge from a
+     * new vertex.
+     *
+     * This will bypass the default type resolution and use the untyped resolver
+     * instead. This method is useful for speeding up a look up when type resolution
+     * isn't required.
+     *
+     * @param <K> The type used to frame the edge.
+     * @param kind
+     *            The kind of frame.
+     * @param labels
+     *            The labels of the edges.
+     * @return The newly created edge.
+     */
+    <K> K setLinkInExplicit(Class<K> kind, String... labels);
 
     /**
      * Remove all edges with the labels and then add edges to/from a new
@@ -277,6 +367,19 @@ public interface VertexFrame extends ElementFrame {
      * @return The newly created edge.
      */
     <K> K setLinkBoth(ClassInitializer<K> initializer, String... labels);
+    
+    /**
+     * Remove all edges with the labels and then add edges to/from a new
+     * vertex.
+     *
+     * @param <K> The type used to frame the edge.
+     * @param kind
+     *            The kind of frame.
+     * @param labels
+     *            The labels of the edges.
+     * @return The newly created edge.
+     */
+    <K> K setLinkBoth(Class<K> kind, String... labels);
 
     /**
      * Remove all edges with the labels and then add edges to/from a new
@@ -294,6 +397,23 @@ public interface VertexFrame extends ElementFrame {
      * @return The newly created edge.
      */
     <K> K setLinkBothExplicit(ClassInitializer<K> initializer, String... labels);
+    
+    /**
+     * Remove all edges with the labels and then add edges to/from a new
+     * vertex.
+     *
+     * This will bypass the default type resolution and use the untyped resolver
+     * instead. This method is useful for speeding up a look up when type resolution
+     * isn't required.
+     *
+     * @param <K> The type used to frame the edge.
+     * @param kind
+     *            The kind of frame.
+     * @param labels
+     *            The labels of the edges.
+     * @return The newly created edge.
+     */
+    <K> K setLinkBothExplicit(Class<K> kind, String... labels);
 
     /**
      * Shortcut to get frame Traversal of current element

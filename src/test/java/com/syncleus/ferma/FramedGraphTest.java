@@ -63,6 +63,28 @@ public class FramedGraphTest {
         final Collection<? extends Integer> knowsCollection = fg.v().has("name", "Julia").bothE().property("years", Integer.class).aggregate().cap();
         Assert.assertEquals(1, knowsCollection.size());
     }
+    
+    @Test
+    public void testSanityByClass() {
+        final Graph g = new TinkerGraph();
+        final FramedGraph fg = new DelegatingFramedGraph(g);
+        final Person p1 = fg.addFramedVertex(Person.class);
+        p1.setName("Bryn");
+
+        final Person p2 = fg.addFramedVertex(Person.class);
+        p2.setName("Julia");
+        final Knows knows = p1.addKnows(p2);
+        knows.setYears(15);
+
+        final Person bryn = fg.v().has("name", "Bryn").next(Person.class);
+
+
+        Assert.assertEquals("Bryn", bryn.getName());
+        Assert.assertEquals(15, bryn.getKnowsList().get(0).getYears());
+
+        final Collection<? extends Integer> knowsCollection = fg.v().has("name", "Julia").bothE().property("years", Integer.class).aggregate().cap();
+        Assert.assertEquals(1, knowsCollection.size());
+    }
 
     @Test
     public void testSanityExplicit() {
@@ -72,6 +94,28 @@ public class FramedGraphTest {
         p1.setName("Bryn");
 
         final Person p2 = fg.addFramedVertexExplicit(Person.DEFAULT_INITIALIZER);
+        p2.setName("Julia");
+        final Knows knows = p1.addKnowsExplicit(p2);
+        knows.setYears(15);
+
+        final Person bryn = fg.v().has("name", "Bryn").nextExplicit(Person.class);
+
+
+        Assert.assertEquals("Bryn", bryn.getName());
+        Assert.assertEquals(15, bryn.getKnowsListExplicit().get(0).getYears());
+
+        final Collection<? extends Integer> knowsCollection = fg.v().has("name", "Julia").bothE().property("years", Integer.class).aggregate().cap();
+        Assert.assertEquals(1, knowsCollection.size());
+    }
+    
+    @Test
+    public void testSanityExplicitByClass() {
+        final Graph g = new TinkerGraph();
+        final FramedGraph fg = new DelegatingFramedGraph(g);
+        final Person p1 = fg.addFramedVertexExplicit(Person.class);
+        p1.setName("Bryn");
+
+        final Person p2 = fg.addFramedVertexExplicit(Person.class);
         p2.setName("Julia");
         final Knows knows = p1.addKnowsExplicit(p2);
         knows.setYears(15);
@@ -103,6 +147,24 @@ public class FramedGraphTest {
         Assert.assertEquals(Programmer.class, bryn.getClass());
         Assert.assertEquals(Person.class, julia.getClass());
     }
+    
+    @Test
+    public void testJavaTypingByClass() {
+        final Graph g = new TinkerGraph();
+        final FramedGraph fg = new DelegatingFramedGraph(g, true, false);
+
+        final Person p1 = fg.addFramedVertex(Programmer.class);
+        p1.setName("Bryn");
+
+        final Person p2 = fg.addFramedVertex(Person.class);
+        p2.setName("Julia");
+
+        final Person bryn = fg.v().has("name", "Bryn").next(Person.class);
+        final Person julia = fg.v().has("name", "Julia").next(Person.class);
+
+        Assert.assertEquals(Programmer.class, bryn.getClass());
+        Assert.assertEquals(Person.class, julia.getClass());
+    }
 
     @Test
     public void testJavaTypingAddExplicit() {
@@ -113,6 +175,24 @@ public class FramedGraphTest {
         p1.setName("Bryn");
 
         final Person p2 = fg.addFramedVertexExplicit(Person.DEFAULT_INITIALIZER);
+        p2.setName("Julia");
+
+        final Person bryn = fg.v().has("name", "Bryn").next(Person.class);
+        final Person julia = fg.v().has("name", "Julia").next(Person.class);
+
+        Assert.assertEquals(Person.class, bryn.getClass());
+        Assert.assertEquals(Person.class, julia.getClass());
+    }
+    
+    @Test
+    public void testJavaTypingAddExplicitByClass() {
+        final Graph g = new TinkerGraph();
+        final FramedGraph fg = new DelegatingFramedGraph(g, true, false);
+
+        final Person p1 = fg.addFramedVertexExplicit(Programmer.class);
+        p1.setName("Bryn");
+
+        final Person p2 = fg.addFramedVertexExplicit(Person.class);
         p2.setName("Julia");
 
         final Person bryn = fg.v().has("name", "Bryn").next(Person.class);
@@ -139,6 +219,24 @@ public class FramedGraphTest {
         Assert.assertEquals(Person.class, bryn.getClass());
         Assert.assertEquals(Person.class, julia.getClass());
     }
+    
+    @Test
+    public void testJavaTypingNextExplicitByClass() {
+        final Graph g = new TinkerGraph();
+        final FramedGraph fg = new DelegatingFramedGraph(g, true, false);
+
+        final Person p1 = fg.addFramedVertex(Programmer.class);
+        p1.setName("Bryn");
+
+        final Person p2 = fg.addFramedVertex(Person.class);
+        p2.setName("Julia");
+
+        final Person bryn = fg.v().has("name", "Bryn").nextExplicit(Person.class);
+        final Person julia = fg.v().has("name", "Julia").nextExplicit(Person.class);
+
+        Assert.assertEquals(Person.class, bryn.getClass());
+        Assert.assertEquals(Person.class, julia.getClass());
+    }
 
     @Test
     public void testCustomFrameBuilder() {
@@ -155,6 +253,22 @@ public class FramedGraphTest {
         final Person person = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
         Assert.assertEquals(o, person);
     }
+    
+    @Test
+    public void testCustomFrameBuilderByClass() {
+        final Person o = new Person();
+        final Graph g = new TinkerGraph();
+        final FramedGraph fg = new DelegatingFramedGraph(g, new FrameFactory() {
+
+            @SuppressWarnings("unchecked")
+            @Override
+            public <T> T create(final Element e, final Class<T> kind) {
+                return (T) o;
+            }
+        }, new SimpleTypeResolver());
+        final Person person = fg.addFramedVertex(Person.class);
+        Assert.assertEquals(o, person);
+    }
 
     @Test
     public void testCustomFrameBuilderExplicit() {
@@ -169,6 +283,22 @@ public class FramedGraphTest {
             }
         }, new SimpleTypeResolver());
         final Person person = fg.addFramedVertexExplicit(Person.DEFAULT_INITIALIZER);
+        Assert.assertEquals(o, person);
+    }
+    
+    @Test
+    public void testCustomFrameBuilderExplicitByClass() {
+        final Person o = new Person();
+        final Graph g = new TinkerGraph();
+        final FramedGraph fg = new DelegatingFramedGraph(g, new FrameFactory() {
+
+            @SuppressWarnings("unchecked")
+            @Override
+            public <T> T create(final Element e, final Class<T> kind) {
+                return (T) o;
+            }
+        }, new SimpleTypeResolver());
+        final Person person = fg.addFramedVertexExplicit(Person.class);
         Assert.assertEquals(o, person);
     }
 

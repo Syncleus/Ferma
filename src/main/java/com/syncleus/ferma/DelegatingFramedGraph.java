@@ -236,6 +236,11 @@ public class DelegatingFramedGraph implements FramedGraph {
         initializer.initalize(frame);
         return frame;
     }
+    
+    @Override
+    public <T> T frameNewElement(final Element e, final Class<T> kind) {
+        return this.frameNewElement(e, new DefaultClassInitializer<>(kind));
+    }
 
     @Override
     public <T> Iterator<? extends T> frame(final Iterator<? extends Element> pipeline, final Class<T> kind) {
@@ -262,169 +267,104 @@ public class DelegatingFramedGraph implements FramedGraph {
     }
 
     @Override
-    public <T> T frameNewElementExplicit(final Element e, final ClassInitializer<T> kind) {
-        final T frame = frameElement(e, kind.getInitializationType());
-        this.untypedResolver.init(e, kind.getInitializationType());
+    public <T> T frameNewElementExplicit(final Element e, final ClassInitializer<T> initializer) {
+        final T frame = frameElement(e, initializer.getInitializationType());
+        this.untypedResolver.init(e, initializer.getInitializationType());
         ((AbstractElementFrame) frame).init();
-        kind.initalize(frame);
+        initializer.initalize(frame);
         return frame;
+    }
+    
+    @Override
+    public <T> T frameNewElementExplicit(final Element e, final Class<T> kind) {
+        return this.frameNewElementExplicit(e, new DefaultClassInitializer<>(kind));
     }
 
     @Override
-    public <T> Iterator<? extends T> frameExplicit(final Iterator<? extends Element> pipeline, final ClassInitializer<T> kind) {
+    public <T> Iterator<? extends T> frameExplicit(final Iterator<? extends Element> pipeline, final Class<T> kind) {
         return Iterators.transform(pipeline, new Function<Element, T>() {
 
             @Override
             public T apply(final Element input) {
-                return frameElementExplicit(input, kind.getInitializationType());
+                return frameElementExplicit(input, kind);
             }
 
         });
     }
 
-    /**
-     * Add a vertex to the graph
-     *
-     * @param <T> The type used to frame the element.
-     * @param kind
-     *            The kind of the frame.
-     * @return The framed vertex.
-     */
     @Override
-    public <T> T addFramedVertex(final ClassInitializer<T> kind) {
-        final T framedVertex = frameNewElement(delegate.addVertex(null), kind);
+    public <T> T addFramedVertex(final ClassInitializer<T> initializer) {
+        final T framedVertex = frameNewElement(delegate.addVertex(null), initializer);
         return framedVertex;
     }
-
-    /**
-     * Add a vertex to the graph
-     *
-     * This will bypass the default type resolution and use the untyped resolver
-     * instead. This method is useful for speeding up a look up when type resolution
-     * isn't required.
-     *
-     * @param <T> The type used to frame the element.
-     * @param kind
-     *            The kind of the frame.
-     * @return The framed vertex.
-     */
+    
     @Override
-    public <T> T addFramedVertexExplicit(final ClassInitializer<T> kind) {
-        final T framedVertex = frameNewElementExplicit(delegate.addVertex(null), kind);
-        return framedVertex;
+    public <T> T addFramedVertex(final Class<T> kind) {
+        return this.addFramedVertex(new DefaultClassInitializer<>(kind));
     }
 
-    /**
-     * Add a vertex to the graph using a frame type of {@link TVertex}.
-     *
-     * @return The framed vertex.
-     */
+    @Override
+    public <T> T addFramedVertexExplicit(final ClassInitializer<T> initializer) {
+        final T framedVertex = frameNewElementExplicit(delegate.addVertex(null), initializer);
+        return framedVertex;
+    }
+    
+    @Override
+    public <T> T addFramedVertexExplicit(final Class<T> kind) {
+        return this.addFramedVertexExplicit(new DefaultClassInitializer<>(kind));
+    }
+
     @Override
     public TVertex addFramedVertex() {
 
         return addFramedVertex(TVertex.DEFAULT_INITIALIZER);
     }
 
-    /**
-     * Add a vertex to the graph using a frame type of {@link TVertex}.
-     *
-     * This will bypass the default type resolution and use the untyped resolver
-     * instead. This method is useful for speeding up a look up when type resolution
-     * isn't required.
-     *
-     * @return The framed vertex.
-     */
     @Override
     public TVertex addFramedVertexExplicit() {
 
         return addFramedVertexExplicit(TVertex.DEFAULT_INITIALIZER);
     }
 
-    /**
-     * Add a edge to the graph
-     *
-     * @param <T> The type used to frame the element.
-     * @param source The source vertex
-     * @param destination The destination vertex
-     * @param label The label for the edge
-     * @param kind
-     *            The kind of the frame.
-     * @return The framed edge.
-     */
     @Override
-    public <T> T addFramedEdge(final VertexFrame source, final VertexFrame destination, final String label, final ClassInitializer<T> kind) {
-        final T framedEdge = frameNewElement(this.delegate.addEdge(null, source.getElement(), destination.getElement(), label), kind);
+    public <T> T addFramedEdge(final VertexFrame source, final VertexFrame destination, final String label, final ClassInitializer<T> initializer) {
+        final T framedEdge = frameNewElement(this.delegate.addEdge(null, source.getElement(), destination.getElement(), label), initializer);
         return framedEdge;
     }
-
-    /**
-     * Add a edge to the graph
-     *
-     * This will bypass the default type resolution and use the untyped resolver
-     * instead. This method is useful for speeding up a look up when type resolution
-     * isn't required.
-     *
-     * @param <T> The type used to frame the element.
-     * @param source The source vertex
-     * @param destination The destination vertex
-     * @param label The label for the edge
-     * @param kind
-     *            The kind of the frame.
-     * @return The framed edge.
-     */
+    
     @Override
-    public <T> T addFramedEdgeExplicit(final VertexFrame source, final VertexFrame destination, final String label, final ClassInitializer<T> kind) {
-        final T framedEdge = frameNewElementExplicit(this.delegate.addEdge(null, source.getElement(), destination.getElement(), label), kind);
-        return framedEdge;
+    public <T> T addFramedEdge(final VertexFrame source, final VertexFrame destination, final String label, final Class<T> kind) {
+        return this.addFramedEdge(source, destination, label, new DefaultClassInitializer<>(kind));
     }
 
-    /**
-     * Add a edge to the graph using a frame type of {@link TEdge}.
-     *
-     * @param source The source vertex
-     * @param destination The destination vertex
-     * @param label The label for the edge
-     * @return The framed edge.
-     */
+    @Override
+    public <T> T addFramedEdgeExplicit(final VertexFrame source, final VertexFrame destination, final String label, final ClassInitializer<T> initializer) {
+        final T framedEdge = frameNewElementExplicit(this.delegate.addEdge(null, source.getElement(), destination.getElement(), label), initializer);
+        return framedEdge;
+    }
+    
+    @Override
+    public <T> T addFramedEdgeExplicit(final VertexFrame source, final VertexFrame destination, final String label, final Class<T> kind) {
+        return this.addFramedEdgeExplicit(source, destination, label, new DefaultClassInitializer<>(kind));
+    }
+
     @Override
     public TEdge addFramedEdge(final VertexFrame source, final VertexFrame destination, final String label) {
 
         return addFramedEdge(source, destination, label, TEdge.DEFAULT_INITIALIZER);
     }
 
-    /**
-     * Add a edge to the graph using a frame type of {@link TEdge}.
-     *
-     * This will bypass the default type resolution and use the untyped resolver
-     * instead. This method is useful for speeding up a look up when type resolution
-     * isn't required.
-     *
-     * @param source The source vertex
-     * @param destination The destination vertex
-     * @param label The label for the edge
-     * @return The framed edge.
-     */
     @Override
     public TEdge addFramedEdgeExplicit(final VertexFrame source, final VertexFrame destination, final String label) {
 
         return addFramedEdgeExplicit(source, destination, label, TEdge.DEFAULT_INITIALIZER);
     }
 
-    /**
-     * Query over all vertices in the graph.
-     *
-     * @return The query.
-     */
     @Override
     public VertexTraversal<?, ?, ?> v() {
         return new GlobalVertexTraversal(this, delegate);
     }
 
-    /**
-     * Query over all edges in the graph.
-     *
-     * @return The query.
-     */
     @Override
     public EdgeTraversal<?, ?, ?> e() {
         return new SimpleTraversal(this, delegate).e();
@@ -470,13 +410,6 @@ public class DelegatingFramedGraph implements FramedGraph {
         return new FramingEdgeIterable<>(this, this.getEdges(key, value), kind, true);
     }
 
-    /**
-     * Query over a list of vertices in the graph.
-     *
-     * @param ids
-     *            The ids of the vertices.
-     * @return The query.
-     */
     @Override
     public VertexTraversal<?, ?, ?> v(final Collection<?> ids) {
         return new SimpleTraversal(this, Iterators.transform(ids.iterator(), new Function<Object, Vertex>() {
@@ -489,13 +422,6 @@ public class DelegatingFramedGraph implements FramedGraph {
         })).castToVertices();
     }
 
-    /**
-     * Query over a list of vertices in the graph.
-     *
-     * @param ids
-     *            The ids of the vertices.
-     * @return The query.
-     */
     @Override
     public VertexTraversal<?, ?, ?> v(final Object... ids) {
         return new SimpleTraversal(this, Iterators.transform(Iterators.forArray(ids), new Function<Object, Vertex>() {
@@ -508,13 +434,6 @@ public class DelegatingFramedGraph implements FramedGraph {
         })).castToVertices();
     }
 
-    /**
-     * Query over a list of edges in the graph.
-     *
-     * @param ids
-     *            The ids of the edges.
-     * @return The query.
-     */
     @Override
     public EdgeTraversal<?, ?, ?> e(final Object... ids) {
         return new SimpleTraversal(this, Iterators.transform(Iterators.forArray(ids), new Function<Object, Edge>() {
@@ -527,13 +446,6 @@ public class DelegatingFramedGraph implements FramedGraph {
         })).castToEdges();
     }
 
-    /**
-     * Query over a list of edges in the graph.
-     *
-     * @param ids
-     *            The ids of the edges.
-     * @return The query.
-     */
     @Override
     public EdgeTraversal<?, ?, ?> e(final Collection<?> ids) {
         return new SimpleTraversal(this, Iterators.transform(ids.iterator(), new Function<Object, Edge>() {

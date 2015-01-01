@@ -336,6 +336,21 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
      * @return the next emitted object
      */
     <N> N nextOrAddExplicit(ClassInitializer<N> initializer);
+    
+    /**
+     * Get the next object emitted from the pipeline. If no such object exists a
+     * new vertex is created.
+     *
+     * This will bypass the default type resolution and use the untyped resolver
+     * instead. This method is useful for speeding up a look up when type resolution
+     * isn't required.
+     * 
+     * @param <N> The type used to frame the element
+     * @param kind
+     *            The kind of frame.
+     * @return the next emitted object
+     */
+    <N> N nextOrAddExplicit(Class<N> kind);
 
     /**
      * Get the next object emitted from the pipeline. If no such object exists a
@@ -347,6 +362,17 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
      * @return the next emitted object
      */
     <N> N nextOrAdd(ClassInitializer<N> initializer);
+    
+    /**
+     * Get the next object emitted from the pipeline. If no such object exists a
+     * new vertex is created.
+     *
+     * @param <N> The type used to frame the element
+     * @param kind
+     *            The kind of frame.
+     * @return the next emitted object
+     */
+    <N> N nextOrAdd(Class<N> kind);
 
     /**
      * Return the next X objects in the traversal as a list.

@@ -34,7 +34,7 @@ public class SimpleTypeResolverTest {
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
         //add a single node to the graph, a programmer.
-        framedGraph.addFramedVertex(Programmer.DEFAULT_INITIALIZER);
+        framedGraph.addFramedVertex(Programmer.class);
 
         //make sure the newly added node is actually a programmer
         final Person programmer = framedGraph.v().next(Person.class);

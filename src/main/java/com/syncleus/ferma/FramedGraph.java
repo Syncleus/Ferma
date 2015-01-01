@@ -39,12 +39,36 @@ public interface FramedGraph extends Graph {
      * Add a vertex to the graph
      *
      * @param <T> The type used to frame the element.
+     * @param initializer
+     *            the initializer for the frame which defines its type and may initialize properties
+     * @return The framed vertex.
+     */
+    <T> T addFramedVertex(ClassInitializer<T> initializer);
+    
+    /**
+     * Add a vertex to the graph
+     *
+     * @param <T> The type used to frame the element.
      * @param kind
      *            The kind of the frame.
      * @return The framed vertex.
      */
-    <T> T addFramedVertex(ClassInitializer<T> kind);
+    <T> T addFramedVertex(Class<T> kind);
 
+    /**
+     * Add a vertex to the graph
+     *
+     * This will bypass the default type resolution and use the untyped resolver
+     * instead. This method is useful for speeding up a look up when type resolution
+     * isn't required.
+     *
+     * @param <T> The type used to frame the element.
+     * @param initializer
+     *            the initializer for the frame which defines its type and may initialize properties
+     * @return The framed vertex.
+     */
+    <T> T addFramedVertexExplicit(ClassInitializer<T> initializer);
+    
     /**
      * Add a vertex to the graph
      *
@@ -57,7 +81,7 @@ public interface FramedGraph extends Graph {
      *            The kind of the frame.
      * @return The framed vertex.
      */
-    <T> T addFramedVertexExplicit(ClassInitializer<T> kind);
+    <T> T addFramedVertexExplicit(Class<T> kind);
 
     /**
      * Add a vertex to the graph using a frame type of {@link TVertex}.
@@ -84,12 +108,42 @@ public interface FramedGraph extends Graph {
      * @param source The source vertex
      * @param destination the destination vertex
      * @param label the label.
+     * @param initializer
+     *            the initializer for the frame which defines its type and may initialize properties
+     * @return The framed edge.
+     */
+    <T> T addFramedEdge(final VertexFrame source, final VertexFrame destination, final String label, ClassInitializer<T> initializer);
+    
+    /**
+     * Add a edge to the graph
+     *
+     * @param <T> The type used to frame the element.
+     * @param source The source vertex
+     * @param destination the destination vertex
+     * @param label the label.
      * @param kind
      *            The kind of the frame.
      * @return The framed edge.
      */
-    <T> T addFramedEdge(final VertexFrame source, final VertexFrame destination, final String label, ClassInitializer<T> kind);
+    <T> T addFramedEdge(final VertexFrame source, final VertexFrame destination, final String label, Class<T> kind);
 
+    /**
+     * Add a edge to the graph
+     *
+     * This will bypass the default type resolution and use the untyped resolver
+     * instead. This method is useful for speeding up a look up when type resolution
+     * isn't required.
+     *
+     * @param <T> The type used to frame the element.
+     * @param source The source vertex
+     * @param destination the destination vertex
+     * @param label the label.
+     * @param initializer
+     *            the initializer for the frame which defines its type and may initialize properties
+     * @return The framed edge.
+     */
+    <T> T addFramedEdgeExplicit(final VertexFrame source, final VertexFrame destination, final String label, ClassInitializer<T> initializer);
+    
     /**
      * Add a edge to the graph
      *
@@ -105,7 +159,7 @@ public interface FramedGraph extends Graph {
      *            The kind of the frame.
      * @return The framed edge.
      */
-    <T> T addFramedEdgeExplicit(final VertexFrame source, final VertexFrame destination, final String label, ClassInitializer<T> kind);
+    <T> T addFramedEdgeExplicit(final VertexFrame source, final VertexFrame destination, final String label, Class<T> kind);
 
     /**
      * Add a edge to the graph using a frame type of {@link TEdge}.
@@ -203,13 +257,17 @@ public interface FramedGraph extends Graph {
 
     <T> Iterator<? extends T> frame(Iterator<? extends Element> pipeline, final Class<T> kind);
 
-    <T> T frameNewElement(Element e, ClassInitializer<T> kind);
+    <T> T frameNewElement(Element e, ClassInitializer<T> initializer);
+    
+    <T> T frameNewElement(Element e, Class<T> kind);
 
-    <T> T frameElement(Element e, Class<T> initializer);
+    <T> T frameElement(Element e, Class<T> kind);
 
-    <T> T frameNewElementExplicit(Element e, ClassInitializer<T> kind);
+    <T> T frameNewElementExplicit(Element e, ClassInitializer<T> initializer);
+    
+    <T> T frameNewElementExplicit(Element e, Class<T> kind);
 
     <T> T frameElementExplicit(Element e, Class<T> kind);
 
-    <T> Iterator<? extends T> frameExplicit(Iterator<? extends Element> pipeline, final ClassInitializer<T> kind);
+    <T> Iterator<? extends T> frameExplicit(Iterator<? extends Element> pipeline, final Class<T> kind);
 }

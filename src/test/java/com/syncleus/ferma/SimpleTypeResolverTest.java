@@ -18,15 +18,18 @@
  ******************************************************************************/
 package com.syncleus.ferma;
 
+import com.syncleus.ferma.annotations.AnnotationFrameFactory;
 import com.tinkerpop.blueprints.impls.tg.TinkerGraph;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.*;
+import com.tinkerpop.blueprints.Graph;
 
 public class SimpleTypeResolverTest {
 
     private static final Set<Class<?>> TEST_TYPES = new HashSet<>(Arrays.asList(new Class<?>[]{Person.class, Programmer.class}));
+    private static final String CUSTOM_TYPE_KEY = "some_custom_type_key";
 
     @Test
     public void testChangeType() {
@@ -46,5 +49,101 @@ public class SimpleTypeResolverTest {
         //make sure the newly added node is actually a programmer
         final Person person = framedGraph.v().next(Person.class);
         Assert.assertFalse(person instanceof Programmer);
+    }
+    
+    @Test
+    public void testCustomTypeKey() {
+        final Graph g = new TinkerGraph();
+        final ReflectionCache cache = new ReflectionCache(TEST_TYPES);
+        final FramedGraph fg = new DelegatingFramedGraph(g, new AnnotationFrameFactory(cache), new SimpleTypeResolver(cache, CUSTOM_TYPE_KEY));
+
+        final Person p1 = fg.addFramedVertex(Programmer.DEFAULT_INITIALIZER);
+        p1.setName("Bryn");
+
+        final Person p2 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
+        p2.setName("Julia");
+
+        final Person bryn = fg.v().has("name", "Bryn").next(Person.class);
+        final Person julia = fg.v().has("name", "Julia").next(Person.class);
+
+        Assert.assertEquals(Programmer.class, bryn.getClass());
+        Assert.assertEquals(Person.class, julia.getClass());
+        
+        Assert.assertNotNull(bryn.getElement().getProperty(CUSTOM_TYPE_KEY));
+        Assert.assertNull(bryn.getElement().getProperty(SimpleTypeResolver.TYPE_RESOLUTION_KEY));
+        Assert.assertNotNull(julia.getElement().getProperty(CUSTOM_TYPE_KEY));
+        Assert.assertNull(julia.getElement().getProperty(SimpleTypeResolver.TYPE_RESOLUTION_KEY));
+    }
+    
+    @Test
+    public void testCustomTypeKeyByClass() {
+        final Graph g = new TinkerGraph();
+        final ReflectionCache cache = new ReflectionCache(TEST_TYPES);
+        final FramedGraph fg = new DelegatingFramedGraph(g, new AnnotationFrameFactory(cache), new SimpleTypeResolver(cache, CUSTOM_TYPE_KEY));
+
+        final Person p1 = fg.addFramedVertex(Programmer.class);
+        p1.setName("Bryn");
+
+        final Person p2 = fg.addFramedVertex(Person.class);
+        p2.setName("Julia");
+
+        final Person bryn = fg.v().has("name", "Bryn").next(Person.class);
+        final Person julia = fg.v().has("name", "Julia").next(Person.class);
+
+        Assert.assertEquals(Programmer.class, bryn.getClass());
+        Assert.assertEquals(Person.class, julia.getClass());
+        
+        Assert.assertNotNull(bryn.getElement().getProperty(CUSTOM_TYPE_KEY));
+        Assert.assertNull(bryn.getElement().getProperty(SimpleTypeResolver.TYPE_RESOLUTION_KEY));
+        Assert.assertNotNull(julia.getElement().getProperty(CUSTOM_TYPE_KEY));
+        Assert.assertNull(julia.getElement().getProperty(SimpleTypeResolver.TYPE_RESOLUTION_KEY));
+    }
+    
+    @Test
+    public void testCustomTypeKeyExplicit() {
+        final Graph g = new TinkerGraph();
+        final ReflectionCache cache = new ReflectionCache(TEST_TYPES);
+        final FramedGraph fg = new DelegatingFramedGraph(g, new AnnotationFrameFactory(cache), new SimpleTypeResolver(cache, CUSTOM_TYPE_KEY));
+
+        final Person p1 = fg.addFramedVertexExplicit(Programmer.DEFAULT_INITIALIZER);
+        p1.setName("Bryn");
+
+        final Person p2 = fg.addFramedVertexExplicit(Person.DEFAULT_INITIALIZER);
+        p2.setName("Julia");
+
+        final Person bryn = fg.v().has("name", "Bryn").next(Person.class);
+        final Person julia = fg.v().has("name", "Julia").next(Person.class);
+
+        Assert.assertEquals(Person.class, bryn.getClass());
+        Assert.assertEquals(Person.class, julia.getClass());
+        
+        Assert.assertNull(bryn.getElement().getProperty(CUSTOM_TYPE_KEY));
+        Assert.assertNull(bryn.getElement().getProperty(SimpleTypeResolver.TYPE_RESOLUTION_KEY));
+        Assert.assertNull(julia.getElement().getProperty(CUSTOM_TYPE_KEY));
+        Assert.assertNull(julia.getElement().getProperty(SimpleTypeResolver.TYPE_RESOLUTION_KEY));
+    }
+
+    @Test
+    public void testCustomTypeKeyExplicitByClass() {
+        final Graph g = new TinkerGraph();
+        final ReflectionCache cache = new ReflectionCache(TEST_TYPES);
+        final FramedGraph fg = new DelegatingFramedGraph(g, new AnnotationFrameFactory(cache), new SimpleTypeResolver(cache, CUSTOM_TYPE_KEY));
+
+        final Person p1 = fg.addFramedVertexExplicit(Programmer.class);
+        p1.setName("Bryn");
+
+        final Person p2 = fg.addFramedVertexExplicit(Person.class);
+        p2.setName("Julia");
+
+        final Person bryn = fg.v().has("name", "Bryn").next(Person.class);
+        final Person julia = fg.v().has("name", "Julia").next(Person.class);
+
+        Assert.assertEquals(Person.class, bryn.getClass());
+        Assert.assertEquals(Person.class, julia.getClass());
+        
+        Assert.assertNull(bryn.getElement().getProperty(CUSTOM_TYPE_KEY));
+        Assert.assertNull(bryn.getElement().getProperty(SimpleTypeResolver.TYPE_RESOLUTION_KEY));
+        Assert.assertNull(julia.getElement().getProperty(CUSTOM_TYPE_KEY));
+        Assert.assertNull(julia.getElement().getProperty(SimpleTypeResolver.TYPE_RESOLUTION_KEY));
     }
 }

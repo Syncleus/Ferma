@@ -33,9 +33,27 @@ public class UntypedTypeResolver implements TypeResolver {
             return (Class<? extends T>) TEdge.class;
         return kind;
     }
+    
+    @Override
+    public Class<?> resolve(final Element element) {
+        return null;
+    }
 
     @Override
     public void init(final Element element, final Class<?> kind) {
-
+    }
+    
+    @Override
+    public void deinit(final Element element) {
+    }
+    
+    @Override
+    public VertexTraversal<?,?,?> hasSubtypes(final VertexTraversal<?,?,?> traverser, final Class<?> type) {
+        return traverser;
+    }
+    
+    @Override
+    public EdgeTraversal<?,?,?> hasSubtypes(final EdgeTraversal<?,?,?> traverser, final Class<?> type) {
+        return traverser;
     }
 }

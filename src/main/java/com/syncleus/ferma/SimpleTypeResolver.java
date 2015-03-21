@@ -19,14 +19,18 @@
 package com.syncleus.ferma;
 
 import com.tinkerpop.blueprints.Element;
+import com.tinkerpop.gremlin.Tokens;
+import java.util.Set;
 
 /**
  * This type resolver will use the Java class stored in the 'java_class' on
  * the element.
  */
 public class SimpleTypeResolver implements TypeResolver {
+    protected final static String TYPE_RESOLUTION_KEY = "ferma_type";
 
     private final ReflectionCache reflectionCache;
+    private final String typeResolutionKey;
 
     /**
      * Creates a new SimpleTypeResolver with a typing engine that can recognize the specified types. While these types
@@ -37,6 +41,19 @@ public class SimpleTypeResolver implements TypeResolver {
      */
     public SimpleTypeResolver() {
         this.reflectionCache = new ReflectionCache();
+	this.typeResolutionKey = TYPE_RESOLUTION_KEY;
+    }
+
+    /**
+     * Creates a new SimpleTypeResolver with a typing engine that can recognize the specified types. While these types
+     * still need to be included in a separate TypedModule they must be created here as well to ensure proper look-ups
+     * occur.
+     *
+     * @since 2.0.0
+     */
+    public SimpleTypeResolver(final String typeResolutionKey) {
+        this.reflectionCache = new ReflectionCache();
+	this.typeResolutionKey = typeResolutionKey;
     }
 
     /**
@@ -49,11 +66,25 @@ public class SimpleTypeResolver implements TypeResolver {
      */
     public SimpleTypeResolver(final ReflectionCache reflectionCache) {
         this.reflectionCache = reflectionCache;
+	this.typeResolutionKey = TYPE_RESOLUTION_KEY;
+    }
+
+    /**
+     * Creates a new SimpleTypeResolver with a typing engine that can recognize the specified types. While these types
+     * still need to be included in a separate TypedModule they must be created here as well to ensure proper look-ups
+     * occur.
+     *
+     * @param reflectionCache the ReflectionCache used to examine the type hierarchy and do general reflection.
+     * @since 2.0.0
+     */
+    public SimpleTypeResolver(final ReflectionCache reflectionCache, final String typeResolutionKey) {
+        this.reflectionCache = reflectionCache;
+	this.typeResolutionKey = typeResolutionKey;
     }
 
     @Override
     public <T> Class<? extends T> resolve(final Element element, final Class<T> kind) {
-        final String nodeClazz = element.getProperty(TYPE_RESOLUTION_KEY);
+        final String nodeClazz = element.getProperty(this.typeResolutionKey);
         if (nodeClazz == null)
             return kind;
 
@@ -65,11 +96,35 @@ public class SimpleTypeResolver implements TypeResolver {
         else
             return kind;
     }
+    
+    @Override
+    public Class<?> resolve(final Element element) {
+        final String typeResolutionName = element.getProperty(this.typeResolutionKey);
+        if (typeResolutionName == null)
+            return null;
+
+        return this.reflectionCache.forName(typeResolutionName);
+    }
 
     @Override
     public void init(final Element element, final Class<?> kind) {
-        final String clazz = element.getProperty(TYPE_RESOLUTION_KEY);
-        if (clazz == null)
-            element.setProperty(TYPE_RESOLUTION_KEY, kind.getName());
+        element.setProperty(this.typeResolutionKey, kind.getName());
+    }
+    
+    @Override
+    public void deinit(final Element element) {
+        element.removeProperty(this.typeResolutionKey);
+    }
+    
+    @Override
+    public VertexTraversal<?,?,?> hasSubtypes(final VertexTraversal<?,?,?> traverser, final Class<?> type) {
+        final Set<? extends String> allAllowedValues = this.reflectionCache.getSubTypeNames(type.getName());
+        return traverser.has(typeResolutionKey, Tokens.T.in, allAllowedValues);
+    }
+    
+    @Override
+    public EdgeTraversal<?,?,?> hasSubtypes(final EdgeTraversal<?,?,?> traverser, final Class<?> type) {
+        final Set<? extends String> allAllowedValues = this.reflectionCache.getSubTypeNames(type.getName());
+        return traverser.has(typeResolutionKey, Tokens.T.in, allAllowedValues);
     }
 }

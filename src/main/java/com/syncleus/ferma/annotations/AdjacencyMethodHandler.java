@@ -171,17 +171,16 @@ public class AdjacencyMethodHandler implements MethodHandler {
             final Adjacency annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Adjacency.class);
             final Direction direction = annotation.direction();
             final String label = annotation.label();
-            final String typeName = type.getName();
-            final Set<? extends String> allAllowedValues = ((CachesReflection) thiz).getReflectionCache().getSubTypeNames(typeName);
+            final TypeResolver resolver = thiz.getGraph().getTypeResolver();
 
             switch (direction) {
             case BOTH:
-                return thiz.both(label).has(TypeResolver.TYPE_RESOLUTION_KEY, Tokens.T.in, allAllowedValues).frame(type);
+                return resolver.hasSubtypes(thiz.both(label), type).frame(type);
             case IN:
-                return thiz.in(label).has(TypeResolver.TYPE_RESOLUTION_KEY, Tokens.T.in, allAllowedValues).frame(type);
+                return resolver.hasSubtypes(thiz.in(label), type).frame(type);
             //Assume out direction
             default:
-                return thiz.out(label).has(TypeResolver.TYPE_RESOLUTION_KEY, Tokens.T.in, allAllowedValues).frame(type);
+                return resolver.hasSubtypes(thiz.out(label), type).frame(type);
             }
         }
     }
@@ -213,17 +212,16 @@ public class AdjacencyMethodHandler implements MethodHandler {
             final Adjacency annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Adjacency.class);
             final Direction direction = annotation.direction();
             final String label = annotation.label();
-            final String typeName = type.getName();
-            final Set<? extends String> allAllowedValues = ((CachesReflection) thiz).getReflectionCache().getSubTypeNames(typeName);
-
+            final TypeResolver resolver = thiz.getGraph().getTypeResolver();
+            
             switch (direction) {
             case BOTH:
-                return thiz.both(label).has(TypeResolver.TYPE_RESOLUTION_KEY, Tokens.T.in, allAllowedValues).next(type);
+                return resolver.hasSubtypes(thiz.both(label), type).next(type);
             case IN:
-                return thiz.in(label).has(TypeResolver.TYPE_RESOLUTION_KEY, Tokens.T.in, allAllowedValues).next(type);
+                return resolver.hasSubtypes(thiz.in(label), type).next(type);
             //Assume out direction
             default:
-                return thiz.out(label).has(TypeResolver.TYPE_RESOLUTION_KEY, Tokens.T.in, allAllowedValues).next(type);
+                return resolver.hasSubtypes(thiz.out(label), type).next(type);
             }
         }
     }

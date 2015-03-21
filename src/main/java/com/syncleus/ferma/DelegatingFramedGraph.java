@@ -459,6 +459,11 @@ public class DelegatingFramedGraph implements FramedGraph {
     }
 
     @Override
+    public TypeResolver getTypeResolver() {
+        return this.defaultResolver;
+    }
+
+    @Override
     public Features getFeatures() {
         return this.delegate.getFeatures();
     }

@@ -29,6 +29,8 @@ import java.util.Iterator;
 public interface FramedGraph extends Graph {
 
     Transaction tx();
+    
+    TypeResolver getTypeResolver();
 
     /**
      * Close the delegate graph.

@@ -55,7 +55,7 @@ public class SimpleTypeResolverTest {
     public void testCustomTypeKey() {
         final Graph g = new TinkerGraph();
         final ReflectionCache cache = new ReflectionCache(TEST_TYPES);
-        final FramedGraph fg = new DelegatingFramedGraph(g, new AnnotationFrameFactory(cache), new SimpleTypeResolver(cache, CUSTOM_TYPE_KEY));
+        final FramedGraph fg = new DelegatingFramedGraph(g, new AnnotationFrameFactory(cache), new PolymorphicTypeResolver(cache, CUSTOM_TYPE_KEY));
 
         final Person p1 = fg.addFramedVertex(Programmer.DEFAULT_INITIALIZER);
         p1.setName("Bryn");
@@ -70,16 +70,16 @@ public class SimpleTypeResolverTest {
         Assert.assertEquals(Person.class, julia.getClass());
         
         Assert.assertNotNull(bryn.getElement().getProperty(CUSTOM_TYPE_KEY));
-        Assert.assertNull(bryn.getElement().getProperty(SimpleTypeResolver.TYPE_RESOLUTION_KEY));
+        Assert.assertNull(bryn.getElement().getProperty(PolymorphicTypeResolver.TYPE_RESOLUTION_KEY));
         Assert.assertNotNull(julia.getElement().getProperty(CUSTOM_TYPE_KEY));
-        Assert.assertNull(julia.getElement().getProperty(SimpleTypeResolver.TYPE_RESOLUTION_KEY));
+        Assert.assertNull(julia.getElement().getProperty(PolymorphicTypeResolver.TYPE_RESOLUTION_KEY));
     }
     
     @Test
     public void testCustomTypeKeyByClass() {
         final Graph g = new TinkerGraph();
         final ReflectionCache cache = new ReflectionCache(TEST_TYPES);
-        final FramedGraph fg = new DelegatingFramedGraph(g, new AnnotationFrameFactory(cache), new SimpleTypeResolver(cache, CUSTOM_TYPE_KEY));
+        final FramedGraph fg = new DelegatingFramedGraph(g, new AnnotationFrameFactory(cache), new PolymorphicTypeResolver(cache, CUSTOM_TYPE_KEY));
 
         final Person p1 = fg.addFramedVertex(Programmer.class);
         p1.setName("Bryn");
@@ -94,16 +94,16 @@ public class SimpleTypeResolverTest {
         Assert.assertEquals(Person.class, julia.getClass());
         
         Assert.assertNotNull(bryn.getElement().getProperty(CUSTOM_TYPE_KEY));
-        Assert.assertNull(bryn.getElement().getProperty(SimpleTypeResolver.TYPE_RESOLUTION_KEY));
+        Assert.assertNull(bryn.getElement().getProperty(PolymorphicTypeResolver.TYPE_RESOLUTION_KEY));
         Assert.assertNotNull(julia.getElement().getProperty(CUSTOM_TYPE_KEY));
-        Assert.assertNull(julia.getElement().getProperty(SimpleTypeResolver.TYPE_RESOLUTION_KEY));
+        Assert.assertNull(julia.getElement().getProperty(PolymorphicTypeResolver.TYPE_RESOLUTION_KEY));
     }
     
     @Test
     public void testCustomTypeKeyExplicit() {
         final Graph g = new TinkerGraph();
         final ReflectionCache cache = new ReflectionCache(TEST_TYPES);
-        final FramedGraph fg = new DelegatingFramedGraph(g, new AnnotationFrameFactory(cache), new SimpleTypeResolver(cache, CUSTOM_TYPE_KEY));
+        final FramedGraph fg = new DelegatingFramedGraph(g, new AnnotationFrameFactory(cache), new PolymorphicTypeResolver(cache, CUSTOM_TYPE_KEY));
 
         final Person p1 = fg.addFramedVertexExplicit(Programmer.DEFAULT_INITIALIZER);
         p1.setName("Bryn");
@@ -118,16 +118,16 @@ public class SimpleTypeResolverTest {
         Assert.assertEquals(Person.class, julia.getClass());
         
         Assert.assertNull(bryn.getElement().getProperty(CUSTOM_TYPE_KEY));
-        Assert.assertNull(bryn.getElement().getProperty(SimpleTypeResolver.TYPE_RESOLUTION_KEY));
+        Assert.assertNull(bryn.getElement().getProperty(PolymorphicTypeResolver.TYPE_RESOLUTION_KEY));
         Assert.assertNull(julia.getElement().getProperty(CUSTOM_TYPE_KEY));
-        Assert.assertNull(julia.getElement().getProperty(SimpleTypeResolver.TYPE_RESOLUTION_KEY));
+        Assert.assertNull(julia.getElement().getProperty(PolymorphicTypeResolver.TYPE_RESOLUTION_KEY));
     }
 
     @Test
     public void testCustomTypeKeyExplicitByClass() {
         final Graph g = new TinkerGraph();
         final ReflectionCache cache = new ReflectionCache(TEST_TYPES);
-        final FramedGraph fg = new DelegatingFramedGraph(g, new AnnotationFrameFactory(cache), new SimpleTypeResolver(cache, CUSTOM_TYPE_KEY));
+        final FramedGraph fg = new DelegatingFramedGraph(g, new AnnotationFrameFactory(cache), new PolymorphicTypeResolver(cache, CUSTOM_TYPE_KEY));
 
         final Person p1 = fg.addFramedVertexExplicit(Programmer.class);
         p1.setName("Bryn");
@@ -142,8 +142,8 @@ public class SimpleTypeResolverTest {
         Assert.assertEquals(Person.class, julia.getClass());
         
         Assert.assertNull(bryn.getElement().getProperty(CUSTOM_TYPE_KEY));
-        Assert.assertNull(bryn.getElement().getProperty(SimpleTypeResolver.TYPE_RESOLUTION_KEY));
+        Assert.assertNull(bryn.getElement().getProperty(PolymorphicTypeResolver.TYPE_RESOLUTION_KEY));
         Assert.assertNull(julia.getElement().getProperty(CUSTOM_TYPE_KEY));
-        Assert.assertNull(julia.getElement().getProperty(SimpleTypeResolver.TYPE_RESOLUTION_KEY));
+        Assert.assertNull(julia.getElement().getProperty(PolymorphicTypeResolver.TYPE_RESOLUTION_KEY));
     }
 }

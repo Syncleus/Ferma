@@ -26,7 +26,7 @@ import java.util.Set;
  * This type resolver will use the Java class stored in the 'java_class' on
  * the element.
  */
-public class SimpleTypeResolver implements TypeResolver {
+public class PolymorphicTypeResolver implements TypeResolver {
     protected final static String TYPE_RESOLUTION_KEY = "ferma_type";
 
     private final ReflectionCache reflectionCache;
@@ -39,7 +39,7 @@ public class SimpleTypeResolver implements TypeResolver {
      *
      * @since 2.0.0
      */
-    public SimpleTypeResolver() {
+    public PolymorphicTypeResolver() {
         this.reflectionCache = new ReflectionCache();
 	this.typeResolutionKey = TYPE_RESOLUTION_KEY;
     }
@@ -51,7 +51,7 @@ public class SimpleTypeResolver implements TypeResolver {
      *
      * @since 2.0.0
      */
-    public SimpleTypeResolver(final String typeResolutionKey) {
+    public PolymorphicTypeResolver(final String typeResolutionKey) {
         this.reflectionCache = new ReflectionCache();
 	this.typeResolutionKey = typeResolutionKey;
     }
@@ -64,7 +64,7 @@ public class SimpleTypeResolver implements TypeResolver {
      * @param reflectionCache the ReflectionCache used to examine the type hierarchy and do general reflection.
      * @since 2.0.0
      */
-    public SimpleTypeResolver(final ReflectionCache reflectionCache) {
+    public PolymorphicTypeResolver(final ReflectionCache reflectionCache) {
         this.reflectionCache = reflectionCache;
 	this.typeResolutionKey = TYPE_RESOLUTION_KEY;
     }
@@ -77,7 +77,7 @@ public class SimpleTypeResolver implements TypeResolver {
      * @param reflectionCache the ReflectionCache used to examine the type hierarchy and do general reflection.
      * @since 2.0.0
      */
-    public SimpleTypeResolver(final ReflectionCache reflectionCache, final String typeResolutionKey) {
+    public PolymorphicTypeResolver(final ReflectionCache reflectionCache, final String typeResolutionKey) {
         this.reflectionCache = reflectionCache;
 	this.typeResolutionKey = typeResolutionKey;
     }

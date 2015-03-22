@@ -117,7 +117,7 @@ public class DelegatingFramedGraph implements FramedGraph {
         this.reflections = new ReflectionCache();
         this.delegate = delegate;
         if (typeResolution) {
-            this.defaultResolver = new SimpleTypeResolver(this.reflections);
+            this.defaultResolver = new PolymorphicTypeResolver(this.reflections);
             this.untypedResolver = new UntypedTypeResolver();
         }
         else {
@@ -146,7 +146,7 @@ public class DelegatingFramedGraph implements FramedGraph {
         this.reflections = reflections;
         this.delegate = delegate;
         if (typeResolution) {
-            this.defaultResolver = new SimpleTypeResolver(this.reflections);
+            this.defaultResolver = new PolymorphicTypeResolver(this.reflections);
             this.untypedResolver = new UntypedTypeResolver();
         }
         else {
@@ -170,7 +170,7 @@ public class DelegatingFramedGraph implements FramedGraph {
     public DelegatingFramedGraph(final Graph delegate, final Collection<? extends Class<?>> types) {
         this.reflections = new ReflectionCache(types);
         this.delegate = delegate;
-        this.defaultResolver = new SimpleTypeResolver(this.reflections);
+        this.defaultResolver = new PolymorphicTypeResolver(this.reflections);
         this.untypedResolver = new UntypedTypeResolver();
         this.builder = new AnnotationFrameFactory(this.reflections);
     }
@@ -190,7 +190,7 @@ public class DelegatingFramedGraph implements FramedGraph {
         this.reflections = new ReflectionCache(types);
         this.delegate = delegate;
         if (typeResolution) {
-            this.defaultResolver = new SimpleTypeResolver(this.reflections);
+            this.defaultResolver = new PolymorphicTypeResolver(this.reflections);
             this.untypedResolver = new UntypedTypeResolver();
         }
         else {

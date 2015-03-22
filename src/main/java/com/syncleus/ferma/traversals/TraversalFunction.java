@@ -25,37 +25,16 @@
  * Source License: Apache Public License v2.0
  * When: November, 20th 2014
  */
-package com.syncleus.ferma;
+package com.syncleus.ferma.traversals;
 
-import java.util.Comparator;
+import com.tinkerpop.pipes.PipeFunction;
 
 /**
- * Framed elements before delegation.
+ * Takes a value and returns another value.
  *
- * @param <T>
+ * The A type is the argument type of the compute() method.
+ * The B type is the return type of the compute() method.
  */
-class FramingComparator<T, K extends ElementFrame> extends FrameMaker implements Comparator<T> {
-
-    private final Comparator<T> delegate;
-
-    public FramingComparator(final Comparator<T> delegate, final FramedGraph graph) {
-        super(graph);
-        this.delegate = delegate;
-
-    }
-
-    public FramingComparator(final Comparator<T> delegate, final FramedGraph graph, final Class<K> kind) {
-        super(graph, kind);
-        this.delegate = delegate;
-    }
-
-    @Override
-    public int compare(T t, T t1) {
-
-        t = makeFrame(t);
-        t1 = makeFrame(t1);
-
-        return delegate.compare(t, t1);
-    }
+public interface TraversalFunction<A, B> extends PipeFunction<A, B> {
 
 }

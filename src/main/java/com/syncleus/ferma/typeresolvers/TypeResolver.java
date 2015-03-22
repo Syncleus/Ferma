@@ -27,8 +27,8 @@
  */
 package com.syncleus.ferma.typeresolvers;
 
-import com.syncleus.ferma.EdgeTraversal;
-import com.syncleus.ferma.VertexTraversal;
+import com.syncleus.ferma.traversals.EdgeTraversal;
+import com.syncleus.ferma.traversals.VertexTraversal;
 import com.tinkerpop.blueprints.Element;
 
 /**

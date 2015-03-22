@@ -25,27 +25,38 @@
  * Source License: Apache Public License v2.0
  * When: November, 20th 2014
  */
-package com.syncleus.ferma;
+package com.syncleus.ferma.traversals;
 
-public interface SplitTraversal<T> {
+import com.syncleus.ferma.ElementFrame;
+import com.syncleus.ferma.FramedGraph;
+import com.syncleus.ferma.traversals.FrameMaker;
 
-    /**
-     * Add an ExhaustMergePipe to the end of the pipeline. The one-step previous
-     * MetaPipe in the pipeline's pipes are used as the internal pipes. The
-     * pipes' emitted objects are merged where the first pipe's objects are
-     * exhausted, then the second, etc.
-     *
-     * @return the extended Pipeline
-     */
-    T exhaustMerge();
+/**
+ * Frames the argument before delegation.
+ *
+ * @param <T>
+ */
+class FramingSideEffectFunction<T, K extends ElementFrame> extends FrameMaker implements SideEffectFunction<T> {
 
-    /**
-     * Add a FairMergePipe to the end of the Pipeline. The one-step previous
-     * MetaPipe in the pipeline's pipes are used as the internal pipes. The
-     * pipes' emitted objects are merged in a round robin fashion.
-     *
-     * @return the extended Pipeline
-     */
-    T fairMerge();
+    private final SideEffectFunction<T> delegate;
+
+    public FramingSideEffectFunction(final SideEffectFunction<T> delegate, final FramedGraph graph, final Class<K> kind) {
+        super(graph, kind);
+        this.delegate = delegate;
+
+    }
+
+    public FramingSideEffectFunction(final SideEffectFunction<T> delegate, final FramedGraph graph) {
+        super(graph);
+        this.delegate = delegate;
+
+    }
+
+    @Override
+    public void execute(T o) {
+        o = makeFrame(o);
+
+        delegate.execute(o);
+    }
 
 }

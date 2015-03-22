@@ -25,8 +25,9 @@
  * Source License: Apache Public License v2.0
  * When: November, 20th 2014
  */
-package com.syncleus.ferma;
+package com.syncleus.ferma.traversals;
 
+import com.syncleus.ferma.EdgeFrame;
 import java.util.*;
 
 import com.tinkerpop.blueprints.Predicate;

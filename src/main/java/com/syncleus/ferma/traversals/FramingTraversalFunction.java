@@ -25,17 +25,50 @@
  * Source License: Apache Public License v2.0
  * When: November, 20th 2014
  */
-package com.syncleus.ferma;
+package com.syncleus.ferma.traversals;
 
-public class TraversalFunctions {
+import com.syncleus.ferma.ElementFrame;
+import com.syncleus.ferma.FramedGraph;
+import com.tinkerpop.pipes.PipeFunction;
 
-    public static <A> TraversalFunction<A, A> identity() {
-        return new TraversalFunction<A, A>() {
+/**
+ * Frames parameters to a traversal function.
+ *
+ * @param <A>
+ * @param <B>
+ */
+class FramingTraversalFunction<A, B, C> extends FrameMaker implements TraversalFunction<C, B> {
 
-            @Override
-            public A compute(final A argument) {
-                return argument;
-            }
-        };
+    private PipeFunction<A, ? extends B> delegate;
+
+    public FramingTraversalFunction(final PipeFunction<A, ? extends B> delegate, final FramedGraph graph, final Class<? extends ElementFrame> kind) {
+        super(graph, kind);
+        this.delegate = delegate;
     }
+
+    public FramingTraversalFunction(final PipeFunction<A, ? extends B> delegate, final FramedGraph graph) {
+        super(graph);
+        this.delegate = delegate;
+    }
+
+    public <T extends ElementFrame> FramingTraversalFunction(final FramedGraph graph, final Class<T> kind) {
+        super(graph, kind);
+    }
+
+    public FramingTraversalFunction(final FramedGraph graph) {
+        super(graph);
+    }
+
+    @Override
+    public B compute(C argument) {
+
+        argument = makeFrame(argument);
+
+        if (delegate == null)
+            return (B) argument;
+
+        return delegate.compute((A) argument);
+
+    }
+
 }

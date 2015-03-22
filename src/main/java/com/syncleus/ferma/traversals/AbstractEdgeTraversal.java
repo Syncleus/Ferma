@@ -25,12 +25,14 @@
  * Source License: Apache Public License v2.0
  * When: November, 20th 2014
  */
-package com.syncleus.ferma;
+package com.syncleus.ferma.traversals;
 
 import java.util.*;
 
 import com.google.common.base.Function;
 import com.google.common.collect.*;
+import com.syncleus.ferma.EdgeFrame;
+import com.syncleus.ferma.TEdge;
 import com.tinkerpop.blueprints.Edge;
 import com.tinkerpop.blueprints.Element;
 import com.tinkerpop.blueprints.Predicate;

@@ -25,10 +25,16 @@
  * Source License: Apache Public License v2.0
  * When: November, 30th 2014
  */
-package com.syncleus.ferma;
+package com.syncleus.ferma.traversals;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Iterators;
+import com.syncleus.ferma.ClassInitializer;
+import com.syncleus.ferma.DefaultClassInitializer;
+import com.syncleus.ferma.EdgeFrame;
+import com.syncleus.ferma.FramedGraph;
+import com.syncleus.ferma.Path;
+import com.syncleus.ferma.VertexFrame;
 import com.tinkerpop.blueprints.*;
 import com.tinkerpop.blueprints.impls.tg.TinkerGraph;
 import com.tinkerpop.gremlin.Tokens;

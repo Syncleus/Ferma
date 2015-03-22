@@ -27,6 +27,10 @@
  */
 package com.syncleus.ferma;
 
+import com.syncleus.ferma.traversals.GlobalVertexTraversal;
+import com.syncleus.ferma.traversals.SimpleTraversal;
+import com.syncleus.ferma.traversals.VertexTraversal;
+import com.syncleus.ferma.traversals.EdgeTraversal;
 import com.syncleus.ferma.framefactories.FrameFactory;
 import com.syncleus.ferma.framefactories.DefaultFrameFactory;
 import com.syncleus.ferma.typeresolvers.UntypedTypeResolver;

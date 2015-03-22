@@ -25,48 +25,40 @@
  * Source License: Apache Public License v2.0
  * When: November, 20th 2014
  */
-package com.syncleus.ferma;
+package com.syncleus.ferma.traversals;
 
-import com.tinkerpop.pipes.PipeFunction;
+import com.syncleus.ferma.ElementFrame;
+import com.syncleus.ferma.FramedGraph;
+import com.syncleus.ferma.traversals.FrameMaker;
+import java.util.Comparator;
 
 /**
- * Frames parameters to a traversal function.
+ * Framed elements before delegation.
  *
- * @param <A>
- * @param <B>
+ * @param <T>
  */
-class FramingTraversalFunction<A, B, C> extends FrameMaker implements TraversalFunction<C, B> {
+class FramingComparator<T, K extends ElementFrame> extends FrameMaker implements Comparator<T> {
 
-    private PipeFunction<A, ? extends B> delegate;
+    private final Comparator<T> delegate;
 
-    public FramingTraversalFunction(final PipeFunction<A, ? extends B> delegate, final FramedGraph graph, final Class<? extends ElementFrame> kind) {
-        super(graph, kind);
-        this.delegate = delegate;
-    }
-
-    public FramingTraversalFunction(final PipeFunction<A, ? extends B> delegate, final FramedGraph graph) {
+    public FramingComparator(final Comparator<T> delegate, final FramedGraph graph) {
         super(graph);
         this.delegate = delegate;
+
     }
 
-    public <T extends ElementFrame> FramingTraversalFunction(final FramedGraph graph, final Class<T> kind) {
+    public FramingComparator(final Comparator<T> delegate, final FramedGraph graph, final Class<K> kind) {
         super(graph, kind);
-    }
-
-    public FramingTraversalFunction(final FramedGraph graph) {
-        super(graph);
+        this.delegate = delegate;
     }
 
     @Override
-    public B compute(C argument) {
+    public int compare(T t, T t1) {
 
-        argument = makeFrame(argument);
+        t = makeFrame(t);
+        t1 = makeFrame(t1);
 
-        if (delegate == null)
-            return (B) argument;
-
-        return delegate.compute((A) argument);
-
+        return delegate.compare(t, t1);
     }
 
 }

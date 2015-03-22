@@ -18,6 +18,11 @@
  ******************************************************************************/
 package com.syncleus.ferma;
 
+import com.syncleus.ferma.traversals.SideEffectFunction;
+import com.syncleus.ferma.traversals.TraversalFunction;
+import com.syncleus.ferma.traversals.TraversalFunctions;
+import com.syncleus.ferma.traversals.Traversal;
+import com.syncleus.ferma.traversals.VertexTraversal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;

@@ -27,6 +27,9 @@
  */
 package com.syncleus.ferma;
 
+import com.syncleus.ferma.traversals.SimpleTraversal;
+import com.syncleus.ferma.traversals.VertexTraversal;
+import com.syncleus.ferma.traversals.EdgeTraversal;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;

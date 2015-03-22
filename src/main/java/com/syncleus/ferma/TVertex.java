@@ -33,5 +33,5 @@ package com.syncleus.ferma;
  *
  */
 public final class TVertex extends AbstractVertexFrame {
-    static final ClassInitializer<TVertex> DEFAULT_INITIALIZER = new DefaultClassInitializer(TVertex.class);
+    public static final ClassInitializer<TVertex> DEFAULT_INITIALIZER = new DefaultClassInitializer(TVertex.class);
 }

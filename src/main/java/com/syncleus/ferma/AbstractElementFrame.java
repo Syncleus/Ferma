@@ -27,6 +27,8 @@
  */
 package com.syncleus.ferma;
 
+import com.syncleus.ferma.traversals.VertexTraversal;
+import com.syncleus.ferma.traversals.EdgeTraversal;
 import java.util.Set;
 
 import com.syncleus.ferma.framefactories.annotation.CachesReflection;

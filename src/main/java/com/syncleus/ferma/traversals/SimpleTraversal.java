@@ -25,8 +25,10 @@
  * Source License: Apache Public License v2.0
  * When: November, 20th 2014
  */
-package com.syncleus.ferma;
+package com.syncleus.ferma.traversals;
 
+import com.syncleus.ferma.ElementFrame;
+import com.syncleus.ferma.FramedGraph;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Iterator;
@@ -42,22 +44,22 @@ import com.tinkerpop.blueprints.Graph;
  * @param <S> The SideEffect of the current pipe.
  * @param <M> The current marked type for the current pipe.
  */
-class SimpleTraversal<T, C, S, M> extends AbstractTraversal<T, C, S, M> {
+public class SimpleTraversal<T, C, S, M> extends AbstractTraversal<T, C, S, M> {
 
     private final FramedGraph graph;
     private final FermaGremlinPipeline pipeline;
     private final Deque<MarkId> marks = new ArrayDeque<>();
     private int markId = 0;
 
-    protected SimpleTraversal(final FramedGraph graph, final Graph delegate) {
+    public SimpleTraversal(final FramedGraph graph, final Graph delegate) {
         this(graph, new FermaGremlinPipeline<>(delegate));
     }
 
-    protected SimpleTraversal(final FramedGraph graph, final Iterator starts) {
+    public SimpleTraversal(final FramedGraph graph, final Iterator starts) {
         this(graph, new FermaGremlinPipeline<>(starts));
     }
 
-    protected SimpleTraversal(final FramedGraph graph, final ElementFrame starts) {
+    public SimpleTraversal(final FramedGraph graph, final ElementFrame starts) {
         this(graph, new FermaGremlinPipeline<>(starts.getElement()));
     }
 

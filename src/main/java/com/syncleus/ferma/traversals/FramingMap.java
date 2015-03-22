@@ -25,44 +25,26 @@
  * Source License: Apache Public License v2.0
  * When: November, 20th 2014
  */
-package com.syncleus.ferma;
+package com.syncleus.ferma.traversals;
 
+import com.syncleus.ferma.ElementFrame;
+import com.syncleus.ferma.FramedGraph;
+import com.syncleus.ferma.traversals.FrameMaker;
 import java.util.Collection;
-import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
-/**
- * Frames elements as they are inserted in to the delegate.
- *
- * @param <E> The type of values to store in the collection.
- * @param <K> The type to frame the values as.
- */
-class FramingCollection<E, K> extends FrameMaker implements Collection<E> {
+class FramingMap<T extends ElementFrame> extends FrameMaker implements Map {
 
-    private final Collection<? super E> delegate;
-    private final boolean explicit;
-
-    public FramingCollection(final Collection<? super E> delegate, final FramedGraph graph, final Class<K> kind) {
-        super(graph, kind);
-        this.delegate = delegate;
-        this.explicit = false;
-    }
-
-    public FramingCollection(final Collection<? super E> delegate, final FramedGraph graph) {
+    public FramingMap(final Map delegate, final FramedGraph graph) {
         super(graph);
         this.delegate = delegate;
-        this.explicit = false;
     }
 
-    public FramingCollection(final Collection<? super E> delegate, final FramedGraph graph, final Class<K> kind, final boolean explicit) {
-        super(graph, kind);
-        this.delegate = delegate;
-        this.explicit = explicit;
-    }
+    private final Map delegate;
 
-    public FramingCollection(final Collection<? super E> delegate, final FramedGraph graph, final boolean explicit) {
-        super(graph);
-        this.delegate = delegate;
-        this.explicit = explicit;
+    public Map getDelegate() {
+        return delegate;
     }
 
     @Override
@@ -76,57 +58,32 @@ class FramingCollection<E, K> extends FrameMaker implements Collection<E> {
     }
 
     @Override
-    public boolean contains(final Object o) {
+    public boolean containsKey(final Object o) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Iterator<E> iterator() {
+    public boolean containsValue(final Object o) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Object[] toArray() {
+    public Object get(final Object o) {
+        return removeFrame(delegate.get(makeFrame(o)));
+    }
+
+    @Override
+    public Object put(final Object k, final Object v) {
+        return delegate.put(makeFrame(k), makeFrame(v));
+    }
+
+    @Override
+    public Object remove(final Object o) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public <T> T[] toArray(final T[] ts) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean add(E e) {
-        e = (this.explicit ? this.<E>makeFrameExplicit(e) : this.<E>makeFrame(e));
-
-        return delegate.add(e);
-    }
-
-    @Override
-    public boolean remove(final Object o) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean containsAll(final Collection<?> collection) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean addAll(final Collection<? extends E> collection) {
-        boolean modified = false;
-        for (final E e : collection)
-            modified |= add(e);
-        return modified;
-    }
-
-    @Override
-    public boolean removeAll(final Collection<?> collection) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean retainAll(final Collection<?> collection) {
+    public void putAll(final Map map) {
         throw new UnsupportedOperationException();
     }
 
@@ -136,18 +93,24 @@ class FramingCollection<E, K> extends FrameMaker implements Collection<E> {
     }
 
     @Override
-    public boolean equals(final Object o) {
+    public Set keySet() {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public int hashCode() {
+    public Collection values() {
         throw new UnsupportedOperationException();
     }
 
-    public Collection<? super E> getDelegate() {
+    @Override
+    public Set entrySet() {
+        return delegate.entrySet();
+    }
 
-        return delegate;
+    @Override
+    public String toString() {
+
+        return delegate.toString();
     }
 
 }

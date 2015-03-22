@@ -25,7 +25,7 @@
  * Source License: Apache Public License v2.0
  * When: November, 20th 2014
  */
-package com.syncleus.ferma;
+package com.syncleus.ferma.traversals;
 
 import java.util.*;
 
@@ -37,6 +37,12 @@ import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
+import com.syncleus.ferma.EdgeFrame;
+import com.syncleus.ferma.FramedGraph;
+import com.syncleus.ferma.Path;
+import com.syncleus.ferma.TEdge;
+import com.syncleus.ferma.TVertex;
+import com.syncleus.ferma.VertexFrame;
 import com.syncleus.ferma.pipes.*;
 import com.tinkerpop.blueprints.Edge;
 import com.tinkerpop.blueprints.Element;

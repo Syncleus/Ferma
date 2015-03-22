@@ -25,34 +25,17 @@
  * Source License: Apache Public License v2.0
  * When: November, 20th 2014
  */
-package com.syncleus.ferma;
+package com.syncleus.ferma.traversals;
 
-/**
- * Frames the argument before delegation.
- *
- * @param <T>
- */
-class FramingSideEffectFunction<T, K extends ElementFrame> extends FrameMaker implements SideEffectFunction<T> {
+public class TraversalFunctions {
 
-    private final SideEffectFunction<T> delegate;
+    public static <A> TraversalFunction<A, A> identity() {
+        return new TraversalFunction<A, A>() {
 
-    public FramingSideEffectFunction(final SideEffectFunction<T> delegate, final FramedGraph graph, final Class<K> kind) {
-        super(graph, kind);
-        this.delegate = delegate;
-
+            @Override
+            public A compute(final A argument) {
+                return argument;
+            }
+        };
     }
-
-    public FramingSideEffectFunction(final SideEffectFunction<T> delegate, final FramedGraph graph) {
-        super(graph);
-        this.delegate = delegate;
-
-    }
-
-    @Override
-    public void execute(T o) {
-        o = makeFrame(o);
-
-        delegate.execute(o);
-    }
-
 }

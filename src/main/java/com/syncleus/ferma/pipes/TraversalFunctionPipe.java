@@ -30,7 +30,7 @@ package com.syncleus.ferma.pipes;
 import java.util.Iterator;
 import java.util.List;
 
-import com.syncleus.ferma.TraversalFunction;
+import com.syncleus.ferma.traversals.TraversalFunction;
 
 import com.tinkerpop.pipes.Pipe;
 

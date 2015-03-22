@@ -81,7 +81,7 @@ public interface TypeResolver {
      * @param type The type of vertex to filter by.
      * @return The traversal stream filtered by the desired type.
      */
-    VertexTraversal<?,?,?> hasSubtypes(VertexTraversal<?,?,?> traverser, Class<?> type);
+    VertexTraversal<?,?,?> hasType(VertexTraversal<?,?,?> traverser, Class<?> type);
     
     /**
      * Filters the objects on the traversal that satisfy a requested type.
@@ -91,5 +91,5 @@ public interface TypeResolver {
      * @param type The type of vertex to filter by.
      * @return The traversal stream filtered by the desired type.
      */
-    EdgeTraversal<?,?,?> hasSubtypes(EdgeTraversal<?,?,?> traverser, Class<?> type);
+    EdgeTraversal<?,?,?> hasType(EdgeTraversal<?,?,?> traverser, Class<?> type);
 }

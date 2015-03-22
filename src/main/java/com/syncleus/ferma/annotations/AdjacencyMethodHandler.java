@@ -177,12 +177,12 @@ public class AdjacencyMethodHandler implements MethodHandler {
 
             switch (direction) {
             case BOTH:
-                return resolver.hasSubtypes(thiz.both(label), type).frame(type);
+                return resolver.hasType(thiz.both(label), type).frame(type);
             case IN:
-                return resolver.hasSubtypes(thiz.in(label), type).frame(type);
+                return resolver.hasType(thiz.in(label), type).frame(type);
             //Assume out direction
             default:
-                return resolver.hasSubtypes(thiz.out(label), type).frame(type);
+                return resolver.hasType(thiz.out(label), type).frame(type);
             }
         }
     }
@@ -220,12 +220,12 @@ public class AdjacencyMethodHandler implements MethodHandler {
             
             switch (direction) {
             case BOTH:
-                return resolver.hasSubtypes(thiz.both(label), type).next(type);
+                return resolver.hasType(thiz.both(label), type).next(type);
             case IN:
-                return resolver.hasSubtypes(thiz.in(label), type).next(type);
+                return resolver.hasType(thiz.in(label), type).next(type);
             //Assume out direction
             default:
-                return resolver.hasSubtypes(thiz.out(label), type).next(type);
+                return resolver.hasType(thiz.out(label), type).next(type);
             }
         }
     }

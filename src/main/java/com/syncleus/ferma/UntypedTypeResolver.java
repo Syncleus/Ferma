@@ -48,12 +48,12 @@ public class UntypedTypeResolver implements TypeResolver {
     }
     
     @Override
-    public VertexTraversal<?,?,?> hasSubtypes(final VertexTraversal<?,?,?> traverser, final Class<?> type) {
+    public VertexTraversal<?,?,?> hasType(final VertexTraversal<?,?,?> traverser, final Class<?> type) {
         return traverser;
     }
     
     @Override
-    public EdgeTraversal<?,?,?> hasSubtypes(final EdgeTraversal<?,?,?> traverser, final Class<?> type) {
+    public EdgeTraversal<?,?,?> hasType(final EdgeTraversal<?,?,?> traverser, final Class<?> type) {
         return traverser;
     }
 }

@@ -131,12 +131,12 @@ public class IncidenceMethodHandler implements MethodHandler {
 
             switch (direction) {
             case BOTH:
-                return resolver.hasSubtypes(thiz.bothE(label), type).frame(type);
+                return resolver.hasType(thiz.bothE(label), type).frame(type);
             case IN:
-                return resolver.hasSubtypes(thiz.inE(label), type).frame(type);
+                return resolver.hasType(thiz.inE(label), type).frame(type);
             //Assume out direction
             default:
-                return resolver.hasSubtypes(thiz.outE(label), type).frame(type);
+                return resolver.hasType(thiz.outE(label), type).frame(type);
             }
 
         }
@@ -176,12 +176,12 @@ public class IncidenceMethodHandler implements MethodHandler {
 
             switch (direction) {
             case BOTH:
-                return resolver.hasSubtypes(thiz.bothE(label), type).next(type);
+                return resolver.hasType(thiz.bothE(label), type).next(type);
             case IN:
-                return resolver.hasSubtypes(thiz.inE(label), type).next(type);
+                return resolver.hasType(thiz.inE(label), type).next(type);
             //Assume out direction
             default:
-                return resolver.hasSubtypes(thiz.outE(label), type).next(type);
+                return resolver.hasType(thiz.outE(label), type).next(type);
             }
 
         }

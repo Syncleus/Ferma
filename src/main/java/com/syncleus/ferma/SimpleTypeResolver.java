@@ -117,13 +117,13 @@ public class SimpleTypeResolver implements TypeResolver {
     }
     
     @Override
-    public VertexTraversal<?,?,?> hasSubtypes(final VertexTraversal<?,?,?> traverser, final Class<?> type) {
+    public VertexTraversal<?,?,?> hasType(final VertexTraversal<?,?,?> traverser, final Class<?> type) {
         final Set<? extends String> allAllowedValues = this.reflectionCache.getSubTypeNames(type.getName());
         return traverser.has(typeResolutionKey, Tokens.T.in, allAllowedValues);
     }
     
     @Override
-    public EdgeTraversal<?,?,?> hasSubtypes(final EdgeTraversal<?,?,?> traverser, final Class<?> type) {
+    public EdgeTraversal<?,?,?> hasType(final EdgeTraversal<?,?,?> traverser, final Class<?> type) {
         final Set<? extends String> allAllowedValues = this.reflectionCache.getSubTypeNames(type.getName());
         return traverser.has(typeResolutionKey, Tokens.T.in, allAllowedValues);
     }

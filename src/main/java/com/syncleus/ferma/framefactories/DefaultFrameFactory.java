@@ -16,23 +16,22 @@
  *  Philadelphia, PA 19148                                                     *
  *                                                                             *
  ******************************************************************************/
-
-/*
- * Part or all of this source file was forked from a third-party project, the details of which are listed below.
- *
- * Source Project: Totorom
- * Source URL: https://github.com/BrynCooke/totorom
- * Source License: Apache Public License v2.0
- * When: November, 20th 2014
- */
-package com.syncleus.ferma;
+package com.syncleus.ferma.framefactories;
 
 import com.tinkerpop.blueprints.Element;
 
 /**
- * Does the actual work of constructing the frame. Implementations
+ * Creates the frame using reflection.
  */
-public interface FrameFactory {
+public class DefaultFrameFactory implements FrameFactory {
 
-    <T> T create(Element e, Class<T> kind);
+    @Override
+    public <T> T create(final Element e, final Class<T> kind) {
+        try {
+            return kind.newInstance();
+        }
+        catch (final InstantiationException | IllegalAccessException caught) {
+            throw new IllegalStateException("Could not instantiate kind: " + kind.getName(), caught);
+        }
+    }
 }

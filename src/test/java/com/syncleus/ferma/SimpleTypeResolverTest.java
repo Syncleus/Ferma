@@ -19,7 +19,7 @@
 package com.syncleus.ferma;
 
 import com.syncleus.ferma.typeresolvers.PolymorphicTypeResolver;
-import com.syncleus.ferma.annotations.AnnotationFrameFactory;
+import com.syncleus.ferma.framefactories.annotation.AnnotationFrameFactory;
 import com.tinkerpop.blueprints.impls.tg.TinkerGraph;
 import org.junit.Assert;
 import org.junit.Test;

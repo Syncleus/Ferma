@@ -18,6 +18,7 @@
  ******************************************************************************/
 package com.syncleus.ferma;
 
+import com.syncleus.ferma.framefactories.FrameFactory;
 import com.syncleus.ferma.typeresolvers.PolymorphicTypeResolver;
 import java.util.Collection;
 import org.junit.Assert;

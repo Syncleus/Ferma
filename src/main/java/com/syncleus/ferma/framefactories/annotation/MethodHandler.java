@@ -16,7 +16,7 @@
  *  Philadelphia, PA 19148                                                     *
  *                                                                             *
  ******************************************************************************/
-package com.syncleus.ferma.annotations;
+package com.syncleus.ferma.framefactories.annotation;
 
 import net.bytebuddy.dynamic.DynamicType;
 

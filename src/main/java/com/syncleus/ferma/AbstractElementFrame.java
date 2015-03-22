@@ -29,7 +29,7 @@ package com.syncleus.ferma;
 
 import java.util.Set;
 
-import com.syncleus.ferma.annotations.CachesReflection;
+import com.syncleus.ferma.framefactories.annotation.CachesReflection;
 import com.tinkerpop.blueprints.Element;
 
 /**

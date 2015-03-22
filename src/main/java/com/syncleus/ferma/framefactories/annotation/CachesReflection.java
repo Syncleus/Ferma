@@ -1,4 +1,4 @@
-package com.syncleus.ferma.annotations;
+package com.syncleus.ferma.framefactories.annotation;
 
 import com.syncleus.ferma.ReflectionCache;
 

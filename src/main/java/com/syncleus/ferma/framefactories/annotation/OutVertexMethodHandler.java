@@ -16,9 +16,10 @@
  *  Philadelphia, PA 19148                                                     *
  *                                                                             *
  ******************************************************************************/
-package com.syncleus.ferma.annotations;
+package com.syncleus.ferma.framefactories.annotation;
 
 import com.syncleus.ferma.EdgeFrame;
+import com.syncleus.ferma.annotations.OutVertex;
 import net.bytebuddy.dynamic.DynamicType;
 import net.bytebuddy.instrumentation.MethodDelegation;
 import net.bytebuddy.instrumentation.method.bytecode.bind.annotation.Origin;

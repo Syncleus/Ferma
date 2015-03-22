@@ -16,10 +16,11 @@
  *  Philadelphia, PA 19148                                                     *
  *                                                                             *
  ******************************************************************************/
-package com.syncleus.ferma.annotations;
+package com.syncleus.ferma.framefactories.annotation;
 
 import com.syncleus.ferma.typeresolvers.TypeResolver;
 import com.syncleus.ferma.*;
+import com.syncleus.ferma.annotations.Incidence;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.gremlin.Tokens;
 import net.bytebuddy.dynamic.DynamicType;

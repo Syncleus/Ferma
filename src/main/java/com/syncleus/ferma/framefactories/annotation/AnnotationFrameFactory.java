@@ -16,9 +16,18 @@
  *  Philadelphia, PA 19148                                                     *
  *                                                                             *
  ******************************************************************************/
-package com.syncleus.ferma.annotations;
+package com.syncleus.ferma.framefactories.annotation;
 
+import com.syncleus.ferma.framefactories.FrameFactory;
 import com.syncleus.ferma.*;
+import com.syncleus.ferma.framefactories.FrameFactory;
+import com.syncleus.ferma.framefactories.annotation.AdjacencyMethodHandler;
+import com.syncleus.ferma.framefactories.annotation.CachesReflection;
+import com.syncleus.ferma.framefactories.annotation.InVertexMethodHandler;
+import com.syncleus.ferma.framefactories.annotation.IncidenceMethodHandler;
+import com.syncleus.ferma.framefactories.annotation.MethodHandler;
+import com.syncleus.ferma.framefactories.annotation.OutVertexMethodHandler;
+import com.syncleus.ferma.framefactories.annotation.PropertyMethodHandler;
 import com.tinkerpop.blueprints.Edge;
 import com.tinkerpop.blueprints.Element;
 import com.tinkerpop.blueprints.Vertex;

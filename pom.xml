@@ -22,7 +22,7 @@
     <groupId>com.syncleus.ferma</groupId>
     <artifactId>ferma</artifactId>
     <packaging>jar</packaging>
-    <version>2.0.5-SNAPSHOT</version>
+    <version>2.0.5</version>
 
 
     <name>Ferma</name>
@@ -46,6 +46,7 @@
         <connection>scm:git:http://gerrit.syncleus.com/Ferma</connection>
         <developerConnection>scm:git:ssh://gerrit.syncleus.com:29418/Ferma</developerConnection>
         <url>http://gerrit.syncleus.com/Ferma</url>
+        <tag>v2.0.5</tag>
     </scm>
 
     <ciManagement>

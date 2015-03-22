@@ -25,8 +25,10 @@
  * Source License: Apache Public License v2.0
  * When: November, 20th 2014
  */
-package com.syncleus.ferma;
+package com.syncleus.ferma.typeresolvers;
 
+import com.syncleus.ferma.EdgeTraversal;
+import com.syncleus.ferma.VertexTraversal;
 import com.tinkerpop.blueprints.Element;
 
 /**

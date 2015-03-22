@@ -16,8 +16,15 @@
  *  Philadelphia, PA 19148                                                     *
  *                                                                             *
  ******************************************************************************/
-package com.syncleus.ferma;
+package com.syncleus.ferma.typeresolvers;
 
+import com.syncleus.ferma.AbstractEdgeFrame;
+import com.syncleus.ferma.AbstractVertexFrame;
+import com.syncleus.ferma.EdgeFrame;
+import com.syncleus.ferma.EdgeTraversal;
+import com.syncleus.ferma.ReflectionCache;
+import com.syncleus.ferma.VertexFrame;
+import com.syncleus.ferma.VertexTraversal;
 import com.tinkerpop.blueprints.Element;
 import com.tinkerpop.gremlin.Tokens;
 import java.util.Set;
@@ -27,7 +34,7 @@ import java.util.Set;
  * the element.
  */
 public class PolymorphicTypeResolver implements TypeResolver {
-    protected final static String TYPE_RESOLUTION_KEY = "ferma_type";
+    public final static String TYPE_RESOLUTION_KEY = "ferma_type";
 
     private final ReflectionCache reflectionCache;
     private final String typeResolutionKey;

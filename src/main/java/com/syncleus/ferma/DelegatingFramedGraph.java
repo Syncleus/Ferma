@@ -27,6 +27,9 @@
  */
 package com.syncleus.ferma;
 
+import com.syncleus.ferma.typeresolvers.UntypedTypeResolver;
+import com.syncleus.ferma.typeresolvers.TypeResolver;
+import com.syncleus.ferma.typeresolvers.PolymorphicTypeResolver;
 import com.google.common.base.Function;
 import com.google.common.collect.Iterators;
 import com.syncleus.ferma.annotations.AnnotationFrameFactory;

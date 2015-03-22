@@ -90,6 +90,7 @@ public class PropertyMethodHandler implements MethodHandler {
 
         @RuntimeType
         public static Object getProperty(@This final ElementFrame thiz, @Origin final Method method) {
+            assert thiz instanceof CachesReflection;
             final Property annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Property.class);
             final String value = annotation.value();
 
@@ -105,6 +106,7 @@ public class PropertyMethodHandler implements MethodHandler {
 
         @RuntimeType
         public static void setProperty(@This final ElementFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final Object obj) {
+            assert thiz instanceof CachesReflection;
             final Property annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Property.class);
             final String value = annotation.value();
 
@@ -118,6 +120,7 @@ public class PropertyMethodHandler implements MethodHandler {
     public static final class RemovePropertyInterceptor {
 
         public static void removeProperty(@This final ElementFrame thiz, @Origin final Method method) {
+            assert thiz instanceof CachesReflection;
             final Property annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Property.class);
             final String value = annotation.value();
 

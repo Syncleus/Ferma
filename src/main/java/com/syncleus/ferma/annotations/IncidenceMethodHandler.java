@@ -101,6 +101,7 @@ public class IncidenceMethodHandler implements MethodHandler {
 
         @RuntimeType
         public static Iterable getEdges(@This final VertexFrame thiz, @Origin final Method method) {
+            assert thiz instanceof CachesReflection;
             final Incidence annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Incidence.class);
             final Direction direction = annotation.direction();
             final String label = annotation.label();
@@ -122,6 +123,7 @@ public class IncidenceMethodHandler implements MethodHandler {
 
         @RuntimeType
         public static Iterable getEdges(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final Class type) {
+            assert thiz instanceof CachesReflection;
             final Incidence annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Incidence.class);
             final Direction direction = annotation.direction();
             final String label = annotation.label();
@@ -144,6 +146,7 @@ public class IncidenceMethodHandler implements MethodHandler {
 
         @RuntimeType
         public static Object getEdges(@This final VertexFrame thiz, @Origin final Method method) {
+            assert thiz instanceof CachesReflection;
             final Incidence annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Incidence.class);
             final Direction direction = annotation.direction();
             final String label = annotation.label();
@@ -165,6 +168,7 @@ public class IncidenceMethodHandler implements MethodHandler {
 
         @RuntimeType
         public static Object getEdge(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final Class type) {
+            assert thiz instanceof CachesReflection;
             final Incidence annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Incidence.class);
             final Direction direction = annotation.direction();
             final String label = annotation.label();

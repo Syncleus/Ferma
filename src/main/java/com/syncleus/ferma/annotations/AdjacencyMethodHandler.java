@@ -156,6 +156,7 @@ public class AdjacencyMethodHandler implements MethodHandler {
 
         @RuntimeType
         public static Iterable getVertexes(@This final VertexFrame thiz, @Origin final Method method) {
+            assert thiz instanceof CachesReflection;
             final Adjacency annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Adjacency.class);
             final Direction direction = annotation.direction();
             final String label = annotation.label();
@@ -168,6 +169,7 @@ public class AdjacencyMethodHandler implements MethodHandler {
 
         @RuntimeType
         public static Iterable getVertexes(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final Class type) {
+            assert thiz instanceof CachesReflection;
             final Adjacency annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Adjacency.class);
             final Direction direction = annotation.direction();
             final String label = annotation.label();
@@ -189,6 +191,7 @@ public class AdjacencyMethodHandler implements MethodHandler {
 
         @RuntimeType
         public static Object getVertexes(@This final VertexFrame thiz, @Origin final Method method) {
+            assert thiz instanceof CachesReflection;
             final Adjacency annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Adjacency.class);
             final Direction direction = annotation.direction();
             final String label = annotation.label();
@@ -209,6 +212,7 @@ public class AdjacencyMethodHandler implements MethodHandler {
 
         @RuntimeType
         public static Object getVertex(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final Class type) {
+            assert thiz instanceof CachesReflection;
             final Adjacency annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Adjacency.class);
             final Direction direction = annotation.direction();
             final String label = annotation.label();
@@ -231,7 +235,7 @@ public class AdjacencyMethodHandler implements MethodHandler {
         @RuntimeType
         public static Object addVertex(@This final VertexFrame thiz, @Origin final Method method) {
             final VertexFrame newVertex = thiz.getGraph().addFramedVertex();
-
+            assert thiz instanceof CachesReflection;
             final Adjacency annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Adjacency.class);
             final Direction direction = annotation.direction();
             final String label = annotation.label();
@@ -261,6 +265,7 @@ public class AdjacencyMethodHandler implements MethodHandler {
             assert newNode instanceof VertexFrame;
             final VertexFrame newVertex = ((VertexFrame) newNode);
 
+            assert thiz instanceof CachesReflection;
             final Adjacency annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Adjacency.class);
             final Direction direction = annotation.direction();
             final String label = annotation.label();
@@ -292,6 +297,7 @@ public class AdjacencyMethodHandler implements MethodHandler {
             assert newNode instanceof VertexFrame;
             final VertexFrame newVertex = ((VertexFrame) newNode);
 
+            assert thiz instanceof CachesReflection;
             final Adjacency annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Adjacency.class);
             final Direction direction = annotation.direction();
             final String label = annotation.label();
@@ -319,7 +325,7 @@ public class AdjacencyMethodHandler implements MethodHandler {
 
         @RuntimeType
         public static Object addVertex(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final VertexFrame newVertex) {
-
+            assert thiz instanceof CachesReflection;
             final Adjacency annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Adjacency.class);
             final Direction direction = annotation.direction();
             final String label = annotation.label();
@@ -345,7 +351,7 @@ public class AdjacencyMethodHandler implements MethodHandler {
 
         @RuntimeType
         public static Object addVertex(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final VertexFrame newVertex, @RuntimeType @Argument(1) final ClassInitializer edgeType) {
-
+            assert thiz instanceof CachesReflection;
             final Adjacency annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Adjacency.class);
             final Direction direction = annotation.direction();
             final String label = annotation.label();
@@ -371,7 +377,7 @@ public class AdjacencyMethodHandler implements MethodHandler {
 
         @RuntimeType
         public static void setVertex(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final Iterable vertexSet) {
-
+            assert thiz instanceof CachesReflection;
             final Adjacency annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Adjacency.class);
             final Direction direction = annotation.direction();
             final String label = annotation.label();
@@ -406,7 +412,7 @@ public class AdjacencyMethodHandler implements MethodHandler {
 
         @RuntimeType
         public static void removeVertex(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final VertexFrame removeVertex) {
-
+            assert thiz instanceof CachesReflection;
             final Adjacency annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Adjacency.class);
             final Direction direction = annotation.direction();
             final String label = annotation.label();

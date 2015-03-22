@@ -19,10 +19,6 @@
 package com.syncleus.ferma;
 
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
-
-import com.tinkerpop.blueprints.impls.tg.TinkerGraphFactory;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -146,6 +142,9 @@ public class FramedGraphTest {
 
         Assert.assertEquals(Programmer.class, bryn.getClass());
         Assert.assertEquals(Person.class, julia.getClass());
+        
+        Assert.assertNotNull(bryn.getElement().getProperty(SimpleTypeResolver.TYPE_RESOLUTION_KEY));
+        Assert.assertNotNull(julia.getElement().getProperty(SimpleTypeResolver.TYPE_RESOLUTION_KEY));
     }
     
     @Test
@@ -164,6 +163,9 @@ public class FramedGraphTest {
 
         Assert.assertEquals(Programmer.class, bryn.getClass());
         Assert.assertEquals(Person.class, julia.getClass());
+        
+        Assert.assertNotNull(bryn.getElement().getProperty(SimpleTypeResolver.TYPE_RESOLUTION_KEY));
+        Assert.assertNotNull(julia.getElement().getProperty(SimpleTypeResolver.TYPE_RESOLUTION_KEY));
     }
 
     @Test
@@ -182,6 +184,9 @@ public class FramedGraphTest {
 
         Assert.assertEquals(Person.class, bryn.getClass());
         Assert.assertEquals(Person.class, julia.getClass());
+        
+        Assert.assertNull(bryn.getElement().getProperty(SimpleTypeResolver.TYPE_RESOLUTION_KEY));
+        Assert.assertNull(julia.getElement().getProperty(SimpleTypeResolver.TYPE_RESOLUTION_KEY));
     }
     
     @Test
@@ -200,6 +205,9 @@ public class FramedGraphTest {
 
         Assert.assertEquals(Person.class, bryn.getClass());
         Assert.assertEquals(Person.class, julia.getClass());
+        
+        Assert.assertNull(bryn.getElement().getProperty(SimpleTypeResolver.TYPE_RESOLUTION_KEY));
+        Assert.assertNull(julia.getElement().getProperty(SimpleTypeResolver.TYPE_RESOLUTION_KEY));
     }
 
     @Test
@@ -218,6 +226,9 @@ public class FramedGraphTest {
 
         Assert.assertEquals(Person.class, bryn.getClass());
         Assert.assertEquals(Person.class, julia.getClass());
+        
+        Assert.assertNotNull(bryn.getElement().getProperty(SimpleTypeResolver.TYPE_RESOLUTION_KEY));
+        Assert.assertNotNull(julia.getElement().getProperty(SimpleTypeResolver.TYPE_RESOLUTION_KEY));
     }
     
     @Test
@@ -236,6 +247,9 @@ public class FramedGraphTest {
 
         Assert.assertEquals(Person.class, bryn.getClass());
         Assert.assertEquals(Person.class, julia.getClass());
+        
+        Assert.assertNotNull(bryn.getElement().getProperty(SimpleTypeResolver.TYPE_RESOLUTION_KEY));
+        Assert.assertNotNull(julia.getElement().getProperty(SimpleTypeResolver.TYPE_RESOLUTION_KEY));
     }
 
     @Test

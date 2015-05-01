@@ -27,9 +27,11 @@
  */
 package com.syncleus.ferma;
 
+import com.syncleus.ferma.traversals.VertexTraversal;
+import com.syncleus.ferma.traversals.EdgeTraversal;
 import java.util.Set;
 
-import com.syncleus.ferma.annotations.CachesReflection;
+import com.syncleus.ferma.framefactories.annotation.CachesReflection;
 import com.tinkerpop.blueprints.Element;
 
 /**
@@ -73,29 +75,17 @@ public abstract class AbstractElementFrame implements ElementFrame {
 
     @Override
     public Class<?> getTypeResolution() {
-        final String typeResolutionName = this.getProperty(TypeResolver.TYPE_RESOLUTION_KEY);
-        if (typeResolutionName == null)
-            return null;
-
-        if (this instanceof CachesReflection)
-            return ((CachesReflection) this).getReflectionCache().forName(typeResolutionName);
-        else
-            try {
-                return Class.forName(typeResolutionName);
-            }
-            catch (final ClassNotFoundException caught) {
-                throw new IllegalStateException("The type resolution class specified in the element could not be found", caught);
-            }
+        return this.graph.getTypeResolver().resolve(element);
     }
 
     @Override
     public void setTypeResolution(final Class<?> type) {
-        this.setProperty(TypeResolver.TYPE_RESOLUTION_KEY, type.getName());
+        this.graph.getTypeResolver().init(element, type);
     }
 
     @Override
     public void removeTypeResolution() {
-        this.getElement().removeProperty(TypeResolver.TYPE_RESOLUTION_KEY);
+        this.graph.getTypeResolver().deinit(element);
     }
 
     @Override

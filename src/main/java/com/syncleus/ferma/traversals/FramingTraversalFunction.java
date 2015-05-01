@@ -25,72 +25,50 @@
  * Source License: Apache Public License v2.0
  * When: November, 20th 2014
  */
-package com.syncleus.ferma.pipes;
+package com.syncleus.ferma.traversals;
 
-import java.util.Iterator;
-import java.util.List;
+import com.syncleus.ferma.ElementFrame;
+import com.syncleus.ferma.FramedGraph;
+import com.tinkerpop.pipes.PipeFunction;
 
-import com.syncleus.ferma.traversals.TraversalFunction;
+/**
+ * Frames parameters to a traversal function.
+ *
+ * @param <A>
+ * @param <B>
+ */
+class FramingTraversalFunction<A, B, C> extends FrameMaker implements TraversalFunction<C, B> {
 
-import com.tinkerpop.pipes.Pipe;
+    private PipeFunction<A, ? extends B> delegate;
 
-public class TraversalFunctionPipe implements TraversalFunction {
-
-    private final TraversalFunction delegate;
-
-    public TraversalFunctionPipe(final TraversalFunction delegate) {
+    public FramingTraversalFunction(final PipeFunction<A, ? extends B> delegate, final FramedGraph graph, final Class<? extends ElementFrame> kind) {
+        super(graph, kind);
         this.delegate = delegate;
     }
 
+    public FramingTraversalFunction(final PipeFunction<A, ? extends B> delegate, final FramedGraph graph) {
+        super(graph);
+        this.delegate = delegate;
+    }
+
+    public <T extends ElementFrame> FramingTraversalFunction(final FramedGraph graph, final Class<T> kind) {
+        super(graph, kind);
+    }
+
+    public FramingTraversalFunction(final FramedGraph graph) {
+        super(graph);
+    }
+
     @Override
-    public Object compute(final Object argument) {
-        final Object result = delegate.compute(argument);
-        if (result instanceof Iterator) {
-            final Iterator i = (Iterator) result;
-            return new Pipe() {
+    public B compute(C argument) {
 
-                @Override
-                public boolean hasNext() {
-                    return i.hasNext();
-                }
+        argument = makeFrame(argument);
 
-                @Override
-                public Object next() {
-                    return i.next();
-                }
+        if (delegate == null)
+            return (B) argument;
 
-                @Override
-                public Iterator iterator() {
-                    return null;
-                }
+        return delegate.compute((A) argument);
 
-                @Override
-                public void setStarts(final Iterator starts) {
-                }
-
-                @Override
-                public void setStarts(final Iterable starts) {
-                }
-
-                @Override
-                public List getCurrentPath() {
-                    return null;
-                }
-
-                @Override
-                public void enablePath(final boolean enable) {
-                }
-
-                @Override
-                public void reset() {
-                }
-
-                @Override
-                public void remove() {
-                }
-            };
-        }
-        return result;
     }
 
 }

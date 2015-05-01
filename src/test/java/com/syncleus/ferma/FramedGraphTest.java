@@ -18,11 +18,9 @@
  ******************************************************************************/
 package com.syncleus.ferma;
 
+import com.syncleus.ferma.framefactories.FrameFactory;
+import com.syncleus.ferma.typeresolvers.PolymorphicTypeResolver;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
-
-import com.tinkerpop.blueprints.impls.tg.TinkerGraphFactory;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -146,6 +144,9 @@ public class FramedGraphTest {
 
         Assert.assertEquals(Programmer.class, bryn.getClass());
         Assert.assertEquals(Person.class, julia.getClass());
+        
+        Assert.assertNotNull(bryn.getElement().getProperty(PolymorphicTypeResolver.TYPE_RESOLUTION_KEY));
+        Assert.assertNotNull(julia.getElement().getProperty(PolymorphicTypeResolver.TYPE_RESOLUTION_KEY));
     }
     
     @Test
@@ -164,6 +165,9 @@ public class FramedGraphTest {
 
         Assert.assertEquals(Programmer.class, bryn.getClass());
         Assert.assertEquals(Person.class, julia.getClass());
+        
+        Assert.assertNotNull(bryn.getElement().getProperty(PolymorphicTypeResolver.TYPE_RESOLUTION_KEY));
+        Assert.assertNotNull(julia.getElement().getProperty(PolymorphicTypeResolver.TYPE_RESOLUTION_KEY));
     }
 
     @Test
@@ -182,6 +186,9 @@ public class FramedGraphTest {
 
         Assert.assertEquals(Person.class, bryn.getClass());
         Assert.assertEquals(Person.class, julia.getClass());
+        
+        Assert.assertNull(bryn.getElement().getProperty(PolymorphicTypeResolver.TYPE_RESOLUTION_KEY));
+        Assert.assertNull(julia.getElement().getProperty(PolymorphicTypeResolver.TYPE_RESOLUTION_KEY));
     }
     
     @Test
@@ -200,6 +207,9 @@ public class FramedGraphTest {
 
         Assert.assertEquals(Person.class, bryn.getClass());
         Assert.assertEquals(Person.class, julia.getClass());
+        
+        Assert.assertNull(bryn.getElement().getProperty(PolymorphicTypeResolver.TYPE_RESOLUTION_KEY));
+        Assert.assertNull(julia.getElement().getProperty(PolymorphicTypeResolver.TYPE_RESOLUTION_KEY));
     }
 
     @Test
@@ -218,6 +228,9 @@ public class FramedGraphTest {
 
         Assert.assertEquals(Person.class, bryn.getClass());
         Assert.assertEquals(Person.class, julia.getClass());
+        
+        Assert.assertNotNull(bryn.getElement().getProperty(PolymorphicTypeResolver.TYPE_RESOLUTION_KEY));
+        Assert.assertNotNull(julia.getElement().getProperty(PolymorphicTypeResolver.TYPE_RESOLUTION_KEY));
     }
     
     @Test
@@ -236,6 +249,9 @@ public class FramedGraphTest {
 
         Assert.assertEquals(Person.class, bryn.getClass());
         Assert.assertEquals(Person.class, julia.getClass());
+        
+        Assert.assertNotNull(bryn.getElement().getProperty(PolymorphicTypeResolver.TYPE_RESOLUTION_KEY));
+        Assert.assertNotNull(julia.getElement().getProperty(PolymorphicTypeResolver.TYPE_RESOLUTION_KEY));
     }
 
     @Test
@@ -249,7 +265,7 @@ public class FramedGraphTest {
             public <T> T create(final Element e, final Class<T> kind) {
                 return (T) o;
             }
-        }, new SimpleTypeResolver());
+        }, new PolymorphicTypeResolver());
         final Person person = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
         Assert.assertEquals(o, person);
     }
@@ -265,7 +281,7 @@ public class FramedGraphTest {
             public <T> T create(final Element e, final Class<T> kind) {
                 return (T) o;
             }
-        }, new SimpleTypeResolver());
+        }, new PolymorphicTypeResolver());
         final Person person = fg.addFramedVertex(Person.class);
         Assert.assertEquals(o, person);
     }
@@ -281,7 +297,7 @@ public class FramedGraphTest {
             public <T> T create(final Element e, final Class<T> kind) {
                 return (T) o;
             }
-        }, new SimpleTypeResolver());
+        }, new PolymorphicTypeResolver());
         final Person person = fg.addFramedVertexExplicit(Person.DEFAULT_INITIALIZER);
         Assert.assertEquals(o, person);
     }
@@ -297,7 +313,7 @@ public class FramedGraphTest {
             public <T> T create(final Element e, final Class<T> kind) {
                 return (T) o;
             }
-        }, new SimpleTypeResolver());
+        }, new PolymorphicTypeResolver());
         final Person person = fg.addFramedVertexExplicit(Person.class);
         Assert.assertEquals(o, person);
     }

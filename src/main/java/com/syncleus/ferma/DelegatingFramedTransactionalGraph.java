@@ -18,6 +18,8 @@
  ******************************************************************************/
 package com.syncleus.ferma;
 
+import com.syncleus.ferma.framefactories.FrameFactory;
+import com.syncleus.ferma.typeresolvers.TypeResolver;
 import com.tinkerpop.blueprints.TransactionalGraph;
 
 import java.util.Collection;

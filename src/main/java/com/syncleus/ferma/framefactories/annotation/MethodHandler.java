@@ -16,22 +16,30 @@
  *  Philadelphia, PA 19148                                                     *
  *                                                                             *
  ******************************************************************************/
+package com.syncleus.ferma.framefactories.annotation;
 
-/*
- * Part or all of this source file was forked from a third-party project, the details of which are listed below.
- *
- * Source Project: Totorom
- * Source URL: https://github.com/BrynCooke/totorom
- * Source License: Apache Public License v2.0
- * When: November, 20th 2014
- */
-package com.syncleus.ferma;
+import net.bytebuddy.dynamic.DynamicType;
+
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
 
 /**
- * A framed vertex for use when you don't want to create a new frame class.
- * Typically used in traversals.
- *
+ * Allows handling of method on frames. Only the first method handler found is called.
+ * Instances of this class should be threadsafe.
  */
-public final class TVertex extends AbstractVertexFrame {
-    public static final ClassInitializer<TVertex> DEFAULT_INITIALIZER = new DefaultClassInitializer(TVertex.class);
+public interface MethodHandler {
+
+    /**
+     * @return The annotation type that this handler responds to.
+     */
+    Class<? extends Annotation> getAnnotationType();
+
+    /**
+     * @param <E> The loaded type of the Byte Buddy Builder
+     * @param method The method being called on the frame.
+     * @param annotation The annotation
+     * @param builder ByteBuddy Builder class to expand.
+     * @return A return value for the method.
+     */
+    <E> DynamicType.Builder<E> processMethod(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation);
 }

@@ -27,9 +27,18 @@
  */
 package com.syncleus.ferma;
 
+import com.syncleus.ferma.traversals.GlobalVertexTraversal;
+import com.syncleus.ferma.traversals.SimpleTraversal;
+import com.syncleus.ferma.traversals.VertexTraversal;
+import com.syncleus.ferma.traversals.EdgeTraversal;
+import com.syncleus.ferma.framefactories.FrameFactory;
+import com.syncleus.ferma.framefactories.DefaultFrameFactory;
+import com.syncleus.ferma.typeresolvers.UntypedTypeResolver;
+import com.syncleus.ferma.typeresolvers.TypeResolver;
+import com.syncleus.ferma.typeresolvers.PolymorphicTypeResolver;
 import com.google.common.base.Function;
 import com.google.common.collect.Iterators;
-import com.syncleus.ferma.annotations.AnnotationFrameFactory;
+import com.syncleus.ferma.framefactories.annotation.AnnotationFrameFactory;
 import com.tinkerpop.blueprints.*;
 import com.tinkerpop.blueprints.util.wrappers.WrapperGraph;
 
@@ -118,7 +127,7 @@ public class DelegatingFramedGraph<G extends Graph> implements WrapperFramedGrap
         this.reflections = new ReflectionCache();
         this.delegate = delegate;
         if (typeResolution) {
-            this.defaultResolver = new SimpleTypeResolver(this.reflections);
+            this.defaultResolver = new PolymorphicTypeResolver(this.reflections);
             this.untypedResolver = new UntypedTypeResolver();
         }
         else {
@@ -147,7 +156,7 @@ public class DelegatingFramedGraph<G extends Graph> implements WrapperFramedGrap
         this.reflections = reflections;
         this.delegate = delegate;
         if (typeResolution) {
-            this.defaultResolver = new SimpleTypeResolver(this.reflections);
+            this.defaultResolver = new PolymorphicTypeResolver(this.reflections);
             this.untypedResolver = new UntypedTypeResolver();
         }
         else {
@@ -171,7 +180,7 @@ public class DelegatingFramedGraph<G extends Graph> implements WrapperFramedGrap
     public DelegatingFramedGraph(final G delegate, final Collection<? extends Class<?>> types) {
         this.reflections = new ReflectionCache(types);
         this.delegate = delegate;
-        this.defaultResolver = new SimpleTypeResolver(this.reflections);
+        this.defaultResolver = new PolymorphicTypeResolver(this.reflections);
         this.untypedResolver = new UntypedTypeResolver();
         this.builder = new AnnotationFrameFactory(this.reflections);
     }
@@ -191,7 +200,7 @@ public class DelegatingFramedGraph<G extends Graph> implements WrapperFramedGrap
         this.reflections = new ReflectionCache(types);
         this.delegate = delegate;
         if (typeResolution) {
-            this.defaultResolver = new SimpleTypeResolver(this.reflections);
+            this.defaultResolver = new PolymorphicTypeResolver(this.reflections);
             this.untypedResolver = new UntypedTypeResolver();
         }
         else {
@@ -462,6 +471,11 @@ public class DelegatingFramedGraph<G extends Graph> implements WrapperFramedGrap
             }
 
         })).castToEdges();
+    }
+
+    @Override
+    public TypeResolver getTypeResolver() {
+        return this.defaultResolver;
     }
 
     @Override

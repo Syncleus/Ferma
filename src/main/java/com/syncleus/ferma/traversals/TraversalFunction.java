@@ -25,72 +25,16 @@
  * Source License: Apache Public License v2.0
  * When: November, 20th 2014
  */
-package com.syncleus.ferma.pipes;
+package com.syncleus.ferma.traversals;
 
-import java.util.Iterator;
-import java.util.List;
+import com.tinkerpop.pipes.PipeFunction;
 
-import com.syncleus.ferma.traversals.TraversalFunction;
-
-import com.tinkerpop.pipes.Pipe;
-
-public class TraversalFunctionPipe implements TraversalFunction {
-
-    private final TraversalFunction delegate;
-
-    public TraversalFunctionPipe(final TraversalFunction delegate) {
-        this.delegate = delegate;
-    }
-
-    @Override
-    public Object compute(final Object argument) {
-        final Object result = delegate.compute(argument);
-        if (result instanceof Iterator) {
-            final Iterator i = (Iterator) result;
-            return new Pipe() {
-
-                @Override
-                public boolean hasNext() {
-                    return i.hasNext();
-                }
-
-                @Override
-                public Object next() {
-                    return i.next();
-                }
-
-                @Override
-                public Iterator iterator() {
-                    return null;
-                }
-
-                @Override
-                public void setStarts(final Iterator starts) {
-                }
-
-                @Override
-                public void setStarts(final Iterable starts) {
-                }
-
-                @Override
-                public List getCurrentPath() {
-                    return null;
-                }
-
-                @Override
-                public void enablePath(final boolean enable) {
-                }
-
-                @Override
-                public void reset() {
-                }
-
-                @Override
-                public void remove() {
-                }
-            };
-        }
-        return result;
-    }
+/**
+ * Takes a value and returns another value.
+ *
+ * The A type is the argument type of the compute() method.
+ * The B type is the return type of the compute() method.
+ */
+public interface TraversalFunction<A, B> extends PipeFunction<A, B> {
 
 }

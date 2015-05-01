@@ -25,72 +25,40 @@
  * Source License: Apache Public License v2.0
  * When: November, 20th 2014
  */
-package com.syncleus.ferma.pipes;
+package com.syncleus.ferma.traversals;
 
-import java.util.Iterator;
-import java.util.List;
+import com.syncleus.ferma.ElementFrame;
+import com.syncleus.ferma.FramedGraph;
+import com.syncleus.ferma.traversals.FrameMaker;
+import java.util.Comparator;
 
-import com.syncleus.ferma.traversals.TraversalFunction;
+/**
+ * Framed elements before delegation.
+ *
+ * @param <T>
+ */
+class FramingComparator<T, K extends ElementFrame> extends FrameMaker implements Comparator<T> {
 
-import com.tinkerpop.pipes.Pipe;
+    private final Comparator<T> delegate;
 
-public class TraversalFunctionPipe implements TraversalFunction {
+    public FramingComparator(final Comparator<T> delegate, final FramedGraph graph) {
+        super(graph);
+        this.delegate = delegate;
 
-    private final TraversalFunction delegate;
+    }
 
-    public TraversalFunctionPipe(final TraversalFunction delegate) {
+    public FramingComparator(final Comparator<T> delegate, final FramedGraph graph, final Class<K> kind) {
+        super(graph, kind);
         this.delegate = delegate;
     }
 
     @Override
-    public Object compute(final Object argument) {
-        final Object result = delegate.compute(argument);
-        if (result instanceof Iterator) {
-            final Iterator i = (Iterator) result;
-            return new Pipe() {
+    public int compare(T t, T t1) {
 
-                @Override
-                public boolean hasNext() {
-                    return i.hasNext();
-                }
+        t = makeFrame(t);
+        t1 = makeFrame(t1);
 
-                @Override
-                public Object next() {
-                    return i.next();
-                }
-
-                @Override
-                public Iterator iterator() {
-                    return null;
-                }
-
-                @Override
-                public void setStarts(final Iterator starts) {
-                }
-
-                @Override
-                public void setStarts(final Iterable starts) {
-                }
-
-                @Override
-                public List getCurrentPath() {
-                    return null;
-                }
-
-                @Override
-                public void enablePath(final boolean enable) {
-                }
-
-                @Override
-                public void reset() {
-                }
-
-                @Override
-                public void remove() {
-                }
-            };
-        }
-        return result;
+        return delegate.compare(t, t1);
     }
 
 }

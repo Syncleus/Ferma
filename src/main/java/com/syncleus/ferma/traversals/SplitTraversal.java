@@ -25,72 +25,27 @@
  * Source License: Apache Public License v2.0
  * When: November, 20th 2014
  */
-package com.syncleus.ferma.pipes;
+package com.syncleus.ferma.traversals;
 
-import java.util.Iterator;
-import java.util.List;
+public interface SplitTraversal<T> {
 
-import com.syncleus.ferma.traversals.TraversalFunction;
+    /**
+     * Add an ExhaustMergePipe to the end of the pipeline. The one-step previous
+     * MetaPipe in the pipeline's pipes are used as the internal pipes. The
+     * pipes' emitted objects are merged where the first pipe's objects are
+     * exhausted, then the second, etc.
+     *
+     * @return the extended Pipeline
+     */
+    T exhaustMerge();
 
-import com.tinkerpop.pipes.Pipe;
-
-public class TraversalFunctionPipe implements TraversalFunction {
-
-    private final TraversalFunction delegate;
-
-    public TraversalFunctionPipe(final TraversalFunction delegate) {
-        this.delegate = delegate;
-    }
-
-    @Override
-    public Object compute(final Object argument) {
-        final Object result = delegate.compute(argument);
-        if (result instanceof Iterator) {
-            final Iterator i = (Iterator) result;
-            return new Pipe() {
-
-                @Override
-                public boolean hasNext() {
-                    return i.hasNext();
-                }
-
-                @Override
-                public Object next() {
-                    return i.next();
-                }
-
-                @Override
-                public Iterator iterator() {
-                    return null;
-                }
-
-                @Override
-                public void setStarts(final Iterator starts) {
-                }
-
-                @Override
-                public void setStarts(final Iterable starts) {
-                }
-
-                @Override
-                public List getCurrentPath() {
-                    return null;
-                }
-
-                @Override
-                public void enablePath(final boolean enable) {
-                }
-
-                @Override
-                public void reset() {
-                }
-
-                @Override
-                public void remove() {
-                }
-            };
-        }
-        return result;
-    }
+    /**
+     * Add a FairMergePipe to the end of the Pipeline. The one-step previous
+     * MetaPipe in the pipeline's pipes are used as the internal pipes. The
+     * pipes' emitted objects are merged in a round robin fashion.
+     *
+     * @return the extended Pipeline
+     */
+    T fairMerge();
 
 }

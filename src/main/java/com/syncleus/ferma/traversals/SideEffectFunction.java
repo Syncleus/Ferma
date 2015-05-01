@@ -25,72 +25,16 @@
  * Source License: Apache Public License v2.0
  * When: November, 20th 2014
  */
-package com.syncleus.ferma.pipes;
+package com.syncleus.ferma.traversals;
 
-import java.util.Iterator;
-import java.util.List;
+/**
+ * 
+ * Takes a value but does not return anything.
+ *
+ * @param <T> The type of input processed by this function.
+ */
+public interface SideEffectFunction<T> {
 
-import com.syncleus.ferma.traversals.TraversalFunction;
-
-import com.tinkerpop.pipes.Pipe;
-
-public class TraversalFunctionPipe implements TraversalFunction {
-
-    private final TraversalFunction delegate;
-
-    public TraversalFunctionPipe(final TraversalFunction delegate) {
-        this.delegate = delegate;
-    }
-
-    @Override
-    public Object compute(final Object argument) {
-        final Object result = delegate.compute(argument);
-        if (result instanceof Iterator) {
-            final Iterator i = (Iterator) result;
-            return new Pipe() {
-
-                @Override
-                public boolean hasNext() {
-                    return i.hasNext();
-                }
-
-                @Override
-                public Object next() {
-                    return i.next();
-                }
-
-                @Override
-                public Iterator iterator() {
-                    return null;
-                }
-
-                @Override
-                public void setStarts(final Iterator starts) {
-                }
-
-                @Override
-                public void setStarts(final Iterable starts) {
-                }
-
-                @Override
-                public List getCurrentPath() {
-                    return null;
-                }
-
-                @Override
-                public void enablePath(final boolean enable) {
-                }
-
-                @Override
-                public void reset() {
-                }
-
-                @Override
-                public void remove() {
-                }
-            };
-        }
-        return result;
-    }
+    void execute(T o);
 
 }

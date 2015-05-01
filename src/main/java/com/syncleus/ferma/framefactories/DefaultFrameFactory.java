@@ -16,22 +16,22 @@
  *  Philadelphia, PA 19148                                                     *
  *                                                                             *
  ******************************************************************************/
+package com.syncleus.ferma.framefactories;
 
-/*
- * Part or all of this source file was forked from a third-party project, the details of which are listed below.
- *
- * Source Project: Totorom
- * Source URL: https://github.com/BrynCooke/totorom
- * Source License: Apache Public License v2.0
- * When: November, 20th 2014
- */
-package com.syncleus.ferma;
+import com.tinkerpop.blueprints.Element;
 
 /**
- * A framed vertex for use when you don't want to create a new frame class.
- * Typically used in traversals.
- *
+ * Creates the frame using reflection.
  */
-public final class TVertex extends AbstractVertexFrame {
-    public static final ClassInitializer<TVertex> DEFAULT_INITIALIZER = new DefaultClassInitializer(TVertex.class);
+public class DefaultFrameFactory implements FrameFactory {
+
+    @Override
+    public <T> T create(final Element e, final Class<T> kind) {
+        try {
+            return kind.newInstance();
+        }
+        catch (final InstantiationException | IllegalAccessException caught) {
+            throw new IllegalStateException("Could not instantiate kind: " + kind.getName(), caught);
+        }
+    }
 }

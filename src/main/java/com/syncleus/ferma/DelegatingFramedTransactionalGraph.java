@@ -22,37 +22,37 @@ import com.tinkerpop.blueprints.TransactionalGraph;
 
 import java.util.Collection;
 
-public class DelegatingFramedTransactionalGraph extends DelegatingFramedGraph implements FramedTransactionalGraph {
+public class DelegatingFramedTransactionalGraph<G extends TransactionalGraph> extends DelegatingFramedGraph<G> implements WrapperFramedTransactionalGraph<G> {
 
-    public DelegatingFramedTransactionalGraph(final TransactionalGraph delegate, final FrameFactory builder, final TypeResolver defaultResolver) {
+    public DelegatingFramedTransactionalGraph(final G delegate, final FrameFactory builder, final TypeResolver defaultResolver) {
         super(delegate, builder, defaultResolver);
     }
 
-    public DelegatingFramedTransactionalGraph(final TransactionalGraph delegate) {
+    public DelegatingFramedTransactionalGraph(final G delegate) {
         super(delegate);
     }
 
-    public DelegatingFramedTransactionalGraph(final TransactionalGraph delegate, final ReflectionCache reflections) {
+    public DelegatingFramedTransactionalGraph(final G delegate, final ReflectionCache reflections) {
         super(delegate, reflections);
     }
 
-    public DelegatingFramedTransactionalGraph(final TransactionalGraph delegate, final TypeResolver defaultResolver) {
+    public DelegatingFramedTransactionalGraph(final G delegate, final TypeResolver defaultResolver) {
         super(delegate, defaultResolver);
     }
 
-    public DelegatingFramedTransactionalGraph(final TransactionalGraph delegate, final boolean typeResolution, final boolean annotationsSupported) {
+    public DelegatingFramedTransactionalGraph(final G delegate, final boolean typeResolution, final boolean annotationsSupported) {
         super(delegate, typeResolution, annotationsSupported);
     }
 
-    public DelegatingFramedTransactionalGraph(final TransactionalGraph delegate, final ReflectionCache reflections, final boolean typeResolution, final boolean annotationsSupported) {
+    public DelegatingFramedTransactionalGraph(final G delegate, final ReflectionCache reflections, final boolean typeResolution, final boolean annotationsSupported) {
         super(delegate, reflections, typeResolution, annotationsSupported);
     }
 
-    public DelegatingFramedTransactionalGraph(final TransactionalGraph delegate, final Collection<? extends Class<?>> types) {
+    public DelegatingFramedTransactionalGraph(final G delegate, final Collection<? extends Class<?>> types) {
         super(delegate, types);
     }
 
-    public DelegatingFramedTransactionalGraph(final TransactionalGraph delegate, final boolean typeResolution, final Collection<? extends Class<?>> types) {
+    public DelegatingFramedTransactionalGraph(final G delegate, final boolean typeResolution, final Collection<? extends Class<?>> types) {
         super(delegate, typeResolution, types);
     }
 

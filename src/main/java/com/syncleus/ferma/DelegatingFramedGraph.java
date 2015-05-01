@@ -31,13 +31,14 @@ import com.google.common.base.Function;
 import com.google.common.collect.Iterators;
 import com.syncleus.ferma.annotations.AnnotationFrameFactory;
 import com.tinkerpop.blueprints.*;
+import com.tinkerpop.blueprints.util.wrappers.WrapperGraph;
 
 import java.util.Collection;
 import java.util.Iterator;
 
-public class DelegatingFramedGraph implements FramedGraph {
+public class DelegatingFramedGraph<G extends Graph> implements WrapperFramedGraph<G> {
 
-    private final Graph delegate;
+    private final G delegate;
     private final TypeResolver defaultResolver;
     private final TypeResolver untypedResolver;
     private final FrameFactory builder;
@@ -53,7 +54,7 @@ public class DelegatingFramedGraph implements FramedGraph {
      * @param defaultResolver
      *            The type defaultResolver that will decide the final frame type.
      */
-    public DelegatingFramedGraph(final Graph delegate, final FrameFactory builder, final TypeResolver defaultResolver) {
+    public DelegatingFramedGraph(final G delegate, final FrameFactory builder, final TypeResolver defaultResolver) {
         this.reflections = null;
         this.delegate = delegate;
         this.defaultResolver = defaultResolver;
@@ -67,7 +68,7 @@ public class DelegatingFramedGraph implements FramedGraph {
      * @param delegate
      *            The graph to wrap.
      */
-    public DelegatingFramedGraph(final Graph delegate) {
+    public DelegatingFramedGraph(final G delegate) {
         this.reflections = new ReflectionCache();
         this.delegate = delegate;
         this.defaultResolver = new UntypedTypeResolver();
@@ -83,7 +84,7 @@ public class DelegatingFramedGraph implements FramedGraph {
      * @param delegate
      *            The graph to wrap.
      */
-    public DelegatingFramedGraph(final Graph delegate, final ReflectionCache reflections) {
+    public DelegatingFramedGraph(final G delegate, final ReflectionCache reflections) {
         this.reflections = reflections;
         this.delegate = delegate;
         this.defaultResolver = new UntypedTypeResolver();
@@ -99,7 +100,7 @@ public class DelegatingFramedGraph implements FramedGraph {
      * @param defaultResolver
      *            The type defaultResolver that will decide the final frame type.
      */
-    public DelegatingFramedGraph(final Graph delegate, final TypeResolver defaultResolver) {
+    public DelegatingFramedGraph(final G delegate, final TypeResolver defaultResolver) {
         this(delegate, new DefaultFrameFactory(), defaultResolver);
     }
 
@@ -113,7 +114,7 @@ public class DelegatingFramedGraph implements FramedGraph {
      * @param annotationsSupported
      * 			  True if annotated classes will be supported, false otherwise.
      */
-    public DelegatingFramedGraph(final Graph delegate, final boolean typeResolution, final boolean annotationsSupported) {
+    public DelegatingFramedGraph(final G delegate, final boolean typeResolution, final boolean annotationsSupported) {
         this.reflections = new ReflectionCache();
         this.delegate = delegate;
         if (typeResolution) {
@@ -142,7 +143,7 @@ public class DelegatingFramedGraph implements FramedGraph {
      * @param annotationsSupported
      * 			  True if annotated classes will be supported, false otherwise.
      */
-    public DelegatingFramedGraph(final Graph delegate, final ReflectionCache reflections, final boolean typeResolution, final boolean annotationsSupported) {
+    public DelegatingFramedGraph(final G delegate, final ReflectionCache reflections, final boolean typeResolution, final boolean annotationsSupported) {
         this.reflections = reflections;
         this.delegate = delegate;
         if (typeResolution) {
@@ -167,7 +168,7 @@ public class DelegatingFramedGraph implements FramedGraph {
      * @param types
      *            The types to be consider for type resolution.
      */
-    public DelegatingFramedGraph(final Graph delegate, final Collection<? extends Class<?>> types) {
+    public DelegatingFramedGraph(final G delegate, final Collection<? extends Class<?>> types) {
         this.reflections = new ReflectionCache(types);
         this.delegate = delegate;
         this.defaultResolver = new SimpleTypeResolver(this.reflections);
@@ -186,7 +187,7 @@ public class DelegatingFramedGraph implements FramedGraph {
      * @param types
      *            The types to be consider for type resolution.
      */
-    public DelegatingFramedGraph(final Graph delegate, final boolean typeResolution, final Collection<? extends Class<?>> types) {
+    public DelegatingFramedGraph(final G delegate, final boolean typeResolution, final Collection<? extends Class<?>> types) {
         this.reflections = new ReflectionCache(types);
         this.delegate = delegate;
         if (typeResolution) {
@@ -198,6 +199,11 @@ public class DelegatingFramedGraph implements FramedGraph {
             this.untypedResolver = this.defaultResolver;
         }
         this.builder = new AnnotationFrameFactory(this.reflections);
+    }
+
+    @Override
+    public G getBaseGraph() {
+        return this.delegate;
     }
 
     @Override

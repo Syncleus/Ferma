@@ -21,9 +21,12 @@ package com.syncleus.ferma;
 import com.syncleus.ferma.framefactories.FrameFactory;
 import com.syncleus.ferma.typeresolvers.PolymorphicTypeResolver;
 import java.util.Collection;
+
+import com.tinkerpop.blueprints.Features;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Answers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -318,7 +321,7 @@ public class FramedGraphTest {
         Assert.assertEquals(o, person);
     }
 
-    @Mock
+    @Mock(answer = Answers.RETURNS_MOCKS)
     private TransactionalGraph transactionalGraph;
 
     public void testTransactionUnsupported() {

@@ -60,16 +60,16 @@ public class DelegatingFramedTransactionalGraph<G extends TransactionalGraph> ex
 
     @Override
     public void stopTransaction(final TransactionalGraph.Conclusion conclusion) {
-        ((TransactionalGraph) this.getDelegate()).stopTransaction(conclusion);
+        ((TransactionalGraph) this.getBaseGraph()).stopTransaction(conclusion);
     }
 
     @Override
     public void commit() {
-        ((TransactionalGraph) this.getDelegate()).commit();
+        ((TransactionalGraph) this.getBaseGraph()).commit();
     }
 
     @Override
     public void rollback() {
-        ((TransactionalGraph) this.getDelegate()).rollback();
+        ((TransactionalGraph) this.getBaseGraph()).rollback();
     }
 }

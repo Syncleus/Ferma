@@ -41,13 +41,13 @@ import com.google.common.collect.Iterators;
 import com.syncleus.ferma.framefactories.annotation.AnnotationFrameFactory;
 import com.tinkerpop.blueprints.*;
 import com.tinkerpop.blueprints.util.wrappers.WrapperGraph;
+import com.tinkerpop.blueprints.util.wrappers.wrapped.WrappedGraph;
 
 import java.util.Collection;
 import java.util.Iterator;
 
-public class DelegatingFramedGraph<G extends Graph> implements WrapperFramedGraph<G> {
+public class DelegatingFramedGraph<G extends Graph> extends WrappedGraph<G> implements WrapperFramedGraph<G> {
 
-    private final G delegate;
     private final TypeResolver defaultResolver;
     private final TypeResolver untypedResolver;
     private final FrameFactory builder;
@@ -64,8 +64,8 @@ public class DelegatingFramedGraph<G extends Graph> implements WrapperFramedGrap
      *            The type defaultResolver that will decide the final frame type.
      */
     public DelegatingFramedGraph(final G delegate, final FrameFactory builder, final TypeResolver defaultResolver) {
+        super(delegate);
         this.reflections = null;
-        this.delegate = delegate;
         this.defaultResolver = defaultResolver;
         this.untypedResolver = new UntypedTypeResolver();
         this.builder = builder;
@@ -78,8 +78,8 @@ public class DelegatingFramedGraph<G extends Graph> implements WrapperFramedGrap
      *            The graph to wrap.
      */
     public DelegatingFramedGraph(final G delegate) {
+        super(delegate);
         this.reflections = new ReflectionCache();
-        this.delegate = delegate;
         this.defaultResolver = new UntypedTypeResolver();
         this.untypedResolver = this.defaultResolver;
         this.builder = new DefaultFrameFactory();
@@ -94,8 +94,8 @@ public class DelegatingFramedGraph<G extends Graph> implements WrapperFramedGrap
      *            The graph to wrap.
      */
     public DelegatingFramedGraph(final G delegate, final ReflectionCache reflections) {
+        super(delegate);
         this.reflections = reflections;
-        this.delegate = delegate;
         this.defaultResolver = new UntypedTypeResolver();
         this.untypedResolver = this.defaultResolver;
         this.builder = new DefaultFrameFactory();
@@ -124,8 +124,8 @@ public class DelegatingFramedGraph<G extends Graph> implements WrapperFramedGrap
      * 			  True if annotated classes will be supported, false otherwise.
      */
     public DelegatingFramedGraph(final G delegate, final boolean typeResolution, final boolean annotationsSupported) {
+        super(delegate);
         this.reflections = new ReflectionCache();
-        this.delegate = delegate;
         if (typeResolution) {
             this.defaultResolver = new PolymorphicTypeResolver(this.reflections);
             this.untypedResolver = new UntypedTypeResolver();
@@ -153,8 +153,8 @@ public class DelegatingFramedGraph<G extends Graph> implements WrapperFramedGrap
      * 			  True if annotated classes will be supported, false otherwise.
      */
     public DelegatingFramedGraph(final G delegate, final ReflectionCache reflections, final boolean typeResolution, final boolean annotationsSupported) {
+        super(delegate);
         this.reflections = reflections;
-        this.delegate = delegate;
         if (typeResolution) {
             this.defaultResolver = new PolymorphicTypeResolver(this.reflections);
             this.untypedResolver = new UntypedTypeResolver();
@@ -178,8 +178,8 @@ public class DelegatingFramedGraph<G extends Graph> implements WrapperFramedGrap
      *            The types to be consider for type resolution.
      */
     public DelegatingFramedGraph(final G delegate, final Collection<? extends Class<?>> types) {
+        super(delegate);
         this.reflections = new ReflectionCache(types);
-        this.delegate = delegate;
         this.defaultResolver = new PolymorphicTypeResolver(this.reflections);
         this.untypedResolver = new UntypedTypeResolver();
         this.builder = new AnnotationFrameFactory(this.reflections);
@@ -197,8 +197,8 @@ public class DelegatingFramedGraph<G extends Graph> implements WrapperFramedGrap
      *            The types to be consider for type resolution.
      */
     public DelegatingFramedGraph(final G delegate, final boolean typeResolution, final Collection<? extends Class<?>> types) {
+        super(delegate);
         this.reflections = new ReflectionCache(types);
-        this.delegate = delegate;
         if (typeResolution) {
             this.defaultResolver = new PolymorphicTypeResolver(this.reflections);
             this.untypedResolver = new UntypedTypeResolver();
@@ -211,14 +211,9 @@ public class DelegatingFramedGraph<G extends Graph> implements WrapperFramedGrap
     }
 
     @Override
-    public G getBaseGraph() {
-        return this.delegate;
-    }
-
-    @Override
     public Transaction tx() {
-        if (delegate instanceof TransactionalGraph)
-            return new Transaction((TransactionalGraph) delegate);
+        if (this.getBaseGraph() instanceof TransactionalGraph)
+            return new Transaction((TransactionalGraph) this.getBaseGraph());
         else
             return new Transaction(null);
     }
@@ -228,7 +223,7 @@ public class DelegatingFramedGraph<G extends Graph> implements WrapperFramedGrap
      */
     @Override
     public void close() {
-        delegate.shutdown();
+        this.getBaseGraph().shutdown();
     }
 
     @Override
@@ -309,7 +304,7 @@ public class DelegatingFramedGraph<G extends Graph> implements WrapperFramedGrap
 
     @Override
     public <T> T addFramedVertex(final ClassInitializer<T> initializer) {
-        final T framedVertex = frameNewElement(delegate.addVertex(null), initializer);
+        final T framedVertex = frameNewElement(this.getBaseGraph().addVertex(null), initializer);
         return framedVertex;
     }
     
@@ -320,7 +315,7 @@ public class DelegatingFramedGraph<G extends Graph> implements WrapperFramedGrap
 
     @Override
     public <T> T addFramedVertexExplicit(final ClassInitializer<T> initializer) {
-        final T framedVertex = frameNewElementExplicit(delegate.addVertex(null), initializer);
+        final T framedVertex = frameNewElementExplicit(this.getBaseGraph().addVertex(null), initializer);
         return framedVertex;
     }
     
@@ -343,7 +338,7 @@ public class DelegatingFramedGraph<G extends Graph> implements WrapperFramedGrap
 
     @Override
     public <T> T addFramedEdge(final VertexFrame source, final VertexFrame destination, final String label, final ClassInitializer<T> initializer) {
-        final T framedEdge = frameNewElement(this.delegate.addEdge(null, source.getElement(), destination.getElement(), label), initializer);
+        final T framedEdge = frameNewElement(this.getBaseGraph().addEdge(null, source.getElement(), destination.getElement(), label), initializer);
         return framedEdge;
     }
     
@@ -354,7 +349,7 @@ public class DelegatingFramedGraph<G extends Graph> implements WrapperFramedGrap
 
     @Override
     public <T> T addFramedEdgeExplicit(final VertexFrame source, final VertexFrame destination, final String label, final ClassInitializer<T> initializer) {
-        final T framedEdge = frameNewElementExplicit(this.delegate.addEdge(null, source.getElement(), destination.getElement(), label), initializer);
+        final T framedEdge = frameNewElementExplicit(this.getBaseGraph().addEdge(null, source.getElement(), destination.getElement(), label), initializer);
         return framedEdge;
     }
     
@@ -377,12 +372,12 @@ public class DelegatingFramedGraph<G extends Graph> implements WrapperFramedGrap
 
     @Override
     public VertexTraversal<?, ?, ?> v() {
-        return new GlobalVertexTraversal(this, delegate);
+        return new GlobalVertexTraversal(this, this.getBaseGraph());
     }
 
     @Override
     public EdgeTraversal<?, ?, ?> e() {
-        return new SimpleTraversal(this, delegate).e();
+        return new SimpleTraversal(this, this.getBaseGraph()).e();
     }
 
     @Override
@@ -431,7 +426,7 @@ public class DelegatingFramedGraph<G extends Graph> implements WrapperFramedGrap
 
             @Override
             public Vertex apply(final Object input) {
-                return delegate.getVertex(input);
+                return getBaseGraph().getVertex(input);
             }
 
         })).castToVertices();
@@ -443,7 +438,7 @@ public class DelegatingFramedGraph<G extends Graph> implements WrapperFramedGrap
 
             @Override
             public Vertex apply(final Object input) {
-                return delegate.getVertex(input);
+                return getBaseGraph().getVertex(input);
             }
 
         })).castToVertices();
@@ -455,7 +450,7 @@ public class DelegatingFramedGraph<G extends Graph> implements WrapperFramedGrap
 
             @Override
             public Edge apply(final Object input) {
-                return delegate.getEdge(input);
+                return getBaseGraph().getEdge(input);
             }
 
         })).castToEdges();
@@ -467,7 +462,7 @@ public class DelegatingFramedGraph<G extends Graph> implements WrapperFramedGrap
 
             @Override
             public Edge apply(final Object input) {
-                return delegate.getEdge(input);
+                return getBaseGraph().getEdge(input);
             }
 
         })).castToEdges();
@@ -480,82 +475,28 @@ public class DelegatingFramedGraph<G extends Graph> implements WrapperFramedGrap
 
     @Override
     public Features getFeatures() {
-        return this.delegate.getFeatures();
+        return this.getBaseGraph().getFeatures();
     }
 
     @Override
     public Vertex addVertex(final Object id) {
-        final VertexFrame framedVertex = frameNewElement(delegate.addVertex(null), TVertex.DEFAULT_INITIALIZER);
+        final VertexFrame framedVertex = frameNewElement(this.getBaseGraph().addVertex(null), TVertex.DEFAULT_INITIALIZER);
         return framedVertex.getElement();
     }
 
     @Override
     public Vertex addVertexExplicit(final Object id) {
-        return delegate.addVertex(null);
-    }
-
-    @Override
-    public Vertex getVertex(final Object id) {
-        return this.delegate.getVertex(id);
-    }
-
-    @Override
-    public void removeVertex(final Vertex vertex) {
-        this.delegate.removeVertex(vertex);
-    }
-
-    @Override
-    public Iterable<Vertex> getVertices() {
-        return this.delegate.getVertices();
-    }
-
-    @Override
-    public Iterable<Vertex> getVertices(final String key, final Object value) {
-        return this.delegate.getVertices(key, value);
+        return this.getBaseGraph().addVertex(null);
     }
 
     @Override
     public Edge addEdge(final Object id, final Vertex outVertex, final Vertex inVertex, final String label) {
-        final EdgeFrame framedEdge = frameNewElement(this.delegate.addEdge(id, outVertex, inVertex, label), TEdge.DEFAULT_INITIALIZER);
+        final EdgeFrame framedEdge = frameNewElement(this.getBaseGraph().addEdge(id, outVertex, inVertex, label), TEdge.DEFAULT_INITIALIZER);
         return framedEdge.getElement();
     }
 
     @Override
     public Edge addEdgeExplicit(final Object id, final Vertex outVertex, final Vertex inVertex, final String label) {
-        return this.delegate.addEdge(id, outVertex, inVertex, label);
-    }
-
-    @Override
-    public Edge getEdge(final Object id) {
-        return this.delegate.getEdge(id);
-    }
-
-    @Override
-    public void removeEdge(final Edge edge) {
-        this.delegate.removeEdge(edge);
-    }
-
-    @Override
-    public Iterable<Edge> getEdges() {
-        return this.delegate.getEdges();
-    }
-
-    @Override
-    public Iterable<Edge> getEdges(final String key, final Object value) {
-        return this.delegate.getEdges(key, value);
-    }
-
-    @Override
-    public GraphQuery query() {
-        return this.delegate.query();
-    }
-
-    @Override
-    public void shutdown() {
-        this.delegate.shutdown();
-    }
-
-    protected Graph getDelegate() {
-        return delegate;
+        return this.getBaseGraph().addEdge(id, outVertex, inVertex, label);
     }
 }

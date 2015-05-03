@@ -97,6 +97,9 @@ public class ReflectionCache extends Reflections {
     }
 
     private static Set<URL> assembleClassUrls(final Collection<? extends Class<?>> annotatedTypes) {
+        if( annotatedTypes == null )
+            throw new IllegalArgumentException("annotatedTypes can not be null");
+
         final Set<URL> toScanUrls = new HashSet<>();
         for (final Class<?> annotatedType : annotatedTypes)
             toScanUrls.add(ClasspathHelper.forClass(annotatedType));

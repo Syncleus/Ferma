@@ -42,6 +42,7 @@ import com.syncleus.ferma.framefactories.annotation.AnnotationFrameFactory;
 import com.tinkerpop.blueprints.*;
 import com.tinkerpop.blueprints.util.wrappers.WrapperGraph;
 import com.tinkerpop.blueprints.util.wrappers.wrapped.WrappedGraph;
+import net.bytebuddy.dynamic.ClassFileLocator;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -65,6 +66,12 @@ public class DelegatingFramedGraph<G extends Graph> extends WrappedGraph<G> impl
      */
     public DelegatingFramedGraph(final G delegate, final FrameFactory builder, final TypeResolver defaultResolver) {
         super(delegate);
+
+        if( builder == null )
+            throw new IllegalArgumentException("builder can not be null");
+        else if( defaultResolver == null )
+            throw new IllegalArgumentException("defaultResolver can not be null");
+
         this.reflections = null;
         this.defaultResolver = defaultResolver;
         this.untypedResolver = new UntypedTypeResolver();
@@ -154,6 +161,10 @@ public class DelegatingFramedGraph<G extends Graph> extends WrappedGraph<G> impl
      */
     public DelegatingFramedGraph(final G delegate, final ReflectionCache reflections, final boolean typeResolution, final boolean annotationsSupported) {
         super(delegate);
+
+        if( reflections == null )
+            throw new IllegalArgumentException("reflections can not be null");
+
         this.reflections = reflections;
         if (typeResolution) {
             this.defaultResolver = new PolymorphicTypeResolver(this.reflections);
@@ -179,6 +190,10 @@ public class DelegatingFramedGraph<G extends Graph> extends WrappedGraph<G> impl
      */
     public DelegatingFramedGraph(final G delegate, final Collection<? extends Class<?>> types) {
         super(delegate);
+
+        if( types == null )
+            throw new IllegalArgumentException("types can not be null");
+
         this.reflections = new ReflectionCache(types);
         this.defaultResolver = new PolymorphicTypeResolver(this.reflections);
         this.untypedResolver = new UntypedTypeResolver();
@@ -198,6 +213,10 @@ public class DelegatingFramedGraph<G extends Graph> extends WrappedGraph<G> impl
      */
     public DelegatingFramedGraph(final G delegate, final boolean typeResolution, final Collection<? extends Class<?>> types) {
         super(delegate);
+
+        if( types == null )
+            throw new IllegalArgumentException("types can not be null");
+        
         this.reflections = new ReflectionCache(types);
         if (typeResolution) {
             this.defaultResolver = new PolymorphicTypeResolver(this.reflections);

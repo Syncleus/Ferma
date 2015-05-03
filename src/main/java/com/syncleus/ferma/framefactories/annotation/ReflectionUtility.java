@@ -19,7 +19,6 @@
 package com.syncleus.ferma.framefactories.annotation;
 
 import com.tinkerpop.blueprints.Vertex;
-
 import java.lang.reflect.*;
 import java.util.Map;
 

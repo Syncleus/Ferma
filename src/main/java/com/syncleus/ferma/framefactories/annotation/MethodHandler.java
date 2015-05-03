@@ -19,7 +19,6 @@
 package com.syncleus.ferma.framefactories.annotation;
 
 import net.bytebuddy.dynamic.DynamicType;
-
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 

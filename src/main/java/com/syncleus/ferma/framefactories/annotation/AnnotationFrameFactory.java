@@ -20,24 +20,15 @@ package com.syncleus.ferma.framefactories.annotation;
 
 import com.syncleus.ferma.framefactories.FrameFactory;
 import com.syncleus.ferma.*;
-import com.syncleus.ferma.framefactories.FrameFactory;
-import com.syncleus.ferma.framefactories.annotation.AdjacencyMethodHandler;
-import com.syncleus.ferma.framefactories.annotation.CachesReflection;
-import com.syncleus.ferma.framefactories.annotation.InVertexMethodHandler;
-import com.syncleus.ferma.framefactories.annotation.IncidenceMethodHandler;
-import com.syncleus.ferma.framefactories.annotation.MethodHandler;
-import com.syncleus.ferma.framefactories.annotation.OutVertexMethodHandler;
-import com.syncleus.ferma.framefactories.annotation.PropertyMethodHandler;
 import com.tinkerpop.blueprints.Edge;
 import com.tinkerpop.blueprints.Element;
 import com.tinkerpop.blueprints.Vertex;
 import net.bytebuddy.ByteBuddy;
-import net.bytebuddy.dynamic.ClassLoadingStrategy;
+import net.bytebuddy.description.modifier.FieldManifestation;
+import net.bytebuddy.description.modifier.Visibility;
 import net.bytebuddy.dynamic.DynamicType;
-import net.bytebuddy.instrumentation.FieldAccessor;
-import net.bytebuddy.modifier.FieldManifestation;
-import net.bytebuddy.modifier.Visibility;
-
+import net.bytebuddy.dynamic.loading.ClassLoadingStrategy;
+import net.bytebuddy.implementation.FieldAccessor;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;

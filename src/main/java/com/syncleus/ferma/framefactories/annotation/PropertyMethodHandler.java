@@ -21,13 +21,13 @@ package com.syncleus.ferma.framefactories.annotation;
 import com.syncleus.ferma.ElementFrame;
 import com.syncleus.ferma.annotations.Property;
 import net.bytebuddy.dynamic.DynamicType;
-import net.bytebuddy.instrumentation.MethodDelegation;
-import net.bytebuddy.instrumentation.method.bytecode.bind.annotation.Argument;
-import net.bytebuddy.instrumentation.method.bytecode.bind.annotation.Origin;
-import net.bytebuddy.instrumentation.method.bytecode.bind.annotation.RuntimeType;
-import net.bytebuddy.instrumentation.method.bytecode.bind.annotation.This;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import net.bytebuddy.implementation.MethodDelegation;
+import net.bytebuddy.implementation.bind.annotation.Argument;
+import net.bytebuddy.implementation.bind.annotation.Origin;
+import net.bytebuddy.implementation.bind.annotation.RuntimeType;
+import net.bytebuddy.implementation.bind.annotation.This;
 import net.bytebuddy.matcher.ElementMatchers;
 
 /**

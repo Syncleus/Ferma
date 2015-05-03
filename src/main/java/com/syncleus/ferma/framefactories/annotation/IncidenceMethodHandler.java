@@ -22,17 +22,14 @@ import com.syncleus.ferma.typeresolvers.TypeResolver;
 import com.syncleus.ferma.*;
 import com.syncleus.ferma.annotations.Incidence;
 import com.tinkerpop.blueprints.Direction;
-import com.tinkerpop.gremlin.Tokens;
 import net.bytebuddy.dynamic.DynamicType;
-import net.bytebuddy.instrumentation.MethodDelegation;
-import net.bytebuddy.instrumentation.method.bytecode.bind.annotation.Argument;
-import net.bytebuddy.instrumentation.method.bytecode.bind.annotation.Origin;
-import net.bytebuddy.instrumentation.method.bytecode.bind.annotation.RuntimeType;
-import net.bytebuddy.instrumentation.method.bytecode.bind.annotation.This;
-
+import net.bytebuddy.implementation.MethodDelegation;
+import net.bytebuddy.implementation.bind.annotation.Argument;
+import net.bytebuddy.implementation.bind.annotation.Origin;
+import net.bytebuddy.implementation.bind.annotation.RuntimeType;
+import net.bytebuddy.implementation.bind.annotation.This;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
-import java.util.Set;
 import net.bytebuddy.matcher.ElementMatchers;
 
 /**

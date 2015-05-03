@@ -52,7 +52,6 @@ public class DelegatingFramedGraph<G extends Graph> extends WrappedGraph<G> impl
     private final TypeResolver defaultResolver;
     private final TypeResolver untypedResolver;
     private final FrameFactory builder;
-    private final ReflectionCache reflections;
 
     /**
      * Construct a framed graph.
@@ -72,7 +71,6 @@ public class DelegatingFramedGraph<G extends Graph> extends WrappedGraph<G> impl
         else if( defaultResolver == null )
             throw new IllegalArgumentException("defaultResolver can not be null");
 
-        this.reflections = null;
         this.defaultResolver = defaultResolver;
         this.untypedResolver = new UntypedTypeResolver();
         this.builder = builder;
@@ -86,23 +84,7 @@ public class DelegatingFramedGraph<G extends Graph> extends WrappedGraph<G> impl
      */
     public DelegatingFramedGraph(final G delegate) {
         super(delegate);
-        this.reflections = new ReflectionCache();
-        this.defaultResolver = new UntypedTypeResolver();
-        this.untypedResolver = this.defaultResolver;
-        this.builder = new DefaultFrameFactory();
-    }
 
-    /**
-     * Construct an untyped framed graph without annotation support
-     *
-     * @param reflections
-     * 			  A RefelctionCache used to determine reflection and hierarchy of classes.
-     * @param delegate
-     *            The graph to wrap.
-     */
-    public DelegatingFramedGraph(final G delegate, final ReflectionCache reflections) {
-        super(delegate);
-        this.reflections = reflections;
         this.defaultResolver = new UntypedTypeResolver();
         this.untypedResolver = this.defaultResolver;
         this.builder = new DefaultFrameFactory();
@@ -132,9 +114,10 @@ public class DelegatingFramedGraph<G extends Graph> extends WrappedGraph<G> impl
      */
     public DelegatingFramedGraph(final G delegate, final boolean typeResolution, final boolean annotationsSupported) {
         super(delegate);
-        this.reflections = new ReflectionCache();
+
+        final ReflectionCache reflections = new ReflectionCache();
         if (typeResolution) {
-            this.defaultResolver = new PolymorphicTypeResolver(this.reflections);
+            this.defaultResolver = new PolymorphicTypeResolver(reflections);
             this.untypedResolver = new UntypedTypeResolver();
         }
         else {
@@ -142,7 +125,7 @@ public class DelegatingFramedGraph<G extends Graph> extends WrappedGraph<G> impl
             this.untypedResolver = this.defaultResolver;
         }
         if (annotationsSupported)
-            this.builder = new AnnotationFrameFactory(this.reflections);
+            this.builder = new AnnotationFrameFactory(reflections);
         else
             this.builder = new DefaultFrameFactory();
     }
@@ -165,9 +148,8 @@ public class DelegatingFramedGraph<G extends Graph> extends WrappedGraph<G> impl
         if( reflections == null )
             throw new IllegalArgumentException("reflections can not be null");
 
-        this.reflections = reflections;
         if (typeResolution) {
-            this.defaultResolver = new PolymorphicTypeResolver(this.reflections);
+            this.defaultResolver = new PolymorphicTypeResolver(reflections);
             this.untypedResolver = new UntypedTypeResolver();
         }
         else {
@@ -175,7 +157,7 @@ public class DelegatingFramedGraph<G extends Graph> extends WrappedGraph<G> impl
             this.untypedResolver = this.defaultResolver;
         }
         if (annotationsSupported)
-            this.builder = new AnnotationFrameFactory(this.reflections);
+            this.builder = new AnnotationFrameFactory(reflections);
         else
             this.builder = new DefaultFrameFactory();
     }
@@ -194,10 +176,10 @@ public class DelegatingFramedGraph<G extends Graph> extends WrappedGraph<G> impl
         if( types == null )
             throw new IllegalArgumentException("types can not be null");
 
-        this.reflections = new ReflectionCache(types);
-        this.defaultResolver = new PolymorphicTypeResolver(this.reflections);
+        final ReflectionCache reflections = new ReflectionCache(types);
+        this.defaultResolver = new PolymorphicTypeResolver(reflections);
         this.untypedResolver = new UntypedTypeResolver();
-        this.builder = new AnnotationFrameFactory(this.reflections);
+        this.builder = new AnnotationFrameFactory(reflections);
     }
 
     /**
@@ -217,16 +199,16 @@ public class DelegatingFramedGraph<G extends Graph> extends WrappedGraph<G> impl
         if( types == null )
             throw new IllegalArgumentException("types can not be null");
         
-        this.reflections = new ReflectionCache(types);
+        final ReflectionCache reflections = new ReflectionCache(types);
         if (typeResolution) {
-            this.defaultResolver = new PolymorphicTypeResolver(this.reflections);
+            this.defaultResolver = new PolymorphicTypeResolver(reflections);
             this.untypedResolver = new UntypedTypeResolver();
         }
         else {
             this.defaultResolver = new UntypedTypeResolver();
             this.untypedResolver = this.defaultResolver;
         }
-        this.builder = new AnnotationFrameFactory(this.reflections);
+        this.builder = new AnnotationFrameFactory(reflections);
     }
 
     @Override

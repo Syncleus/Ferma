@@ -34,10 +34,6 @@ public class DelegatingFramedTransactionalGraph<G extends TransactionalGraph> ex
         super(delegate);
     }
 
-    public DelegatingFramedTransactionalGraph(final G delegate, final ReflectionCache reflections) {
-        super(delegate, reflections);
-    }
-
     public DelegatingFramedTransactionalGraph(final G delegate, final TypeResolver defaultResolver) {
         super(delegate, defaultResolver);
     }

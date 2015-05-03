@@ -22,7 +22,7 @@ import com.syncleus.ferma.framefactories.FrameFactory;
 import com.syncleus.ferma.typeresolvers.PolymorphicTypeResolver;
 import java.util.Collection;
 
-import com.tinkerpop.blueprints.Features;
+import com.tinkerpop.blueprints.*;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,9 +31,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import com.tinkerpop.blueprints.Element;
-import com.tinkerpop.blueprints.Graph;
-import com.tinkerpop.blueprints.TransactionalGraph;
 import com.tinkerpop.blueprints.impls.tg.TinkerGraph;
 
 public class FramedGraphTest {
@@ -322,7 +319,7 @@ public class FramedGraphTest {
     }
 
     @Mock(answer = Answers.RETURNS_MOCKS)
-    private TransactionalGraph transactionalGraph;
+    private ThreadedTransactionalGraph transactionalGraph;
 
     @Test
     public void testTransactionCommitted() {
@@ -336,6 +333,13 @@ public class FramedGraphTest {
         final FramedTransactionalGraph fg = new DelegatingFramedTransactionalGraph(transactionalGraph);
         fg.rollback();
         Mockito.verify(transactionalGraph).rollback();
+    }
+
+    @Test
+    public void testTransactionStart() {
+        final FramedThreadedTransactionalGraph fg = new DelegatingFramedThreadedTransactionalGraph(transactionalGraph);
+        fg.newTransaction();
+        Mockito.verify(transactionalGraph).newTransaction();
     }
 
     @Test

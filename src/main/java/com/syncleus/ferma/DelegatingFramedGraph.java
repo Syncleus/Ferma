@@ -211,14 +211,6 @@ public class DelegatingFramedGraph<G extends Graph> extends WrappedGraph<G> impl
         this.builder = new AnnotationFrameFactory(reflections);
     }
 
-    @Override
-    public Transaction tx() {
-        if (this.getBaseGraph() instanceof TransactionalGraph)
-            return new Transaction((TransactionalGraph) this.getBaseGraph());
-        else
-            return new Transaction(null);
-    }
-
     /**
      * Close the delegate graph.
      */

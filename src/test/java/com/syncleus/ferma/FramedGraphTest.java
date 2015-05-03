@@ -324,59 +324,17 @@ public class FramedGraphTest {
     @Mock(answer = Answers.RETURNS_MOCKS)
     private TransactionalGraph transactionalGraph;
 
-    public void testTransactionUnsupported() {
-        final Graph g = new TinkerGraph();
-        final FramedGraph fg = new DelegatingFramedGraph(g);
-        try (Transaction t = fg.tx()) {
-
-        }
-
-    }
-
     @Test
     public void testTransactionCommitted() {
-
-        final FramedGraph fg = new DelegatingFramedGraph(transactionalGraph);
-        try (Transaction t = fg.tx()) {
-            t.commit();
-        }
-
+        final FramedTransactionalGraph fg = new DelegatingFramedTransactionalGraph(transactionalGraph);
+        fg.commit();
         Mockito.verify(transactionalGraph).commit();
     }
 
     @Test
     public void testTransactionRolledBack() {
-
-        final FramedGraph fg = new DelegatingFramedGraph(transactionalGraph);
-        try (Transaction t = fg.tx()) {
-            t.rollback();
-        }
-
-        Mockito.verify(transactionalGraph).rollback();
-    }
-
-    @Test
-    public void testTransactionNotComitted() {
-
-        final FramedGraph fg = new DelegatingFramedGraph(transactionalGraph);
-        try (Transaction t = fg.tx()) {
-
-        }
-
-        Mockito.verify(transactionalGraph).rollback();
-    }
-
-    @Test
-    public void testTransactionException() {
-
-        final FramedGraph fg = new DelegatingFramedGraph(transactionalGraph);
-
-        try (Transaction t = fg.tx()) {
-            throw new Exception();
-        }
-        catch (final Exception e) {
-        }
-
+        final FramedTransactionalGraph fg = new DelegatingFramedTransactionalGraph(transactionalGraph);
+        fg.rollback();
         Mockito.verify(transactionalGraph).rollback();
     }
 

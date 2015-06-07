@@ -1,4 +1,5 @@
 # Ferma
+[![Build Status](http://builds.syncleus.com/buildStatus/icon?job=Ferma&style=plastic)](http://builds.syncleus.com/job/Ferma/)
 
 An ORM / OGM for the TinkerPop graph stack.
 

@@ -1,5 +1,6 @@
 # Ferma
 [![Build Status](http://builds.syncleus.com/buildStatus/icon?job=Ferma&style=plastic)](http://builds.syncleus.com/job/Ferma/)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.syncleus.ferma/ferma/badge.png?style=plastic)](https://maven-badges.herokuapp.com/maven-central/com.syncleus.ferma/ferma/)
 
 An ORM / OGM for the TinkerPop graph stack.
 

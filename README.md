@@ -70,11 +70,11 @@ instantiated when performing queries. Lets start with a simple example domain.
         setProperty("name", name);
       }
 
-      public List<Knows> getKnowsList() {
+      public List<? extends Knows> getKnowsList() {
         return outE("knows").toList(Knows.class);
       }
 
-      public List<Person> getFriendsOfFriends() {
+      public List<? extends Person> getFriendsOfFriends() {
         return out("knows").out("knows").except(this).toList(Person.class);
       }
 

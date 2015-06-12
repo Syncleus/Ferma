@@ -8,31 +8,31 @@ import com.tinkerpop.blueprints.TransactionalGraph;
 import java.util.Collection;
 
 public class DelegatingFramedThreadedTransactionalGraph<G extends ThreadedTransactionalGraph> extends DelegatingFramedTransactionalGraph<G> implements WrapperFramedThreadedTransactionalGraph<G> {
-  public DelegatingFramedThreadedTransactionalGraph(G delegate, FrameFactory builder, TypeResolver defaultResolver) {
+  public DelegatingFramedThreadedTransactionalGraph(final G delegate, final FrameFactory builder, final TypeResolver defaultResolver) {
     super(delegate, builder, defaultResolver);
   }
 
-  public DelegatingFramedThreadedTransactionalGraph(G delegate) {
+  public DelegatingFramedThreadedTransactionalGraph(final G delegate) {
     super(delegate);
   }
 
-  public DelegatingFramedThreadedTransactionalGraph(G delegate, TypeResolver defaultResolver) {
+  public DelegatingFramedThreadedTransactionalGraph(final G delegate, final TypeResolver defaultResolver) {
     super(delegate, defaultResolver);
   }
 
-  public DelegatingFramedThreadedTransactionalGraph(G delegate, boolean typeResolution, boolean annotationsSupported) {
+  public DelegatingFramedThreadedTransactionalGraph(final G delegate, final boolean typeResolution, final boolean annotationsSupported) {
     super(delegate, typeResolution, annotationsSupported);
   }
 
-  public DelegatingFramedThreadedTransactionalGraph(G delegate, ReflectionCache reflections, boolean typeResolution, boolean annotationsSupported) {
+  public DelegatingFramedThreadedTransactionalGraph(final G delegate, final ReflectionCache reflections, final boolean typeResolution, final boolean annotationsSupported) {
     super(delegate, reflections, typeResolution, annotationsSupported);
   }
 
-  public DelegatingFramedThreadedTransactionalGraph(G delegate, Collection<? extends Class<?>> types) {
+  public DelegatingFramedThreadedTransactionalGraph(final G delegate, final Collection<? extends Class<?>> types) {
     super(delegate, types);
   }
 
-  public DelegatingFramedThreadedTransactionalGraph(G delegate, boolean typeResolution, Collection<? extends Class<?>> types) {
+  public DelegatingFramedThreadedTransactionalGraph(final G delegate, final boolean typeResolution, final Collection<? extends Class<?>> types) {
     super(delegate, typeResolution, types);
   }
 

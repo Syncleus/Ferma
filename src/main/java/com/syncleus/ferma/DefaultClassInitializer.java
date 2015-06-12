@@ -31,7 +31,7 @@ public class DefaultClassInitializer<C> implements ClassInitializer<C> {
     }
 
     @Override
-    public void initalize(C frame) {
+    public void initalize(final C frame) {
     }
 
 }

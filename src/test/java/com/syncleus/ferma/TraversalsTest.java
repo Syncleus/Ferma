@@ -505,7 +505,7 @@ public class TraversalsTest {
 
     @Test
     public void testRemove1() {
-        VertexTraversal<?, ?, ?> traversal = graph.v().has("lang", "java");
+        final VertexTraversal<?, ?, ?> traversal = graph.v().has("lang", "java");
         traversal.next();
         traversal.remove();
         Assert.assertEquals(5, graph.v().count());
@@ -513,7 +513,7 @@ public class TraversalsTest {
 
     @Test
     public void testRemove2() {
-        VertexTraversal<?, ?, ?> traversal = graph.v().has("lang", "java").in();
+        final VertexTraversal<?, ?, ?> traversal = graph.v().has("lang", "java").in();
         traversal.next();
         traversal.remove();
         Assert.assertEquals(5, graph.v().count());

@@ -39,7 +39,7 @@ public class GenericClassInitializer<C> implements ClassInitializer<C> {
     }
     
     @Override
-    public void initalize(C frame) {
+    public void initalize(final C frame) {
         if( !(frame instanceof ElementFrame) )
             throw new IllegalArgumentException("frame was not an instance of an ElementFrame");
         final ElementFrame elementFrame = (ElementFrame) frame;

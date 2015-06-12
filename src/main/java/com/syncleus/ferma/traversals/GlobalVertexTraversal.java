@@ -863,7 +863,7 @@ public class GlobalVertexTraversal<C, S, M> implements VertexTraversal<C, S, M> 
     }
 
     @Override
-    public Collection<? extends VertexFrame> fill(Collection<? super VertexFrame> collection) {
+    public Collection<? extends VertexFrame> fill(final Collection<? super VertexFrame> collection) {
         return this.simpleDelegate().fill(collection);
     }
 

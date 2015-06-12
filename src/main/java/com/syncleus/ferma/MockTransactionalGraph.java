@@ -33,17 +33,17 @@ public class MockTransactionalGraph implements TransactionalGraph {
   }
 
   @Override
-  public Vertex addVertex(Object id) {
+  public Vertex addVertex(final Object id) {
     return delegate.addVertex(id);
   }
 
   @Override
-  public Vertex getVertex(Object id) {
+  public Vertex getVertex(final Object id) {
     return delegate.getVertex(id);
   }
 
   @Override
-  public void removeVertex(Vertex vertex) {
+  public void removeVertex(final Vertex vertex) {
     delegate.removeVertex(vertex);
   }
 
@@ -53,22 +53,22 @@ public class MockTransactionalGraph implements TransactionalGraph {
   }
 
   @Override
-  public Iterable<Vertex> getVertices(String key, Object value) {
+  public Iterable<Vertex> getVertices(final String key, final Object value) {
     return delegate.getVertices(key, value);
   }
 
   @Override
-  public Edge addEdge(Object id, Vertex outVertex, Vertex inVertex, String label) {
+  public Edge addEdge(final Object id, final Vertex outVertex, final Vertex inVertex, final String label) {
     return delegate.addEdge(id, outVertex, inVertex, label);
   }
 
   @Override
-  public Edge getEdge(Object id) {
+  public Edge getEdge(final Object id) {
     return delegate.getEdge(id);
   }
 
   @Override
-  public void removeEdge(Edge edge) {
+  public void removeEdge(final Edge edge) {
     delegate.removeEdge(edge);
   }
 
@@ -78,7 +78,7 @@ public class MockTransactionalGraph implements TransactionalGraph {
   }
 
   @Override
-  public Iterable<Edge> getEdges(String key, Object value) {
+  public Iterable<Edge> getEdges(final String key, final Object value) {
     return delegate.getEdges(key, value);
   }
 
@@ -93,7 +93,7 @@ public class MockTransactionalGraph implements TransactionalGraph {
   }
 
   @Override
-  public void stopTransaction(Conclusion conclusion) {
+  public void stopTransaction(final Conclusion conclusion) {
   }
 
   @Override

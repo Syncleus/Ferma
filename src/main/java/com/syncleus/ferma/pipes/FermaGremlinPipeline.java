@@ -73,7 +73,7 @@ public class FermaGremlinPipeline<S, E> extends com.tinkerpop.gremlin.java.Greml
     }
 
     @Override
-    public List<E> next(int number) {
+    public List<E> next(final int number) {
         this.current = null;
         return super.next(number);
     }

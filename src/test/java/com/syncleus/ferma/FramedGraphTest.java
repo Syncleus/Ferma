@@ -44,6 +44,7 @@ public class FramedGraphTest {
     public void testSanity() {
         final Graph g = new TinkerGraph();
         final FramedGraph fg = new DelegatingFramedGraph(g);
+
         final Person p1 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
         p1.setName("Bryn");
 

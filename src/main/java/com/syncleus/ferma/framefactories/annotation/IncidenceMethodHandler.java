@@ -33,6 +33,7 @@ import net.bytebuddy.implementation.bind.annotation.This;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.util.Set;
 
 import net.bytebuddy.matcher.ElementMatchers;
 
@@ -220,20 +221,35 @@ public class IncidenceMethodHandler implements MethodHandler {
             final Incidence annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Incidence.class);
             final Direction direction = annotation.direction();
             final String label = annotation.label();
+            
+            Class<?> edgeClass=null;
 
-            TEdge edge=null;
+            try {
+				edgeClass=Class.forName(label);
+			} catch (ClassNotFoundException e) {
+				throw new IllegalStateException("Couldn't find an edge with name "+label);
+			}
+           
+            if (edgeClass==null)
+            	throw new IllegalStateException("Couldn't find an edge with name "+label);
+            if (!AbstractEdgeFrame.class.isAssignableFrom(edgeClass))
+            	throw new IllegalStateException("Class "+label+" doesn't extend class "+AbstractEdgeFrame.class.getCanonicalName());
+
+            
+            Object edge=null;
             switch (direction) {
             case BOTH:
-            	edge=thiz.getGraph().addFramedEdge(newVertex, thiz, label);
-                edge=thiz.getGraph().addFramedEdge(thiz, newVertex, label);
+            	edge=thiz.getGraph().addFramedEdge(newVertex, thiz, label, edgeClass);
+                edge=thiz.getGraph().addFramedEdge(thiz, newVertex, label,edgeClass);
                 break;
             case IN:
-            	edge=thiz.getGraph().addFramedEdge(newVertex, thiz, label);
+            	edge=thiz.getGraph().addFramedEdge(newVertex, thiz, label,edgeClass);
                 break;
             //Assume out direction
             default:
-            	edge=thiz.getGraph().addFramedEdge(thiz, newVertex, label);
+            	edge=thiz.getGraph().addFramedEdge(thiz, newVertex, label,edgeClass);
             }
+            
 
             return edge;
         }

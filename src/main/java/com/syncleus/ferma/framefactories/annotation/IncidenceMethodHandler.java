@@ -20,16 +20,20 @@ package com.syncleus.ferma.framefactories.annotation;
 
 import com.syncleus.ferma.typeresolvers.TypeResolver;
 import com.syncleus.ferma.*;
+import com.syncleus.ferma.annotations.Adjacency;
 import com.syncleus.ferma.annotations.Incidence;
 import com.tinkerpop.blueprints.Direction;
+
 import net.bytebuddy.dynamic.DynamicType;
 import net.bytebuddy.implementation.MethodDelegation;
 import net.bytebuddy.implementation.bind.annotation.Argument;
 import net.bytebuddy.implementation.bind.annotation.Origin;
 import net.bytebuddy.implementation.bind.annotation.RuntimeType;
 import net.bytebuddy.implementation.bind.annotation.This;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+
 import net.bytebuddy.matcher.ElementMatchers;
 
 /**
@@ -72,6 +76,16 @@ public class IncidenceMethodHandler implements MethodHandler {
                 return this.removeEdge(builder, method, annotation);
             else
                 throw new IllegalStateException(method.getName() + " was annotated with @Incidence but had more than 1 arguments.");
+        else if(ReflectionUtility.isAddMethod(method)){
+        	// this implements @Incidence add that was missing in 2.5 version
+        	//see https://github.com/tinkerpop/frames/wiki/Core-Annotations for more details
+        	if (arguments==null || arguments.length!=1)
+        		throw new IllegalStateException(method.getName() + " was annotated with @Incidence with add method but didn't just a single argument.");
+        	else if (!AbstractVertexFrame.class.isAssignableFrom(arguments[0].getType()))
+        		throw new IllegalStateException(method.getName() + " was annotated with @Incidence, had a single argument, but that argument was not of the type "+AbstractVertexFrame.class.getSimpleName());
+        	return this.addEdgeByType(builder, method, annotation);
+        	
+        }
         else
             throw new IllegalStateException(method.getName() + " was annotated with @Incidence but did not begin with: get, remove");
     }
@@ -94,6 +108,10 @@ public class IncidenceMethodHandler implements MethodHandler {
 
     private <E> DynamicType.Builder<E> removeEdge(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
         return builder.method(ElementMatchers.is(method)).intercept(MethodDelegation.to(RemoveEdgeInterceptor.class));
+    }
+    
+    private <E> DynamicType.Builder<E> addEdgeByType(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
+        return builder.method(ElementMatchers.is(method)).intercept(MethodDelegation.to(AddEdgeByObjectUntypedEdgeInterceptor.class));
     }
 
     public static final class GetEdgesDefaultInterceptor {
@@ -191,6 +209,33 @@ public class IncidenceMethodHandler implements MethodHandler {
         @RuntimeType
         public static void removeEdge(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final EdgeFrame edge) {
             edge.remove();
+        }
+    }
+    
+    public static final class AddEdgeByObjectUntypedEdgeInterceptor {
+
+        @RuntimeType
+        public static Object addVertex(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final VertexFrame newVertex) {
+            assert thiz instanceof CachesReflection;
+            final Incidence annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Incidence.class);
+            final Direction direction = annotation.direction();
+            final String label = annotation.label();
+
+            TEdge edge=null;
+            switch (direction) {
+            case BOTH:
+            	edge=thiz.getGraph().addFramedEdge(newVertex, thiz, label);
+                edge=thiz.getGraph().addFramedEdge(thiz, newVertex, label);
+                break;
+            case IN:
+            	edge=thiz.getGraph().addFramedEdge(newVertex, thiz, label);
+                break;
+            //Assume out direction
+            default:
+            	edge=thiz.getGraph().addFramedEdge(thiz, newVertex, label);
+            }
+
+            return edge;
         }
     }
 }

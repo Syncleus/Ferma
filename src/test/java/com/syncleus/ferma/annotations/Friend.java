@@ -16,15 +16,21 @@
  *  Philadelphia, PA 19148                                                     *
  *                                                                             *
  ******************************************************************************/
-package com.syncleus.ferma;
+package com.syncleus.ferma.annotations;
 
-import com.syncleus.ferma.annotations.Incidence;
+import com.syncleus.ferma.ClassInitializer;
+import com.syncleus.ferma.DefaultClassInitializer;
+import com.syncleus.ferma.Knows;
+import com.syncleus.ferma.Person;
 import com.tinkerpop.blueprints.Direction;
 
 public abstract class Friend extends Person {
     static final ClassInitializer<Friend> DEFAULT_INITIALIZER = new DefaultClassInitializer(Friend.class);
     
     
-    @Incidence(label="com.syncleus.ferma.Knows", direction=Direction.BOTH)
-    public abstract Knows addKnowsIncidence(Friend programmer);
+    @Incidence(label="com.syncleus.ferma.Knows", direction=Direction.OUT)
+    public abstract Knows addKnows(Friend programmer);
+
+    @Incidence(label="com.syncleus.ferma.Knows", direction=Direction.IN)
+    public abstract Knows addKnownBy(Friend programmer);
 }

@@ -16,12 +16,16 @@
  *  Philadelphia, PA 19148                                                     *
  *                                                                             *
  ******************************************************************************/
-package com.syncleus.ferma;
+package com.syncleus.ferma.annotations;
 
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.syncleus.ferma.DelegatingFramedGraph;
+import com.syncleus.ferma.FramedGraph;
+import com.syncleus.ferma.Knows;
+import com.syncleus.ferma.Person;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -34,7 +38,7 @@ public class ExtendedFramedEdgeTest {
 
 	private static final Set<Class<?>> TEST_TYPES = new HashSet<Class<?>>(
     		Arrays.asList(new Class<?>[]{
-    				Person.class, 
+    				Person.class,
     				Friend.class,
     				Knows.class
     				}
@@ -42,6 +46,7 @@ public class ExtendedFramedEdgeTest {
 	private Friend p1;
     private Friend p2;
     private Knows e1;
+    private Knows e2;
 
     @Before
     public void init() {
@@ -53,8 +58,10 @@ public class ExtendedFramedEdgeTest {
         p2 = fg.addFramedVertex(Friend.class);
         p1.setName("Bryn");
         p2.setName("Julia");
-        e1 = p1.addKnowsIncidence(p2);
+        e1 = p1.addKnows(p2);
         e1.setYears(15);
+        e2 = p1.addKnownBy(p2);
+        e2.setYears(15);
         
     }
 

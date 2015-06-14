@@ -115,6 +115,34 @@
                 <role>Developer</role>
             </roles>
         </contributor>
+        <contributor>
+            <name>Bryn Cooke</name>
+            <email>BrynCooke@gmail.com</email>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Daniel Thommes</name>
+            <email>dandroid42@googlemail.com</email>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Tjad Clark</name>
+            <email>tjataz@gmail.com</email>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Willem Salembier</name>
+            <email>willem.salembier@gmail.com</email>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </contributor>
     </contributors>
 
     <properties>

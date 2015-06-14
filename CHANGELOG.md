@@ -1,4 +1,4 @@
-# maven-mongodb-plugin Changelog
+# Ferma Changelog
 
 ## 2.0.6
 

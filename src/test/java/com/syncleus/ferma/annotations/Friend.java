@@ -28,9 +28,9 @@ public abstract class Friend extends Person {
     static final ClassInitializer<Friend> DEFAULT_INITIALIZER = new DefaultClassInitializer(Friend.class);
     
     
-    @Incidence(label="com.syncleus.ferma.Knows", direction=Direction.OUT)
+    @Incidence(label="knows", direction=Direction.OUT)
     public abstract Knows addKnows(Friend programmer);
 
-    @Incidence(label="com.syncleus.ferma.Knows", direction=Direction.IN)
+    @Incidence(label="knows", direction=Direction.IN)
     public abstract Knows addKnownBy(Friend programmer);
 }

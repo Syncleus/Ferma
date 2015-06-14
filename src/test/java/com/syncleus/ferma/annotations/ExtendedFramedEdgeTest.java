@@ -67,7 +67,7 @@ public class ExtendedFramedEdgeTest {
 
     @Test
     public void testLabel() {
-        Assert.assertEquals(Knows.class.getCanonicalName(), e1.getLabel());
+        Assert.assertEquals("knows", e1.getLabel());
     }
 
     @Test

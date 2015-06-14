@@ -632,7 +632,7 @@ public interface Traversal<T, C, S, M> extends Iterator<T>, Iterable<T> {
      *            the name of the AsPipe
      * @return the extended Pipeline
      */
-    Traversal<T, ?, ?, M> as(String name);
+    Traversal<T, C, S, ? extends Traversal<T, C, S, M>> as(String name);
 
     /**
      * If the object's path is repeating (looping), then the object is filtered.
@@ -642,6 +642,13 @@ public interface Traversal<T, C, S, M> extends Iterator<T>, Iterable<T> {
      * @return the extended Pipeline
      */
     Traversal<T, ?, ?, M> simplePath();
+
+    /**
+     * The object that was marked with the specific name is emitted.
+     *
+     * @return the extended Pipeline
+     */
+    M back(String name);
 
     /**
      * The object that was seen at the topmost marked step is emitted. The mark step is removed from the stack.

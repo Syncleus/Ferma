@@ -89,6 +89,12 @@ public class TraversalsTest {
     }
 
     @Test
+    public void testMarkBackNamed() {
+
+        Assert.assertEquals(29, graph.v().as("someName").outE("knows").inV().has("age", T.gt, 30).back("someName").property("age").next());
+    }
+
+    @Test
     public void testMarkOptional() {
         final List<VertexFrame> aggregate = new ArrayList<>();
         Assert.assertEquals(6, graph.v().mark().outE("knows").inV().has("age", T.gt, 30).aggregate(aggregate).optional()

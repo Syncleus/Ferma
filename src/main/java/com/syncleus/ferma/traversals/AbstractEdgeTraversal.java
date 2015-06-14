@@ -206,8 +206,8 @@ abstract class AbstractEdgeTraversal<C, S, M> extends AbstractTraversal<EdgeFram
     }
 
     @Override
-    public EdgeTraversal<?, ?, M> as(final String name) {
-        return (EdgeTraversal) super.as(name);
+    public EdgeTraversal<C, S, ? extends EdgeTraversal<C, S, M>> as(final String name) {
+        return (EdgeTraversal<C, S, ? extends EdgeTraversal<C, S, M>>) super.as(name);
     }
 
     @Override

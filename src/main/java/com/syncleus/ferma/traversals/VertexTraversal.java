@@ -742,7 +742,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
     VertexTraversal<?, ?, M> order(Tokens.T order);
 
     @Override
-    VertexTraversal<?, ?, M> as(String name);
+    VertexTraversal<C, S, ? extends VertexTraversal<C, S, M>> as(String name);
 
     @Override
     VertexTraversal<?, ?, M> simplePath();

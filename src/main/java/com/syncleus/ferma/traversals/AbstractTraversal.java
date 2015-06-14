@@ -98,9 +98,9 @@ abstract class AbstractTraversal<T, C, S, M> implements Traversal<T, C, S, M> {
     }
 
     @Override
-    public Traversal<T, ?, ?, M> as(final String name) {
+    public Traversal<T, C, S, ? extends Traversal<T, C, S, M>> as(final String name) {
         pipeline().as(name);
-        return this;
+        return (Traversal<T, C, S, ? extends Traversal<T, C, S, M>>) this;
     }
 
     @Override
@@ -710,6 +710,12 @@ abstract class AbstractTraversal<T, C, S, M> implements Traversal<T, C, S, M> {
         final MarkId mark = popMark();
         pipeline().back(mark.id);
         return (M) mark.traversal;
+    }
+
+    @Override
+    public M back(final String name) {
+        pipeline().back(name);
+        return (M) this;
     }
 
     @Override

@@ -1,5 +1,16 @@
 # maven-mongodb-plugin Changelog
 
+## 2.0.6
+
+* Added the ability to use the @Incidence annotation on add* methods. These work the same as with adjacency but return the edge rather than the node.
+* Added additional metadata to the pom file.
+* Added multi-threaded transaction support.
+* Added support for tinkerpop style transaction handling.
+* Added additional argument sanity checking for fail-fast exceptions.
+* Implemented WrappedGraph interface for DelegatingFramedGraph.
+* The pom site goal now executes successfully.
+* Added badges to the readme to report project state.
+
 ## 2.0.5
 
 * The type resolution key can now be easily customized.

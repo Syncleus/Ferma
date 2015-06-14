@@ -108,6 +108,13 @@
             </roles>
             <timezone>-5</timezone>
         </contributor>
+        <contributor>
+            <name>Mohamed T. AlRefaie</name>
+            <email>m.taher@msn.com</email>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </contributor>
     </contributors>
 
     <properties>

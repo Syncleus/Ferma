@@ -155,9 +155,10 @@ public class IncidenceMethodHandler implements MethodHandler {
                     throw new IllegalStateException(method.getName() + " is annotated with direction BOTH, this is not allowed for add methods annotated with @Incidence.");
                 case IN:
                     return thiz.getGraph().addFramedEdge(newVertex, thiz, label, method.getReturnType());
-                //Assume out direction
-                default:
+                case OUT:
                     return thiz.getGraph().addFramedEdge(thiz, newVertex, label, method.getReturnType());
+                default:
+                    throw new IllegalStateException(method.getName() + " is annotated with a direction other than BOTH, IN, or OUT.");
             }
         }
     }
@@ -182,9 +183,10 @@ public class IncidenceMethodHandler implements MethodHandler {
                     throw new IllegalStateException(method.getName() + " is annotated with direction BOTH, this is not allowed for add methods annotated with @Incidence.");
                 case IN:
                     return thiz.getGraph().addFramedEdge(newVertex, thiz, label, method.getReturnType());
-                //Assume out direction
-                default:
+                case OUT:
                     return thiz.getGraph().addFramedEdge(thiz, newVertex, label, method.getReturnType());
+                default:
+                    throw new IllegalStateException(method.getName() + " is annotated with a direction other than BOTH, IN, or OUT.");
             }
         }
     }
@@ -209,9 +211,10 @@ public class IncidenceMethodHandler implements MethodHandler {
                     throw new IllegalStateException(method.getName() + " is annotated with direction BOTH, this is not allowed for add methods annotated with @Incidence.");
                 case IN:
                     return thiz.getGraph().addFramedEdge(newVertex, thiz, label, edgeType);
-                //Assume out direction
-                default:
+                case OUT:
                     return thiz.getGraph().addFramedEdge(thiz, newVertex, label, edgeType);
+                default:
+                    throw new IllegalStateException(method.getName() + " is annotated with a direction other than BOTH, IN, or OUT.");
             }
         }
     }
@@ -230,9 +233,10 @@ public class IncidenceMethodHandler implements MethodHandler {
                     throw new IllegalStateException(method.getName() + " is annotated with direction BOTH, this is not allowed for add methods annotated with @Incidence.");
                 case IN:
                     return thiz.getGraph().addFramedEdge(newVertex, thiz, label, method.getReturnType());
-                //Assume out direction
-                default:
+                case OUT:
                     return thiz.getGraph().addFramedEdge(thiz, newVertex, label, method.getReturnType());
+                default:
+                    throw new IllegalStateException(method.getName() + " is annotated with a direction other than BOTH, IN, or OUT.");
             }
         }
     }
@@ -251,9 +255,10 @@ public class IncidenceMethodHandler implements MethodHandler {
                     throw new IllegalStateException(method.getName() + " is annotated with direction BOTH, this is not allowed for add methods annotated with @Incidence.");
                 case IN:
                     return thiz.getGraph().addFramedEdge(newVertex, thiz, label, edgeType);
-                //Assume out direction
-                default:
+                case OUT:
                     return thiz.getGraph().addFramedEdge(thiz, newVertex, label, edgeType);
+                default:
+                    throw new IllegalStateException(method.getName() + " is annotated with a direction other than BOTH, IN, or OUT.");
             }
         }
     }
@@ -268,15 +273,15 @@ public class IncidenceMethodHandler implements MethodHandler {
             final String label = annotation.label();
 
             switch (direction) {
-            case BOTH:
-                return thiz.bothE(label).frame(VertexFrame.class);
-            case IN:
-                return thiz.inE(label).frame(VertexFrame.class);
-            //Assume out direction
-            default:
-                return thiz.outE(label).frame(VertexFrame.class);
+                case BOTH:
+                    return thiz.bothE(label).frame(VertexFrame.class);
+                case IN:
+                    return thiz.inE(label).frame(VertexFrame.class);
+                case OUT:
+                    return thiz.outE(label).frame(VertexFrame.class);
+                default:
+                    throw new IllegalStateException(method.getName() + " is annotated with a direction other than BOTH, IN, or OUT.");
             }
-
         }
     }
 
@@ -291,15 +296,15 @@ public class IncidenceMethodHandler implements MethodHandler {
             final TypeResolver resolver = thiz.getGraph().getTypeResolver();
 
             switch (direction) {
-            case BOTH:
-                return resolver.hasType(thiz.bothE(label), type).frame(type);
-            case IN:
-                return resolver.hasType(thiz.inE(label), type).frame(type);
-            //Assume out direction
-            default:
-                return resolver.hasType(thiz.outE(label), type).frame(type);
+                case BOTH:
+                    return resolver.hasType(thiz.bothE(label), type).frame(type);
+                case IN:
+                    return resolver.hasType(thiz.inE(label), type).frame(type);
+                case OUT:
+                    return resolver.hasType(thiz.outE(label), type).frame(type);
+                default:
+                    throw new IllegalStateException(method.getName() + " is annotated with a direction other than BOTH, IN, or OUT.");
             }
-
         }
     }
 
@@ -313,15 +318,15 @@ public class IncidenceMethodHandler implements MethodHandler {
             final String label = annotation.label();
 
             switch (direction) {
-            case BOTH:
-                return thiz.bothE(label).next(VertexFrame.class);
-            case IN:
-                return thiz.inE(label).next(VertexFrame.class);
-            //Assume out direction
-            default:
-                return thiz.outE(label).next(VertexFrame.class);
+                case BOTH:
+                    return thiz.bothE(label).next(VertexFrame.class);
+                case IN:
+                    return thiz.inE(label).next(VertexFrame.class);
+                case OUT:
+                    return thiz.outE(label).next(VertexFrame.class);
+                default:
+                    throw new IllegalStateException(method.getName() + " is annotated with a direction other than BOTH, IN, or OUT.");
             }
-
         }
     }
 
@@ -336,15 +341,15 @@ public class IncidenceMethodHandler implements MethodHandler {
             final TypeResolver resolver = thiz.getGraph().getTypeResolver();
 
             switch (direction) {
-            case BOTH:
-                return resolver.hasType(thiz.bothE(label), type).next(type);
-            case IN:
-                return resolver.hasType(thiz.inE(label), type).next(type);
-            //Assume out direction
-            default:
-                return resolver.hasType(thiz.outE(label), type).next(type);
+                case BOTH:
+                    return resolver.hasType(thiz.bothE(label), type).next(type);
+                case IN:
+                    return resolver.hasType(thiz.inE(label), type).next(type);
+                case OUT:
+                    return resolver.hasType(thiz.outE(label), type).next(type);
+                default:
+                    throw new IllegalStateException(method.getName() + " is annotated with a direction other than BOTH, IN, or OUT.");
             }
-
         }
     }
 

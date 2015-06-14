@@ -44,7 +44,7 @@ To include Ferma in your project of choice include the following Maven dependenc
     <dependency>
         <groupId>com.syncleus.ferma</groupId>
         <artifactId>ferma</artifactId>
-        <version>2.0.5</version>
+        <version>2.0.6</version>
     </dependency>
     
 

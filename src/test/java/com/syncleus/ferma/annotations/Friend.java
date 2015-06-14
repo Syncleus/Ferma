@@ -18,19 +18,22 @@
  ******************************************************************************/
 package com.syncleus.ferma.annotations;
 
-import com.syncleus.ferma.ClassInitializer;
-import com.syncleus.ferma.DefaultClassInitializer;
-import com.syncleus.ferma.Knows;
-import com.syncleus.ferma.Person;
+import com.syncleus.ferma.*;
 import com.tinkerpop.blueprints.Direction;
 
 public abstract class Friend extends Person {
-    static final ClassInitializer<Friend> DEFAULT_INITIALIZER = new DefaultClassInitializer(Friend.class);
+    public static final ClassInitializer<Friend> DEFAULT_INITIALIZER = new DefaultClassInitializer(Friend.class);
     
     
     @Incidence(label="knows", direction=Direction.OUT)
-    public abstract Knows addKnows(Friend programmer);
+    public abstract Knows addKnows(Friend programmer, ClassInitializer<? extends Knows> type);
 
     @Incidence(label="knows", direction=Direction.IN)
-    public abstract Knows addKnownBy(Friend programmer);
+    public abstract Knows addKnownBy(Friend programmer, ClassInitializer<? extends Knows> type);
+
+    @Incidence(label="knows", direction=Direction.OUT)
+    public abstract EdgeFrame addKnows(Friend programmer);
+
+    @Incidence(label="knows", direction=Direction.IN)
+    public abstract EdgeFrame addKnownBy(Friend programmer);
 }

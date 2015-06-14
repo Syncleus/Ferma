@@ -154,9 +154,9 @@ public class IncidenceMethodHandler implements MethodHandler {
                 case BOTH:
                     throw new IllegalStateException(method.getName() + " is annotated with direction BOTH, this is not allowed for add methods annotated with @Incidence.");
                 case IN:
-                    return thiz.getGraph().addFramedEdge(newVertex, thiz, label, method.getReturnType());
+                    return thiz.getGraph().addFramedEdge(newVertex, thiz, label);
                 case OUT:
-                    return thiz.getGraph().addFramedEdge(thiz, newVertex, label, method.getReturnType());
+                    return thiz.getGraph().addFramedEdge(thiz, newVertex, label);
                 default:
                     throw new IllegalStateException(method.getName() + " is annotated with a direction other than BOTH, IN, or OUT.");
             }
@@ -182,9 +182,9 @@ public class IncidenceMethodHandler implements MethodHandler {
                 case BOTH:
                     throw new IllegalStateException(method.getName() + " is annotated with direction BOTH, this is not allowed for add methods annotated with @Incidence.");
                 case IN:
-                    return thiz.getGraph().addFramedEdge(newVertex, thiz, label, method.getReturnType());
+                    return thiz.getGraph().addFramedEdge(newVertex, thiz, label);
                 case OUT:
-                    return thiz.getGraph().addFramedEdge(thiz, newVertex, label, method.getReturnType());
+                    return thiz.getGraph().addFramedEdge(thiz, newVertex, label);
                 default:
                     throw new IllegalStateException(method.getName() + " is annotated with a direction other than BOTH, IN, or OUT.");
             }
@@ -232,9 +232,9 @@ public class IncidenceMethodHandler implements MethodHandler {
                 case BOTH:
                     throw new IllegalStateException(method.getName() + " is annotated with direction BOTH, this is not allowed for add methods annotated with @Incidence.");
                 case IN:
-                    return thiz.getGraph().addFramedEdge(newVertex, thiz, label, method.getReturnType());
+                    return thiz.getGraph().addFramedEdge(newVertex, thiz, label);
                 case OUT:
-                    return thiz.getGraph().addFramedEdge(thiz, newVertex, label, method.getReturnType());
+                    return thiz.getGraph().addFramedEdge(thiz, newVertex, label);
                 default:
                     throw new IllegalStateException(method.getName() + " is annotated with a direction other than BOTH, IN, or OUT.");
             }

@@ -19,7 +19,7 @@
 package com.syncleus.ferma;
 
 public class Knows extends AbstractEdgeFrame {
-    static final ClassInitializer<Knows> DEFAULT_INITIALIZER = new DefaultClassInitializer(Knows.class);
+    public static final ClassInitializer<Knows> DEFAULT_INITIALIZER = new DefaultClassInitializer(Knows.class);
 
     public void setYears(final int years) {
         setProperty("years", years);

@@ -58,9 +58,9 @@ public class ExtendedFramedEdgeTest {
         p2 = fg.addFramedVertex(Friend.class);
         p1.setName("Bryn");
         p2.setName("Julia");
-        e1 = p1.addKnows(p2);
+        e1 = p1.addKnows(p2, Knows.DEFAULT_INITIALIZER);
         e1.setYears(15);
-        e2 = p1.addKnownBy(p2);
+        e2 = p1.addKnownBy(p2, Knows.DEFAULT_INITIALIZER);
         e2.setYears(15);
         
     }

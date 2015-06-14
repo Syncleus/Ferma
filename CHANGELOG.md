@@ -1,5 +1,9 @@
 # Ferma Changelog
 
+## 2.0.7
+
+* Added the ability to use as and back gremline pipe methods with named marks.
+
 ## 2.0.6
 
 * Added the ability to use the @Incidence annotation on add* methods. These work the same as with adjacency but return the edge rather than the node.

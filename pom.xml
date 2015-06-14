@@ -261,6 +261,32 @@
                     </formats>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>com.mycila.maven-license-plugin</groupId>
+                <artifactId>maven-license-plugin</artifactId>
+                <version>1.9.0</version>
+                <configuration>
+                    <header>NOTICE</header>
+                    <strictCheck>true</strictCheck>
+                    <aggregate>true</aggregate>
+                    <encoding>UTF-8</encoding>
+                    <failIfMissing>true</failIfMissing>
+                    <skipExistingHeaders>false</skipExistingHeaders>
+                    <includes>
+                        <include>**/src/main/java/**</include>
+                        <include>**/src/test/java/**</include>
+                    </includes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>process-sources</phase>
+                        <goals>
+                            <goal>format</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
 
     </build>

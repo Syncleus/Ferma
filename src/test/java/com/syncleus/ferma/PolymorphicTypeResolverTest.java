@@ -25,7 +25,7 @@ import org.junit.Test;
 import java.util.*;
 import com.tinkerpop.blueprints.Graph;
 
-public class SimpleTypeResolverTest {
+public class PolymorphicTypeResolverTest {
 
     private static final Set<Class<?>> TEST_TYPES = new HashSet<>(Arrays.asList(new Class<?>[]{Person.class, Programmer.class}));
     private static final String CUSTOM_TYPE_KEY = "some_custom_type_key";

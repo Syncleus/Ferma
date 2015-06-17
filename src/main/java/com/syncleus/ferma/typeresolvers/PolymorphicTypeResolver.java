@@ -25,6 +25,7 @@ import com.syncleus.ferma.VertexFrame;
 import com.syncleus.ferma.traversals.VertexTraversal;
 import com.tinkerpop.blueprints.Element;
 import com.tinkerpop.gremlin.Tokens;
+
 import java.util.Set;
 
 /**
@@ -132,4 +133,17 @@ public class PolymorphicTypeResolver implements TypeResolver {
         final Set<? extends String> allAllowedValues = this.reflectionCache.getSubTypeNames(type.getName());
         return traverser.has(typeResolutionKey, Tokens.T.in, allAllowedValues);
     }
+
+    @Override
+    public VertexTraversal<?, ?, ?> hasNotType(VertexTraversal<?, ?, ?> traverser, Class<?> type) {
+        final Set<? extends String> allAllowedValues = this.reflectionCache.getSubTypeNames(type.getName());
+        return traverser.has(typeResolutionKey, Tokens.T.notin, allAllowedValues);
+    }
+
+    @Override
+    public EdgeTraversal<?, ?, ?> hasNotType(EdgeTraversal<?, ?, ?> traverser, Class<?> type) {
+        final Set<? extends String> allAllowedValues = this.reflectionCache.getSubTypeNames(type.getName());
+        return traverser.has(typeResolutionKey, Tokens.T.notin, allAllowedValues);
+    }
+
 }

@@ -553,6 +553,12 @@ abstract class AbstractVertexTraversal<C, S, M> extends AbstractTraversal<Vertex
     }
 
     @Override
+    public VertexTraversal<?, ?, M> has(Class<?> clazz) {
+        graph().getTypeResolver().hasType(this, clazz);
+        return this;
+    }
+
+    @Override
     public VertexTraversal<?, ?, M> hasNot(final String key) {
         return (VertexTraversal<?, ?, M>) super.hasNot(key);
     }
@@ -560,6 +566,12 @@ abstract class AbstractVertexTraversal<C, S, M> extends AbstractTraversal<Vertex
     @Override
     public VertexTraversal<?, ?, M> hasNot(final String key, final Object value) {
         return (VertexTraversal<?, ?, M>) super.hasNot(key, value);
+    }
+
+    @Override
+    public VertexTraversal<?, ?, M> hasNot(Class<?> clazz) {
+        graph().getTypeResolver().hasNotType(this, clazz);
+        return this;
     }
 
     @Override

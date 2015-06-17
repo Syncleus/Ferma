@@ -29,7 +29,6 @@ import java.util.*;
 import com.google.common.collect.Sets;
 import com.syncleus.ferma.pipes.DivertPipe;
 import com.syncleus.ferma.pipes.TraversalFunctionPipe;
-
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Iterators;
@@ -41,6 +40,7 @@ import com.syncleus.ferma.TEdge;
 import com.syncleus.ferma.TVertex;
 import com.syncleus.ferma.VertexFrame;
 import com.syncleus.ferma.pipes.*;
+import com.syncleus.ferma.typeresolvers.PolymorphicTypeResolver;
 import com.tinkerpop.blueprints.Edge;
 import com.tinkerpop.blueprints.Element;
 import com.tinkerpop.blueprints.Graph;

@@ -196,6 +196,12 @@ abstract class AbstractEdgeTraversal<C, S, M> extends AbstractTraversal<EdgeFram
     }
 
     @Override
+    public EdgeTraversal<?, ?, M> has(Class<?> clazz) {
+        graph().getTypeResolver().hasType(this, clazz);
+        return this;
+    }
+
+    @Override
     public EdgeTraversal<?, ?, M> hasNot(final String key) {
         return (EdgeTraversal) super.hasNot(key);
     }
@@ -203,6 +209,12 @@ abstract class AbstractEdgeTraversal<C, S, M> extends AbstractTraversal<EdgeFram
     @Override
     public EdgeTraversal<?, ?, M> hasNot(final String key, final Object value) {
         return (EdgeTraversal) super.hasNot(key, value);
+    }
+
+    @Override
+    public EdgeTraversal<?, ?, M> hasNot(Class<?> clazz) {
+        graph().getTypeResolver().hasNotType(this, clazz);
+        return this;
     }
 
     @Override

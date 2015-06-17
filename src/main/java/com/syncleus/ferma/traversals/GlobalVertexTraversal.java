@@ -191,6 +191,11 @@ public class GlobalVertexTraversal<C, S, M> implements VertexTraversal<C, S, M> 
     }
 
     @Override
+    public VertexTraversal<?, ?, M> has(Class<?> clazz) {
+        return this.delegate().has(clazz);
+    }
+
+    @Override
     public VertexTraversal<?, ?, M> hasNot(final String key) {
         return this.delegate().hasNot(key);
     }
@@ -198,6 +203,11 @@ public class GlobalVertexTraversal<C, S, M> implements VertexTraversal<C, S, M> 
     @Override
     public VertexTraversal<?, ?, M> hasNot(final String key, final Object value) {
         return this.delegate().hasNot(key, value);
+    }
+
+    @Override
+    public VertexTraversal<?, ?, M> hasNot(Class<?> clazz) {
+        return this.delegate().hasNot(clazz);
     }
 
     @Override

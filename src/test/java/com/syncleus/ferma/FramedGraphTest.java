@@ -16,11 +16,11 @@
  */
 package com.syncleus.ferma;
 
-import com.syncleus.ferma.framefactories.FrameFactory;
-import com.syncleus.ferma.typeresolvers.PolymorphicTypeResolver;
-import java.util.Collection;
+import static org.junit.Assert.assertEquals;
 
-import com.tinkerpop.blueprints.*;
+import java.util.Collection;
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,6 +29,11 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import com.syncleus.ferma.framefactories.FrameFactory;
+import com.syncleus.ferma.typeresolvers.PolymorphicTypeResolver;
+import com.tinkerpop.blueprints.Element;
+import com.tinkerpop.blueprints.Graph;
+import com.tinkerpop.blueprints.ThreadedTransactionalGraph;
 import com.tinkerpop.blueprints.impls.tg.TinkerGraph;
 
 public class FramedGraphTest {
@@ -125,6 +130,36 @@ public class FramedGraphTest {
 
         final Collection<? extends Integer> knowsCollection = fg.v().has("name", "Julia").bothE().property("years", Integer.class).aggregate().cap();
         Assert.assertEquals(1, knowsCollection.size());
+    }
+
+    @Test
+    public void testHasClassFilter() {
+        final Graph g = new TinkerGraph();
+        final FramedGraph fg = new DelegatingFramedGraph(g, true, false);
+
+        Person rootPerson = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
+        for (int i = 0; i < 10; i++) {
+            Person person = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
+            rootPerson.addKnows(person);
+        }
+
+        for (int i = 0; i < 5; i++) {
+            Program program = fg.addFramedVertex(Program.DEFAULT_INITIALIZER);
+            program.getElement().addEdge("UNTYPED_EDGE", rootPerson.getElement());
+        }
+
+        assertEquals(5, fg.e().hasNot(Knows.class).count());
+        assertEquals(10, fg.e().has(Knows.class).count());
+        assertEquals(5, fg.v().hasNot(Person.class).count());
+        List<? extends Person> persons = fg.v().hasNot(Person.class).has(Person.class).toListExplicit(Person.class);
+        assertEquals(0, persons.size());
+
+        persons = fg.v().has(Person.class).toListExplicit(Person.class);
+        assertEquals(11, persons.size());
+        // Verify that all found persons have indeed been filtered
+        for(Person person: persons ) {
+            assertEquals(Person.class.getName(), person.getProperty(PolymorphicTypeResolver.TYPE_RESOLUTION_KEY));
+        }
     }
 
     @Test

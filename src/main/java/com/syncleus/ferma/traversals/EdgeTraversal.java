@@ -24,9 +24,14 @@
  */
 package com.syncleus.ferma.traversals;
 
-import com.syncleus.ferma.EdgeFrame;
-import java.util.*;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
+import com.syncleus.ferma.EdgeFrame;
 import com.tinkerpop.blueprints.Predicate;
 import com.tinkerpop.gremlin.Tokens;
 import com.tinkerpop.pipes.transform.TransformPipe;
@@ -99,6 +104,16 @@ public interface EdgeTraversal<C, S, M> extends Traversal<EdgeFrame, C, S, M> {
     EdgeTraversal<?, ?, M> has(String key, Predicate predicate, Object value);
 
     /**
+     * If the incoming edge has the provided ferma_type property that is
+     * checked against the given class, then let the element pass.
+     * 
+     * @param clazz
+     *             the class that should be used for filtering
+     * @return the extended Pipeline
+     */
+    EdgeTraversal<?, ?, M> has(Class<?> clazz);
+
+    /**
      * Check if the element does not have a property with provided key.
      *
      * @param key
@@ -120,6 +135,16 @@ public interface EdgeTraversal<C, S, M> extends Traversal<EdgeFrame, C, S, M> {
      * @return the extended Pipeline
      */
     EdgeTraversal<?, ?, M> hasNot(String key, Object value);
+
+    /**
+     * If the incoming edge has not the provided ferma_type property that is
+     * checked against the given class, then let the edge pass.
+     *
+     * @param clazz
+     *             the class to check against
+     * @return the extended Pipeline
+     */
+    EdgeTraversal<?, ?, M> hasNot(Class<?> clazz);
 
     /**
      * Add an IntervalFilterPipe to the end of the Pipeline. If the incoming
@@ -543,4 +568,5 @@ public interface EdgeTraversal<C, S, M> extends Traversal<EdgeFrame, C, S, M> {
      * @return the extended Pipeline
      */
     EdgeTraversal<?, ?, M> loop(TraversalFunction<EdgeFrame, ? extends EdgeTraversal<?, ?, ?>> traversal, int depth);
+
 }

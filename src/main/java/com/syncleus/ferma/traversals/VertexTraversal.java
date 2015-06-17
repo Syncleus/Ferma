@@ -99,6 +99,16 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
     VertexTraversal<?, ?, M> has(String key, Predicate predicate, Object value);
 
     /**
+     * If the incoming vertex has the provided ferma_type property that is
+     * checked against the given class, then let the element pass.
+     *
+     * @param clazz
+     *             the class to check against
+     * @return the extended Pipeline
+     */
+	VertexTraversal<?, ?, M> has(Class<?> clazz);
+
+    /**
      * Check if the element does not have a property with provided key.
      *
      * @param key
@@ -119,6 +129,16 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
      * @return the extended Pipeline
      */
     VertexTraversal<?, ?, M> hasNot(String key, Object value);
+
+    /**
+     * If the incoming vertex has not the provided ferma_type property that is
+     * checked against the given class, then let it pass.
+     *
+     * @param clazz
+     *             the class to check against
+     * @return the extended Pipeline
+     */
+	VertexTraversal<?, ?, M> hasNot(Class<?> clazz);
 
     /**
      * If the incoming element has a value that is within the interval value
@@ -843,4 +863,5 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
      * @return the extended Pipeline
      */
     VertexTraversal<?, ?, M> loop(TraversalFunction<VertexFrame, ? extends VertexTraversal<?, ?, ?>> traversal, int depth);
+
 }

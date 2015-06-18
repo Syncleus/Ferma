@@ -24,14 +24,15 @@
  */
 package com.syncleus.ferma;
 
-import com.syncleus.ferma.traversals.SimpleTraversal;
-import com.syncleus.ferma.traversals.VertexTraversal;
-import com.syncleus.ferma.traversals.EdgeTraversal;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import com.syncleus.ferma.traversals.EdgeTraversal;
+import com.syncleus.ferma.traversals.SimpleTraversal;
+import com.syncleus.ferma.traversals.VertexTraversal;
 import com.tinkerpop.blueprints.Edge;
 import com.tinkerpop.blueprints.Vertex;
+import com.tinkerpop.blueprints.util.wrappers.wrapped.WrappedElement;
 
 /**
  * The base class that all vertex frames must extend.
@@ -40,7 +41,11 @@ public abstract class AbstractVertexFrame extends AbstractElementFrame implement
 
     @Override
     public Vertex getElement() {
-        return (Vertex) super.getElement();
+        if(super.getElement() instanceof WrappedElement) {
+            return (Vertex) ((WrappedElement)super.getElement()).getBaseElement();
+        } else {
+            return (Vertex) super.getElement();
+        }
     }
 
     @Override

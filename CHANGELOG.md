@@ -3,6 +3,7 @@
 ## 2.0.7
 
 * Added the ability to use as and back gremline pipe methods with named marks.
+* Switched over to using the Syncleus parent POM.
 
 ## 2.0.6
 

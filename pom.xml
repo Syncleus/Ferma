@@ -242,9 +242,7 @@
                     <skipExistingHeaders>false</skipExistingHeaders>
                 </configuration>
             </plugin>
-
         </plugins>
-
     </build>
 
     <reporting>

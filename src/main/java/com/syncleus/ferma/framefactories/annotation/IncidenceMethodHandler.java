@@ -244,7 +244,7 @@ public class IncidenceMethodHandler implements MethodHandler {
     public static final class AddEdgeByObjectTypedEdgeInterceptor {
 
         @RuntimeType
-        public static <C> Object addVertex(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final VertexFrame newVertex, @RuntimeType @Argument(1) final ClassInitializer edgeType) {
+        public static Object addVertex(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final VertexFrame newVertex, @RuntimeType @Argument(1) final ClassInitializer edgeType) {
             assert thiz instanceof CachesReflection;
             final Incidence annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Incidence.class);
             final Direction direction = annotation.direction();

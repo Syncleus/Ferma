@@ -5,6 +5,7 @@
 * Added the ability to use as and back gremline pipe methods with named marks.
 * Added hasType to the gremlin pipeline.
 * Switched over to using the Syncleus parent POM.
+* renamed the pipeline map method to propertyMap to reflect the TP3 interfaces.
 
 ## 2.0.6
 

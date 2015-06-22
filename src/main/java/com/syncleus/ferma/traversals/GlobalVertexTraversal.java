@@ -765,8 +765,8 @@ public class GlobalVertexTraversal<C, S, M> implements VertexTraversal<C, S, M> 
     }
 
     @Override
-    public Traversal<Map<String, Object>, ?, ?, M> map(final String... keys) {
-        return this.simpleDelegate().map(keys);
+    public Traversal<Map<String, Object>, ?, ?, M> propertyMap(final String... keys) {
+        return this.simpleDelegate().propertyMap(keys);
     }
 
     @Override

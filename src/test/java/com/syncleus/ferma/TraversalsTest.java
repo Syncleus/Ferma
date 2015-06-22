@@ -173,8 +173,8 @@ public class TraversalsTest {
 
     @Test
     public void testMap() {
-        Assert.assertEquals(2, graph.v(1).map().next().size());
-        Assert.assertEquals(6, graph.v().map("id", "age").count());
+        Assert.assertEquals(2, graph.v(1).propertyMap().next().size());
+        Assert.assertEquals(6, graph.v().propertyMap("id", "age").count());
     }
 
     @Test

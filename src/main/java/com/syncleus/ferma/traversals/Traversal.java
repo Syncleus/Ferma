@@ -122,7 +122,7 @@ public interface Traversal<T, C, S, M> extends Iterator<T>, Iterable<T> {
      *            retrieved)
      * @return the extended Pipeline
      */
-    Traversal<Map<String, Object>, ?, ?, M> map(String... keys);
+    Traversal<Map<String, Object>, ?, ?, M> propertyMap(String... keys);
 
     /**
      * Will only emit the object if it has not been seen before.

@@ -23,6 +23,7 @@ import com.syncleus.ferma.traversals.EdgeTraversal;
 import com.syncleus.ferma.TEdge;
 import com.syncleus.ferma.TVertex;
 import com.syncleus.ferma.VertexFrame;
+import com.syncleus.ferma.traversals.TraversalFunction;
 import com.syncleus.ferma.traversals.VertexTraversal;
 import com.tinkerpop.blueprints.Element;
 
@@ -55,12 +56,22 @@ public class UntypedTypeResolver implements TypeResolver {
     
     @Override
     public VertexTraversal<?,?,?> hasType(final VertexTraversal<?,?,?> traverser, final Class<?> type) {
-        return traverser;
+        return traverser.filter(new TraversalFunction<VertexFrame, Boolean>() {
+            @Override
+            public Boolean compute(VertexFrame argument) {
+                return false;
+            }
+        });
     }
     
     @Override
     public EdgeTraversal<?,?,?> hasType(final EdgeTraversal<?,?,?> traverser, final Class<?> type) {
-        return traverser;
+        return traverser.filter(new TraversalFunction<EdgeFrame, Boolean>() {
+            @Override
+            public Boolean compute(EdgeFrame argument) {
+                return false;
+            }
+        });
     }
 
 	@Override

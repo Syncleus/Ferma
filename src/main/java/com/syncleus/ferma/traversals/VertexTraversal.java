@@ -1,22 +1,19 @@
-/******************************************************************************
- *                                                                             *
- *  Copyright: (c) Syncleus, Inc.                                              *
- *                                                                             *
- *  You may redistribute and modify this source code under the terms and       *
- *  conditions of the Open Source Community License - Type C version 1.0       *
- *  or any later version as published by Syncleus, Inc. at www.syncleus.com.   *
- *  There should be a copy of the license included with this file. If a copy   *
- *  of the license is not included you are granted no right to distribute or   *
- *  otherwise use this file except through a legal and valid license. You      *
- *  should also contact Syncleus, Inc. at the information below if you cannot  *
- *  find a license:                                                            *
- *                                                                             *
- *  Syncleus, Inc.                                                             *
- *  2604 South 12th Street                                                     *
- *  Philadelphia, PA 19148                                                     *
- *                                                                             *
- ******************************************************************************/
-
+/**
+ * Copyright: (c) Syncleus, Inc.
+ *
+ * You may redistribute and modify this source code under the terms and
+ * conditions of the Open Source Community License - Type C version 1.0
+ * or any later version as published by Syncleus, Inc. at www.syncleus.com.
+ * There should be a copy of the license included with this file. If a copy
+ * of the license is not included you are granted no right to distribute or
+ * otherwise use this file except through a legal and valid license. You
+ * should also contact Syncleus, Inc. at the information below if you cannot
+ * find a license:
+ *
+ * Syncleus, Inc.
+ * 2604 South 12th Street
+ * Philadelphia, PA 19148
+ */
 /*
  * Part or all of this source file was forked from a third-party project, the details of which are listed below.
  *
@@ -102,6 +99,16 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
     VertexTraversal<?, ?, M> has(String key, Predicate predicate, Object value);
 
     /**
+     * If the incoming vertex has the provided ferma_type property that is
+     * checked against the given class, then let the element pass.
+     *
+     * @param clazz
+     *             the class to check against
+     * @return the extended Pipeline
+     */
+	VertexTraversal<?, ?, M> has(Class<?> clazz);
+
+    /**
      * Check if the element does not have a property with provided key.
      *
      * @param key
@@ -122,6 +129,16 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
      * @return the extended Pipeline
      */
     VertexTraversal<?, ?, M> hasNot(String key, Object value);
+
+    /**
+     * If the incoming vertex has not the provided ferma_type property that is
+     * checked against the given class, then let it pass.
+     *
+     * @param clazz
+     *             the class to check against
+     * @return the extended Pipeline
+     */
+	VertexTraversal<?, ?, M> hasNot(Class<?> clazz);
 
     /**
      * If the incoming element has a value that is within the interval value
@@ -745,7 +762,7 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
     VertexTraversal<?, ?, M> order(Tokens.T order);
 
     @Override
-    VertexTraversal<?, ?, M> as(String name);
+    VertexTraversal<C, S, ? extends VertexTraversal<C, S, M>> as(String name);
 
     @Override
     VertexTraversal<?, ?, M> simplePath();
@@ -846,4 +863,5 @@ public interface VertexTraversal<C, S, M> extends Traversal<VertexFrame, C, S, M
      * @return the extended Pipeline
      */
     VertexTraversal<?, ?, M> loop(TraversalFunction<VertexFrame, ? extends VertexTraversal<?, ?, ?>> traversal, int depth);
+
 }

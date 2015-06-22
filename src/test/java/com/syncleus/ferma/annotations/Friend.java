@@ -19,18 +19,19 @@ package com.syncleus.ferma.annotations;
 import com.syncleus.ferma.*;
 import com.tinkerpop.blueprints.Direction;
 
-public interface GodAlternative extends VertexFrame {
-    static final ClassInitializer<GodAlternative> DEFAULT_INITIALIZER = new DefaultClassInitializer(GodAlternative.class);
+public abstract class Friend extends Person {
+    public static final ClassInitializer<Friend> DEFAULT_INITIALIZER = new DefaultClassInitializer(Friend.class);
+    
+    
+    @Incidence(label="knows", direction=Direction.OUT)
+    public abstract Knows addKnows(Friend programmer, ClassInitializer<? extends Knows> type);
 
-    @Adjacency(label = "father", direction = Direction.IN)
-    <N extends God> Iterable<? extends N> getSons(Class<? extends N> type);
+    @Incidence(label="knows", direction=Direction.IN)
+    public abstract Knows addKnownBy(Friend programmer, ClassInitializer<? extends Knows> type);
 
-    @Adjacency(label = "father", direction = Direction.IN)
-    <N extends God> N getSon(Class<? extends N> type);
+    @Incidence(label="knows", direction=Direction.OUT)
+    public abstract EdgeFrame addKnows(Friend programmer);
 
-    @Adjacency(label = "father", direction = Direction.IN)
-    <N extends God> N addSon(ClassInitializer<? extends N> type);
-
-    @Adjacency(label = "")
-    <N extends God> Iterable<? extends N> getNoLabel(Class<? extends N> type);
+    @Incidence(label="knows", direction=Direction.IN)
+    public abstract EdgeFrame addKnownBy(Friend programmer);
 }

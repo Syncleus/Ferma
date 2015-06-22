@@ -1,22 +1,19 @@
-/******************************************************************************
- *                                                                             *
- *  Copyright: (c) Syncleus, Inc.                                              *
- *                                                                             *
- *  You may redistribute and modify this source code under the terms and       *
- *  conditions of the Open Source Community License - Type C version 1.0       *
- *  or any later version as published by Syncleus, Inc. at www.syncleus.com.   *
- *  There should be a copy of the license included with this file. If a copy   *
- *  of the license is not included you are granted no right to distribute or   *
- *  otherwise use this file except through a legal and valid license. You      *
- *  should also contact Syncleus, Inc. at the information below if you cannot  *
- *  find a license:                                                            *
- *                                                                             *
- *  Syncleus, Inc.                                                             *
- *  2604 South 12th Street                                                     *
- *  Philadelphia, PA 19148                                                     *
- *                                                                             *
- ******************************************************************************/
-
+/**
+ * Copyright: (c) Syncleus, Inc.
+ *
+ * You may redistribute and modify this source code under the terms and
+ * conditions of the Open Source Community License - Type C version 1.0
+ * or any later version as published by Syncleus, Inc. at www.syncleus.com.
+ * There should be a copy of the license included with this file. If a copy
+ * of the license is not included you are granted no right to distribute or
+ * otherwise use this file except through a legal and valid license. You
+ * should also contact Syncleus, Inc. at the information below if you cannot
+ * find a license:
+ *
+ * Syncleus, Inc.
+ * 2604 South 12th Street
+ * Philadelphia, PA 19148
+ */
 /*
  * Part or all of this source file was forked from a third-party project, the details of which are listed below.
  *
@@ -635,7 +632,7 @@ public interface Traversal<T, C, S, M> extends Iterator<T>, Iterable<T> {
      *            the name of the AsPipe
      * @return the extended Pipeline
      */
-    Traversal<T, ?, ?, M> as(String name);
+    Traversal<T, C, S, ? extends Traversal<T, C, S, M>> as(String name);
 
     /**
      * If the object's path is repeating (looping), then the object is filtered.
@@ -645,6 +642,13 @@ public interface Traversal<T, C, S, M> extends Iterator<T>, Iterable<T> {
      * @return the extended Pipeline
      */
     Traversal<T, ?, ?, M> simplePath();
+
+    /**
+     * The object that was marked with the specific name is emitted.
+     *
+     * @return the extended Pipeline
+     */
+    M back(String name);
 
     /**
      * The object that was seen at the topmost marked step is emitted. The mark step is removed from the stack.

@@ -1,21 +1,19 @@
-/******************************************************************************
- *                                                                             *
- *  Copyright: (c) Syncleus, Inc.                                              *
- *                                                                             *
- *  You may redistribute and modify this source code under the terms and       *
- *  conditions of the Open Source Community License - Type C version 1.0       *
- *  or any later version as published by Syncleus, Inc. at www.syncleus.com.   *
- *  There should be a copy of the license included with this file. If a copy   *
- *  of the license is not included you are granted no right to distribute or   *
- *  otherwise use this file except through a legal and valid license. You      *
- *  should also contact Syncleus, Inc. at the information below if you cannot  *
- *  find a license:                                                            *
- *                                                                             *
- *  Syncleus, Inc.                                                             *
- *  2604 South 12th Street                                                     *
- *  Philadelphia, PA 19148                                                     *
- *                                                                             *
- ******************************************************************************/
+/**
+ * Copyright: (c) Syncleus, Inc.
+ *
+ * You may redistribute and modify this source code under the terms and
+ * conditions of the Open Source Community License - Type C version 1.0
+ * or any later version as published by Syncleus, Inc. at www.syncleus.com.
+ * There should be a copy of the license included with this file. If a copy
+ * of the license is not included you are granted no right to distribute or
+ * otherwise use this file except through a legal and valid license. You
+ * should also contact Syncleus, Inc. at the information below if you cannot
+ * find a license:
+ *
+ * Syncleus, Inc.
+ * 2604 South 12th Street
+ * Philadelphia, PA 19148
+ */
 package com.syncleus.ferma.framefactories.annotation;
 
 import com.syncleus.ferma.typeresolvers.TypeResolver;
@@ -53,6 +51,25 @@ public class IncidenceMethodHandler implements MethodHandler {
     public <E> DynamicType.Builder<E> processMethod(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
         final java.lang.reflect.Parameter[] arguments = method.getParameters();
 
+        if (ReflectionUtility.isAddMethod(method))
+            if (arguments == null || arguments.length == 0)
+                return this.addEdgeDefault(builder, method, annotation);
+            else if (arguments.length == 1)
+                if (ClassInitializer.class.isAssignableFrom(arguments[0].getType()))
+                    return this.addEdgeByTypeUntypedEdge(builder, method, annotation);
+                else
+                    return this.addEdgeByObjectUntypedEdge(builder, method, annotation);
+            else if (arguments.length == 2) {
+                if (!(ClassInitializer.class.isAssignableFrom(arguments[1].getType())))
+                    throw new IllegalStateException(method.getName() + " was annotated with @Adjacency, had two arguments, but the second argument was not of the type ClassInitializer");
+
+                if (ClassInitializer.class.isAssignableFrom(arguments[0].getType()))
+                    return this.addEdgeByTypeTypedEdge(builder, method, annotation);
+                else
+                    return this.addEdgeByObjectTypedEdge(builder, method, annotation);
+            }
+            else
+                throw new IllegalStateException(method.getName() + " was annotated with @Adjacency but had more than 1 arguments.");
         if (ReflectionUtility.isGetMethod(method))
             if (arguments == null || arguments.length == 0)
                 if (Iterable.class.isAssignableFrom(method.getReturnType()))
@@ -77,18 +94,28 @@ public class IncidenceMethodHandler implements MethodHandler {
                 return this.removeEdge(builder, method, annotation);
             else
                 throw new IllegalStateException(method.getName() + " was annotated with @Incidence but had more than 1 arguments.");
-        else if(ReflectionUtility.isAddMethod(method)){
-        	// this implements @Incidence add that was missing in 2.5 version
-        	//see https://github.com/tinkerpop/frames/wiki/Core-Annotations for more details
-        	if (arguments==null || arguments.length!=1)
-        		throw new IllegalStateException(method.getName() + " was annotated with @Incidence with add method but didn't just a single argument.");
-        	else if (!AbstractVertexFrame.class.isAssignableFrom(arguments[0].getType()))
-        		throw new IllegalStateException(method.getName() + " was annotated with @Incidence, had a single argument, but that argument was not of the type "+AbstractVertexFrame.class.getSimpleName());
-        	return this.addEdgeByType(builder, method, annotation);
-        	
-        }
         else
             throw new IllegalStateException(method.getName() + " was annotated with @Incidence but did not begin with: get, remove");
+    }
+
+    private <E> DynamicType.Builder<E> addEdgeDefault(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
+        return builder.method(ElementMatchers.is(method)).intercept(MethodDelegation.to(AddEdgeDefaultInterceptor.class));
+    }
+
+    private <E> DynamicType.Builder<E> addEdgeByTypeUntypedEdge(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
+        return builder.method(ElementMatchers.is(method)).intercept(MethodDelegation.to(AddEdgeByTypeUntypedEdgeInterceptor.class));
+    }
+
+    private <E> DynamicType.Builder<E> addEdgeByObjectUntypedEdge(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
+        return builder.method(ElementMatchers.is(method)).intercept(MethodDelegation.to(AddEdgeByObjectUntypedEdgeInterceptor.class));
+    }
+
+    private <E> DynamicType.Builder<E> addEdgeByTypeTypedEdge(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
+        return builder.method(ElementMatchers.is(method)).intercept(MethodDelegation.to(AddEdgeByTypeTypedEdgeInterceptor.class));
+    }
+
+    private <E> DynamicType.Builder<E> addEdgeByObjectTypedEdge(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
+        return builder.method(ElementMatchers.is(method)).intercept(MethodDelegation.to(AddEdgeByObjectTypedEdgeInterceptor.class));
     }
 
     private <E> DynamicType.Builder<E> getEdgesDefault(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
@@ -110,9 +137,128 @@ public class IncidenceMethodHandler implements MethodHandler {
     private <E> DynamicType.Builder<E> removeEdge(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
         return builder.method(ElementMatchers.is(method)).intercept(MethodDelegation.to(RemoveEdgeInterceptor.class));
     }
-    
-    private <E> DynamicType.Builder<E> addEdgeByType(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
-        return builder.method(ElementMatchers.is(method)).intercept(MethodDelegation.to(AddEdgeByObjectUntypedEdgeInterceptor.class));
+
+    public static final class AddEdgeDefaultInterceptor {
+
+        @RuntimeType
+        public static Object addEdge(@This final VertexFrame thiz, @Origin final Method method) {
+            final VertexFrame newVertex = thiz.getGraph().addFramedVertex();
+            assert thiz instanceof CachesReflection;
+            final Incidence annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Incidence.class);
+            final Direction direction = annotation.direction();
+            final String label = annotation.label();
+
+            switch (direction) {
+                case BOTH:
+                    throw new IllegalStateException(method.getName() + " is annotated with direction BOTH, this is not allowed for add methods annotated with @Incidence.");
+                case IN:
+                    return thiz.getGraph().addFramedEdge(newVertex, thiz, label);
+                case OUT:
+                    return thiz.getGraph().addFramedEdge(thiz, newVertex, label);
+                default:
+                    throw new IllegalStateException(method.getName() + " is annotated with a direction other than BOTH, IN, or OUT.");
+            }
+        }
+    }
+
+    public static final class AddEdgeByTypeUntypedEdgeInterceptor {
+
+        @RuntimeType
+        public static Object addVertex(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(value = 0) final ClassInitializer vertexType) {
+            final Object newNode = thiz.getGraph().addFramedVertex(vertexType);
+            assert newNode instanceof VertexFrame;
+            final VertexFrame newVertex = ((VertexFrame) newNode);
+
+            assert thiz instanceof CachesReflection;
+            final Incidence annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Incidence.class);
+            final Direction direction = annotation.direction();
+            final String label = annotation.label();
+
+            assert vertexType.getInitializationType().isInstance(newNode);
+
+            switch (direction) {
+                case BOTH:
+                    throw new IllegalStateException(method.getName() + " is annotated with direction BOTH, this is not allowed for add methods annotated with @Incidence.");
+                case IN:
+                    return thiz.getGraph().addFramedEdge(newVertex, thiz, label);
+                case OUT:
+                    return thiz.getGraph().addFramedEdge(thiz, newVertex, label);
+                default:
+                    throw new IllegalStateException(method.getName() + " is annotated with a direction other than BOTH, IN, or OUT.");
+            }
+        }
+    }
+
+    public static final class AddEdgeByTypeTypedEdgeInterceptor {
+
+        @RuntimeType
+        public static Object addVertex(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final ClassInitializer vertexType, @RuntimeType @Argument(1) final ClassInitializer edgeType) {
+            final Object newNode = thiz.getGraph().addFramedVertex(vertexType);
+            assert newNode instanceof VertexFrame;
+            final VertexFrame newVertex = ((VertexFrame) newNode);
+
+            assert thiz instanceof CachesReflection;
+            final Incidence annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Incidence.class);
+            final Direction direction = annotation.direction();
+            final String label = annotation.label();
+
+            assert vertexType.getInitializationType().isInstance(newNode);
+
+            switch (direction) {
+                case BOTH:
+                    throw new IllegalStateException(method.getName() + " is annotated with direction BOTH, this is not allowed for add methods annotated with @Incidence.");
+                case IN:
+                    return thiz.getGraph().addFramedEdge(newVertex, thiz, label, edgeType);
+                case OUT:
+                    return thiz.getGraph().addFramedEdge(thiz, newVertex, label, edgeType);
+                default:
+                    throw new IllegalStateException(method.getName() + " is annotated with a direction other than BOTH, IN, or OUT.");
+            }
+        }
+    }
+
+    public static final class AddEdgeByObjectUntypedEdgeInterceptor {
+
+        @RuntimeType
+        public static Object addVertex(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final VertexFrame newVertex) {
+            assert thiz instanceof CachesReflection;
+            final Incidence annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Incidence.class);
+            final Direction direction = annotation.direction();
+            final String label = annotation.label();
+
+            switch (direction) {
+                case BOTH:
+                    throw new IllegalStateException(method.getName() + " is annotated with direction BOTH, this is not allowed for add methods annotated with @Incidence.");
+                case IN:
+                    return thiz.getGraph().addFramedEdge(newVertex, thiz, label);
+                case OUT:
+                    return thiz.getGraph().addFramedEdge(thiz, newVertex, label);
+                default:
+                    throw new IllegalStateException(method.getName() + " is annotated with a direction other than BOTH, IN, or OUT.");
+            }
+        }
+    }
+
+    public static final class AddEdgeByObjectTypedEdgeInterceptor {
+
+        @RuntimeType
+        public static Object addVertex(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final VertexFrame newVertex, @RuntimeType @Argument(1) final ClassInitializer edgeType) {
+            assert thiz instanceof CachesReflection;
+            final Incidence annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Incidence.class);
+            final Direction direction = annotation.direction();
+            final String label = annotation.label();
+
+            switch (direction) {
+                case BOTH:
+                    throw new IllegalStateException(method.getName() + " is annotated with direction BOTH, this is not allowed for add methods annotated with @Incidence.");
+                case IN:
+                    return thiz.getGraph().addFramedEdge(newVertex, thiz, label, edgeType);
+                case OUT:
+                    return thiz.getGraph().addFramedEdge(thiz, newVertex, label, edgeType);
+                default:
+                    throw new IllegalStateException(method.getName() + " is annotated with a direction other than BOTH, IN, or OUT.");
+            }
+        }
     }
 
     public static final class GetEdgesDefaultInterceptor {
@@ -125,15 +271,15 @@ public class IncidenceMethodHandler implements MethodHandler {
             final String label = annotation.label();
 
             switch (direction) {
-            case BOTH:
-                return thiz.bothE(label).frame(VertexFrame.class);
-            case IN:
-                return thiz.inE(label).frame(VertexFrame.class);
-            //Assume out direction
-            default:
-                return thiz.outE(label).frame(VertexFrame.class);
+                case BOTH:
+                    return thiz.bothE(label).frame(VertexFrame.class);
+                case IN:
+                    return thiz.inE(label).frame(VertexFrame.class);
+                case OUT:
+                    return thiz.outE(label).frame(VertexFrame.class);
+                default:
+                    throw new IllegalStateException(method.getName() + " is annotated with a direction other than BOTH, IN, or OUT.");
             }
-
         }
     }
 
@@ -148,15 +294,15 @@ public class IncidenceMethodHandler implements MethodHandler {
             final TypeResolver resolver = thiz.getGraph().getTypeResolver();
 
             switch (direction) {
-            case BOTH:
-                return resolver.hasType(thiz.bothE(label), type).frame(type);
-            case IN:
-                return resolver.hasType(thiz.inE(label), type).frame(type);
-            //Assume out direction
-            default:
-                return resolver.hasType(thiz.outE(label), type).frame(type);
+                case BOTH:
+                    return resolver.hasType(thiz.bothE(label), type).frame(type);
+                case IN:
+                    return resolver.hasType(thiz.inE(label), type).frame(type);
+                case OUT:
+                    return resolver.hasType(thiz.outE(label), type).frame(type);
+                default:
+                    throw new IllegalStateException(method.getName() + " is annotated with a direction other than BOTH, IN, or OUT.");
             }
-
         }
     }
 
@@ -170,15 +316,15 @@ public class IncidenceMethodHandler implements MethodHandler {
             final String label = annotation.label();
 
             switch (direction) {
-            case BOTH:
-                return thiz.bothE(label).next(VertexFrame.class);
-            case IN:
-                return thiz.inE(label).next(VertexFrame.class);
-            //Assume out direction
-            default:
-                return thiz.outE(label).next(VertexFrame.class);
+                case BOTH:
+                    return thiz.bothE(label).next(VertexFrame.class);
+                case IN:
+                    return thiz.inE(label).next(VertexFrame.class);
+                case OUT:
+                    return thiz.outE(label).next(VertexFrame.class);
+                default:
+                    throw new IllegalStateException(method.getName() + " is annotated with a direction other than BOTH, IN, or OUT.");
             }
-
         }
     }
 
@@ -193,15 +339,15 @@ public class IncidenceMethodHandler implements MethodHandler {
             final TypeResolver resolver = thiz.getGraph().getTypeResolver();
 
             switch (direction) {
-            case BOTH:
-                return resolver.hasType(thiz.bothE(label), type).next(type);
-            case IN:
-                return resolver.hasType(thiz.inE(label), type).next(type);
-            //Assume out direction
-            default:
-                return resolver.hasType(thiz.outE(label), type).next(type);
+                case BOTH:
+                    return resolver.hasType(thiz.bothE(label), type).next(type);
+                case IN:
+                    return resolver.hasType(thiz.inE(label), type).next(type);
+                case OUT:
+                    return resolver.hasType(thiz.outE(label), type).next(type);
+                default:
+                    throw new IllegalStateException(method.getName() + " is annotated with a direction other than BOTH, IN, or OUT.");
             }
-
         }
     }
 
@@ -210,73 +356,6 @@ public class IncidenceMethodHandler implements MethodHandler {
         @RuntimeType
         public static void removeEdge(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final EdgeFrame edge) {
             edge.remove();
-        }
-    }
-    
-    public static final class AddEdgeByObjectUntypedEdgeInterceptor {
-
-        @RuntimeType
-        public static Object addEdge(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final VertexFrame newVertex) {
-            assert thiz instanceof CachesReflection;
-            final Incidence annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Incidence.class);
-            final Direction direction = annotation.direction();
-            final String label = annotation.label();
-            
-            Class<?> edgeClass=null;
-
-            try {
-				edgeClass=Class.forName(label);
-			} catch (ClassNotFoundException e) {
-				throw new IllegalStateException("Couldn't find an edge with name "+label);
-			}
-           
-            if (edgeClass==null)
-            	throw new IllegalStateException("Couldn't find an edge with name "+label);
-            if (!AbstractEdgeFrame.class.isAssignableFrom(edgeClass))
-            	throw new IllegalStateException("Class "+label+" doesn't extend class "+AbstractEdgeFrame.class.getCanonicalName());
-
-            
-            Object edge=null;
-            switch (direction) {
-            case BOTH:
-            	edge=thiz.getGraph().addFramedEdge(newVertex, thiz, label, edgeClass);
-                edge=thiz.getGraph().addFramedEdge(thiz, newVertex, label,edgeClass);
-                break;
-            case IN:
-            	edge=thiz.getGraph().addFramedEdge(newVertex, thiz, label,edgeClass);
-                break;
-            //Assume out direction
-            default:
-            	edge=thiz.getGraph().addFramedEdge(thiz, newVertex, label,edgeClass);
-            }
-            
-
-            return edge;
-        }
-        public static final class AddEdgeByObjectTypedEdgeInterceptor {
-
-            @RuntimeType
-            public static Object addEdge(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final VertexFrame newVertex, @RuntimeType @Argument(1) final ClassInitializer edgeType) {
-                assert thiz instanceof CachesReflection;
-                final Adjacency annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Adjacency.class);
-                final Direction direction = annotation.direction();
-                final String label = annotation.label();
-
-                switch (direction) {
-                case BOTH:
-                    thiz.getGraph().addFramedEdge(newVertex, thiz, label, edgeType);
-                    thiz.getGraph().addFramedEdge(thiz, newVertex, label, edgeType);
-                    break;
-                case IN:
-                    thiz.getGraph().addFramedEdge(newVertex, thiz, label, edgeType);
-                    break;
-                //Assume out direction
-                default:
-                    thiz.getGraph().addFramedEdge(thiz, newVertex, label, edgeType);
-                }
-
-                return newVertex;
-            }
         }
     }
 }

@@ -1,22 +1,19 @@
-/******************************************************************************
- *                                                                             *
- *  Copyright: (c) Syncleus, Inc.                                              *
- *                                                                             *
- *  You may redistribute and modify this source code under the terms and       *
- *  conditions of the Open Source Community License - Type C version 1.0       *
- *  or any later version as published by Syncleus, Inc. at www.syncleus.com.   *
- *  There should be a copy of the license included with this file. If a copy   *
- *  of the license is not included you are granted no right to distribute or   *
- *  otherwise use this file except through a legal and valid license. You      *
- *  should also contact Syncleus, Inc. at the information below if you cannot  *
- *  find a license:                                                            *
- *                                                                             *
- *  Syncleus, Inc.                                                             *
- *  2604 South 12th Street                                                     *
- *  Philadelphia, PA 19148                                                     *
- *                                                                             *
- ******************************************************************************/
-
+/**
+ * Copyright: (c) Syncleus, Inc.
+ *
+ * You may redistribute and modify this source code under the terms and
+ * conditions of the Open Source Community License - Type C version 1.0
+ * or any later version as published by Syncleus, Inc. at www.syncleus.com.
+ * There should be a copy of the license included with this file. If a copy
+ * of the license is not included you are granted no right to distribute or
+ * otherwise use this file except through a legal and valid license. You
+ * should also contact Syncleus, Inc. at the information below if you cannot
+ * find a license:
+ *
+ * Syncleus, Inc.
+ * 2604 South 12th Street
+ * Philadelphia, PA 19148
+ */
 /*
  * Part or all of this source file was forked from a third-party project, the details of which are listed below.
  *
@@ -94,4 +91,24 @@ public interface TypeResolver {
      * @return The traversal stream filtered by the desired type.
      */
     EdgeTraversal<?,?,?> hasType(EdgeTraversal<?,?,?> traverser, Class<?> type);
+
+    /**
+     * Filters out the objects on the traversal that are not satisfying a requested type.
+     * 
+     * @param traverser A traversal pointing to the current set of vertex to be
+     * filtered
+     * @param type The type to filter by.
+     * @return The traversal stream filtered by the desired type.
+     */
+    VertexTraversal<?,?,?> hasNotType(VertexTraversal<?,?,?> traverser, Class<?> type);
+
+    /**
+     * Filters out the objects on the traversal that are not satisfying a requested type.
+     * 
+     * @param traverser A traversal pointing to the current set of edges to be
+     * filtered
+     * @param type The type to filter by.
+     * @return The traversal stream filtered by the desired type.
+     */
+    EdgeTraversal<?,?,?> hasNotType(EdgeTraversal<?,?,?> traverser, Class<?> type);
 }

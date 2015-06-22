@@ -1,22 +1,19 @@
-/******************************************************************************
- *                                                                             *
- *  Copyright: (c) Syncleus, Inc.                                              *
- *                                                                             *
- *  You may redistribute and modify this source code under the terms and       *
- *  conditions of the Open Source Community License - Type C version 1.0       *
- *  or any later version as published by Syncleus, Inc. at www.syncleus.com.   *
- *  There should be a copy of the license included with this file. If a copy   *
- *  of the license is not included you are granted no right to distribute or   *
- *  otherwise use this file except through a legal and valid license. You      *
- *  should also contact Syncleus, Inc. at the information below if you cannot  *
- *  find a license:                                                            *
- *                                                                             *
- *  Syncleus, Inc.                                                             *
- *  2604 South 12th Street                                                     *
- *  Philadelphia, PA 19148                                                     *
- *                                                                             *
- ******************************************************************************/
-
+/**
+ * Copyright: (c) Syncleus, Inc.
+ *
+ * You may redistribute and modify this source code under the terms and
+ * conditions of the Open Source Community License - Type C version 1.0
+ * or any later version as published by Syncleus, Inc. at www.syncleus.com.
+ * There should be a copy of the license included with this file. If a copy
+ * of the license is not included you are granted no right to distribute or
+ * otherwise use this file except through a legal and valid license. You
+ * should also contact Syncleus, Inc. at the information below if you cannot
+ * find a license:
+ *
+ * Syncleus, Inc.
+ * 2604 South 12th Street
+ * Philadelphia, PA 19148
+ */
 /*
  * Part or all of this source file was forked from a third-party project, the details of which are listed below.
  *
@@ -32,7 +29,6 @@ import java.util.*;
 import com.google.common.collect.Sets;
 import com.syncleus.ferma.pipes.DivertPipe;
 import com.syncleus.ferma.pipes.TraversalFunctionPipe;
-
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Iterators;
@@ -44,6 +40,7 @@ import com.syncleus.ferma.TEdge;
 import com.syncleus.ferma.TVertex;
 import com.syncleus.ferma.VertexFrame;
 import com.syncleus.ferma.pipes.*;
+import com.syncleus.ferma.typeresolvers.PolymorphicTypeResolver;
 import com.tinkerpop.blueprints.Edge;
 import com.tinkerpop.blueprints.Element;
 import com.tinkerpop.blueprints.Graph;
@@ -101,9 +98,9 @@ abstract class AbstractTraversal<T, C, S, M> implements Traversal<T, C, S, M> {
     }
 
     @Override
-    public Traversal<T, ?, ?, M> as(final String name) {
+    public Traversal<T, C, S, ? extends Traversal<T, C, S, M>> as(final String name) {
         pipeline().as(name);
-        return this;
+        return (Traversal<T, C, S, ? extends Traversal<T, C, S, M>>) this;
     }
 
     @Override
@@ -713,6 +710,12 @@ abstract class AbstractTraversal<T, C, S, M> implements Traversal<T, C, S, M> {
         final MarkId mark = popMark();
         pipeline().back(mark.id);
         return (M) mark.traversal;
+    }
+
+    @Override
+    public M back(final String name) {
+        pipeline().back(name);
+        return (M) this;
     }
 
     @Override

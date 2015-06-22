@@ -1,22 +1,19 @@
-/******************************************************************************
- *                                                                             *
- *  Copyright: (c) Syncleus, Inc.                                              *
- *                                                                             *
- *  You may redistribute and modify this source code under the terms and       *
- *  conditions of the Open Source Community License - Type C version 1.0       *
- *  or any later version as published by Syncleus, Inc. at www.syncleus.com.   *
- *  There should be a copy of the license included with this file. If a copy   *
- *  of the license is not included you are granted no right to distribute or   *
- *  otherwise use this file except through a legal and valid license. You      *
- *  should also contact Syncleus, Inc. at the information below if you cannot  *
- *  find a license:                                                            *
- *                                                                             *
- *  Syncleus, Inc.                                                             *
- *  2604 South 12th Street                                                     *
- *  Philadelphia, PA 19148                                                     *
- *                                                                             *
- ******************************************************************************/
-
+/**
+ * Copyright: (c) Syncleus, Inc.
+ *
+ * You may redistribute and modify this source code under the terms and
+ * conditions of the Open Source Community License - Type C version 1.0
+ * or any later version as published by Syncleus, Inc. at www.syncleus.com.
+ * There should be a copy of the license included with this file. If a copy
+ * of the license is not included you are granted no right to distribute or
+ * otherwise use this file except through a legal and valid license. You
+ * should also contact Syncleus, Inc. at the information below if you cannot
+ * find a license:
+ *
+ * Syncleus, Inc.
+ * 2604 South 12th Street
+ * Philadelphia, PA 19148
+ */
 /*
  * Part or all of this source file was forked from a third-party project, the details of which are listed below.
  *
@@ -194,6 +191,11 @@ public class GlobalVertexTraversal<C, S, M> implements VertexTraversal<C, S, M> 
     }
 
     @Override
+    public VertexTraversal<?, ?, M> has(Class<?> clazz) {
+        return this.delegate().has(clazz);
+    }
+
+    @Override
     public VertexTraversal<?, ?, M> hasNot(final String key) {
         return this.delegate().hasNot(key);
     }
@@ -201,6 +203,11 @@ public class GlobalVertexTraversal<C, S, M> implements VertexTraversal<C, S, M> 
     @Override
     public VertexTraversal<?, ?, M> hasNot(final String key, final Object value) {
         return this.delegate().hasNot(key, value);
+    }
+
+    @Override
+    public VertexTraversal<?, ?, M> hasNot(Class<?> clazz) {
+        return this.delegate().hasNot(clazz);
     }
 
     @Override
@@ -648,7 +655,7 @@ public class GlobalVertexTraversal<C, S, M> implements VertexTraversal<C, S, M> 
     }
 
     @Override
-    public VertexTraversal<?, ?, M> as(final String name) {
+    public VertexTraversal<C, S, ? extends VertexTraversal<C, S, M>> as(final String name) {
         return this.simpleDelegate().as(name);
     }
 
@@ -765,6 +772,11 @@ public class GlobalVertexTraversal<C, S, M> implements VertexTraversal<C, S, M> 
     @Override
     public M back() {
         return this.simpleDelegate().back();
+    }
+
+    @Override
+    public M back(final String name) {
+        return this.simpleDelegate().back(name);
     }
 
     @Override

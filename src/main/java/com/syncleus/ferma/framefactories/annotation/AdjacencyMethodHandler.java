@@ -1,21 +1,19 @@
-/******************************************************************************
- *                                                                             *
- *  Copyright: (c) Syncleus, Inc.                                              *
- *                                                                             *
- *  You may redistribute and modify this source code under the terms and       *
- *  conditions of the Open Source Community License - Type C version 1.0       *
- *  or any later version as published by Syncleus, Inc. at www.syncleus.com.   *
- *  There should be a copy of the license included with this file. If a copy   *
- *  of the license is not included you are granted no right to distribute or   *
- *  otherwise use this file except through a legal and valid license. You      *
- *  should also contact Syncleus, Inc. at the information below if you cannot  *
- *  find a license:                                                            *
- *                                                                             *
- *  Syncleus, Inc.                                                             *
- *  2604 South 12th Street                                                     *
- *  Philadelphia, PA 19148                                                     *
- *                                                                             *
- ******************************************************************************/
+/**
+ * Copyright: (c) Syncleus, Inc.
+ *
+ * You may redistribute and modify this source code under the terms and
+ * conditions of the Open Source Community License - Type C version 1.0
+ * or any later version as published by Syncleus, Inc. at www.syncleus.com.
+ * There should be a copy of the license included with this file. If a copy
+ * of the license is not included you are granted no right to distribute or
+ * otherwise use this file except through a legal and valid license. You
+ * should also contact Syncleus, Inc. at the information below if you cannot
+ * find a license:
+ *
+ * Syncleus, Inc.
+ * 2604 South 12th Street
+ * Philadelphia, PA 19148
+ */
 package com.syncleus.ferma.framefactories.annotation;
 
 import com.syncleus.ferma.typeresolvers.TypeResolver;
@@ -175,13 +173,14 @@ public class AdjacencyMethodHandler implements MethodHandler {
             final TypeResolver resolver = thiz.getGraph().getTypeResolver();
 
             switch (direction) {
-            case BOTH:
-                return resolver.hasType(thiz.both(label), type).frame(type);
-            case IN:
-                return resolver.hasType(thiz.in(label), type).frame(type);
-            //Assume out direction
-            default:
-                return resolver.hasType(thiz.out(label), type).frame(type);
+                case BOTH:
+                    return resolver.hasType(thiz.both(label), type).frame(type);
+                case IN:
+                    return resolver.hasType(thiz.in(label), type).frame(type);
+                case OUT:
+                    return resolver.hasType(thiz.out(label), type).frame(type);
+                default:
+                    throw new IllegalStateException(method.getName() + " is annotated with a direction other than BOTH, IN, or OUT.");
             }
         }
     }
@@ -196,13 +195,14 @@ public class AdjacencyMethodHandler implements MethodHandler {
             final String label = annotation.label();
 
             switch (direction) {
-            case BOTH:
-                return thiz.both(label).next(VertexFrame.class);
-            case IN:
-                return thiz.in(label).next(VertexFrame.class);
-            //Assume out direction
-            default:
-                return thiz.out(label).next(VertexFrame.class);
+                case BOTH:
+                    return thiz.both(label).next(VertexFrame.class);
+                case IN:
+                    return thiz.in(label).next(VertexFrame.class);
+                case OUT:
+                    return thiz.out(label).next(VertexFrame.class);
+                default:
+                    throw new IllegalStateException(method.getName() + " is annotated with a direction other than BOTH, IN, or OUT.");
             }
         }
     }
@@ -218,13 +218,14 @@ public class AdjacencyMethodHandler implements MethodHandler {
             final TypeResolver resolver = thiz.getGraph().getTypeResolver();
             
             switch (direction) {
-            case BOTH:
-                return resolver.hasType(thiz.both(label), type).next(type);
-            case IN:
-                return resolver.hasType(thiz.in(label), type).next(type);
-            //Assume out direction
-            default:
-                return resolver.hasType(thiz.out(label), type).next(type);
+                case BOTH:
+                    return resolver.hasType(thiz.both(label), type).next(type);
+                case IN:
+                    return resolver.hasType(thiz.in(label), type).next(type);
+                case OUT:
+                    return resolver.hasType(thiz.out(label), type).next(type);
+                default:
+                    throw new IllegalStateException(method.getName() + " is annotated with a direction other than BOTH, IN, or OUT.");
             }
         }
     }
@@ -240,16 +241,17 @@ public class AdjacencyMethodHandler implements MethodHandler {
             final String label = annotation.label();
 
             switch (direction) {
-            case BOTH:
-                thiz.getGraph().addFramedEdge(newVertex, thiz, label);
-                thiz.getGraph().addFramedEdge(thiz, newVertex, label);
-                break;
-            case IN:
-                thiz.getGraph().addFramedEdge(newVertex, thiz, label);
-                break;
-            //Assume out direction
-            default:
-                thiz.getGraph().addFramedEdge(thiz, newVertex, label);
+                case BOTH:
+                    thiz.getGraph().addFramedEdge(newVertex, thiz, label);
+                    thiz.getGraph().addFramedEdge(thiz, newVertex, label);
+                    break;
+                case IN:
+                    thiz.getGraph().addFramedEdge(newVertex, thiz, label);
+                    break;
+                case OUT:
+                    thiz.getGraph().addFramedEdge(thiz, newVertex, label);
+                default:
+                    throw new IllegalStateException(method.getName() + " is annotated with a direction other than BOTH, IN, or OUT.");
             }
 
             return newVertex;
@@ -272,16 +274,17 @@ public class AdjacencyMethodHandler implements MethodHandler {
             assert vertexType.getInitializationType().isInstance(newNode);
 
             switch (direction) {
-            case BOTH:
-                thiz.getGraph().addFramedEdge(newVertex, thiz, label);
-                thiz.getGraph().addFramedEdge(thiz, newVertex, label);
-                break;
-            case IN:
-                thiz.getGraph().addFramedEdge(newVertex, thiz, label);
-                break;
-            //Assume out direction
-            default:
-                thiz.getGraph().addFramedEdge(thiz, newVertex, label);
+                case BOTH:
+                    thiz.getGraph().addFramedEdge(newVertex, thiz, label);
+                    thiz.getGraph().addFramedEdge(thiz, newVertex, label);
+                    break;
+                case IN:
+                    thiz.getGraph().addFramedEdge(newVertex, thiz, label);
+                    break;
+                case OUT:
+                    thiz.getGraph().addFramedEdge(thiz, newVertex, label);
+                default:
+                    throw new IllegalStateException(method.getName() + " is annotated with a direction other than BOTH, IN, or OUT.");
             }
 
             return newNode;
@@ -304,16 +307,17 @@ public class AdjacencyMethodHandler implements MethodHandler {
             assert vertexType.getInitializationType().isInstance(newNode);
 
             switch (direction) {
-            case BOTH:
-                thiz.getGraph().addFramedEdge(newVertex, thiz, label, edgeType);
-                thiz.getGraph().addFramedEdge(thiz, newVertex, label, edgeType);
-                break;
-            case IN:
-                thiz.getGraph().addFramedEdge(newVertex, thiz, label, edgeType);
-                break;
-            //Assume out direction
-            default:
-                thiz.getGraph().addFramedEdge(thiz, newVertex, label, edgeType);
+                case BOTH:
+                    thiz.getGraph().addFramedEdge(newVertex, thiz, label, edgeType);
+                    thiz.getGraph().addFramedEdge(thiz, newVertex, label, edgeType);
+                    break;
+                case IN:
+                    thiz.getGraph().addFramedEdge(newVertex, thiz, label, edgeType);
+                    break;
+                case OUT:
+                    thiz.getGraph().addFramedEdge(thiz, newVertex, label, edgeType);
+                default:
+                    throw new IllegalStateException(method.getName() + " is annotated with a direction other than BOTH, IN, or OUT.");
             }
 
             return newNode;
@@ -330,16 +334,17 @@ public class AdjacencyMethodHandler implements MethodHandler {
             final String label = annotation.label();
 
             switch (direction) {
-            case BOTH:
-                thiz.getGraph().addFramedEdge(newVertex, thiz, label);
-                thiz.getGraph().addFramedEdge(thiz, newVertex, label);
-                break;
-            case IN:
-                thiz.getGraph().addFramedEdge(newVertex, thiz, label);
-                break;
-            //Assume out direction
-            default:
-                thiz.getGraph().addFramedEdge(thiz, newVertex, label);
+                case BOTH:
+                    thiz.getGraph().addFramedEdge(newVertex, thiz, label);
+                    thiz.getGraph().addFramedEdge(thiz, newVertex, label);
+                    break;
+                case IN:
+                    thiz.getGraph().addFramedEdge(newVertex, thiz, label);
+                    break;
+                case OUT:
+                    thiz.getGraph().addFramedEdge(thiz, newVertex, label);
+                default:
+                    throw new IllegalStateException(method.getName() + " is annotated with a direction other than BOTH, IN, or OUT.");
             }
 
             return newVertex;
@@ -356,16 +361,17 @@ public class AdjacencyMethodHandler implements MethodHandler {
             final String label = annotation.label();
 
             switch (direction) {
-            case BOTH:
-                thiz.getGraph().addFramedEdge(newVertex, thiz, label, edgeType);
-                thiz.getGraph().addFramedEdge(thiz, newVertex, label, edgeType);
-                break;
-            case IN:
-                thiz.getGraph().addFramedEdge(newVertex, thiz, label, edgeType);
-                break;
-            //Assume out direction
-            default:
-                thiz.getGraph().addFramedEdge(thiz, newVertex, label, edgeType);
+                case BOTH:
+                    thiz.getGraph().addFramedEdge(newVertex, thiz, label, edgeType);
+                    thiz.getGraph().addFramedEdge(thiz, newVertex, label, edgeType);
+                    break;
+                case IN:
+                    thiz.getGraph().addFramedEdge(newVertex, thiz, label, edgeType);
+                    break;
+                case OUT:
+                    thiz.getGraph().addFramedEdge(thiz, newVertex, label, edgeType);
+                default:
+                    throw new IllegalStateException(method.getName() + " is annotated with a direction other than BOTH, IN, or OUT.");
             }
 
             return newVertex;
@@ -383,26 +389,27 @@ public class AdjacencyMethodHandler implements MethodHandler {
 
 
             switch (direction) {
-            case BOTH:
-                for (final EdgeFrame existingEdge : thiz.bothE(label))
-                    existingEdge.remove();
-                for (final VertexFrame newVertex : (Iterable<? extends VertexFrame>) vertexSet) {
-                    thiz.getGraph().addFramedEdge(newVertex, thiz, label);
-                    thiz.getGraph().addFramedEdge(thiz, newVertex, label);
-                }
-                break;
-            case IN:
-                for (final EdgeFrame existingEdge : thiz.inE(label))
-                    existingEdge.remove();
-                for (final VertexFrame newVertex : (Iterable<? extends VertexFrame>) vertexSet)
-                    thiz.getGraph().addFramedEdge(newVertex, thiz, label);
-                break;
-            //Assume out direction
-            default:
-                for (final EdgeFrame existingEdge : thiz.outE(label))
-                    existingEdge.remove();
-                for (final VertexFrame newVertex : (Iterable<? extends VertexFrame>) vertexSet)
-                    thiz.getGraph().addFramedEdge(thiz, newVertex, label);
+                case BOTH:
+                    for (final EdgeFrame existingEdge : thiz.bothE(label))
+                        existingEdge.remove();
+                    for (final VertexFrame newVertex : (Iterable<? extends VertexFrame>) vertexSet) {
+                        thiz.getGraph().addFramedEdge(newVertex, thiz, label);
+                        thiz.getGraph().addFramedEdge(thiz, newVertex, label);
+                    }
+                    break;
+                case IN:
+                    for (final EdgeFrame existingEdge : thiz.inE(label))
+                        existingEdge.remove();
+                    for (final VertexFrame newVertex : (Iterable<? extends VertexFrame>) vertexSet)
+                        thiz.getGraph().addFramedEdge(newVertex, thiz, label);
+                    break;
+                case OUT:
+                    for (final EdgeFrame existingEdge : thiz.outE(label))
+                        existingEdge.remove();
+                    for (final VertexFrame newVertex : (Iterable<? extends VertexFrame>) vertexSet)
+                        thiz.getGraph().addFramedEdge(thiz, newVertex, label);
+                default:
+                    throw new IllegalStateException(method.getName() + " is annotated with a direction other than BOTH, IN, or OUT.");
             }
         }
     }
@@ -417,21 +424,22 @@ public class AdjacencyMethodHandler implements MethodHandler {
             final String label = annotation.label();
 
             switch (direction) {
-            case BOTH:
-                for (final EdgeFrame edge : thiz.bothE(label))
-                    if (null == removeVertex || edge.outV().next().getId().equals(removeVertex.getId()) || edge.inV().next().getId().equals(removeVertex.getId()))
-                        edge.remove();
-                break;
-            case IN:
-                for (final EdgeFrame edge : thiz.inE(label))
-                    if (null == removeVertex || edge.outV().next().getId().equals(removeVertex.getId()))
-                        edge.remove();
-                break;
-            //Assume out direction
-            default:
-                for (final EdgeFrame edge : thiz.outE(label))
-                    if (null == removeVertex || edge.inV().next().getId().equals(removeVertex.getId()))
-                        edge.remove();
+                case BOTH:
+                    for (final EdgeFrame edge : thiz.bothE(label))
+                        if (null == removeVertex || edge.outV().next().getId().equals(removeVertex.getId()) || edge.inV().next().getId().equals(removeVertex.getId()))
+                            edge.remove();
+                    break;
+                case IN:
+                    for (final EdgeFrame edge : thiz.inE(label))
+                        if (null == removeVertex || edge.outV().next().getId().equals(removeVertex.getId()))
+                            edge.remove();
+                    break;
+                case OUT:
+                    for (final EdgeFrame edge : thiz.outE(label))
+                        if (null == removeVertex || edge.inV().next().getId().equals(removeVertex.getId()))
+                            edge.remove();
+                default:
+                    throw new IllegalStateException(method.getName() + " is annotated with a direction other than BOTH, IN, or OUT.");
             }
         }
     }

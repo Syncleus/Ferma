@@ -6,3 +6,5 @@
 * Daniel Thommes <dandroid42@googlemail.com>
 * Tjad Clark <tjataz@gmail.com>
 * Willem Salembier <willem.salembier@gmail.com>
+* Johannes Schüth <git@jotschi.de>
+

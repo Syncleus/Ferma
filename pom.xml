@@ -143,6 +143,13 @@
                 <role>Developer</role>
             </roles>
         </contributor>
+        <contributor>
+            <name>Johannes Schüth</name>
+            <email>git@jotschi.de</email>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </contributor>
     </contributors>
 
     <properties>

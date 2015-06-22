@@ -216,7 +216,7 @@ public class IncidenceMethodHandler implements MethodHandler {
     public static final class AddEdgeByObjectUntypedEdgeInterceptor {
 
         @RuntimeType
-        public static Object addVertex(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final VertexFrame newVertex) {
+        public static Object addEdge(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final VertexFrame newVertex) {
             assert thiz instanceof CachesReflection;
             final Incidence annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Incidence.class);
             final Direction direction = annotation.direction();
@@ -252,6 +252,31 @@ public class IncidenceMethodHandler implements MethodHandler {
             
 
             return edge;
+        }
+        public static final class AddEdgeByObjectTypedEdgeInterceptor {
+
+            @RuntimeType
+            public static Object addEdge(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final VertexFrame newVertex, @RuntimeType @Argument(1) final ClassInitializer edgeType) {
+                assert thiz instanceof CachesReflection;
+                final Adjacency annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Adjacency.class);
+                final Direction direction = annotation.direction();
+                final String label = annotation.label();
+
+                switch (direction) {
+                case BOTH:
+                    thiz.getGraph().addFramedEdge(newVertex, thiz, label, edgeType);
+                    thiz.getGraph().addFramedEdge(thiz, newVertex, label, edgeType);
+                    break;
+                case IN:
+                    thiz.getGraph().addFramedEdge(newVertex, thiz, label, edgeType);
+                    break;
+                //Assume out direction
+                default:
+                    thiz.getGraph().addFramedEdge(thiz, newVertex, label, edgeType);
+                }
+
+                return newVertex;
+            }
         }
     }
 }

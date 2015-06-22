@@ -3,6 +3,7 @@
 ## 2.0.7
 
 * Added the ability to use as and back gremline pipe methods with named marks.
+* Added hasType to the gremlin pipeline.
 
 ## 2.0.6
 

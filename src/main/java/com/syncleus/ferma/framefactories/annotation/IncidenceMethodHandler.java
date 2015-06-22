@@ -225,14 +225,16 @@ public class IncidenceMethodHandler implements MethodHandler {
             final Incidence annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Incidence.class);
             final Direction direction = annotation.direction();
             final String label = annotation.label();
+            
+            DefaultClassInitializer edgeType2 = new DefaultClassInitializer(method.getReturnType());
 
             switch (direction) {
                 case BOTH:
                     throw new IllegalStateException(method.getName() + " is annotated with direction BOTH, this is not allowed for add methods annotated with @Incidence.");
                 case IN:
-                    return thiz.getGraph().addFramedEdge(newVertex, thiz, label);
+                    return thiz.getGraph().addFramedEdge(newVertex, thiz, label,edgeType2);
                 case OUT:
-                    return thiz.getGraph().addFramedEdge(thiz, newVertex, label);
+                    return thiz.getGraph().addFramedEdge(thiz, newVertex, label,edgeType2);
                 default:
                     throw new IllegalStateException(method.getName() + " is annotated with a direction other than BOTH, IN, or OUT.");
             }
@@ -242,12 +244,12 @@ public class IncidenceMethodHandler implements MethodHandler {
     public static final class AddEdgeByObjectTypedEdgeInterceptor {
 
         @RuntimeType
-        public static Object addVertex(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final VertexFrame newVertex, @RuntimeType @Argument(1) final ClassInitializer edgeType) {
+        public static <C> Object addVertex(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final VertexFrame newVertex, @RuntimeType @Argument(1) final ClassInitializer edgeType) {
             assert thiz instanceof CachesReflection;
             final Incidence annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Incidence.class);
             final Direction direction = annotation.direction();
             final String label = annotation.label();
-
+            
             switch (direction) {
                 case BOTH:
                     throw new IllegalStateException(method.getName() + " is annotated with direction BOTH, this is not allowed for add methods annotated with @Incidence.");

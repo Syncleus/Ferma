@@ -45,6 +45,7 @@ public class ExtendedFramedEdgeTest {
     private Friend p2;
     private Knows e1;
     private Knows e2;
+    private Knows e3;
 
     @Before
     public void init() {
@@ -60,6 +61,9 @@ public class ExtendedFramedEdgeTest {
         e1.setYears(15);
         e2 = p1.addKnownBy(p2, Knows.DEFAULT_INITIALIZER);
         e2.setYears(15);
+        
+        e3=p1.addKnowsSmartResolver(p2);
+        e3.setYears(15);
         
     }
 
@@ -92,10 +96,17 @@ public class ExtendedFramedEdgeTest {
     public void testOutVExplicit() {
         Assert.assertEquals(p1, e1.outV().nextExplicit(Friend.class));
     }
+    
 
     @Test
     public void testBothVExplicit() {
         Assert.assertEquals(p1, e1.bothV().nextExplicit(Friend.class));
+    }
+    
+    @Test
+    public void testSmartResolver() {
+        Assert.assertNotNull(e3);
+        Assert.assertEquals(e3.getYears(), 15);
     }
     
 }

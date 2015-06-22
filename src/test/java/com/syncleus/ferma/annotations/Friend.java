@@ -34,4 +34,7 @@ public abstract class Friend extends Person {
 
     @Incidence(label="knows", direction=Direction.IN)
     public abstract EdgeFrame addKnownBy(Friend programmer);
+    
+    @Incidence(label="knows", direction=Direction.OUT)
+    public abstract Knows addKnowsSmartResolver(Friend programmer);
 }

@@ -226,8 +226,6 @@ public class IncidenceMethodHandler implements MethodHandler {
             final Direction direction = annotation.direction();
             final String label = annotation.label();
             
-            //DefaultClassInitializer edgeType2 = new DefaultClassInitializer(method.getReturnType());
-
             switch (direction) {
                 case BOTH:
                     throw new IllegalStateException(method.getName() + " is annotated with direction BOTH, this is not allowed for add methods annotated with @Incidence.");

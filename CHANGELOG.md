@@ -1,6 +1,6 @@
 # Ferma Changelog
 
-## 2.0.7
+## 2.1.0
 
 * Added the ability to use as and back gremline pipe methods with named marks.
 * Added hasType to the gremlin pipeline.

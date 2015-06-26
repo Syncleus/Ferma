@@ -284,6 +284,15 @@ abstract class AbstractEdgeTraversal<C, S, M> extends AbstractTraversal<EdgeFram
     }
 
     @Override
+    public <N> N nextOrDefaultExplicit(final Class<N> kind, final N defaultValue) {
+        if (pipeline().hasNext()) {
+            return nextExplicit(kind);
+        } else {
+            return defaultValue;
+        }
+    }
+
+    @Override
     public <T> Iterable<T> frame(final Class<T> kind) {
         return Iterables.transform(pipeline(), new Function() {
 

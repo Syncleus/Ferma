@@ -569,4 +569,21 @@ public interface EdgeTraversal<C, S, M> extends Traversal<EdgeFrame, C, S, M> {
      */
     EdgeTraversal<?, ?, M> loop(TraversalFunction<EdgeFrame, ? extends EdgeTraversal<?, ?, ?>> traversal, int depth);
 
+    /**
+     * Get the next object emitted from the pipeline. If no such object exists,
+     * then a the default value is returned.
+     *
+     * This will bypass the default type resolution and use the untyped resolver
+     * instead. This method is useful for speeding up a look up when type resolution
+     * isn't required.
+     *
+     * @param <N> The type used to frame the element
+     * @param kind
+     *            The type of frame for the element.
+     * @param defaultValue
+     *            The object to return if no next object exists.
+     * @return the next emitted object
+     */
+    <N> N nextOrDefaultExplicit(Class<N> kind, N defaultValue);
+
 }

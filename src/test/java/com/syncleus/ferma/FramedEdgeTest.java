@@ -16,10 +16,14 @@
  */
 package com.syncleus.ferma;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockitoAnnotations;
+
 import com.tinkerpop.blueprints.Graph;
 import com.tinkerpop.blueprints.impls.tg.TinkerGraph;
 
@@ -28,12 +32,13 @@ public class FramedEdgeTest {
     private Person p1;
     private Person p2;
     private Knows e1;
+    private FramedGraph fg;
 
     @Before
     public void init() {
         MockitoAnnotations.initMocks(this);
         final Graph g = new TinkerGraph();
-        final FramedGraph fg = new DelegatingFramedGraph(g);
+        fg = new DelegatingFramedGraph(g);
         p1 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
         p2 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
         p1.setName("Bryn");
@@ -77,5 +82,11 @@ public class FramedEdgeTest {
     public void testBothVExplicit() {
         Assert.assertEquals(p1, e1.bothV().nextExplicit(Person.class));
     }
-    
+
+    @Test
+    public void testNextOrDefaultExplicit() {
+        assertNotNull(fg.e().nextOrDefaultExplicit(Knows.class, null));
+        fg.e().removeAll();
+        assertNull(fg.e().nextOrDefaultExplicit(Knows.class, null));
+    }
 }

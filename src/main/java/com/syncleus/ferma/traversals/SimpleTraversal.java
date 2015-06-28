@@ -42,9 +42,6 @@ import com.tinkerpop.blueprints.Graph;
  * @param <M> The current marked type for the current pipe.
  */
 public class SimpleTraversal<T, C, S, M> extends AbstractTraversal<T, C, S, M> {
-
-    private final FramedGraph graph;
-    private final FermaGremlinPipeline pipeline;
     private final Deque<MarkId> marks = new ArrayDeque<>();
     private int markId = 0;
 
@@ -53,7 +50,7 @@ public class SimpleTraversal<T, C, S, M> extends AbstractTraversal<T, C, S, M> {
     }
 
     public SimpleTraversal(final FramedGraph graph, final Iterator starts) {
-        this(graph, new FermaGremlinPipeline<>(starts));
+        super(graph, new FermaGremlinPipeline<>(starts));
     }
 
     public SimpleTraversal(final FramedGraph graph, final ElementFrame starts) {
@@ -80,12 +77,6 @@ public class SimpleTraversal<T, C, S, M> extends AbstractTraversal<T, C, S, M> {
         return marks.pop();
     }
 
-    private SimpleTraversal(final FramedGraph graph, final FermaGremlinPipeline pipeline) {
-        this.graph = graph;
-        this.pipeline = pipeline;
-
-    }
-
     /**
      * @return Cast the traversal to a {@link VertexTraversal}
      */
@@ -108,18 +99,6 @@ public class SimpleTraversal<T, C, S, M> extends AbstractTraversal<T, C, S, M> {
     }
 
     @Override
-    protected FermaGremlinPipeline getPipeline() {
-
-        return pipeline;
-    }
-
-    @Override
-    protected FramedGraph graph() {
-
-        return graph;
-    }
-
-    @Override
     protected <N> SplitTraversal<N> castToSplit() {
         return splitTraversal;
     }
@@ -139,7 +118,7 @@ public class SimpleTraversal<T, C, S, M> extends AbstractTraversal<T, C, S, M> {
         }
     };
 
-    private final EdgeTraversal edgeTraversal = new AbstractEdgeTraversal() {
+    private final EdgeTraversal edgeTraversal = new AbstractEdgeTraversal(getGraph(), getPipeline()) {
 
         @Override
         public VertexTraversal castToVertices() {
@@ -149,16 +128,6 @@ public class SimpleTraversal<T, C, S, M> extends AbstractTraversal<T, C, S, M> {
         @Override
         public EdgeTraversal castToEdges() {
             return edgeTraversal;
-        }
-
-        @Override
-        protected FramedGraph graph() {
-            return graph;
-        }
-
-        @Override
-        protected FermaGremlinPipeline getPipeline() {
-            return pipeline;
         }
 
         @Override
@@ -182,7 +151,7 @@ public class SimpleTraversal<T, C, S, M> extends AbstractTraversal<T, C, S, M> {
         }
     };
 
-    private final VertexTraversal vertexTraversal = new AbstractVertexTraversal() {
+    private final VertexTraversal vertexTraversal = new AbstractVertexTraversal(getGraph(), getPipeline()) {
         @Override
         public VertexTraversal castToVertices() {
             return vertexTraversal;
@@ -196,16 +165,6 @@ public class SimpleTraversal<T, C, S, M> extends AbstractTraversal<T, C, S, M> {
         @Override
         protected Traversal castToTraversal() {
             return SimpleTraversal.this;
-        }
-
-        @Override
-        protected FramedGraph graph() {
-            return graph;
-        }
-
-        @Override
-        protected FermaGremlinPipeline getPipeline() {
-            return pipeline;
         }
 
         @Override

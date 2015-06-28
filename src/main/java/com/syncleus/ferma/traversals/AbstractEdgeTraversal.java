@@ -29,7 +29,9 @@ import java.util.*;
 import com.google.common.base.Function;
 import com.google.common.collect.*;
 import com.syncleus.ferma.EdgeFrame;
+import com.syncleus.ferma.FramedGraph;
 import com.syncleus.ferma.TEdge;
+import com.syncleus.ferma.pipes.FermaGremlinPipeline;
 import com.tinkerpop.blueprints.Edge;
 import com.tinkerpop.blueprints.Element;
 import com.tinkerpop.blueprints.Predicate;
@@ -50,6 +52,9 @@ import com.tinkerpop.pipes.util.structures.Tree;
  * @param <M> The current marked type for the current pipe.
  */
 abstract class AbstractEdgeTraversal<C, S, M> extends AbstractTraversal<EdgeFrame, C, S, M> implements EdgeTraversal<C, S, M> {
+    protected AbstractEdgeTraversal(FramedGraph graph, FermaGremlinPipeline pipeline) {
+        super(graph, pipeline);
+    }
 
     @Override
     public EdgeFrame next() {

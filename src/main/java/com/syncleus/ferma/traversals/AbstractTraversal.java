@@ -64,10 +64,25 @@ import com.tinkerpop.pipes.util.structures.Tree;
  * @param <M> The current marked type for the current pipe.
  */
 abstract class AbstractTraversal<T, C, S, M> implements Traversal<T, C, S, M> {
+    private final FramedGraph graph;
+    private final FermaGremlinPipeline pipeline;
 
-    protected abstract FramedGraph graph();
+    protected AbstractTraversal(final FramedGraph graph, final FermaGremlinPipeline pipeline) {
+        this.graph = graph;
+        this.pipeline = pipeline;
+    }
 
-    protected abstract FermaGremlinPipeline getPipeline();
+    protected FramedGraph graph() {
+        return this.graph;
+    }
+
+    protected FermaGremlinPipeline getPipeline() {
+        return this.pipeline;
+    }
+
+    protected FramedGraph getGraph() {
+        return graph;
+    }
 
     @Override
     public VertexTraversal<?, ?, M> v() {

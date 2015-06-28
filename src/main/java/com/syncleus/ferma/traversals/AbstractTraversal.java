@@ -40,7 +40,6 @@ import com.syncleus.ferma.TEdge;
 import com.syncleus.ferma.TVertex;
 import com.syncleus.ferma.VertexFrame;
 import com.syncleus.ferma.pipes.*;
-import com.syncleus.ferma.typeresolvers.PolymorphicTypeResolver;
 import com.tinkerpop.blueprints.Edge;
 import com.tinkerpop.blueprints.Element;
 import com.tinkerpop.blueprints.Graph;
@@ -68,17 +67,17 @@ abstract class AbstractTraversal<T, C, S, M> implements Traversal<T, C, S, M> {
 
     protected abstract FramedGraph graph();
 
-    protected abstract FermaGremlinPipeline pipeline();
+    protected abstract FermaGremlinPipeline getPipeline();
 
     @Override
     public VertexTraversal<?, ?, M> v() {
-        pipeline().V();
+        getPipeline().V();
         return castToVertices();
     }
 
     @Override
     public EdgeTraversal<?, ?, M> e() {
-        pipeline().E();
+        getPipeline().E();
         return castToEdges();
     }
 
@@ -94,55 +93,55 @@ abstract class AbstractTraversal<T, C, S, M> implements Traversal<T, C, S, M> {
 
     @Override
     public long count() {
-        return pipeline().count();
+        return getPipeline().count();
     }
 
     @Override
     public Traversal<T, C, S, ? extends Traversal<T, C, S, M>> as(final String name) {
-        pipeline().as(name);
+        getPipeline().as(name);
         return (Traversal<T, C, S, ? extends Traversal<T, C, S, M>>) this;
     }
 
     @Override
     public void iterate() {
-        pipeline().iterate();
+        getPipeline().iterate();
     }
 
     protected Traversal<?, ?, ?, M> has(final String key) {
-        pipeline().has(key);
+        getPipeline().has(key);
         return this;
     }
 
     protected Traversal<?, ?, ?, M> has(final String key, Object value) {
         if (value instanceof Enum)
             value = value.toString();
-        pipeline().has(key, value);
+        getPipeline().has(key, value);
         return this;
     }
 
     protected Traversal<?, ?, ?, M> has(final String key, final Tokens.T compareToken, Object value) {
         if (value.getClass().isArray())
             value = Arrays.asList((Object[]) value);
-        pipeline().has(key, compareToken, value);
+        getPipeline().has(key, compareToken, value);
         return this;
     }
 
     protected Traversal<?, ?, ?, M> has(final String key, final Predicate predicate, Object value) {
         if (value instanceof Enum)
             value = value.toString();
-        pipeline().has(key, predicate, value);
+        getPipeline().has(key, predicate, value);
         return this;
     }
 
     protected Traversal<?, ?, ?, M> hasNot(final String key) {
-        pipeline().hasNot(key);
+        getPipeline().hasNot(key);
         return this;
     }
 
     protected Traversal<?, ?, ?, M> hasNot(final String key, Object value) {
         if (value instanceof Enum)
             value = value.toString();
-        pipeline().hasNot(key, value);
+        getPipeline().hasNot(key, value);
         return this;
     }
 
@@ -155,79 +154,79 @@ abstract class AbstractTraversal<T, C, S, M> implements Traversal<T, C, S, M> {
         if (endValue instanceof Enum)
             pipelineEnd = endValue.toString();
 
-        pipeline().interval(key, pipelineStart, pipelineEnd);
+        getPipeline().interval(key, pipelineStart, pipelineEnd);
         return this;
     }
 
     @Override
     public Traversal<T, ?, ?, M> identity() {
-        pipeline()._();
+        getPipeline()._();
         return this;
     }
 
     @Override
     public Traversal<T, ?, ?, M> except(final Iterable<?> collection) {
-        pipeline().except(unwrap(Lists.newArrayList(collection)));
+        getPipeline().except(unwrap(Lists.newArrayList(collection)));
         return this;
     }
 
     @Override
     public Traversal<Map<String, Object>, ?, ?, M> propertyMap(final String... keys) {
-        pipeline().map(keys);
+        getPipeline().map(keys);
         return castToTraversal();
     }
 
     @Override
     public Traversal<T, ?, ?, M> dedup() {
-        pipeline().dedup();
+        getPipeline().dedup();
         return this;
     }
 
     @Override
     public Traversal<T, ?, ?, M> dedup(final TraversalFunction<T, ?> dedupFunction) {
-        pipeline().dedup(dedupFunction);
+        getPipeline().dedup(dedupFunction);
         return this;
     }
 
     @Override
     public Traversal<T, ?, ?, M> except(final String... namedSteps) {
-        pipeline().except(namedSteps);
+        getPipeline().except(namedSteps);
         return this;
     }
 
     @Override
     public Traversal<T, ?, ?, M> filter(final TraversalFunction<T, Boolean> filterFunction) {
-        pipeline().filter(new FramingTraversalFunction(filterFunction, graph()));
+        getPipeline().filter(new FramingTraversalFunction(filterFunction, graph()));
         return this;
     }
 
     @Override
     public Traversal<T, ?, ?, M> random(final double bias) {
-        pipeline().random(bias);
+        getPipeline().random(bias);
         return this;
     }
 
     @Override
     public Traversal<T, ?, ?, M> range(final int low, final int high) {
-        pipeline().range(low, high);
+        getPipeline().range(low, high);
         return this;
     }
 
     @Override
     public Traversal<T, ?, ?, M> retain(final Iterable<?> collection) {
-        pipeline().retain(unwrap(Lists.newArrayList(collection)));
+        getPipeline().retain(unwrap(Lists.newArrayList(collection)));
         return this;
     }
 
     @Override
     public Traversal<T, ?, ?, M> retain(final String... namedSteps) {
-        pipeline().retain(namedSteps);
+        getPipeline().retain(namedSteps);
         return this;
     }
 
     @Override
     public Traversal<T, ?, ?, M> simplePath() {
-        pipeline().simplePath();
+        getPipeline().simplePath();
         return this;
     }
 
@@ -239,82 +238,82 @@ abstract class AbstractTraversal<T, C, S, M> implements Traversal<T, C, S, M> {
 
     @Override
     public Traversal<T, Collection<? extends T>, Collection<? extends T>, M> aggregate(final Collection<? super T> aggregate) {
-        pipeline().aggregate(aggregate, new FramingTraversalFunction<>(graph()));
+        getPipeline().aggregate(aggregate, new FramingTraversalFunction<>(graph()));
         return (Traversal<T, Collection<? extends T>, Collection<? extends T>, M>) this;
     }
 
     @Override
     public <N> Traversal<T, Collection<? extends N>, Collection<? extends N>, M> aggregate(final Collection<? super N> aggregate, final TraversalFunction<T, ? extends N> aggregateFunction) {
-        pipeline().aggregate(aggregate, new FramingTraversalFunction<>(aggregateFunction, graph()));
+        getPipeline().aggregate(aggregate, new FramingTraversalFunction<>(aggregateFunction, graph()));
         return (Traversal<T, Collection<? extends N>, Collection<? extends N>, M>) this;
     }
 
     @Override
     public <N> Traversal<T, Collection<? extends N>, Collection<? extends N>, M> aggregate(final TraversalFunction<T, ? extends N> aggregateFunction) {
-        pipeline().aggregate(new FramingTraversalFunction<>(aggregateFunction, graph()));
+        getPipeline().aggregate(new FramingTraversalFunction<>(aggregateFunction, graph()));
         return (Traversal<T, Collection<? extends N>, Collection<? extends N>, M>) this;
     }
 
     @Override
     public <K, V> Traversal<T, Map<K, List<V>>, Map<K, List<V>>, M> groupBy(final Map<K, List<V>> map, final TraversalFunction<T, K> keyFunction, final TraversalFunction<T, Iterator<V>> valueFunction) {
-        pipeline().groupBy(map, new FramingTraversalFunction<>(keyFunction, graph()),
-                           new TraversalFunctionPipe(new FramingTraversalFunction<>(valueFunction, graph())));
+        getPipeline().groupBy(map, new FramingTraversalFunction<>(keyFunction, graph()),
+            new TraversalFunctionPipe(new FramingTraversalFunction<>(valueFunction, graph())));
         return (Traversal<T, Map<K, List<V>>, Map<K, List<V>>, M>) this;
     }
 
     @Override
     public <K, V> Traversal<T, Map<K, List<V>>, Map<K, List<V>>, M> groupBy(final TraversalFunction<T, K> keyFunction, final TraversalFunction<T, Iterator<V>> valueFunction) {
 
-        pipeline().groupBy(new FramingTraversalFunction<>(keyFunction, graph()),
-                           new TraversalFunctionPipe(new FramingTraversalFunction<>(valueFunction, graph())));
+        getPipeline().groupBy(new FramingTraversalFunction<>(keyFunction, graph()),
+            new TraversalFunctionPipe(new FramingTraversalFunction<>(valueFunction, graph())));
         return (Traversal<T, Map<K, List<V>>, Map<K, List<V>>, M>) this;
     }
 
     @Override
     public <K, V, V2> Traversal<T, Map<K, V2>, Map<K, V2>, M> groupBy(final Map<K, V2> reduceMap, final TraversalFunction<T, K> keyFunction, final TraversalFunction<T, Iterator<V>> valueFunction,
                                                                       final TraversalFunction<List<V>, V2> reduceFunction) {
-        pipeline().groupBy(reduceMap, new FramingTraversalFunction<>(keyFunction, graph()),
-                           new TraversalFunctionPipe(new FramingTraversalFunction<>(valueFunction, graph())), reduceFunction);
+        getPipeline().groupBy(reduceMap, new FramingTraversalFunction<>(keyFunction, graph()),
+            new TraversalFunctionPipe(new FramingTraversalFunction<>(valueFunction, graph())), reduceFunction);
         return (Traversal<T, Map<K, V2>, Map<K, V2>, M>) this;
     }
 
     @Override
     public <K, V, V2> Traversal<T, Map<K, V2>, Map<K, V2>, M> groupBy(final TraversalFunction<T, K> keyFunction, final TraversalFunction<T, Iterator<V>> valueFunction,
                                                                       final TraversalFunction<List<V>, V2> reduceFunction) {
-        pipeline().groupBy(new FramingTraversalFunction<>(keyFunction, graph()),
-                           new TraversalFunctionPipe(new FramingTraversalFunction<>(valueFunction, graph())), reduceFunction);
+        getPipeline().groupBy(new FramingTraversalFunction<>(keyFunction, graph()),
+            new TraversalFunctionPipe(new FramingTraversalFunction<>(valueFunction, graph())), reduceFunction);
         return (Traversal<T, Map<K, V2>, Map<K, V2>, M>) this;
     }
 
     @Override
     public <K> Traversal<T, Map<K, Long>, Map<K, Long>, M> groupCount(final Map<K, Long> map, final TraversalFunction<T, K> keyFunction, final TraversalFunction<Pair<T, Long>, Long> valueFunction) {
-        pipeline().groupCount(map, new FramingTraversalFunction<>(keyFunction, graph()),
-                              new TraversalFunctionPipe(new FramingTraversalFunction<>(valueFunction, graph())));
+        getPipeline().groupCount(map, new FramingTraversalFunction<>(keyFunction, graph()),
+            new TraversalFunctionPipe(new FramingTraversalFunction<>(valueFunction, graph())));
         return (Traversal<T, Map<K, Long>, Map<K, Long>, M>) this;
     }
 
     @Override
     public <K> Traversal<T, Map<K, Long>, Map<K, Long>, M> groupCount(final TraversalFunction<T, K> keyFunction, final TraversalFunction<Pair<T, Long>, Long> valueFunction) {
-        pipeline().groupCount(new FramingTraversalFunction<>(keyFunction, graph()),
-                              new FramingTraversalFunction<>(valueFunction, graph()));
+        getPipeline().groupCount(new FramingTraversalFunction<>(keyFunction, graph()),
+            new FramingTraversalFunction<>(valueFunction, graph()));
         return (Traversal<T, Map<K, Long>, Map<K, Long>, M>) this;
     }
 
     @Override
     public <K> Traversal<T, Map<K, Long>, Map<K, Long>, M> groupCount(final Map<K, Long> map, final TraversalFunction<T, K> keyFunction) {
-        pipeline().groupCount(new FramingMap<>(map, graph()), new FramingTraversalFunction<>(keyFunction, graph()));
+        getPipeline().groupCount(new FramingMap<>(map, graph()), new FramingTraversalFunction<>(keyFunction, graph()));
         return (Traversal<T, Map<K, Long>, Map<K, Long>, M>) this;
     }
 
     @Override
     public <K> Traversal<T, Map<K, Long>, Map<K, Long>, M> groupCount(final TraversalFunction<T, K> keyFunction) {
-        pipeline().groupCount(new FramingTraversalFunction<>(keyFunction, graph()));
+        getPipeline().groupCount(new FramingTraversalFunction<>(keyFunction, graph()));
         return (Traversal<T, Map<K, Long>, Map<K, Long>, M>) this;
     }
 
     @Override
     public Traversal<T, Map<T, Long>, Map<T, Long>, M> groupCount(final Map<T, Long> map) {
-        pipeline().groupCount(new FramingMap<>(map, graph()));
+        getPipeline().groupCount(new FramingMap<>(map, graph()));
         return (Traversal<T, Map<T, Long>, Map<T, Long>, M>) this;
     }
 
@@ -326,13 +325,13 @@ abstract class AbstractTraversal<T, C, S, M> implements Traversal<T, C, S, M> {
 
     @Override
     public EdgeTraversal<?, ?, M> idEdge(final Graph graph) {
-        pipeline().idEdge(graph);
+        getPipeline().idEdge(graph);
         return castToEdges();
     }
 
     @Override
     public <N> Traversal<N, ?, ?, M> id() {
-        pipeline().id();
+        getPipeline().id();
         return castToTraversal();
     }
 
@@ -343,14 +342,14 @@ abstract class AbstractTraversal<T, C, S, M> implements Traversal<T, C, S, M> {
 
     @Override
     public VertexTraversal<?, ?, M> idVertex(final Graph graph) {
-        pipeline().idVertex(graph);
+        getPipeline().idVertex(graph);
         return castToVertices();
     }
 
     @Override
     public Traversal<T, ?, ?, M> sideEffect(final SideEffectFunction<T> sideEffectFunction) {
         final FramingSideEffectFunction function = new FramingSideEffectFunction<>(sideEffectFunction, graph());
-        pipeline().sideEffect(new TraversalFunction() {
+        getPipeline().sideEffect(new TraversalFunction() {
 
             @Override
             public Object compute(final Object argument) {
@@ -364,13 +363,13 @@ abstract class AbstractTraversal<T, C, S, M> implements Traversal<T, C, S, M> {
 
     @Override
     public <N> Traversal<T, Collection<? extends N>, N, M> store(final Collection<? super N> storage) {
-        pipeline().store(storage, new FramingTraversalFunction<>(graph()));
+        getPipeline().store(storage, new FramingTraversalFunction<>(graph()));
         return (Traversal<T, Collection<? extends N>, N, M>) this;
     }
 
     @Override
     public <N> Traversal<T, Collection<? extends N>, N, M> store(final Collection<? super N> storage, final TraversalFunction<T, N> storageFunction) {
-        pipeline().store(storage, new FramingTraversalFunction<>(storageFunction, graph()));
+        getPipeline().store(storage, new FramingTraversalFunction<>(storageFunction, graph()));
         return (Traversal<T, Collection<? extends N>, N, M>) this;
     }
 
@@ -381,86 +380,86 @@ abstract class AbstractTraversal<T, C, S, M> implements Traversal<T, C, S, M> {
 
     @Override
     public <N> Traversal<T, Collection<? extends N>, N, M> store(final TraversalFunction<T, N> storageFunction) {
-        pipeline().store(new FramingTraversalFunction<>(storageFunction, graph()));
+        getPipeline().store(new FramingTraversalFunction<>(storageFunction, graph()));
         return (Traversal<T, Collection<? extends N>, N, M>) this;
     }
 
     @Override
     public Traversal<T, Table, Table, M> table(final Table table, final Collection<String> stepNames, final TraversalFunction<?, ?>... columnFunctions) {
-        pipeline().table(table, stepNames, this.wrap(columnFunctions));
+        getPipeline().table(table, stepNames, this.wrap(columnFunctions));
         return (Traversal<T, Table, Table, M>) this;
     }
 
     @Override
     public Traversal<T, Table, Table, M> table(final Table table, final TraversalFunction<?, ?>... columnFunctions) {
-        pipeline().table(table, wrap(columnFunctions));
+        getPipeline().table(table, wrap(columnFunctions));
         return (Traversal<T, Table, Table, M>) this;
     }
 
     @Override
     public Traversal<T, Table, Table, M> table(final TraversalFunction<?, ?>... columnFunctions) {
-        pipeline().table(wrap(columnFunctions));
+        getPipeline().table(wrap(columnFunctions));
         return (Traversal<T, Table, Table, M>) this;
     }
 
     @Override
     public Traversal<T, Table, Table, M> table(final Table table) {
-        pipeline().table(table, new FramingTraversalFunction<>(graph()));
+        getPipeline().table(table, new FramingTraversalFunction<>(graph()));
         return (Traversal<T, Table, Table, M>) this;
     }
 
     @Override
     public Traversal<T, Table, Table, M> table() {
-        pipeline().table(new FramingTraversalFunction<>(graph()));
+        getPipeline().table(new FramingTraversalFunction<>(graph()));
         return (Traversal<T, Table, Table, M>) this;
     }
 
     @Override
     public <N> Traversal<T, Tree<N>, Tree<N>, M> tree(final Tree<N> tree) {
-        pipeline().tree(tree, new FramingTraversalFunction<>(graph()));
+        getPipeline().tree(tree, new FramingTraversalFunction<>(graph()));
         return (Traversal<T, Tree<N>, Tree<N>, M>) this;
     }
 
     @Override
     public Traversal<T, Tree<T>, Tree<T>, M> tree() {
-        pipeline().tree(new FramingTraversalFunction<>(graph()));
+        getPipeline().tree(new FramingTraversalFunction<>(graph()));
         return (Traversal<T, Tree<T>, Tree<T>, M>) this;
     }
 
     @Override
     public Traversal<T, ?, ?, M> memoize(final String namedStep) {
-        pipeline().memoize(namedStep);
+        getPipeline().memoize(namedStep);
         return this;
     }
 
     @Override
     public Traversal<T, ?, ?, M> memoize(final String namedStep, final Map<?, ?> map) {
-        pipeline().memoize(namedStep, map);
+        getPipeline().memoize(namedStep, map);
         return this;
     }
 
     @Override
     public Traversal<T, ?, ?, M> order() {
-        pipeline().order();
+        getPipeline().order();
         return this;
     }
 
     @Override
     public Traversal<T, ?, ?, M> order(final Order order) {
-        pipeline().order(order);
+        getPipeline().order(order);
         return this;
     }
 
     @Override
     public Traversal<T, ?, ?, M> order(final Tokens.T order) {
-        pipeline().order(order);
+        getPipeline().order(order);
         return this;
     }
 
     @Override
     public Traversal<T, ?, ?, M> order(final Comparator<? super T> compareFunction) {
         final FramingComparator framingComparator = new FramingComparator(compareFunction, graph());
-        pipeline().order(new TraversalFunction<Pair<Object, Object>, Integer>() {
+        getPipeline().order(new TraversalFunction<Pair<Object, Object>, Integer>() {
 
             @Override
             public Integer compute(final Pair<Object, Object> argument) {
@@ -473,39 +472,39 @@ abstract class AbstractTraversal<T, C, S, M> implements Traversal<T, C, S, M> {
     @Override
     public Traversal<Path, ?, ?, M> path(final TraversalFunction<?, ?>... pathFunctions) {
         if (pathFunctions.length == 0)
-            pipeline().path(new FramingTraversalFunction<>(graph()));
+            getPipeline().path(new FramingTraversalFunction<>(graph()));
         else
-            pipeline().path(wrap(pathFunctions));
+            getPipeline().path(wrap(pathFunctions));
         return castToTraversal();
     }
 
     @Override
     public Traversal<Row<?>, ?, ?, M> select(final Collection<String> stepNames, final TraversalFunction<?, ?>... columnFunctions) {
-        pipeline().select(stepNames, wrap(columnFunctions));
+        getPipeline().select(stepNames, wrap(columnFunctions));
         return castToTraversal();
     }
 
     @Override
     public Traversal<Row<?>, ?, ?, M> select(final TraversalFunction<?, ?>... columnFunctions) {
-        pipeline().select(wrap(columnFunctions));
+        getPipeline().select(wrap(columnFunctions));
         return castToTraversal();
     }
 
     @Override
     public Traversal<Row<?>, ?, ?, M> select() {
-        pipeline().select(new FramingTraversalFunction<>(graph()));
+        getPipeline().select(new FramingTraversalFunction<>(graph()));
         return castToTraversal();
     }
 
     @Override
     public Traversal<T, ?, ?, M> shuffle() {
-        pipeline().shuffle();
+        getPipeline().shuffle();
         return this;
     }
 
     @Override
     public C cap() {
-        pipeline().cap();
+        getPipeline().cap();
         Object next = castToTraversal().next();
         if (next instanceof FramingMap)
             next = ((FramingMap) next).getDelegate();
@@ -518,34 +517,34 @@ abstract class AbstractTraversal<T, C, S, M> implements Traversal<T, C, S, M> {
     public Traversal<T, ?, ?, M> divert(final SideEffectFunction<S> sideEffectFunction) {
 
         final FramingSideEffectFunction framingSideEffectFunction = new FramingSideEffectFunction(sideEffectFunction, graph());
-        pipeline().add(
-              new DivertPipe((SideEffectPipe) FluentUtility.removePreviousPipes(pipeline(), 1).get(0), new TraversalFunction() {
+        getPipeline().add(
+            new DivertPipe((SideEffectPipe) FluentUtility.removePreviousPipes(getPipeline(), 1).get(0), new TraversalFunction() {
 
-                  @Override
-                  public Object compute(final Object argument) {
-                      framingSideEffectFunction.execute(argument);
-                      return null;
-                  }
+                @Override
+                public Object compute(final Object argument) {
+                    framingSideEffectFunction.execute(argument);
+                    return null;
+                }
 
-              }));
+            }));
         return this;
     }
 
     @Override
     public <N> Traversal<? extends N, ?, ?, M> transform(final TraversalFunction<T, N> function) {
-        pipeline().transform(new FramingTraversalFunction(function, graph()));
+        getPipeline().transform(new FramingTraversalFunction(function, graph()));
         return castToTraversal();
     }
 
     @Override
     public <N> Traversal<N, ?, ?, M> start(final N object) {
-        pipeline().start(object);
+        getPipeline().start(object);
         return (Traversal<N, ?, ?, M>) this;
     }
 
     @Override
     public List<? extends T> next(final int number) {
-        return Lists.transform(pipeline().next(number), new Function() {
+        return Lists.transform(getPipeline().next(number), new Function() {
 
             @Override
             public Object apply(final Object input) {
@@ -562,7 +561,7 @@ abstract class AbstractTraversal<T, C, S, M> implements Traversal<T, C, S, M> {
     @Override
     public List<? extends T> toList() {
 
-        return Lists.transform(pipeline().toList(), new Function() {
+        return Lists.transform(getPipeline().toList(), new Function() {
 
             @Override
             public Object apply(final Object input) {
@@ -585,24 +584,24 @@ abstract class AbstractTraversal<T, C, S, M> implements Traversal<T, C, S, M> {
 
     @Override
     public Collection<? extends T> fill(final Collection<? super T> collection) {
-        return pipeline().fill(new FramingCollection<>(collection, graph()));
+        return getPipeline().fill(new FramingCollection<>(collection, graph()));
     }
 
     @Override
     public Traversal<T, C, S, M> enablePath() {
-        pipeline().enablePath();
+        getPipeline().enablePath();
         return this;
     }
 
     @Override
     public Traversal<T, C, S, M> optimize(final boolean optimize) {
-        pipeline().optimize(optimize);
+        getPipeline().optimize(optimize);
         return this;
     }
 
     @Override
     public T next() {
-        final Object e = pipeline().next();
+        final Object e = getPipeline().next();
         if (e instanceof Edge)
             return (T) graph().frameElementExplicit((Element) e, TEdge.class);
         else if (e instanceof Vertex)
@@ -612,7 +611,7 @@ abstract class AbstractTraversal<T, C, S, M> implements Traversal<T, C, S, M> {
 
     @Override
     public T nextOrDefault(final T defaultValue) {
-        if (pipeline().hasNext())
+        if (getPipeline().hasNext())
             return next();
         else
             return defaultValue;
@@ -620,19 +619,19 @@ abstract class AbstractTraversal<T, C, S, M> implements Traversal<T, C, S, M> {
 
     @Override
     public EdgeTraversal<?, ?, M> start(final EdgeFrame object) {
-        pipeline().start(object);
+        getPipeline().start(object);
         return castToEdges();
     }
 
     @Override
     public VertexTraversal<?, ?, M> start(final VertexFrame object) {
-        pipeline().start(object);
+        getPipeline().start(object);
         return castToVertices();
     }
 
     @Override
     public <N> Traversal<N, ?, ?, M> property(final String key) {
-        pipeline().property(key);
+        getPipeline().property(key);
         return castToTraversal();
     }
 
@@ -646,12 +645,12 @@ abstract class AbstractTraversal<T, C, S, M> implements Traversal<T, C, S, M> {
 
     @Override
     public boolean hasNext() {
-        return pipeline().hasNext();
+        return getPipeline().hasNext();
     }
 
     @Override
     public Iterator<T> iterator() {
-        return Iterators.transform(pipeline(), new Function() {
+        return Iterators.transform(getPipeline(), new Function() {
 
             @Override
             public Object apply(final Object input) {
@@ -693,14 +692,14 @@ abstract class AbstractTraversal<T, C, S, M> implements Traversal<T, C, S, M> {
 
     @Override
     public Traversal<T, ?, ?, M> gatherScatter() {
-        pipeline().gather().scatter();
+        getPipeline().gather().scatter();
         return this;
     }
 
     @Override
     public Traversal<T, C, S, ? extends Traversal<T, C, S, M>> mark() {
         final MarkId mark = pushMark();
-        pipeline().as(mark.id);
+        getPipeline().as(mark.id);
 
         return (Traversal<T, C, S, ? extends Traversal<T, C, S, M>>) this;
     }
@@ -708,20 +707,20 @@ abstract class AbstractTraversal<T, C, S, M> implements Traversal<T, C, S, M> {
     @Override
     public M back() {
         final MarkId mark = popMark();
-        pipeline().back(mark.id);
+        getPipeline().back(mark.id);
         return (M) mark.traversal;
     }
 
     @Override
     public M back(final String name) {
-        pipeline().back(name);
+        getPipeline().back(name);
         return (M) this;
     }
 
     @Override
     public M optional() {
         final MarkId mark = popMark();
-        pipeline().optional(mark.id);
+        getPipeline().optional(mark.id);
         return (M) mark.traversal;
     }
 
@@ -763,7 +762,7 @@ abstract class AbstractTraversal<T, C, S, M> implements Traversal<T, C, S, M> {
 
     @Override
     public VertexTraversal<?, ?, M> v(final String key, final Object value) {
-        pipeline().V(key, value);
+        getPipeline().V(key, value);
         return castToVertices();
     }
 
@@ -779,6 +778,6 @@ abstract class AbstractTraversal<T, C, S, M> implements Traversal<T, C, S, M> {
 
     @Override
     public void remove() {
-        pipeline().remove();
+        getPipeline().remove();
     }
 }

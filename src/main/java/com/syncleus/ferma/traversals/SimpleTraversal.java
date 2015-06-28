@@ -108,7 +108,7 @@ public class SimpleTraversal<T, C, S, M> extends AbstractTraversal<T, C, S, M> {
     }
 
     @Override
-    protected FermaGremlinPipeline pipeline() {
+    protected FermaGremlinPipeline getPipeline() {
 
         return pipeline;
     }
@@ -128,13 +128,13 @@ public class SimpleTraversal<T, C, S, M> extends AbstractTraversal<T, C, S, M> {
 
         @Override
         public Traversal exhaustMerge() {
-            pipeline().exhaustMerge();
+            getPipeline().exhaustMerge();
             return castToTraversal();
         }
 
         @Override
         public Traversal fairMerge() {
-            pipeline().fairMerge();
+            getPipeline().fairMerge();
             return castToTraversal();
         }
     };
@@ -157,7 +157,7 @@ public class SimpleTraversal<T, C, S, M> extends AbstractTraversal<T, C, S, M> {
         }
 
         @Override
-        protected FermaGremlinPipeline pipeline() {
+        protected FermaGremlinPipeline getPipeline() {
             return pipeline;
         }
 
@@ -204,7 +204,7 @@ public class SimpleTraversal<T, C, S, M> extends AbstractTraversal<T, C, S, M> {
         }
 
         @Override
-        protected FermaGremlinPipeline pipeline() {
+        protected FermaGremlinPipeline getPipeline() {
             return pipeline;
         }
 

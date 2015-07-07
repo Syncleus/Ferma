@@ -16,7 +16,12 @@
  */
 package com.syncleus.ferma.annotations;
 
-import com.syncleus.ferma.*;
+import com.syncleus.ferma.ClassInitializer;
+import com.syncleus.ferma.DefaultClassInitializer;
+import com.syncleus.ferma.EdgeFrame;
+import com.syncleus.ferma.Knows;
+import com.syncleus.ferma.Person;
+import com.syncleus.ferma.WeightedKnows;
 import com.tinkerpop.blueprints.Direction;
 
 public abstract class Friend extends Person {
@@ -24,14 +29,24 @@ public abstract class Friend extends Person {
     
     
     @Incidence(label="knows", direction=Direction.OUT)
-    public abstract Knows addKnows(Friend programmer, ClassInitializer<? extends Knows> type);
+    public abstract Knows addKnows(Friend friend, ClassInitializer<? extends Knows> type);
 
     @Incidence(label="knows", direction=Direction.IN)
-    public abstract Knows addKnownBy(Friend programmer, ClassInitializer<? extends Knows> type);
+    public abstract Knows addKnownBy(Friend friend, ClassInitializer<? extends Knows> type);
+    
+    @Incidence(label="knows", direction=Direction.IN)
+    public abstract WeightedKnows addWeightedKnownBy(Friend friend, ClassInitializer<? extends WeightedKnows> type);
 
+    @Incidence(label="knows", direction=Direction.IN)
+    public abstract Iterable<? extends Knows> getAllKnows();
+
+    
     @Incidence(label="knows", direction=Direction.OUT)
-    public abstract EdgeFrame addKnows(Friend programmer);
+    public abstract EdgeFrame addKnows(Friend friend);
 
     @Incidence(label="knows", direction=Direction.IN)
-    public abstract EdgeFrame addKnownBy(Friend programmer);
+    public abstract EdgeFrame addKnownBy(Friend friend);
+    
+    @Incidence(label="knows", direction=Direction.OUT)
+    public abstract <N extends Knows> N addKnowsSmartResolver(Friend friend);
 }

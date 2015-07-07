@@ -18,12 +18,15 @@ package com.syncleus.ferma.annotations;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import com.syncleus.ferma.DelegatingFramedGraph;
 import com.syncleus.ferma.FramedGraph;
 import com.syncleus.ferma.Knows;
 import com.syncleus.ferma.Person;
+import com.syncleus.ferma.WeightedKnows;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -45,6 +48,8 @@ public class ExtendedFramedEdgeTest {
     private Friend p2;
     private Knows e1;
     private Knows e2;
+    private Knows e3;
+    private Knows e4;
 
     @Before
     public void init() {
@@ -60,6 +65,15 @@ public class ExtendedFramedEdgeTest {
         e1.setYears(15);
         e2 = p1.addKnownBy(p2, Knows.DEFAULT_INITIALIZER);
         e2.setYears(15);
+        
+        e3=p1.addKnowsSmartResolver(p2);
+        e3.setYears(15);
+        
+        e4=p1.addWeightedKnownBy(p2, WeightedKnows.DEFAULT_INITIALIZER);
+        e4.setYears(15);
+        
+        
+        
         
     }
 
@@ -92,10 +106,26 @@ public class ExtendedFramedEdgeTest {
     public void testOutVExplicit() {
         Assert.assertEquals(p1, e1.outV().nextExplicit(Friend.class));
     }
+    
+    @Test
+    public void testgetAllKnows() {
+    	Iterable<? extends Knows> it = p1.getAllKnows();
+    	Assert.assertNotNull(it);
+    	for(Knows k: it){
+    		System.out.println(k.getClass().getCanonicalName());
+    	}
+    }
+    
 
     @Test
     public void testBothVExplicit() {
         Assert.assertEquals(p1, e1.bothV().nextExplicit(Friend.class));
+    }
+    
+    @Test
+    public void testSmartResolver() {
+        Assert.assertNotNull(e3);
+        Assert.assertEquals(e3.getYears(), 15);
     }
     
 }

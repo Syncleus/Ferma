@@ -225,14 +225,14 @@ public class IncidenceMethodHandler implements MethodHandler {
             final Incidence annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Incidence.class);
             final Direction direction = annotation.direction();
             final String label = annotation.label();
-
+            
             switch (direction) {
                 case BOTH:
                     throw new IllegalStateException(method.getName() + " is annotated with direction BOTH, this is not allowed for add methods annotated with @Incidence.");
                 case IN:
-                    return thiz.getGraph().addFramedEdge(newVertex, thiz, label);
+                    return thiz.getGraph().addFramedEdge(newVertex, thiz, label, method.getReturnType());
                 case OUT:
-                    return thiz.getGraph().addFramedEdge(thiz, newVertex, label);
+                    return thiz.getGraph().addFramedEdge(thiz, newVertex, label,method.getReturnType());
                 default:
                     throw new IllegalStateException(method.getName() + " is annotated with a direction other than BOTH, IN, or OUT.");
             }
@@ -247,7 +247,7 @@ public class IncidenceMethodHandler implements MethodHandler {
             final Incidence annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Incidence.class);
             final Direction direction = annotation.direction();
             final String label = annotation.label();
-
+            
             switch (direction) {
                 case BOTH:
                     throw new IllegalStateException(method.getName() + " is annotated with direction BOTH, this is not allowed for add methods annotated with @Incidence.");

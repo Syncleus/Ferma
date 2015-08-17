@@ -575,8 +575,8 @@ abstract class AbstractVertexTraversal<C, S, M> extends AbstractTraversal<Vertex
     }
 
     @Override
-    public VertexTraversal<C, S, ? extends VertexTraversal<C, S, M>> as(final String name) {
-        return (VertexTraversal<C, S, ? extends VertexTraversal<C, S, M>>) super.as(name);
+    public VertexTraversal<?, ?, M> as(final String name) {
+        return (VertexTraversal<?, ?, M>) super.as(name);
     }
 
     @Override

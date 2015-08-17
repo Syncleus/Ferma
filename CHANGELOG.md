@@ -3,8 +3,7 @@
 ## 2.1.0
 
 * Fixed a bug where an exception was thrown when using the @Adjacency annotation on outgoing adjacencies for add*, set*, and remove*.
-* Added the ability to use as and back gremline pipe methods with named marks.
-* Added hasType to the gremlin pipeline.
+* Added has and hasNot keyed to type to the gremlin pipeline.
 * Switched over to using the Syncleus parent POM.
 * renamed the pipeline map method to propertyMap to reflect the TP3 interfaces.
 

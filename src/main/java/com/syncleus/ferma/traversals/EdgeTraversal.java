@@ -469,7 +469,7 @@ public interface EdgeTraversal<C, S, M> extends Traversal<EdgeFrame, C, S, M> {
     EdgeTraversal<?, ?, M> order(Comparator<? super EdgeFrame> compareFunction);
 
     @Override
-    EdgeTraversal<C, S, ? extends EdgeTraversal<C, S, M>> as(String name);
+    EdgeTraversal<?, ?, M> as(String name);
 
     @Override
     EdgeTraversal<?, ?, M> simplePath();

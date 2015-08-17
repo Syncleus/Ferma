@@ -655,7 +655,7 @@ public class GlobalVertexTraversal<C, S, M> implements VertexTraversal<C, S, M> 
     }
 
     @Override
-    public VertexTraversal<C, S, ? extends VertexTraversal<C, S, M>> as(final String name) {
+    public VertexTraversal<?, ?, M> as(final String name) {
         return this.simpleDelegate().as(name);
     }
 
@@ -772,11 +772,6 @@ public class GlobalVertexTraversal<C, S, M> implements VertexTraversal<C, S, M> 
     @Override
     public M back() {
         return this.simpleDelegate().back();
-    }
-
-    @Override
-    public M back(final String name) {
-        return this.simpleDelegate().back(name);
     }
 
     @Override

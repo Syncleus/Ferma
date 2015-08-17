@@ -2,6 +2,7 @@
 
 ## 2.1.0
 
+* Fixed a bug where an exception was thrown when using the @Adjacency annotation on outgoing adjacencies for add*, set*, and remove*.
 * Added the ability to use as and back gremline pipe methods with named marks.
 * Added hasType to the gremlin pipeline.
 * Switched over to using the Syncleus parent POM.

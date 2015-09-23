@@ -200,6 +200,8 @@ public interface FramedGraph extends Graph {
      */
     EdgeTraversal<?, ?, ?> e();
 
+    <F> F getFramedVertexExplicit(Class<F> classOfF, Object id);
+
     <F> Iterable<? extends F> getFramedVertices(final Class<F> kind);
 
     <F> Iterable<? extends F> getFramedVertices(final String key, final Object value, final Class<F> kind);

@@ -17,6 +17,7 @@
 package com.syncleus.ferma;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.Collection;
 import java.util.List;
@@ -418,5 +419,17 @@ public class FramedGraphTest {
 
         final Collection<? extends Integer> knowsCollection = fg.v().has("name", "Julia").bothE().property("years", Integer.class).aggregate().cap();
         Assert.assertEquals(1, knowsCollection.size());
+    }
+
+    @Test
+    public void testGetFramedVertexExplicit() {
+        final Graph g = new TinkerGraph();
+        final FramedGraph fg = new DelegatingFramedGraph(g);
+        final TVertex p1 = fg.addFramedVertexExplicit();
+        p1.setProperty("name", "Bryn");
+
+        Person p = fg.getFramedVertexExplicit(Person.class, p1.getId());
+        assertNotNull(p);
+        assertEquals("Bryn", p.getName());
     }
 }

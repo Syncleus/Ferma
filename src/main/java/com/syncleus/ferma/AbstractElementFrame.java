@@ -27,8 +27,6 @@ package com.syncleus.ferma;
 import com.syncleus.ferma.traversals.VertexTraversal;
 import com.syncleus.ferma.traversals.EdgeTraversal;
 import java.util.Set;
-
-import com.syncleus.ferma.framefactories.annotation.CachesReflection;
 import com.tinkerpop.blueprints.Element;
 
 /**
@@ -72,17 +70,17 @@ public abstract class AbstractElementFrame implements ElementFrame {
 
     @Override
     public Class<?> getTypeResolution() {
-        return this.graph.getTypeResolver().resolve(element);
+        return getGraph().getTypeResolver().resolve(element);
     }
 
     @Override
     public void setTypeResolution(final Class<?> type) {
-        this.graph.getTypeResolver().init(element, type);
+        getGraph().getTypeResolver().init(element, type);
     }
 
     @Override
     public void removeTypeResolution() {
-        this.graph.getTypeResolver().deinit(element);
+        getGraph().getTypeResolver().deinit(element);
     }
 
     @Override
@@ -125,22 +123,22 @@ public abstract class AbstractElementFrame implements ElementFrame {
 
     @Override
     public VertexTraversal<?, ?, ?> v() {
-        return graph.v();
+        return getGraph().v();
     }
 
     @Override
     public EdgeTraversal<?, ?, ?> e() {
-        return graph.e();
+        return getGraph().e();
     }
 
     @Override
     public VertexTraversal<?, ?, ?> v(final Object... ids) {
-        return graph.v(ids);
+        return getGraph().v(ids);
     }
 
     @Override
     public EdgeTraversal<?, ?, ?> e(final Object... ids) {
-        return graph.e(ids);
+        return getGraph().e(ids);
     }
 
     @Override

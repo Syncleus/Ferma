@@ -46,6 +46,12 @@ public interface ElementFrame {
     Element getElement();
 
     /**
+     * Set the underlying element.
+     * @param element
+     */
+	void setElement(Element element);
+
+    /**
      * @return The underlying graph.
      */
     FramedGraph getGraph();
@@ -137,4 +143,5 @@ public interface ElementFrame {
      * @return The query.
      */
     EdgeTraversal<?, ?, ?> e(final Object... ids);
+
 }

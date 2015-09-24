@@ -51,7 +51,7 @@ public abstract class AbstractElementFrame implements ElementFrame {
 
     /**
      * This method is only called when creating new elements that don't already exist in the graph. This method should
-     * be overridden to initalize any properties of an element on its creation. If an element is being framed that
+     * be overridden to initialize any properties of an element on its creation. If an element is being framed that
      * already exists in the graph this method will not be called.
      */
     protected void init() {
@@ -60,37 +60,42 @@ public abstract class AbstractElementFrame implements ElementFrame {
 
     @Override
     public <N> N getId() {
-        return (N) element.getId();
+        return (N) getElement().getId();
     }
 
     @Override
     public Set<String> getPropertyKeys() {
-        return element.getPropertyKeys();
+        return getElement().getPropertyKeys();
     }
 
     @Override
     public Class<?> getTypeResolution() {
-        return getGraph().getTypeResolver().resolve(element);
+        return getGraph().getTypeResolver().resolve(getElement());
     }
 
     @Override
     public void setTypeResolution(final Class<?> type) {
-        getGraph().getTypeResolver().init(element, type);
+        getGraph().getTypeResolver().init(getElement(), type);
     }
 
     @Override
     public void removeTypeResolution() {
-        getGraph().getTypeResolver().deinit(element);
+        getGraph().getTypeResolver().deinit(getElement());
     }
 
     @Override
     public void remove() {
-        element.remove();
+        getElement().remove();
     }
 
     @Override
     public Element getElement() {
         return element;
+    }
+
+    @Override
+    public void setElement(Element element) {
+        this.element = element;
     }
 
     @Override
@@ -100,25 +105,26 @@ public abstract class AbstractElementFrame implements ElementFrame {
 
     @Override
     public <T> T getProperty(final String name) {
-        return element.getProperty(name);
+        return getElement().getProperty(name);
     }
 
     @Override
     public <T> T getProperty(final String name, final Class<T> type) {
-        if (type.isEnum())
-            return (T) Enum.valueOf((Class<Enum>) type, (String) element.getProperty(name));
-
-        return element.getProperty(name);
+        if (type.isEnum()) {
+            return (T) Enum.valueOf((Class<Enum>) type, (String) getElement().getProperty(name));
+        }
+        return getElement().getProperty(name);
     }
 
     @Override
     public void setProperty(final String name, final Object value) {
-        if (value == null)
-            element.removeProperty(name);
-        else if (value instanceof Enum)
-            element.setProperty(name, value.toString());
-        else
-            element.setProperty(name, value);
+        if (value == null) {
+            getElement().removeProperty(name);
+        } else if (value instanceof Enum) {
+            getElement().setProperty(name, value.toString());
+        } else {
+            getElement().setProperty(name, value);
+        }
     }
 
     @Override
@@ -143,7 +149,7 @@ public abstract class AbstractElementFrame implements ElementFrame {
 
     @Override
     public int hashCode() {
-        return element.hashCode();
+        return getElement().hashCode();
     }
 
     @Override
@@ -155,23 +161,21 @@ public abstract class AbstractElementFrame implements ElementFrame {
         if (getClass() != o.getClass())
             return false;
         final AbstractElementFrame other = (AbstractElementFrame) o;
-        if (element == null) {
-            if (other.element != null)
+        if (getElement() == null) {
+            if (other.getElement() != null)
                 return false;
         }
-        else if (!element.equals(other.element))
+        else if (!getElement().equals(other.getElement()))
             return false;
         return true;
     }
 
     protected <N> N getId(final Class<N> clazz) {
-
         return (N) getId();
     }
 
     @Override
     public String toString() {
-
         return getElement().toString();
     }
 

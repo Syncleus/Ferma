@@ -1,5 +1,11 @@
 # Ferma Changelog
 
+## 2.2.0-SNAPSHOT
+
+* Added getFramedVertexExplicit method which can be used to load a framed vertex by id.
+* The internal references to the nested graph and the nested element within a element frame have been changed in order to enable custom getElement/getGraph methods which may be desired in some cases.
+  * [Example usecase](https://github.com/Syncleus/Ferma/issues/10)
+
 ## 2.1.0
 
 * Fixed a bug where an exception was thrown when using the @Adjacency annotation on outgoing adjacencies for add*, set*, and remove*.

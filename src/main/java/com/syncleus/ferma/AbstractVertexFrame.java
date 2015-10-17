@@ -209,7 +209,7 @@ public abstract class AbstractVertexFrame extends AbstractElementFrame implement
 
     @Override
     public <K> K setLinkOut(final ClassInitializer<K> initializer, final String... labels) {
-        final K vertex = getGraph().addFramedVertex(initializer);
+        final K vertex = getGraph().addFramedVertex(null, initializer);
         setLinkOut((VertexFrame) vertex, labels);
         return vertex;
     }
@@ -233,7 +233,7 @@ public abstract class AbstractVertexFrame extends AbstractElementFrame implement
 
     @Override
     public <K> K setLinkIn(final ClassInitializer<K> initializer, final String... labels) {
-        final K vertex = getGraph().addFramedVertex(initializer);
+        final K vertex = getGraph().addFramedVertex(null, initializer);
         setLinkIn((VertexFrame) vertex, labels);
         return vertex;
     }
@@ -257,7 +257,7 @@ public abstract class AbstractVertexFrame extends AbstractElementFrame implement
 
     @Override
     public <K> K setLinkBoth(final ClassInitializer<K> initializer, final String... labels) {
-        final K vertex = getGraph().addFramedVertex(initializer);
+        final K vertex = getGraph().addFramedVertex(null, initializer);
         setLinkBoth((VertexFrame) vertex, labels);
         return vertex;
     }

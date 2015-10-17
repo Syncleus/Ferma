@@ -2,6 +2,7 @@
 
 ## 2.2.0-SNAPSHOT
 
+* Added id parameter to ```fg.addFramedVertex``` and ```fg.addFramedEdge``` methods to prepare for orientdb custom vertex and edge types.
 * Added getFramedVertexExplicit method which can be used to load a framed vertex by id.
 * The internal references to the nested graph and the nested element within a element frame have been changed in order to enable custom getElement/getGraph methods which may be desired in some cases.
   * [Example usecase](https://github.com/Syncleus/Ferma/issues/10)

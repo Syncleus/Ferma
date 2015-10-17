@@ -37,9 +37,7 @@ import com.google.common.base.Function;
 import com.google.common.collect.Iterators;
 import com.syncleus.ferma.framefactories.annotation.AnnotationFrameFactory;
 import com.tinkerpop.blueprints.*;
-import com.tinkerpop.blueprints.util.wrappers.WrapperGraph;
 import com.tinkerpop.blueprints.util.wrappers.wrapped.WrappedGraph;
-import net.bytebuddy.dynamic.ClassFileLocator;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -293,14 +291,14 @@ public class DelegatingFramedGraph<G extends Graph> extends WrappedGraph<G> impl
     }
 
     @Override
-    public <T> T addFramedVertex(final ClassInitializer<T> initializer) {
-        final T framedVertex = frameNewElement(this.getBaseGraph().addVertex(null), initializer);
+    public <T> T addFramedVertex(Object id, final ClassInitializer<T> initializer) {
+        final T framedVertex = frameNewElement(this.getBaseGraph().addVertex(id), initializer);
         return framedVertex;
     }
     
     @Override
     public <T> T addFramedVertex(final Class<T> kind) {
-        return this.addFramedVertex(new DefaultClassInitializer<>(kind));
+        return this.addFramedVertex(null, new DefaultClassInitializer<>(kind));
     }
 
     @Override
@@ -316,8 +314,7 @@ public class DelegatingFramedGraph<G extends Graph> extends WrappedGraph<G> impl
 
     @Override
     public TVertex addFramedVertex() {
-
-        return addFramedVertex(TVertex.DEFAULT_INITIALIZER);
+        return addFramedVertex(null, TVertex.DEFAULT_INITIALIZER);
     }
 
     @Override
@@ -327,14 +324,14 @@ public class DelegatingFramedGraph<G extends Graph> extends WrappedGraph<G> impl
     }
 
     @Override
-    public <T> T addFramedEdge(final VertexFrame source, final VertexFrame destination, final String label, final ClassInitializer<T> initializer) {
-        final T framedEdge = frameNewElement(this.getBaseGraph().addEdge(null, source.getElement(), destination.getElement(), label), initializer);
+    public <T> T addFramedEdge(final Object id, final VertexFrame source, final VertexFrame destination, final String label, final ClassInitializer<T> initializer) {
+        final T framedEdge = frameNewElement(this.getBaseGraph().addEdge(id, source.getElement(), destination.getElement(), label), initializer);
         return framedEdge;
     }
     
     @Override
     public <T> T addFramedEdge(final VertexFrame source, final VertexFrame destination, final String label, final Class<T> kind) {
-        return this.addFramedEdge(source, destination, label, new DefaultClassInitializer<>(kind));
+        return this.addFramedEdge(null, source, destination, label, new DefaultClassInitializer<>(kind));
     }
 
     @Override
@@ -350,8 +347,7 @@ public class DelegatingFramedGraph<G extends Graph> extends WrappedGraph<G> impl
 
     @Override
     public TEdge addFramedEdge(final VertexFrame source, final VertexFrame destination, final String label) {
-
-        return addFramedEdge(source, destination, label, TEdge.DEFAULT_INITIALIZER);
+        return addFramedEdge(null, source, destination, label, TEdge.DEFAULT_INITIALIZER);
     }
 
     @Override

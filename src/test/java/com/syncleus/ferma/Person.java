@@ -36,11 +36,8 @@ public class Person extends AbstractVertexFrame {
     }
 
     public Iterator<Person> getKnowsExplicit() {
-
         return out("knows").frame(Person.class).iterator();
     }
-    
-   
 
     public List<? extends Knows> getKnowsList() {
         return outE("knows").toList(Knows.class);

@@ -40,11 +40,13 @@ public interface FramedGraph extends Graph {
      * Add a vertex to the graph
      *
      * @param <T> The type used to frame the element.
+     * @param id
+     *            the recommended object identifier
      * @param initializer
      *            the initializer for the frame which defines its type and may initialize properties
      * @return The framed vertex.
      */
-    <T> T addFramedVertex(ClassInitializer<T> initializer);
+    <T> T addFramedVertex(Object id, ClassInitializer<T> initializer);
     
     /**
      * Add a vertex to the graph
@@ -106,15 +108,16 @@ public interface FramedGraph extends Graph {
      * Add a edge to the graph
      *
      * @param <T> The type used to frame the element.
-     * @param source The source vertex
+     * @param id the recommended object identifier
+     * @param source the source vertex
      * @param destination the destination vertex
      * @param label the label.
      * @param initializer
      *            the initializer for the frame which defines its type and may initialize properties
      * @return The framed edge.
      */
-    <T> T addFramedEdge(final VertexFrame source, final VertexFrame destination, final String label, ClassInitializer<T> initializer);
-    
+    <T> T addFramedEdge(final Object id, final VertexFrame source, final VertexFrame destination, final String label, ClassInitializer<T> initializer);
+
     /**
      * Add a edge to the graph
      *

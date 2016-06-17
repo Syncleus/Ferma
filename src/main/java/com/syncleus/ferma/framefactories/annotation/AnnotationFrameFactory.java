@@ -90,9 +90,9 @@ public class AnnotationFrameFactory implements FrameFactory {
         DynamicType.Builder<? extends E> classBuilder;
         if (clazz.isInterface())
             if (element instanceof Vertex)
-                classBuilder = (DynamicType.Builder<? extends E>) new ByteBuddy().withImplementing(clazz).subclass(AbstractVertexFrame.class);
+                classBuilder = (DynamicType.Builder<? extends E>) new ByteBuddy().subclass(AbstractVertexFrame.class).implement(clazz);
             else if (element instanceof Edge)
-                classBuilder = (DynamicType.Builder<? extends E>) new ByteBuddy().withImplementing(clazz).subclass(AbstractEdgeFrame.class);
+                classBuilder = (DynamicType.Builder<? extends E>) new ByteBuddy().subclass(AbstractEdgeFrame.class).implement(clazz);
             else
                 throw new IllegalStateException("class is neither an Edge or a vertex!");
         else {

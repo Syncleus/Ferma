@@ -6,6 +6,7 @@
 * Added getFramedVertexExplicit method which can be used to load a framed vertex by id.
 * The internal references to the nested graph and the nested element within a element frame have been changed in order to enable custom getElement/getGraph methods which may be desired in some cases.
   * [Example usecase](https://github.com/Syncleus/Ferma/issues/10)
+* Changed the projects license to Apache Software License v2.
 
 ## 2.1.0
 

@@ -4,6 +4,7 @@
 [![Coverage](https://codecov.io/gh/Syncleus/Ferma/branch/master/graph/badge.svg)](https://codecov.io/gh/Syncleus/Ferma)
 [![Dependencies](https://www.versioneye.com/user/projects/57e37d4279806f0039830884/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/57e37d4279806f0039830884)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.syncleus.ferma/ferma/badge.png?style=flat)](https://maven-badges.herokuapp.com/maven-central/com.syncleus.ferma/ferma/)
+[![Gitter](https://badges.gitter.im/Syncleus/Ferma.svg)](https://gitter.im/Syncleus/Ferma?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 **Licensed under the Apache Software License v2**
 

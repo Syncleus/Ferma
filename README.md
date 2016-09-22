@@ -1,5 +1,5 @@
 # Ferma
-[![Dependency Status](https://www.versioneye.com/user/projects/5574ab853363340025000071/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/5574ab853363340025000071)
+[![Dependencies](https://www.versioneye.com/user/projects/57e37d4279806f0039830884/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/57e37d4279806f0039830884)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.syncleus.ferma/ferma/badge.png?style=flat)](https://maven-badges.herokuapp.com/maven-central/com.syncleus.ferma/ferma/)
 
 An ORM / OGM for the TinkerPop graph stack.

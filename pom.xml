@@ -37,8 +37,8 @@
 
     <licenses>
         <license>
-            <name>Open Source Community License - Type C version 1.0 or later</name>
-            <url>http://wiki.syncleus.com/images/3/3b/Oscl-c.txt</url>
+            <name>Apache Software License version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
             <distribution>repo</distribution>
         </license>
     </licenses>

@@ -386,4 +386,15 @@ public abstract class AbstractVertexFrame extends AbstractElementFrame implement
             }
         });
     }
+
+    @Override
+    public <T> T traverse(Function<GraphTraversal<? extends Vertex, ? extends Vertex>, T> traverser) {
+        return this.getGraph().traverse(new Function<GraphTraversalSource, T>() {
+            @Nullable
+            @Override
+            public T apply(@Nullable GraphTraversalSource input) {
+                return traverser.apply(input.V(getElement().id()));
+            }
+        });
+    }
 }

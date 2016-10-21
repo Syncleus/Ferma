@@ -183,4 +183,15 @@ public abstract class AbstractEdgeFrame extends AbstractElementFrame implements 
             }
         });
     }
+
+    @Override
+    public <T> T traverse(Function<GraphTraversal<? extends Edge, ? extends Edge>, T> traverser) {
+        return this.getGraph().traverse(new Function<GraphTraversalSource, T>() {
+            @Nullable
+            @Override
+            public T apply(@Nullable GraphTraversalSource input) {
+                return traverser.apply(input.E(getElement().id()));
+            }
+        });
+    }
 }

@@ -210,6 +210,8 @@ public interface FramedGraph {
 
     void traverse(final VoidFunction<GraphTraversalSource> traverser);
 
+    <T> T traverse(final Function<GraphTraversalSource, T> traverser);
+
     <T> T getFramedVertex(Class<T> kind, Object id);
 
     <T> T getFramedVertexExplicit(Class<T> kind, Object id);

@@ -438,4 +438,6 @@ public interface VertexFrame extends ElementFrame {
     <T> T traverseSingletonExplicit(final Function<GraphTraversal<? extends Vertex, ? extends Vertex>, Iterator<? extends Element>> traverser, final Class<T> kind, boolean isNew);
 
     void traverse(final VoidFunction<GraphTraversal<? extends Vertex, ? extends Vertex>> traverser);
+
+    <T> T traverse(final Function<GraphTraversal<? extends Vertex, ? extends Vertex>, T> traverser);
 }

@@ -73,4 +73,6 @@ public interface EdgeFrame extends ElementFrame {
     <T> T traverseSingletonExplicit(final Function<GraphTraversal<? extends Edge, ? extends Edge>, Iterator<? extends Element>> traverser, final Class<T> kind, boolean isNew);
 
     void traverse(final VoidFunction<GraphTraversal<? extends Edge, ? extends Edge>> traverser);
+
+    <T> T traverse(final Function<GraphTraversal<? extends Edge, ? extends Edge>, T> traverser);
 }

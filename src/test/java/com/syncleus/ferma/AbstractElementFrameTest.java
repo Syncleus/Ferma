@@ -15,6 +15,9 @@
  */
 package com.syncleus.ferma;
 
+import com.google.common.base.Function;
+import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
+import org.apache.tinkerpop.gremlin.structure.Element;
 import org.apache.tinkerpop.gremlin.structure.Graph;
 import org.apache.tinkerpop.gremlin.tinkergraph.structure.TinkerGraph;
 import org.junit.Assert;
@@ -22,17 +25,20 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockitoAnnotations;
 import com.google.common.collect.Sets;
+import javax.annotation.Nullable;
+import java.util.Iterator;
 
 public class AbstractElementFrameTest {
 
+    private FramedGraph fg;
     private Person p1;
     private Knows e1;
 
     @Before
     public void init() {
         MockitoAnnotations.initMocks(this);
-        final Graph g = TinkerGraph.open();
-        final FramedGraph fg = new DelegatingFramedGraph(g);
+        Graph g = TinkerGraph.open();
+        fg = new DelegatingFramedGraph(g);
         p1 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
         final Person p2 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
         p1.setName("Bryn");
@@ -69,41 +75,90 @@ public class AbstractElementFrameTest {
         Assert.assertNull(p1.getProperty("name"));
     }
 
-//    @Test
-//    public void testV() {
-//        Assert.assertEquals(2, p1.v().count());
-//    }
-//
-//    @Test
-//    public void testE() {
-//        Assert.assertEquals(1, p1.e().count());
-//    }
-//
-//    @Test
-//    public void testv() {
-//        Assert.assertEquals(p1, p1.v(p1.getId()).next(Person.class));
-//    }
-//
-//    @Test
-//    public void teste() {
-//        Assert.assertEquals(e1, p1.e(e1.getId()).next(Knows.class));
-//    }
-//
-//    @Test
-//    public void testvExplicit() {
-//        Assert.assertEquals(p1, p1.v(p1.getId()).nextExplicit(Person.class));
-//    }
-//
-//    @Test
-//    public void testeExplicit() {
-//        Assert.assertEquals(e1, p1.e(e1.getId()).nextExplicit(Knows.class));
-//    }
-//
-//    @Test
-//    public void testRemove() {
-//        p1.remove();
-//        Assert.assertEquals(1, p1.v().count());
-//    }
+    @Test
+    public void testV() {
+        final Long count = fg.traverse(new Function<GraphTraversalSource, Long>() {
+            @Nullable
+            @Override
+            public Long apply(@Nullable GraphTraversalSource input) {
+                return input.V().count().next();
+            }
+        });
+        Assert.assertEquals((Long) 2L, count);
+    }
+
+    @Test
+    public void testE() {
+        final Long count = fg.traverse(new Function<GraphTraversalSource, Long>() {
+            @Nullable
+            @Override
+            public Long apply(@Nullable GraphTraversalSource input) {
+                return input.E().count().next();
+            }
+        });
+        Assert.assertEquals((Long) 1L, count);
+    }
+
+    @Test
+    public void testVById() {
+        final Person person = fg.traverseSingleton(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
+            @Nullable
+            @Override
+            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
+                return input.V(p1.<Long>getId());
+            }
+        }, Person.class, false);
+        Assert.assertEquals(p1, person);
+    }
+
+    @Test
+    public void testEById() {
+        final Knows knows = fg.traverseSingleton(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
+            @Nullable
+            @Override
+            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
+                return input.E(e1.<Long>getId());
+            }
+        }, Knows.class, false);
+        Assert.assertEquals(e1, knows);
+    }
+
+    @Test
+    public void testVByIdExplicit() {
+        final Person person = fg.traverseSingletonExplicit(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
+            @Nullable
+            @Override
+            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
+                return input.V(p1.<Long>getId());
+            }
+        }, Person.class, false);
+        Assert.assertEquals(p1, person);
+    }
+
+    @Test
+    public void testEByIdExplicit() {
+        final Knows knows = fg.traverseSingletonExplicit(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
+            @Nullable
+            @Override
+            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
+                return input.E(e1.<Long>getId());
+            }
+        }, Knows.class, false);
+        Assert.assertEquals(e1, knows);
+    }
+
+    @Test
+    public void testRemove() {
+        p1.remove();
+        final Long count = fg.traverse(new Function<GraphTraversalSource, Long>() {
+            @Nullable
+            @Override
+            public Long apply(@Nullable GraphTraversalSource input) {
+                return input.V().count().next();
+            }
+        });
+        Assert.assertEquals((Long) 1L, count);
+    }
 
     @Test
     public void testReframe() {
@@ -117,9 +172,16 @@ public class AbstractElementFrameTest {
         Assert.assertEquals((Long) p1.getId(), (Long) v1.getId());
     }
 
-//    @Test
-//    public void testvNull() {
-//        Assert.assertNull(p1.v("noId").next());
-//    }
+    @Test
+    public void testVNull() {
+        final Long count = fg.traverse(new Function<GraphTraversalSource, Long>() {
+            @Nullable
+            @Override
+            public Long apply(@Nullable GraphTraversalSource input) {
+                return input.V("noId").count().next();
+            }
+        });
+        Assert.assertEquals((Long) 0L, count);
+    }
 
 }

@@ -27,7 +27,7 @@ import java.util.function.Consumer;
  * It is expected that this interface be implemented by providers in a {@link ThreadLocal} fashion. In other words
  * transactions are bound to the current thread, which means that any graph operation executed by the thread occurs
  * in the context of that transaction and that there may only be one thread executing in a single transaction.
- * 
+ *
  * It is important to realize that this class is not a "transaction object".  It is a class that holds transaction
  * related methods thus hiding them from the {@link WrappedFramedGraph} interface.  This object is not meant to be passed around
  * as a transactional context.

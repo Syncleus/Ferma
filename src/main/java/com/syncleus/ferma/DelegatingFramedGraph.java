@@ -608,6 +608,11 @@ public class DelegatingFramedGraph<G extends Graph> implements WrappedFramedGrap
     }
 
     @Override
+    public <T> T traverse(Function<GraphTraversalSource, T> traverser) {
+        return traverser.apply(this.getBaseGraph().traversal());
+    }
+
+    @Override
     public TypeResolver getTypeResolver() {
         return this.defaultResolver;
     }

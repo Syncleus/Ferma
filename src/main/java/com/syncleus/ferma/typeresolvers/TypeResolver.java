@@ -23,7 +23,10 @@
  */
 package com.syncleus.ferma.typeresolvers;
 
+import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
+import org.apache.tinkerpop.gremlin.structure.Edge;
 import org.apache.tinkerpop.gremlin.structure.Element;
+import org.apache.tinkerpop.gremlin.structure.Vertex;
 
 /**
  * Type resolvers resolve the frame type from the element being requested and
@@ -77,17 +80,7 @@ public interface TypeResolver {
      * @param type The type to filter by.
      * @return The traversal stream filtered by the desired type.
      */
-    VertexTraversal<?,?,?> hasType(VertexTraversal<?,?,?> traverser, Class<?> type);
-    
-    /**
-     * Filters the objects on the traversal that satisfy a requested type.
-     * 
-     * @param traverser A traversal pointing to the current set of edges to be
-     * filtered
-     * @param type The type to filter by.
-     * @return The traversal stream filtered by the desired type.
-     */
-    EdgeTraversal<?,?,?> hasType(EdgeTraversal<?,?,?> traverser, Class<?> type);
+    <P extends Element, T extends Element> GraphTraversal<P,T> hasType(GraphTraversal<P,T> traverser, Class<?> type);
 
     /**
      * Filters out the objects on the traversal that are not satisfying a requested type.
@@ -97,15 +90,5 @@ public interface TypeResolver {
      * @param type The type to filter by.
      * @return The traversal stream filtered by the desired type.
      */
-    VertexTraversal<?,?,?> hasNotType(VertexTraversal<?,?,?> traverser, Class<?> type);
-
-    /**
-     * Filters out the objects on the traversal that are not satisfying a requested type.
-     * 
-     * @param traverser A traversal pointing to the current set of edges to be
-     * filtered
-     * @param type The type to filter by.
-     * @return The traversal stream filtered by the desired type.
-     */
-    EdgeTraversal<?,?,?> hasNotType(EdgeTraversal<?,?,?> traverser, Class<?> type);
+    <P extends Element, T extends Element> GraphTraversal<P,T> hasNotType(GraphTraversal<P,T> traverser, Class<?> type);
 }

@@ -169,11 +169,11 @@ public class AdjacencyMethodHandler implements MethodHandler {
                 public Iterator<? extends Element> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
                     switch(direction) {
                         case IN:
-                            return input.inE(label).inV();
+                            return input.in(label);
                         case OUT:
-                            return input.outE(label).inV();
+                            return input.out(label);
                         case BOTH:
-                            return input.bothE(label).inV();
+                            return input.both(label);
                         default:
                             throw new IllegalStateException("Direction not recognized.");
                     }
@@ -192,16 +192,22 @@ public class AdjacencyMethodHandler implements MethodHandler {
             final String label = annotation.label();
             final TypeResolver resolver = thiz.getGraph().getTypeResolver();
 
-            switch (direction) {
-                case BOTH:
-                    return resolver.hasType(thiz.both(label), type).frame(type);
-                case IN:
-                    return resolver.hasType(thiz.in(label), type).frame(type);
-                case OUT:
-                    return resolver.hasType(thiz.out(label), type).frame(type);
-                default:
-                    throw new IllegalStateException(method.getName() + " is annotated with a direction other than BOTH, IN, or OUT.");
-            }
+            return thiz.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, Iterator<? extends Element>>() {
+                @Nullable
+                @Override
+                public Iterator<? extends Element> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
+                    switch(direction) {
+                        case IN:
+                            return resolver.hasType(input.in(label), type);
+                        case OUT:
+                            return resolver.hasType(input.out(label), type);
+                        case BOTH:
+                            return resolver.hasType(input.both(label), type);
+                        default:
+                            throw new IllegalStateException("Direction not recognized.");
+                    }
+                }
+            }, type, false);
         }
     }
 
@@ -220,11 +226,11 @@ public class AdjacencyMethodHandler implements MethodHandler {
                 public Iterator<? extends Element> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
                     switch(direction) {
                         case IN:
-                            return input.inE(label).inV();
+                            return input.in(label);
                         case OUT:
-                            return input.outE(label).inV();
+                            return input.out(label);
                         case BOTH:
-                            return input.bothE(label).inV();
+                            return input.both(label);
                         default:
                             throw new IllegalStateException("Direction not recognized.");
                     }
@@ -242,17 +248,23 @@ public class AdjacencyMethodHandler implements MethodHandler {
             final Direction direction = annotation.direction();
             final String label = annotation.label();
             final TypeResolver resolver = thiz.getGraph().getTypeResolver();
-            
-            switch (direction) {
-                case BOTH:
-                    return resolver.hasType(thiz.both(label), type).next(type);
-                case IN:
-                    return resolver.hasType(thiz.in(label), type).next(type);
-                case OUT:
-                    return resolver.hasType(thiz.out(label), type).next(type);
-                default:
-                    throw new IllegalStateException(method.getName() + " is annotated with a direction other than BOTH, IN, or OUT.");
-            }
+
+            return thiz.traverseSingleton(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, Iterator<? extends Element>>() {
+                @Nullable
+                @Override
+                public Iterator<? extends Element> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
+                    switch(direction) {
+                        case IN:
+                            return resolver.hasType(input.in(label), type);
+                        case OUT:
+                            return resolver.hasType(input.out(label), type);
+                        case BOTH:
+                            return resolver.hasType(input.both(label), type);
+                        default:
+                            throw new IllegalStateException("Direction not recognized.");
+                    }
+                }
+            }, type, false);
         }
     }
 

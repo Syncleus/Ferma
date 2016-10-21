@@ -21,7 +21,11 @@ import com.syncleus.ferma.EdgeFrame;
 import com.syncleus.ferma.TEdge;
 import com.syncleus.ferma.TVertex;
 import com.syncleus.ferma.VertexFrame;
+import org.apache.tinkerpop.gremlin.process.traversal.Traverser;
+import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
 import org.apache.tinkerpop.gremlin.structure.Element;
+
+import java.util.function.Predicate;
 
 /**
  * This type resolver simply returns the type requested by the client.
@@ -49,34 +53,19 @@ public class UntypedTypeResolver implements TypeResolver {
     @Override
     public void deinit(final Element element) {
     }
-    
+
     @Override
-    public VertexTraversal<?,?,?> hasType(final VertexTraversal<?,?,?> traverser, final Class<?> type) {
-        return traverser.filter(new TraversalFunction<VertexFrame, Boolean>() {
+    public <P extends Element, T extends Element> GraphTraversal<P, T> hasType(GraphTraversal<P, T> traverser, Class<?> type) {
+        return traverser.filter(new Predicate<Traverser<T>>() {
             @Override
-            public Boolean compute(VertexFrame argument) {
-                return false;
-            }
-        });
-    }
-    
-    @Override
-    public EdgeTraversal<?,?,?> hasType(final EdgeTraversal<?,?,?> traverser, final Class<?> type) {
-        return traverser.filter(new TraversalFunction<EdgeFrame, Boolean>() {
-            @Override
-            public Boolean compute(EdgeFrame argument) {
+            public boolean test(Traverser<T> unused) {
                 return false;
             }
         });
     }
 
-	@Override
-	public VertexTraversal<?, ?, ?> hasNotType(VertexTraversal<?, ?, ?> traverser, Class<?> type) {
-		return traverser;
-	}
-
-	@Override
-	public EdgeTraversal<?, ?, ?> hasNotType(EdgeTraversal<?, ?, ?> traverser, Class<?> type) {
-		return traverser;
-	}
+    @Override
+    public <P extends Element, T extends Element> GraphTraversal<P, T> hasNotType(GraphTraversal<P, T> traverser, Class<?> type) {
+        return traverser;
+    }
 }

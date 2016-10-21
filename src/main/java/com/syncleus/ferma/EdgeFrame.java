@@ -18,7 +18,7 @@ package com.syncleus.ferma;
 import com.syncleus.ferma.traversals.VertexTraversal;
 import com.syncleus.ferma.traversals.EdgeTraversal;
 import com.google.gson.JsonObject;
-import com.tinkerpop.blueprints.Edge;
+import org.apache.tinkerpop.gremlin.structure.Edge;
 
 public interface EdgeFrame extends ElementFrame {
     @Override

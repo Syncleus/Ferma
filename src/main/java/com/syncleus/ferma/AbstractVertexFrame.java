@@ -29,9 +29,9 @@ import com.google.gson.JsonObject;
 import com.syncleus.ferma.traversals.EdgeTraversal;
 import com.syncleus.ferma.traversals.SimpleTraversal;
 import com.syncleus.ferma.traversals.VertexTraversal;
-import com.tinkerpop.blueprints.Edge;
-import com.tinkerpop.blueprints.Vertex;
-import com.tinkerpop.blueprints.util.wrappers.wrapped.WrappedElement;
+import org.apache.tinkerpop.gremlin.structure.Edge;
+import org.apache.tinkerpop.gremlin.structure.Vertex;
+import org.apache.tinkerpop.gremlin.structure.util.wrapped.WrappedElement;
 
 /**
  * The base class that all vertex frames must extend.

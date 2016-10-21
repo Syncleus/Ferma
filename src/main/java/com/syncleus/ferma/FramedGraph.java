@@ -15,11 +15,16 @@
  */
 package com.syncleus.ferma;
 
+import com.google.common.base.Function;
 import com.syncleus.ferma.traversals.VertexTraversal;
 import com.syncleus.ferma.traversals.EdgeTraversal;
 import com.syncleus.ferma.typeresolvers.TypeResolver;
-import com.tinkerpop.blueprints.*;
+import org.apache.tinkerpop.gremlin.structure.Edge;
+import org.apache.tinkerpop.gremlin.structure.Element;
+import org.apache.tinkerpop.gremlin.structure.Graph;
+import org.apache.tinkerpop.gremlin.structure.Vertex;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -33,7 +38,7 @@ public interface FramedGraph extends Graph {
     /**
      * Close the delegate graph.
      */
-    void close();
+    void close() throws IOException;
 
     /**
      * Add a vertex to the graph
@@ -107,15 +112,15 @@ public interface FramedGraph extends Graph {
      * Add a edge to the graph
      *
      * @param <T> The type used to frame the element.
-     * @param id the recommended object identifier
      * @param source the source vertex
      * @param destination the destination vertex
      * @param label the label.
      * @param initializer
      *            the initializer for the frame which defines its type and may initialize properties
+     * @param id the recommended object identifier
      * @return The framed edge.
      */
-    <T> T addFramedEdge(final Object id, final VertexFrame source, final VertexFrame destination, final String label, ClassInitializer<T> initializer);
+    <T> T addFramedEdge(final VertexFrame source, final VertexFrame destination, final String label, ClassInitializer<T> initializer, final Object... id);
 
     /**
      * Add a edge to the graph
@@ -188,19 +193,21 @@ public interface FramedGraph extends Graph {
      */
     TEdge addFramedEdgeExplicit(final VertexFrame source, final VertexFrame destination, final String label);
 
-    /**
-     * Query over all vertices in the graph.
-     *
-     * @return The query.
-     */
-    VertexTraversal<?, ?, ?> v();
+    <T extends ElementFrame> Iterator<T> traverse(final Function<Graph, Iterator<? extends Element>> traverser, final ClassInitializer<T> initializer);
 
-    /**
-     * Query over all edges in the graph.
-     *
-     * @return The query.
-     */
-    EdgeTraversal<?, ?, ?> e();
+    <T extends ElementFrame> Iterator<T> traverse(final Function<Graph, Iterator<? extends Element>> traverser, final Class<T> kind, boolean isNew);
+
+    <T extends ElementFrame> Iterator<T> traverseExplicit(final Function<Graph, Iterator<? extends Element>> traverser, final ClassInitializer<T> initializer);
+
+    <T extends ElementFrame> Iterator<T> traverseExplicit(final Function<Graph, Iterator<? extends Element>> traverser, final Class<T> kind, boolean isNew);
+
+    <T extends ElementFrame> T traverseSingleton(final Function<Graph, Iterator<? extends Element>> traverser, final ClassInitializer<T> initializer);
+
+    <T extends ElementFrame> T traverseSingleton(final Function<Graph, Iterator<? extends Element>> traverser, final Class<T> kind, boolean isNew);
+
+    <T extends ElementFrame> T traverseSingletonExplicit(final Function<Graph, Iterator<? extends Element>> traverser, final ClassInitializer<T> initializer);
+
+    <T extends ElementFrame> T traverseSingletonExplicit(final Function<Graph, Iterator<? extends Element>> traverser, final Class<T> kind, boolean isNew);
 
     <F> F getFramedVertexExplicit(Class<F> classOfF, Object id);
 

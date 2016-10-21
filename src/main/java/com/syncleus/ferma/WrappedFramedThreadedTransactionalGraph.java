@@ -15,7 +15,6 @@
  */
 package com.syncleus.ferma;
 
-import com.tinkerpop.blueprints.ThreadedTransactionalGraph;
 
-public interface WrapperFramedThreadedTransactionalGraph<G extends ThreadedTransactionalGraph> extends WrapperFramedTransactionalGraph<G>, FramedThreadedTransactionalGraph {
+public interface WrappedFramedThreadedTransactionalGraph<G extends ThreadedTransactionalGraph> extends WrappedFramedTransactionalGraph<G>, FramedThreadedTransactionalGraph {
 }

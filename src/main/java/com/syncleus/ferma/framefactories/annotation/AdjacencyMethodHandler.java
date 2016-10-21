@@ -309,14 +309,14 @@ public class AdjacencyMethodHandler implements MethodHandler {
 
             switch (direction) {
                 case BOTH:
-                    thiz.getGraph().addFramedEdge(null, newVertex, thiz, label, edgeType);
-                    thiz.getGraph().addFramedEdge(null, thiz, newVertex, label, edgeType);
+                    thiz.getGraph().addFramedEdge(newVertex, thiz, label, edgeType);
+                    thiz.getGraph().addFramedEdge(thiz, newVertex, label, edgeType);
                     break;
                 case IN:
-                    thiz.getGraph().addFramedEdge(null, newVertex, thiz, label, edgeType);
+                    thiz.getGraph().addFramedEdge(newVertex, thiz, label, edgeType);
                     break;
                 case OUT:
-                    thiz.getGraph().addFramedEdge(null, thiz, newVertex, label, edgeType);
+                    thiz.getGraph().addFramedEdge(thiz, newVertex, label, edgeType);
                     break;
                 default:
                     throw new IllegalStateException(method.getName() + " is annotated with a direction other than BOTH, IN, or OUT.");
@@ -365,14 +365,14 @@ public class AdjacencyMethodHandler implements MethodHandler {
 
             switch (direction) {
                 case BOTH:
-                    thiz.getGraph().addFramedEdge(null, newVertex, thiz, label, edgeType);
-                    thiz.getGraph().addFramedEdge(null, thiz, newVertex, label, edgeType);
+                    thiz.getGraph().addFramedEdge(newVertex, thiz, label, edgeType);
+                    thiz.getGraph().addFramedEdge(thiz, newVertex, label, edgeType);
                     break;
                 case IN:
-                    thiz.getGraph().addFramedEdge(null, newVertex, thiz, label, edgeType);
+                    thiz.getGraph().addFramedEdge(newVertex, thiz, label, edgeType);
                     break;
                 case OUT:
-                    thiz.getGraph().addFramedEdge(null, thiz, newVertex, label, edgeType);
+                    thiz.getGraph().addFramedEdge(thiz, newVertex, label, edgeType);
                     break;
                 default:
                     throw new IllegalStateException(method.getName() + " is annotated with a direction other than BOTH, IN, or OUT.");

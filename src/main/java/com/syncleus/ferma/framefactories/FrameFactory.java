@@ -23,7 +23,7 @@
  */
 package com.syncleus.ferma.framefactories;
 
-import com.tinkerpop.blueprints.Element;
+import org.apache.tinkerpop.gremlin.structure.Element;
 
 /**
  * Does the actual work of constructing the frame. Implementations

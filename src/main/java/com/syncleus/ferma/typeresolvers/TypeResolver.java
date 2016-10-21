@@ -25,7 +25,7 @@ package com.syncleus.ferma.typeresolvers;
 
 import com.syncleus.ferma.traversals.EdgeTraversal;
 import com.syncleus.ferma.traversals.VertexTraversal;
-import com.tinkerpop.blueprints.Element;
+import org.apache.tinkerpop.gremlin.structure.Element;
 
 /**
  * Type resolvers resolve the frame type from the element being requested and

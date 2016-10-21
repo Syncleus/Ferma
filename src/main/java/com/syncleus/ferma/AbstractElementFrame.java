@@ -25,8 +25,9 @@ package com.syncleus.ferma;
 
 import com.syncleus.ferma.traversals.VertexTraversal;
 import com.syncleus.ferma.traversals.EdgeTraversal;
+import org.apache.tinkerpop.gremlin.structure.Element;
+
 import java.util.Set;
-import com.tinkerpop.blueprints.Element;
 
 /**
  * The base of all framed elements.

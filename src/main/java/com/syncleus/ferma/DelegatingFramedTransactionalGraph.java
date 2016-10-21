@@ -21,7 +21,7 @@ import com.tinkerpop.blueprints.TransactionalGraph;
 
 import java.util.Collection;
 
-public class DelegatingFramedTransactionalGraph<G extends TransactionalGraph> extends DelegatingFramedGraph<G> implements WrapperFramedTransactionalGraph<G> {
+public class DelegatingFramedTransactionalGraph<G extends TransactionalGraph> extends DelegatingFramedGraph<G> implements WrappedFramedTransactionalGraph<G> {
 
     public DelegatingFramedTransactionalGraph(final G delegate, final FrameFactory builder, final TypeResolver defaultResolver) {
         super(delegate, builder, defaultResolver);

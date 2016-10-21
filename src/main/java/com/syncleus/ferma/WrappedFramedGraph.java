@@ -15,8 +15,9 @@
  */
 package com.syncleus.ferma;
 
-import com.tinkerpop.blueprints.Graph;
-import com.tinkerpop.blueprints.util.wrappers.WrapperGraph;
 
-public interface WrapperFramedGraph<G extends Graph> extends FramedGraph, WrapperGraph<G> {
+import org.apache.tinkerpop.gremlin.structure.Graph;
+import org.apache.tinkerpop.gremlin.structure.util.wrapped.WrappedGraph;
+
+public interface WrappedFramedGraph<G extends Graph> extends FramedGraph, WrappedGraph<G> {
 }

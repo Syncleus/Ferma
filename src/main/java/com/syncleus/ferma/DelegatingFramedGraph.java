@@ -23,29 +23,36 @@
  */
 package com.syncleus.ferma;
 
+import com.google.common.base.Function;
 import com.syncleus.ferma.traversals.GlobalVertexTraversal;
 import com.syncleus.ferma.traversals.SimpleTraversal;
-import com.syncleus.ferma.traversals.VertexTraversal;
-import com.syncleus.ferma.traversals.EdgeTraversal;
 import com.syncleus.ferma.framefactories.FrameFactory;
 import com.syncleus.ferma.framefactories.DefaultFrameFactory;
 import com.syncleus.ferma.typeresolvers.UntypedTypeResolver;
 import com.syncleus.ferma.typeresolvers.TypeResolver;
 import com.syncleus.ferma.typeresolvers.PolymorphicTypeResolver;
-import com.google.common.base.Function;
 import com.google.common.collect.Iterators;
 import com.syncleus.ferma.framefactories.annotation.AnnotationFrameFactory;
-import com.tinkerpop.blueprints.*;
-import com.tinkerpop.blueprints.util.wrappers.wrapped.WrappedGraph;
+import org.apache.tinkerpop.gremlin.structure.Edge;
+import org.apache.tinkerpop.gremlin.structure.Element;
+import org.apache.tinkerpop.gremlin.structure.Graph;
+import org.apache.tinkerpop.gremlin.structure.Vertex;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
 
-public class DelegatingFramedGraph<G extends Graph> extends WrappedGraph<G> implements WrapperFramedGraph<G> {
+public class DelegatingFramedGraph<G extends Graph> implements WrappedFramedGraph<G>{
 
     private final TypeResolver defaultResolver;
     private final TypeResolver untypedResolver;
     private final FrameFactory builder;
+    private final G delegate;
+
+    @Override
+    public G getBaseGraph() {
+        return delegate;
+    }
 
     /**
      * Construct a framed graph.
@@ -58,7 +65,7 @@ public class DelegatingFramedGraph<G extends Graph> extends WrappedGraph<G> impl
      *            The type defaultResolver that will decide the final frame type.
      */
     public DelegatingFramedGraph(final G delegate, final FrameFactory builder, final TypeResolver defaultResolver) {
-        super(delegate);
+       this.delegate = delegate;
 
         if( builder == null )
             throw new IllegalArgumentException("builder can not be null");
@@ -77,7 +84,7 @@ public class DelegatingFramedGraph<G extends Graph> extends WrappedGraph<G> impl
      *            The graph to wrap.
      */
     public DelegatingFramedGraph(final G delegate) {
-        super(delegate);
+        this.delegate = delegate;
 
         this.defaultResolver = new UntypedTypeResolver();
         this.untypedResolver = this.defaultResolver;
@@ -107,7 +114,7 @@ public class DelegatingFramedGraph<G extends Graph> extends WrappedGraph<G> impl
      * 			  True if annotated classes will be supported, false otherwise.
      */
     public DelegatingFramedGraph(final G delegate, final boolean typeResolution, final boolean annotationsSupported) {
-        super(delegate);
+        this.delegate = delegate;
 
         final ReflectionCache reflections = new ReflectionCache();
         if (typeResolution) {
@@ -137,7 +144,7 @@ public class DelegatingFramedGraph<G extends Graph> extends WrappedGraph<G> impl
      * 			  True if annotated classes will be supported, false otherwise.
      */
     public DelegatingFramedGraph(final G delegate, final ReflectionCache reflections, final boolean typeResolution, final boolean annotationsSupported) {
-        super(delegate);
+        this.delegate = delegate;
 
         if( reflections == null )
             throw new IllegalArgumentException("reflections can not be null");
@@ -165,7 +172,7 @@ public class DelegatingFramedGraph<G extends Graph> extends WrappedGraph<G> impl
      *            The types to be consider for type resolution.
      */
     public DelegatingFramedGraph(final G delegate, final Collection<? extends Class<?>> types) {
-        super(delegate);
+        this.delegate = delegate;
 
         if( types == null )
             throw new IllegalArgumentException("types can not be null");
@@ -188,7 +195,7 @@ public class DelegatingFramedGraph<G extends Graph> extends WrappedGraph<G> impl
      *            The types to be consider for type resolution.
      */
     public DelegatingFramedGraph(final G delegate, final boolean typeResolution, final Collection<? extends Class<?>> types) {
-        super(delegate);
+        this.delegate = delegate;
 
         if( types == null )
             throw new IllegalArgumentException("types can not be null");
@@ -209,8 +216,16 @@ public class DelegatingFramedGraph<G extends Graph> extends WrappedGraph<G> impl
      * Close the delegate graph.
      */
     @Override
-    public void close() {
-        this.getBaseGraph().shutdown();
+    public void close() throws IOException {
+        try {
+            this.getBaseGraph().close();
+        }
+        catch(Exception caught) {
+            if( caught instanceof  RuntimeException )
+                throw (RuntimeException) caught;
+            else
+                throw new IOException("Close malfunctioned:", caught);
+        }
     }
 
     @Override
@@ -302,7 +317,7 @@ public class DelegatingFramedGraph<G extends Graph> extends WrappedGraph<G> impl
 
     @Override
     public <T> T addFramedVertexExplicit(final ClassInitializer<T> initializer) {
-        final T framedVertex = frameNewElementExplicit(this.getBaseGraph().addVertex(null), initializer);
+        final T framedVertex = frameNewElementExplicit(this.getBaseGraph().addVertex(), initializer);
         return framedVertex;
     }
     
@@ -323,19 +338,20 @@ public class DelegatingFramedGraph<G extends Graph> extends WrappedGraph<G> impl
     }
 
     @Override
-    public <T> T addFramedEdge(final Object id, final VertexFrame source, final VertexFrame destination, final String label, final ClassInitializer<T> initializer) {
-        final T framedEdge = frameNewElement(this.getBaseGraph().addEdge(id, source.getElement(), destination.getElement(), label), initializer);
+    public <T> T addFramedEdge(final VertexFrame source, final VertexFrame destination, final String label, final ClassInitializer<T> initializer, final Object... ids) {
+        final Edge baseEdge = destination.getElement().addEdge(label, source.getElement(), ids);
+        final T framedEdge = frameNewElement(baseEdge, initializer);
         return framedEdge;
     }
     
     @Override
     public <T> T addFramedEdge(final VertexFrame source, final VertexFrame destination, final String label, final Class<T> kind) {
-        return this.addFramedEdge(null, source, destination, label, new DefaultClassInitializer<>(kind));
+        return this.addFramedEdge(source, destination, label, new DefaultClassInitializer<>(kind));
     }
 
     @Override
     public <T> T addFramedEdgeExplicit(final VertexFrame source, final VertexFrame destination, final String label, final ClassInitializer<T> initializer) {
-        final T framedEdge = frameNewElementExplicit(this.getBaseGraph().addEdge(null, source.getElement(), destination.getElement(), label), initializer);
+        final T framedEdge = frameNewElementExplicit(destination.getElement().addEdge(label, source.getElement(), null), initializer);
         return framedEdge;
     }
     
@@ -346,7 +362,7 @@ public class DelegatingFramedGraph<G extends Graph> extends WrappedGraph<G> impl
 
     @Override
     public TEdge addFramedEdge(final VertexFrame source, final VertexFrame destination, final String label) {
-        return addFramedEdge(null, source, destination, label, TEdge.DEFAULT_INITIALIZER);
+        return addFramedEdge(source, destination, label, TEdge.DEFAULT_INITIALIZER);
     }
 
     @Override
@@ -355,19 +371,108 @@ public class DelegatingFramedGraph<G extends Graph> extends WrappedGraph<G> impl
         return addFramedEdgeExplicit(source, destination, label, TEdge.DEFAULT_INITIALIZER);
     }
 
-    @Override
-    public VertexTraversal<?, ?, ?> v() {
-        return new GlobalVertexTraversal(this, this.getBaseGraph());
+    public <T extends ElementFrame> Iterator<T> traverse(final Function<Graph, Iterator<? extends Element>> traverser, final ClassInitializer<T> initializer) {
+        Iterator<? extends Element> elements = traverser.apply(this.getBaseGraph());
+        return new Iterator<T>() {
+            @Override
+            public boolean hasNext() {
+                return elements.hasNext();
+            }
+
+            @Override
+            public T next() {
+                return frameNewElement(elements.next(), initializer);
+            }
+        };
     }
 
-    @Override
-    public EdgeTraversal<?, ?, ?> e() {
-        return new SimpleTraversal(this, this.getBaseGraph()).e();
+    public <T extends ElementFrame> Iterator<T> traverse(final Function<Graph, Iterator<? extends Element>> traverser, final Class<T> kind, boolean isNew) {
+        Iterator<? extends Element> elements = traverser.apply(this.getBaseGraph());
+        return new Iterator<T>() {
+            @Override
+            public boolean hasNext() {
+                return elements.hasNext();
+            }
+
+            @Override
+            public T next() {
+                if( isNew )
+                    return frameNewElement(elements.next(), kind);
+                else
+                    return frameElement(elements.next(), kind);
+            }
+        };
+    }
+
+    public <T extends ElementFrame> Iterator<T> traverseExplicit(final Function<Graph, Iterator<? extends Element>> traverser, final ClassInitializer<T> initializer) {
+        Iterator<? extends Element> elements = traverser.apply(this.getBaseGraph());
+        return new Iterator<T>() {
+            @Override
+            public boolean hasNext() {
+                return elements.hasNext();
+            }
+
+            @Override
+            public T next() {
+                return frameNewElementExplicit(elements.next(), initializer);
+            }
+        };
+    }
+
+    public <T extends ElementFrame> Iterator<T> traverseExplicit(final Function<Graph, Iterator<? extends Element>> traverser, final Class<T> kind, boolean isNew) {
+        Iterator<? extends Element> elements = traverser.apply(this.getBaseGraph());
+        return new Iterator<T>() {
+            @Override
+            public boolean hasNext() {
+                return elements.hasNext();
+            }
+
+            @Override
+            public T next() {
+                if( isNew )
+                    return frameNewElementExplicit(elements.next(), kind);
+                else
+                    return frameElementExplicit(elements.next(), kind);
+            }
+        };
+    }
+
+    public <T extends ElementFrame> T traverseSingleton(final Function<Graph, Iterator<? extends Element>> traverser, final ClassInitializer<T> initializer) {
+        Iterator<T> frames = this.traverse(traverser, initializer);
+        if( frames.hasNext() )
+            return frames.next();
+        else
+            return null;
+    }
+
+    public <T extends ElementFrame> T traverseSingleton(final Function<Graph, Iterator<? extends Element>> traverser, final Class<T> kind, boolean isNew) {
+        Iterator<T> frames = this.traverse(traverser, kind, isNew);
+        if( frames.hasNext() )
+            return frames.next();
+        else
+            return null;
+    }
+
+    public <T extends ElementFrame> T traverseSingletonExplicit(final Function<Graph, Iterator<? extends Element>> traverser, final ClassInitializer<T> initializer) {
+        Iterator<T> frames = this.traverseExplicit(traverser, initializer);
+        if( frames.hasNext() )
+            return frames.next();
+        else
+            return null;
+    }
+
+    public <T extends ElementFrame> T traverseSingletonExplicit(final Function<Graph, Iterator<? extends Element>> traverser, final Class<T> kind, boolean isNew) {
+        Iterator<T> frames = this.traverseExplicit(traverser, kind, isNew);
+        if( frames.hasNext() )
+            return frames.next();
+        else
+            return null;
     }
 
     @Override
     public <F> F getFramedVertexExplicit(Class<F> classOfF, Object id) {
-        return frameElement(this.getBaseGraph().getVertex(id), classOfF);
+        this.traverse()
+        return frameElementExplicit(this.getBaseGraph().getVertex(id), classOfF);
     }
 
     @Override

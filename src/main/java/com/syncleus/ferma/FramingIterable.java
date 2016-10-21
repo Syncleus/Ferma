@@ -23,7 +23,7 @@
  */
 package com.syncleus.ferma;
 
-import com.tinkerpop.blueprints.Element;
+import org.apache.tinkerpop.gremlin.structure.Element;
 
 import java.util.Iterator;
 

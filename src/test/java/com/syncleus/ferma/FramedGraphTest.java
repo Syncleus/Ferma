@@ -48,10 +48,10 @@ public class FramedGraphTest {
         final Graph g = new TinkerGraph();
         final FramedGraph fg = new DelegatingFramedGraph(g);
 
-        final Person p1 = fg.addFramedVertex(null, Person.DEFAULT_INITIALIZER);
+        final Person p1 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
         p1.setName("Bryn");
 
-        final Person p2 = fg.addFramedVertex(null, Person.DEFAULT_INITIALIZER);
+        final Person p2 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
         p2.setName("Julia");
         final Knows knows = p1.addKnows(p2);
         knows.setYears(15);
@@ -137,14 +137,14 @@ public class FramedGraphTest {
         final Graph g = new TinkerGraph();
         final FramedGraph fg = new DelegatingFramedGraph(g, true, false);
 
-        Person rootPerson = fg.addFramedVertex(null, Person.DEFAULT_INITIALIZER);
+        Person rootPerson = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
         for (int i = 0; i < 10; i++) {
-            Person person = fg.addFramedVertex(null, Person.DEFAULT_INITIALIZER);
+            Person person = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
             rootPerson.addKnows(person);
         }
 
         for (int i = 0; i < 5; i++) {
-            Program program = fg.addFramedVertex(null, Program.DEFAULT_INITIALIZER);
+            Program program = fg.addFramedVertex(Program.DEFAULT_INITIALIZER);
             program.getElement().addEdge("UNTYPED_EDGE", rootPerson.getElement());
         }
 
@@ -167,10 +167,10 @@ public class FramedGraphTest {
         final Graph g = new TinkerGraph();
         final FramedGraph fg = new DelegatingFramedGraph(g, true, false);
 
-        final Person p1 = fg.addFramedVertex(null, Programmer.DEFAULT_INITIALIZER);
+        final Person p1 = fg.addFramedVertex(Programmer.DEFAULT_INITIALIZER);
         p1.setName("Bryn");
 
-        final Person p2 = fg.addFramedVertex(null, Person.DEFAULT_INITIALIZER);
+        final Person p2 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
         p2.setName("Julia");
 
         final Person bryn = fg.v().has("name", "Bryn").next(Person.class);
@@ -251,10 +251,10 @@ public class FramedGraphTest {
         final Graph g = new TinkerGraph();
         final FramedGraph fg = new DelegatingFramedGraph(g, true, false);
 
-        final Person p1 = fg.addFramedVertex(null, Programmer.DEFAULT_INITIALIZER);
+        final Person p1 = fg.addFramedVertex(Programmer.DEFAULT_INITIALIZER);
         p1.setName("Bryn");
 
-        final Person p2 = fg.addFramedVertex(null, Person.DEFAULT_INITIALIZER);
+        final Person p2 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
         p2.setName("Julia");
 
         final Person bryn = fg.v().has("name", "Bryn").nextExplicit(Person.class);
@@ -300,7 +300,7 @@ public class FramedGraphTest {
                 return (T) o;
             }
         }, new PolymorphicTypeResolver());
-        final Person person = fg.addFramedVertex(null, Person.DEFAULT_INITIALIZER);
+        final Person person = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
         Assert.assertEquals(o, person);
     }
     

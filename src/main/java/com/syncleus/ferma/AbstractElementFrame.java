@@ -23,10 +23,7 @@
  */
 package com.syncleus.ferma;
 
-import com.syncleus.ferma.traversals.VertexTraversal;
-import com.syncleus.ferma.traversals.EdgeTraversal;
 import org.apache.tinkerpop.gremlin.structure.Element;
-
 import java.util.Set;
 
 /**
@@ -60,12 +57,12 @@ public abstract class AbstractElementFrame implements ElementFrame {
 
     @Override
     public <N> N getId() {
-        return (N) getElement().getId();
+        return (N) getElement().id();
     }
 
     @Override
     public Set<String> getPropertyKeys() {
-        return getElement().getPropertyKeys();
+        return getElement().keys();
     }
 
     @Override
@@ -105,46 +102,26 @@ public abstract class AbstractElementFrame implements ElementFrame {
 
     @Override
     public <T> T getProperty(final String name) {
-        return getElement().getProperty(name);
+        return getElement().value(name);
     }
 
     @Override
     public <T> T getProperty(final String name, final Class<T> type) {
         if (type.isEnum()) {
-            return (T) Enum.valueOf((Class<Enum>) type, (String) getElement().getProperty(name));
+            return (T) Enum.valueOf((Class<Enum>) type, getElement().value(name));
         }
-        return getElement().getProperty(name);
+        return getElement().value(name);
     }
 
     @Override
     public void setProperty(final String name, final Object value) {
         if (value == null) {
-            getElement().removeProperty(name);
+            getElement().property(name, null);
         } else if (value instanceof Enum) {
-            getElement().setProperty(name, value.toString());
+            getElement().property(name, value.toString());
         } else {
-            getElement().setProperty(name, value);
+            getElement().property(name, value);
         }
-    }
-
-    @Override
-    public VertexTraversal<?, ?, ?> v() {
-        return getGraph().v();
-    }
-
-    @Override
-    public EdgeTraversal<?, ?, ?> e() {
-        return getGraph().e();
-    }
-
-    @Override
-    public VertexTraversal<?, ?, ?> v(final Object... ids) {
-        return getGraph().v(ids);
-    }
-
-    @Override
-    public EdgeTraversal<?, ?, ?> e(final Object... ids) {
-        return getGraph().e(ids);
     }
 
     @Override

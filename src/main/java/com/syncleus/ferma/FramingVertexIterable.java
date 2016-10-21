@@ -15,7 +15,7 @@
  */
 package com.syncleus.ferma;
 
-import com.tinkerpop.blueprints.Vertex;
+import org.apache.tinkerpop.gremlin.structure.Vertex;
 
 public class FramingVertexIterable<T> extends FramingIterable<T, Vertex> {
 

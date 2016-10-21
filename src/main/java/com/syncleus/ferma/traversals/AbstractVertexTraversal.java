@@ -432,7 +432,7 @@ abstract class AbstractVertexTraversal<C, S, M> extends AbstractTraversal<Vertex
             return graph().frameElement((Element) getPipeline().next(), initializer.getInitializationType());
         }
         catch (final NoSuchElementException e) {
-            return graph().addFramedVertex(null, initializer);
+            return graph().addFramedVertex(initializer);
         }
     }
     
@@ -447,7 +447,7 @@ abstract class AbstractVertexTraversal<C, S, M> extends AbstractTraversal<Vertex
             return graph().frameElementExplicit((Element) getPipeline().next(), initializer.getInitializationType());
         }
         catch (final NoSuchElementException e) {
-            return graph().addFramedVertex(null, initializer);
+            return graph().addFramedVertex(initializer);
         }
     }
     

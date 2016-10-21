@@ -23,15 +23,17 @@
  */
 package com.syncleus.ferma;
 
+import com.google.common.base.Function;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
-import com.syncleus.ferma.traversals.EdgeTraversal;
-import com.syncleus.ferma.traversals.SimpleTraversal;
-import com.syncleus.ferma.traversals.VertexTraversal;
-import org.apache.tinkerpop.gremlin.structure.Edge;
-import org.apache.tinkerpop.gremlin.structure.Vertex;
+import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
+import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
+import org.apache.tinkerpop.gremlin.structure.*;
 import org.apache.tinkerpop.gremlin.structure.util.wrapped.WrappedElement;
+import javax.annotation.Nullable;
+import java.util.Iterator;
+import java.util.function.Consumer;
 
 /**
  * The base class that all vertex frames must extend.
@@ -84,105 +86,79 @@ public abstract class AbstractVertexFrame extends AbstractElementFrame implement
     }
 
     @Override
-    public VertexTraversal<?, ?, ?> out(final int branchFactor, final String... labels) {
-        return new SimpleTraversal(getGraph(), this).castToVertices().out(branchFactor, labels);
-    }
-
-    @Override
-    public VertexTraversal<?, ?, ?> out(final String... labels) {
-        return new SimpleTraversal(getGraph(), this).castToVertices().out(labels);
-    }
-
-    @Override
-    public VertexTraversal<?, ?, ?> in(final int branchFactor, final String... labels) {
-        return new SimpleTraversal(getGraph(), this).castToVertices().in(branchFactor, labels);
-    }
-
-    @Override
-    public VertexTraversal<?, ?, ?> in(final String... labels) {
-        return new SimpleTraversal(getGraph(), this).castToVertices().in(labels);
-    }
-
-    @Override
-    public VertexTraversal<?, ?, ?> both(final int branchFactor, final String... labels) {
-        return new SimpleTraversal(getGraph(), this).castToVertices().both(branchFactor, labels);
-    }
-
-    @Override
-    public VertexTraversal<?, ?, ?> both(final String... labels) {
-        return new SimpleTraversal(getGraph(), this).castToVertices().both(labels);
-    }
-
-    @Override
-    public EdgeTraversal<?, ?, ?> outE(final int branchFactor, final String... labels) {
-        return new SimpleTraversal(getGraph(), this).castToVertices().outE(branchFactor, labels);
-    }
-
-    @Override
-    public EdgeTraversal<?, ?, ?> outE(final String... labels) {
-        return new SimpleTraversal(getGraph(), this).castToVertices().outE(labels);
-    }
-
-    @Override
-    public EdgeTraversal<?, ?, ?> inE(final int branchFactor, final String... labels) {
-        return new SimpleTraversal(getGraph(), this).castToVertices().inE(branchFactor, labels);
-    }
-
-    @Override
-    public EdgeTraversal<?, ?, ?> inE(final String... labels) {
-        return new SimpleTraversal(getGraph(), this).castToVertices().inE(labels);
-    }
-
-    @Override
-    public EdgeTraversal<?, ?, ?> bothE(final int branchFactor, final String... labels) {
-        return new SimpleTraversal(getGraph(), this).castToVertices().bothE(branchFactor, labels);
-    }
-
-    @Override
-    public EdgeTraversal<?, ?, ?> bothE(final String... labels) {
-        return new SimpleTraversal(getGraph(), this).castToVertices().bothE(labels);
-    }
-
-    @Override
     public void linkOut(final VertexFrame vertex, final String... labels) {
         for (final String label : labels)
-            traversal().linkOut(label, vertex).iterate();
+            vertex.getElement().addEdge(label, this.getElement(), null);
     }
 
     @Override
     public void linkIn(final VertexFrame vertex, final String... labels) {
         for (final String label : labels)
-            traversal().linkIn(label, vertex).iterate();
+            this.getElement().addEdge(label, vertex.getElement(), null);
     }
 
     @Override
     public void linkBoth(final VertexFrame vertex, final String... labels) {
-        for (final String label : labels)
-            traversal().linkBoth(label, vertex).iterate();
+        for (final String label : labels) {
+            vertex.getElement().addEdge(label, this.getElement(), null);
+            this.getElement().addEdge(label, vertex.getElement(), null);
+        }
     }
 
     @Override
     public void unlinkOut(final VertexFrame vertex, final String... labels) {
         if (vertex != null)
-            outE(labels).mark().inV().retain(vertex).back().removeAll();
+            this.traverse(new VoidFunction<GraphTraversal<? extends Vertex, ? extends Vertex>>() {
+                @Override
+                public void apply(GraphTraversal<? extends Vertex, ? extends Vertex> input) {
+                    Iterator<Edge> edges = input.outE(labels);
+                    edges.forEachRemaining(new Consumer<Edge>() {
+                        @Override
+                        public void accept(Edge edge) {
+                            if( edge.outVertex().equals(vertex) )
+                                edge.remove();
+                        }
+                    });
+                }
+            });
         else
-            outE(labels).removeAll();
+            this.traverse(new VoidFunction<GraphTraversal<? extends Vertex, ? extends Vertex>>() {
+                @Override
+                public void apply(GraphTraversal<? extends Vertex, ? extends Vertex> input) {
+                    input.outE(labels).remove();
+                }
+            });
     }
 
     @Override
     public void unlinkIn(final VertexFrame vertex, final String... labels) {
         if (vertex != null)
-            inE(labels).mark().outV().retain(vertex).back().removeAll();
+            this.traverse(new VoidFunction<GraphTraversal<? extends Vertex, ? extends Vertex>>() {
+                @Override
+                public void apply(GraphTraversal<? extends Vertex, ? extends Vertex> input) {
+                    Iterator<Edge> edges = input.inE(labels);
+                    edges.forEachRemaining(new Consumer<Edge>() {
+                        @Override
+                        public void accept(Edge edge) {
+                            if( edge.inVertex().equals(vertex) )
+                                edge.remove();
+                        }
+                    });
+                }
+            });
         else
-            inE(labels).removeAll();
+            this.traverse(new VoidFunction<GraphTraversal<? extends Vertex, ? extends Vertex>>() {
+                @Override
+                public void apply(GraphTraversal<? extends Vertex, ? extends Vertex> input) {
+                    input.inE(labels).remove();
+                }
+            });
     }
 
     @Override
     public void unlinkBoth(final VertexFrame vertex, final String... labels) {
-        if (vertex != null)
-            bothE(labels).mark().bothV().retain(vertex).back().removeAll();
-        else
-            bothE(labels).removeAll();
+        this.unlinkIn(vertex, labels);
+        this.unlinkOut(vertex, labels);
     }
 
     @Override
@@ -208,7 +184,7 @@ public abstract class AbstractVertexFrame extends AbstractElementFrame implement
 
     @Override
     public <K> K setLinkOut(final ClassInitializer<K> initializer, final String... labels) {
-        final K vertex = getGraph().addFramedVertex(null, initializer);
+        final K vertex = getGraph().addFramedVertex(initializer);
         setLinkOut((VertexFrame) vertex, labels);
         return vertex;
     }
@@ -232,7 +208,7 @@ public abstract class AbstractVertexFrame extends AbstractElementFrame implement
 
     @Override
     public <K> K setLinkIn(final ClassInitializer<K> initializer, final String... labels) {
-        final K vertex = getGraph().addFramedVertex(null, initializer);
+        final K vertex = getGraph().addFramedVertex(initializer);
         setLinkIn((VertexFrame) vertex, labels);
         return vertex;
     }
@@ -256,7 +232,7 @@ public abstract class AbstractVertexFrame extends AbstractElementFrame implement
 
     @Override
     public <K> K setLinkBoth(final ClassInitializer<K> initializer, final String... labels) {
-        final K vertex = getGraph().addFramedVertex(null, initializer);
+        final K vertex = getGraph().addFramedVertex(initializer);
         setLinkBoth((VertexFrame) vertex, labels);
         return vertex;
     }
@@ -276,11 +252,6 @@ public abstract class AbstractVertexFrame extends AbstractElementFrame implement
     @Override
     public <K> K setLinkBothExplicit(final Class<K> kind, final String... labels) {
         return this.setLinkBothExplicit(new DefaultClassInitializer<>(kind), labels);
-    }
-
-    @Override
-    public VertexTraversal<?, ?, ?> traversal() {
-        return new SimpleTraversal(getGraph(), this).castToVertices();
     }
 
     @Override
@@ -316,5 +287,103 @@ public abstract class AbstractVertexFrame extends AbstractElementFrame implement
     @Override
     public <T> T reframeExplicit(final Class<T> kind) {
         return getGraph().frameElementExplicit(getElement(), kind);
+    }
+
+    @Override
+    public <T> Iterable<? extends T> traverse(final Function<GraphTraversal<? extends Vertex, ? extends Vertex>, Iterator<? extends Element>> traverser, final ClassInitializer<T> initializer) {
+        return this.getGraph().traverse(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
+            @Nullable
+            @Override
+            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
+                return traverser.apply(input.V(getElement().id()));
+            }
+        }, initializer);
+    }
+
+    @Override
+    public <T> Iterable<? extends T> traverse(Function<GraphTraversal<? extends Vertex, ? extends Vertex>, Iterator<? extends Element>> traverser, Class<T> kind, boolean isNew) {
+        return this.getGraph().traverse(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
+            @Nullable
+            @Override
+            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
+                return traverser.apply(input.V(getElement().id()));
+            }
+        }, kind, isNew);
+    }
+
+    @Override
+    public <T> Iterable<? extends T> traverseExplicit(Function<GraphTraversal<? extends Vertex, ? extends Vertex>, Iterator<? extends Element>> traverser, ClassInitializer<T> initializer) {
+        return this.getGraph().traverseExplicit(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
+            @Nullable
+            @Override
+            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
+                return traverser.apply(input.V(getElement().id()));
+            }
+        }, initializer);
+    }
+
+    @Override
+    public <T> Iterable<? extends T> traverseExplicit(Function<GraphTraversal<? extends Vertex, ? extends Vertex>, Iterator<? extends Element>> traverser, Class<T> kind, boolean isNew) {
+        return this.getGraph().traverseExplicit(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
+            @Nullable
+            @Override
+            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
+                return traverser.apply(input.V(getElement().id()));
+            }
+        }, kind, isNew);
+    }
+
+    @Override
+    public <T> T traverseSingleton(Function<GraphTraversal<? extends Vertex, ? extends Vertex>, Iterator<? extends Element>> traverser, ClassInitializer<T> initializer) {
+        return this.getGraph().traverseSingleton(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
+            @Nullable
+            @Override
+            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
+                return traverser.apply(input.V(getElement().id()));
+            }
+        }, initializer);
+    }
+
+    @Override
+    public <T> T traverseSingleton(Function<GraphTraversal<? extends Vertex, ? extends Vertex>, Iterator<? extends Element>> traverser, Class<T> kind, boolean isNew) {
+        return this.getGraph().traverseSingleton(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
+            @Nullable
+            @Override
+            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
+                return traverser.apply(input.V(getElement().id()));
+            }
+        }, kind, isNew);
+    }
+
+    @Override
+    public <T> T traverseSingletonExplicit(Function<GraphTraversal<? extends Vertex, ? extends Vertex>, Iterator<? extends Element>> traverser, ClassInitializer<T> initializer) {
+        return this.getGraph().traverseSingletonExplicit(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
+            @Nullable
+            @Override
+            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
+                return traverser.apply(input.V(getElement().id()));
+            }
+        }, initializer);
+    }
+
+    @Override
+    public <T> T traverseSingletonExplicit(Function<GraphTraversal<? extends Vertex, ? extends Vertex>, Iterator<? extends Element>> traverser, Class<T> kind, boolean isNew) {
+        return this.getGraph().traverseSingletonExplicit(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
+            @Nullable
+            @Override
+            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
+                return traverser.apply(input.V(getElement().id()));
+            }
+        }, kind, isNew);
+    }
+
+    @Override
+    public void traverse(VoidFunction<GraphTraversal<? extends Vertex, ? extends Vertex>> traverser) {
+        this.getGraph().traverse(new VoidFunction<GraphTraversalSource>() {
+            @Override
+            public void apply(GraphTraversalSource input) {
+                traverser.apply(input.V(getElement().id()));
+            }
+        });
     }
 }

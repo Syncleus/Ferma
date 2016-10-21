@@ -15,7 +15,6 @@
  */
 package com.syncleus.ferma;
 
-
 import org.apache.tinkerpop.gremlin.structure.Graph;
 import org.apache.tinkerpop.gremlin.structure.util.wrapped.WrappedGraph;
 

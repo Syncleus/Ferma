@@ -262,7 +262,7 @@ public class AdjacencyMethodHandler implements MethodHandler {
 
         @RuntimeType
         public static Object addVertex(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(value = 0) final ClassInitializer vertexType) {
-            final Object newNode = thiz.getGraph().addFramedVertex(null, vertexType);
+            final Object newNode = thiz.getGraph().addFramedVertex(vertexType);
             assert newNode instanceof VertexFrame;
             final VertexFrame newVertex = ((VertexFrame) newNode);
 
@@ -296,7 +296,7 @@ public class AdjacencyMethodHandler implements MethodHandler {
 
         @RuntimeType
         public static Object addVertex(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final ClassInitializer vertexType, @RuntimeType @Argument(1) final ClassInitializer edgeType) {
-            final Object newNode = thiz.getGraph().addFramedVertex(null, vertexType);
+            final Object newNode = thiz.getGraph().addFramedVertex(vertexType);
             assert newNode instanceof VertexFrame;
             final VertexFrame newVertex = ((VertexFrame) newNode);
 

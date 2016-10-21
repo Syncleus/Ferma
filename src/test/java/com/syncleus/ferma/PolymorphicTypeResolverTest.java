@@ -55,10 +55,10 @@ public class PolymorphicTypeResolverTest {
         final ReflectionCache cache = new ReflectionCache(TEST_TYPES);
         final FramedGraph fg = new DelegatingFramedGraph(g, new AnnotationFrameFactory(cache), new PolymorphicTypeResolver(cache, CUSTOM_TYPE_KEY));
 
-        final Person p1 = fg.addFramedVertex(null, Programmer.DEFAULT_INITIALIZER);
+        final Person p1 = fg.addFramedVertex(Programmer.DEFAULT_INITIALIZER);
         p1.setName("Bryn");
 
-        final Person p2 = fg.addFramedVertex(null, Person.DEFAULT_INITIALIZER);
+        final Person p2 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
         p2.setName("Julia");
 
         final Person bryn = fg.v().has("name", "Bryn").next(Person.class);

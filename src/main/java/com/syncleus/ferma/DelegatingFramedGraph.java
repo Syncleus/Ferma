@@ -24,8 +24,6 @@
 package com.syncleus.ferma;
 
 import com.google.common.base.Function;
-import com.syncleus.ferma.traversals.GlobalVertexTraversal;
-import com.syncleus.ferma.traversals.SimpleTraversal;
 import com.syncleus.ferma.framefactories.FrameFactory;
 import com.syncleus.ferma.framefactories.DefaultFrameFactory;
 import com.syncleus.ferma.typeresolvers.UntypedTypeResolver;
@@ -33,11 +31,11 @@ import com.syncleus.ferma.typeresolvers.TypeResolver;
 import com.syncleus.ferma.typeresolvers.PolymorphicTypeResolver;
 import com.google.common.collect.Iterators;
 import com.syncleus.ferma.framefactories.annotation.AnnotationFrameFactory;
+import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
 import org.apache.tinkerpop.gremlin.structure.Edge;
 import org.apache.tinkerpop.gremlin.structure.Element;
 import org.apache.tinkerpop.gremlin.structure.Graph;
-import org.apache.tinkerpop.gremlin.structure.Vertex;
-
+import javax.annotation.Nullable;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
@@ -212,6 +210,11 @@ public class DelegatingFramedGraph<G extends Graph> implements WrappedFramedGrap
         this.builder = new AnnotationFrameFactory(reflections);
     }
 
+    @Override
+    public FrameFactory getBuilder() {
+        return builder;
+    }
+
     /**
      * Close the delegate graph.
      */
@@ -305,14 +308,14 @@ public class DelegatingFramedGraph<G extends Graph> implements WrappedFramedGrap
     }
 
     @Override
-    public <T> T addFramedVertex(Object id, final ClassInitializer<T> initializer) {
-        final T framedVertex = frameNewElement(this.getBaseGraph().addVertex(id), initializer);
+    public <T> T addFramedVertex(final ClassInitializer<T> initializer, Object... keyValues) {
+        final T framedVertex = frameNewElement(this.getBaseGraph().addVertex(keyValues), initializer);
         return framedVertex;
     }
     
     @Override
     public <T> T addFramedVertex(final Class<T> kind) {
-        return this.addFramedVertex(null, new DefaultClassInitializer<>(kind));
+        return this.addFramedVertex(new DefaultClassInitializer<>(kind));
     }
 
     @Override
@@ -328,7 +331,7 @@ public class DelegatingFramedGraph<G extends Graph> implements WrappedFramedGrap
 
     @Override
     public TVertex addFramedVertex() {
-        return addFramedVertex(null, TVertex.DEFAULT_INITIALIZER);
+        return addFramedVertex(TVertex.DEFAULT_INITIALIZER);
     }
 
     @Override
@@ -338,8 +341,8 @@ public class DelegatingFramedGraph<G extends Graph> implements WrappedFramedGrap
     }
 
     @Override
-    public <T> T addFramedEdge(final VertexFrame source, final VertexFrame destination, final String label, final ClassInitializer<T> initializer, final Object... ids) {
-        final Edge baseEdge = destination.getElement().addEdge(label, source.getElement(), ids);
+    public <T> T addFramedEdge(final VertexFrame source, final VertexFrame destination, final String label, final ClassInitializer<T> initializer, final Object... keyValues) {
+        final Edge baseEdge = destination.getElement().addEdge(label, source.getElement(), keyValues);
         final T framedEdge = frameNewElement(baseEdge, initializer);
         return framedEdge;
     }
@@ -371,98 +374,118 @@ public class DelegatingFramedGraph<G extends Graph> implements WrappedFramedGrap
         return addFramedEdgeExplicit(source, destination, label, TEdge.DEFAULT_INITIALIZER);
     }
 
-    public <T extends ElementFrame> Iterator<T> traverse(final Function<Graph, Iterator<? extends Element>> traverser, final ClassInitializer<T> initializer) {
-        Iterator<? extends Element> elements = traverser.apply(this.getBaseGraph());
-        return new Iterator<T>() {
+    public <T> Iterable<? extends T> traverse(final Function<GraphTraversalSource, Iterator<? extends Element>> traverser, final ClassInitializer<T> initializer) {
+        Iterator<? extends Element> elements = traverser.apply(this.getBaseGraph().traversal());
+        return new Iterable<T>() {
             @Override
-            public boolean hasNext() {
-                return elements.hasNext();
-            }
+            public Iterator<T> iterator() {
+                return new Iterator<T>() {
+                    @Override
+                    public boolean hasNext() {
+                        return elements.hasNext();
+                    }
 
-            @Override
-            public T next() {
-                return frameNewElement(elements.next(), initializer);
-            }
-        };
-    }
-
-    public <T extends ElementFrame> Iterator<T> traverse(final Function<Graph, Iterator<? extends Element>> traverser, final Class<T> kind, boolean isNew) {
-        Iterator<? extends Element> elements = traverser.apply(this.getBaseGraph());
-        return new Iterator<T>() {
-            @Override
-            public boolean hasNext() {
-                return elements.hasNext();
-            }
-
-            @Override
-            public T next() {
-                if( isNew )
-                    return frameNewElement(elements.next(), kind);
-                else
-                    return frameElement(elements.next(), kind);
+                    @Override
+                    public T next() {
+                        return frameNewElement(elements.next(), initializer);
+                    }
+                };
             }
         };
     }
 
-    public <T extends ElementFrame> Iterator<T> traverseExplicit(final Function<Graph, Iterator<? extends Element>> traverser, final ClassInitializer<T> initializer) {
-        Iterator<? extends Element> elements = traverser.apply(this.getBaseGraph());
-        return new Iterator<T>() {
+    public <T> Iterable<? extends T> traverse(final Function<GraphTraversalSource, Iterator<? extends Element>> traverser, final Class<T> kind, boolean isNew) {
+        Iterator<? extends Element> elements = traverser.apply(this.getBaseGraph().traversal());
+        return new Iterable<T>() {
             @Override
-            public boolean hasNext() {
-                return elements.hasNext();
-            }
+            public Iterator<T> iterator() {
+                return new Iterator<T>() {
+                    @Override
+                    public boolean hasNext() {
+                        return elements.hasNext();
+                    }
 
-            @Override
-            public T next() {
-                return frameNewElementExplicit(elements.next(), initializer);
-            }
-        };
-    }
-
-    public <T extends ElementFrame> Iterator<T> traverseExplicit(final Function<Graph, Iterator<? extends Element>> traverser, final Class<T> kind, boolean isNew) {
-        Iterator<? extends Element> elements = traverser.apply(this.getBaseGraph());
-        return new Iterator<T>() {
-            @Override
-            public boolean hasNext() {
-                return elements.hasNext();
-            }
-
-            @Override
-            public T next() {
-                if( isNew )
-                    return frameNewElementExplicit(elements.next(), kind);
-                else
-                    return frameElementExplicit(elements.next(), kind);
+                    @Override
+                    public T next() {
+                        if( isNew )
+                            return frameNewElement(elements.next(), kind);
+                        else
+                            return frameElement(elements.next(), kind);
+                    }
+                };
             }
         };
     }
 
-    public <T extends ElementFrame> T traverseSingleton(final Function<Graph, Iterator<? extends Element>> traverser, final ClassInitializer<T> initializer) {
-        Iterator<T> frames = this.traverse(traverser, initializer);
+    public <T> Iterable<? extends T> traverseExplicit(final Function<GraphTraversalSource, Iterator<? extends Element>> traverser, final ClassInitializer<T> initializer) {
+        Iterator<? extends Element> elements = traverser.apply(this.getBaseGraph().traversal());
+        return new Iterable<T>() {
+            @Override
+            public Iterator<T> iterator() {
+                return new Iterator<T>() {
+                    @Override
+                    public boolean hasNext() {
+                        return elements.hasNext();
+                    }
+
+                    @Override
+                    public T next() {
+                        return frameNewElementExplicit(elements.next(), initializer);
+                    }
+                };
+            }
+        };
+    }
+
+    public <T> Iterable<? extends T> traverseExplicit(final Function<GraphTraversalSource, Iterator<? extends Element>> traverser, final Class<T> kind, boolean isNew) {
+        Iterator<? extends Element> elements = traverser.apply(this.getBaseGraph().traversal());
+        return new Iterable<T>() {
+            @Override
+            public Iterator<T> iterator() {
+                return new Iterator<T>() {
+                    @Override
+                    public boolean hasNext() {
+                        return elements.hasNext();
+                    }
+
+                    @Override
+                    public T next() {
+                        if( isNew )
+                            return frameNewElementExplicit(elements.next(), kind);
+                        else
+                            return frameElementExplicit(elements.next(), kind);
+                    }
+                };
+            }
+        };
+    }
+
+    public <T> T traverseSingleton(final Function<GraphTraversalSource, Iterator<? extends Element>> traverser, final ClassInitializer<T> initializer) {
+        Iterator<? extends T> frames = this.traverse(traverser, initializer).iterator();
         if( frames.hasNext() )
             return frames.next();
         else
             return null;
     }
 
-    public <T extends ElementFrame> T traverseSingleton(final Function<Graph, Iterator<? extends Element>> traverser, final Class<T> kind, boolean isNew) {
-        Iterator<T> frames = this.traverse(traverser, kind, isNew);
+    public <T> T traverseSingleton(final Function<GraphTraversalSource, Iterator<? extends Element>> traverser, final Class<T> kind, boolean isNew) {
+        Iterator<? extends T> frames = this.traverse(traverser, kind, isNew).iterator();
         if( frames.hasNext() )
             return frames.next();
         else
             return null;
     }
 
-    public <T extends ElementFrame> T traverseSingletonExplicit(final Function<Graph, Iterator<? extends Element>> traverser, final ClassInitializer<T> initializer) {
-        Iterator<T> frames = this.traverseExplicit(traverser, initializer);
+    public <T> T traverseSingletonExplicit(final Function<GraphTraversalSource, Iterator<? extends Element>> traverser, final ClassInitializer<T> initializer) {
+        Iterator<? extends T> frames = this.traverseExplicit(traverser, initializer).iterator();
         if( frames.hasNext() )
             return frames.next();
         else
             return null;
     }
 
-    public <T extends ElementFrame> T traverseSingletonExplicit(final Function<Graph, Iterator<? extends Element>> traverser, final Class<T> kind, boolean isNew) {
-        Iterator<T> frames = this.traverseExplicit(traverser, kind, isNew);
+    public <T> T traverseSingletonExplicit(final Function<GraphTraversalSource, Iterator<? extends Element>> traverser, final Class<T> kind, boolean isNew) {
+        Iterator<? extends T> frames = this.traverseExplicit(traverser, kind, isNew).iterator();
         if( frames.hasNext() )
             return frames.next();
         else
@@ -470,97 +493,118 @@ public class DelegatingFramedGraph<G extends Graph> implements WrappedFramedGrap
     }
 
     @Override
-    public <F> F getFramedVertexExplicit(Class<F> classOfF, Object id) {
-        this.traverse()
-        return frameElementExplicit(this.getBaseGraph().getVertex(id), classOfF);
-    }
-
-    @Override
-    public <F> Iterable<? extends F> getFramedVertices(final Class<F> kind) {
-        return new FramingVertexIterable<>(this, this.getVertices(), kind);
-    }
-
-    @Override
-    public <F> Iterable<? extends F> getFramedVertices(final String key, final Object value, final Class<F> kind) {
-        return new FramingVertexIterable<>(this, this.getVertices(key, value), kind);
-    }
-
-    @Override
-    public <F> Iterable<? extends F> getFramedVerticesExplicit(final Class<F> kind) {
-        return new FramingVertexIterable<>(this, this.getVertices(), kind, true);
-    }
-
-    @Override
-    public <F> Iterable<? extends F> getFramedVerticesExplicit(final String key, final Object value, final Class<F> kind) {
-        return new FramingVertexIterable<>(this, this.getVertices(key, value), kind, true);
-    }
-
-    @Override
-    public <F> Iterable<? extends F> getFramedEdges(final Class<F> kind) {
-        return new FramingEdgeIterable<>(this, this.getEdges(), kind);
-    }
-
-    @Override
-    public <F> Iterable<? extends F> getFramedEdges(final String key, final Object value, final Class<F> kind) {
-        return new FramingEdgeIterable<>(this, this.getEdges(key, value), kind);
-    }
-
-    @Override
-    public <F> Iterable<? extends F> getFramedEdgesExplicit(final Class<F> kind) {
-        return new FramingEdgeIterable<>(this, this.getEdges(), kind, true);
-    }
-
-    @Override
-    public <F> Iterable<? extends F> getFramedEdgesExplicit(final String key, final Object value, final Class<F> kind) {
-        return new FramingEdgeIterable<>(this, this.getEdges(key, value), kind, true);
-    }
-
-    @Override
-    public VertexTraversal<?, ?, ?> v(final Collection<?> ids) {
-        return new SimpleTraversal(this, Iterators.transform(ids.iterator(), new Function<Object, Vertex>() {
-
+    public <T> T getFramedVertex(Class<T> kind, Object id) {
+        return this.traverseSingleton(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
+            @Nullable
             @Override
-            public Vertex apply(final Object input) {
-                return getBaseGraph().getVertex(input);
+            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
+                return input.V(id);
             }
-
-        })).castToVertices();
+        }, kind, false);
     }
 
     @Override
-    public VertexTraversal<?, ?, ?> v(final Object... ids) {
-        return new SimpleTraversal(this, Iterators.transform(Iterators.forArray(ids), new Function<Object, Vertex>() {
-
+    public <T> T getFramedVertexExplicit(Class<T> kind, Object id) {
+        return this.traverseSingletonExplicit(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
+            @Nullable
             @Override
-            public Vertex apply(final Object input) {
-                return getBaseGraph().getVertex(input);
+            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
+                return input.V(id);
             }
-
-        })).castToVertices();
+        }, kind, false);
     }
 
     @Override
-    public EdgeTraversal<?, ?, ?> e(final Object... ids) {
-        return new SimpleTraversal(this, Iterators.transform(Iterators.forArray(ids), new Function<Object, Edge>() {
-
+    public <T> Iterable<? extends T> getFramedVertices(final Class<T> kind) {
+        return this.traverse(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
+            @Nullable
             @Override
-            public Edge apply(final Object input) {
-                return getBaseGraph().getEdge(input);
+            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
+                return input.V();
             }
-
-        })).castToEdges();
+        }, kind, false);
     }
 
     @Override
-    public EdgeTraversal<?, ?, ?> e(final Collection<?> ids) {
-        return new SimpleTraversal(this, Iterators.transform(ids.iterator(), new Function<Object, Edge>() {
-
+    public <T> Iterable<? extends T> getFramedVertices(final String key, final Object value, final Class<T> kind) {
+        return this.traverse(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
+            @Nullable
             @Override
-            public Edge apply(final Object input) {
-                return getBaseGraph().getEdge(input);
+            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
+                return input.V().has(key, value);
             }
+        }, kind, false);
+    }
 
-        })).castToEdges();
+    @Override
+    public <T> Iterable<? extends T> getFramedVerticesExplicit(final Class<T> kind) {
+        return this.traverseExplicit(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
+            @Nullable
+            @Override
+            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
+                return input.V();
+            }
+        }, kind, false);
+    }
+
+    @Override
+    public <T> Iterable<? extends T> getFramedVerticesExplicit(final String key, final Object value, final Class<T> kind) {
+        return this.traverseExplicit(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
+            @Nullable
+            @Override
+            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
+                return input.V().has(key, value);
+            }
+        }, kind, false);
+    }
+
+    @Override
+    public <T> Iterable<? extends T> getFramedEdges(final Class<T> kind) {
+        return this.traverse(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
+            @Nullable
+            @Override
+            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
+                return input.E();
+            }
+        }, kind, false);
+    }
+
+    @Override
+    public <T> Iterable<? extends T> getFramedEdges(final String key, final Object value, final Class<T> kind) {
+        return this.traverse(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
+            @Nullable
+            @Override
+            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
+                return input.E().has(key, value);
+            }
+        }, kind, false);
+    }
+
+    @Override
+    public <T> Iterable<? extends T> getFramedEdgesExplicit(final Class<T> kind) {
+        return this.traverseExplicit(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
+            @Nullable
+            @Override
+            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
+                return input.E();
+            }
+        }, kind, false);
+    }
+
+    @Override
+    public <T> Iterable<? extends T> getFramedEdgesExplicit(final String key, final Object value, final Class<T> kind) {
+        return this.traverseExplicit(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
+            @Nullable
+            @Override
+            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
+                return input.E().has(key, value);
+            }
+        }, kind, false);
+    }
+
+    @Override
+    public void traverse(VoidFunction<GraphTraversalSource> traverser) {
+        traverser.apply(this.getBaseGraph().traversal());
     }
 
     @Override
@@ -569,29 +613,7 @@ public class DelegatingFramedGraph<G extends Graph> implements WrappedFramedGrap
     }
 
     @Override
-    public Features getFeatures() {
-        return this.getBaseGraph().getFeatures();
-    }
-
-    @Override
-    public Vertex addVertex(final Object id) {
-        final VertexFrame framedVertex = frameNewElement(this.getBaseGraph().addVertex(null), TVertex.DEFAULT_INITIALIZER);
-        return framedVertex.getElement();
-    }
-
-    @Override
-    public Vertex addVertexExplicit(final Object id) {
-        return this.getBaseGraph().addVertex(null);
-    }
-
-    @Override
-    public Edge addEdge(final Object id, final Vertex outVertex, final Vertex inVertex, final String label) {
-        final EdgeFrame framedEdge = frameNewElement(this.getBaseGraph().addEdge(id, outVertex, inVertex, label), TEdge.DEFAULT_INITIALIZER);
-        return framedEdge.getElement();
-    }
-
-    @Override
-    public Edge addEdgeExplicit(final Object id, final Vertex outVertex, final Vertex inVertex, final String label) {
-        return this.getBaseGraph().addEdge(id, outVertex, inVertex, label);
+    public WrappedTransaction tx() {
+        return new DelegatingTransaction(this.getBaseGraph().tx(), this);
     }
 }

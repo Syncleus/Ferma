@@ -16,24 +16,21 @@
 package com.syncleus.ferma;
 
 import com.google.common.base.Function;
-import com.syncleus.ferma.traversals.VertexTraversal;
-import com.syncleus.ferma.traversals.EdgeTraversal;
+import com.syncleus.ferma.framefactories.FrameFactory;
 import com.syncleus.ferma.typeresolvers.TypeResolver;
-import org.apache.tinkerpop.gremlin.structure.Edge;
-import org.apache.tinkerpop.gremlin.structure.Element;
-import org.apache.tinkerpop.gremlin.structure.Graph;
-import org.apache.tinkerpop.gremlin.structure.Vertex;
-
+import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
+import org.apache.tinkerpop.gremlin.structure.*;
 import java.io.IOException;
-import java.util.Collection;
 import java.util.Iterator;
 
 /**
  * The primary class for framing your blueprints graphs.
  */
-public interface FramedGraph extends Graph {
+public interface FramedGraph {
 
     TypeResolver getTypeResolver();
+
+    FrameFactory getBuilder();
 
     /**
      * Close the delegate graph.
@@ -44,13 +41,13 @@ public interface FramedGraph extends Graph {
      * Add a vertex to the graph
      *
      * @param <T> The type used to frame the element.
-     * @param id
-     *            the recommended object identifier
      * @param initializer
      *            the initializer for the frame which defines its type and may initialize properties
+     * @param keyValues
+     *            the recommended object identifier
      * @return The framed vertex.
      */
-    <T> T addFramedVertex(Object id, ClassInitializer<T> initializer);
+    <T> T addFramedVertex(ClassInitializer<T> initializer, Object... keyValues);
     
     /**
      * Add a vertex to the graph
@@ -117,10 +114,10 @@ public interface FramedGraph extends Graph {
      * @param label the label.
      * @param initializer
      *            the initializer for the frame which defines its type and may initialize properties
-     * @param id the recommended object identifier
+     * @param keyValues the recommended object identifier
      * @return The framed edge.
      */
-    <T> T addFramedEdge(final VertexFrame source, final VertexFrame destination, final String label, ClassInitializer<T> initializer, final Object... id);
+    <T> T addFramedEdge(final VertexFrame source, final VertexFrame destination, final String label, ClassInitializer<T> initializer, final Object... keyValues);
 
     /**
      * Add a edge to the graph
@@ -193,79 +190,43 @@ public interface FramedGraph extends Graph {
      */
     TEdge addFramedEdgeExplicit(final VertexFrame source, final VertexFrame destination, final String label);
 
-    <T extends ElementFrame> Iterator<T> traverse(final Function<Graph, Iterator<? extends Element>> traverser, final ClassInitializer<T> initializer);
+    <T> Iterable<? extends T> traverse(final Function<GraphTraversalSource, Iterator<? extends Element>> traverser, final ClassInitializer<T> initializer);
 
-    <T extends ElementFrame> Iterator<T> traverse(final Function<Graph, Iterator<? extends Element>> traverser, final Class<T> kind, boolean isNew);
+    <T> Iterable<? extends T> traverse(final Function<GraphTraversalSource, Iterator<? extends Element>> traverser, final Class<T> kind, boolean isNew);
 
-    <T extends ElementFrame> Iterator<T> traverseExplicit(final Function<Graph, Iterator<? extends Element>> traverser, final ClassInitializer<T> initializer);
+    <T> Iterable<? extends T> traverseExplicit(final Function<GraphTraversalSource, Iterator<? extends Element>> traverser, final ClassInitializer<T> initializer);
 
-    <T extends ElementFrame> Iterator<T> traverseExplicit(final Function<Graph, Iterator<? extends Element>> traverser, final Class<T> kind, boolean isNew);
+    <T> Iterable<? extends T> traverseExplicit(final Function<GraphTraversalSource, Iterator<? extends Element>> traverser, final Class<T> kind, boolean isNew);
 
-    <T extends ElementFrame> T traverseSingleton(final Function<Graph, Iterator<? extends Element>> traverser, final ClassInitializer<T> initializer);
+    <T> T traverseSingleton(final Function<GraphTraversalSource, Iterator<? extends Element>> traverser, final ClassInitializer<T> initializer);
 
-    <T extends ElementFrame> T traverseSingleton(final Function<Graph, Iterator<? extends Element>> traverser, final Class<T> kind, boolean isNew);
+    <T> T traverseSingleton(final Function<GraphTraversalSource, Iterator<? extends Element>> traverser, final Class<T> kind, boolean isNew);
 
-    <T extends ElementFrame> T traverseSingletonExplicit(final Function<Graph, Iterator<? extends Element>> traverser, final ClassInitializer<T> initializer);
+    <T> T traverseSingletonExplicit(final Function<GraphTraversalSource, Iterator<? extends Element>> traverser, final ClassInitializer<T> initializer);
 
-    <T extends ElementFrame> T traverseSingletonExplicit(final Function<Graph, Iterator<? extends Element>> traverser, final Class<T> kind, boolean isNew);
+    <T> T traverseSingletonExplicit(final Function<GraphTraversalSource, Iterator<? extends Element>> traverser, final Class<T> kind, boolean isNew);
 
-    <F> F getFramedVertexExplicit(Class<F> classOfF, Object id);
+    void traverse(final VoidFunction<GraphTraversalSource> traverser);
 
-    <F> Iterable<? extends F> getFramedVertices(final Class<F> kind);
+    <T> T getFramedVertex(Class<T> kind, Object id);
 
-    <F> Iterable<? extends F> getFramedVertices(final String key, final Object value, final Class<F> kind);
+    <T> T getFramedVertexExplicit(Class<T> kind, Object id);
 
-    <F> Iterable<? extends F> getFramedVerticesExplicit(final Class<F> kind);
+    <T> Iterable<? extends T> getFramedVertices(final Class<T> kind);
 
-    <F> Iterable<? extends F> getFramedVerticesExplicit(final String key, final Object value, final Class<F> kind);
+    <T> Iterable<? extends T> getFramedVertices(final String key, final Object value, final Class<T> kind);
 
-    <F> Iterable<? extends F> getFramedEdges(final Class<F> kind);
+    <T> Iterable<? extends T> getFramedVerticesExplicit(final Class<T> kind);
 
-    <F> Iterable<? extends F> getFramedEdges(final String key, final Object value, final Class<F> kind);
+    <T> Iterable<? extends T> getFramedVerticesExplicit(final String key, final Object value, final Class<T> kind);
 
-    <F> Iterable<? extends F> getFramedEdgesExplicit(final Class<F> kind);
+    <T> Iterable<? extends T> getFramedEdges(final Class<T> kind);
 
-    <F> Iterable<? extends F> getFramedEdgesExplicit(final String key, final Object value, final Class<F> kind);
+    <T> Iterable<? extends T> getFramedEdges(final String key, final Object value, final Class<T> kind);
 
-    /**
-     * Query over a list of vertices in the graph.
-     *
-     * @param ids
-     *            The ids of the vertices.
-     * @return The query.
-     */
-    VertexTraversal<?, ?, ?> v(final Collection<?> ids);
+    <T> Iterable<? extends T> getFramedEdgesExplicit(final Class<T> kind);
 
-    /**
-     * Query over a list of vertices in the graph.
-     *
-     * @param ids
-     *            The ids of the vertices.
-     * @return The query.
-     */
-    VertexTraversal<?, ?, ?> v(final Object... ids);
-
-    /**
-     * Query over a list of edges in the graph.
-     *
-     * @param ids
-     *            The ids of the edges.
-     * @return The query.
-     */
-    EdgeTraversal<?, ?, ?> e(final Object... ids);
-
-    /**
-     * Query over a list of edges in the graph.
-     *
-     * @param ids
-     *            The ids of the edges.
-     * @return The query.
-     */
-    EdgeTraversal<?, ?, ?> e(final Collection<?> ids);
-
-    Vertex addVertexExplicit(Object id);
-
-    Edge addEdgeExplicit(Object id, Vertex outVertex, Vertex inVertex, String label);
+    <T> Iterable<? extends T> getFramedEdgesExplicit(final String key, final Object value, final Class<T> kind);
 
     <T> Iterator<? extends T> frame(Iterator<? extends Element> pipeline, final Class<T> kind);
 
@@ -282,4 +243,6 @@ public interface FramedGraph extends Graph {
     <T> T frameElementExplicit(Element e, Class<T> kind);
 
     <T> Iterator<? extends T> frameExplicit(Iterator<? extends Element> pipeline, final Class<T> kind);
+
+    WrappedTransaction tx();
 }

@@ -23,13 +23,17 @@
  */
 package com.syncleus.ferma;
 
-import com.syncleus.ferma.traversals.SimpleTraversal;
-import com.syncleus.ferma.traversals.VertexTraversal;
-import com.syncleus.ferma.traversals.EdgeTraversal;
+import com.google.common.base.Function;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
-import com.tinkerpop.blueprints.Edge;
+import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
+import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
+import org.apache.tinkerpop.gremlin.structure.Edge;
+import org.apache.tinkerpop.gremlin.structure.Element;
+
+import javax.annotation.Nullable;
+import java.util.Iterator;
 
 /**
  * The base class that all edge frames must extend.
@@ -43,27 +47,7 @@ public abstract class AbstractEdgeFrame extends AbstractElementFrame implements 
 
     @Override
     public String getLabel() {
-        return getElement().getLabel();
-    }
-
-    @Override
-    public VertexTraversal<?, ?, ?> inV() {
-        return new SimpleTraversal(getGraph(), this).castToEdges().inV();
-    }
-
-    @Override
-    public VertexTraversal<?, ?, ?> outV() {
-        return new SimpleTraversal(getGraph(), this).castToEdges().outV();
-    }
-
-    @Override
-    public VertexTraversal<?, ?, ?> bothV() {
-        return new SimpleTraversal(getGraph(), this).castToEdges().bothV();
-    }
-
-    @Override
-    public EdgeTraversal<?, ?, ?> traversal() {
-        return new SimpleTraversal(getGraph(), this).castToEdges();
+        return getElement().label();
     }
 
     @Override
@@ -83,8 +67,6 @@ public abstract class AbstractEdgeFrame extends AbstractElementFrame implements 
             else if (value instanceof String)
                 json.addProperty(key, (String) value);
         }
-        json.add("outV", outV().next().toJson());
-        json.add("inV", inV().next().toJson());
         return json;
     }
 
@@ -102,5 +84,103 @@ public abstract class AbstractEdgeFrame extends AbstractElementFrame implements 
     @Override
     public <T> T reframeExplicit(final Class<T> kind) {
         return getGraph().frameElementExplicit(getElement(), kind);
+    }
+
+    @Override
+    public <T> Iterable<? extends T> traverse(final Function<GraphTraversal<? extends Edge, ? extends Edge>, Iterator<? extends Element>> traverser, final ClassInitializer<T> initializer) {
+        return this.getGraph().traverse(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
+            @Nullable
+            @Override
+            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
+                return traverser.apply(input.E(getElement().id()));
+            }
+        }, initializer);
+    }
+
+    @Override
+    public <T> Iterable<? extends T> traverse(Function<GraphTraversal<? extends Edge, ? extends Edge>, Iterator<? extends Element>> traverser, Class<T> kind, boolean isNew) {
+        return this.getGraph().traverse(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
+            @Nullable
+            @Override
+            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
+                return traverser.apply(input.E(getElement().id()));
+            }
+        }, kind, isNew);
+    }
+
+    @Override
+    public <T> Iterable<? extends T> traverseExplicit(Function<GraphTraversal<? extends Edge, ? extends Edge>, Iterator<? extends Element>> traverser, ClassInitializer<T> initializer) {
+        return this.getGraph().traverseExplicit(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
+            @Nullable
+            @Override
+            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
+                return traverser.apply(input.E(getElement().id()));
+            }
+        }, initializer);
+    }
+
+    @Override
+    public <T> Iterable<? extends T> traverseExplicit(Function<GraphTraversal<? extends Edge, ? extends Edge>, Iterator<? extends Element>> traverser, Class<T> kind, boolean isNew) {
+        return this.getGraph().traverseExplicit(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
+            @Nullable
+            @Override
+            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
+                return traverser.apply(input.E(getElement().id()));
+            }
+        }, kind, isNew);
+    }
+
+    @Override
+    public <T> T traverseSingleton(Function<GraphTraversal<? extends Edge, ? extends Edge>, Iterator<? extends Element>> traverser, ClassInitializer<T> initializer) {
+        return this.getGraph().traverseSingleton(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
+            @Nullable
+            @Override
+            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
+                return traverser.apply(input.E(getElement().id()));
+            }
+        }, initializer);
+    }
+
+    @Override
+    public <T> T traverseSingleton(Function<GraphTraversal<? extends Edge, ? extends Edge>, Iterator<? extends Element>> traverser, Class<T> kind, boolean isNew) {
+        return this.getGraph().traverseSingleton(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
+            @Nullable
+            @Override
+            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
+                return traverser.apply(input.E(getElement().id()));
+            }
+        }, kind, isNew);
+    }
+
+    @Override
+    public <T> T traverseSingletonExplicit(Function<GraphTraversal<? extends Edge, ? extends Edge>, Iterator<? extends Element>> traverser, ClassInitializer<T> initializer) {
+        return this.getGraph().traverseSingletonExplicit(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
+            @Nullable
+            @Override
+            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
+                return traverser.apply(input.E(getElement().id()));
+            }
+        }, initializer);
+    }
+
+    @Override
+    public <T> T traverseSingletonExplicit(Function<GraphTraversal<? extends Edge, ? extends Edge>, Iterator<? extends Element>> traverser, Class<T> kind, boolean isNew) {
+        return this.getGraph().traverseSingletonExplicit(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
+            @Nullable
+            @Override
+            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
+                return traverser.apply(input.E(getElement().id()));
+            }
+        }, kind, isNew);
+    }
+
+    @Override
+    public void traverse(VoidFunction<GraphTraversal<? extends Edge, ? extends Edge>> traverser) {
+        this.getGraph().traverse(new VoidFunction<GraphTraversalSource>() {
+            @Override
+            public void apply(GraphTraversalSource input) {
+                traverser.apply(input.E(getElement().id()));
+            }
+        });
     }
 }

@@ -15,10 +15,13 @@
  */
 package com.syncleus.ferma;
 
-import com.syncleus.ferma.traversals.VertexTraversal;
-import com.syncleus.ferma.traversals.EdgeTraversal;
+import com.google.common.base.Function;
 import com.google.gson.JsonObject;
+import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
 import org.apache.tinkerpop.gremlin.structure.Edge;
+import org.apache.tinkerpop.gremlin.structure.Element;
+
+import java.util.Iterator;
 
 public interface EdgeFrame extends ElementFrame {
     @Override
@@ -28,28 +31,6 @@ public interface EdgeFrame extends ElementFrame {
      * @return The label associated with this edge
      */
     String getLabel();
-
-    /**
-     * @return The in vertex for this edge.
-     */
-    VertexTraversal<?, ?, ?> inV();
-
-    /**
-     * @return The out vertex of this edge.
-     */
-    VertexTraversal<?, ?, ?> outV();
-
-    /**
-     * @return The vertices for this edge.
-     */
-    VertexTraversal<?, ?, ?> bothV();
-
-    /**
-     * Shortcut to get Traversal of current element
-     *
-     * @return the EdgeTraversal of the current element
-     */
-    EdgeTraversal<?, ?, ?> traversal();
 
     JsonObject toJson();
 
@@ -74,4 +55,22 @@ public interface EdgeFrame extends ElementFrame {
      * @return The new frame
      */
     <T> T reframeExplicit(Class<T> kind);
+
+    <T> Iterable<? extends T> traverse(final Function<GraphTraversal<? extends Edge, ? extends Edge>, Iterator<? extends Element>> traverser, final ClassInitializer<T> initializer);
+
+    <T> Iterable<? extends T> traverse(final Function<GraphTraversal<? extends Edge, ? extends Edge>, Iterator<? extends Element>> traverser, final Class<T> kind, boolean isNew);
+
+    <T> Iterable<? extends T> traverseExplicit(final Function<GraphTraversal<? extends Edge, ? extends Edge>, Iterator<? extends Element>> traverser, final ClassInitializer<T> initializer);
+
+    <T> Iterable<? extends T> traverseExplicit(final Function<GraphTraversal<? extends Edge, ? extends Edge>, Iterator<? extends Element>> traverser, final Class<T> kind, boolean isNew);
+
+    <T> T traverseSingleton(final Function<GraphTraversal<? extends Edge, ? extends Edge>, Iterator<? extends Element>> traverser, final ClassInitializer<T> initializer);
+
+    <T> T traverseSingleton(final Function<GraphTraversal<? extends Edge, ? extends Edge>, Iterator<? extends Element>> traverser, final Class<T> kind, boolean isNew);
+
+    <T> T traverseSingletonExplicit(final Function<GraphTraversal<? extends Edge, ? extends Edge>, Iterator<? extends Element>> traverser, final ClassInitializer<T> initializer);
+
+    <T> T traverseSingletonExplicit(final Function<GraphTraversal<? extends Edge, ? extends Edge>, Iterator<? extends Element>> traverser, final Class<T> kind, boolean isNew);
+
+    void traverse(final VoidFunction<GraphTraversal<? extends Edge, ? extends Edge>> traverser);
 }

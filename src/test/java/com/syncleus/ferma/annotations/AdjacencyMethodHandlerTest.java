@@ -239,7 +239,7 @@ public class AdjacencyMethodHandlerTest {
         final VertexFrame fatherVertex = father;
         Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
 
-        final God child = framedGraph.addFramedVertex(null, God.DEFAULT_INITIALIZER);
+        final God child = framedGraph.addFramedVertex(God.DEFAULT_INITIALIZER);
         father.addSon(child);
 
         Assert.assertTrue(child != null);
@@ -281,7 +281,7 @@ public class AdjacencyMethodHandlerTest {
         final VertexFrame fatherVertex = father;
         Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
 
-        final God child = framedGraph.addFramedVertex(null, God.DEFAULT_INITIALIZER);
+        final God child = framedGraph.addFramedVertex(God.DEFAULT_INITIALIZER);
         father.addSon(child, FatherEdge.DEFAULT_INITIALIZER);
 
         Assert.assertTrue(child != null);
@@ -335,7 +335,7 @@ public class AdjacencyMethodHandlerTest {
         Assert.assertEquals(childVertex.getElement().getProperty("name"), "hercules");
         Assert.assertTrue(child instanceof GodExtended);
 
-        father.setSons(Arrays.asList(framedGraph.addFramedVertex(null, God.DEFAULT_INITIALIZER)));
+        father.setSons(Arrays.asList(framedGraph.addFramedVertex(God.DEFAULT_INITIALIZER)));
 
         child = father.getSon(God.class);
         Assert.assertNotNull(child);

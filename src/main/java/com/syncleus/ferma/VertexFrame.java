@@ -15,10 +15,12 @@
  */
 package com.syncleus.ferma;
 
-import com.syncleus.ferma.traversals.VertexTraversal;
-import com.syncleus.ferma.traversals.EdgeTraversal;
+import com.google.common.base.Function;
 import com.google.gson.JsonObject;
+import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
+import org.apache.tinkerpop.gremlin.structure.Element;
 import org.apache.tinkerpop.gremlin.structure.Vertex;
+import java.util.Iterator;
 
 public interface VertexFrame extends ElementFrame {    
     @Override
@@ -113,30 +115,6 @@ public interface VertexFrame extends ElementFrame {
      * @return The added edge.
      */
     TEdge addFramedEdgeExplicit(String label, VertexFrame inVertex);
-
-    VertexTraversal<?, ?, ?> out(final int branchFactor, final String... labels);
-
-    VertexTraversal<?, ?, ?> out(final String... labels);
-
-    VertexTraversal<?, ?, ?> in(final int branchFactor, final String... labels);
-
-    VertexTraversal<?, ?, ?> in(final String... labels);
-
-    VertexTraversal<?, ?, ?> both(final int branchFactor, final String... labels);
-
-    VertexTraversal<?, ?, ?> both(final String... labels);
-
-    EdgeTraversal<?, ?, ?> outE(final int branchFactor, final String... labels);
-
-    EdgeTraversal<?, ?, ?> outE(final String... labels);
-
-    EdgeTraversal<?, ?, ?> inE(final int branchFactor, final String... labels);
-
-    EdgeTraversal<?, ?, ?> inE(final String... labels);
-
-    EdgeTraversal<?, ?, ?> bothE(final int branchFactor, final String... labels);
-
-    EdgeTraversal<?, ?, ?> bothE(final String... labels);
 
     /**
      * Create edges from the framed vertex to the supplied vertex with the
@@ -415,13 +393,6 @@ public interface VertexFrame extends ElementFrame {
     <K> K setLinkBothExplicit(Class<K> kind, String... labels);
 
     /**
-     * Shortcut to get frame Traversal of current element
-     *
-     * @return The traversal for the current element.
-     */
-    VertexTraversal<?, ?, ?> traversal();
-
-    /**
      * Output the vertex as JSON.
      *
      * @return A JsonObject representing this frame.
@@ -449,4 +420,22 @@ public interface VertexFrame extends ElementFrame {
      * @return The new frame
      */
     <T> T reframeExplicit(Class<T> kind);
+
+    <T> Iterable<? extends T> traverse(final Function<GraphTraversal<? extends Vertex, ? extends Vertex>, Iterator<? extends Element>> traverser, final ClassInitializer<T> initializer);
+
+    <T> Iterable<? extends T> traverse(final Function<GraphTraversal<? extends Vertex, ? extends Vertex>, Iterator<? extends Element>> traverser, final Class<T> kind, boolean isNew);
+
+    <T> Iterable<? extends T> traverseExplicit(final Function<GraphTraversal<? extends Vertex, ? extends Vertex>, Iterator<? extends Element>> traverser, final ClassInitializer<T> initializer);
+
+    <T> Iterable<? extends T> traverseExplicit(final Function<GraphTraversal<? extends Vertex, ? extends Vertex>, Iterator<? extends Element>> traverser, final Class<T> kind, boolean isNew);
+
+    <T> T traverseSingleton(final Function<GraphTraversal<? extends Vertex, ? extends Vertex>, Iterator<? extends Element>> traverser, final ClassInitializer<T> initializer);
+
+    <T> T traverseSingleton(final Function<GraphTraversal<? extends Vertex, ? extends Vertex>, Iterator<? extends Element>> traverser, final Class<T> kind, boolean isNew);
+
+    <T> T traverseSingletonExplicit(final Function<GraphTraversal<? extends Vertex, ? extends Vertex>, Iterator<? extends Element>> traverser, final ClassInitializer<T> initializer);
+
+    <T> T traverseSingletonExplicit(final Function<GraphTraversal<? extends Vertex, ? extends Vertex>, Iterator<? extends Element>> traverser, final Class<T> kind, boolean isNew);
+
+    void traverse(final VoidFunction<GraphTraversal<? extends Vertex, ? extends Vertex>> traverser);
 }

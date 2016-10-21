@@ -15,10 +15,7 @@
  */
 package com.syncleus.ferma;
 
-import com.syncleus.ferma.traversals.VertexTraversal;
-import com.syncleus.ferma.traversals.EdgeTraversal;
 import org.apache.tinkerpop.gremlin.structure.Element;
-
 import java.util.Set;
 
 public interface ElementFrame {
@@ -110,37 +107,5 @@ public interface ElementFrame {
      * @since 2.1.0
      */
     void removeTypeResolution();
-
-    /**
-     * Query over all vertices in the graph.
-     *
-     * @return The query.
-     */
-    VertexTraversal<?, ?, ?> v();
-
-    /**
-     * Query over all edges in the graph.
-     *
-     * @return The query.
-     */
-    EdgeTraversal<?, ?, ?> e();
-
-    /**
-     * Query over a list of vertices in the graph.
-     *
-     * @param ids
-     *            The ids of the vertices.
-     * @return The query.
-     */
-    VertexTraversal<?, ?, ?> v(final Object... ids);
-
-    /**
-     * Query over a list of edges in the graph.
-     *
-     * @param ids
-     *            The ids of the edges.
-     * @return The query.
-     */
-    EdgeTraversal<?, ?, ?> e(final Object... ids);
 
 }

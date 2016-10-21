@@ -15,7 +15,8 @@
  */
 package com.syncleus.ferma.framefactories.annotation;
 
-import com.tinkerpop.blueprints.Vertex;
+import org.apache.tinkerpop.gremlin.structure.Vertex;
+
 import java.lang.reflect.*;
 import java.util.Map;
 

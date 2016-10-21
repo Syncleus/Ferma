@@ -23,8 +23,6 @@
  */
 package com.syncleus.ferma.typeresolvers;
 
-import com.syncleus.ferma.traversals.EdgeTraversal;
-import com.syncleus.ferma.traversals.VertexTraversal;
 import org.apache.tinkerpop.gremlin.structure.Element;
 
 /**

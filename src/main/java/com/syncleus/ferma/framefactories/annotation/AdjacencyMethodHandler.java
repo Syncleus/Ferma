@@ -15,19 +15,25 @@
  */
 package com.syncleus.ferma.framefactories.annotation;
 
+import com.google.common.base.Function;
 import com.syncleus.ferma.typeresolvers.TypeResolver;
 import com.syncleus.ferma.*;
 import com.syncleus.ferma.annotations.Adjacency;
-import com.tinkerpop.blueprints.Direction;
 import net.bytebuddy.dynamic.DynamicType;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.util.Iterator;
 import net.bytebuddy.matcher.ElementMatchers;
 import net.bytebuddy.implementation.MethodDelegation;
 import net.bytebuddy.implementation.bind.annotation.Argument;
 import net.bytebuddy.implementation.bind.annotation.Origin;
 import net.bytebuddy.implementation.bind.annotation.RuntimeType;
 import net.bytebuddy.implementation.bind.annotation.This;
+import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
+import org.apache.tinkerpop.gremlin.structure.Direction;
+import org.apache.tinkerpop.gremlin.structure.Element;
+import org.apache.tinkerpop.gremlin.structure.Vertex;
+import javax.annotation.Nullable;
 
 /**
  * A method handler that implemented the Adjacency Annotation.
@@ -157,7 +163,22 @@ public class AdjacencyMethodHandler implements MethodHandler {
             final Direction direction = annotation.direction();
             final String label = annotation.label();
 
-            return new FramingVertexIterable(thiz.getGraph(), thiz.getElement().getVertices(direction, label), VertexFrame.class);
+            return thiz.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, Iterator<? extends Element>>() {
+                @Nullable
+                @Override
+                public Iterator<? extends Element> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
+                    switch(direction) {
+                        case IN:
+                            return input.inE(label).inV();
+                        case OUT:
+                            return input.outE(label).inV();
+                        case BOTH:
+                            return input.bothE(label).inV();
+                        default:
+                            throw new IllegalStateException("Direction not recognized.");
+                    }
+                }
+            }, VertexFrame.class, false);
         }
     }
 
@@ -193,16 +214,22 @@ public class AdjacencyMethodHandler implements MethodHandler {
             final Direction direction = annotation.direction();
             final String label = annotation.label();
 
-            switch (direction) {
-                case BOTH:
-                    return thiz.both(label).next(VertexFrame.class);
-                case IN:
-                    return thiz.in(label).next(VertexFrame.class);
-                case OUT:
-                    return thiz.out(label).next(VertexFrame.class);
-                default:
-                    throw new IllegalStateException(method.getName() + " is annotated with a direction other than BOTH, IN, or OUT.");
-            }
+            return thiz.traverseSingleton(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, Iterator<? extends Element>>() {
+                @Nullable
+                @Override
+                public Iterator<? extends Element> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
+                    switch(direction) {
+                        case IN:
+                            return input.inE(label).inV();
+                        case OUT:
+                            return input.outE(label).inV();
+                        case BOTH:
+                            return input.bothE(label).inV();
+                        default:
+                            throw new IllegalStateException("Direction not recognized.");
+                    }
+                }
+            }, VertexFrame.class, false);
         }
     }
 
@@ -394,7 +421,14 @@ public class AdjacencyMethodHandler implements MethodHandler {
 
             switch (direction) {
                 case BOTH:
-                    for (final EdgeFrame existingEdge : thiz.bothE(label))
+                    final Iterable<? extends EdgeFrame> bothEdges = thiz.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, Iterator<? extends Element>>() {
+                        @Nullable
+                        @Override
+                        public Iterator<? extends Element> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
+                            return input.bothE(label);
+                        }
+                    }, TEdge.class, false);
+                    for (final EdgeFrame existingEdge : bothEdges)
                         existingEdge.remove();
                     for (final VertexFrame newVertex : (Iterable<? extends VertexFrame>) vertexSet) {
                         thiz.getGraph().addFramedEdge(newVertex, thiz, label);
@@ -402,13 +436,27 @@ public class AdjacencyMethodHandler implements MethodHandler {
                     }
                     break;
                 case IN:
-                    for (final EdgeFrame existingEdge : thiz.inE(label))
+                    final Iterable<? extends EdgeFrame> inEdges = thiz.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, Iterator<? extends Element>>() {
+                        @Nullable
+                        @Override
+                        public Iterator<? extends Element> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
+                            return input.inE(label);
+                        }
+                    }, TEdge.class, false);
+                    for (final EdgeFrame existingEdge : inEdges)
                         existingEdge.remove();
                     for (final VertexFrame newVertex : (Iterable<? extends VertexFrame>) vertexSet)
                         thiz.getGraph().addFramedEdge(newVertex, thiz, label);
                     break;
                 case OUT:
-                    for (final EdgeFrame existingEdge : thiz.outE(label))
+                    final Iterable<? extends EdgeFrame> outEdges = thiz.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, Iterator<? extends Element>>() {
+                        @Nullable
+                        @Override
+                        public Iterator<? extends Element> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
+                            return input.outE(label);
+                        }
+                    }, TEdge.class, false);
+                    for (final EdgeFrame existingEdge : outEdges)
                         existingEdge.remove();
                     for (final VertexFrame newVertex : (Iterable<? extends VertexFrame>) vertexSet)
                         thiz.getGraph().addFramedEdge(thiz, newVertex, label);
@@ -430,18 +478,39 @@ public class AdjacencyMethodHandler implements MethodHandler {
 
             switch (direction) {
                 case BOTH:
-                    for (final EdgeFrame edge : thiz.bothE(label))
-                        if (null == removeVertex || edge.outV().next().getId().equals(removeVertex.getId()) || edge.inV().next().getId().equals(removeVertex.getId()))
+                    final Iterable<? extends EdgeFrame> bothEdges = thiz.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, Iterator<? extends Element>>() {
+                        @Nullable
+                        @Override
+                        public Iterator<? extends Element> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
+                            return input.bothE(label);
+                        }
+                    }, TEdge.class, false);
+                    for (final EdgeFrame edge : bothEdges)
+                        if (null == removeVertex || edge.getElement().outVertex().id().equals(removeVertex.getId()) || edge.getElement().inVertex().id().equals(removeVertex.getId()))
                             edge.remove();
                     break;
                 case IN:
-                    for (final EdgeFrame edge : thiz.inE(label))
-                        if (null == removeVertex || edge.outV().next().getId().equals(removeVertex.getId()))
+                    final Iterable<? extends EdgeFrame> inEdges = thiz.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, Iterator<? extends Element>>() {
+                        @Nullable
+                        @Override
+                        public Iterator<? extends Element> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
+                            return input.inE(label);
+                        }
+                    }, TEdge.class, false);
+                    for (final EdgeFrame edge : inEdges)
+                        if (null == removeVertex || edge.getElement().outVertex().id().equals(removeVertex.getId()))
                             edge.remove();
                     break;
                 case OUT:
-                    for (final EdgeFrame edge : thiz.outE(label))
-                        if (null == removeVertex || edge.inV().next().getId().equals(removeVertex.getId()))
+                    final Iterable<? extends EdgeFrame> outEdges = thiz.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, Iterator<? extends Element>>() {
+                        @Nullable
+                        @Override
+                        public Iterator<? extends Element> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
+                            return input.outE(label);
+                        }
+                    }, TEdge.class, false);
+                    for (final EdgeFrame edge : outEdges)
+                        if (null == removeVertex || edge.getElement().inVertex().id().equals(removeVertex.getId()))
                             edge.remove();
                     break;
                 default:

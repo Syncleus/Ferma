@@ -15,6 +15,7 @@
  */
 package com.syncleus.ferma.framefactories.annotation;
 
+import com.google.common.base.Function;
 import com.syncleus.ferma.EdgeFrame;
 import com.syncleus.ferma.annotations.OutVertex;
 import net.bytebuddy.dynamic.DynamicType;
@@ -24,7 +25,14 @@ import net.bytebuddy.implementation.bind.annotation.RuntimeType;
 import net.bytebuddy.implementation.bind.annotation.This;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.util.Iterator;
+
 import net.bytebuddy.matcher.ElementMatchers;
+import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
+import org.apache.tinkerpop.gremlin.structure.Edge;
+import org.apache.tinkerpop.gremlin.structure.Element;
+
+import javax.annotation.Nullable;
 
 /**
  * A method handler that implemented the OutVertex Annotation.
@@ -59,7 +67,13 @@ public class OutVertexMethodHandler implements MethodHandler {
 
         @RuntimeType
         public static Object getVertex(@This final EdgeFrame thiz, @Origin final Method method) {
-            return thiz.outV().next(method.getReturnType());
+            return thiz.traverseSingleton(new Function<GraphTraversal<? extends Edge, ? extends Edge>, Iterator<? extends Element>>() {
+                @Nullable
+                @Override
+                public Iterator<? extends Element> apply(@Nullable GraphTraversal<? extends Edge, ? extends Edge> input) {
+                    return input.outV();
+                }
+            }, method.getReturnType(), false);
         }
     }
 }

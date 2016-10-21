@@ -15,7 +15,7 @@
  */
 package com.syncleus.ferma.annotations;
 
-import com.tinkerpop.blueprints.Direction;
+import org.apache.tinkerpop.gremlin.structure.Direction;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

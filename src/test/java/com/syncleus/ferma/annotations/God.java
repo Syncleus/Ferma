@@ -16,7 +16,7 @@
 package com.syncleus.ferma.annotations;
 
 import com.syncleus.ferma.*;
-import com.tinkerpop.blueprints.Direction;
+import org.apache.tinkerpop.gremlin.structure.Direction;
 
 public interface God extends VertexFrame {
     static final ClassInitializer<God> DEFAULT_INITIALIZER = new DefaultClassInitializer(God.class);

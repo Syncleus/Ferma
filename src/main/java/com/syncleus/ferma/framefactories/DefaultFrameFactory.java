@@ -15,7 +15,7 @@
  */
 package com.syncleus.ferma.framefactories;
 
-import com.tinkerpop.blueprints.Element;
+import org.apache.tinkerpop.gremlin.structure.Element;
 
 /**
  * Creates the frame using reflection.

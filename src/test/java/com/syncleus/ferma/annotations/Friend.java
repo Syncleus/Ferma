@@ -16,13 +16,13 @@
 package com.syncleus.ferma.annotations;
 
 import com.syncleus.ferma.*;
-import com.tinkerpop.blueprints.Direction;
+import org.apache.tinkerpop.gremlin.structure.Direction;
 
 public abstract class Friend extends Person {
     public static final ClassInitializer<Friend> DEFAULT_INITIALIZER = new DefaultClassInitializer(Friend.class);
     
     
-    @Incidence(label="knows", direction=Direction.OUT)
+    @Incidence(label="knows", direction= Direction.OUT)
     public abstract Knows addKnows(Friend programmer, ClassInitializer<? extends Knows> type);
 
     @Incidence(label="knows", direction=Direction.IN)

@@ -18,12 +18,20 @@ package com.syncleus.ferma;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+import com.google.common.base.Function;
+import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
+import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
+import org.apache.tinkerpop.gremlin.structure.Edge;
+import org.apache.tinkerpop.gremlin.structure.Element;
 import org.apache.tinkerpop.gremlin.structure.Graph;
 import org.apache.tinkerpop.gremlin.tinkergraph.structure.TinkerGraph;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockitoAnnotations;
+
+import javax.annotation.Nullable;
+import java.util.Iterator;
 
 public class FramedEdgeTest {
 
@@ -46,45 +54,80 @@ public class FramedEdgeTest {
         
     }
 
-//    @Test
-//    public void testLabel() {
-//        Assert.assertEquals("knows", e1.getLabel());
-//    }
-//
-//    @Test
-//    public void testInV() {
-//        Assert.assertEquals(p2, e1.inV().next(Person.class));
-//    }
-//
-//    @Test
-//    public void testOutV() {
-//        Assert.assertEquals(p1, e1.outV().next(Person.class));
-//    }
-//
-//    @Test
-//    public void testBothV() {
-//        Assert.assertEquals(p1, e1.bothV().next(Person.class));
-//    }
-//
-//    @Test
-//    public void testInVExplicit() {
-//        Assert.assertEquals(p2, e1.inV().nextExplicit(Person.class));
-//    }
-//
-//    @Test
-//    public void testOutVExplicit() {
-//        Assert.assertEquals(p1, e1.outV().nextExplicit(Person.class));
-//    }
-//
-//    @Test
-//    public void testBothVExplicit() {
-//        Assert.assertEquals(p1, e1.bothV().nextExplicit(Person.class));
-//    }
-//
-//    @Test
-//    public void testNextOrDefaultExplicit() {
-//        assertNotNull(fg.e().nextOrDefaultExplicit(Knows.class, null));
-//        fg.e().removeAll();
-//        assertNull(fg.e().nextOrDefaultExplicit(Knows.class, null));
-//    }
+    @Test
+    public void testLabel() {
+        Assert.assertEquals("knows", e1.getLabel());
+    }
+
+    @Test
+    public void testInV() {
+        final Person person = e1.traverseSingleton(new Function<GraphTraversal<? extends Edge, ? extends Edge>, Iterator<? extends Element>>() {
+            @Nullable
+            @Override
+            public Iterator<? extends Element> apply(@Nullable GraphTraversal<? extends Edge, ? extends Edge> input) {
+                return input.inV();
+            }
+        }, Person.class, false);
+        Assert.assertEquals(p2, person);
+    }
+
+    @Test
+    public void testOutV() {
+        final Person person = e1.traverseSingleton(new Function<GraphTraversal<? extends Edge, ? extends Edge>, Iterator<? extends Element>>() {
+            @Nullable
+            @Override
+            public Iterator<? extends Element> apply(@Nullable GraphTraversal<? extends Edge, ? extends Edge> input) {
+                return input.outV();
+            }
+        }, Person.class, false);
+        Assert.assertEquals(p1, person);
+    }
+
+    @Test
+    public void testBothV() {
+        final Person person = e1.traverseSingleton(new Function<GraphTraversal<? extends Edge, ? extends Edge>, Iterator<? extends Element>>() {
+            @Nullable
+            @Override
+            public Iterator<? extends Element> apply(@Nullable GraphTraversal<? extends Edge, ? extends Edge> input) {
+                return input.bothV();
+            }
+        }, Person.class, false);
+        Assert.assertEquals(p1, person);
+    }
+
+    @Test
+    public void testInVExplicit() {
+        final Person person = e1.traverseSingletonExplicit(new Function<GraphTraversal<? extends Edge, ? extends Edge>, Iterator<? extends Element>>() {
+            @Nullable
+            @Override
+            public Iterator<? extends Element> apply(@Nullable GraphTraversal<? extends Edge, ? extends Edge> input) {
+                return input.inV();
+            }
+        }, Person.class, false);
+        Assert.assertEquals(p2, person);
+    }
+
+    @Test
+    public void testOutVExplicit() {
+        final Person person = e1.traverseSingletonExplicit(new Function<GraphTraversal<? extends Edge, ? extends Edge>, Iterator<? extends Element>>() {
+            @Nullable
+            @Override
+            public Iterator<? extends Element> apply(@Nullable GraphTraversal<? extends Edge, ? extends Edge> input) {
+                return input.outV();
+            }
+        }, Person.class, false);
+        Assert.assertEquals(p1, person);
+    }
+
+    @Test
+    public void testBothVExplicit() {
+        final Person person = e1.traverseSingletonExplicit(new Function<GraphTraversal<? extends Edge, ? extends Edge>, Iterator<? extends Element>>() {
+            @Nullable
+            @Override
+            public Iterator<? extends Element> apply(@Nullable GraphTraversal<? extends Edge, ? extends Edge> input) {
+                return input.bothV();
+            }
+        }, Person.class, false);
+        Assert.assertEquals(p1, person);
+    }
 }

@@ -367,7 +367,7 @@ public class DelegatingFramedGraph<G extends Graph> extends WrappedGraph<G> impl
 
     @Override
     public <F> F getFramedVertexExplicit(Class<F> classOfF, Object id) {
-        return frameElement(this.getBaseGraph().getVertex(id), classOfF);
+        return frameElementExplicit(this.getBaseGraph().getVertex(id), classOfF);
     }
 
     @Override

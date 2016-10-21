@@ -23,6 +23,7 @@ import com.syncleus.ferma.VertexFrame;
 import org.apache.tinkerpop.gremlin.process.traversal.P;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
 import org.apache.tinkerpop.gremlin.structure.Element;
+import org.apache.tinkerpop.gremlin.structure.Property;
 
 import java.util.Set;
 
@@ -88,8 +89,11 @@ public class PolymorphicTypeResolver implements TypeResolver {
 
     @Override
     public <T> Class<? extends T> resolve(final Element element, final Class<T> kind) {
-        final String nodeClazz = element.<String>property(this.typeResolutionKey).value();
-        if (nodeClazz == null)
+        final Property<String> nodeClazzProperty = element.<String>property(this.typeResolutionKey);
+        final String nodeClazz;
+        if( nodeClazzProperty.isPresent() )
+            nodeClazz = nodeClazzProperty.value();
+        else
             return kind;
 
         final Class<T> nodeKind = (Class<T>) this.reflectionCache.forName(nodeClazz);
@@ -117,7 +121,7 @@ public class PolymorphicTypeResolver implements TypeResolver {
     
     @Override
     public void deinit(final Element element) {
-        element.property(this.typeResolutionKey, null);
+        element.property(this.typeResolutionKey).remove();
     }
 
     @Override

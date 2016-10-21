@@ -44,8 +44,7 @@ public class AbstractElementFrameTest {
 
     @Test
     public void testGetId() {
-        Assert.assertEquals("0", p1.getId());
-
+        Assert.assertEquals((Long) 0L, (Long) p1.getId());
     }
 
     @Test
@@ -109,13 +108,13 @@ public class AbstractElementFrameTest {
     @Test
     public void testReframe() {
         final TVertex v1 = p1.reframe(TVertex.class);
-        Assert.assertEquals(p1.getId(), v1.getId());
+        Assert.assertEquals((Long) p1.getId(), (Long) v1.getId());
     }
 
     @Test
     public void testReframeExplicit() {
         final TVertex v1 = p1.reframeExplicit(TVertex.class);
-        Assert.assertEquals(p1.getId(), v1.getId());
+        Assert.assertEquals((Long) p1.getId(), (Long) v1.getId());
     }
 
 //    @Test

@@ -24,6 +24,8 @@
 package com.syncleus.ferma;
 
 import org.apache.tinkerpop.gremlin.structure.Element;
+import org.apache.tinkerpop.gremlin.structure.Property;
+
 import java.util.Set;
 
 /**
@@ -102,7 +104,11 @@ public abstract class AbstractElementFrame implements ElementFrame {
 
     @Override
     public <T> T getProperty(final String name) {
-        return getElement().value(name);
+        final Property<T> property = getElement().<T>property(name);
+        if( property.isPresent())
+            return property.value();
+        else
+            return null;
     }
 
     @Override
@@ -116,7 +122,7 @@ public abstract class AbstractElementFrame implements ElementFrame {
     @Override
     public void setProperty(final String name, final Object value) {
         if (value == null) {
-            getElement().property(name, null);
+            getElement().property(name).remove();
         } else if (value instanceof Enum) {
             getElement().property(name, value.toString());
         } else {

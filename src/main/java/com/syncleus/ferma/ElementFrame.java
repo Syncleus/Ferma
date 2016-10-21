@@ -43,7 +43,7 @@ public interface ElementFrame {
 
     /**
      * Set the underlying element.
-     * @param element
+     * @param element The new underlying element.
      */
 	void setElement(Element element);
 

@@ -78,6 +78,8 @@ public interface TypeResolver {
      * @param traverser A traversal pointing to the current set of vertex to be
      * filtered
      * @param type The type to filter by.
+     * @param <P> Previous type in the graph traversal
+     * @param <T> Current type in the graph traversal
      * @return The traversal stream filtered by the desired type.
      */
     <P extends Element, T extends Element> GraphTraversal<P,T> hasType(GraphTraversal<P,T> traverser, Class<?> type);
@@ -88,6 +90,8 @@ public interface TypeResolver {
      * @param traverser A traversal pointing to the current set of vertex to be
      * filtered
      * @param type The type to filter by.
+     * @param <P> Previous type in the graph traversal
+     * @param <T> Current type in the graph traversal
      * @return The traversal stream filtered by the desired type.
      */
     <P extends Element, T extends Element> GraphTraversal<P,T> hasNotType(GraphTraversal<P,T> traverser, Class<?> type);

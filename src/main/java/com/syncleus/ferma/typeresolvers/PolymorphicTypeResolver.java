@@ -54,6 +54,7 @@ public class PolymorphicTypeResolver implements TypeResolver {
      * still need to be included in a separate TypedModule they must be created here as well to ensure proper look-ups
      * occur.
      *
+     * @param typeResolutionKey The key used to identfy a element's type.
      * @since 2.0.0
      */
     public PolymorphicTypeResolver(final String typeResolutionKey) {
@@ -80,6 +81,7 @@ public class PolymorphicTypeResolver implements TypeResolver {
      * occur.
      *
      * @param reflectionCache the ReflectionCache used to examine the type hierarchy and do general reflection.
+     * @param typeResolutionKey The key used to identfy a element's type.
      * @since 2.0.0
      */
     public PolymorphicTypeResolver(final ReflectionCache reflectionCache, final String typeResolutionKey) {

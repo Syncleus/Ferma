@@ -34,6 +34,8 @@ public interface FramedGraph {
 
     /**
      * Close the delegate graph.
+     *
+     * @throws IOException Whenever an IO problem prevents the stream from closing.
      */
     void close() throws IOException;
 

@@ -1,6 +1,10 @@
 # Ferma Changelog
 
-## 2.2.0-SNAPSHOT
+## 3.0.0
+
+* Tinkerpop3 is now supported.
+
+## 2.2.0
 
 * Added id parameter to ```fg.addFramedVertex``` and ```fg.addFramedEdge``` methods to prepare for orientdb custom vertex and edge types.
 * Added getFramedVertexExplicit method which can be used to load a framed vertex by id.

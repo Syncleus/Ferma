@@ -19,9 +19,14 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
+import com.google.common.base.Function;
+import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
+import org.apache.tinkerpop.gremlin.structure.Element;
 import org.apache.tinkerpop.gremlin.structure.Graph;
+import org.apache.tinkerpop.gremlin.structure.Vertex;
 import org.apache.tinkerpop.gremlin.tinkergraph.structure.TinkerGraph;
 import org.junit.Assert;
 import org.junit.Before;
@@ -33,6 +38,8 @@ import org.mockito.MockitoAnnotations;
 import com.syncleus.ferma.framefactories.FrameFactory;
 import com.syncleus.ferma.typeresolvers.PolymorphicTypeResolver;
 
+import javax.annotation.Nullable;
+
 public class FramedGraphTest {
 
     @Before
@@ -40,29 +47,43 @@ public class FramedGraphTest {
         MockitoAnnotations.initMocks(this);
     }
 
-//    @Test
-//    public void testSanity() {
-//        final Graph g = TinkerGraph.open();
-//        final FramedGraph fg = new DelegatingFramedGraph(g);
-//
-//        final Person p1 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
-//        p1.setName("Bryn");
-//
-//        final Person p2 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
-//        p2.setName("Julia");
-//        final Knows knows = p1.addKnows(p2);
-//        knows.setYears(15);
-//
-//        final Person bryn = fg.v().has("name", "Bryn").next(Person.class);
-//
-//
-//        Assert.assertEquals("Bryn", bryn.getName());
-//        Assert.assertEquals(15, bryn.getKnowsList().get(0).getYears());
-//
-//        final Collection<? extends Integer> knowsCollection = fg.v().has("name", "Julia").bothE().property("years", Integer.class).aggregate().cap();
-//        Assert.assertEquals(1, knowsCollection.size());
-//    }
-//
+    @Test
+    public void testSanity() {
+        final Graph g = TinkerGraph.open();
+        final FramedGraph fg = new DelegatingFramedGraph(g);
+
+        final Person p1 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
+        p1.setName("Bryn");
+
+        final Person p2 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
+        p2.setName("Julia");
+        final Knows knows = p1.addKnows(p2);
+        knows.setYears(15);
+
+        g.traversal().V().has("name", "Bryn").hasNext();
+
+        final Person bryn = fg.traverseSingleton(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
+            @Nullable
+            @Override
+            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
+                return input.V().has("name", "Bryn");
+            }
+        }, Person.class, false);
+
+
+        Assert.assertEquals("Bryn", bryn.getName());
+        Assert.assertEquals(15, bryn.getKnowsList().get(0).getYears());
+
+        final Long knowsCount = fg.traverse(new Function<GraphTraversalSource, Long>() {
+            @Nullable
+            @Override
+            public Long apply(@Nullable GraphTraversalSource input) {
+                return input.V().has("name", "Julia").bothE().properties("years").aggregate("test").cap("test").count().next();
+            }
+        });
+        Assert.assertEquals((Long) 1L, knowsCount);
+    }
+
 //    @Test
 //    public void testSanityByClass() {
 //        final Graph g = TinkerGraph.open();

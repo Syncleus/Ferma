@@ -21,11 +21,13 @@ import com.syncleus.ferma.EdgeFrame;
 import com.syncleus.ferma.ReflectionCache;
 import com.syncleus.ferma.VertexFrame;
 import org.apache.tinkerpop.gremlin.process.traversal.P;
+import org.apache.tinkerpop.gremlin.process.traversal.Traverser;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
 import org.apache.tinkerpop.gremlin.structure.Element;
 import org.apache.tinkerpop.gremlin.structure.Property;
 
 import java.util.Set;
+import java.util.function.Predicate;
 
 /**
  * This type resolver will use the Java class stored in the 'java_class' on
@@ -135,7 +137,20 @@ public class PolymorphicTypeResolver implements TypeResolver {
     @Override
     public <P extends Element, T extends Element> GraphTraversal<P, T> hasNotType(GraphTraversal<P, T> traverser, Class<?> type) {
         final Set<? extends String> allAllowedValues = this.reflectionCache.getSubTypeNames(type.getName());
-        return traverser.has(typeResolutionKey, org.apache.tinkerpop.gremlin.process.traversal.P.without(allAllowedValues));
+        return traverser.filter(new Predicate<Traverser<T>>() {
+            @Override
+            public boolean test(Traverser<T> toCheck) {
+                final Property<String> property = toCheck.get().property(typeResolutionKey);
+                if( !property.isPresent() )
+                    return true;
+
+                final String resolvedType = property.value();
+                if( allAllowedValues.contains(resolvedType) )
+                    return false;
+                else
+                    return true;
+            }
+        });
     }
 
 }

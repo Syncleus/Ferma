@@ -88,55 +88,51 @@ public abstract class AbstractVertexFrame extends AbstractElementFrame implement
     @Override
     public void linkOut(final VertexFrame vertex, final String... labels) {
         for (final String label : labels)
-            vertex.getElement().addEdge(label, this.getElement(), null);
+            this.getElement().addEdge(label, vertex.getElement());
     }
 
     @Override
     public void linkIn(final VertexFrame vertex, final String... labels) {
         for (final String label : labels)
-            this.getElement().addEdge(label, vertex.getElement(), null);
+            vertex.getElement().addEdge(label, this.getElement());
     }
 
     @Override
     public void linkBoth(final VertexFrame vertex, final String... labels) {
         for (final String label : labels) {
-            vertex.getElement().addEdge(label, this.getElement(), null);
-            this.getElement().addEdge(label, vertex.getElement(), null);
+            vertex.getElement().addEdge(label, this.getElement());
+            this.getElement().addEdge(label, vertex.getElement());
         }
     }
 
     @Override
     public void unlinkOut(final VertexFrame vertex, final String... labels) {
-        if (vertex != null)
-        {
-            final Iterator<Edge> edges = this.getRawTraversal().outE(labels);
-            edges.forEachRemaining(new Consumer<Edge>() {
-                @Override
-                public void accept(final Edge edge) {
-                    if( edge.outVertex().equals(vertex) )
-                        edge.remove();
-                }
-            });
-        }
-        else
-            this.getRawTraversal().outE(labels).remove();
+        final Iterator<Edge> edges = this.getRawTraversal().outE(labels);
+        edges.forEachRemaining(new Consumer<Edge>() {
+            @Override
+            public void accept(final Edge edge) {
+                if( vertex == null )
+                    edge.remove();
+                else if( edge.inVertex().equals(vertex.getElement()) )
+                    edge.remove();
+            }
+        });
     }
 
     @Override
     public void unlinkIn(final VertexFrame vertex, final String... labels) {
-        if (vertex != null)
-        {
-            final Iterator<Edge> edges = this.getRawTraversal().inE(labels);
-            edges.forEachRemaining(new Consumer<Edge>() {
-                @Override
-                public void accept(final Edge edge) {
-                    if( edge.inVertex().equals(vertex) )
-                        edge.remove();
+        final Iterator<Edge> edges = this.getRawTraversal().inE(labels);
+        edges.forEachRemaining(new Consumer<Edge>() {
+            @Override
+            public void accept(final Edge edge) {
+                if( vertex == null ) {
+                    edge.remove();
                 }
-            });
-        }
-        else
-            this.getRawTraversal().inE(labels).remove();
+                else if( edge.outVertex().id().equals(vertex.getElement().id()) ) {
+                    edge.remove();
+                }
+            }
+        });
     }
 
     @Override

@@ -16,12 +16,13 @@
 package com.syncleus.ferma;
 
 import static org.junit.Assert.assertEquals;
+
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.Consumer;
-
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
+import com.syncleus.ferma.framefactories.FrameFactory;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
 import org.apache.tinkerpop.gremlin.structure.Element;
@@ -396,147 +397,135 @@ public class FramedGraphTest {
         Assert.assertNotNull(julia.getElement().property(PolymorphicTypeResolver.TYPE_RESOLUTION_KEY).value());
     }
 
-//    @Test
-//    public void testCustomFrameBuilder() {
-//        final Person o = new Person();
-//        final Graph g = TinkerGraph.open();
-//        final FramedGraph fg = new DelegatingFramedGraph(g, new FrameFactory() {
-//
-//            @SuppressWarnings("unchecked")
-//            @Override
-//            public <T> T create(final Element e, final Class<T> kind) {
-//                return (T) o;
-//            }
-//        }, new PolymorphicTypeResolver());
-//        final Person person = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
-//        Assert.assertEquals(o, person);
-//    }
-//
-//    @Test
-//    public void testCustomFrameBuilderByClass() {
-//        final Person o = new Person();
-//        final Graph g = TinkerGraph.open();
-//        final FramedGraph fg = new DelegatingFramedGraph(g, new FrameFactory() {
-//
-//            @SuppressWarnings("unchecked")
-//            @Override
-//            public <T> T create(final Element e, final Class<T> kind) {
-//                return (T) o;
-//            }
-//        }, new PolymorphicTypeResolver());
-//        final Person person = fg.addFramedVertex(Person.class);
-//        Assert.assertEquals(o, person);
-//    }
-//
-//    @Test
-//    public void testCustomFrameBuilderExplicit() {
-//        final Person o = new Person();
-//        final Graph g = TinkerGraph.open();
-//        final FramedGraph fg = new DelegatingFramedGraph(g, new FrameFactory() {
-//
-//            @SuppressWarnings("unchecked")
-//            @Override
-//            public <T> T create(final Element e, final Class<T> kind) {
-//                return (T) o;
-//            }
-//        }, new PolymorphicTypeResolver());
-//        final Person person = fg.addFramedVertexExplicit(Person.DEFAULT_INITIALIZER);
-//        Assert.assertEquals(o, person);
-//    }
-//
-//    @Test
-//    public void testCustomFrameBuilderExplicitByClass() {
-//        final Person o = new Person();
-//        final Graph g = TinkerGraph.open();
-//        final FramedGraph fg = new DelegatingFramedGraph(g, new FrameFactory() {
-//
-//            @SuppressWarnings("unchecked")
-//            @Override
-//            public <T> T create(final Element e, final Class<T> kind) {
-//                return (T) o;
-//            }
-//        }, new PolymorphicTypeResolver());
-//        final Person person = fg.addFramedVertexExplicit(Person.class);
-//        Assert.assertEquals(o, person);
-//    }
-//
-//    @Mock(answer = Answers.RETURNS_MOCKS)
-//    private ThreadedTransactionalGraph transactionalGraph;
-//
-//    @Test
-//    public void testTransactionCommitted() {
-//        final FramedTransactionalGraph fg = new DelegatingFramedTransactionalGraph(transactionalGraph);
-//        fg.commit();
-//        Mockito.verify(transactionalGraph).commit();
-//    }
-//
-//    @Test
-//    public void testTransactionRolledBack() {
-//        final FramedTransactionalGraph fg = new DelegatingFramedTransactionalGraph(transactionalGraph);
-//        fg.rollback();
-//        Mockito.verify(transactionalGraph).rollback();
-//    }
-//
-//    @Test
-//    public void testTransactionStart() {
-//        final FramedThreadedTransactionalGraph fg = new DelegatingFramedThreadedTransactionalGraph(transactionalGraph);
-//        fg.newTransaction();
-//        Mockito.verify(transactionalGraph).newTransaction();
-//    }
-//
-//    @Test
-//    public void testUntypedFrames() {
-//        final Graph g = TinkerGraph.open();
-//        final FramedGraph fg = new DelegatingFramedGraph(g);
-//        final TVertex p1 = fg.addFramedVertex();
-//        p1.setProperty("name", "Bryn");
-//
-//        final TVertex p2 = fg.addFramedVertex();
-//        p2.setProperty("name", "Julia");
-//        final TEdge knows = p1.addFramedEdge("knows", p2);
-//        knows.setProperty("years", 15);
-//
-//        final VertexFrame bryn = fg.v().has("name", "Bryn").next();
-//
-//
-//        Assert.assertEquals("Bryn", bryn.getProperty("name"));
-//        Assert.assertEquals(15, bryn.outE("knows").toList().get(0).getProperty("years"));
-//
-//        final Collection<? extends Integer> knowsCollection = fg.v().has("name", "Julia").bothE().property("years", Integer.class).aggregate().cap();
-//        Assert.assertEquals(1, knowsCollection.size());
-//    }
-//
-//    @Test
-//    public void testUntypedFramesExplicit() {
-//        final Graph g = TinkerGraph.open();
-//        final FramedGraph fg = new DelegatingFramedGraph(g);
-//        final TVertex p1 = fg.addFramedVertexExplicit();
-//        p1.setProperty("name", "Bryn");
-//
-//        final TVertex p2 = fg.addFramedVertexExplicit();
-//        p2.setProperty("name", "Julia");
-//        final TEdge knows = p1.addFramedEdgeExplicit("knows", p2);
-//        knows.setProperty("years", 15);
-//
-//        final VertexFrame bryn = fg.v().has("name", "Bryn").next();
-//
-//
-//        Assert.assertEquals("Bryn", bryn.getProperty("name"));
-//        Assert.assertEquals(15, bryn.outE("knows").toList().get(0).getProperty("years"));
-//
-//        final Collection<? extends Integer> knowsCollection = fg.v().has("name", "Julia").bothE().property("years", Integer.class).aggregate().cap();
-//        Assert.assertEquals(1, knowsCollection.size());
-//    }
-//
-//    @Test
-//    public void testGetFramedVertexExplicit() {
-//        final Graph g = TinkerGraph.open();
-//        final FramedGraph fg = new DelegatingFramedGraph(g);
-//        final TVertex p1 = fg.addFramedVertexExplicit();
-//        p1.setProperty("name", "Bryn");
-//
-//        Person p = fg.getFramedVertexExplicit(Person.class, p1.getId());
-//        assertNotNull(p);
-//        assertEquals("Bryn", p.getName());
-//    }
+    @Test
+    public void testCustomFrameBuilder() {
+        final Person o = new Person();
+        final Graph g = TinkerGraph.open();
+        final FramedGraph fg = new DelegatingFramedGraph(g, new FrameFactory() {
+
+            @SuppressWarnings("unchecked")
+            @Override
+            public <T> T create(final Element e, final Class<T> kind) {
+                return (T) o;
+            }
+        }, new PolymorphicTypeResolver());
+        final Person person = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
+        Assert.assertEquals(o, person);
+    }
+
+    @Test
+    public void testCustomFrameBuilderByClass() {
+        final Person o = new Person();
+        final Graph g = TinkerGraph.open();
+        final FramedGraph fg = new DelegatingFramedGraph(g, new FrameFactory() {
+
+            @SuppressWarnings("unchecked")
+            @Override
+            public <T> T create(final Element e, final Class<T> kind) {
+                return (T) o;
+            }
+        }, new PolymorphicTypeResolver());
+        final Person person = fg.addFramedVertex(Person.class);
+        Assert.assertEquals(o, person);
+    }
+
+    @Test
+    public void testCustomFrameBuilderExplicit() {
+        final Person o = new Person();
+        final Graph g = TinkerGraph.open();
+        final FramedGraph fg = new DelegatingFramedGraph(g, new FrameFactory() {
+
+            @SuppressWarnings("unchecked")
+            @Override
+            public <T> T create(final Element e, final Class<T> kind) {
+                return (T) o;
+            }
+        }, new PolymorphicTypeResolver());
+        final Person person = fg.addFramedVertexExplicit(Person.DEFAULT_INITIALIZER);
+        Assert.assertEquals(o, person);
+    }
+
+    @Test
+    public void testCustomFrameBuilderExplicitByClass() {
+        final Person o = new Person();
+        final Graph g = TinkerGraph.open();
+        final FramedGraph fg = new DelegatingFramedGraph(g, new FrameFactory() {
+
+            @SuppressWarnings("unchecked")
+            @Override
+            public <T> T create(final Element e, final Class<T> kind) {
+                return (T) o;
+            }
+        }, new PolymorphicTypeResolver());
+        final Person person = fg.addFramedVertexExplicit(Person.class);
+        Assert.assertEquals(o, person);
+    }
+
+    @Test
+    public void testUntypedFrames() {
+        final Graph g = TinkerGraph.open();
+        final FramedGraph fg = new DelegatingFramedGraph(g);
+        final TVertex p1 = fg.addFramedVertex();
+        p1.setProperty("name", "Bryn");
+
+        final TVertex p2 = fg.addFramedVertex();
+        p2.setProperty("name", "Julia");
+        final TEdge knows = p1.addFramedEdge("knows", p2);
+        knows.setProperty("years", 15);
+
+        final VertexFrame bryn = fg.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
+            @Nullable
+            @Override
+            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
+                return input.V().has("name", "Bryn");
+            }
+        }).next(VertexFrame.class);
+
+
+        Assert.assertEquals("Bryn", bryn.getProperty("name"));
+        Assert.assertEquals(15, bryn.getRawTraversal().outE("knows").toList().get(0).property("years").value());
+
+        final Long knowsCount = fg.getRawTraversal().V().has("name", "Julia").bothE().properties("years").aggregate("test").cap("test").count().next();
+        Assert.assertEquals((Long) 1L, knowsCount);
+    }
+
+    @Test
+    public void testUntypedFramesExplicit() {
+        final Graph g = TinkerGraph.open();
+        final FramedGraph fg = new DelegatingFramedGraph(g);
+        final TVertex p1 = fg.addFramedVertexExplicit();
+        p1.setProperty("name", "Bryn");
+
+        final TVertex p2 = fg.addFramedVertexExplicit();
+        p2.setProperty("name", "Julia");
+        final TEdge knows = p1.addFramedEdgeExplicit("knows", p2);
+        knows.setProperty("years", 15);
+
+        final VertexFrame bryn = fg.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
+            @Nullable
+            @Override
+            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
+                return input.V().has("name", "Bryn");
+            }
+        }).next(VertexFrame.class);
+
+
+        Assert.assertEquals("Bryn", bryn.getProperty("name"));
+        Assert.assertEquals(15, bryn.getRawTraversal().outE("knows").toList().get(0).property("years").value());
+
+        final Long knowsCount = fg.getRawTraversal().V().has("name", "Julia").bothE().properties("years").aggregate("test").cap("test").count().next();
+        Assert.assertEquals((Long) 1L, knowsCount);
+    }
+
+    @Test
+    public void testGetFramedVertexExplicit() {
+        final Graph g = TinkerGraph.open();
+        final FramedGraph fg = new DelegatingFramedGraph(g);
+        final TVertex p1 = fg.addFramedVertexExplicit();
+        p1.setProperty("name", "Bryn");
+
+        Person p = fg.getFramedVertexExplicit(Person.class, p1.getId());
+        Assert.assertNotNull(p);
+        Assert.assertEquals("Bryn", p.getName());
+    }
 }

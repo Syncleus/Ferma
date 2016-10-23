@@ -46,7 +46,7 @@ public class PolymorphicTypeResolverTest {
         final Person programmer = framedGraph.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
+            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
                 return input.V();
             }
         }).next(Person.class);
@@ -59,7 +59,7 @@ public class PolymorphicTypeResolverTest {
         final Person person = framedGraph.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
+            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
                 return input.V();
             }
         }).next(Person.class);

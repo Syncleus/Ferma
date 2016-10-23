@@ -57,7 +57,7 @@ public class FramedEdgeTest {
         final Person person = e1.traverse(new Function<GraphTraversal<? extends Edge, ? extends Edge>, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public GraphTraversal<?, ?> apply(@Nullable GraphTraversal<? extends Edge, ? extends Edge> input) {
+            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversal<? extends Edge, ? extends Edge> input) {
                 return input.inV();
             }
         }).next(Person.class);
@@ -69,7 +69,7 @@ public class FramedEdgeTest {
         final Person person = e1.traverse(new Function<GraphTraversal<? extends Edge, ? extends Edge>, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public GraphTraversal<?, ?> apply(@Nullable GraphTraversal<? extends Edge, ? extends Edge> input) {
+            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversal<? extends Edge, ? extends Edge> input) {
                 return input.outV();
             }
         }).next(Person.class);
@@ -81,7 +81,7 @@ public class FramedEdgeTest {
         final Person person = e1.traverse(new Function<GraphTraversal<? extends Edge, ? extends Edge>, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public GraphTraversal<?, ?> apply(@Nullable GraphTraversal<? extends Edge, ? extends Edge> input) {
+            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversal<? extends Edge, ? extends Edge> input) {
                 return input.bothV();
             }
         }).next(Person.class);
@@ -93,7 +93,7 @@ public class FramedEdgeTest {
         final Person person = e1.traverse(new Function<GraphTraversal<? extends Edge, ? extends Edge>, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public GraphTraversal<?, ?> apply(@Nullable GraphTraversal<? extends Edge, ? extends Edge> input) {
+            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversal<? extends Edge, ? extends Edge> input) {
                 return input.inV();
             }
         }).nextExplicit(Person.class);
@@ -105,7 +105,7 @@ public class FramedEdgeTest {
         final Person person = e1.traverse(new Function<GraphTraversal<? extends Edge, ? extends Edge>, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public GraphTraversal<?, ?> apply(@Nullable GraphTraversal<? extends Edge, ? extends Edge> input) {
+            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversal<? extends Edge, ? extends Edge> input) {
                 return input.outV();
             }
         }).nextExplicit(Person.class);
@@ -117,7 +117,7 @@ public class FramedEdgeTest {
         final Person person = e1.traverse(new Function<GraphTraversal<? extends Edge, ? extends Edge>, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public GraphTraversal<?, ?> apply(@Nullable GraphTraversal<? extends Edge, ? extends Edge> input) {
+            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversal<? extends Edge, ? extends Edge> input) {
                 return input.bothV();
             }
         }).nextExplicit(Person.class);

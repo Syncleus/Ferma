@@ -16,7 +16,7 @@
 package com.syncleus.ferma;
 
 public class RunMe {
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         System.out.println("implementation version: " + RunMe.class.getPackage().getImplementationVersion());
         System.out.println("implementation vendor: " + RunMe.class.getPackage().getImplementationVendor());
         System.out.println("implementation title: " + RunMe.class.getPackage().getImplementationTitle());

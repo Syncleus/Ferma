@@ -129,17 +129,17 @@ public class PolymorphicTypeResolver implements TypeResolver {
     }
 
     @Override
-    public <P extends Element, T extends Element> GraphTraversal<P, T> hasType(GraphTraversal<P, T> traverser, Class<?> type) {
+    public <P extends Element, T extends Element> GraphTraversal<P, T> hasType(final GraphTraversal<P, T> traverser, final Class<?> type) {
         final Set<? extends String> allAllowedValues = this.reflectionCache.getSubTypeNames(type.getName());
         return traverser.has(typeResolutionKey, org.apache.tinkerpop.gremlin.process.traversal.P.within(allAllowedValues));
     }
 
     @Override
-    public <P extends Element, T extends Element> GraphTraversal<P, T> hasNotType(GraphTraversal<P, T> traverser, Class<?> type) {
+    public <P extends Element, T extends Element> GraphTraversal<P, T> hasNotType(final GraphTraversal<P, T> traverser, final Class<?> type) {
         final Set<? extends String> allAllowedValues = this.reflectionCache.getSubTypeNames(type.getName());
         return traverser.filter(new Predicate<Traverser<T>>() {
             @Override
-            public boolean test(Traverser<T> toCheck) {
+            public boolean test(final Traverser<T> toCheck) {
                 final Property<String> property = toCheck.get().property(typeResolutionKey);
                 if( !property.isPresent() )
                     return true;

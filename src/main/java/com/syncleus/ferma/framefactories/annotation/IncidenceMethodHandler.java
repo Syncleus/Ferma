@@ -277,7 +277,7 @@ public class IncidenceMethodHandler implements MethodHandler {
                     return thiz.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>>() {
                         @Nullable
                         @Override
-                        public GraphTraversal<?, ?> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
+                        public GraphTraversal<?, ?> apply(@Nullable final GraphTraversal<? extends Vertex, ? extends Vertex> input) {
                             return input.bothE(label);
                         }
                     }).frame(VertexFrame.class);
@@ -285,7 +285,7 @@ public class IncidenceMethodHandler implements MethodHandler {
                     return thiz.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>>() {
                         @Nullable
                         @Override
-                        public GraphTraversal<?, ?> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
+                        public GraphTraversal<?, ?> apply(@Nullable final GraphTraversal<? extends Vertex, ? extends Vertex> input) {
                             return input.inE(label);
                         }
                     }).frame(VertexFrame.class);
@@ -293,7 +293,7 @@ public class IncidenceMethodHandler implements MethodHandler {
                     return thiz.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>>() {
                         @Nullable
                         @Override
-                        public GraphTraversal<?, ?> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
+                        public GraphTraversal<?, ?> apply(@Nullable final GraphTraversal<? extends Vertex, ? extends Vertex> input) {
                             return input.outE(label);
                         }
                     }).frame(VertexFrame.class);
@@ -318,7 +318,7 @@ public class IncidenceMethodHandler implements MethodHandler {
                     return thiz.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>>() {
                         @Nullable
                         @Override
-                        public GraphTraversal<?, ?> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
+                        public GraphTraversal<?, ?> apply(@Nullable final GraphTraversal<? extends Vertex, ? extends Vertex> input) {
                             return resolver.hasType(input.bothE(label), type);
                         }
                     }).frame(type);
@@ -326,7 +326,7 @@ public class IncidenceMethodHandler implements MethodHandler {
                     return thiz.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>>() {
                         @Nullable
                         @Override
-                        public GraphTraversal<?, ?> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
+                        public GraphTraversal<?, ?> apply(@Nullable final GraphTraversal<? extends Vertex, ? extends Vertex> input) {
                             return resolver.hasType(input.inE(label), type);
                         }
                     }).frame(type);
@@ -334,7 +334,7 @@ public class IncidenceMethodHandler implements MethodHandler {
                     return thiz.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>>() {
                         @Nullable
                         @Override
-                        public GraphTraversal<?, ?> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
+                        public GraphTraversal<?, ?> apply(@Nullable final GraphTraversal<? extends Vertex, ? extends Vertex> input) {
                             return resolver.hasType(input.outE(label), type);
                         }
                     }).frame(type);
@@ -358,7 +358,7 @@ public class IncidenceMethodHandler implements MethodHandler {
                     return thiz.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>>() {
                         @Nullable
                         @Override
-                        public GraphTraversal<?, ?> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
+                        public GraphTraversal<?, ?> apply(@Nullable final GraphTraversal<? extends Vertex, ? extends Vertex> input) {
                             return input.bothE(label);
                         }
                     }).next(VertexFrame.class);
@@ -366,7 +366,7 @@ public class IncidenceMethodHandler implements MethodHandler {
                     return thiz.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>>() {
                         @Nullable
                         @Override
-                        public GraphTraversal<?, ?> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
+                        public GraphTraversal<?, ?> apply(@Nullable final GraphTraversal<? extends Vertex, ? extends Vertex> input) {
                             return input.inE(label);
                         }
                     }).next(VertexFrame.class);
@@ -374,7 +374,7 @@ public class IncidenceMethodHandler implements MethodHandler {
                     return thiz.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>>() {
                         @Nullable
                         @Override
-                        public GraphTraversal<?, ?> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
+                        public GraphTraversal<?, ?> apply(@Nullable final GraphTraversal<? extends Vertex, ? extends Vertex> input) {
                             return input.outE(label);
                         }
                     }).next(VertexFrame.class);
@@ -399,7 +399,7 @@ public class IncidenceMethodHandler implements MethodHandler {
                     return thiz.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>>() {
                         @Nullable
                         @Override
-                        public GraphTraversal<?, ?> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
+                        public GraphTraversal<?, ?> apply(@Nullable final GraphTraversal<? extends Vertex, ? extends Vertex> input) {
                             return resolver.hasType(input.bothE(label), type);
                         }
                     }).next(type);
@@ -407,7 +407,7 @@ public class IncidenceMethodHandler implements MethodHandler {
                     return thiz.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>>() {
                         @Nullable
                         @Override
-                        public GraphTraversal<?, ?> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
+                        public GraphTraversal<?, ?> apply(@Nullable final GraphTraversal<? extends Vertex, ? extends Vertex> input) {
                             return resolver.hasType(input.inE(label), type);
                         }
                     }).next(type);
@@ -415,7 +415,7 @@ public class IncidenceMethodHandler implements MethodHandler {
                     return thiz.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>>() {
                         @Nullable
                         @Override
-                        public GraphTraversal<?, ?> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
+                        public GraphTraversal<?, ?> apply(@Nullable final GraphTraversal<? extends Vertex, ? extends Vertex> input) {
                             return resolver.hasType(input.outE(label), type);
                         }
                     }).next(type);

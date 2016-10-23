@@ -55,17 +55,17 @@ public class UntypedTypeResolver implements TypeResolver {
     }
 
     @Override
-    public <P extends Element, T extends Element> GraphTraversal<P, T> hasType(GraphTraversal<P, T> traverser, Class<?> type) {
+    public <P extends Element, T extends Element> GraphTraversal<P, T> hasType(final GraphTraversal<P, T> traverser, final Class<?> type) {
         return traverser.filter(new Predicate<Traverser<T>>() {
             @Override
-            public boolean test(Traverser<T> unused) {
+            public boolean test(final Traverser<T> unused) {
                 return false;
             }
         });
     }
 
     @Override
-    public <P extends Element, T extends Element> GraphTraversal<P, T> hasNotType(GraphTraversal<P, T> traverser, Class<?> type) {
+    public <P extends Element, T extends Element> GraphTraversal<P, T> hasNotType(final GraphTraversal<P, T> traverser, final Class<?> type) {
         return traverser;
     }
 }

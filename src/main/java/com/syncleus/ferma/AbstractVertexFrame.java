@@ -109,10 +109,10 @@ public abstract class AbstractVertexFrame extends AbstractElementFrame implement
     public void unlinkOut(final VertexFrame vertex, final String... labels) {
         if (vertex != null)
         {
-            Iterator<Edge> edges = this.getRawTraversal().outE(labels);
+            final Iterator<Edge> edges = this.getRawTraversal().outE(labels);
             edges.forEachRemaining(new Consumer<Edge>() {
                 @Override
-                public void accept(Edge edge) {
+                public void accept(final Edge edge) {
                     if( edge.outVertex().equals(vertex) )
                         edge.remove();
                 }
@@ -126,10 +126,10 @@ public abstract class AbstractVertexFrame extends AbstractElementFrame implement
     public void unlinkIn(final VertexFrame vertex, final String... labels) {
         if (vertex != null)
         {
-            Iterator<Edge> edges = this.getRawTraversal().inE(labels);
+            final Iterator<Edge> edges = this.getRawTraversal().inE(labels);
             edges.forEachRemaining(new Consumer<Edge>() {
                 @Override
-                public void accept(Edge edge) {
+                public void accept(final Edge edge) {
                     if( edge.inVertex().equals(vertex) )
                         edge.remove();
                 }
@@ -274,11 +274,11 @@ public abstract class AbstractVertexFrame extends AbstractElementFrame implement
     }
 
     @Override
-    public <T extends Traversable<?, ?>> T traverse(Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>> traverser) {
+    public <T extends Traversable<?, ?>> T traverse(final Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>> traverser) {
         return this.getGraph().traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
+            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
                 return traverser.apply(input.V(getElement().id()));
             }
         });

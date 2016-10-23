@@ -40,7 +40,7 @@ public class Person extends AbstractVertexFrame {
         return this.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public GraphTraversal<?, ?> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
+            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversal<? extends Vertex, ? extends Vertex> input) {
                 return input.out("knows");
             }
         }).frame(Person.class);
@@ -50,7 +50,7 @@ public class Person extends AbstractVertexFrame {
         return this.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public GraphTraversal<?, ?> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
+            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversal<? extends Vertex, ? extends Vertex> input) {
                 return input.out("knows");
             }
         }).frameExplicit(Person.class);
@@ -60,7 +60,7 @@ public class Person extends AbstractVertexFrame {
         return this.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public GraphTraversal<?, ?> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
+            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversal<? extends Vertex, ? extends Vertex> input) {
                 return input.outE("knows");
             }
         }).toList(Knows.class);
@@ -70,7 +70,7 @@ public class Person extends AbstractVertexFrame {
         return this.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public GraphTraversal<?, ?> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
+            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversal<? extends Vertex, ? extends Vertex> input) {
                 return input.outE("knows");
             }
         }).toListExplicit(Knows.class);
@@ -88,7 +88,7 @@ public class Person extends AbstractVertexFrame {
         return this.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public GraphTraversal<?, ?> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
+            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversal<? extends Vertex, ? extends Vertex> input) {
                 return input.out("knows");
             }
         }).next(Person.class);
@@ -98,7 +98,7 @@ public class Person extends AbstractVertexFrame {
         return this.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public GraphTraversal<?, ?> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
+            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversal<? extends Vertex, ? extends Vertex> input) {
                 return input.out("knows");
             }
         }).nextExplicit(Person.class);

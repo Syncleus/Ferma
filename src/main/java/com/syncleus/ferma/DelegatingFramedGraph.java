@@ -224,7 +224,7 @@ public class DelegatingFramedGraph<G extends Graph> implements WrappedFramedGrap
         try {
             this.getBaseGraph().close();
         }
-        catch(Exception caught) {
+        catch(final Exception caught) {
             if( caught instanceof  RuntimeException )
                 throw (RuntimeException) caught;
             else
@@ -309,7 +309,7 @@ public class DelegatingFramedGraph<G extends Graph> implements WrappedFramedGrap
     }
 
     @Override
-    public <T> T addFramedVertex(final ClassInitializer<T> initializer, Object... keyValues) {
+    public <T> T addFramedVertex(final ClassInitializer<T> initializer, final Object... keyValues) {
         final T framedVertex = frameNewElement(this.getBaseGraph().addVertex(keyValues), initializer);
         return framedVertex;
     }
@@ -376,7 +376,7 @@ public class DelegatingFramedGraph<G extends Graph> implements WrappedFramedGrap
     }
 
     @Override
-    public <T extends Traversable<?, ?>> T traverse(Function<GraphTraversalSource, GraphTraversal<?, ?>> traverser) {
+    public <T extends Traversable<?, ?>> T traverse(final Function<GraphTraversalSource, GraphTraversal<?, ?>> traverser) {
         return (T) new DefaultTraversable(traverser.apply(this.getBaseGraph().traversal()), this);
     }
 
@@ -386,22 +386,22 @@ public class DelegatingFramedGraph<G extends Graph> implements WrappedFramedGrap
     }
 
     @Override
-    public <T> T getFramedVertex(Class<T> kind, Object id) {
+    public <T> T getFramedVertex(final Class<T> kind, final Object id) {
         return this.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
+            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
                 return input.V(id);
             }
         }).next(kind);
     }
 
     @Override
-    public <T> T getFramedVertexExplicit(Class<T> kind, Object id) {
+    public <T> T getFramedVertexExplicit(final Class<T> kind, final Object id) {
         return this.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
+            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
                 return input.V(id);
             }
         }).nextExplicit(kind);
@@ -409,10 +409,10 @@ public class DelegatingFramedGraph<G extends Graph> implements WrappedFramedGrap
 
     @Override
     public <T> Iterator<? extends T> getFramedVertices(final Class<T> kind) {
-        Traversable<?, T> result = this.<Traversable<?, T>>traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
+        final Traversable<?, T> result = this.<Traversable<?, T>>traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
+            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
                 return input.V();
             }
         });
@@ -424,7 +424,7 @@ public class DelegatingFramedGraph<G extends Graph> implements WrappedFramedGrap
         return this.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
+            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
                 return input.V().has(key, value);
             }
         }).frame(kind);
@@ -435,7 +435,7 @@ public class DelegatingFramedGraph<G extends Graph> implements WrappedFramedGrap
         return this.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
+            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
                 return input.V();
             }
         }).frameExplicit(kind);
@@ -446,7 +446,7 @@ public class DelegatingFramedGraph<G extends Graph> implements WrappedFramedGrap
         return this.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
+            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
                 return input.V().has(key, value);
             }
         }).frameExplicit(kind);
@@ -457,7 +457,7 @@ public class DelegatingFramedGraph<G extends Graph> implements WrappedFramedGrap
         return this.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
+            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
                 return input.E();
             }
         }).frame(kind);
@@ -468,7 +468,7 @@ public class DelegatingFramedGraph<G extends Graph> implements WrappedFramedGrap
         return this.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
+            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
                 return input.E().has(key, value);
             }
         }).frame(kind);
@@ -479,7 +479,7 @@ public class DelegatingFramedGraph<G extends Graph> implements WrappedFramedGrap
         return this.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
+            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
                 return input.E();
             }
         }).frameExplicit(kind);
@@ -490,7 +490,7 @@ public class DelegatingFramedGraph<G extends Graph> implements WrappedFramedGrap
         return this.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
+            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
                 return input.E().has(key, value);
             }
         }).frameExplicit(kind);

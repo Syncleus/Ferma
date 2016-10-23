@@ -58,7 +58,7 @@ public class FramedGraphTest {
         final Person bryn = fg.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
+            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
                 return input.V().has("name", "Bryn");
             }
         }).next(Person.class);
@@ -86,7 +86,7 @@ public class FramedGraphTest {
         final Person bryn = fg.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
+            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
                 return input.V().has("name", "Bryn");
             }
         }).next(Person.class);
@@ -114,7 +114,7 @@ public class FramedGraphTest {
         final Person bryn = fg.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
+            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
                 return input.V().has("name", "Bryn");
             }
         }).nextExplicit(Person.class);
@@ -141,7 +141,7 @@ public class FramedGraphTest {
         final Person bryn = fg.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
+            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
                 return input.V().has("name", "Bryn");
             }
         }).nextExplicit(Person.class);
@@ -159,14 +159,14 @@ public class FramedGraphTest {
         final Graph g = TinkerGraph.open();
         final FramedGraph fg = new DelegatingFramedGraph(g, true, false);
 
-        Person rootPerson = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
+        final Person rootPerson = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
         for (int i = 0; i < 10; i++) {
-            Person person = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
+            final Person person = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
             rootPerson.addKnows(person);
         }
 
         for (int i = 0; i < 5; i++) {
-            Program program = fg.addFramedVertex(Program.DEFAULT_INITIALIZER);
+            final Program program = fg.addFramedVertex(Program.DEFAULT_INITIALIZER);
             program.getElement().addEdge("UNTYPED_EDGE", rootPerson.getElement());
         }
 
@@ -182,17 +182,17 @@ public class FramedGraphTest {
         final Iterator<? extends Person> persons = fg.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
+            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
                 return fg.getTypeResolver().hasType(input.V(), Person.class);
             }
         }).frameExplicit(Person.class);
 
-        List<Person> personList = Lists.newArrayList(persons);
+        final List<Person> personList = Lists.newArrayList(persons);
         assertEquals(11, personList.size());
         // Verify that all found persons have indeed been filtered
         persons.forEachRemaining(new Consumer<Person>() {
             @Override
-            public void accept(Person person) {
+            public void accept(final Person person) {
                 assertEquals(Person.class.getName(), person.getProperty(PolymorphicTypeResolver.TYPE_RESOLUTION_KEY));
             }
         });
@@ -212,14 +212,14 @@ public class FramedGraphTest {
         final Person bryn = fg.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
+            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
                 return input.V().has("name", "Bryn");
             }
         }).next(Person.class);
         final Person julia = fg.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
+            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
                 return input.V().has("name", "Julia");
             }
         }).next(Person.class);
@@ -245,14 +245,14 @@ public class FramedGraphTest {
         final Person bryn = fg.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
+            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
                 return input.V().has("name", "Bryn");
             }
         }).next(Person.class);
         final Person julia = fg.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
+            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
                 return input.V().has("name", "Julia");
             }
         }).next(Person.class);
@@ -278,14 +278,14 @@ public class FramedGraphTest {
         final Person bryn = fg.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
+            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
                 return input.V().has("name", "Bryn");
             }
         }).next(Person.class);
         final Person julia = fg.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
+            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
                 return input.V().has("name", "Julia");
             }
         }).next(Person.class);
@@ -311,14 +311,14 @@ public class FramedGraphTest {
         final Person bryn = fg.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
+            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
                 return input.V().has("name", "Bryn");
             }
         }).next(Person.class);
         final Person julia = fg.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
+            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
                 return input.V().has("name", "Julia");
             }
         }).next(Person.class);
@@ -344,14 +344,14 @@ public class FramedGraphTest {
         final Person bryn = fg.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
+            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
                 return input.V().has("name", "Bryn");
             }
         }).nextExplicit(Person.class);
         final Person julia = fg.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
+            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
                 return input.V().has("name", "Julia");
             }
         }).nextExplicit(Person.class);
@@ -377,14 +377,14 @@ public class FramedGraphTest {
         final Person bryn = fg.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
+            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
                 return input.V().has("name", "Bryn");
             }
         }).nextExplicit(Person.class);
         final Person julia = fg.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
+            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
                 return input.V().has("name", "Julia");
             }
         }).nextExplicit(Person.class);

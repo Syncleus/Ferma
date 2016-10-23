@@ -93,7 +93,7 @@ public abstract class AbstractElementFrame implements ElementFrame {
     }
 
     @Override
-    public void setElement(Element element) {
+    public void setElement(final Element element) {
         this.element = element;
     }
 
@@ -113,10 +113,15 @@ public abstract class AbstractElementFrame implements ElementFrame {
 
     @Override
     public <T> T getProperty(final String name, final Class<T> type) {
+        final Property<T> nameProperty = getElement().property(name);
+        if( !nameProperty.isPresent() )
+            return null;
+        final T nameValue = nameProperty.value();
+
         if (type.isEnum()) {
-            return (T) Enum.valueOf((Class<Enum>) type, getElement().value(name));
+            return (T) Enum.valueOf((Class<Enum>) type, nameValue.toString());
         }
-        return getElement().value(name);
+        return nameValue;
     }
 
     @Override

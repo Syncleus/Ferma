@@ -169,7 +169,7 @@ public class AdjacencyMethodHandler implements MethodHandler {
             return thiz.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?,?>>() {
                 @Nullable
                 @Override
-                public GraphTraversal<?,?> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
+                public GraphTraversal<?,?> apply(@Nullable final GraphTraversal<? extends Vertex, ? extends Vertex> input) {
                     switch(direction) {
                         case IN:
                             return input.in(label);
@@ -198,7 +198,7 @@ public class AdjacencyMethodHandler implements MethodHandler {
             return thiz.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?,?>>() {
                 @Nullable
                 @Override
-                public GraphTraversal<?,?> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
+                public GraphTraversal<?,?> apply(@Nullable final GraphTraversal<? extends Vertex, ? extends Vertex> input) {
                     switch(direction) {
                         case IN:
                             return resolver.hasType(input.in(label), type);
@@ -226,7 +226,7 @@ public class AdjacencyMethodHandler implements MethodHandler {
             return thiz.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?,?>>() {
                 @Nullable
                 @Override
-                public GraphTraversal<?,?> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
+                public GraphTraversal<?,?> apply(@Nullable final GraphTraversal<? extends Vertex, ? extends Vertex> input) {
                     switch(direction) {
                         case IN:
                             return input.in(label);
@@ -255,7 +255,7 @@ public class AdjacencyMethodHandler implements MethodHandler {
             return thiz.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?,?>>() {
                 @Nullable
                 @Override
-                public GraphTraversal<?,?> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
+                public GraphTraversal<?,?> apply(@Nullable final GraphTraversal<? extends Vertex, ? extends Vertex> input) {
                     switch(direction) {
                         case IN:
                             return resolver.hasType(input.in(label), type);
@@ -472,7 +472,7 @@ public class AdjacencyMethodHandler implements MethodHandler {
                     final Iterator<Edge> bothEdges = thiz.getRawTraversal().bothE(label);
                     bothEdges.forEachRemaining(new Consumer<Edge>() {
                         @Override
-                        public void accept(Edge edge) {
+                        public void accept(final Edge edge) {
                             if (null == removeVertex || edge.outVertex().id().equals(removeVertex.getId()) || edge.inVertex().id().equals(removeVertex.getId()))
                                 edge.remove();
                         }
@@ -482,7 +482,7 @@ public class AdjacencyMethodHandler implements MethodHandler {
                     final Iterator<Edge> inEdges = thiz.getRawTraversal().inE(label);
                     inEdges.forEachRemaining(new Consumer<Edge>() {
                         @Override
-                        public void accept(Edge edge) {
+                        public void accept(final Edge edge) {
                             if (null == removeVertex || edge.outVertex().id().equals(removeVertex.getId()))
                                 edge.remove();
                         }
@@ -491,7 +491,7 @@ public class AdjacencyMethodHandler implements MethodHandler {
                     final Iterator<Edge> outEdges = thiz.getRawTraversal().outE(label);
                     outEdges.forEachRemaining(new Consumer<Edge>() {
                         @Override
-                        public void accept(Edge edge) {
+                        public void accept(final Edge edge) {
                             if (null == removeVertex || edge.inVertex().id().equals(removeVertex.getId()))
                                 edge.remove();
                         }

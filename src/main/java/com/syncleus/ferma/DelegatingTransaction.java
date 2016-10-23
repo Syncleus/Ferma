@@ -65,12 +65,12 @@ public class DelegatingTransaction implements WrappedTransaction {
     }
 
     @Override
-    public void addTransactionListener(Consumer<Transaction.Status> listener) {
+    public void addTransactionListener(final Consumer<Transaction.Status> listener) {
         this.delegate.addTransactionListener(listener);
     }
 
     @Override
-    public void removeTransactionListener(Consumer<Transaction.Status> listener) {
+    public void removeTransactionListener(final Consumer<Transaction.Status> listener) {
         this.delegate.removeTransactionListener(listener);
     }
 

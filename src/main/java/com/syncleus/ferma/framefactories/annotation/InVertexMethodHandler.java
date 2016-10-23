@@ -70,7 +70,7 @@ public class InVertexMethodHandler implements MethodHandler {
             return thiz.traverse(new Function<GraphTraversal<? extends Edge, ? extends Edge>, GraphTraversal<?, ?>>() {
                 @Nullable
                 @Override
-                public GraphTraversal<?, ?> apply(@Nullable GraphTraversal<? extends Edge, ? extends Edge> input) {
+                public GraphTraversal<?, ?> apply(@Nullable final GraphTraversal<? extends Edge, ? extends Edge> input) {
                     return input.inV();
                 }
             }).next(method.getReturnType());

@@ -38,7 +38,7 @@ public class AbstractElementFrameTest {
     @Before
     public void init() {
         MockitoAnnotations.initMocks(this);
-        Graph g = TinkerGraph.open();
+        final Graph g = TinkerGraph.open();
         fg = new DelegatingFramedGraph(g);
         p1 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
         final Person p2 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
@@ -93,7 +93,7 @@ public class AbstractElementFrameTest {
         final Person person = fg.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
+            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
                 return input.V(p1.<Long>getId());
             }
         }).next(Person.class);
@@ -105,7 +105,7 @@ public class AbstractElementFrameTest {
         final Knows knows = fg.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
+            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
                 return input.E(e1.<Long>getId());
             }
         }).next(Knows.class);
@@ -117,7 +117,7 @@ public class AbstractElementFrameTest {
         final Person person = fg.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
+            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
                 return input.V(p1.<Long>getId());
             }
         }).nextExplicit(Person.class);
@@ -129,7 +129,7 @@ public class AbstractElementFrameTest {
         final Knows knows = fg.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
+            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
                 return input.E(e1.<Long>getId());
             }
         }).nextExplicit(Knows.class);

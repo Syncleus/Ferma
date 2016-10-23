@@ -108,51 +108,35 @@ public abstract class AbstractVertexFrame extends AbstractElementFrame implement
     @Override
     public void unlinkOut(final VertexFrame vertex, final String... labels) {
         if (vertex != null)
-            this.traverse(new VoidFunction<GraphTraversal<? extends Vertex, ? extends Vertex>>() {
+        {
+            Iterator<Edge> edges = this.getRawTraversal().outE(labels);
+            edges.forEachRemaining(new Consumer<Edge>() {
                 @Override
-                public void apply(GraphTraversal<? extends Vertex, ? extends Vertex> input) {
-                    Iterator<Edge> edges = input.outE(labels);
-                    edges.forEachRemaining(new Consumer<Edge>() {
-                        @Override
-                        public void accept(Edge edge) {
-                            if( edge.outVertex().equals(vertex) )
-                                edge.remove();
-                        }
-                    });
+                public void accept(Edge edge) {
+                    if( edge.outVertex().equals(vertex) )
+                        edge.remove();
                 }
             });
+        }
         else
-            this.traverse(new VoidFunction<GraphTraversal<? extends Vertex, ? extends Vertex>>() {
-                @Override
-                public void apply(GraphTraversal<? extends Vertex, ? extends Vertex> input) {
-                    input.outE(labels).remove();
-                }
-            });
+            this.getRawTraversal().outE(labels).remove();
     }
 
     @Override
     public void unlinkIn(final VertexFrame vertex, final String... labels) {
         if (vertex != null)
-            this.traverse(new VoidFunction<GraphTraversal<? extends Vertex, ? extends Vertex>>() {
+        {
+            Iterator<Edge> edges = this.getRawTraversal().inE(labels);
+            edges.forEachRemaining(new Consumer<Edge>() {
                 @Override
-                public void apply(GraphTraversal<? extends Vertex, ? extends Vertex> input) {
-                    Iterator<Edge> edges = input.inE(labels);
-                    edges.forEachRemaining(new Consumer<Edge>() {
-                        @Override
-                        public void accept(Edge edge) {
-                            if( edge.inVertex().equals(vertex) )
-                                edge.remove();
-                        }
-                    });
+                public void accept(Edge edge) {
+                    if( edge.inVertex().equals(vertex) )
+                        edge.remove();
                 }
             });
+        }
         else
-            this.traverse(new VoidFunction<GraphTraversal<? extends Vertex, ? extends Vertex>>() {
-                @Override
-                public void apply(GraphTraversal<? extends Vertex, ? extends Vertex> input) {
-                    input.inE(labels).remove();
-                }
-            });
+            this.getRawTraversal().inE(labels).remove();
     }
 
     @Override
@@ -290,111 +274,18 @@ public abstract class AbstractVertexFrame extends AbstractElementFrame implement
     }
 
     @Override
-    public <T> Iterable<? extends T> traverse(final Function<GraphTraversal<? extends Vertex, ? extends Vertex>, Iterator<? extends Element>> traverser, final ClassInitializer<T> initializer) {
-        return this.getGraph().traverse(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
+    public <T extends Traversable<?, ?>> T traverse(Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>> traverser) {
+        return this.getGraph().traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
-                return traverser.apply(input.V(getElement().id()));
-            }
-        }, initializer);
-    }
-
-    @Override
-    public <T> Iterable<? extends T> traverse(Function<GraphTraversal<? extends Vertex, ? extends Vertex>, Iterator<? extends Element>> traverser, Class<T> kind, boolean isNew) {
-        return this.getGraph().traverse(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
-            @Nullable
-            @Override
-            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
-                return traverser.apply(input.V(getElement().id()));
-            }
-        }, kind, isNew);
-    }
-
-    @Override
-    public <T> Iterable<? extends T> traverseExplicit(Function<GraphTraversal<? extends Vertex, ? extends Vertex>, Iterator<? extends Element>> traverser, ClassInitializer<T> initializer) {
-        return this.getGraph().traverseExplicit(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
-            @Nullable
-            @Override
-            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
-                return traverser.apply(input.V(getElement().id()));
-            }
-        }, initializer);
-    }
-
-    @Override
-    public <T> Iterable<? extends T> traverseExplicit(Function<GraphTraversal<? extends Vertex, ? extends Vertex>, Iterator<? extends Element>> traverser, Class<T> kind, boolean isNew) {
-        return this.getGraph().traverseExplicit(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
-            @Nullable
-            @Override
-            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
-                return traverser.apply(input.V(getElement().id()));
-            }
-        }, kind, isNew);
-    }
-
-    @Override
-    public <T> T traverseSingleton(Function<GraphTraversal<? extends Vertex, ? extends Vertex>, Iterator<? extends Element>> traverser, ClassInitializer<T> initializer) {
-        return this.getGraph().traverseSingleton(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
-            @Nullable
-            @Override
-            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
-                return traverser.apply(input.V(getElement().id()));
-            }
-        }, initializer);
-    }
-
-    @Override
-    public <T> T traverseSingleton(Function<GraphTraversal<? extends Vertex, ? extends Vertex>, Iterator<? extends Element>> traverser, Class<T> kind, boolean isNew) {
-        return this.getGraph().traverseSingleton(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
-            @Nullable
-            @Override
-            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
-                return traverser.apply(input.V(getElement().id()));
-            }
-        }, kind, isNew);
-    }
-
-    @Override
-    public <T> T traverseSingletonExplicit(Function<GraphTraversal<? extends Vertex, ? extends Vertex>, Iterator<? extends Element>> traverser, ClassInitializer<T> initializer) {
-        return this.getGraph().traverseSingletonExplicit(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
-            @Nullable
-            @Override
-            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
-                return traverser.apply(input.V(getElement().id()));
-            }
-        }, initializer);
-    }
-
-    @Override
-    public <T> T traverseSingletonExplicit(Function<GraphTraversal<? extends Vertex, ? extends Vertex>, Iterator<? extends Element>> traverser, Class<T> kind, boolean isNew) {
-        return this.getGraph().traverseSingletonExplicit(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
-            @Nullable
-            @Override
-            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
-                return traverser.apply(input.V(getElement().id()));
-            }
-        }, kind, isNew);
-    }
-
-    @Override
-    public void traverse(VoidFunction<GraphTraversal<? extends Vertex, ? extends Vertex>> traverser) {
-        this.getGraph().traverse(new VoidFunction<GraphTraversalSource>() {
-            @Override
-            public void apply(GraphTraversalSource input) {
-                traverser.apply(input.V(getElement().id()));
-            }
-        });
-    }
-
-    @Override
-    public <T> T traverse(Function<GraphTraversal<? extends Vertex, ? extends Vertex>, T> traverser) {
-        return this.getGraph().traverse(new Function<GraphTraversalSource, T>() {
-            @Nullable
-            @Override
-            public T apply(@Nullable GraphTraversalSource input) {
+            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
                 return traverser.apply(input.V(getElement().id()));
             }
         });
+    }
+
+    @Override
+    public GraphTraversal<? extends Vertex, ? extends Vertex> getRawTraversal() {
+        return this.getGraph().getRawTraversal().V(getElement().id());
     }
 }

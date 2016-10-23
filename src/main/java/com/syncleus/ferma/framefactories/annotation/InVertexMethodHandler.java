@@ -67,13 +67,13 @@ public class InVertexMethodHandler implements MethodHandler {
 
         @RuntimeType
         public static Object getVertex(@This final EdgeFrame thiz, @Origin final Method method) {
-            return thiz.traverseSingleton(new Function<GraphTraversal<? extends Edge, ? extends Edge>, Iterator<? extends Element>>() {
+            return thiz.traverse(new Function<GraphTraversal<? extends Edge, ? extends Edge>, GraphTraversal<?, ?>>() {
                 @Nullable
                 @Override
-                public Iterator<? extends Element> apply(@Nullable GraphTraversal<? extends Edge, ? extends Edge> input) {
+                public GraphTraversal<?, ?> apply(@Nullable GraphTraversal<? extends Edge, ? extends Edge> input) {
                     return input.inV();
                 }
-            }, method.getReturnType(), false);
+            }).next(method.getReturnType());
         }
     }
 }

@@ -56,23 +56,7 @@ public interface EdgeFrame extends ElementFrame {
      */
     <T> T reframeExplicit(Class<T> kind);
 
-    <T> Iterable<? extends T> traverse(final Function<GraphTraversal<? extends Edge, ? extends Edge>, Iterator<? extends Element>> traverser, final ClassInitializer<T> initializer);
+    <T extends Traversable<?, ?>> T traverse(Function<GraphTraversal<? extends Edge, ? extends Edge>, GraphTraversal<?, ?>> traverser);
 
-    <T> Iterable<? extends T> traverse(final Function<GraphTraversal<? extends Edge, ? extends Edge>, Iterator<? extends Element>> traverser, final Class<T> kind, boolean isNew);
-
-    <T> Iterable<? extends T> traverseExplicit(final Function<GraphTraversal<? extends Edge, ? extends Edge>, Iterator<? extends Element>> traverser, final ClassInitializer<T> initializer);
-
-    <T> Iterable<? extends T> traverseExplicit(final Function<GraphTraversal<? extends Edge, ? extends Edge>, Iterator<? extends Element>> traverser, final Class<T> kind, boolean isNew);
-
-    <T> T traverseSingleton(final Function<GraphTraversal<? extends Edge, ? extends Edge>, Iterator<? extends Element>> traverser, final ClassInitializer<T> initializer);
-
-    <T> T traverseSingleton(final Function<GraphTraversal<? extends Edge, ? extends Edge>, Iterator<? extends Element>> traverser, final Class<T> kind, boolean isNew);
-
-    <T> T traverseSingletonExplicit(final Function<GraphTraversal<? extends Edge, ? extends Edge>, Iterator<? extends Element>> traverser, final ClassInitializer<T> initializer);
-
-    <T> T traverseSingletonExplicit(final Function<GraphTraversal<? extends Edge, ? extends Edge>, Iterator<? extends Element>> traverser, final Class<T> kind, boolean isNew);
-
-    void traverse(final VoidFunction<GraphTraversal<? extends Edge, ? extends Edge>> traverser);
-
-    <T> T traverse(final Function<GraphTraversal<? extends Edge, ? extends Edge>, T> traverser);
+    GraphTraversal<? extends Edge, ? extends Edge> getRawTraversal();
 }

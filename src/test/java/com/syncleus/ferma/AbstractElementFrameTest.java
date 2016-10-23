@@ -16,6 +16,7 @@
 package com.syncleus.ferma;
 
 import com.google.common.base.Function;
+import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
 import org.apache.tinkerpop.gremlin.structure.Element;
 import org.apache.tinkerpop.gremlin.structure.Graph;
@@ -77,86 +78,68 @@ public class AbstractElementFrameTest {
 
     @Test
     public void testV() {
-        final Long count = fg.traverse(new Function<GraphTraversalSource, Long>() {
-            @Nullable
-            @Override
-            public Long apply(@Nullable GraphTraversalSource input) {
-                return input.V().count().next();
-            }
-        });
+        final Long count = fg.getRawTraversal().V().count().next();
         Assert.assertEquals((Long) 2L, count);
     }
 
     @Test
     public void testE() {
-        final Long count = fg.traverse(new Function<GraphTraversalSource, Long>() {
-            @Nullable
-            @Override
-            public Long apply(@Nullable GraphTraversalSource input) {
-                return input.E().count().next();
-            }
-        });
+        final Long count = fg.getRawTraversal().E().count().next();
         Assert.assertEquals((Long) 1L, count);
     }
 
     @Test
     public void testVById() {
-        final Person person = fg.traverseSingleton(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
+        final Person person = fg.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
+            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
                 return input.V(p1.<Long>getId());
             }
-        }, Person.class, false);
+        }).next(Person.class);
         Assert.assertEquals(p1, person);
     }
 
     @Test
     public void testEById() {
-        final Knows knows = fg.traverseSingleton(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
+        final Knows knows = fg.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
+            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
                 return input.E(e1.<Long>getId());
             }
-        }, Knows.class, false);
+        }).next(Knows.class);
         Assert.assertEquals(e1, knows);
     }
 
     @Test
     public void testVByIdExplicit() {
-        final Person person = fg.traverseSingletonExplicit(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
+        final Person person = fg.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
+            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
                 return input.V(p1.<Long>getId());
             }
-        }, Person.class, false);
+        }).nextExplicit(Person.class);
         Assert.assertEquals(p1, person);
     }
 
     @Test
     public void testEByIdExplicit() {
-        final Knows knows = fg.traverseSingletonExplicit(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
+        final Knows knows = fg.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
+            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
                 return input.E(e1.<Long>getId());
             }
-        }, Knows.class, false);
+        }).nextExplicit(Knows.class);
         Assert.assertEquals(e1, knows);
     }
 
     @Test
     public void testRemove() {
         p1.remove();
-        final Long count = fg.traverse(new Function<GraphTraversalSource, Long>() {
-            @Nullable
-            @Override
-            public Long apply(@Nullable GraphTraversalSource input) {
-                return input.V().count().next();
-            }
-        });
+        final Long count = fg.getRawTraversal().V().count().next();
         Assert.assertEquals((Long) 1L, count);
     }
 
@@ -174,13 +157,7 @@ public class AbstractElementFrameTest {
 
     @Test
     public void testVNull() {
-        final Long count = fg.traverse(new Function<GraphTraversalSource, Long>() {
-            @Nullable
-            @Override
-            public Long apply(@Nullable GraphTraversalSource input) {
-                return input.V("noId").count().next();
-            }
-        });
+        final Long count = fg.getRawTraversal().V("noId").count().next();
         Assert.assertEquals((Long) 0L, count);
     }
 

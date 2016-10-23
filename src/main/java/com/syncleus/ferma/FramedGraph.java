@@ -18,6 +18,7 @@ package com.syncleus.ferma;
 import com.google.common.base.Function;
 import com.syncleus.ferma.framefactories.FrameFactory;
 import com.syncleus.ferma.typeresolvers.TypeResolver;
+import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
 import org.apache.tinkerpop.gremlin.structure.*;
 import java.io.IOException;
@@ -192,45 +193,29 @@ public interface FramedGraph {
      */
     TEdge addFramedEdgeExplicit(final VertexFrame source, final VertexFrame destination, final String label);
 
-    <T> Iterable<? extends T> traverse(final Function<GraphTraversalSource, Iterator<? extends Element>> traverser, final ClassInitializer<T> initializer);
+    <T extends Traversable<?, ?>> T traverse(Function<GraphTraversalSource, GraphTraversal<?, ?>> traverser);
 
-    <T> Iterable<? extends T> traverse(final Function<GraphTraversalSource, Iterator<? extends Element>> traverser, final Class<T> kind, boolean isNew);
-
-    <T> Iterable<? extends T> traverseExplicit(final Function<GraphTraversalSource, Iterator<? extends Element>> traverser, final ClassInitializer<T> initializer);
-
-    <T> Iterable<? extends T> traverseExplicit(final Function<GraphTraversalSource, Iterator<? extends Element>> traverser, final Class<T> kind, boolean isNew);
-
-    <T> T traverseSingleton(final Function<GraphTraversalSource, Iterator<? extends Element>> traverser, final ClassInitializer<T> initializer);
-
-    <T> T traverseSingleton(final Function<GraphTraversalSource, Iterator<? extends Element>> traverser, final Class<T> kind, boolean isNew);
-
-    <T> T traverseSingletonExplicit(final Function<GraphTraversalSource, Iterator<? extends Element>> traverser, final ClassInitializer<T> initializer);
-
-    <T> T traverseSingletonExplicit(final Function<GraphTraversalSource, Iterator<? extends Element>> traverser, final Class<T> kind, boolean isNew);
-
-    void traverse(final VoidFunction<GraphTraversalSource> traverser);
-
-    <T> T traverse(final Function<GraphTraversalSource, T> traverser);
+    GraphTraversalSource getRawTraversal();
 
     <T> T getFramedVertex(Class<T> kind, Object id);
 
     <T> T getFramedVertexExplicit(Class<T> kind, Object id);
 
-    <T> Iterable<? extends T> getFramedVertices(final Class<T> kind);
+    <T> Iterator<? extends T> getFramedVertices(final Class<T> kind);
 
-    <T> Iterable<? extends T> getFramedVertices(final String key, final Object value, final Class<T> kind);
+    <T> Iterator<? extends T> getFramedVertices(final String key, final Object value, final Class<T> kind);
 
-    <T> Iterable<? extends T> getFramedVerticesExplicit(final Class<T> kind);
+    <T> Iterator<? extends T> getFramedVerticesExplicit(final Class<T> kind);
 
-    <T> Iterable<? extends T> getFramedVerticesExplicit(final String key, final Object value, final Class<T> kind);
+    <T> Iterator<? extends T> getFramedVerticesExplicit(final String key, final Object value, final Class<T> kind);
 
-    <T> Iterable<? extends T> getFramedEdges(final Class<T> kind);
+    <T> Iterator<? extends T> getFramedEdges(final Class<T> kind);
 
-    <T> Iterable<? extends T> getFramedEdges(final String key, final Object value, final Class<T> kind);
+    <T> Iterator<? extends T> getFramedEdges(final String key, final Object value, final Class<T> kind);
 
-    <T> Iterable<? extends T> getFramedEdgesExplicit(final Class<T> kind);
+    <T> Iterator<? extends T> getFramedEdgesExplicit(final Class<T> kind);
 
-    <T> Iterable<? extends T> getFramedEdgesExplicit(final String key, final Object value, final Class<T> kind);
+    <T> Iterator<? extends T> getFramedEdgesExplicit(final String key, final Object value, final Class<T> kind);
 
     <T> Iterator<? extends T> frame(Iterator<? extends Element> pipeline, final Class<T> kind);
 

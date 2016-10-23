@@ -37,48 +37,43 @@ public class Person extends AbstractVertexFrame {
     }
 
     public Iterator<? extends Person> getKnows() {
-
-        return this.<Person>traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, Iterator<? extends Element>>() {
+        return this.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public Iterator<? extends Element> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
+            public GraphTraversal<?, ?> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
                 return input.out("knows");
             }
-        }, Person.class, false).iterator();
+        }).frame(Person.class);
     }
 
     public Iterator<? extends Person> getKnowsExplicit() {
-        return this.<Person>traverseExplicit(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, Iterator<? extends Element>>() {
+        return this.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public Iterator<? extends Element> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
+            public GraphTraversal<?, ?> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
                 return input.out("knows");
             }
-        }, Person.class, false).iterator();
+        }).frameExplicit(Person.class);
     }
 
     public List<? extends Knows> getKnowsList() {
-        final Iterator<? extends Knows> edges = this.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, Iterator<? extends Element>>() {
+        return this.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public Iterator<? extends Element> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
+            public GraphTraversal<?, ?> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
                 return input.outE("knows");
             }
-        }, Knows.class, false).iterator();
-
-        return Lists.<Knows>newArrayList(edges);
+        }).toList(Knows.class);
     }
 
     public List<? extends Knows> getKnowsListExplicit() {
-        final Iterator<? extends Knows> edges = this.traverseExplicit(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, Iterator<? extends Element>>() {
+        return this.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public Iterator<? extends Element> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
+            public GraphTraversal<?, ?> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
                 return input.outE("knows");
             }
-        }, Knows.class, false).iterator();
-
-        return Lists.<Knows>newArrayList(edges);
+        }).toListExplicit(Knows.class);
     }
 
     public List<? extends Person> getKnowsCollectionVertices() {
@@ -90,23 +85,23 @@ public class Person extends AbstractVertexFrame {
     }
 
     public Person getFirst() {
-        return this.<Person>traverseSingleton(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, Iterator<? extends Element>>() {
+        return this.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public Iterator<? extends Element> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
+            public GraphTraversal<?, ?> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
                 return input.out("knows");
             }
-        }, Person.class, false);
+        }).next(Person.class);
     }
 
     public Person getFirstExplicit() {
-        return this.<Person>traverseSingletonExplicit(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, Iterator<? extends Element>>() {
+        return this.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public Iterator<? extends Element> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
+            public GraphTraversal<?, ?> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
                 return input.out("knows");
             }
-        }, Person.class, false);
+        }).nextExplicit(Person.class);
     }
 
     public Knows addKnows(final Person friend) {

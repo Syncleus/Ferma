@@ -266,7 +266,7 @@ public class IncidenceMethodHandler implements MethodHandler {
     public static final class GetEdgesDefaultInterceptor {
 
         @RuntimeType
-        public static Iterable getEdges(@This final VertexFrame thiz, @Origin final Method method) {
+        public static Iterator getEdges(@This final VertexFrame thiz, @Origin final Method method) {
             assert thiz instanceof CachesReflection;
             final Incidence annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Incidence.class);
             final Direction direction = annotation.direction();
@@ -274,29 +274,29 @@ public class IncidenceMethodHandler implements MethodHandler {
 
             switch (direction) {
                 case BOTH:
-                    return thiz.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, Iterator<? extends Element>>() {
+                    return thiz.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>>() {
                         @Nullable
                         @Override
-                        public Iterator<? extends Element> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
+                        public GraphTraversal<?, ?> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
                             return input.bothE(label);
                         }
-                    }, VertexFrame.class, false);
+                    }).frame(VertexFrame.class);
                 case IN:
-                    return thiz.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, Iterator<? extends Element>>() {
+                    return thiz.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>>() {
                         @Nullable
                         @Override
-                        public Iterator<? extends Element> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
+                        public GraphTraversal<?, ?> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
                             return input.inE(label);
                         }
-                    }, VertexFrame.class, false);
+                    }).frame(VertexFrame.class);
                 case OUT:
-                    return thiz.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, Iterator<? extends Element>>() {
+                    return thiz.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>>() {
                         @Nullable
                         @Override
-                        public Iterator<? extends Element> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
+                        public GraphTraversal<?, ?> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
                             return input.outE(label);
                         }
-                    }, VertexFrame.class, false);
+                    }).frame(VertexFrame.class);
                 default:
                     throw new IllegalStateException(method.getName() + " is annotated with a direction other than BOTH, IN, or OUT.");
             }
@@ -306,7 +306,7 @@ public class IncidenceMethodHandler implements MethodHandler {
     public static final class GetEdgesByTypeInterceptor {
 
         @RuntimeType
-        public static Iterable getEdges(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final Class type) {
+        public static Iterator getEdges(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final Class type) {
             assert thiz instanceof CachesReflection;
             final Incidence annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Incidence.class);
             final Direction direction = annotation.direction();
@@ -315,29 +315,29 @@ public class IncidenceMethodHandler implements MethodHandler {
 
             switch (direction) {
                 case BOTH:
-                    return thiz.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, Iterator<? extends Element>>() {
+                    return thiz.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>>() {
                         @Nullable
                         @Override
-                        public Iterator<? extends Element> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
+                        public GraphTraversal<?, ?> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
                             return resolver.hasType(input.bothE(label), type);
                         }
-                    }, type, false);
+                    }).frame(type);
                 case IN:
-                    return thiz.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, Iterator<? extends Element>>() {
+                    return thiz.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>>() {
                         @Nullable
                         @Override
-                        public Iterator<? extends Element> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
+                        public GraphTraversal<?, ?> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
                             return resolver.hasType(input.inE(label), type);
                         }
-                    }, type, false);
+                    }).frame(type);
                 case OUT:
-                    return thiz.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, Iterator<? extends Element>>() {
+                    return thiz.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>>() {
                         @Nullable
                         @Override
-                        public Iterator<? extends Element> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
+                        public GraphTraversal<?, ?> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
                             return resolver.hasType(input.outE(label), type);
                         }
-                    }, type, false);
+                    }).frame(type);
                 default:
                     throw new IllegalStateException(method.getName() + " is annotated with a direction other than BOTH, IN, or OUT.");
             }
@@ -355,29 +355,29 @@ public class IncidenceMethodHandler implements MethodHandler {
 
             switch (direction) {
                 case BOTH:
-                    return thiz.traverseSingleton(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, Iterator<? extends Element>>() {
+                    return thiz.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>>() {
                         @Nullable
                         @Override
-                        public Iterator<? extends Element> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
+                        public GraphTraversal<?, ?> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
                             return input.bothE(label);
                         }
-                    }, VertexFrame.class, false);
+                    }).next(VertexFrame.class);
                 case IN:
-                    return thiz.traverseSingleton(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, Iterator<? extends Element>>() {
+                    return thiz.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>>() {
                         @Nullable
                         @Override
-                        public Iterator<? extends Element> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
+                        public GraphTraversal<?, ?> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
                             return input.inE(label);
                         }
-                    }, VertexFrame.class, false);
+                    }).next(VertexFrame.class);
                 case OUT:
-                    return thiz.traverseSingleton(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, Iterator<? extends Element>>() {
+                    return thiz.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>>() {
                         @Nullable
                         @Override
-                        public Iterator<? extends Element> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
+                        public GraphTraversal<?, ?> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
                             return input.outE(label);
                         }
-                    }, VertexFrame.class, false);
+                    }).next(VertexFrame.class);
                 default:
                     throw new IllegalStateException(method.getName() + " is annotated with a direction other than BOTH, IN, or OUT.");
             }
@@ -396,29 +396,29 @@ public class IncidenceMethodHandler implements MethodHandler {
 
             switch (direction) {
                 case BOTH:
-                    return thiz.traverseSingleton(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, Iterator<? extends Element>>() {
+                    return thiz.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>>() {
                         @Nullable
                         @Override
-                        public Iterator<? extends Element> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
+                        public GraphTraversal<?, ?> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
                             return resolver.hasType(input.bothE(label), type);
                         }
-                    }, type, false);
+                    }).next(type);
                 case IN:
-                    return thiz.traverseSingleton(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, Iterator<? extends Element>>() {
+                    return thiz.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>>() {
                         @Nullable
                         @Override
-                        public Iterator<? extends Element> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
+                        public GraphTraversal<?, ?> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
                             return resolver.hasType(input.inE(label), type);
                         }
-                    }, type, false);
+                    }).next(type);
                 case OUT:
-                    return thiz.traverseSingleton(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, Iterator<? extends Element>>() {
+                    return thiz.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>>() {
                         @Nullable
                         @Override
-                        public Iterator<? extends Element> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
+                        public GraphTraversal<?, ?> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
                             return resolver.hasType(input.outE(label), type);
                         }
-                    }, type, false);
+                    }).next(type);
                 default:
                     throw new IllegalStateException(method.getName() + " is annotated with a direction other than BOTH, IN, or OUT.");
             }

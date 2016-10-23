@@ -18,8 +18,11 @@ package com.syncleus.ferma;
 import static org.junit.Assert.assertEquals;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Consumer;
+
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
+import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
 import org.apache.tinkerpop.gremlin.structure.Element;
 import org.apache.tinkerpop.gremlin.structure.Graph;
@@ -52,25 +55,19 @@ public class FramedGraphTest {
         final Knows knows = p1.addKnows(p2);
         knows.setYears(15);
 
-        final Person bryn = fg.traverseSingleton(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
+        final Person bryn = fg.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
+            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
                 return input.V().has("name", "Bryn");
             }
-        }, Person.class, false);
+        }).next(Person.class);
 
 
         Assert.assertEquals("Bryn", bryn.getName());
         Assert.assertEquals(15, bryn.getKnowsList().get(0).getYears());
 
-        final Long knowsCount = fg.traverse(new Function<GraphTraversalSource, Long>() {
-            @Nullable
-            @Override
-            public Long apply(@Nullable GraphTraversalSource input) {
-                return input.V().has("name", "Julia").bothE().properties("years").aggregate("test").cap("test").count().next();
-            }
-        });
+        final Long knowsCount = fg.getRawTraversal().V().has("name", "Julia").bothE().properties("years").aggregate("test").cap("test").count().next();
         Assert.assertEquals((Long) 1L, knowsCount);
     }
 
@@ -86,25 +83,19 @@ public class FramedGraphTest {
         final Knows knows = p1.addKnows(p2);
         knows.setYears(15);
 
-        final Person bryn = fg.traverseSingleton(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
+        final Person bryn = fg.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
+            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
                 return input.V().has("name", "Bryn");
             }
-        }, Person.class, false);
+        }).next(Person.class);
 
 
         Assert.assertEquals("Bryn", bryn.getName());
         Assert.assertEquals(15, bryn.getKnowsList().get(0).getYears());
 
-        final Long knowsCount = fg.traverse(new Function<GraphTraversalSource, Long>() {
-            @Nullable
-            @Override
-            public Long apply(@Nullable GraphTraversalSource input) {
-                return input.V().has("name", "Julia").bothE().properties("years").aggregate("test").cap("test").count().next();
-            }
-        });
+        final Long knowsCount = fg.getRawTraversal().V().has("name", "Julia").bothE().properties("years").aggregate("test").cap("test").count().next();
         Assert.assertEquals((Long) 1L, knowsCount);
     }
 
@@ -120,24 +111,18 @@ public class FramedGraphTest {
         final Knows knows = p1.addKnowsExplicit(p2);
         knows.setYears(15);
 
-        final Person bryn = fg.traverseSingletonExplicit(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
+        final Person bryn = fg.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
+            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
                 return input.V().has("name", "Bryn");
             }
-        }, Person.class, false);
+        }).nextExplicit(Person.class);
 
 
         Assert.assertEquals("Bryn", bryn.getName());
         Assert.assertEquals(15, bryn.getKnowsListExplicit().get(0).getYears());
-        final Long knowsCount = fg.traverse(new Function<GraphTraversalSource, Long>() {
-            @Nullable
-            @Override
-            public Long apply(@Nullable GraphTraversalSource input) {
-                return input.V().has("name", "Julia").bothE().properties("years").aggregate("test").cap("test").count().next();
-            }
-        });
+        final Long knowsCount = fg.getRawTraversal().V().has("name", "Julia").bothE().properties("years").aggregate("test").cap("test").count().next();
         Assert.assertEquals((Long) 1L, knowsCount);
     }
 
@@ -153,25 +138,19 @@ public class FramedGraphTest {
         final Knows knows = p1.addKnowsExplicit(p2);
         knows.setYears(15);
 
-        final Person bryn = fg.traverseSingletonExplicit(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
+        final Person bryn = fg.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
+            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
                 return input.V().has("name", "Bryn");
             }
-        }, Person.class, false);
+        }).nextExplicit(Person.class);
 
 
         Assert.assertEquals("Bryn", bryn.getName());
         Assert.assertEquals(15, bryn.getKnowsListExplicit().get(0).getYears());
 
-        final Long knowsCount = fg.traverse(new Function<GraphTraversalSource, Long>() {
-            @Nullable
-            @Override
-            public Long apply(@Nullable GraphTraversalSource input) {
-                return input.V().has("name", "Julia").bothE().properties("years").aggregate("test").cap("test").count().next();
-            }
-        });
+        final Long knowsCount = fg.getRawTraversal().V().has("name", "Julia").bothE().properties("years").aggregate("test").cap("test").count().next();
         Assert.assertEquals((Long) 1L, knowsCount);
     }
 
@@ -191,53 +170,32 @@ public class FramedGraphTest {
             program.getElement().addEdge("UNTYPED_EDGE", rootPerson.getElement());
         }
 
-        final Long hasNotKnowsCount = fg.traverse(new Function<GraphTraversalSource, Long>() {
-            @Nullable
-            @Override
-            public Long apply(@Nullable GraphTraversalSource input) {
-                return fg.getTypeResolver().hasNotType(input.E(), Knows.class).count().next();
-            }
-        });
-        final Long hasKnowsCount = fg.traverse(new Function<GraphTraversalSource, Long>() {
-            @Nullable
-            @Override
-            public Long apply(@Nullable GraphTraversalSource input) {
-                return fg.getTypeResolver().hasType(input.E(), Knows.class).count().next();
-            }
-        });
-        final Long hasNotPersonCount = fg.traverse(new Function<GraphTraversalSource, Long>() {
-            @Nullable
-            @Override
-            public Long apply(@Nullable GraphTraversalSource input) {
-                return fg.getTypeResolver().hasNotType(input.V(), Person.class).count().next();
-            }
-        });
-        final Long noPersonCount = fg.traverse(new Function<GraphTraversalSource, Long>() {
-            @Nullable
-            @Override
-            public Long apply(@Nullable GraphTraversalSource input) {
-                return fg.getTypeResolver().hasType(fg.getTypeResolver().hasNotType(input.V(), Person.class), Person.class).count().next();
-            }
-        });
+        final Long hasNotKnowsCount = fg.getTypeResolver().hasNotType(fg.getRawTraversal().E(), Knows.class).count().next();
+        final Long hasKnowsCount = fg.getTypeResolver().hasType(fg.getRawTraversal().E(), Knows.class).count().next();
+        final Long hasNotPersonCount = fg.getTypeResolver().hasNotType(fg.getRawTraversal().V(), Person.class).count().next();
+        final Long noPersonCount = fg.getTypeResolver().hasType(fg.getTypeResolver().hasNotType(fg.getRawTraversal().V(), Person.class), Person.class).count().next();
         assertEquals((Long) 5L, hasNotKnowsCount);
         assertEquals((Long) 10L, hasKnowsCount);
         assertEquals((Long) 5L, hasNotPersonCount);
         assertEquals((Long) 0L, noPersonCount);
 
-        final Iterable<? extends Person> persons = fg.traverseExplicit(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
+        final Iterator<? extends Person> persons = fg.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
+            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
                 return fg.getTypeResolver().hasType(input.V(), Person.class);
             }
-        }, Person.class, false);
+        }).frameExplicit(Person.class);
 
         List<Person> personList = Lists.newArrayList(persons);
         assertEquals(11, personList.size());
         // Verify that all found persons have indeed been filtered
-        for(Person person: persons ) {
-            assertEquals(Person.class.getName(), person.getProperty(PolymorphicTypeResolver.TYPE_RESOLUTION_KEY));
-        }
+        persons.forEachRemaining(new Consumer<Person>() {
+            @Override
+            public void accept(Person person) {
+                assertEquals(Person.class.getName(), person.getProperty(PolymorphicTypeResolver.TYPE_RESOLUTION_KEY));
+            }
+        });
     }
 
     @Test
@@ -251,20 +209,20 @@ public class FramedGraphTest {
         final Person p2 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
         p2.setName("Julia");
 
-        final Person bryn = fg.traverseSingleton(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
+        final Person bryn = fg.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
+            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
                 return input.V().has("name", "Bryn");
             }
-        }, Person.class, false);
-        final Person julia = fg.traverseSingleton(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
+        }).next(Person.class);
+        final Person julia = fg.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
+            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
                 return input.V().has("name", "Julia");
             }
-        }, Person.class, false);
+        }).next(Person.class);
 
         Assert.assertEquals(Programmer.class, bryn.getClass());
         Assert.assertEquals(Person.class, julia.getClass());
@@ -284,20 +242,20 @@ public class FramedGraphTest {
         final Person p2 = fg.addFramedVertex(Person.class);
         p2.setName("Julia");
 
-        final Person bryn = fg.traverseSingleton(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
+        final Person bryn = fg.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
+            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
                 return input.V().has("name", "Bryn");
             }
-        }, Person.class, false);
-        final Person julia = fg.traverseSingleton(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
+        }).next(Person.class);
+        final Person julia = fg.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
+            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
                 return input.V().has("name", "Julia");
             }
-        }, Person.class, false);
+        }).next(Person.class);
 
         Assert.assertEquals(Programmer.class, bryn.getClass());
         Assert.assertEquals(Person.class, julia.getClass());
@@ -317,20 +275,20 @@ public class FramedGraphTest {
         final Person p2 = fg.addFramedVertexExplicit(Person.DEFAULT_INITIALIZER);
         p2.setName("Julia");
 
-        final Person bryn = fg.traverseSingleton(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
+        final Person bryn = fg.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
+            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
                 return input.V().has("name", "Bryn");
             }
-        }, Person.class, false);
-        final Person julia = fg.traverseSingleton(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
+        }).next(Person.class);
+        final Person julia = fg.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
+            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
                 return input.V().has("name", "Julia");
             }
-        }, Person.class, false);
+        }).next(Person.class);
 
         Assert.assertEquals(Person.class, bryn.getClass());
         Assert.assertEquals(Person.class, julia.getClass());
@@ -350,20 +308,20 @@ public class FramedGraphTest {
         final Person p2 = fg.addFramedVertexExplicit(Person.class);
         p2.setName("Julia");
 
-        final Person bryn = fg.traverseSingleton(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
+        final Person bryn = fg.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
+            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
                 return input.V().has("name", "Bryn");
             }
-        }, Person.class, false);
-        final Person julia = fg.traverseSingleton(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
+        }).next(Person.class);
+        final Person julia = fg.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
+            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
                 return input.V().has("name", "Julia");
             }
-        }, Person.class, false);
+        }).next(Person.class);
 
         Assert.assertEquals(Person.class, bryn.getClass());
         Assert.assertEquals(Person.class, julia.getClass());
@@ -383,20 +341,20 @@ public class FramedGraphTest {
         final Person p2 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
         p2.setName("Julia");
 
-        final Person bryn = fg.traverseSingletonExplicit(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
+        final Person bryn = fg.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
+            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
                 return input.V().has("name", "Bryn");
             }
-        }, Person.class, false);
-        final Person julia = fg.traverseSingletonExplicit(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
+        }).nextExplicit(Person.class);
+        final Person julia = fg.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
+            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
                 return input.V().has("name", "Julia");
             }
-        }, Person.class, false);
+        }).nextExplicit(Person.class);
 
         Assert.assertEquals(Person.class, bryn.getClass());
         Assert.assertEquals(Person.class, julia.getClass());
@@ -416,20 +374,20 @@ public class FramedGraphTest {
         final Person p2 = fg.addFramedVertex(Person.class);
         p2.setName("Julia");
 
-        final Person bryn = fg.traverseSingletonExplicit(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
+        final Person bryn = fg.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
+            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
                 return input.V().has("name", "Bryn");
             }
-        }, Person.class, false);
-        final Person julia = fg.traverseSingletonExplicit(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
+        }).nextExplicit(Person.class);
+        final Person julia = fg.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
+            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
                 return input.V().has("name", "Julia");
             }
-        }, Person.class, false);
+        }).nextExplicit(Person.class);
 
         Assert.assertEquals(Person.class, bryn.getClass());
         Assert.assertEquals(Person.class, julia.getClass());

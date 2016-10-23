@@ -18,6 +18,7 @@ package com.syncleus.ferma;
 import com.google.common.base.Function;
 import com.syncleus.ferma.typeresolvers.PolymorphicTypeResolver;
 import com.syncleus.ferma.framefactories.annotation.AnnotationFrameFactory;
+import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
 import org.apache.tinkerpop.gremlin.structure.Element;
 import org.apache.tinkerpop.gremlin.structure.Graph;
@@ -42,26 +43,26 @@ public class PolymorphicTypeResolverTest {
         framedGraph.addFramedVertex(Programmer.class);
 
         //make sure the newly added node is actually a programmer
-        final Person programmer = framedGraph.traverseSingleton(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
+        final Person programmer = framedGraph.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
+            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
                 return input.V();
             }
-        }, Person.class, false);
+        }).next(Person.class);
         Assert.assertTrue(programmer instanceof Programmer);
 
         //change the type resolution to person
         programmer.setTypeResolution(Person.class);
 
         //make sure the newly added node is not actually a programmer
-        final Person person = framedGraph.traverseSingleton(new Function<GraphTraversalSource, Iterator<? extends Element>>() {
+        final Person person = framedGraph.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
             @Nullable
             @Override
-            public Iterator<? extends Element> apply(@Nullable GraphTraversalSource input) {
+            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
                 return input.V();
             }
-        }, Person.class, false);
+        }).next(Person.class);
         Assert.assertFalse(person instanceof Programmer);
     }
     

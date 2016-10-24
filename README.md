@@ -7,11 +7,9 @@
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.syncleus.ferma/ferma/badge.png?style=flat)](https://maven-badges.herokuapp.com/maven-central/com.syncleus.ferma/ferma/)
 [![Gitter](https://badges.gitter.im/Syncleus/Ferma.svg)](https://gitter.im/Syncleus/Ferma?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
-**Supports Tinkerpop3** for Tinkerpop2 support use version 2.x
+An ORM / OGM for the TinkerPop graph stack.
 
 **Licensed under the Apache Software License v2**
-
-An ORM / OGM for the TinkerPop graph stack.
 
 The Ferma project has been created as an alternative to the TinkerPop Frames project. Redesigned for performance and
 additional features. Unlike with TinkerPop Frames, annotated classes in Ferma have their abstract methods implemented
@@ -29,6 +27,8 @@ suite provides several tools which can be used to work with the Ferma engine.
 * **Pipes** - A data-flow framework for splitting, merging, filtering, and transforming of data
 * **Gremlin** - A graph query language
 * **Blueprints** - A standard graph API
+
+Ferma also **Supports Tinkerpop3 and Tinkerpop2**. For tinkerpop2 support use version 2.x and for tinkerpop3 user version 3.x.
 
 Ferma also supports any of the many databases compatible with TinkerPop including the following.
 

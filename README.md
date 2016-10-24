@@ -8,6 +8,7 @@
 [![Gitter](https://badges.gitter.im/Syncleus/Ferma.svg)](https://gitter.im/Syncleus/Ferma?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 **Supports Tinkerpop3** for Tinkerpop2 support use version 2.x
+
 **Licensed under the Apache Software License v2**
 
 An ORM / OGM for the TinkerPop graph stack.

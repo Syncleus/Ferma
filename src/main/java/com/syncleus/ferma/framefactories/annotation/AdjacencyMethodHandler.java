@@ -497,6 +497,7 @@ public class AdjacencyMethodHandler implements MethodHandler {
                                 edge.remove();
                         }
                     });
+                    break;
                 case OUT:
                     final Iterator<Edge> outEdges = thiz.getRawTraversal().outE(label);
                     outEdges.forEachRemaining(new Consumer<Edge>() {

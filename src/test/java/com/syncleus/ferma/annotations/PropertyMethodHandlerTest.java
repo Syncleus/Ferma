@@ -55,44 +55,62 @@ public class PropertyMethodHandlerTest {
         Assert.assertEquals("jupiter", father.getName());
     }
 
-//    @Test
-//    public void testSetName() {
-//        final Graph godGraph = TinkerGraph.open();
-//        GodGraphLoader.load(godGraph);
-//
-//        final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
-//
-//        List<? extends God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
-//
-//        God father = gods.iterator().next();
-//        Assert.assertTrue(father != null);
-//        VertexFrame fatherVertex = father;
-//        Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
-//        father.setName("joopiter");
-//
-//        gods = framedGraph.v().has("name", "joopiter").toList(God.class);
-//
-//        father = gods.iterator().next();
-//        Assert.assertTrue(father != null);
-//        fatherVertex = father;
-//        Assert.assertEquals(fatherVertex.getProperty("name"), "joopiter");
-//    }
-//
-//    @Test
-//    public void testRemoveName() {
-//        final Graph godGraph = TinkerGraph.open();
-//        GodGraphLoader.load(godGraph);
-//
-//        final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
-//
-//        final List<? extends God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
-//
-//        final God father = gods.iterator().next();
-//        Assert.assertTrue(father != null);
-//        final VertexFrame fatherVertex = father;
-//        Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
-//        father.removeName();
-//
-//        Assert.assertNull(fatherVertex.getProperty("name"));
-//    }
+    @Test
+    public void testSetName() {
+        final Graph godGraph = TinkerGraph.open();
+        GodGraphLoader.load(godGraph);
+
+        final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
+
+        List<? extends God> gods = framedGraph.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
+            @Nullable
+            @Override
+            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
+                return input.V().has("name", "jupiter");
+            }
+        }).toList(God.class);
+
+        God father = gods.iterator().next();
+        Assert.assertTrue(father != null);
+        VertexFrame fatherVertex = father;
+        Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
+        father.setName("joopiter");
+
+        gods = framedGraph.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
+            @Nullable
+            @Override
+            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
+                return input.V().has("name", "joopiter");
+            }
+        }).toList(God.class);
+
+        father = gods.iterator().next();
+        Assert.assertTrue(father != null);
+        fatherVertex = father;
+        Assert.assertEquals(fatherVertex.getProperty("name"), "joopiter");
+    }
+
+    @Test
+    public void testRemoveName() {
+        final Graph godGraph = TinkerGraph.open();
+        GodGraphLoader.load(godGraph);
+
+        final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
+
+        List<? extends God> gods = framedGraph.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
+            @Nullable
+            @Override
+            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
+                return input.V().has("name", "jupiter");
+            }
+        }).toList(God.class);
+
+        final God father = gods.iterator().next();
+        Assert.assertTrue(father != null);
+        final VertexFrame fatherVertex = father;
+        Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
+        father.removeName();
+
+        Assert.assertNull(fatherVertex.getProperty("name"));
+    }
 }

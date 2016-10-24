@@ -15,41 +15,50 @@
  */
 package com.syncleus.ferma.annotations;
 
+import com.google.common.base.Function;
 import com.syncleus.ferma.DelegatingFramedGraph;
 import com.syncleus.ferma.FramedGraph;
 import com.syncleus.ferma.VertexFrame;
+import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
+import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
 import org.apache.tinkerpop.gremlin.tinkergraph.structure.TinkerGraph;
 import org.junit.Assert;
 import org.junit.Test;
 
+import javax.annotation.Nullable;
 import java.util.*;
 
 public class InVertexMethodHandlerTest {
 
     private static final Set<Class<?>> TEST_TYPES = new HashSet<>(Arrays.asList(new Class<?>[]{God.class, FatherEdge.class, GodExtended.class, FatherEdgeExtended.class}));
 
-//    @Test
-//    public void testGetSonEdges() {
-//        final TinkerGraph godGraph = TinkerGraph.open();
-//        GodGraphLoader.load(godGraph);
-//
-//        final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
-//
-//        final List<? extends God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
-//
-//        God father = gods.iterator().next();
-//        Assert.assertTrue(father != null);
-//        VertexFrame fatherVertex = father;
-//        Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
-//
-//        final Iterable<? extends FatherEdge> childrenEdges = father.getSonEdges(FatherEdge.class);
-//        final Iterator<? extends FatherEdge> childEdgeIterator = childrenEdges.iterator();
-//        Assert.assertTrue(childEdgeIterator.hasNext());
-//        final FatherEdge childEdge = childEdgeIterator.next();
-//
-//        father = childEdge.getFather();
-//        Assert.assertTrue(father != null);
-//        fatherVertex = father;
-//        Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
-//    }
+    @Test
+    public void testGetSonEdges() {
+        final TinkerGraph godGraph = TinkerGraph.open();
+        GodGraphLoader.load(godGraph);
+
+        final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
+
+        final List<? extends God> gods = framedGraph.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
+            @Nullable
+            @Override
+            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
+                return input.V().has("name", "jupiter");
+            }
+        }).toList(God.class);
+
+        God father = gods.iterator().next();
+        Assert.assertTrue(father != null);
+        VertexFrame fatherVertex = father;
+        Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
+
+        final Iterator<? extends FatherEdge> childEdgeIterator = father.getSonEdges(FatherEdge.class);
+        Assert.assertTrue(childEdgeIterator.hasNext());
+        final FatherEdge childEdge = childEdgeIterator.next();
+
+        father = childEdge.getFather();
+        Assert.assertTrue(father != null);
+        fatherVertex = father;
+        Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
+    }
 }

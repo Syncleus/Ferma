@@ -34,7 +34,6 @@ import net.bytebuddy.implementation.bind.annotation.This;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
 import org.apache.tinkerpop.gremlin.structure.Direction;
 import org.apache.tinkerpop.gremlin.structure.Edge;
-import org.apache.tinkerpop.gremlin.structure.Element;
 import org.apache.tinkerpop.gremlin.structure.Vertex;
 import javax.annotation.Nullable;
 
@@ -75,7 +74,7 @@ public class AdjacencyMethodHandler implements MethodHandler {
                 throw new IllegalStateException(method.getName() + " was annotated with @Adjacency but had more than 1 arguments.");
         else if (ReflectionUtility.isGetMethod(method))
             if (arguments == null || arguments.length == 0) {
-                if (Iterable.class.isAssignableFrom(method.getReturnType()))
+                if (Iterator.class.isAssignableFrom(method.getReturnType()))
                     return this.getVertexesDefault(builder, method, annotation);
 
                 return this.getVertexDefault(builder, method, annotation);
@@ -84,7 +83,7 @@ public class AdjacencyMethodHandler implements MethodHandler {
                 if (!(Class.class.isAssignableFrom(arguments[0].getType())))
                     throw new IllegalStateException(method.getName() + " was annotated with @Adjacency, had a single argument, but that argument was not of the type Class");
 
-                if (Iterable.class.isAssignableFrom(method.getReturnType()))
+                if (Iterator.class.isAssignableFrom(method.getReturnType()))
                     return this.getVertexesByType(builder, method, annotation);
 
                 return this.getVertexByType(builder, method, annotation);
@@ -102,7 +101,7 @@ public class AdjacencyMethodHandler implements MethodHandler {
             if (arguments == null || arguments.length == 0)
                 throw new IllegalStateException(method.getName() + " was annotated with @Adjacency but had no arguments.");
             else if (arguments.length == 1) {
-                if (!(Iterable.class.isAssignableFrom(arguments[0].getType())))
+                if (!(Iterator.class.isAssignableFrom(arguments[0].getType())))
                     throw new IllegalStateException(method.getName() + " was annotated with @Adjacency, had a single argument, but that argument was not of the type Class");
 
                 return this.setVertex(builder, method, annotation);
@@ -427,7 +426,7 @@ public class AdjacencyMethodHandler implements MethodHandler {
     public static final class SetVertexInterceptor {
 
         @RuntimeType
-        public static void setVertex(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final Iterable vertexSet) {
+        public static void setVertex(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final Iterator vertexSet) {
             assert thiz instanceof CachesReflection;
             final Adjacency annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Adjacency.class);
             final Direction direction = annotation.direction();
@@ -436,21 +435,32 @@ public class AdjacencyMethodHandler implements MethodHandler {
 
             switch (direction) {
                 case BOTH:
-                    thiz.getRawTraversal().bothE(label).remove();
-                    for (final VertexFrame newVertex : (Iterable<? extends VertexFrame>) vertexSet) {
-                        thiz.getGraph().addFramedEdge(newVertex, thiz, label);
-                        thiz.getGraph().addFramedEdge(thiz, newVertex, label);
-                    }
+                    thiz.unlinkBoth(null, label);
+                    ((Iterator<? extends VertexFrame>)vertexSet).forEachRemaining(new Consumer<VertexFrame>() {
+                        @Override
+                        public void accept(VertexFrame vertexFrame) {
+                            thiz.getGraph().addFramedEdge(vertexFrame, thiz, label);
+                            thiz.getGraph().addFramedEdge(thiz, vertexFrame, label);
+                        }
+                    });
                     break;
                 case IN:
-                    thiz.getRawTraversal().inE(label).remove();
-                    for (final VertexFrame newVertex : (Iterable<? extends VertexFrame>) vertexSet)
-                        thiz.getGraph().addFramedEdge(newVertex, thiz, label);
+                    thiz.unlinkIn(null, label);
+                    ((Iterator<? extends VertexFrame>)vertexSet).forEachRemaining(new Consumer<VertexFrame>() {
+                        @Override
+                        public void accept(VertexFrame vertexFrame) {
+                            thiz.getGraph().addFramedEdge(vertexFrame, thiz, label);
+                        }
+                    });
                     break;
                 case OUT:
-                    thiz.getRawTraversal().outE(label).remove();
-                    for (final VertexFrame newVertex : (Iterable<? extends VertexFrame>) vertexSet)
-                        thiz.getGraph().addFramedEdge(thiz, newVertex, label);
+                    thiz.unlinkOut(null, label);
+                    ((Iterator<? extends VertexFrame>)vertexSet).forEachRemaining(new Consumer<VertexFrame>() {
+                        @Override
+                        public void accept(VertexFrame vertexFrame) {
+                            thiz.getGraph().addFramedEdge(thiz, vertexFrame, label);
+                        }
+                    });
                     break;
                 default:
                     throw new IllegalStateException(method.getName() + " is annotated with a direction other than BOTH, IN, or OUT.");

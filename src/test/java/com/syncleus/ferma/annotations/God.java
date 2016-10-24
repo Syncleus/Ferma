@@ -18,6 +18,8 @@ package com.syncleus.ferma.annotations;
 import com.syncleus.ferma.*;
 import org.apache.tinkerpop.gremlin.structure.Direction;
 
+import java.util.Iterator;
+
 public interface God extends VertexFrame {
     static final ClassInitializer<God> DEFAULT_INITIALIZER = new DefaultClassInitializer(God.class);
 
@@ -37,16 +39,16 @@ public interface God extends VertexFrame {
     String getType();
 
     @Adjacency(label = "father", direction = Direction.IN)
-    Iterable<? extends God> getSons();
+    Iterator<? extends God> getSons();
 
     @Adjacency(label = "father", direction = Direction.IN)
     God getSon();
 
     @Adjacency(label = "father", direction = Direction.IN)
-    <N extends God> Iterable<? extends N> getSons(Class<? extends N> type);
+    <N extends God> Iterator<? extends N> getSons(Class<? extends N> type);
 
     @Adjacency(label = "father", direction = Direction.OUT)
-    <N extends God> Iterable<? extends N> getParents();
+    <N extends God> Iterator<? extends N> getParents();
 
     @Adjacency(label = "father", direction = Direction.IN)
     <N extends God> N getSon(Class<? extends N> type);
@@ -67,16 +69,16 @@ public interface God extends VertexFrame {
     God addSon(God son, ClassInitializer<? extends FatherEdge> edge);
 
     @Adjacency(label = "father", direction = Direction.IN)
-    void setSons(Iterable<? extends God> vertexSet);
+    void setSons(Iterator<? extends God> vertexSet);
 
     @Adjacency(label = "father", direction = Direction.IN)
     void removeSon(God son);
 
     @Incidence(label = "father", direction = Direction.IN)
-    Iterable<? extends EdgeFrame> getSonEdges();
+    Iterator<? extends EdgeFrame> getSonEdges();
 
     @Incidence(label = "father", direction = Direction.IN)
-    <N extends FatherEdge> Iterable<? extends N> getSonEdges(Class<? extends N> type);
+    <N extends FatherEdge> Iterator<? extends N> getSonEdges(Class<? extends N> type);
 
     @Incidence(label = "father", direction = Direction.IN)
     EdgeFrame getSonEdge();

@@ -93,9 +93,5 @@ public class GodGraphLoader {
 
         cerberus.addEdge("lives", tartarus);
         ElementHelper.attachProperties(cerberus.addEdge("battled", alcmene), "time", 5);
-
-        // commit the transaction to disk
-        if(graph.tx() != null)
-            graph.tx().commit();
     }
 }

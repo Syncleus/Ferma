@@ -18,6 +18,7 @@ package com.syncleus.ferma.framefactories.annotation;
 import org.apache.tinkerpop.gremlin.structure.Vertex;
 
 import java.lang.reflect.*;
+import java.util.Iterator;
 import java.util.Map;
 
 public class ReflectionUtility {
@@ -42,12 +43,12 @@ public class ReflectionUtility {
         return method.getName().startsWith(REMOVE);
     }
 
-    public static boolean acceptsIterable(final Method method) {
-        return 1 == method.getParameterTypes().length && Iterable.class.isAssignableFrom(method.getParameterTypes()[0]);
+    public static boolean acceptsIterator(final Method method) {
+        return 1 == method.getParameterTypes().length && Iterator.class.isAssignableFrom(method.getParameterTypes()[0]);
     }
 
-    public static boolean returnsIterable(final Method method) {
-        return Iterable.class.isAssignableFrom(method.getReturnType());
+    public static boolean returnsIterator(final Method method) {
+        return Iterator.class.isAssignableFrom(method.getReturnType());
     }
 
     public static boolean returnsVertex(final Method method) {

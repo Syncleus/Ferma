@@ -18,11 +18,13 @@ package com.syncleus.ferma.annotations;
 import com.syncleus.ferma.*;
 import org.apache.tinkerpop.gremlin.structure.Direction;
 
+import java.util.Iterator;
+
 public interface GodAlternative extends VertexFrame {
     static final ClassInitializer<GodAlternative> DEFAULT_INITIALIZER = new DefaultClassInitializer(GodAlternative.class);
 
     @Adjacency(label = "father", direction = Direction.IN)
-    <N extends God> Iterable<? extends N> getSons(Class<? extends N> type);
+    <N extends God> Iterator<? extends N> getSons(Class<? extends N> type);
 
     @Adjacency(label = "father", direction = Direction.IN)
     <N extends God> N getSon(Class<? extends N> type);
@@ -31,5 +33,5 @@ public interface GodAlternative extends VertexFrame {
     <N extends God> N addSon(ClassInitializer<? extends N> type);
 
     @Adjacency(label = "")
-    <N extends God> Iterable<? extends N> getNoLabel(Class<? extends N> type);
+    <N extends God> Iterator<? extends N> getNoLabel(Class<? extends N> type);
 }

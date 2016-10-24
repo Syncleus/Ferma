@@ -15,36 +15,46 @@
  */
 package com.syncleus.ferma.annotations;
 
+import com.google.common.base.Function;
 import com.syncleus.ferma.DelegatingFramedGraph;
 import com.syncleus.ferma.FramedGraph;
 import com.syncleus.ferma.VertexFrame;
+import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
+import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
 import org.apache.tinkerpop.gremlin.structure.Graph;
 import org.apache.tinkerpop.gremlin.tinkergraph.structure.TinkerGraph;
 import org.junit.Assert;
 import org.junit.Test;
 
+import javax.annotation.Nullable;
 import java.util.*;
 
 public class PropertyMethodHandlerTest {
 
     private static final Set<Class<?>> TEST_TYPES = new HashSet<>(Arrays.asList(new Class<?>[]{God.class, FatherEdge.class, GodExtended.class, GodAlternative.class}));
 
-//    @Test
-//    public void testGetName() {
-//        final Graph godGraph = TinkerGraph.open();
-//        GodGraphLoader.load(godGraph);
-//
-//        final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
-//
-//        final List<? extends God> gods = framedGraph.v().has("name", "jupiter").toList(God.class);
-//
-//        final God father = gods.iterator().next();
-//        Assert.assertTrue(father != null);
-//        final VertexFrame fatherVertex = father;
-//        Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
-//        Assert.assertEquals("jupiter", father.getName());
-//    }
-//
+    @Test
+    public void testGetName() {
+        final Graph godGraph = TinkerGraph.open();
+        GodGraphLoader.load(godGraph);
+
+        final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
+
+        final List<? extends God> gods = framedGraph.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
+            @Nullable
+            @Override
+            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
+                return input.V().has("name", "jupiter");
+            }
+        }).toList(God.class);
+
+        final God father = gods.iterator().next();
+        Assert.assertTrue(father != null);
+        final VertexFrame fatherVertex = father;
+        Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
+        Assert.assertEquals("jupiter", father.getName());
+    }
+
 //    @Test
 //    public void testSetName() {
 //        final Graph godGraph = TinkerGraph.open();

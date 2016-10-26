@@ -20,7 +20,7 @@ import static org.junit.Assert.assertEquals;
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.Consumer;
-import com.google.common.base.Function;
+import java.util.function.Function;
 import com.google.common.collect.Lists;
 import com.syncleus.ferma.framefactories.FrameFactory;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;

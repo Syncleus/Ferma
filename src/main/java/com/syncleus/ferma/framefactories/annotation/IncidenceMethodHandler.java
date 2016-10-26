@@ -15,7 +15,7 @@
  */
 package com.syncleus.ferma.framefactories.annotation;
 
-import com.google.common.base.Function;
+import java.util.function.Function;
 import com.syncleus.ferma.typeresolvers.TypeResolver;
 import com.syncleus.ferma.*;
 import com.syncleus.ferma.annotations.Incidence;

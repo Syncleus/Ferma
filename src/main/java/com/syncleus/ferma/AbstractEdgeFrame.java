@@ -23,7 +23,7 @@
  */
 package com.syncleus.ferma;
 
-import com.google.common.base.Function;
+import java.util.function.Function;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;

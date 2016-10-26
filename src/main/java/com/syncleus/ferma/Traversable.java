@@ -15,7 +15,7 @@
  */
 package com.syncleus.ferma;
 
-import com.google.common.base.Function;
+import java.util.function.Function;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
 import java.util.Iterator;
 import java.util.List;

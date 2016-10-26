@@ -15,7 +15,6 @@
  */
 package com.syncleus.ferma;
 
-import com.google.common.base.Function;
 import com.syncleus.ferma.framefactories.FrameFactory;
 import com.syncleus.ferma.typeresolvers.TypeResolver;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
@@ -23,6 +22,7 @@ import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSo
 import org.apache.tinkerpop.gremlin.structure.*;
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.function.Function;
 
 /**
  * The primary class for framing your blueprints graphs.

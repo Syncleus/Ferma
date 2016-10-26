@@ -23,7 +23,7 @@
  */
 package com.syncleus.ferma;
 
-import com.google.common.base.Function;
+import java.util.function.Function;
 import com.syncleus.ferma.framefactories.FrameFactory;
 import com.syncleus.ferma.framefactories.DefaultFrameFactory;
 import com.syncleus.ferma.typeresolvers.UntypedTypeResolver;
@@ -260,7 +260,7 @@ public class DelegatingFramedGraph<G extends Graph> implements WrappedFramedGrap
 
     @Override
     public <T> Iterator<? extends T> frame(final Iterator<? extends Element> pipeline, final Class<T> kind) {
-        return Iterators.transform(pipeline, new Function<Element, T>() {
+        return Iterators.transform(pipeline, new com.google.common.base.Function<Element, T>() {
 
             @Override
             public T apply(final Element input) {
@@ -298,7 +298,7 @@ public class DelegatingFramedGraph<G extends Graph> implements WrappedFramedGrap
 
     @Override
     public <T> Iterator<? extends T> frameExplicit(final Iterator<? extends Element> pipeline, final Class<T> kind) {
-        return Iterators.transform(pipeline, new Function<Element, T>() {
+        return Iterators.transform(pipeline, new com.google.common.base.Function<Element, T>() {
 
             @Override
             public T apply(final Element input) {

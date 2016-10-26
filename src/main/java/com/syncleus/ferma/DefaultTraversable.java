@@ -15,7 +15,7 @@
  */
 package com.syncleus.ferma;
 
-import com.google.common.base.Function;
+import java.util.function.Function;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
@@ -125,7 +125,7 @@ public class DefaultTraversable<PE, E> implements Traversable<PE, E>{
 
     @Override
     public <N> List<? extends N> next(final int amount, final Class<N> kind) {
-        return Lists.transform((List<Element>) this.baseTraversal.next(amount), new Function<Element, N>() {
+        return Lists.transform((List<Element>) this.baseTraversal.next(amount), new com.google.common.base.Function<Element, N>() {
             @Override
             public N apply(final Element input) {
                 return parentGraph.frameElement(input, kind);
@@ -135,7 +135,7 @@ public class DefaultTraversable<PE, E> implements Traversable<PE, E>{
 
     @Override
     public <N> List<? extends N> nextExplicit(final int amount, final Class<N> kind) {
-        return Lists.transform((List<Element>) this.baseTraversal.next(amount), new Function<Element, N>() {
+        return Lists.transform((List<Element>) this.baseTraversal.next(amount), new com.google.common.base.Function<Element, N>() {
             @Override
             public N apply(final Element input) {
                 return parentGraph.frameElementExplicit(input, kind);
@@ -175,7 +175,7 @@ public class DefaultTraversable<PE, E> implements Traversable<PE, E>{
 
     @Override
     public <N> List<? extends N> toList(final Class<N> kind) {
-        return Lists.transform((List<Element>) this.baseTraversal.toList(), new Function<Element, N>() {
+        return Lists.transform((List<Element>) this.baseTraversal.toList(), new com.google.common.base.Function<Element, N>() {
             @Override
             public N apply(final Element input) {
                 return parentGraph.frameElement(input, kind);
@@ -185,7 +185,7 @@ public class DefaultTraversable<PE, E> implements Traversable<PE, E>{
 
     @Override
     public <N> List<? extends N> toListExplicit(final Class<N> kind) {
-        return Lists.transform((List<Element>) this.baseTraversal.toList(), new Function<Element, N>() {
+        return Lists.transform((List<Element>) this.baseTraversal.toList(), new com.google.common.base.Function<Element, N>() {
             @Override
             public N apply(final Element input) {
                 return parentGraph.frameElementExplicit(input, kind);

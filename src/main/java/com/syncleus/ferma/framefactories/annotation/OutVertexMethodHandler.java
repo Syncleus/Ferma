@@ -15,7 +15,7 @@
  */
 package com.syncleus.ferma.framefactories.annotation;
 
-import com.google.common.base.Function;
+import java.util.function.Function;
 import com.syncleus.ferma.EdgeFrame;
 import com.syncleus.ferma.annotations.OutVertex;
 import net.bytebuddy.dynamic.DynamicType;

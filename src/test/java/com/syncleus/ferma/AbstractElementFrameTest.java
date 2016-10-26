@@ -15,7 +15,7 @@
  */
 package com.syncleus.ferma;
 
-import com.google.common.base.Function;
+import java.util.function.Function;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
 import org.apache.tinkerpop.gremlin.structure.Element;
@@ -102,13 +102,14 @@ public class AbstractElementFrameTest {
 
     @Test
     public void testEById() {
-        final Knows knows = fg.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
-            @Nullable
-            @Override
-            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
-                return input.E(e1.<Long>getId());
-            }
-        }).next(Knows.class);
+        final Knows knows = fg.traverse((GraphTraversalSource s) -> {return s.E(e1.<Long>getId());}).next(Knows.class);
+//        final Knows knows = fg.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
+//            @Nullable
+//            @Override
+//            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
+//                return input.E(e1.<Long>getId());
+//            }
+//        }).next(Knows.class);
         Assert.assertEquals(e1, knows);
     }
 

@@ -4,6 +4,7 @@
 [![Coverage](https://codecov.io/gh/Syncleus/Ferma/branch/master/graph/badge.svg)](https://codecov.io/gh/Syncleus/Ferma)
 [![Dependencies](https://www.versioneye.com/user/projects/57e37d4279806f0039830884/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/57e37d4279806f0039830884)
 [![Codacy](https://api.codacy.com/project/badge/Grade/e287e33b94734124ada41efd0ae48652)](https://www.codacy.com/app/freemo/Ferma?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Syncleus/Ferma&amp;utm_campaign=Badge_Grade)
+[![Javadocs](http://www.javadoc.io/badge/com.syncleus.ferma/ferma.svg)](http://www.javadoc.io/doc/com.syncleus.ferma/ferma)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.syncleus.ferma/ferma/badge.png?style=flat)](https://maven-badges.herokuapp.com/maven-central/com.syncleus.ferma/ferma/)
 [![Gitter](https://badges.gitter.im/Syncleus/Ferma.svg)](https://gitter.im/Syncleus/Ferma?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 

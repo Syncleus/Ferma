@@ -3,6 +3,8 @@
 ## 3.0.0
 
 * Tinkerpop3 is now supported.
+* Removed several of the pipline methods from exiting classes, this is now replaced with the traverse method.
+* Ferma specific pipelines are now replaced with Tinkerpop3 traversals.
 
 ## 2.2.0
 

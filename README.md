@@ -37,11 +37,11 @@ Ferma also supports any of the many databases compatible with TinkerPop includin
  * [Oracle NoSQL](http://www.oracle.com/us/products/database/nosql/overview/index.html)
  * [TinkerGraph](https://github.com/tinkerpop/blueprints/wiki/TinkerGraph)
 
-For Additional documentation and information please use the [official Ferma wiki](http://wiki.syncleus.com/index.php/Ferma).
+For Additional documentation and information please use the [official Ferma wiki](https://github.com/Syncleus/Ferma/wiki).
 
 For support please use the [official Ferma mailing list](https://groups.google.com/a/syncleus.com/forum/#!forum/ferma-list).
 
-Please file bugs and feature requests on [the official Syncleus issue tracker](http://bugs.syncleus.com/browse/FMA/).
+Please file bugs and feature requests on [the official issue tracker](https://github.com/Syncleus/Ferma/issues).
 
 ## Dependency
 
@@ -50,7 +50,7 @@ To include Ferma in your project of choice include the following Maven dependenc
     <dependency>
         <groupId>com.syncleus.ferma</groupId>
         <artifactId>ferma</artifactId>
-        <version>2.1.0</version>
+        <version>2.2.0</version>
     </dependency>
     
 
@@ -233,13 +233,9 @@ construct the byte-code for any abstract annotated methods.
 
 ## Obtaining the Source
 
-The official source repository for Ferma is located on the Syncleus Gerrit instance and can be cloned using the
+The official source repository for Ferma is located on the Syncleus Github instance and can be cloned using the
 following command.
 
 ```
 git clone https://github.com/Syncleus/Ferma.git
 ```
-
-We also maintain a GitHub clone of the official repository which can be found
-[here](https://github.com/Syncleus/Ferma). Finally Syncleus also hosts an instance of GitLab which has a
-clone of the repository which can be found [here](http://gitlab.syncleus.com/syncleus/Ferma).

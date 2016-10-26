@@ -11,24 +11,34 @@ An ORM / OGM for the TinkerPop graph stack.
 
 **Licensed under the Apache Software License v2**
 
-The Ferma project has been created as an alternative to the TinkerPop Frames project. Redesigned for performance and
-additional features. Unlike with TinkerPop Frames, annotated classes in Ferma have their abstract methods implemented
-using code generation during start-up with Byte Buddy, avoiding the need for proxy classes. This in turn significantly
-improves performance when compared with TinkerPop Frames. Ferma offers many new features including several
-annotated method types supplementing those provided by TinkerPop Frames. Ferma is designed to easily replace TinkerPop
-Frames in existing code, as such, the annotations provided by Ferma are a super-set of those provided by TinkerPop
-Frames.
+The Ferma project was originally created as an alternative to the TinkerPop2 Frames project. Which at the time lacked
+features needed by the community, and its performance was crippilingly slow. Today Ferma is a robust framework that
+takes on a role similar to Object-relational Model (ORM) libraries for traditional databases. Ferma is often refered to
+as a Object-graph Model (OGM) library, and maps Java objects to elements in a graph such as Vertexs and Edges.
 
-Ferma is built directly on TinkerPop Blueprints with no dependency on TinkerPop Frames. This ensures all the TinkerPop
-features and compatibilities are preserved, but with a high-performance drop-in replacement for Frames. The TinkerPop
-suite provides several tools which can be used to work with the Ferma engine.
+Ferma 3.x **Supports Tinkerpop3**. For tinkerpop2 support use Ferma version 2.x.
 
-* **Furnace** - Graph analysis utilities
-* **Pipes** - A data-flow framework for splitting, merging, filtering, and transforming of data
-* **Gremlin** - A graph query language
-* **Blueprints** - A standard graph API
+Annotated classes in Ferma have their abstract methods implemented using code generation during start-up with Byte
+Buddy, avoiding the need for proxy classes. This in turn significantly improves performance when compared with TinkerPop
+Frames and other frameworks. Ferma offers many features including several annotated method types as well handling Java
+typing completely transparently. This ensures whatever the type of the object is when you persist it to the graph the
+same Java type will be used when instantiaing a class off of the graph.
 
-Ferma also **Supports Tinkerpop3 and Tinkerpop2**. For tinkerpop2 support use version 2.x and for tinkerpop3 user version 3.x.
+Ferma is designed to easily replace TinkerPop Frames in existing code, as such, the annotations provided by Ferma are a
+super-set of those provided by TinkerPop Frames.
+
+Ferma is built directly on top of TinkerPop3 and allows access to all of the Tinkerpop internals. This ensures all the
+TinkerPop features are preserved. The TinkerPop suite provides several tools which can be used to work with the Ferma
+engine.
+
+* **Gremlin**, a database agnostic query language for Graph Databases.
+* **Gremlin Server**, a server that provides an interface for executing Gremlin on remote machines.
+* a data-flow framework for splitting, merging, filtering, and transforming of data
+* **Graph Computer**, a frammework for running algorithms against a Graph Database.
+* Support for both **OLTP** and **OLAP** engines.
+* **TinkerGraph** a Graph Database and the reference implementation for Tinkerpop.
+* Native **Gephi** integration for visualizing graphs.
+* Interfaces for most major Graph Compute Engines including **Hadoop M/R**. **Spark**, and **Giraph**.
 
 Ferma also supports any of the many databases compatible with TinkerPop including the following.
 
@@ -37,13 +47,12 @@ Ferma also supports any of the many databases compatible with TinkerPop includin
  * [OrientDB](http://www.orientechnologies.com/orientdb/)
  * [MongoDB](http://www.mongodb.org)
  * [Oracle NoSQL](http://www.oracle.com/us/products/database/nosql/overview/index.html)
- * [TinkerGraph](https://github.com/tinkerpop/blueprints/wiki/TinkerGraph)
+ * TinkerGraph
 
-For Additional documentation and information please use the [official Ferma wiki](http://wiki.syncleus.com/index.php/Ferma).
+For support please use [Gitter](https://badges.gitter.im/Syncleus/Ferma.svg)](https://gitter.im/Syncleus/Ferma?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+or the [official Ferma mailing list](https://groups.google.com/a/syncleus.com/forum/#!forum/ferma-list).
 
-For support please use the [official Ferma mailing list](https://groups.google.com/a/syncleus.com/forum/#!forum/ferma-list).
-
-Please file bugs and feature requests on [the official Syncleus issue tracker](http://bugs.syncleus.com/browse/FMA/).
+Please file bugs and feature requests on [Github](https://github.com/Syncleus/Ferma).
 
 ## Dependency
 
@@ -52,7 +61,7 @@ To include Ferma in your project of choice include the following Maven dependenc
     <dependency>
         <groupId>com.syncleus.ferma</groupId>
         <artifactId>ferma</artifactId>
-        <version>2.1.0</version>
+        <version>3.0.0</version>
     </dependency>
     
 
@@ -79,11 +88,7 @@ instantiated when performing queries. Lets start with a simple example domain.
       }
 
       public List<? extends Knows> getKnowsList() {
-        return outE("knows").toList(Knows.class);
-      }
-
-      public List<? extends Person> getFriendsOfFriends() {
-        return out("knows").out("knows").except(this).toList(Person.class);
+        return traverse((v) -> v.outE("knows")).toList(Knows.class);
       }
 
       public Knows addKnows(Person friend) {
@@ -117,11 +122,10 @@ And here is how you interact with the framed elements:
       Knows knows = p1.addKnows(p2);
       knows.setYears(15);
 
-      Person jeff = fg.v().has("name", "Jeff").next(Person.class);
+      Person jeff = fg.traverse((g) -> v().has("name", "Jeff")).next(Person.class);
 
 
       Assert.assertEquals("Jeff", jeff.getName());
-      Assert.assertEquals(15, jeff.getKnowsList().get(0).getYears());
     }
 
 ### Simple Mode Example
@@ -150,8 +154,8 @@ Using simple mode will save the type of Java class the element was created with 
       Person p2 = fg.addFramedVertex(Person.class);
       p2.setName("Julia");
       
-      Person jeff = fg.v().has("name", "Jeff").next(Person.class);
-      Person julia = fg.v().has("name", "Julia").next(Person.class);
+      Person jeff = fg.traverse((g) -> g.v().has("name", "Jeff")).next(Person.class);
+      Person julia = fg.traverse((g) -> g.v().has("name", "Julia")).next(Person.class);
       
       Assert.assertEquals(Programmer.class, jeff.getClass());
       Assert.assertEquals(Person.class, julia.getClass());
@@ -175,16 +179,16 @@ The same example as above done with annotations would look something like this.
       public abstract void setName(String name);
 
       @Adjacency("knows")
-      public abstract Iterable<Person> getKnowsPeople();
+      public abstract Iterator<Person> getKnowsPeople();
 
       @Incidence("knows")
-      public abstract Iterable<Knows> getKnows();
+      public abstract Iterator<Knows> getKnows();
 
       @Incidence("knows")
       public abstract Knows addKnows(Person friend);
 
-      public List<Person> getFriendsOfFriends() {
-        return out("knows").out("knows").except(this).toList(Person.class);
+      public List<Person> getFriendsNamedBill() {
+        return traverse((v) -> v.out("knows").has("name", "bill").toList(Person.class);
       }
     }
 
@@ -226,8 +230,8 @@ construct the byte-code for any abstract annotated methods.
       Person p2 = fg.addFramedVertex(Person.class);
       p2.setName("Julia");
 
-      Person jeff = fg.v().has("name", "Jeff").next(Person.class);
-      Person julia = fg.v().has("name", "Julia").next(Person.class);
+      Person jeff = fg.traverse((g) -> g.v().has("name", "Jeff")).next(Person.class);
+      Person julia = fg.traverse((g) -> g.v().has("name", "Julia")).next(Person.class);
 
       Assert.assertEquals(Programmer.class, jeff.getClass());
       Assert.assertEquals(Person.class, julia.getClass());
@@ -235,13 +239,9 @@ construct the byte-code for any abstract annotated methods.
 
 ## Obtaining the Source
 
-The official source repository for Ferma is located on the Syncleus Gerrit instance and can be cloned using the
+The official source repository for Ferma is located in the Syncleus Github repository and can be cloned using the
 following command.
 
 ```
 git clone https://github.com/Syncleus/Ferma.git
 ```
-
-We also maintain a GitHub clone of the official repository which can be found
-[here](https://github.com/Syncleus/Ferma). Finally Syncleus also hosts an instance of GitLab which has a
-clone of the repository which can be found [here](http://gitlab.syncleus.com/syncleus/Ferma).

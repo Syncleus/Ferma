@@ -14,8 +14,8 @@
     <version>2.2.1-SNAPSHOT</version>
 
     <name>Ferma</name>
-    <description>An ORM for the Tinkerpop2 graph stack.</description>
-    <url>http://wiki.syncleus.com/index.php/Ferma</url>
+    <description>An ORM for the Tinkerpop3 graph stack.</description>
+    <url>https://github.com/Syncleus/Ferma.git</url>
 
     <licenses>
         <license>
@@ -31,19 +31,19 @@
     </organization>
 
     <scm>
-        <connection>scm:git:http://gerrit.syncleus.com/Ferma</connection>
-        <developerConnection>scm:git:ssh://gerrit.syncleus.com:29418/Ferma</developerConnection>
-        <url>http://gerrit.syncleus.com/Ferma</url>
+        <connection>scm:git:https://github.com/Syncleus/Ferma</connection>
+        <developerConnection>scm:git:ssh://github.com/Syncleus/Ferma</developerConnection>
+        <url>https://github.com/Syncleus/Ferma.git</url>
     </scm>
 
     <ciManagement>
-        <system>jenkins</system>
-        <url>http://builds.syncleus.com/</url>
+        <system>travis</system>
+        <url>https://travis-ci.org/Syncleus/Ferma/</url>
     </ciManagement>
 
     <issueManagement>
-        <system>JIRA</system>
-        <url>http://bugs.syncleus.com/browse/FMA/</url>
+        <system>GitHub</system>
+        <url>https://github.com/Syncleus/Ferma/issues</url>
     </issueManagement>
     
     <mailingLists>

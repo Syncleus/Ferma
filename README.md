@@ -1,3 +1,5 @@
+![](https://github.com/Syncleus/Ferma/wiki/img/ferma-logo.png)
+
 # Ferma
 
 [![Build Status](https://travis-ci.org/Syncleus/Ferma.svg?branch=master)](https://travis-ci.org/Syncleus/Ferma)

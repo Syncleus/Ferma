@@ -14,28 +14,28 @@ An ORM / OGM for the TinkerPop graph stack.
 
 The Ferma project was originally created as an alternative to the TinkerPop2 Frames project. Which at the time lacked
 features needed by the community, and its performance was cripplingly slow. Today Ferma is a robust framework that
-takes on a role similar to Object-relational Model (ORM) libraries for traditional databases. Ferma is often referred to
-as a Object-graph Model (OGM) library, and maps Java objects to elements in a graph such as Vertexs and Edges.
+takes on a role similar to an Object-relational Model (ORM) library for traditional databases. Ferma is often referred to
+as a Object-graph Model (OGM) library, and maps Java objects to elements in a graph such as a Vertex or an Edge.
 
 Ferma 3.x **Supports Tinkerpop3**. For tinkerpop2 support use Ferma version 2.x.
 
 Annotated classes in Ferma have their abstract methods implemented using code generation during start-up with Byte
 Buddy, avoiding the need for proxy classes. This in turn significantly improves performance when compared with TinkerPop
-Frames and other frameworks. Ferma offers many features including several annotated method types as well handling Java
-typing completely transparently. This ensures whatever the type of the object is when you persist it to the graph the
-same Java type will be used when instantiaing a class off of the graph.
+Frames and other frameworks. Ferma offers many features including several annotation types to reduce the need for
+boilerplate code as well as handling Java typing transparently. This ensures whatever the type of the object is when you
+persist it to the graph the same Java type will be used when instantiating a class off of the graph.
 
 Ferma is designed to easily replace TinkerPop Frames in existing code, as such, the annotations provided by Ferma are a
 super-set of those provided by TinkerPop Frames.
 
-Ferma is built directly on top of TinkerPop3 and allows access to all of the Tinkerpop internals. This ensures all the
-TinkerPop features are preserved. The TinkerPop suite provides several tools which can be used to work with the Ferma
-engine.
+Ferma is built directly on top of TinkerPop and allows access to all of the internals. This ensures all the
+TinkerPop features are available to the end-user. The TinkerPop stack provides several tools which can be used to work
+with the Ferma engine.
 
 * **Gremlin**, a database agnostic query language for Graph Databases.
 * **Gremlin Server**, a server that provides an interface for executing Gremlin on remote machines.
 * a data-flow framework for splitting, merging, filtering, and transforming of data
-* **Graph Computer**, a frammework for running algorithms against a Graph Database.
+* **Graph Computer**, a framework for running algorithms against a Graph Database.
 * Support for both **OLTP** and **OLAP** engines.
 * **TinkerGraph** a Graph Database and the reference implementation for Tinkerpop.
 * Native **Gephi** integration for visualizing graphs.

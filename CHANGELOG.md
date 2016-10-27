@@ -2,7 +2,7 @@
 
 ## 3.0.1
 
-
+* Removed the following deprecated classes: FramingIterable, FramingVertexIterable, Path, RunMe, Storage, and VoidFunction.
 
 ## 3.0.0
 

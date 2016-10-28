@@ -15,7 +15,9 @@ An ORM / OGM for the TinkerPop graph stack.
 The Ferma project was originally created as an alternative to the TinkerPop2 Frames project. Which at the time lacked
 features needed by the community, and its performance was cripplingly slow. Today Ferma is a robust framework that
 takes on a role similar to an Object-relational Model (ORM) library for traditional databases. Ferma is often referred to
-as a Object-graph Model (OGM) library, and maps Java objects to elements in a graph such as a Vertex or an Edge.
+as a Object-graph Model (OGM) library, and maps Java objects to elements in a graph such as a Vertex or an Edge. In
+short it allows a schema to be defined using java interfaces and classes which provides a level of abstraction for
+interacting with the underlying graph.
 
 Ferma 3.x **Supports Tinkerpop3**. For tinkerpop2 support use Ferma version 2.x.
 

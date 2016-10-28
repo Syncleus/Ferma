@@ -128,7 +128,7 @@ And here is how you interact with the framed elements:
       Knows knows = p1.addKnows(p2);
       knows.setYears(15);
 
-      Person jeff = fg.traverse((g) -> v().has("name", "Jeff")).next(Person.class);
+      Person jeff = fg.traverse((g) -> g.v().has("name", "Jeff")).next(Person.class);
 
 
       Assert.assertEquals("Jeff", jeff.getName());

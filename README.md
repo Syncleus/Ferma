@@ -19,7 +19,7 @@ as a Object-graph Model (OGM) library, and maps Java objects to elements in a gr
 short it allows a schema to be defined using java interfaces and classes which provides a level of abstraction for
 interacting with the underlying graph.
 
-Ferma 3.x **Supports Tinkerpop3**. For tinkerpop2 support use Ferma version 2.x.
+Ferma 3.x **Supports TinkerPop3**. For TinkerPop2 support use Ferma version 2.x.
 
 Annotated classes in Ferma have their abstract methods implemented using code generation during start-up with Byte
 Buddy, avoiding the need for proxy classes. This in turn significantly improves performance when compared with TinkerPop
@@ -39,7 +39,7 @@ with the Ferma engine.
 * a data-flow framework for splitting, merging, filtering, and transforming of data
 * **Graph Computer**, a framework for running algorithms against a Graph Database.
 * Support for both **OLTP** and **OLAP** engines.
-* **TinkerGraph** a Graph Database and the reference implementation for Tinkerpop.
+* **TinkerGraph** a Graph Database and the reference implementation for TinkerPop.
 * Native **Gephi** integration for visualizing graphs.
 * Interfaces for most major Graph Compute Engines including **Hadoop M/R**. **Spark**, and **Giraph**.
 

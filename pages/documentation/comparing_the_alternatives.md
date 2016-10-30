@@ -33,8 +33,8 @@ Despite the superior performance of Ferma it also supports all the features prov
 
 |                                                                                                                  | **Ferma**     | **Frames**    | **Totorom**   | **Peapod**    |
 |------------------------------------------------------------------------------------------------------------------|---------------|---------------|---------------|---------------|
-| **"JPA-like Annotations":Ferma:Creating\_Annotated\_Domain\_Models**                                             | Supported     | Supported     | Not Supported | Supported     |
-| **"Type information encoded into graph.":\#Type\_information\_encoded\_into\_graph**                             | Supported     | Supported     | Supported     | Supported     |
+| **[JPA-like Annotations](creating_annotated_domain_models)**                                                     | Supported     | Supported     | Not Supported | Supported     |
+| **[Type information encoded into graph](#Type_information_encoded_into_graph)**                                  | Supported     | Supported     | Supported     | Supported     |
 | **"Framing of elements instantiated according to type hierarchy.":\#Framing\_instantiated\_by\_type\_hierarchy** | Supported     | Supported     | Supported     | Supported     |
 | **"Element queried by type hierarchy.":\#Element\_queried\_by\_type\_hierarchy**                                 | Supported     | Not Supported | Not Supported | Partial \*    |
 | **"Turning off type resolution on a per-call basis.":\#Turning\_off\_type\_resolution\_per\_call**               | Supported     | Not Supported | Not Supported | Not Supported |

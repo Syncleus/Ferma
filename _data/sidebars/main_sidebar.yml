@@ -40,10 +40,10 @@ entries:
       url: /glossary.html
       output: web, pdf
 
-  - title: Release Notes
+  - title: Reference
     output: web, pdf
     folderitems:
 
-    - title: 3.0.0 Release notes
-      url: /release_notes_3_0_0.html
+    - title: Core Annotations
+      url: /core_annotations.html
       output: web, pdf

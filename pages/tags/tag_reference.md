@@ -1,8 +1,8 @@
 ---
-title: "Getting started pages"
-tagName: getting_started
+title: "Reference pages"
+tagName: reference
 search: exclude
-permalink: tag_getting_started.html
+permalink: tag_reference.html
 sidebar: main_sidebar
 folder: tags
 ---

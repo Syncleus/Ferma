@@ -32,6 +32,10 @@ entries:
       url: /getting_started.html
       output: web, pdf
 
+    - title: Comparing the Alternatives
+      url: /comparing_the_alternatives.html
+      output: web, pdf
+
   - title: Release Notes
     output: web, pdf
     folderitems:

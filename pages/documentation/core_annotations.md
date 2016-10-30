@@ -25,6 +25,11 @@ Allowed prefixes: `get`, `is`, `can`, `set`, `remove`
 Annotation arguments:
 `value` - The name of the property
 
+The following would bind the method it is used on to the property named `foo`:
+```java
+@Property("foo")
+```
+
 ### get prefix
 
 Valid return types: *Any*

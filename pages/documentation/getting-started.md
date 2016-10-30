@@ -12,7 +12,7 @@ folder: documentation
 
 Ferma provides three levels of type resolution: untyped, simple, and annotated. In untyped mode Ferma doesn't handle typing at all, instead the type must be explicitly indicated whenever querying. In simple mode Ferma provides type context encoded as graph element properties which ensures the same type comes out that goes in to a graph. In annotated mode all the features of simple mode are provided as well as enabling the use of annotations on abstract methods to instruct Ferma to dynamically construct byte code to implement the abstract methods at start up.
 
-h1(#dependency). Dependency
+## Dependency
 
 To include Ferma in your project of choice include the following Maven dependency into your build.
 
@@ -24,7 +24,7 @@ To include Ferma in your project of choice include the following Maven dependenc
 </dependency>
 ```
 
-h1(#untyped-mode-example). Untyped Mode Example
+## Untyped Mode Example
 
 In untyped mode there is no automatic typing. Whatever class is explicitly indicated is the type that will be instantiated when performing queries. Lets start with a simple example domain.
 
@@ -82,7 +82,7 @@ public void testUntyped() {
 }
 ```
 
-h1(#simple-mode-example). Simple Mode Example
+## Simple Mode Example
 
 In simple mode you must provide concrete classes, no abstract or interfaces allowed, and the class should always extend from a FramedVertex or FramedEdge. Simple mode doesn't provide any annotations either. The purpose of simple mode is to provide type resolution. Basically the type of object you use when adding to the graph is the same type you get out when reading from the graph.
 
@@ -116,7 +116,7 @@ public void testSimpleTyping() {
 }
 ```
 
-h1(#annotated-mode-example). Annotated Mode Example
+## Annotated Mode Example
 
 In annotated mode you can either provide concrete classes, abstract classes, or even interfaces. Abstract classes and concrete classes must extend from FramedVertex or FramedEdge, however, interfaces do not have this restriction. Annotated mode also provides a set of annotations which must be used to define any abstract methods that are to be implemented by the engine. Annotated mode provides the same type resolution as provided by simple mode with a bit more power to determine parent-child relationships at run time.
 

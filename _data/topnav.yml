@@ -20,6 +20,8 @@ topnav_dropdowns:
           external_url: http://www.javadoc.io/doc/com.syncleus.ferma/ferma
     - title: Related Projects
       folderitems:
+        - title: Ferma Comparison Benchmarks
+          external_url: https://github.com/Syncleus/Ferma-benchmark
         - title: Ferma Recurse
           external_url: https://github.com/Syncleus/Ferma-recurse
         - title: Fusion Graph

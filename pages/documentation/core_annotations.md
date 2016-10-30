@@ -20,9 +20,11 @@ Below specifies that annotations that can be used when defining a Frame's interf
 ## Property annotation
 
 Valid on frames: Edge and Vertex
+
 Allowed prefixes: `get`, `is`, `can`, `set`, `remove`
 
 Annotation arguments:
+
 `value` - The name of the property
 
 The following would bind the method it is used on to the property named `foo`:
@@ -35,6 +37,7 @@ The following would bind the method it is used on to the property named `foo`:
 ### `get` prefix
 
 Valid return types: *Any*
+
 Valid method arguments: `()`
 
 Get the property value of an element. Used when property is not a boolean value.
@@ -49,6 +52,7 @@ Foobar getFoobar()
 ### is prefix
 
 Valid return types: `boolean`
+
 Valid method arguments: `()`
 
 Get the property value of an element. Used when property is a boolean value.
@@ -63,6 +67,7 @@ boolean isFoobared()
 ### set prefix
 
 Valid return types: *None*
+
 Valid method arguments: `(Object)`
 
 Set the property value of an element.
@@ -77,6 +82,7 @@ void setFoobar(Foobar foobar)
 ### remove prefix
 
 Valid return types: *None*
+
 Valid method arguments: `()`
 
 Remove the property of an element.
@@ -91,10 +97,13 @@ void removeFoobar()
 ## Adjacency annotation
 
 Valid on frames: Vertex
+
 Allowed prefixes: `add`, `get`, `remove`, `set`
 
 Annotation arguments:
+
 `label` - The label assigned to the edge which connects the adjacent nodes.
+
 `direction` - The direction for the edge which creates the adjacency. It can be assigned any of the values from @org.apache.tinkerpop.gremlin.structure.Direction@.
 
 ### add prefix

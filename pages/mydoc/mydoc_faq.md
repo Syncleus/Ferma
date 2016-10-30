@@ -1,7 +1,7 @@
 ---
-title: FAQ layout
+title: Getting Started
 permalink: getting_started.html
-sidebar: mydoc_sidebar
+sidebar: main_sidebar
 tags: [special_layouts]
 keywords: frequently asked questions, FAQ, question and answer, collapsible sections, expand, collapse
 last_updated: November 30, 2015

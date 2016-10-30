@@ -40,7 +40,7 @@ Valid method arguments: `()`
 
 #### ()
 
-Valid return types: *Any*
+Valid return types: *Any Frame*
 
 Get the property value of an element. Used when property is not a boolean value.
 
@@ -48,7 +48,17 @@ example:
 
 ```java
 @Property("Foo")
-Foobar getFoobar()
+Bar getFoobar()
+```
+
+```java
+@Property("Foo")
+<E extends Bar> E getFoobar()
+```
+
+```java
+@Property("Foo")
+<E> E getFoobar()
 ```
 
 ### is prefix
@@ -76,13 +86,23 @@ Valid method arguments: `(Object)`
 
 Valid return types: *None*
 
-Set the property value of an element.
+Set the property value of an element. The argument can be any class accepted by the underlying graph.
 
 example:
 
 ```java
 @Property("Foo")
-void setFoobar(Foobar foobar)
+void setFoobar(Bar foobar)
+```
+
+```java
+@Property("Foo")
+<E extends Bar> void setFoobar(E foobar)
+```
+
+```java
+@Property("Foo")
+<E extends VectorFrame> void setFoobar(E foobar)
 ```
 
 ### remove prefix
@@ -116,15 +136,15 @@ Annotation arguments:
 
 ### add prefix
 
-Valid method arguments: `()`, `(VertexFrame)`, `(ClassInitializer)`, `(ClassInitializer, ClassInitializer)`
+Valid method arguments: `()`, `(&lt;Any Frame&gt;)`, `(ClassInitializer)`, `(ClassInitializer, ClassInitializer)`
 
 Adds a node as an adjacency to the current node, and the returns the newly connected node.
 
 #### ()
 
-Valid return types: `VertexFrame`
+Valid return types: `Object` or `VertexFrame`
 
-Creates a new vertex without any type information as well as an untyped edge to connect to it. The newly created VertexFrame is returned.
+Creates a new vertex without any type information as well as an untyped edge to connect to it. The newly created VertexFrame is returned. Since it is untyped the return type of the signature can either be `Object` or `VertexFrame`.
 
 example:
 
@@ -133,26 +153,46 @@ example:
 VertexFrame addFoobar()
 ```
 
-#### (VertexFrame)
+#### (&lt;Any Frame&gt;)
 
-Valid return types: `VertexFrame`
+Valid return types: *Any frame*
 
-Creates a new edge without any type information and connects it between this vertex the vertex specified as an argument to the method.
+Creates a new edge without any type information and connects it between this vertex the vertex specified as an argument to the method. The frame returned is the same as the frame given in the argument, it is only there for compatability with other add methods. This method can also have a `void` return type.
+
+examples:
+
+```java
+@Adjacency("Foo")
+Bar addFoobar(Bar existingVertex)
+```
+
+```java
+@Adjacency("Foo")
+<E extends Bar> E addFoobar(E existingVertex)
+```
+
+```java
+@Adjacency("Foo")
+<E extends VertexFrame> E addFoobar(E existingVertex)
+```
+
+#### (ClassInitializer)
+
+Valid return types: *Any Frame*
+
+Creates a new edge without any type information and connects it between this vertex and a newly created vertex. The newly created vertex will have a type, as well as be initiated, according to the details specified in the ClassInitializer argument. Java generics can, and should, be used to narrow the return type.
 
 example:
 
 ```java
 @Adjacency("Foo")
-VertexFrame addFoobar(VertexFrame existingVertex)
+Bar addFoobar(ClassInitializer<Bar> vertexInitializer)
 ```
 
-#### (ClassInitializer)
-
-Valid return types: `VertexFrame`
-
-Creates a new edge without any type information and connects it between this vertex and a newly created vertex. The newly created vertex will have a type, as well as be initiated, according to the details specified in the ClassInitializer argument. Java generics can, and should, be used to narrow the return type.
-
-example:
+```java
+@Adjacency("Foo")
+<E extends Bar> E addFoobar(ClassInitializer<E> vertexInitializer)
+```
 
 ```java
 @Adjacency("Foo")
@@ -161,7 +201,7 @@ example:
 
 #### (ClassInitializer, ClassInitializer)
 
-Valid return types: `VertexFrame`
+Valid return types: *Any Frame*
 
 Creates a new edge and connects this to a new vertex. The newly created vertex will have a type, as well as be initiated, according to the details specified in the first ClassInitializer argument. Similarly the newly created edge will hava type, and be initiated using, the second ClassInitializer argument. Java generics can, and should, be used to narrow the return type.
 
@@ -169,6 +209,18 @@ example:
 
 ```java
 @Adjacency("Foo")
+Bar addFoobar(ClassInitializer<Bar> vertexInitializer,
+              ClassInitializer<?> edgeInitializer)
+```
+
+```java
+@Adjacency("Foo")
+<E extends Bar> E addFoobar(ClassInitializer<E> vertexInitializer,
+                            ClassInitializer<?> edgeInitializer)
+```
+
+```java
+@Adjacency("Foo")
 <E extends VertexFrame> E addFoobar(ClassInitializer<E> vertexInitializer,
-                                    ClassInitializer<? extends EdgeFrame> edgeInitializer)
+                                    ClassInitializer<?> edgeInitializer)
 ```

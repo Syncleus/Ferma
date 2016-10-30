@@ -5,7 +5,6 @@ tags: [getting_started]
 sidebar: main_sidebar
 permalink: index.html
 toc: false
-summary: An overview of the project and features.
 ---
 
 ![](https://github.com/Syncleus/Ferma/wiki/img/ferma-logo-text.png)

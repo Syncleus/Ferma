@@ -1,10 +1,10 @@
 ---
-title: Getting started with the Documentation Theme for Jekyll
-keywords: sample homepage
+title: Introduction
+keywords: introduction
 tags: [getting_started]
 sidebar: main_sidebar
 permalink: index.html
-summary: These brief instructions will help you get started quickly with the theme. The other topics in this help provide additional information and detail about working with other aspects of this theme and Jekyll.
+summary: An overview of the project and features.
 ---
 
 ## Testing

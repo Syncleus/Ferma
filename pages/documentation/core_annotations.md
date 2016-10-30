@@ -32,7 +32,7 @@ The following would bind the method it is used on to the property named `foo`:
 //Method declared here
 ```
 
-### get prefix
+### `get` prefix
 
 Valid return types: *Any*
 Valid method arguments: `()`

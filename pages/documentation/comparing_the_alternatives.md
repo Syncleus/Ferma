@@ -34,12 +34,12 @@ Despite the superior performance of Ferma it also supports all the features prov
 |                                                                                                                  | **Ferma**     | **Frames**    | **Totorom**   | **Peapod**    |
 |------------------------------------------------------------------------------------------------------------------|---------------|---------------|---------------|---------------|
 | **[JPA-like Annotations](creating_annotated_domain_models)**                                                     | Supported     | Supported     | Not Supported | Supported     |
-| **[Type information encoded into graph](#Type_information_encoded_into_graph)**                                  | Supported     | Supported     | Supported     | Supported     |
-| **"Framing of elements instantiated according to type hierarchy.":\#Framing\_instantiated\_by\_type\_hierarchy** | Supported     | Supported     | Supported     | Supported     |
-| **"Element queried by type hierarchy.":\#Element\_queried\_by\_type\_hierarchy**                                 | Supported     | Not Supported | Not Supported | Partial \*    |
-| **"Turning off type resolution on a per-call basis.":\#Turning\_off\_type\_resolution\_per\_call**               | Supported     | Not Supported | Not Supported | Not Supported |
-| **"Changing the encoded graph type already stored in the database.":\#Changing\_type\_encoded\_in\_the\_graph**  | Supported     | Not Supported | Not Supported | Not Supported |
-| **"Customizing the way type information is stored in the graph":\#Customizing\_how\_types\_are\_encoded**        | Supported     | Not Supported | Not Supported | Not Supported |
+| **[Type information encoded into graph](#type-information-encoded-into-graph)**                                  | Supported     | Supported     | Supported     | Supported     |
+| **[Framing of elements instantiated according to type hierarchy](#framing-instantiated-by-type-hierarchy)**      | Supported     | Supported     | Supported     | Supported     |
+| **[Element queried by type hierarchy](#element-queried-by-type-hierarchy)**                                      | Supported     | Not Supported | Not Supported | Partial \*    |
+| **[Turning off type resolution on a per call basis](#turning-off-type-resolution-per-call)**                     | Supported     | Not Supported | Not Supported | Not Supported |
+| **[Changing the encoded graph type already stored in the database](#changing-type-encoded-in-the-graph)**        | Supported     | Not Supported | Not Supported | Not Supported |
+| **[Customizing the way type information is stored in the graph](#customizing-how-types-are-encoded)**            | Supported     | Not Supported | Not Supported | Not Supported |
 | **Tinkerpop 2 support**                                                                                          | Supported     | Supported     | Supported     | Not Supported |
 | **Tinkerpop 3 support**                                                                                          | Not Supported | Not Supported | Not Supported | Supported     |
 

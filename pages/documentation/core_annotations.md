@@ -136,7 +136,7 @@ Annotation arguments:
 
 ### add prefix
 
-Valid method arguments: `()`, `(&lt;Any Frame&gt;)`, `(ClassInitializer)`, `(ClassInitializer, ClassInitializer)`
+Valid method arguments: `()`, `(<Any Frame>)`, `(ClassInitializer)`, `(ClassInitializer, ClassInitializer)`
 
 Adds a node as an adjacency to the current node, and the returns the newly connected node.
 

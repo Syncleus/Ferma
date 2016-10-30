@@ -17,7 +17,7 @@ Method names that are annotated must have one of the following prefixes: add, ge
 
 Below specifies that annotations that can be used when defining a Frame's interface. By specifying the method argument and return types, the underlying graph is constrained to the interface specification.
 
-# Property annotation
+## Property annotation
 
 Valid on frames: Edge and Vertex
 Allowed prefixes: `get`, `is`, `can`, `set`, `remove`
@@ -25,7 +25,7 @@ Allowed prefixes: `get`, `is`, `can`, `set`, `remove`
 Annotation arguments:
 @value@ - The name of the property
 
-## get prefix
+### get prefix
 
 Valid return types: *Any*
 Valid method arguments: `()`
@@ -39,7 +39,7 @@ example:
 Foobar getFoobar()
 ```
 
-## is prefix
+### is prefix
 
 Valid return types: `boolean`
 Valid method arguments: `()`
@@ -53,7 +53,7 @@ example:
 boolean isFoobared()
 ```
 
-## set prefix
+### set prefix
 
 Valid return types: *None*
 Valid method arguments: `(Object)`
@@ -67,7 +67,7 @@ example:
 void setFoobar(Foobar foobar)
 ```
 
-## remove prefix
+### remove prefix
 
 Valid return types: *None*
 Valid method arguments: `()`
@@ -81,7 +81,7 @@ example:
 void removeFoobar()
 ```
 
-# Adjacency annotation
+## Adjacency annotation
 
 Valid on frames: Vertex
 Allowed prefixes: `add`, `get`, `remove`, `set`
@@ -90,13 +90,13 @@ Annotation arguments:
 `label` - The label assigned to the edge which connects the adjacent nodes.
 `direction` - The direction for the edge which creates the adjacency. It can be assigned any of the values from @org.apache.tinkerpop.gremlin.structure.Direction@.
 
-## add prefix
+### add prefix
 
 Valid method arguments: `()`, `(ClassInitializer)`, `(ClassInitializer, ClassInitializer)`, `(VertexFrame)`
 
 Adds a node as an adjacency to the current node, and the returns the newly connected node.
 
-### () arguments
+#### () arguments
 
 Valid return types: `VertexFrame`
 

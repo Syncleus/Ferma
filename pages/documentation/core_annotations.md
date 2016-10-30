@@ -38,7 +38,7 @@ The following would bind the method it is used on to the property named `foo`:
 
 Valid method arguments: `()`
 
-#### () signature
+#### ()
 
 Valid return types: *Any*
 
@@ -55,7 +55,7 @@ Foobar getFoobar()
 
 Valid method arguments: `()`
 
-#### () signature
+#### ()
 
 Valid return types: `boolean`
 
@@ -72,7 +72,7 @@ boolean isFoobared()
 
 Valid method arguments: `(Object)`
 
-#### (Object) signature
+#### (Object)
 
 Valid return types: *None*
 
@@ -89,7 +89,7 @@ void setFoobar(Foobar foobar)
 
 Valid method arguments: `()`
 
-#### () signature
+#### ()
 
 Valid return types: *None*
 
@@ -120,7 +120,7 @@ Valid method arguments: `()`, `(VertexFrame)`, `(ClassInitializer)`, `(ClassInit
 
 Adds a node as an adjacency to the current node, and the returns the newly connected node.
 
-#### () signature
+#### ()
 
 Valid return types: `VertexFrame`
 
@@ -133,7 +133,7 @@ example:
 VertexFrame addFoobar()
 ```
 
-#### (VertexFrame) signature
+#### (VertexFrame)
 
 Valid return types: `VertexFrame`
 
@@ -146,7 +146,7 @@ example:
 VertexFrame addFoobar(VertexFrame existingVertex)
 ```
 
-#### (ClassInitializer) signature
+#### (ClassInitializer)
 
 Valid return types: `VertexFrame`
 
@@ -159,7 +159,7 @@ example:
 <E extends VertexFrame> E addFoobar(ClassInitializer<E> vertexInitializer)
 ```
 
-#### (ClassInitializer, ClassInitializer) signature
+#### (ClassInitializer, ClassInitializer)
 
 Valid return types: `VertexFrame`
 
@@ -169,5 +169,6 @@ example:
 
 ```java
 @Adjacency("Foo")
-<E extends VertexFrame> E addFoobar(ClassInitializer<E> vertexInitializer, ClassInitializer<? extends EdgeFrame> edgeInitializer)
+<E extends VertexFrame> E addFoobar(ClassInitializer<E> vertexInitializer,
+                                    ClassInitializer<? extends EdgeFrame> edgeInitializer)
 ```

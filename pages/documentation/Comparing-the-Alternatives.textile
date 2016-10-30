@@ -1,0 +1,135 @@
+There are several OGM/ORM options out there. For the purposes of this document we will focus only on those that have a stable release, or are close to a stable release. At the time of this writing those are: Tinkerpop Framed and Totorom.
+
+h1(#benchmarks). Benchmarks
+
+We maintain an informal project for benchmarking Ferma against other OGM available, you can find the "source here":https://github.com/Syncleus/Ferma-benchmark. However below is a matrix breakdown of the results. Instead of showing raw execution time we show the ratio of each OGM compared to Ferma. Therefore if the table lists 1x then it means the framework has the same execution time as Ferma, if it lists 2x then it took twice as long to execute, and if it indicates 0.5x then it took half the time to execute. Obviously any value less than 1x indicates the OGM out performed Ferma and any value greater than 1x indicates Ferma had the superior performance tiimes.
+
+||*Blueprints*|*Gremlin Pipeline*|*Tinkerpop3*|*Frames*|*Totorom*|*Peapod*|
+|*Get adjacencies via annotation*|Not capable|Not capable|Not capable|x2.09|Not capable|x2.65|
+|*Get verticies (untyped)*|x0.89|x3.94|x16.98|Not capable|x4.24|Not capable|
+|*Get verticies (typed)*|x0.92|x3.94|Not capable|x0.96|x4.20|x20.74|
+|*Get verticies and call next (untyped)*|x0.79|x3.87|x11.74|Not capable|x4.81|Not capable|
+|*Get verticies and call next (typed)*|x0.72|x2.91|Not capable|x1.94|x3.31|x16.70|
+
+As can be seen Ferma out performs all the alternative solutions considerably by several orders of magnitude. While results do vary slightly from system to system these results are pretty close to typical. Go ahead, check out the benchmark program and run it for yourself!
+
+h1(#feature-breakdown). Feature Breakdown
+
+Despite the superior performance of Ferma it also supports all the features provided by the alternatives out there, not to mention several novel features. The following gives a quick breakdown of the features of the various frameworks. We also include a bit later in the document some Ferma examples showing the various features in action. All of the examples below use the domain model "found here":Ferma:Domain_Example.
+
+|_. |_. *Ferma*|_. *Frames*|_. *Totorom*|_. *Peapod*|
+|*"JPA-like Annotations":Ferma:Creating_Annotated_Domain_Models*|Supported|Supported|Not Supported|Supported|
+|*"Type information encoded into graph.":#Type_information_encoded_into_graph*|Supported|Supported|Supported|Supported|
+|*"Framing of elements instantiated according to type hierarchy.":#Framing_instantiated_by_type_hierarchy*|Supported|Supported|Supported|Supported|
+|*"Element queried by type hierarchy.":#Element_queried_by_type_hierarchy*|Supported|Not Supported|Not Supported|Partial &#42;|
+|*"Turning off type resolution on a per-call basis.":#Turning_off_type_resolution_per-call*|Supported|Not Supported|Not Supported|Not Supported|
+|*"Changing the encoded graph type already stored in the database.":#Changing_type_encoded_in_the_graph*|Supported|Not Supported|Not Supported|Not Supported|
+|*"Customizing the way type information is stored in the graph":#Customizing_how_types_are_encoded*|Supported|Not Supported|Not Supported|Not Supported|
+|*Tinkerpop 2 support*|Supported|Supported|Supported|Not Supported|
+|*Tinkerpop 3 support*|Not Supported|Not Supported|Not Supported|Supported|
+
+&#42; While Peapod does support querying for all instances of a type, and its subtypes, it does not support a mechanism to query for a specific type while excluding subtypes.
+
+h2(#type-information-encoded-into-graph). Type information encoded into graph
+
+```java
+Set<Class<?>> types = new HashSet<Class<?>>(Arrays.asList(new Class<?>[]{Person.class}));
+Graph g = new TinkerGraph();
+FramedGraph fg = new DelegatingFramedGraph(g, types);
+
+fg.addFramedVertex(Person.class);
+Person person = fg.v().next(Program.class);
+
+String personClassName = Person.class.getName();
+String encodedClassName = person.getProperty(PolymorphicTypeResolver.TYPE_RESOLUTION_KEY)
+assert(personClassName.equals(encodedClassName));
+```
+
+h2(#framing-instantiated-by-type-hierarchy). Framing instantiated by type hierarchy
+
+```java
+Set<Class<?>> types = new HashSet<Class<?>>(Arrays.asList(new Class<?>[]{Person.class,
+                                                                         Programmer.class}));
+TinkerGraph g = new TinkerGraph();
+FramedGraph fg = new DelegatingFramedGraph(g, types);
+
+fg.addFramedVertex(Programmer.class);
+
+//make sure the newly added node is actually a programmer
+Person programmer = fg.v().next(Person.class);
+assert(programmer instanceof Programmer);
+```
+
+h2(#element-queried-by-type-hierarchy). Element queried by type hierarchy
+
+```java
+Set<Class<?>> types = new HashSet<Class<?>>(Arrays.asList(new Class<?>[]{Person.class,
+                                                                         Programmer.class}));
+TinkerGraph g = new TinkerGraph();
+FramedGraph fg = new DelegatingFramedGraph(g, types);
+
+fg.addFramedVertex(Programmer.class);
+fg.addFramedVertex(Person.class);
+
+//counts how many people (or subclasses thereof) in the graph.
+assert(fg.v().has(Person.class).count() == 2);
+//counts how many programmers are in the graph
+assert(fg.v().has(Programmer.class).count() == 1);
+```
+
+h2(#turning-off-type-resolution-per-call). Turning off type resolution per&#45;call
+
+```java
+Set<Class<?>> types = new HashSet<Class<?>>(Arrays.asList(new Class<?>[]{Person.class,
+                                                                         Programmer.class}));
+TinkerGraph g = new TinkerGraph();
+FramedGraph fg = new DelegatingFramedGraph(g, types);
+
+fg.addFramedVertex(Programmer.class);
+
+//With type resolution is active it should be a programmer
+assert(fg.v().next(Person.class) instanceof Programmer);
+//With type resolution bypassed it is no longer a programmer
+assert(!(fg.v().nextExplicit(Person.class) instanceof Programmer));
+```
+
+h2(#changing-type-encoded-in-the-graph). Changing type encoded in the graph
+
+```java
+Set<Class<?>> types = new HashSet<Class<?>>(Arrays.asList(new Class<?>[]{Person.class,
+                                                                         Programmer.class}));
+TinkerGraph g = new TinkerGraph();
+FramedGraph fg = new DelegatingFramedGraph(g, types);
+
+fg.addFramedVertex(Programmer.class);
+
+//make sure the newly added node is actually a programmer
+Person programmer = fg.v().next(Person.class);
+assert(programmer instanceof Programmer);
+
+//change the type resolution to person
+programmer.setTypeResolution(Person.class);
+
+//make sure the newly added node is actually a programmer
+Person person = fg.v().next(Person.class);
+assert(person instanceof Person);
+assert(!(person instanceof Programmer));
+```
+
+h2(#customizing-how-types-are-encoded). Customizing how types are encoded
+
+```java
+Set<Class<?>> types = new HashSet<Class<?>>(Arrays.asList(new Class<?>[]{Person.class}));
+final ReflectionCache cache = new ReflectionCache(types);
+FrameFactory factory = new AnnotationFrameFactory(cache);
+TypeResolver resolver = new PolymorphicTypeResolver(cache, "customTypeKey");
+Graph g = new TinkerGraph();
+FramedGraph fg = new DelegatingFramedGraph(g, factory, resolver);
+
+fg.addFramedVertex(Person.class);
+Person person = fg.v().next(Program.class);
+
+String personClassName = Person.class.getName();
+String encodedClassName = person.getProperty("customTypeKey")
+assert(personClassName.equals(encodedClassName));
+```

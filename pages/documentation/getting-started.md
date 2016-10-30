@@ -5,7 +5,6 @@ sidebar: main_sidebar
 tags: [getting_started]
 keywords: quick start, getting started
 last_updated: October 30, 2016
-summary: "A quick set of intructions to help get you started"
 toc: true
 folder: documentation
 ---

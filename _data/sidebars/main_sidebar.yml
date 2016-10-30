@@ -36,6 +36,10 @@ entries:
       url: /comparing_the_alternatives.html
       output: web, pdf
 
+    - title: Glossary
+      url: /glossary.html
+      output: web, pdf
+
   - title: Release Notes
     output: web, pdf
     folderitems:

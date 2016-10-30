@@ -16,9 +16,8 @@ Benchmarks
 
 We maintain an informal project for benchmarking Ferma against other OGM available, you can find the [source here](https://github.com/Syncleus/Ferma-benchmark). However below is a matrix breakdown of the results. Instead of showing raw execution time we show the ratio of each OGM compared to Ferma. Therefore if the table lists 1x then it means the framework has the same execution time as Ferma, if it lists 2x then it took twice as long to execute, and if it indicates 0.5x then it took half the time to execute. Obviously any value less than 1x indicates the OGM out performed Ferma and any value greater than 1x indicates Ferma had the superior performance tiimes.
 
-|                                           |                |                      |                |             |             |             |
-|-------------------------------------------|----------------|----------------------|----------------|-------------|-------------|-------------|
 |                                           | **Blueprints** | **Gremlin Pipeline** | **Tinkerpop3** | **Frames**  | **Totorom** | **Peapod**  |
+|-------------------------------------------|----------------|----------------------|----------------|-------------|-------------|-------------|
 | **Get adjacencies via annotation**        | Not capable    | Not capable          | Not capable    | x2.09       | Not capable | x2.65       |
 | **Get verticies (untyped)**               | x0.89          | x3.94                | x16.98         | Not capable | x4.24       | Not capable |
 | **Get verticies (typed)**                 | x0.92          | x3.94                | Not capable    | x0.96       | x4.20       | x20.74      |

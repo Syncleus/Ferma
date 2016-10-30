@@ -36,9 +36,11 @@ The following would bind the method it is used on to the property named `foo`:
 
 ### get prefix
 
-Valid return types: *Any*
-
 Valid method arguments: `()`
+
+#### () signature
+
+Valid return types: *Any*
 
 Get the property value of an element. Used when property is not a boolean value.
 
@@ -51,9 +53,11 @@ Foobar getFoobar()
 
 ### is prefix
 
-Valid return types: `boolean`
-
 Valid method arguments: `()`
+
+#### () signature
+
+Valid return types: `boolean`
 
 Get the property value of an element. Used when property is a boolean value.
 
@@ -66,9 +70,11 @@ boolean isFoobared()
 
 ### set prefix
 
-Valid return types: *None*
-
 Valid method arguments: `(Object)`
+
+#### (Object) signature
+
+Valid return types: *None*
 
 Set the property value of an element.
 
@@ -81,9 +87,11 @@ void setFoobar(Foobar foobar)
 
 ### remove prefix
 
-Valid return types: *None*
-
 Valid method arguments: `()`
+
+#### () signature
+
+Valid return types: *None*
 
 Remove the property of an element.
 
@@ -112,7 +120,7 @@ Valid method arguments: `()`, `(ClassInitializer)`, `(ClassInitializer, ClassIni
 
 Adds a node as an adjacency to the current node, and the returns the newly connected node.
 
-#### () arguments
+#### () signature
 
 Valid return types: `VertexFrame`
 

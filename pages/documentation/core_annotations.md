@@ -116,7 +116,7 @@ Annotation arguments:
 
 ### add prefix
 
-Valid method arguments: `()`, `(ClassInitializer)`, `(ClassInitializer, ClassInitializer)`, `(VertexFrame)`
+Valid method arguments: `()`, `(VertexFrame)`, `(ClassInitializer)`, `(ClassInitializer, ClassInitializer)`
 
 Adds a node as an adjacency to the current node, and the returns the newly connected node.
 
@@ -131,4 +131,43 @@ example:
 ```java
 @Adjacency("Foo")
 VertexFrame addFoobar()
+```
+
+#### (VertexFrame) signature
+
+Valid return types: `VertexFrame`
+
+Creates a new edge without any type information and connects it between this vertex the vertex specified as an argument to the method.
+
+example:
+
+```java
+@Adjacency("Foo")
+VertexFrame addFoobar(VertexFrame existingVertex)
+```
+
+#### (ClassInitializer) signature
+
+Valid return types: `VertexFrame`
+
+Creates a new edge without any type information and connects it between this vertex and a newly created vertex. The newly created vertex will have a type, as well as be initiated, according to the details specified in the ClassInitializer argument. Java generics can, and should, be used to narrow the return type.
+
+example:
+
+```java
+@Adjacency("Foo")
+<E extends VertexFrame> E addFoobar(ClassInitializer<E> vertexInitializer)
+```
+
+#### (ClassInitializer, ClassInitializer) signature
+
+Valid return types: `VertexFrame`
+
+Creates a new edge and connects this to a new vertex. The newly created vertex will have a type, as well as be initiated, according to the details specified in the first ClassInitializer argument. Similarly the newly created edge will hava type, and be initiated using, the second ClassInitializer argument. Java generics can, and should, be used to narrow the return type.
+
+example:
+
+```java
+@Adjacency("Foo")
+<E extends VertexFrame> E addFoobar(ClassInitializer<E> vertexInitializer, ClassInitializer<? extends EdgeFrame> edgeInitializer)
 ```

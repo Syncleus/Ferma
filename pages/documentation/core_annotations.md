@@ -23,7 +23,7 @@ Valid on frames: Edge and Vertex
 Allowed prefixes: `get`, `is`, `can`, `set`, `remove`
 
 Annotation arguments:
-@value@ - The name of the property
+`value` - The name of the property
 
 ### get prefix
 

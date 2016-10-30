@@ -7,7 +7,7 @@ permalink: index.html
 toc: false
 ---
 
-![](https://github.com/Syncleus/Ferma/wiki/img/ferma-logo-text.png)
+![](images/ferma-logo-text.png)
 
 An ORM / OGM for the TinkerPop graph stack.
 

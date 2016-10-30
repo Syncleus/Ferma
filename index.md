@@ -1,13 +1,10 @@
 ---
-title: Getting Started
-permalink: getting_started.html
-sidebar: main_sidebar
+title: Introduction
+keywords: introduction
 tags: [getting_started]
-keywords: quick start, getting started
-last_updated: October 30, 2016
-summary: "A quick set of intructions to help get you started"
-toc: true
-folder: documentation
+sidebar: main_sidebar
+permalink: index.html
+summary: An overview of the project and features.
 ---
 
 ![](https://github.com/Syncleus/Ferma/wiki/img/ferma-logo-text.png)

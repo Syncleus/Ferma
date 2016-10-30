@@ -26,6 +26,7 @@ Annotation arguments:
 `value` - The name of the property
 
 The following would bind the method it is used on to the property named `foo`:
+
 ```java
 @Property("foo")
 ```

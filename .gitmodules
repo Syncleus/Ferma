@@ -1,0 +1,4 @@
+[submodule "wiki"]
+    path = pages/main
+    url = https://github.com/Syncleus/Ferma.wiki.git
+    branch = master

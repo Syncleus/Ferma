@@ -40,7 +40,7 @@ Valid method arguments: `()`
 
 #### ()
 
-Valid return types: *Any Frame*
+Valid return types: *Any Object*
 
 Get the property value of an element. Used when property is not a boolean value.
 
@@ -84,7 +84,7 @@ Valid method arguments: `(Object)`
 
 #### (Object)
 
-Valid return types: *None*
+Valid return types: `void`
 
 Set the property value of an element. The argument can be any class accepted by the underlying graph.
 
@@ -111,7 +111,7 @@ Valid method arguments: `()`
 
 #### ()
 
-Valid return types: *None*
+Valid return types: `void`
 
 Remove the property of an element.
 
@@ -136,7 +136,7 @@ Annotation arguments:
 
 ### add prefix
 
-Valid method arguments: `()`, `(<Any Frame>)`, `(ClassInitializer)`, `(ClassInitializer, ClassInitializer)`
+Valid method arguments: `()`, `(<Any Vertex Frame>)`, `(ClassInitializer)`, `(ClassInitializer, ClassInitializer)`
 
 Adds a node as an adjacency to the current node, and the returns the newly connected node.
 
@@ -153,9 +153,9 @@ example:
 VertexFrame addFoobar()
 ```
 
-#### (&lt;Any Frame&gt;)
+#### (&lt;Any Vertex Frame&gt;)
 
-Valid return types: *Any frame*
+Valid return types: *Any Vertex Frame*
 
 Creates a new edge without any type information and connects it between this vertex the vertex specified as an argument to the method. The frame returned is the same as the frame given in the argument, it is only there for compatability with other add methods. This method can also have a `void` return type.
 
@@ -178,7 +178,7 @@ Bar addFoobar(Bar existingVertex)
 
 #### (ClassInitializer)
 
-Valid return types: *Any Frame*
+Valid return types: *Any Vertex Frame*
 
 Creates a new edge without any type information and connects it between this vertex and a newly created vertex. The newly created vertex will have a type, as well as be initiated, according to the details specified in the ClassInitializer argument. Java generics can, and should, be used to narrow the return type.
 
@@ -201,7 +201,7 @@ Bar addFoobar(ClassInitializer<? extends Bar> vertexInitializer)
 
 #### (ClassInitializer, ClassInitializer)
 
-Valid return types: *Any Frame*
+Valid return types: *Any Vertex Frame*
 
 Creates a new edge and connects this to a new vertex. The newly created vertex will have a type, as well as be initiated, according to the details specified in the first ClassInitializer argument. Similarly the newly created edge will hava type, and be initiated using, the second ClassInitializer argument. Java generics can, and should, be used to narrow the return type.
 
@@ -233,7 +233,7 @@ Get's one or more adjacent vertex from the graph.
 
 #### ()
 
-Valid return types: *Any Frame* or `Iterator`
+Valid return types: *Any Vertex Frame* or `Object` or `VertexFrame` or `Iterator`
 
 Retrieves one or more of the adjacent vertex. If the return type is a specific Frame, an `Object`, or a `VertexFrame` then only the first instance is returned. If the return type is an iterator then it will iterate over all matching vertex. When using an Iterator it is encouraged to use generics. The returned frames will always be instantiated as the type encoded in the graph if there is one.
 
@@ -273,7 +273,7 @@ Iterator<Bar> getFoobar()
 
 #### (Class)
 
-Valid return types: *Any Frame* or `Iterator`
+Valid return types: *Any Vertex Frame* or `Object` or `VertexFrame` or `Iterator`
 
 Retrieves one or more of the adjacent vertex. If the return type is a specific Frame, an `Object`, or a `VertexFrame` then only the first instance is returned. If the return type is an iterator then it will iterate over all matches vertex. When using an Iterator it is encouraged to use generics.
 
@@ -309,5 +309,34 @@ Iterator<Bar> getFoobar(Class<? extends Bar> filter)
 ```java
 @Adjacency("Foo")
 <E extends VertexFrame> Iterator<E> getFoobar(Class<? extends E> filter)
+```
+
+### remove prefix
+
+Valid method arguments: `(<Any Vertex Frame>)`
+
+Removes any edges which cause an adjacency.
+
+#### (&lt;Any Vertex Frame&gt;)
+
+Valid return types: `void`
+
+Removes any edges which create an adjacency between the vurrent vertex and the vertex specified in the methods argument.
+
+example:
+
+```java
+@Adjacency("Foo")
+void removeFoobar(Bar vertex)
+```
+
+```java
+@Adjacency("Foo")
+<E extends Bar> void removeFoobar(E vertex)
+```
+
+```java
+@Adjacency("Foo")
+<E extends VertexFrame> void removeFoobar(E vertex)
 ```
 

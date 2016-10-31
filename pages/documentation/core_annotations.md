@@ -186,17 +186,17 @@ example:
 
 ```java
 @Adjacency("Foo")
-Bar addFoobar(ClassInitializer<Bar> vertexInitializer)
+Bar addFoobar(ClassInitializer<? extends Bar> vertexInitializer)
 ```
 
 ```java
 @Adjacency("Foo")
-<E extends Bar> E addFoobar(ClassInitializer<E> vertexInitializer)
+<E extends Bar> E addFoobar(ClassInitializer<? extends E> vertexInitializer)
 ```
 
 ```java
 @Adjacency("Foo")
-<E extends VertexFrame> E addFoobar(ClassInitializer<E> vertexInitializer)
+<E extends VertexFrame> E addFoobar(ClassInitializer<? extends E> vertexInitializer)
 ```
 
 #### (ClassInitializer, ClassInitializer)
@@ -209,18 +209,105 @@ example:
 
 ```java
 @Adjacency("Foo")
-Bar addFoobar(ClassInitializer<Bar> vertexInitializer,
+Bar addFoobar(ClassInitializer<? extends Bar> vertexInitializer,
               ClassInitializer<?> edgeInitializer)
 ```
 
 ```java
 @Adjacency("Foo")
-<E extends Bar> E addFoobar(ClassInitializer<E> vertexInitializer,
+<E extends Bar> E addFoobar(ClassInitializer<? extends E> vertexInitializer,
                             ClassInitializer<?> edgeInitializer)
 ```
 
 ```java
 @Adjacency("Foo")
-<E extends VertexFrame> E addFoobar(ClassInitializer<E> vertexInitializer,
+<E extends VertexFrame> E addFoobar(ClassInitializer<? extends E> vertexInitializer,
                                     ClassInitializer<?> edgeInitializer)
 ```
+
+### get prefix
+
+Valid method arguments: `()`, `(Class)`
+
+Get's one or more adjacent vertex from the graph.
+
+#### ()
+
+Valid return types: *Any Frame* or `Iterator`
+
+Retrieves one or more of the adjacent vertex. If the return type is a specific Frame, an `Object`, or a `VertexFrame` then only the first instance is returned. If the return type is an iterator then it will iterate over all matching vertex. When using an Iterator it is encouraged to use generics. The returned frames will always be instantiated as the type encoded in the graph if there is one.
+
+**Note:** If a type is specified that is more specific than the type of the returned element then an exception will be thrown. Therefore the return type specifed should always by the same type, or a super-type, of the expected return type. VertexFrame is always a safe return type for this method.
+
+example:
+
+```java
+@Adjacency("Foo")
+Bar getFoobar()
+```
+
+```java
+@Adjacency("Foo")
+<E extends Bar> E getFoobar()
+```
+
+```java
+@Adjacency("Foo")
+<E extends VertexFrame> E getFoobar()
+```
+
+```java
+@Adjacency("Foo")
+Iterator<Bar> getFoobar()
+```
+
+```java
+@Adjacency("Foo")
+<E extends Bar> Iterator<E> getFoobar()
+```
+
+```java
+@Adjacency("Foo")
+<E extends VertexFrame> Iterator<E> getFoobar()
+```
+
+#### (Class)
+
+Valid return types: *Any Frame* or `Iterator`
+
+Retrieves one or more of the adjacent vertex. If the return type is a specific Frame, an `Object`, or a `VertexFrame` then only the first instance is returned. If the return type is an iterator then it will iterate over all matches vertex. When using an Iterator it is encouraged to use generics.
+
+The Class argument of the method specifes a filter such that only vertex which are of a matching type, or a subtype, to that of the argument will be returned.
+
+example:
+
+```java
+@Adjacency("Foo")
+Bar getFoobar(Class<? extends Bar> filter)
+```
+
+```java
+@Adjacency("Foo")
+<E extends Bar> E getFoobar(Class<? extends E> filter)
+```
+
+```java
+@Adjacency("Foo")
+<E extends VertexFrame> E getFoobar(Class<? extends E> filter)
+```
+
+```java
+@Adjacency("Foo")
+Iterator<Bar> getFoobar(Class<? extends Bar> filter)
+```
+
+```java
+@Adjacency("Foo")
+<E extends Bar> Iterator<E> getFoobar(Class<? extends E> filter)
+```
+
+```java
+@Adjacency("Foo")
+<E extends VertexFrame> Iterator<E> getFoobar(Class<? extends E> filter)
+```
+

@@ -340,3 +340,34 @@ void removeFoobar(Bar vertex)
 <E extends VertexFrame> void removeFoobar(E vertex)
 ```
 
+### set prefix
+
+Valid method arguments: `(Iterator)`
+
+Creates new edges connected to several vertex.
+
+#### (Iterator)
+
+Valid return types: `void`
+
+The argument for this method must be an Iterator which iterates over any vertex Frames. It is suggested you specify a Generic Type for the Iterator for usability.
+
+This method will iterate over all the vertex specified in the Iterator argument and create new edges to connect to it. The edges in the graph will not encode a type.
+
+example:
+
+```java
+@Adjacency("Foo")
+void setFoobar(Iterator<Bar> vertex)
+```
+
+```java
+@Adjacency("Foo")
+<E extends Bar> void setFoobar(Iterator<? extends E> vertex)
+```
+
+```java
+@Adjacency("Foo")
+<E extends VertexFrame> void setFoobar(Iterator<? extends E> vertex)
+```
+

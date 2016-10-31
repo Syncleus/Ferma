@@ -52,7 +52,7 @@ Ferma also supports any of the many databases compatible with TinkerPop includin
  * [Oracle NoSQL](http://www.oracle.com/us/products/database/nosql/overview/index.html)
  * TinkerGraph
 
-For documentation refer to our [wiki](https://github.com/Syncleus/Ferma/wiki) as well as the
+For documentation refer to our [project page](http://syncleus.com/Ferma) as well as the
 [latest Javadocs](http://www.javadoc.io/doc/com.syncleus.ferma/ferma).
 
 For support please use [Gitter](https://gitter.im/Syncleus/Ferma?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)

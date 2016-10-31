@@ -36,7 +36,7 @@ The following would bind the method it is used on to the property named `foo`:
 
 ### get prefix
 
-Valid method arguments: `()`
+Valid method signatures: `()`
 
 #### ()
 
@@ -63,7 +63,7 @@ Bar getFoobar()
 
 ### is prefix
 
-Valid method arguments: `()`
+Valid method signatures: `()`
 
 #### ()
 
@@ -80,7 +80,7 @@ boolean isFoobared()
 
 ### set prefix
 
-Valid method arguments: `(Object)`
+Valid method signatures: `(Object)`
 
 #### (Object)
 
@@ -107,7 +107,7 @@ void setFoobar(Bar foobar)
 
 ### remove prefix
 
-Valid method arguments: `()`
+Valid method signatures: `()`
 
 #### ()
 
@@ -136,7 +136,7 @@ Annotation arguments:
 
 ### add prefix
 
-Valid method arguments: `()`, `(<Any Vertex Frame>)`, `(ClassInitializer)`, `(ClassInitializer, ClassInitializer)`
+Valid method signatures: `()`, `(<Any Vertex Frame>)`, `(ClassInitializer)`, `(ClassInitializer, ClassInitializer)`
 
 Adds a node as an adjacency to the current node, and the returns the newly connected node.
 
@@ -227,7 +227,7 @@ Bar addFoobar(ClassInitializer<? extends Bar> vertexInitializer,
 
 ### get prefix
 
-Valid method arguments: `()`, `(Class)`
+Valid method signatures: `()`, `(Class)`
 
 Get's one or more adjacent vertex from the graph.
 
@@ -313,7 +313,7 @@ Iterator<Bar> getFoobar(Class<? extends Bar> filter)
 
 ### remove prefix
 
-Valid method arguments: `(<Any Vertex Frame>)`
+Valid method signatures: `(<Any Vertex Frame>)`
 
 Removes any edges which cause an adjacency.
 
@@ -342,7 +342,7 @@ void removeFoobar(Bar vertex)
 
 ### set prefix
 
-Valid method arguments: `(Iterator)`
+Valid method signatures: `(Iterator)`
 
 Creates new edges connected to several vertex.
 

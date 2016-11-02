@@ -12,7 +12,7 @@
     <groupId>com.syncleus.ferma</groupId>
     <artifactId>ferma</artifactId>
     <packaging>jar</packaging>
-    <version>3.0.1-SNAPSHOT</version>
+    <version>3.0.1</version>
 
     <name>Ferma</name>
     <description>An ORM for the Tinkerpop3 graph stack.</description>
@@ -140,19 +140,6 @@
             </roles>
         </contributor>
     </contributors>
-
-    <repositories>
-        <repository>
-            <id>ossrh.snapshots</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
 
     <dependencies>
         <dependency>

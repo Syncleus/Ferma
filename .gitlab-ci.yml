@@ -72,7 +72,7 @@ test:jdk8:
   # Archive up the built documentation site.
   artifacts:
     paths:
-    - target/staging
+    - target/site
   image: maven:3-jdk-8
 
 

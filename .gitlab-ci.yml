@@ -62,11 +62,11 @@ verify:jdk8:
 # To get this working you need to define a volume while configuring your gitlab-ci-multi-runner.
 # Mount your `settings.xml` as `/root/.m2/settings.xml` which holds your secrets.
 # See https://maven.apache.org/settings.html
-deploy:jdk8:
+test:jdk8:
   # Use stage test here, so the pages job may later pickup the created site.
   stage: test
   script:
-    - 'mvn $MAVEN_CLI_OPTS deploy site site:stage'
+    - 'mvn $MAVEN_CLI_OPTS package site'
   only:
     - master
   # Archive up the built documentation site.

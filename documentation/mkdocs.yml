@@ -1,0 +1,25 @@
+site_name: Ferma
+theme: material
+repo_name: 'GitHub'
+repo_url: 'https://github.com/Syncleus/Ferma'
+pages:
+    - Home: index.md
+    - Comparing the Alternatives: comparing_the_alternatives.md
+    - Core Annotations: core_annotations.md
+    - Getting Started: getting_started.md
+    - Glossary: glossary.md
+extra:
+  version: '3.0.1'
+  logo: 'images/ferma-logo.png'
+  palette:
+    primary: 'blue'
+    accent: 'deep orange'
+  author:
+    github: 'freemo'
+    twitter: 'DebeoMorium'
+
+markdown_extensions:
+  - codehilite(css_class=code)
+  - admonition
+  - toc:
+      permalink: True

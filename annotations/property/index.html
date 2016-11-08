@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
     
       
-        <title>Glossary - Ferma</title>
+        <title>@Propery - Ferma</title>
       
       
       
@@ -17,35 +17,35 @@
     
     <meta property="og:url" content="None">
     <meta property="og:title" content="Ferma">
-    <meta property="og:image" content="None/../images/ferma-logo.svg">
+    <meta property="og:image" content="None/../../images/ferma-logo.svg">
     <meta name="apple-mobile-web-app-title" content="Ferma">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     
-      <link rel="apple-touch-icon" href="../images/ferma-logo.svg">
+      <link rel="apple-touch-icon" href="../../images/ferma-logo.svg">
     
     
-    <link rel="shortcut icon" type="image/x-icon" href="../assets/images/favicon-e565ddfa3b.ico">
-    <link rel="icon" type="image/x-icon" href="../assets/images/favicon-e565ddfa3b.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="../../assets/images/favicon-e565ddfa3b.ico">
+    <link rel="icon" type="image/x-icon" href="../../assets/images/favicon-e565ddfa3b.ico">
     <style>
       @font-face {
       	font-family: 'Icon';
-      	src: url('../assets/fonts/icon.eot?52m981');
-      	src: url('../assets/fonts/icon.eot?#iefix52m981')
+      	src: url('../../assets/fonts/icon.eot?52m981');
+      	src: url('../../assets/fonts/icon.eot?#iefix52m981')
                format('embedded-opentype'),
-      		   url('../assets/fonts/icon.woff?52m981')
+      		   url('../../assets/fonts/icon.woff?52m981')
                format('woff'),
-      		   url('../assets/fonts/icon.ttf?52m981')
+      		   url('../../assets/fonts/icon.ttf?52m981')
                format('truetype'),
-      		   url('../assets/fonts/icon.svg?52m981#icon')
+      		   url('../../assets/fonts/icon.svg?52m981#icon')
                format('svg');
       	font-weight: normal;
       	font-style: normal;
       }
     </style>
-    <link rel="stylesheet" href="../assets/stylesheets/application-a422ff04cc.css">
+    <link rel="stylesheet" href="../../assets/stylesheets/application-a422ff04cc.css">
     
-      <link rel="stylesheet" href="../assets/stylesheets/palettes-05ab2406df.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/palettes-05ab2406df.css">
     
     
       
@@ -62,7 +62,7 @@
       </style>
     
     
-    <script src="../assets/javascripts/modernizr-4ab42b99fd.js"></script>
+    <script src="../../assets/javascripts/modernizr-4ab42b99fd.js"></script>
     
   </head>
   
@@ -92,9 +92,13 @@
         
           <span class="path">
             
+              
+                Core Annotations <i class="icon icon-link"></i>
+              
+            
           </span>
         
-        Glossary
+        @Propery
       </div>
     </div>
     
@@ -132,7 +136,7 @@
     <div class="banner">
       
         <div class="logo">
-          <img src="../images/ferma-logo.svg">
+          <img src="../../images/ferma-logo.svg">
         </div>
       
       <div class="name">
@@ -173,7 +177,7 @@
           
             
   <li>
-    <a class="" title="Home" href="..">
+    <a class="" title="Home" href="../..">
       Home
     </a>
     
@@ -182,7 +186,7 @@
           
             
   <li>
-    <a class="" title="Getting Started" href="../getting_started/">
+    <a class="" title="Getting Started" href="../../getting_started/">
       Getting Started
     </a>
     
@@ -191,7 +195,7 @@
           
             
   <li>
-    <a class="" title="Comparing the Alternatives" href="../comparing_the_alternatives/">
+    <a class="" title="Comparing the Alternatives" href="../../comparing_the_alternatives/">
       Comparing the Alternatives
     </a>
     
@@ -200,12 +204,9 @@
           
             
   <li>
-    <a class="current" title="Glossary" href="./">
+    <a class="" title="Glossary" href="../../glossary/">
       Glossary
     </a>
-    
-      
-      
     
   </li>
 
@@ -217,7 +218,7 @@
       
         
   <li>
-    <a class="" title="Overview" href="../annotations/overview/">
+    <a class="" title="Overview" href="../overview/">
       Overview
     </a>
     
@@ -226,16 +227,47 @@
       
         
   <li>
-    <a class="" title="@Propery" href="../annotations/property/">
+    <a class="current" title="@Propery" href="./">
       @Propery
     </a>
+    
+      
+      
+        <ul>
+          
+            <li class="anchor">
+              <a title="get prefix" href="#get-prefix">
+                get prefix
+              </a>
+            </li>
+          
+            <li class="anchor">
+              <a title="is prefix" href="#is-prefix">
+                is prefix
+              </a>
+            </li>
+          
+            <li class="anchor">
+              <a title="set prefix" href="#set-prefix">
+                set prefix
+              </a>
+            </li>
+          
+            <li class="anchor">
+              <a title="remove prefix" href="#remove-prefix">
+                remove prefix
+              </a>
+            </li>
+          
+        </ul>
+      
     
   </li>
 
       
         
   <li>
-    <a class="" title="@adjacency" href="../annotations/adjacency/">
+    <a class="" title="@adjacency" href="../adjacency/">
       @adjacency
     </a>
     
@@ -270,10 +302,71 @@
       <article class="article">
         <div class="wrapper">
           
-            <h1>Glossary</h1>
+            <h1>@Propery</h1>
           
-          <p><strong>Frame</strong> - A class from the schema that represents an element from the graph. A frame usually extends either a VertexFrame or an EdgeFrame, though they are not required to do so.</p>
-<p><strong>Element</strong> - Either a vertex or an edge in a graph.</p>
+          <p>Valid on frames: Edge and Vertex</p>
+<p>Allowed prefixes: <code>get</code>, <code>is</code>, <code>can</code>, <code>set</code>, <code>remove</code></p>
+<p>Annotation arguments:</p>
+<p><code>value</code> - The name of the property</p>
+<p>The following would bind the method it is used on to the property named <code>foo</code>:</p>
+<pre class="code"><code class="language-java">@Property(&quot;foo&quot;)
+//Method declared here</code></pre>
+
+
+<h2 id="get-prefix">get prefix<a class="headerlink" href="#get-prefix" title="Permanent link">&para;</a></h2>
+<p>Valid method signatures: <code>()</code></p>
+<h3 id="_1">()<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<p>Valid return types: <em>Any Object</em></p>
+<p>Get the property value of an element. Used when property is not a boolean value.</p>
+<p>example:</p>
+<pre class="code"><code class="language-java">@Property(&quot;Foo&quot;)
+Bar getFoobar()</code></pre>
+
+
+<pre class="code"><code class="language-java">@Property(&quot;Foo&quot;)
+&lt;E extends Bar&gt; E getFoobar()</code></pre>
+
+
+<pre class="code"><code class="language-java">@Property(&quot;Foo&quot;)
+&lt;E&gt; E getFoobar()</code></pre>
+
+
+<h2 id="is-prefix">is prefix<a class="headerlink" href="#is-prefix" title="Permanent link">&para;</a></h2>
+<p>Valid method signatures: <code>()</code></p>
+<h3 id="_2">()<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<p>Valid return types: <code>boolean</code></p>
+<p>Get the property value of an element. Used when property is a boolean value.</p>
+<p>example:</p>
+<pre class="code"><code class="language-java">@Property(&quot;Foobared&quot;)
+boolean isFoobared()</code></pre>
+
+
+<h2 id="set-prefix">set prefix<a class="headerlink" href="#set-prefix" title="Permanent link">&para;</a></h2>
+<p>Valid method signatures: <code>(Object)</code></p>
+<h3 id="object">(Object)<a class="headerlink" href="#object" title="Permanent link">&para;</a></h3>
+<p>Valid return types: <code>void</code></p>
+<p>Set the property value of an element. The argument can be any class accepted by the underlying graph.</p>
+<p>example:</p>
+<pre class="code"><code class="language-java">@Property(&quot;Foo&quot;)
+void setFoobar(Bar foobar)</code></pre>
+
+
+<pre class="code"><code class="language-java">@Property(&quot;Foo&quot;)
+&lt;E extends Bar&gt; void setFoobar(E foobar)</code></pre>
+
+
+<pre class="code"><code class="language-java">@Property(&quot;Foo&quot;)
+&lt;E extends VectorFrame&gt; void setFoobar(E foobar)</code></pre>
+
+
+<h2 id="remove-prefix">remove prefix<a class="headerlink" href="#remove-prefix" title="Permanent link">&para;</a></h2>
+<p>Valid method signatures: <code>()</code></p>
+<h3 id="_3">()<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p>Valid return types: <code>void</code></p>
+<p>Remove the property of an element.</p>
+<p>example:</p>
+<pre class="code"><code class="language-java">@Property(&quot;Foo&quot;)
+void removeFoobar()</code></pre>
           <aside class="copyright" role="note">
             
             Documentation built with
@@ -290,7 +383,7 @@
   <nav class="pagination" aria-label="Footer">
     <div class="previous">
       
-        <a href="../comparing_the_alternatives/" title="Comparing the Alternatives">
+        <a href="../overview/" title="Overview">
           <span class="direction">
             Previous
           </span>
@@ -300,7 +393,7 @@
             </div>
             <div class="stretch">
               <div class="title">
-                Comparing the Alternatives
+                Overview
               </div>
             </div>
           </div>
@@ -309,14 +402,14 @@
     </div>
     <div class="next">
       
-        <a href="../annotations/overview/" title="Overview">
+        <a href="../adjacency/" title="@adjacency">
           <span class="direction">
             Next
           </span>
           <div class="page">
             <div class="stretch">
               <div class="title">
-                Overview
+                @adjacency
               </div>
             </div>
             <div class="button button-next" role="button" aria-label="Next">
@@ -342,10 +435,10 @@
       </div>
     </main>
     <script>
-      var base_url = '..';
+      var base_url = '../..';
       var repo_id  = 'Syncleus/Ferma';
     </script>
-    <script src="../assets/javascripts/application-997097ee0c.js"></script>
+    <script src="../../assets/javascripts/application-997097ee0c.js"></script>
     
     
   </body>

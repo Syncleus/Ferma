@@ -4,23 +4,7 @@
     
     <url>
      <loc>/</loc>
-     <lastmod>2016-11-07</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    
-
-    
-    <url>
-     <loc>/comparing_the_alternatives/</loc>
-     <lastmod>2016-11-07</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    
-
-    
-    <url>
-     <loc>/core_annotations/</loc>
-     <lastmod>2016-11-07</lastmod>
+     <lastmod>2016-11-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -28,7 +12,15 @@
     
     <url>
      <loc>/getting_started/</loc>
-     <lastmod>2016-11-07</lastmod>
+     <lastmod>2016-11-08</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>/comparing_the_alternatives/</loc>
+     <lastmod>2016-11-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -36,9 +28,31 @@
     
     <url>
      <loc>/glossary/</loc>
-     <lastmod>2016-11-07</lastmod>
+     <lastmod>2016-11-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
+    
+
+    
+        
+    <url>
+     <loc>/annotations/overview/</loc>
+     <lastmod>2016-11-08</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/annotations/property/</loc>
+     <lastmod>2016-11-08</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/annotations/adjacency/</loc>
+     <lastmod>2016-11-08</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
     
 
 </urlset>

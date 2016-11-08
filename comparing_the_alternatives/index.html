@@ -98,15 +98,10 @@
       </div>
     </div>
     
-      
-      <div class="button button-twitter" role="button" aria-label="Twitter">
-        <a href="https://twitter.com/DebeoMorium" title="@DebeoMorium on Twitter" target="_blank" class="toggle-button icon icon-twitter"></a>
-      </div>
-    
     
       
       <div class="button button-github" role="button" aria-label="GitHub">
-        <a href="https://github.com/freemo" title="@freemo on GitHub" target="_blank" class="toggle-button icon icon-github"></a>
+        <a href="https://github.com/Syncleus" title="@Syncleus on GitHub" target="_blank" class="toggle-button icon icon-github"></a>
       </div>
     
     <div class="button button-search" role="button" aria-label="Search">
@@ -187,32 +182,37 @@
           
             
   <li>
+    <a class="" title="Getting Started" href="../getting_started/">
+      Getting Started
+    </a>
+    
+  </li>
+
+          
+            
+  <li>
     <a class="current" title="Comparing the Alternatives" href="./">
       Comparing the Alternatives
     </a>
     
       
-        
       
+        <ul>
+          
+            <li class="anchor">
+              <a title="Benchmarks" href="#benchmarks">
+                Benchmarks
+              </a>
+            </li>
+          
+            <li class="anchor">
+              <a title="Feature Breakdown" href="#feature-breakdown">
+                Feature Breakdown
+              </a>
+            </li>
+          
+        </ul>
       
-    
-  </li>
-
-          
-            
-  <li>
-    <a class="" title="Core Annotations" href="../core_annotations/">
-      Core Annotations
-    </a>
-    
-  </li>
-
-          
-            
-  <li>
-    <a class="" title="Getting Started" href="../getting_started/">
-      Getting Started
-    </a>
     
   </li>
 
@@ -226,24 +226,53 @@
   </li>
 
           
+            
+  <li>
+    <span class="section">Core Annotations</span>
+    <ul>
+      
+        
+  <li>
+    <a class="" title="Overview" href="../annotations/overview/">
+      Overview
+    </a>
+    
+  </li>
+
+      
+        
+  <li>
+    <a class="" title="@Propery" href="../annotations/property/">
+      @Propery
+    </a>
+    
+  </li>
+
+      
+        
+  <li>
+    <a class="" title="@adjacency" href="../annotations/adjacency/">
+      @adjacency
+    </a>
+    
+  </li>
+
+      
+    </ul>
+  </li>
+
+          
         </ul>
         
           <hr>
           <span class="section">The author</span>
           <ul>
             
-              
-              <li>
-                <a href="https://twitter.com/DebeoMorium" target="_blank" title="@DebeoMorium on Twitter">
-                  @DebeoMorium on Twitter
-                </a>
-              </li>
-            
             
               
               <li>
-                <a href="https://github.com/freemo" target="_blank" title="@freemo on GitHub">
-                  @freemo on GitHub
+                <a href="https://github.com/Syncleus" target="_blank" title="@Syncleus on GitHub">
+                  @Syncleus on GitHub
                 </a>
               </li>
             
@@ -257,8 +286,10 @@
       <article class="article">
         <div class="wrapper">
           
+            <h1>Comparing the Alternatives</h1>
+          
           <p>There are several OGM/ORM options out there. For the purposes of this document we will focus only on those that have a stable release, or are close to a stable release. At the time of this writing those are: Tinkerpop Framed and Totorom.</p>
-<h1 id="benchmarks">Benchmarks<a class="headerlink" href="#benchmarks" title="Permanent link">&para;</a></h1>
+<h2 id="benchmarks">Benchmarks<a class="headerlink" href="#benchmarks" title="Permanent link">&para;</a></h2>
 <p>We maintain an informal project for benchmarking Ferma against other OGM available, you can find the <a href="https://github.com/Syncleus/Ferma-benchmark">source here</a>. However below is a matrix breakdown of the results. Instead of showing raw execution time we show the ratio of each OGM compared to Ferma. Therefore if the table lists 1x then it means the framework has the same execution time as Ferma, if it lists 2x then it took twice as long to execute, and if it indicates 0.5x then it took half the time to execute. Obviously any value less than 1x indicates the OGM out performed Ferma and any value greater than 1x indicates Ferma had the superior performance tiimes.</p>
 <table>
 <thead>
@@ -321,7 +352,7 @@
 </tbody>
 </table>
 <p>As can be seen Ferma out performs all the alternative solutions considerably by several orders of magnitude. While results do vary slightly from system to system these results are pretty close to typical. Go ahead, check out the benchmark program and run it for yourself!</p>
-<h1 id="feature-breakdown">Feature Breakdown<a class="headerlink" href="#feature-breakdown" title="Permanent link">&para;</a></h1>
+<h2 id="feature-breakdown">Feature Breakdown<a class="headerlink" href="#feature-breakdown" title="Permanent link">&para;</a></h2>
 <p>Despite the superior performance of Ferma it also supports all the features provided by the alternatives out there, not to mention several novel features. The following gives a quick breakdown of the features of the various frameworks. We also include a bit later in the document some Ferma examples showing the various features in action. All of the examples below use the domain model <a href="Ferma:Domain_Example">found here</a>.</p>
 <table>
 <thead>
@@ -400,7 +431,7 @@
 </tbody>
 </table>
 <p>* While Peapod does support querying for all instances of a type, and its subtypes, it does not support a mechanism to query for a specific type while excluding subtypes.</p>
-<h2 id="type-information-encoded-into-graph">Type information encoded into graph<a class="headerlink" href="#type-information-encoded-into-graph" title="Permanent link">&para;</a></h2>
+<h3 id="type-information-encoded-into-graph">Type information encoded into graph<a class="headerlink" href="#type-information-encoded-into-graph" title="Permanent link">&para;</a></h3>
 <pre class="code"><code class="language-java">Set&lt;Class&lt;?&gt;&gt; types = new HashSet&lt;Class&lt;?&gt;&gt;(Arrays.asList(new Class&lt;?&gt;[]{Person.class}));
 Graph g = new TinkerGraph();
 FramedGraph fg = new DelegatingFramedGraph(g, types);
@@ -413,7 +444,7 @@ String encodedClassName = person.getProperty(PolymorphicTypeResolver.TYPE_RESOLU
 assert(personClassName.equals(encodedClassName));</code></pre>
 
 
-<h2 id="framing-instantiated-by-type-hierarchy">Framing instantiated by type hierarchy<a class="headerlink" href="#framing-instantiated-by-type-hierarchy" title="Permanent link">&para;</a></h2>
+<h3 id="framing-instantiated-by-type-hierarchy">Framing instantiated by type hierarchy<a class="headerlink" href="#framing-instantiated-by-type-hierarchy" title="Permanent link">&para;</a></h3>
 <pre class="code"><code class="language-java">Set&lt;Class&lt;?&gt;&gt; types = new HashSet&lt;Class&lt;?&gt;&gt;(Arrays.asList(new Class&lt;?&gt;[]{Person.class,
                                                                          Programmer.class}));
 TinkerGraph g = new TinkerGraph();
@@ -426,7 +457,7 @@ Person programmer = fg.v().next(Person.class);
 assert(programmer instanceof Programmer);</code></pre>
 
 
-<h2 id="element-queried-by-type-hierarchy">Element queried by type hierarchy<a class="headerlink" href="#element-queried-by-type-hierarchy" title="Permanent link">&para;</a></h2>
+<h3 id="element-queried-by-type-hierarchy">Element queried by type hierarchy<a class="headerlink" href="#element-queried-by-type-hierarchy" title="Permanent link">&para;</a></h3>
 <pre class="code"><code class="language-java">Set&lt;Class&lt;?&gt;&gt; types = new HashSet&lt;Class&lt;?&gt;&gt;(Arrays.asList(new Class&lt;?&gt;[]{Person.class,
                                                                          Programmer.class}));
 TinkerGraph g = new TinkerGraph();
@@ -441,7 +472,7 @@ assert(fg.v().has(Person.class).count() == 2);
 assert(fg.v().has(Programmer.class).count() == 1);</code></pre>
 
 
-<h2 id="turning-off-type-resolution-per-call">Turning off type resolution per call<a class="headerlink" href="#turning-off-type-resolution-per-call" title="Permanent link">&para;</a></h2>
+<h3 id="turning-off-type-resolution-per-call">Turning off type resolution per call<a class="headerlink" href="#turning-off-type-resolution-per-call" title="Permanent link">&para;</a></h3>
 <pre class="code"><code class="language-java">Set&lt;Class&lt;?&gt;&gt; types = new HashSet&lt;Class&lt;?&gt;&gt;(Arrays.asList(new Class&lt;?&gt;[]{Person.class,
                                                                          Programmer.class}));
 TinkerGraph g = new TinkerGraph();
@@ -455,7 +486,7 @@ assert(fg.v().next(Person.class) instanceof Programmer);
 assert(!(fg.v().nextExplicit(Person.class) instanceof Programmer));</code></pre>
 
 
-<h2 id="changing-type-encoded-in-the-graph">Changing type encoded in the graph<a class="headerlink" href="#changing-type-encoded-in-the-graph" title="Permanent link">&para;</a></h2>
+<h3 id="changing-type-encoded-in-the-graph">Changing type encoded in the graph<a class="headerlink" href="#changing-type-encoded-in-the-graph" title="Permanent link">&para;</a></h3>
 <pre class="code"><code class="language-java">Set&lt;Class&lt;?&gt;&gt; types = new HashSet&lt;Class&lt;?&gt;&gt;(Arrays.asList(new Class&lt;?&gt;[]{Person.class,
                                                                          Programmer.class}));
 TinkerGraph g = new TinkerGraph();
@@ -476,7 +507,7 @@ assert(person instanceof Person);
 assert(!(person instanceof Programmer));</code></pre>
 
 
-<h2 id="customizing-how-types-are-encoded">Customizing how types are encoded<a class="headerlink" href="#customizing-how-types-are-encoded" title="Permanent link">&para;</a></h2>
+<h3 id="customizing-how-types-are-encoded">Customizing how types are encoded<a class="headerlink" href="#customizing-how-types-are-encoded" title="Permanent link">&para;</a></h3>
 <pre class="code"><code class="language-java">Set&lt;Class&lt;?&gt;&gt; types = new HashSet&lt;Class&lt;?&gt;&gt;(Arrays.asList(new Class&lt;?&gt;[]{Person.class}));
 final ReflectionCache cache = new ReflectionCache(types);
 FrameFactory factory = new AnnotationFrameFactory(cache);
@@ -506,7 +537,7 @@ assert(personClassName.equals(encodedClassName));</code></pre>
   <nav class="pagination" aria-label="Footer">
     <div class="previous">
       
-        <a href=".." title="Home">
+        <a href="../getting_started/" title="Getting Started">
           <span class="direction">
             Previous
           </span>
@@ -516,7 +547,7 @@ assert(personClassName.equals(encodedClassName));</code></pre>
             </div>
             <div class="stretch">
               <div class="title">
-                Home
+                Getting Started
               </div>
             </div>
           </div>
@@ -525,14 +556,14 @@ assert(personClassName.equals(encodedClassName));</code></pre>
     </div>
     <div class="next">
       
-        <a href="../core_annotations/" title="Core Annotations">
+        <a href="../glossary/" title="Glossary">
           <span class="direction">
             Next
           </span>
           <div class="page">
             <div class="stretch">
               <div class="title">
-                Core Annotations
+                Glossary
               </div>
             </div>
             <div class="button button-next" role="button" aria-label="Next">

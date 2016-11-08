@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
     
       
-        <title>Glossary - Ferma</title>
+        <title>Overview - Ferma</title>
       
       
       
@@ -17,35 +17,35 @@
     
     <meta property="og:url" content="None">
     <meta property="og:title" content="Ferma">
-    <meta property="og:image" content="None/../images/ferma-logo.svg">
+    <meta property="og:image" content="None/../../images/ferma-logo.svg">
     <meta name="apple-mobile-web-app-title" content="Ferma">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     
-      <link rel="apple-touch-icon" href="../images/ferma-logo.svg">
+      <link rel="apple-touch-icon" href="../../images/ferma-logo.svg">
     
     
-    <link rel="shortcut icon" type="image/x-icon" href="../assets/images/favicon-e565ddfa3b.ico">
-    <link rel="icon" type="image/x-icon" href="../assets/images/favicon-e565ddfa3b.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="../../assets/images/favicon-e565ddfa3b.ico">
+    <link rel="icon" type="image/x-icon" href="../../assets/images/favicon-e565ddfa3b.ico">
     <style>
       @font-face {
       	font-family: 'Icon';
-      	src: url('../assets/fonts/icon.eot?52m981');
-      	src: url('../assets/fonts/icon.eot?#iefix52m981')
+      	src: url('../../assets/fonts/icon.eot?52m981');
+      	src: url('../../assets/fonts/icon.eot?#iefix52m981')
                format('embedded-opentype'),
-      		   url('../assets/fonts/icon.woff?52m981')
+      		   url('../../assets/fonts/icon.woff?52m981')
                format('woff'),
-      		   url('../assets/fonts/icon.ttf?52m981')
+      		   url('../../assets/fonts/icon.ttf?52m981')
                format('truetype'),
-      		   url('../assets/fonts/icon.svg?52m981#icon')
+      		   url('../../assets/fonts/icon.svg?52m981#icon')
                format('svg');
       	font-weight: normal;
       	font-style: normal;
       }
     </style>
-    <link rel="stylesheet" href="../assets/stylesheets/application-a422ff04cc.css">
+    <link rel="stylesheet" href="../../assets/stylesheets/application-a422ff04cc.css">
     
-      <link rel="stylesheet" href="../assets/stylesheets/palettes-05ab2406df.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/palettes-05ab2406df.css">
     
     
       
@@ -62,7 +62,7 @@
       </style>
     
     
-    <script src="../assets/javascripts/modernizr-4ab42b99fd.js"></script>
+    <script src="../../assets/javascripts/modernizr-4ab42b99fd.js"></script>
     
   </head>
   
@@ -92,9 +92,13 @@
         
           <span class="path">
             
+              
+                Core Annotations <i class="icon icon-link"></i>
+              
+            
           </span>
         
-        Glossary
+        Overview
       </div>
     </div>
     
@@ -132,7 +136,7 @@
     <div class="banner">
       
         <div class="logo">
-          <img src="../images/ferma-logo.svg">
+          <img src="../../images/ferma-logo.svg">
         </div>
       
       <div class="name">
@@ -173,7 +177,7 @@
           
             
   <li>
-    <a class="" title="Home" href="..">
+    <a class="" title="Home" href="../..">
       Home
     </a>
     
@@ -182,7 +186,7 @@
           
             
   <li>
-    <a class="" title="Getting Started" href="../getting_started/">
+    <a class="" title="Getting Started" href="../../getting_started/">
       Getting Started
     </a>
     
@@ -191,7 +195,7 @@
           
             
   <li>
-    <a class="" title="Comparing the Alternatives" href="../comparing_the_alternatives/">
+    <a class="" title="Comparing the Alternatives" href="../../comparing_the_alternatives/">
       Comparing the Alternatives
     </a>
     
@@ -200,12 +204,9 @@
           
             
   <li>
-    <a class="current" title="Glossary" href="./">
+    <a class="" title="Glossary" href="../../glossary/">
       Glossary
     </a>
-    
-      
-      
     
   </li>
 
@@ -217,16 +218,19 @@
       
         
   <li>
-    <a class="" title="Overview" href="../annotations/overview/">
+    <a class="current" title="Overview" href="./">
       Overview
     </a>
+    
+      
+      
     
   </li>
 
       
         
   <li>
-    <a class="" title="@Propery" href="../annotations/property/">
+    <a class="" title="@Propery" href="../property/">
       @Propery
     </a>
     
@@ -235,7 +239,7 @@
       
         
   <li>
-    <a class="" title="@adjacency" href="../annotations/adjacency/">
+    <a class="" title="@adjacency" href="../adjacency/">
       @adjacency
     </a>
     
@@ -270,10 +274,12 @@
       <article class="article">
         <div class="wrapper">
           
-            <h1>Glossary</h1>
+            <h1>Overview</h1>
           
-          <p><strong>Frame</strong> - A class from the schema that represents an element from the graph. A frame usually extends either a VertexFrame or an EdgeFrame, though they are not required to do so.</p>
-<p><strong>Element</strong> - Either a vertex or an edge in a graph.</p>
+          <p>The Ferma schema is defined by a collection of interfaces and classes written by the user. Each method will interact with the underlying graph to either modify the graph in some way, or to retrieve an element or property from the graph. There are two techniques for defining how these methods behave. Either you can explicitly implement the method, or you can leave the method as abstract and annotate the method in order to allow Ferma to implement the method for you. Here we will define the annotations available to you and how they work, along with a few examples.</p>
+<p>The behavior of an annotated method is dictated not only by the annotation applied to it but also the method's signature. Therefore an annotated method will behave differently if it's return type, arguments, or even if the method name were to change. It is important to note that when a method is explicitly defined (doesnt use an annotation) then the method signature can be anything.</p>
+<p>Method names that are annotated must have one of the following prefixes: add, get, remove, set, is, can.</p>
+<p>Below specifies that annotations that can be used when defining a Frame's interface. By specifying the method argument and return types, the underlying graph is constrained to the interface specification.</p>
           <aside class="copyright" role="note">
             
             Documentation built with
@@ -290,7 +296,7 @@
   <nav class="pagination" aria-label="Footer">
     <div class="previous">
       
-        <a href="../comparing_the_alternatives/" title="Comparing the Alternatives">
+        <a href="../../glossary/" title="Glossary">
           <span class="direction">
             Previous
           </span>
@@ -300,7 +306,7 @@
             </div>
             <div class="stretch">
               <div class="title">
-                Comparing the Alternatives
+                Glossary
               </div>
             </div>
           </div>
@@ -309,14 +315,14 @@
     </div>
     <div class="next">
       
-        <a href="../annotations/overview/" title="Overview">
+        <a href="../property/" title="@Propery">
           <span class="direction">
             Next
           </span>
           <div class="page">
             <div class="stretch">
               <div class="title">
-                Overview
+                @Propery
               </div>
             </div>
             <div class="button button-next" role="button" aria-label="Next">
@@ -342,10 +348,10 @@
       </div>
     </main>
     <script>
-      var base_url = '..';
+      var base_url = '../..';
       var repo_id  = 'Syncleus/Ferma';
     </script>
-    <script src="../assets/javascripts/application-997097ee0c.js"></script>
+    <script src="../../assets/javascripts/application-997097ee0c.js"></script>
     
     
   </body>

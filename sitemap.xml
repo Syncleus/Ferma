@@ -1,24 +1,44 @@
----
-layout: none
-search: exclude
----
-
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  {% for post in site.posts %}
-  {% unless post.search == "exclude" %}
-  <url>
-    <loc>{{site.url}}{{post.url}}</loc>
-  </url>
-  {% endunless %}
-  {% endfor %}
 
+    
+    <url>
+     <loc>/</loc>
+     <lastmod>2016-11-07</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
 
-  {% for page in site.pages %}
-  {% unless page.search == "exclude" %}
-  <url>
-    <loc>{{site.url}}{{ page.url}}</loc>
-  </url>
-  {% endunless %}
-  {% endfor %}
+    
+    <url>
+     <loc>/comparing_the_alternatives/</loc>
+     <lastmod>2016-11-07</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>/core_annotations/</loc>
+     <lastmod>2016-11-07</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>/getting_started/</loc>
+     <lastmod>2016-11-07</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>/glossary/</loc>
+     <lastmod>2016-11-07</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
 </urlset>

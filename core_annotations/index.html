@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="no-js ie6"><![endif]-->
+<!--[if IE 7 ]><html class="no-js ie7"><![endif]-->
+<!--[if IE 8 ]><html class="no-js ie8"><![endif]-->
+<!--[if IE 9 ]><html class="no-js ie9"><![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
+    
+      
+        <title>Core Annotations - Ferma</title>
+      
+      
+      
+      
+    
+    <meta property="og:url" content="None">
+    <meta property="og:title" content="Ferma">
+    <meta property="og:image" content="None/../images/ferma-logo.png">
+    <meta name="apple-mobile-web-app-title" content="Ferma">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+      <link rel="apple-touch-icon" href="../images/ferma-logo.png">
+    
+    
+    <link rel="shortcut icon" type="image/x-icon" href="../assets/images/favicon-e565ddfa3b.ico">
+    <link rel="icon" type="image/x-icon" href="../assets/images/favicon-e565ddfa3b.ico">
+    <style>
+      @font-face {
+      	font-family: 'Icon';
+      	src: url('../assets/fonts/icon.eot?52m981');
+      	src: url('../assets/fonts/icon.eot?#iefix52m981')
+               format('embedded-opentype'),
+      		   url('../assets/fonts/icon.woff?52m981')
+               format('woff'),
+      		   url('../assets/fonts/icon.ttf?52m981')
+               format('truetype'),
+      		   url('../assets/fonts/icon.svg?52m981#icon')
+               format('svg');
+      	font-weight: normal;
+      	font-style: normal;
+      }
+    </style>
+    <link rel="stylesheet" href="../assets/stylesheets/application-a422ff04cc.css">
+    
+      <link rel="stylesheet" href="../assets/stylesheets/palettes-05ab2406df.css">
+    
+    
+      
+      
+      
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,700|Ubuntu+Mono">
+      <style>
+        body, input {
+          font-family: 'Ubuntu', Helvetica, Arial, sans-serif;
+        }
+        pre, code {
+          font-family: 'Ubuntu Mono', 'Courier New', 'Courier', monospace;
+        }
+      </style>
+    
+    
+    <script src="../assets/javascripts/modernizr-4ab42b99fd.js"></script>
+    
+  </head>
+  
+  
+  
+  <body class="palette-primary-blue palette-accent-deep-orange">
+    
+      
+      
+    
+    <div class="backdrop">
+      <div class="backdrop-paper"></div>
+    </div>
+    <input class="toggle" type="checkbox" id="toggle-drawer">
+    <input class="toggle" type="checkbox" id="toggle-search">
+    <label class="toggle-button overlay" for="toggle-drawer"></label>
+    <header class="header">
+      <nav aria-label="Header">
+  <div class="bar default">
+    <div class="button button-menu" role="button" aria-label="Menu">
+      <label class="toggle-button icon icon-menu" for="toggle-drawer">
+        <span></span>
+      </label>
+    </div>
+    <div class="stretch">
+      <div class="title">
+        
+          <span class="path">
+            
+          </span>
+        
+        Core Annotations
+      </div>
+    </div>
+    
+      
+      <div class="button button-twitter" role="button" aria-label="Twitter">
+        <a href="https://twitter.com/DebeoMorium" title="@DebeoMorium on Twitter" target="_blank" class="toggle-button icon icon-twitter"></a>
+      </div>
+    
+    
+      
+      <div class="button button-github" role="button" aria-label="GitHub">
+        <a href="https://github.com/freemo" title="@freemo on GitHub" target="_blank" class="toggle-button icon icon-github"></a>
+      </div>
+    
+    <div class="button button-search" role="button" aria-label="Search">
+      <label class="toggle-button icon icon-search" title="Search" for="toggle-search"></label>
+    </div>
+  </div>
+  <div class="bar search">
+    <div class="button button-close" role="button" aria-label="Close">
+      <label class="toggle-button icon icon-back" for="toggle-search"></label>
+    </div>
+    <div class="stretch">
+      <div class="field">
+        <input class="query" type="text" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck>
+      </div>
+    </div>
+    <div class="button button-reset" role="button" aria-label="Search">
+      <button class="toggle-button icon icon-close" id="reset-search"></button>
+    </div>
+  </div>
+</nav>
+    </header>
+    <main class="main">
+      
+      <div class="drawer">
+        <nav aria-label="Navigation">
+  
+  <a href="https://github.com/Syncleus/Ferma" class="project">
+    <div class="banner">
+      
+        <div class="logo">
+          <img src="../images/ferma-logo.png">
+        </div>
+      
+      <div class="name">
+        <strong>
+          Ferma
+          <span class="version">
+            3.0.1
+          </span>
+        </strong>
+        
+          <br>
+          Syncleus/Ferma
+        
+      </div>
+    </div>
+  </a>
+  <div class="scrollable">
+    <div class="wrapper">
+      
+        <ul class="repo">
+          <li class="repo-download">
+            
+            <a href="https://github.com/Syncleus/Ferma/archive/3.0.1.zip" target="_blank" title="Download" data-action="download">
+              <i class="icon icon-download"></i> Download
+            </a>
+          </li>
+          <li class="repo-stars">
+            <a href="https://github.com/Syncleus/Ferma/stargazers" target="_blank" title="Stargazers" data-action="star">
+              <i class="icon icon-star"></i> Stars
+              <span class="count">&ndash;</span>
+            </a>
+          </li>
+        </ul>
+        <hr>
+      
+      <div class="toc">
+        <ul>
+          
+            
+  <li>
+    <a class="" title="Home" href="..">
+      Home
+    </a>
+    
+  </li>
+
+          
+            
+  <li>
+    <a class="" title="Comparing the Alternatives" href="../comparing_the_alternatives/">
+      Comparing the Alternatives
+    </a>
+    
+  </li>
+
+          
+            
+  <li>
+    <a class="current" title="Core Annotations" href="./">
+      Core Annotations
+    </a>
+    
+      
+      
+        <ul>
+          
+            <li class="anchor">
+              <a title="Property annotation" href="#property-annotation">
+                Property annotation
+              </a>
+            </li>
+          
+            <li class="anchor">
+              <a title="Adjacency annotation" href="#adjacency-annotation">
+                Adjacency annotation
+              </a>
+            </li>
+          
+        </ul>
+      
+    
+  </li>
+
+          
+            
+  <li>
+    <a class="" title="Getting Started" href="../getting_started/">
+      Getting Started
+    </a>
+    
+  </li>
+
+          
+            
+  <li>
+    <a class="" title="Glossary" href="../glossary/">
+      Glossary
+    </a>
+    
+  </li>
+
+          
+        </ul>
+        
+          <hr>
+          <span class="section">The author</span>
+          <ul>
+            
+              
+              <li>
+                <a href="https://twitter.com/DebeoMorium" target="_blank" title="@DebeoMorium on Twitter">
+                  @DebeoMorium on Twitter
+                </a>
+              </li>
+            
+            
+              
+              <li>
+                <a href="https://github.com/freemo" target="_blank" title="@freemo on GitHub">
+                  @freemo on GitHub
+                </a>
+              </li>
+            
+          </ul>
+        
+      </div>
+    </div>
+  </div>
+</nav>
+      </div>
+      <article class="article">
+        <div class="wrapper">
+          
+            <h1>Core Annotations</h1>
+          
+          <div class="toc">
+<ul>
+<li><a href="#property-annotation">Property annotation</a><ul>
+<li><a href="#get-prefix">get prefix</a><ul>
+<li><a href="#_1">()</a></li>
+</ul>
+</li>
+<li><a href="#is-prefix">is prefix</a><ul>
+<li><a href="#_2">()</a></li>
+</ul>
+</li>
+<li><a href="#set-prefix">set prefix</a><ul>
+<li><a href="#object">(Object)</a></li>
+</ul>
+</li>
+<li><a href="#remove-prefix">remove prefix</a><ul>
+<li><a href="#_3">()</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#adjacency-annotation">Adjacency annotation</a><ul>
+<li><a href="#add-prefix">add prefix</a><ul>
+<li><a href="#_4">()</a></li>
+<li><a href="#any-vertex-frame">(&lt;Any Vertex Frame&gt;)</a></li>
+<li><a href="#classinitializer">(ClassInitializer)</a></li>
+<li><a href="#classinitializer-classinitializer">(ClassInitializer, ClassInitializer)</a></li>
+</ul>
+</li>
+<li><a href="#get-prefix_1">get prefix</a><ul>
+<li><a href="#_5">()</a></li>
+<li><a href="#class">(Class)</a></li>
+</ul>
+</li>
+<li><a href="#remove-prefix_1">remove prefix</a><ul>
+<li><a href="#any-vertex-frame_1">(&lt;Any Vertex Frame&gt;)</a></li>
+</ul>
+</li>
+<li><a href="#set-prefix_1">set prefix</a><ul>
+<li><a href="#iterator">(Iterator)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<p>The Ferma schema is defined by a collection of interfaces and classes written by the user. Each method will interact with the underlying graph to either modify the graph in some way, or to retrieve an element or property from the graph. There are two techniques for defining how these methods behave. Either you can explicitly implement the method, or you can leave the method as abstract and annotate the method in order to allow Ferma to implement the method for you. Here we will define the annotations available to you and how they work, along with a few examples.</p>
+<p>The behavior of an annotated method is dictated not only by the annotation applied to it but also the method's signature. Therefore an annotated method will behave differently if it's return type, arguments, or even if the method name were to change. It is important to note that when a method is explicitly defined (doesnt use an annotation) then the method signature can be anything.</p>
+<p>Method names that are annotated must have one of the following prefixes: add, get, remove, set, is, can.</p>
+<p>Below specifies that annotations that can be used when defining a Frame's interface. By specifying the method argument and return types, the underlying graph is constrained to the interface specification.</p>
+<h2 id="property-annotation">Property annotation<a class="headerlink" href="#property-annotation" title="Permanent link">&para;</a></h2>
+<p>Valid on frames: Edge and Vertex</p>
+<p>Allowed prefixes: <code>get</code>, <code>is</code>, <code>can</code>, <code>set</code>, <code>remove</code></p>
+<p>Annotation arguments:</p>
+<p><code>value</code> - The name of the property</p>
+<p>The following would bind the method it is used on to the property named <code>foo</code>:</p>
+<pre class="code"><code class="language-java">@Property(&quot;foo&quot;)
+//Method declared here</code></pre>
+
+
+<h3 id="get-prefix">get prefix<a class="headerlink" href="#get-prefix" title="Permanent link">&para;</a></h3>
+<p>Valid method signatures: <code>()</code></p>
+<h4 id="_1">()<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h4>
+<p>Valid return types: <em>Any Object</em></p>
+<p>Get the property value of an element. Used when property is not a boolean value.</p>
+<p>example:</p>
+<pre class="code"><code class="language-java">@Property(&quot;Foo&quot;)
+Bar getFoobar()</code></pre>
+
+
+<pre class="code"><code class="language-java">@Property(&quot;Foo&quot;)
+&lt;E extends Bar&gt; E getFoobar()</code></pre>
+
+
+<pre class="code"><code class="language-java">@Property(&quot;Foo&quot;)
+&lt;E&gt; E getFoobar()</code></pre>
+
+
+<h3 id="is-prefix">is prefix<a class="headerlink" href="#is-prefix" title="Permanent link">&para;</a></h3>
+<p>Valid method signatures: <code>()</code></p>
+<h4 id="_2">()<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h4>
+<p>Valid return types: <code>boolean</code></p>
+<p>Get the property value of an element. Used when property is a boolean value.</p>
+<p>example:</p>
+<pre class="code"><code class="language-java">@Property(&quot;Foobared&quot;)
+boolean isFoobared()</code></pre>
+
+
+<h3 id="set-prefix">set prefix<a class="headerlink" href="#set-prefix" title="Permanent link">&para;</a></h3>
+<p>Valid method signatures: <code>(Object)</code></p>
+<h4 id="object">(Object)<a class="headerlink" href="#object" title="Permanent link">&para;</a></h4>
+<p>Valid return types: <code>void</code></p>
+<p>Set the property value of an element. The argument can be any class accepted by the underlying graph.</p>
+<p>example:</p>
+<pre class="code"><code class="language-java">@Property(&quot;Foo&quot;)
+void setFoobar(Bar foobar)</code></pre>
+
+
+<pre class="code"><code class="language-java">@Property(&quot;Foo&quot;)
+&lt;E extends Bar&gt; void setFoobar(E foobar)</code></pre>
+
+
+<pre class="code"><code class="language-java">@Property(&quot;Foo&quot;)
+&lt;E extends VectorFrame&gt; void setFoobar(E foobar)</code></pre>
+
+
+<h3 id="remove-prefix">remove prefix<a class="headerlink" href="#remove-prefix" title="Permanent link">&para;</a></h3>
+<p>Valid method signatures: <code>()</code></p>
+<h4 id="_3">()<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h4>
+<p>Valid return types: <code>void</code></p>
+<p>Remove the property of an element.</p>
+<p>example:</p>
+<pre class="code"><code class="language-java">@Property(&quot;Foo&quot;)
+void removeFoobar()</code></pre>
+
+
+<h2 id="adjacency-annotation">Adjacency annotation<a class="headerlink" href="#adjacency-annotation" title="Permanent link">&para;</a></h2>
+<p>Valid on frames: Vertex</p>
+<p>Allowed prefixes: <code>add</code>, <code>get</code>, <code>remove</code>, <code>set</code></p>
+<p>Annotation arguments:</p>
+<p><code>label</code> - The label assigned to the edge which connects the adjacent nodes.</p>
+<p><code>direction</code> - The direction for the edge which creates the adjacency. It can be assigned any of the values from @org.apache.tinkerpop.gremlin.structure.Direction@.</p>
+<h3 id="add-prefix">add prefix<a class="headerlink" href="#add-prefix" title="Permanent link">&para;</a></h3>
+<p>Valid method signatures: <code>()</code>, <code>(&lt;Any Vertex Frame&gt;)</code>, <code>(ClassInitializer)</code>, <code>(ClassInitializer, ClassInitializer)</code></p>
+<p>Adds a node as an adjacency to the current node, and the returns the newly connected node.</p>
+<h4 id="_4">()<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h4>
+<p>Valid return types: <code>Object</code> or <code>VertexFrame</code></p>
+<p>Creates a new vertex without any type information as well as an untyped edge to connect to it. The newly created VertexFrame is returned. Since it is untyped the return type of the signature can either be <code>Object</code> or <code>VertexFrame</code>.</p>
+<p>example:</p>
+<pre class="code"><code class="language-java">@Adjacency(&quot;Foo&quot;)
+VertexFrame addFoobar()</code></pre>
+
+
+<h4 id="any-vertex-frame">(&lt;Any Vertex Frame&gt;)<a class="headerlink" href="#any-vertex-frame" title="Permanent link">&para;</a></h4>
+<p>Valid return types: <em>Any Vertex Frame</em></p>
+<p>Creates a new edge without any type information and connects it between this vertex the vertex specified as an argument to the method. The frame returned is the same as the frame given in the argument, it is only there for compatability with other add methods. This method can also have a <code>void</code> return type.</p>
+<p>examples:</p>
+<pre class="code"><code class="language-java">@Adjacency(&quot;Foo&quot;)
+Bar addFoobar(Bar existingVertex)</code></pre>
+
+
+<pre class="code"><code class="language-java">@Adjacency(&quot;Foo&quot;)
+&lt;E extends Bar&gt; E addFoobar(E existingVertex)</code></pre>
+
+
+<pre class="code"><code class="language-java">@Adjacency(&quot;Foo&quot;)
+&lt;E extends VertexFrame&gt; E addFoobar(E existingVertex)</code></pre>
+
+
+<h4 id="classinitializer">(ClassInitializer)<a class="headerlink" href="#classinitializer" title="Permanent link">&para;</a></h4>
+<p>Valid return types: <em>Any Vertex Frame</em></p>
+<p>Creates a new edge without any type information and connects it between this vertex and a newly created vertex. The newly created vertex will have a type, as well as be initiated, according to the details specified in the ClassInitializer argument. Java generics can, and should, be used to narrow the return type.</p>
+<p>example:</p>
+<pre class="code"><code class="language-java">@Adjacency(&quot;Foo&quot;)
+Bar addFoobar(ClassInitializer&lt;? extends Bar&gt; vertexInitializer)</code></pre>
+
+
+<pre class="code"><code class="language-java">@Adjacency(&quot;Foo&quot;)
+&lt;E extends Bar&gt; E addFoobar(ClassInitializer&lt;? extends E&gt; vertexInitializer)</code></pre>
+
+
+<pre class="code"><code class="language-java">@Adjacency(&quot;Foo&quot;)
+&lt;E extends VertexFrame&gt; E addFoobar(ClassInitializer&lt;? extends E&gt; vertexInitializer)</code></pre>
+
+
+<h4 id="classinitializer-classinitializer">(ClassInitializer, ClassInitializer)<a class="headerlink" href="#classinitializer-classinitializer" title="Permanent link">&para;</a></h4>
+<p>Valid return types: <em>Any Vertex Frame</em></p>
+<p>Creates a new edge and connects this to a new vertex. The newly created vertex will have a type, as well as be initiated, according to the details specified in the first ClassInitializer argument. Similarly the newly created edge will hava type, and be initiated using, the second ClassInitializer argument. Java generics can, and should, be used to narrow the return type.</p>
+<p>example:</p>
+<pre class="code"><code class="language-java">@Adjacency(&quot;Foo&quot;)
+Bar addFoobar(ClassInitializer&lt;? extends Bar&gt; vertexInitializer,
+              ClassInitializer&lt;?&gt; edgeInitializer)</code></pre>
+
+
+<pre class="code"><code class="language-java">@Adjacency(&quot;Foo&quot;)
+&lt;E extends Bar&gt; E addFoobar(ClassInitializer&lt;? extends E&gt; vertexInitializer,
+                            ClassInitializer&lt;?&gt; edgeInitializer)</code></pre>
+
+
+<pre class="code"><code class="language-java">@Adjacency(&quot;Foo&quot;)
+&lt;E extends VertexFrame&gt; E addFoobar(ClassInitializer&lt;? extends E&gt; vertexInitializer,
+                                    ClassInitializer&lt;?&gt; edgeInitializer)</code></pre>
+
+
+<h3 id="get-prefix_1">get prefix<a class="headerlink" href="#get-prefix_1" title="Permanent link">&para;</a></h3>
+<p>Valid method signatures: <code>()</code>, <code>(Class)</code></p>
+<p>Get's one or more adjacent vertex from the graph.</p>
+<h4 id="_5">()<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h4>
+<p>Valid return types: <em>Any Vertex Frame</em> or <code>Object</code> or <code>VertexFrame</code> or <code>Iterator</code></p>
+<p>Retrieves one or more of the adjacent vertex. If the return type is a specific Frame, an <code>Object</code>, or a <code>VertexFrame</code> then only the first instance is returned. If the return type is an iterator then it will iterate over all matching vertex. When using an Iterator it is encouraged to use generics. The returned frames will always be instantiated as the type encoded in the graph if there is one.</p>
+<p><strong>Note:</strong> If a type is specified that is more specific than the type of the returned element then an exception will be thrown. Therefore the return type specifed should always by the same type, or a super-type, of the expected return type. VertexFrame is always a safe return type for this method.</p>
+<p>example:</p>
+<pre class="code"><code class="language-java">@Adjacency(&quot;Foo&quot;)
+Bar getFoobar()</code></pre>
+
+
+<pre class="code"><code class="language-java">@Adjacency(&quot;Foo&quot;)
+&lt;E extends Bar&gt; E getFoobar()</code></pre>
+
+
+<pre class="code"><code class="language-java">@Adjacency(&quot;Foo&quot;)
+&lt;E extends VertexFrame&gt; E getFoobar()</code></pre>
+
+
+<pre class="code"><code class="language-java">@Adjacency(&quot;Foo&quot;)
+Iterator&lt;Bar&gt; getFoobar()</code></pre>
+
+
+<pre class="code"><code class="language-java">@Adjacency(&quot;Foo&quot;)
+&lt;E extends Bar&gt; Iterator&lt;E&gt; getFoobar()</code></pre>
+
+
+<pre class="code"><code class="language-java">@Adjacency(&quot;Foo&quot;)
+&lt;E extends VertexFrame&gt; Iterator&lt;E&gt; getFoobar()</code></pre>
+
+
+<h4 id="class">(Class)<a class="headerlink" href="#class" title="Permanent link">&para;</a></h4>
+<p>Valid return types: <em>Any Vertex Frame</em> or <code>Object</code> or <code>VertexFrame</code> or <code>Iterator</code></p>
+<p>Retrieves one or more of the adjacent vertex. If the return type is a specific Frame, an <code>Object</code>, or a <code>VertexFrame</code> then only the first instance is returned. If the return type is an iterator then it will iterate over all matches vertex. When using an Iterator it is encouraged to use generics.</p>
+<p>The Class argument of the method specifes a filter such that only vertex which are of a matching type, or a subtype, to that of the argument will be returned.</p>
+<p>example:</p>
+<pre class="code"><code class="language-java">@Adjacency(&quot;Foo&quot;)
+Bar getFoobar(Class&lt;? extends Bar&gt; filter)</code></pre>
+
+
+<pre class="code"><code class="language-java">@Adjacency(&quot;Foo&quot;)
+&lt;E extends Bar&gt; E getFoobar(Class&lt;? extends E&gt; filter)</code></pre>
+
+
+<pre class="code"><code class="language-java">@Adjacency(&quot;Foo&quot;)
+&lt;E extends VertexFrame&gt; E getFoobar(Class&lt;? extends E&gt; filter)</code></pre>
+
+
+<pre class="code"><code class="language-java">@Adjacency(&quot;Foo&quot;)
+Iterator&lt;Bar&gt; getFoobar(Class&lt;? extends Bar&gt; filter)</code></pre>
+
+
+<pre class="code"><code class="language-java">@Adjacency(&quot;Foo&quot;)
+&lt;E extends Bar&gt; Iterator&lt;E&gt; getFoobar(Class&lt;? extends E&gt; filter)</code></pre>
+
+
+<pre class="code"><code class="language-java">@Adjacency(&quot;Foo&quot;)
+&lt;E extends VertexFrame&gt; Iterator&lt;E&gt; getFoobar(Class&lt;? extends E&gt; filter)</code></pre>
+
+
+<h3 id="remove-prefix_1">remove prefix<a class="headerlink" href="#remove-prefix_1" title="Permanent link">&para;</a></h3>
+<p>Valid method signatures: <code>(&lt;Any Vertex Frame&gt;)</code></p>
+<p>Removes any edges which cause an adjacency.</p>
+<h4 id="any-vertex-frame_1">(&lt;Any Vertex Frame&gt;)<a class="headerlink" href="#any-vertex-frame_1" title="Permanent link">&para;</a></h4>
+<p>Valid return types: <code>void</code></p>
+<p>Removes any edges which create an adjacency between the vurrent vertex and the vertex specified in the methods argument.</p>
+<p>example:</p>
+<pre class="code"><code class="language-java">@Adjacency(&quot;Foo&quot;)
+void removeFoobar(Bar vertex)</code></pre>
+
+
+<pre class="code"><code class="language-java">@Adjacency(&quot;Foo&quot;)
+&lt;E extends Bar&gt; void removeFoobar(E vertex)</code></pre>
+
+
+<pre class="code"><code class="language-java">@Adjacency(&quot;Foo&quot;)
+&lt;E extends VertexFrame&gt; void removeFoobar(E vertex)</code></pre>
+
+
+<h3 id="set-prefix_1">set prefix<a class="headerlink" href="#set-prefix_1" title="Permanent link">&para;</a></h3>
+<p>Valid method signatures: <code>(Iterator)</code></p>
+<p>Creates new edges connected to several vertex.</p>
+<h4 id="iterator">(Iterator)<a class="headerlink" href="#iterator" title="Permanent link">&para;</a></h4>
+<p>Valid return types: <code>void</code></p>
+<p>The argument for this method must be an Iterator which iterates over any vertex Frames. It is suggested you specify a Generic Type for the Iterator for usability.</p>
+<p>This method will iterate over all the vertex specified in the Iterator argument and create new edges to connect to it. The edges in the graph will not encode a type.</p>
+<p>example:</p>
+<pre class="code"><code class="language-java">@Adjacency(&quot;Foo&quot;)
+void setFoobar(Iterator&lt;Bar&gt; vertex)</code></pre>
+
+
+<pre class="code"><code class="language-java">@Adjacency(&quot;Foo&quot;)
+&lt;E extends Bar&gt; void setFoobar(Iterator&lt;? extends E&gt; vertex)</code></pre>
+
+
+<pre class="code"><code class="language-java">@Adjacency(&quot;Foo&quot;)
+&lt;E extends VertexFrame&gt; void setFoobar(Iterator&lt;? extends E&gt; vertex)</code></pre>
+          <aside class="copyright" role="note">
+            
+            Documentation built with
+            <a href="http://www.mkdocs.org" target="_blank">MkDocs</a>
+            using the
+            <a href="http://squidfunk.github.io/mkdocs-material/" target="_blank">
+              Material
+            </a>
+            theme.
+          </aside>
+          
+            <footer class="footer">
+              
+  <nav class="pagination" aria-label="Footer">
+    <div class="previous">
+      
+        <a href="../comparing_the_alternatives/" title="Comparing the Alternatives">
+          <span class="direction">
+            Previous
+          </span>
+          <div class="page">
+            <div class="button button-previous" role="button" aria-label="Previous">
+              <i class="icon icon-back"></i>
+            </div>
+            <div class="stretch">
+              <div class="title">
+                Comparing the Alternatives
+              </div>
+            </div>
+          </div>
+        </a>
+      
+    </div>
+    <div class="next">
+      
+        <a href="../getting_started/" title="Getting Started">
+          <span class="direction">
+            Next
+          </span>
+          <div class="page">
+            <div class="stretch">
+              <div class="title">
+                Getting Started
+              </div>
+            </div>
+            <div class="button button-next" role="button" aria-label="Next">
+              <i class="icon icon-forward"></i>
+            </div>
+          </div>
+        </a>
+      
+    </div>
+  </nav>
+
+            </footer>
+          
+        </div>
+      </article>
+      <div class="results" role="status" aria-live="polite">
+        <div class="scrollable">
+          <div class="wrapper">
+            <div class="meta"></div>
+            <div class="list"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script>
+      var base_url = '..';
+      var repo_id  = 'Syncleus/Ferma';
+    </script>
+    <script src="../assets/javascripts/application-997097ee0c.js"></script>
+    
+    
+  </body>
+</html>

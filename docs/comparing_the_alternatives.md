@@ -1,14 +1,3 @@
----
-title: Comparing the Alternatives
-permalink: comparing_the_alternatives.html
-sidebar: main_sidebar
-tags: [getting_started]
-keywords: getting started
-last_updated: October 30, 2016
-toc: true
-folder: documentation
----
-
 There are several OGM/ORM options out there. For the purposes of this document we will focus only on those that have a stable release, or are close to a stable release. At the time of this writing those are: Tinkerpop Framed and Totorom.
 
 Benchmarks

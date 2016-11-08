@@ -1,13 +1,4 @@
----
-title: Introduction
-keywords: introduction
-tags: [getting_started]
-sidebar: main_sidebar
-permalink: index.html
-toc: false
----
-
-![](images/ferma-logo-text.png)
+![](images/ferma-logo-text.svg)
 
 An ORM / OGM for the TinkerPop graph stack.
 

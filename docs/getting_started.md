@@ -1,14 +1,3 @@
----
-title: Getting Started
-permalink: getting_started.html
-sidebar: main_sidebar
-tags: [getting_started]
-keywords: quick start, getting started
-last_updated: October 30, 2016
-toc: true
-folder: documentation
----
-
 Ferma provides three levels of type resolution: untyped, simple, and annotated. In untyped mode Ferma doesn't handle typing at all, instead the type must be explicitly indicated whenever querying. In simple mode Ferma provides type context encoded as graph element properties which ensures the same type comes out that goes in to a graph. In annotated mode all the features of simple mode are provided as well as enabling the use of annotations on abstract methods to instruct Ferma to dynamically construct byte code to implement the abstract methods at start up.
 
 ## Dependency

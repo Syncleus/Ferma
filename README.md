@@ -1,4 +1,4 @@
-![](http://syncleus.com/Ferma/images/ferma-logo-text.png)
+![](http://syncleus.com/Ferma/images/ferma-logo-text.svg)
 
 [![Build Status](https://travis-ci.org/Syncleus/Ferma.svg?branch=master)](https://travis-ci.org/Syncleus/Ferma)
 [![Coverage](https://codecov.io/gh/Syncleus/Ferma/branch/master/graph/badge.svg)](https://codecov.io/gh/Syncleus/Ferma)

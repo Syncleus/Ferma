@@ -5,10 +5,13 @@ repo_url: 'https://github.com/Syncleus/Ferma'
 site_dir: 'target/mkdocs'
 pages:
     - Home: index.md
-    - Comparing the Alternatives: comparing_the_alternatives.md
-    - Core Annotations: core_annotations.md
     - Getting Started: getting_started.md
+    - Comparing the Alternatives: comparing_the_alternatives.md
     - Glossary: glossary.md
+    - Core Annotations:
+        - Overview: annotations/overview.md
+        - '@Propery': annotations/property.md
+        - '@adjacency': annotations/adjacency.md
 extra:
   version: '3.0.1'
   logo: 'images/ferma-logo.svg'
@@ -18,8 +21,7 @@ extra:
     primary: 'blue'
     accent: 'deep orange'
   author:
-    github: 'freemo'
-    twitter: 'DebeoMorium'
+    github: 'Syncleus'
 
 markdown_extensions:
   - codehilite(css_class=code)

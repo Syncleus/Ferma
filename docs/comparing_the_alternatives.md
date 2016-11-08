@@ -1,7 +1,6 @@
 There are several OGM/ORM options out there. For the purposes of this document we will focus only on those that have a stable release, or are close to a stable release. At the time of this writing those are: Tinkerpop Framed and Totorom.
 
-Benchmarks
-==========
+## Benchmarks
 
 We maintain an informal project for benchmarking Ferma against other OGM available, you can find the [source here](https://github.com/Syncleus/Ferma-benchmark). However below is a matrix breakdown of the results. Instead of showing raw execution time we show the ratio of each OGM compared to Ferma. Therefore if the table lists 1x then it means the framework has the same execution time as Ferma, if it lists 2x then it took twice as long to execute, and if it indicates 0.5x then it took half the time to execute. Obviously any value less than 1x indicates the OGM out performed Ferma and any value greater than 1x indicates Ferma had the superior performance tiimes.
 
@@ -15,8 +14,7 @@ We maintain an informal project for benchmarking Ferma against other OGM availab
 
 As can be seen Ferma out performs all the alternative solutions considerably by several orders of magnitude. While results do vary slightly from system to system these results are pretty close to typical. Go ahead, check out the benchmark program and run it for yourself!
 
-Feature Breakdown
-=================
+## Feature Breakdown
 
 Despite the superior performance of Ferma it also supports all the features provided by the alternatives out there, not to mention several novel features. The following gives a quick breakdown of the features of the various frameworks. We also include a bit later in the document some Ferma examples showing the various features in action. All of the examples below use the domain model [found here](Ferma:Domain_Example).
 
@@ -34,8 +32,7 @@ Despite the superior performance of Ferma it also supports all the features prov
 
 \* While Peapod does support querying for all instances of a type, and its subtypes, it does not support a mechanism to query for a specific type while excluding subtypes.
 
-Type information encoded into graph
------------------------------------
+### Type information encoded into graph
 
 ```java
 Set<Class<?>> types = new HashSet<Class<?>>(Arrays.asList(new Class<?>[]{Person.class}));
@@ -50,8 +47,7 @@ String encodedClassName = person.getProperty(PolymorphicTypeResolver.TYPE_RESOLU
 assert(personClassName.equals(encodedClassName));
 ```
 
-Framing instantiated by type hierarchy
---------------------------------------
+### Framing instantiated by type hierarchy
 
 ```java
 Set<Class<?>> types = new HashSet<Class<?>>(Arrays.asList(new Class<?>[]{Person.class,
@@ -66,8 +62,7 @@ Person programmer = fg.v().next(Person.class);
 assert(programmer instanceof Programmer);
 ```
 
-Element queried by type hierarchy
----------------------------------
+### Element queried by type hierarchy
 
 ```java
 Set<Class<?>> types = new HashSet<Class<?>>(Arrays.asList(new Class<?>[]{Person.class,
@@ -84,8 +79,7 @@ assert(fg.v().has(Person.class).count() == 2);
 assert(fg.v().has(Programmer.class).count() == 1);
 ```
 
-Turning off type resolution per call
-------------------------------------
+### Turning off type resolution per call
 
 ```java
 Set<Class<?>> types = new HashSet<Class<?>>(Arrays.asList(new Class<?>[]{Person.class,
@@ -101,8 +95,7 @@ assert(fg.v().next(Person.class) instanceof Programmer);
 assert(!(fg.v().nextExplicit(Person.class) instanceof Programmer));
 ```
 
-Changing type encoded in the graph
-----------------------------------
+### Changing type encoded in the graph
 
 ```java
 Set<Class<?>> types = new HashSet<Class<?>>(Arrays.asList(new Class<?>[]{Person.class,
@@ -125,8 +118,7 @@ assert(person instanceof Person);
 assert(!(person instanceof Programmer));
 ```
 
-Customizing how types are encoded
----------------------------------
+### Customizing how types are encoded
 
 ```java
 Set<Class<?>> types = new HashSet<Class<?>>(Arrays.asList(new Class<?>[]{Person.class}));

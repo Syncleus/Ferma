@@ -309,10 +309,10 @@
 <p>Annotation arguments:</p>
 <p><code>label</code> - The label assigned to the edge which connects the adjacent nodes.</p>
 <p><code>direction</code> - The direction for the edge which creates the adjacency. It can be assigned any of the values from @org.apache.tinkerpop.gremlin.structure.Direction@.</p>
-<h2 id="add-prefix">add prefix<a class="headerlink" href="#add-prefix" title="Permanent link">&para;</a></h2>
+<h2 id="add-prefix">add prefix<a class="headerlink" href="#add-prefix" title="Permanent link">#</a></h2>
 <p>Valid method signatures: <code>()</code>, <code>(&lt;Any Vertex Frame&gt;)</code>, <code>(ClassInitializer)</code>, <code>(ClassInitializer, ClassInitializer)</code></p>
 <p>Adds a node as an adjacency to the current node, and the returns the newly connected node.</p>
-<h3 id="_1">()<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<h3 id="_1">()<a class="headerlink" href="#_1" title="Permanent link">#</a></h3>
 <p>Valid return types: <code>Object</code> or <code>VertexFrame</code></p>
 <p>Creates a new vertex without any type information as well as an untyped edge to connect to it. The newly created VertexFrame is returned. Since it is untyped the return type of the signature can either be <code>Object</code> or <code>VertexFrame</code>.</p>
 <p>example:</p>
@@ -320,7 +320,7 @@
 VertexFrame addFoobar()</code></pre>
 
 
-<h3 id="any-vertex-frame">(&lt;Any Vertex Frame&gt;)<a class="headerlink" href="#any-vertex-frame" title="Permanent link">&para;</a></h3>
+<h3 id="any-vertex-frame">(&lt;Any Vertex Frame&gt;)<a class="headerlink" href="#any-vertex-frame" title="Permanent link">#</a></h3>
 <p>Valid return types: <em>Any Vertex Frame</em></p>
 <p>Creates a new edge without any type information and connects it between this vertex the vertex specified as an argument to the method. The frame returned is the same as the frame given in the argument, it is only there for compatability with other add methods. This method can also have a <code>void</code> return type.</p>
 <p>examples:</p>
@@ -336,7 +336,7 @@ Bar addFoobar(Bar existingVertex)</code></pre>
 &lt;E extends VertexFrame&gt; E addFoobar(E existingVertex)</code></pre>
 
 
-<h3 id="classinitializer">(ClassInitializer)<a class="headerlink" href="#classinitializer" title="Permanent link">&para;</a></h3>
+<h3 id="classinitializer">(ClassInitializer)<a class="headerlink" href="#classinitializer" title="Permanent link">#</a></h3>
 <p>Valid return types: <em>Any Vertex Frame</em></p>
 <p>Creates a new edge without any type information and connects it between this vertex and a newly created vertex. The newly created vertex will have a type, as well as be initiated, according to the details specified in the ClassInitializer argument. Java generics can, and should, be used to narrow the return type.</p>
 <p>example:</p>
@@ -352,7 +352,7 @@ Bar addFoobar(ClassInitializer&lt;? extends Bar&gt; vertexInitializer)</code></p
 &lt;E extends VertexFrame&gt; E addFoobar(ClassInitializer&lt;? extends E&gt; vertexInitializer)</code></pre>
 
 
-<h3 id="classinitializer-classinitializer">(ClassInitializer, ClassInitializer)<a class="headerlink" href="#classinitializer-classinitializer" title="Permanent link">&para;</a></h3>
+<h3 id="classinitializer-classinitializer">(ClassInitializer, ClassInitializer)<a class="headerlink" href="#classinitializer-classinitializer" title="Permanent link">#</a></h3>
 <p>Valid return types: <em>Any Vertex Frame</em></p>
 <p>Creates a new edge and connects this to a new vertex. The newly created vertex will have a type, as well as be initiated, according to the details specified in the first ClassInitializer argument. Similarly the newly created edge will hava type, and be initiated using, the second ClassInitializer argument. Java generics can, and should, be used to narrow the return type.</p>
 <p>example:</p>
@@ -371,10 +371,10 @@ Bar addFoobar(ClassInitializer&lt;? extends Bar&gt; vertexInitializer,
                                     ClassInitializer&lt;?&gt; edgeInitializer)</code></pre>
 
 
-<h2 id="get-prefix">get prefix<a class="headerlink" href="#get-prefix" title="Permanent link">&para;</a></h2>
+<h2 id="get-prefix">get prefix<a class="headerlink" href="#get-prefix" title="Permanent link">#</a></h2>
 <p>Valid method signatures: <code>()</code>, <code>(Class)</code></p>
 <p>Get's one or more adjacent vertex from the graph.</p>
-<h3 id="_2">()<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<h3 id="_2">()<a class="headerlink" href="#_2" title="Permanent link">#</a></h3>
 <p>Valid return types: <em>Any Vertex Frame</em> or <code>Object</code> or <code>VertexFrame</code> or <code>Iterator</code></p>
 <p>Retrieves one or more of the adjacent vertex. If the return type is a specific Frame, an <code>Object</code>, or a <code>VertexFrame</code> then only the first instance is returned. If the return type is an iterator then it will iterate over all matching vertex. When using an Iterator it is encouraged to use generics. The returned frames will always be instantiated as the type encoded in the graph if there is one.</p>
 <p><strong>Note:</strong> If a type is specified that is more specific than the type of the returned element then an exception will be thrown. Therefore the return type specifed should always by the same type, or a super-type, of the expected return type. VertexFrame is always a safe return type for this method.</p>
@@ -403,7 +403,7 @@ Iterator&lt;Bar&gt; getFoobar()</code></pre>
 &lt;E extends VertexFrame&gt; Iterator&lt;E&gt; getFoobar()</code></pre>
 
 
-<h3 id="class">(Class)<a class="headerlink" href="#class" title="Permanent link">&para;</a></h3>
+<h3 id="class">(Class)<a class="headerlink" href="#class" title="Permanent link">#</a></h3>
 <p>Valid return types: <em>Any Vertex Frame</em> or <code>Object</code> or <code>VertexFrame</code> or <code>Iterator</code></p>
 <p>Retrieves one or more of the adjacent vertex. If the return type is a specific Frame, an <code>Object</code>, or a <code>VertexFrame</code> then only the first instance is returned. If the return type is an iterator then it will iterate over all matches vertex. When using an Iterator it is encouraged to use generics.</p>
 <p>The Class argument of the method specifes a filter such that only vertex which are of a matching type, or a subtype, to that of the argument will be returned.</p>
@@ -432,10 +432,10 @@ Iterator&lt;Bar&gt; getFoobar(Class&lt;? extends Bar&gt; filter)</code></pre>
 &lt;E extends VertexFrame&gt; Iterator&lt;E&gt; getFoobar(Class&lt;? extends E&gt; filter)</code></pre>
 
 
-<h2 id="remove-prefix">remove prefix<a class="headerlink" href="#remove-prefix" title="Permanent link">&para;</a></h2>
+<h2 id="remove-prefix">remove prefix<a class="headerlink" href="#remove-prefix" title="Permanent link">#</a></h2>
 <p>Valid method signatures: <code>(&lt;Any Vertex Frame&gt;)</code></p>
 <p>Removes any edges which cause an adjacency.</p>
-<h3 id="any-vertex-frame_1">(&lt;Any Vertex Frame&gt;)<a class="headerlink" href="#any-vertex-frame_1" title="Permanent link">&para;</a></h3>
+<h3 id="any-vertex-frame_1">(&lt;Any Vertex Frame&gt;)<a class="headerlink" href="#any-vertex-frame_1" title="Permanent link">#</a></h3>
 <p>Valid return types: <code>void</code></p>
 <p>Removes any edges which create an adjacency between the vurrent vertex and the vertex specified in the methods argument.</p>
 <p>example:</p>
@@ -451,10 +451,10 @@ void removeFoobar(Bar vertex)</code></pre>
 &lt;E extends VertexFrame&gt; void removeFoobar(E vertex)</code></pre>
 
 
-<h2 id="set-prefix">set prefix<a class="headerlink" href="#set-prefix" title="Permanent link">&para;</a></h2>
+<h2 id="set-prefix">set prefix<a class="headerlink" href="#set-prefix" title="Permanent link">#</a></h2>
 <p>Valid method signatures: <code>(Iterator)</code></p>
 <p>Creates new edges connected to several vertex.</p>
-<h3 id="iterator">(Iterator)<a class="headerlink" href="#iterator" title="Permanent link">&para;</a></h3>
+<h3 id="iterator">(Iterator)<a class="headerlink" href="#iterator" title="Permanent link">#</a></h3>
 <p>Valid return types: <code>void</code></p>
 <p>The argument for this method must be an Iterator which iterates over any vertex Frames. It is suggested you specify a Generic Type for the Iterator for usability.</p>
 <p>This method will iterate over all the vertex specified in the Iterator argument and create new edges to connect to it. The edges in the graph will not encode a type.</p>

@@ -69,10 +69,6 @@ test:jdk8:
     - 'mvn $MAVEN_CLI_OPTS package'
   only:
     - master
-  # Archive up the built documentation site.
-  artifacts:
-    paths:
-    - target
   image: maven:3-jdk-8
 
 
@@ -84,8 +80,6 @@ pages:
     # Because Maven appends the artifactId automatically to the staging path if you did define a parent pom,
     # you might need to use `mv target/staging/YOUR_ARTIFACT_ID public` instead.
     - mv target/mkdocs public
-  dependencies:
-    - test:jdk8
   artifacts:
     paths:
     - public

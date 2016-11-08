@@ -1,94 +1,155 @@
-![](images/ferma-logo-text.png)
+#### [Bootstrap themes from Bootswatch][themes]
 
-An ORM / OGM for the TinkerPop graph stack.
+[![Bootswatch themes](images/carousel-themes.png)][themes]
 
-**Licensed under the Apache Software License v2**
+Select a free theme for your website from an excellent gallery at [Bootswatch][bootswatch].
+Out of the box support for these and other custom [Bootstrap][bootstrap] themes.
 
-The Ferma project was originally created as an alternative to the
-TinkerPop2 Frames project. Which at the time lacked features needed by
-the community, and its performance was cripplingly slow. Today Ferma is
-a robust framework that takes on a role similar to an Object-relational
-Model (ORM) library for traditional databases. Ferma is often referred
-to as a Object-graph Model (OGM) library, and maps Java objects to
-elements in a graph such as a Vertex or an Edges. In short it allows a
-schema to be defined using java interfaces and classes which provides a
-level of abstraction for interacting with the underlying graph.
 
-Ferma 3.x **Supports TinkerPop3**. For tinkerPop2 support use Ferma
-version 2.x.
+#### [Page layouts][reflow-layouts]
 
-Annotated classes in Ferma have their abstract methods implemented using
-code generation during start-up with Byte Buddy, avoiding the need for
-proxy classes. This in turn significantly improves performance when
-compared with TinkerPop Frames and other frameworks. Ferma offers many
-features including several annotation types to reduce the need for
-boilerplate code as well as handling Java typing transparently. This
-ensures whatever the type of the object is when you persist it to the
-graph the same Java type will be used when instantiating a class off of
-the graph.
+[![Page layouts](images/carousel-layouts.jpg)][reflow-layouts]
 
-Ferma is designed to easily replace TinkerPop Frames in existing code,
-as such, the annotations provided by Ferma are a super-set of those
-provided by TinkerPop Frames.
+Write plain text in Markdown or APT, then set different layouts to your page sections.
 
-Ferma is built directly on top of TinkerPop and allows access to all of
-the internals. This ensures all the TinkerPop features are available to
-the end-user. The TinkerPop stack provides several tools which can be
-used to work with the Ferma engine.
 
--   **Gremlin**, a database agnostic query language for Graph Databases.
--   **Gremlin Server**, a server that provides an interface for
-    executing Gremlin on remote machines.
--   a data-flow framework for splitting, merging, filtering, and
-    transforming of data
--   **Graph Computer**, a framework for running algorithms against a
-    Graph Database.
--   Support for both **OLTP** and **OLAP** engines.
--   **TinkerGraph** a Graph Database and the reference implementation
-    for TinkerPop.
--   Native **Gephi** integration for visualizing graphs.
--   Interfaces for most major Graph Compute Engines including **Hadoop
-    M/R**. **Spark**, and **Giraph**.
+#### [Modern skin][reflow-misc]
 
-Ferma also supports any of the many databases compatible with TinkerPop
-including the following.
+[![Modern skin](images/carousel-components.jpg)][reflow-misc]
 
--   [Titan](http://thinkaurelius.github.io/titan/)
--   [Neo4j](http://neo4j.com)
--   [OrientDB](http://www.orientechnologies.com/orientdb/)
--   [MongoDB](http://www.mongodb.org)
--   [Oracle
-    NoSQL](http://www.oracle.com/us/products/database/nosql/overview/index.html)
--   TinkerGraph
+Reflow skin uses modern components from Bootstrap and other libraries, upgrades Maven generated
+site and provides further enhancements.
 
-Ferma Javadocs:
-[latest](http://www.javadoc.io/doc/com.syncleus.ferma/ferma) -
-[3.0.1](http://www.javadoc.io/doc/com.syncleus.ferma/ferma/3.0.1) -
-[3.0.0](http://www.javadoc.io/doc/com.syncleus.ferma/ferma/3.0.0) -
-[2.2.0](http://www.javadoc.io/doc/com.syncleus.ferma/ferma/2.2.0) -
-[2.1.0](http://www.javadoc.io/doc/com.syncleus.ferma/ferma/2.1.0) -
-[2.0.6](http://www.javadoc.io/doc/com.syncleus.ferma/ferma/2.0.6) -
-[2.0.5](http://www.javadoc.io/doc/com.syncleus.ferma/ferma/2.0.5) -
-[2.0.4](http://www.javadoc.io/doc/com.syncleus.ferma/ferma/2.0.4) -
-[2.0.3](http://www.javadoc.io/doc/com.syncleus.ferma/ferma/2.0.3) -
-[2.0.2](http://www.javadoc.io/doc/com.syncleus.ferma/ferma/2.0.2) -
-[2.0.1](http://www.javadoc.io/doc/com.syncleus.ferma/ferma/2.0.1) -
-[2.0.0](http://www.javadoc.io/doc/com.syncleus.ferma/ferma/2.0.0)
 
-For support please use
-[Gitter](https://gitter.im/Syncleus/Ferma)
-or the [official Ferma mailing
-list](https://groups.google.com/a/syncleus.com/forum/#!forum/ferma-list).
+#### [New Velocity tools][reflow-tools]
 
-Please file bugs and feature requests on
-[Github](https://github.com/Syncleus/Ferma/issues).
+[![Reflow Velocity tools](images/carousel-tools.png)][reflow-tools]
 
-Obtaining the Source
---------------------
+The skin adds a library of new Velocity tools to use in your own Maven template: rewrite HTML code,
+support per-page configurations and more!
 
-The official source repository for Ferma is located in the Syncleus
-Github repository and can be cloned using the following command.
 
+[bootswatch]: http://bootswatch.com
+[bootstrap]: http://getbootstrap.com
+[themes]: skin/themes/
+[reflow-layouts]: skin/layouts.html
+[reflow-misc]: skin/misc.html
+[reflow-tools]: reflow-velocity-tools/
+
+
+---
+
+
+## Get it now
+
+To use Reflow skin in your Maven site, [add it to site.xml][reflow-usage]:
+
+```xml
+<skin>
+  <groupId>lt.velykis.maven.skins</groupId>
+  <artifactId>reflow-maven-skin</artifactId>
+  <version>1.1.1</version>
+</skin>
 ```
-git clone https://github.com/Syncleus/Ferma.git
-```
+
+Furthermore, the skin requires accompanying [Reflow Velocity tools][reflow-tools] as a dependency
+as well as Apache Velocity 1.7.
+[Add them as dependencies][reflow-usage] to `maven-site-plugin`.
+
+[Full usage instructions &raquo;][reflow-usage]
+
+[reflow-usage]: skin/
+
+
+## Responsive layouts
+
+Write your pages in [APT or Markdown][doxia-formats], then restructure them using Reflow skin
+[layouts][reflow-layouts]:
+
+-   **Carousel** - spinning image slideshow
+-   **Thumbnails** - showcase your image gallery
+-   **Columns** - multi-column text
+-   **Sidebar** - wrap into a sidebar
+-   **Body** - text as it has been written
+
+Partition the page into sections using `<hr/>` elements, and define preferred layouts for each section in `site.xml`. Reflow skin is responsive thanks to [Bootstrap][bootstrap], so the layouts
+will be rearranged automatically for readability on small screens.
+
+[Read more about layouts in the documentation &raquo;][reflow-layouts]
+
+[doxia-formats]: http://maven.apache.org/doxia/references/index.html
+
+
+## Themes
+
+The skin theme can be [switched easily][themes]: just select a Bootstrap theme
+to give an easy makeover for your Maven site.
+
+-   **Default** - use the default [Bootstrap][bootstrap] theme
+-   **Bootswatch** - select an excellent free theme from [Bootswatch][bootswatch]
+-   **Custom** - create your own Bootstrap theme with [existing tools][bootstrap-custom]
+
+**Need to change something?** Extend the skin with custom `site.css` file in your project, and
+[reuse it for multi-module site][reflow-multi].
+
+[How to select a theme &raquo;][themes]
+
+[bootstrap-custom]: http://twitter.github.com/bootstrap/customize.html
+[reflow-multi]: skin/multi-module.html
+
+
+## Configure
+
+Reflow is very configurable: many features and components can be disabled, and optional
+enhancements enabled using [configuration in `site.xml`][reflow-config]:
+
+-   **Table of contents** - display ToC for each page: top bar or sidebar
+-   **Menus** - filter Maven menus and select what to display in top or bottom navigation
+-   **Code highlight** - syntax colouring for code snippets
+-   **Image preview** - display images in pop-ups
+-   ... [and more][reflow-config]
+
+Check out the [documentation][reflow-config] for all the features. Every configuration option
+can be applied on a _per-page_ basis!
+
+[reflow-config]: skin/config.html
+
+
+---
+
+
+## Velocity tools
+
+Reflow skin provides custom Velocity tools library to be used in Maven site template:
+
+-   **`SkinConfigTool`** - convenient access to custom configuration options (global and per-page)
+-   **`HtmlTool`** - query and modify HTML text
+-   **`URITool`** - use Java URIs in the template
+
+To enable these tools for any skin, add `reflow-velocity-tools` dependency to
+`maven-site-plugin` in the POM.
+
+[Read more about usage and browse the Javadoc &raquo;][reflow-tools]
+
+
+---
+
+
+### About
+
+Reflow Maven skin is an [Apache Maven site][mvn-site] skin built on [Bootstrap][bootstrap].
+
+The code is [open source][reflow-github] and licensed under [Apache license][apache-license].
+The skin can be used freely for your Maven projects.
+
+[Contribute][contribute] by reporting issues, suggesting new features, or forking the
+Git repository on GitHub and adding some good code!
+
+In the end, if you _really really_ like the skin and want to support the author, I will
+be glad to [accept a small donation][donate].
+
+[mvn-site]: http://maven.apache.org/guides/mini/guide-site.html
+[apache-license]: http://www.apache.org/licenses/LICENSE-2.0
+[contribute]: contribute.html
+[reflow-github]: http://github.com/andriusvelykis/reflow-maven-skin/
+[donate]: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=QWKNRFZH52828

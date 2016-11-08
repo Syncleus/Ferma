@@ -77,7 +77,7 @@ test:jdk8:
 
 
 pages:
-  image: docker pull icereed/mkdocs-material:latest
+  image: icereed/mkdocs-material:latest
   stage: deploy
   script:
     - mkdocs build

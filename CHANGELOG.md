@@ -1,5 +1,7 @@
 # Ferma Changelog
 
+## 3.0.3
+
 ## 3.0.2
 
 * Updated package dependencies, specifically Byte Buddy, mostly performance improvements.

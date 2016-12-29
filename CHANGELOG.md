@@ -1,5 +1,7 @@
 # Ferma Changelog
 
+## 2.2.2
+
 ## 2.2.1
 
 * Updated package dependencies, specifically Byte Buddy, mostly performance improvements.

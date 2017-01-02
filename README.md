@@ -84,7 +84,7 @@ instruct Ferma to dynamically construct byte-code to implement the abstract meth
 In untyped mode there is no automatic typing. Whatever class is explicitly indicated is the type that will be
 instantiated when performing queries. Lets start with a simple example domain.
 
-    public class Person extends VertexFrame {
+    public class Person extends AbstractVertexFrame {
       public String getName() {
         return getProperty("name");
       }
@@ -177,7 +177,7 @@ power to determine parent-child relationships at runtime.
 
 The same example as above done with annotations would look something like this.
 
-    public abstract class Person extends VertexFrame {
+    public abstract class Person extends AbstractVertexFrame {
       @Property("name")
       public abstract String getName();
 
@@ -198,7 +198,7 @@ The same example as above done with annotations would look something like this.
       }
     }
 
-    public abstract class Knows extends EdgeFrame {
+    public abstract class Knows extends AbstractEdgeFrame {
       @Property("years")
       public abstract void setYears(int years);
 

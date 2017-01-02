@@ -64,11 +64,13 @@ Please file bugs and feature requests on [Github](https://github.com/Syncleus/Fe
 
 To include Ferma in your project of choice include the following Maven dependency into your build.
 
-    <dependency>
-        <groupId>com.syncleus.ferma</groupId>
-        <artifactId>ferma</artifactId>
-        <version>3.0.2</version>
-    </dependency>
+```xml
+<dependency>
+    <groupId>com.syncleus.ferma</groupId>
+    <artifactId>ferma</artifactId>
+    <version>3.0.2</version>
+</dependency>
+```
     
 
 ## Getting Started
@@ -140,7 +142,15 @@ public void testUntyped() {
 
 ### Simple Mode Example
 
-In simple mode you must provide concrete classes, no abstract or interfaces allowed, and the class should always extend
+In simple mode you must provide concrete classes, no abstract<dependency>
+68
+    <groupId>com.syncleus.ferma</groupId>
+69
+    <artifactId>ferma</artifactId>
+70
+    <version>3.0.2</version>
+71
+</dependency> or interfaces allowed, and the class should always extend
 from a FramedVertex or FramedEdge. Simple mode doesn't provide any annotations either. The purpose of simple mode is to
 provide type resolution. Basically the type of object you use when adding to the graph is the same type you get out when
 reading from the graph.
@@ -259,6 +269,6 @@ public void testAnnotatedTyping() {
 The official source repository for Ferma is located in the Syncleus Github repository and can be cloned using the
 following command.
 
-```
+```bash
 git clone https://github.com/Syncleus/Ferma.git
 ```

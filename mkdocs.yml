@@ -10,7 +10,7 @@ pages:
     - Glossary: glossary.md
     - Core Annotations:
         - Overview: annotations/overview.md
-        - '@Propery': annotations/property.md
+        - '@Property': annotations/property.md
         - '@adjacency': annotations/adjacency.md
 extra:
   version: '3.0.1'

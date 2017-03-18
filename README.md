@@ -133,7 +133,7 @@ public void testUntyped() {
   Knows knows = p1.addKnows(p2);
   knows.setYears(15);
 
-  Person jeff = fg.traverse((g) -> g.v().has("name", "Jeff")).next(Person.class);
+  Person jeff = fg.traverse((g) -> g.V().has("name", "Jeff")).next(Person.class);
 
 
   Assert.assertEquals("Jeff", jeff.getName());
@@ -142,15 +142,7 @@ public void testUntyped() {
 
 ### Simple Mode Example
 
-In simple mode you must provide concrete classes, no abstract<dependency>
-68
-    <groupId>com.syncleus.ferma</groupId>
-69
-    <artifactId>ferma</artifactId>
-70
-    <version>3.0.2</version>
-71
-</dependency> or interfaces allowed, and the class should always extend
+In simple mode you must provide concrete classes, no abstract or interfaces allowed, and the class should always extend
 from a FramedVertex or FramedEdge. Simple mode doesn't provide any annotations either. The purpose of simple mode is to
 provide type resolution. Basically the type of object you use when adding to the graph is the same type you get out when
 reading from the graph.
@@ -177,8 +169,8 @@ public void testSimpleTyping() {
   Person p2 = fg.addFramedVertex(Person.class);
   p2.setName("Julia");
 
-  Person jeff = fg.traverse((g) -> g.v().has("name", "Jeff")).next(Person.class);
-  Person julia = fg.traverse((g) -> g.v().has("name", "Julia")).next(Person.class);
+  Person jeff = fg.traverse((g) -> g.V().has("name", "Jeff")).next(Person.class);
+  Person julia = fg.traverse((g) -> g.V().has("name", "Julia")).next(Person.class);
 
   Assert.assertEquals(Programmer.class, jeff.getClass());
   Assert.assertEquals(Person.class, julia.getClass());
@@ -256,8 +248,8 @@ public void testAnnotatedTyping() {
   Person p2 = fg.addFramedVertex(Person.class);
   p2.setName("Julia");
 
-  Person jeff = fg.traverse((g) -> g.v().has("name", "Jeff")).next(Person.class);
-  Person julia = fg.traverse((g) -> g.v().has("name", "Julia")).next(Person.class);
+  Person jeff = fg.traverse((g) -> g.V().has("name", "Jeff")).next(Person.class);
+  Person julia = fg.traverse((g) -> g.V().has("name", "Julia")).next(Person.class);
 
   Assert.assertEquals(Programmer.class, jeff.getClass());
   Assert.assertEquals(Person.class, julia.getClass());

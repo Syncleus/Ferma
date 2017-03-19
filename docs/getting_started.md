@@ -63,7 +63,7 @@ public void testUntyped() {
   Knows knows = p1.addKnows(p2);
   knows.setYears(15);
 
-  Person jeff = fg.traverse((g) -> g.v().has("name", "Jeff")).next(Person.class);
+  Person jeff = fg.traverse((g) -> g.V().has("name", "Jeff")).next(Person.class);
 
 
   Assert.assertEquals("Jeff", jeff.getName());
@@ -96,8 +96,8 @@ public void testSimpleTyping() {
   Person p2 = fg.addFramedVertex(Person.class);
   p2.setName("Julia");
   
-  Person jeff = fg.traverse((g) -> g.v().has("name", "Jeff")).next(Person.class);
-  Person julia = fg.traverse((g) -> g.v().has("name", "Julia")).next(Person.class);
+  Person jeff = fg.traverse((g) -> g.V().has("name", "Jeff")).next(Person.class);
+  Person julia = fg.traverse((g) -> g.V().has("name", "Julia")).next(Person.class);
   
   Assert.assertEquals(Programmer.class, jeff.getClass());
   Assert.assertEquals(Person.class, julia.getClass());
@@ -169,8 +169,8 @@ public void testAnnotatedTyping() {
   Person p2 = fg.addFramedVertex(Person.class);
   p2.setName("Julia");
 
-  Person jeff = fg.traverse((g) -> g.v().has("name", "Jeff")).next(Person.class);
-  Person julia = fg.traverse((g) -> g.v().has("name", "Julia")).next(Person.class);
+  Person jeff = fg.traverse((g) -> g.V().has("name", "Jeff")).next(Person.class);
+  Person julia = fg.traverse((g) -> g.V().has("name", "Julia")).next(Person.class);
 
   Assert.assertEquals(Programmer.class, jeff.getClass());
   Assert.assertEquals(Person.class, julia.getClass());

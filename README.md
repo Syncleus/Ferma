@@ -232,28 +232,28 @@ In this mode you want to tell the engine what classes you will be using so it ca
 construct the byte-code for any abstract annotated methods.
 
 ```java
-    public void testAnnotatedTyping() {
-        Set<Class<?>> types = new HashSet<Class<?>>(Arrays.asList(new Class<?>[]{
+public void testAnnotatedTyping() {
+  Set<Class<?>> types = new HashSet<Class<?>>(Arrays.asList(new Class<?>[]{
                 Person.class,
                 Programmer.class,
                 Knows.class}));
-        Graph graph = TinkerGraph.open();
+  Graph graph = TinkerGraph.open();
 
-        //implies annotated mode
-        FramedGraph fg = new DelegatingFramedGraph(graph, true, types);
+  //implies annotated mode
+  FramedGraph fg = new DelegatingFramedGraph(graph, true, types);
 
-        Person p1 = fg.addFramedVertex(Programmer.class);
-        p1.setName("Jeff");
+  Person p1 = fg.addFramedVertex(Programmer.class);
+  p1.setName("Jeff");
 
-        Person p2 = fg.addFramedVertex(Person.class);
-        p2.setName("Julia");
+  Person p2 = fg.addFramedVertex(Person.class);
+  p2.setName("Julia");
 
-        Person jeff = fg.traverse((g) -> g.V().has("name", "Jeff")).next(Person.class);
-        Person julia = fg.traverse((g) -> g.V().has("name", "Julia")).next(Person.class);
+  Person jeff = fg.traverse((g) -> g.V().has("name", "Jeff")).next(Person.class);
+  Person julia = fg.traverse((g) -> g.V().has("name", "Julia")).next(Person.class);
 
-        Assert.assertTrue(Programmer.class.isAssignableFrom(jeff.getClass()));
-        Assert.assertTrue(Person.class.isAssignableFrom(julia.getClass()));
-    }
+  Assert.assertTrue(Programmer.class.isAssignableFrom(jeff.getClass()));
+  Assert.assertTrue(Person.class.isAssignableFrom(julia.getClass()));
+}
 ```
 
 ## Obtaining the Source

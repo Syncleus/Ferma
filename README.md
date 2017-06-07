@@ -205,13 +205,7 @@ public abstract class Person extends AbstractVertexFrame {
   public abstract Knows addKnows(Person friend);
 
   public List<? extends Person> getFriendsNamedBill() {
-      return this.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>>() {
-        @Nullable
-        @Override
-        public GraphTraversal<?, ?> apply(@Nullable final GraphTraversal<? extends Vertex, ? extends Vertex> input) {
-            return input.out("knows").has("name", "bill");
-        }
-     }).toList(Person.class);
+      return this.traverse(input -> input.out("knows").has("name", "bill")).toList(Person.class);
   }
 }
 

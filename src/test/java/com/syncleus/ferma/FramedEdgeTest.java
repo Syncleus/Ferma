@@ -54,73 +54,40 @@ public class FramedEdgeTest {
 
     @Test
     public void testInV() {
-        final Person person = e1.traverse(new Function<GraphTraversal<? extends Edge, ? extends Edge>, GraphTraversal<?, ?>>() {
-            @Nullable
-            @Override
-            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversal<? extends Edge, ? extends Edge> input) {
-                return input.inV();
-            }
-        }).next(Person.class);
+        final Person person = e1.traverse(
+            GraphTraversal::inV).next(Person.class);
         Assert.assertEquals(p2, person);
     }
 
     @Test
     public void testOutV() {
-        final Person person = e1.traverse(new Function<GraphTraversal<? extends Edge, ? extends Edge>, GraphTraversal<?, ?>>() {
-            @Nullable
-            @Override
-            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversal<? extends Edge, ? extends Edge> input) {
-                return input.outV();
-            }
-        }).next(Person.class);
+        final Person person = e1.traverse(
+            GraphTraversal::outV).next(Person.class);
         Assert.assertEquals(p1, person);
     }
 
     @Test
     public void testBothV() {
-        final Person person = e1.traverse(new Function<GraphTraversal<? extends Edge, ? extends Edge>, GraphTraversal<?, ?>>() {
-            @Nullable
-            @Override
-            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversal<? extends Edge, ? extends Edge> input) {
-                return input.bothV();
-            }
-        }).next(Person.class);
+        final Person person = e1.traverse(
+            GraphTraversal::bothV).next(Person.class);
         Assert.assertEquals(p1, person);
     }
 
     @Test
     public void testInVExplicit() {
-        final Person person = e1.traverse(new Function<GraphTraversal<? extends Edge, ? extends Edge>, GraphTraversal<?, ?>>() {
-            @Nullable
-            @Override
-            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversal<? extends Edge, ? extends Edge> input) {
-                return input.inV();
-            }
-        }).nextExplicit(Person.class);
+        final Person person = e1.traverse(GraphTraversal::inV).nextExplicit(Person.class);
         Assert.assertEquals(p2, person);
     }
 
     @Test
     public void testOutVExplicit() {
-        final Person person = e1.traverse(new Function<GraphTraversal<? extends Edge, ? extends Edge>, GraphTraversal<?, ?>>() {
-            @Nullable
-            @Override
-            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversal<? extends Edge, ? extends Edge> input) {
-                return input.outV();
-            }
-        }).nextExplicit(Person.class);
+        final Person person = e1.traverse(GraphTraversal::outV).nextExplicit(Person.class);
         Assert.assertEquals(p1, person);
     }
 
     @Test
     public void testBothVExplicit() {
-        final Person person = e1.traverse(new Function<GraphTraversal<? extends Edge, ? extends Edge>, GraphTraversal<?, ?>>() {
-            @Nullable
-            @Override
-            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversal<? extends Edge, ? extends Edge> input) {
-                return input.bothV();
-            }
-        }).nextExplicit(Person.class);
+        final Person person = e1.traverse(GraphTraversal::bothV).nextExplicit(Person.class);
         Assert.assertEquals(p1, person);
     }
 }

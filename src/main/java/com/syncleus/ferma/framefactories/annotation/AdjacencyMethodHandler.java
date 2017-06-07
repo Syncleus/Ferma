@@ -15,27 +15,24 @@
  */
 package com.syncleus.ferma.framefactories.annotation;
 
-import java.util.function.Function;
-import com.syncleus.ferma.typeresolvers.TypeResolver;
-import com.syncleus.ferma.*;
+import com.syncleus.ferma.ClassInitializer;
+import com.syncleus.ferma.VertexFrame;
 import com.syncleus.ferma.annotations.Adjacency;
+import com.syncleus.ferma.typeresolvers.TypeResolver;
 import net.bytebuddy.dynamic.DynamicType;
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
-import java.util.Iterator;
-import java.util.function.Consumer;
-
-import net.bytebuddy.matcher.ElementMatchers;
 import net.bytebuddy.implementation.MethodDelegation;
 import net.bytebuddy.implementation.bind.annotation.Argument;
 import net.bytebuddy.implementation.bind.annotation.Origin;
 import net.bytebuddy.implementation.bind.annotation.RuntimeType;
 import net.bytebuddy.implementation.bind.annotation.This;
-import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
+import net.bytebuddy.matcher.ElementMatchers;
 import org.apache.tinkerpop.gremlin.structure.Direction;
 import org.apache.tinkerpop.gremlin.structure.Edge;
-import org.apache.tinkerpop.gremlin.structure.Vertex;
-import javax.annotation.Nullable;
+
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
+import java.util.Iterator;
+import java.util.function.Consumer;
 
 /**
  * A method handler that implemented the Adjacency Annotation.
@@ -165,20 +162,16 @@ public class AdjacencyMethodHandler implements MethodHandler {
             final Direction direction = annotation.direction();
             final String label = annotation.label();
 
-            return thiz.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?,?>>() {
-                @Nullable
-                @Override
-                public GraphTraversal<?,?> apply(@Nullable final GraphTraversal<? extends Vertex, ? extends Vertex> input) {
-                    switch(direction) {
-                        case IN:
-                            return input.in(label);
-                        case OUT:
-                            return input.out(label);
-                        case BOTH:
-                            return input.both(label);
-                        default:
-                            throw new IllegalStateException("Direction not recognized.");
-                    }
+            return thiz.traverse(input -> {
+                switch(direction) {
+                    case IN:
+                        return input.in(label);
+                    case OUT:
+                        return input.out(label);
+                    case BOTH:
+                        return input.both(label);
+                    default:
+                        throw new IllegalStateException("Direction not recognized.");
                 }
             }).frame(VertexFrame.class);
         }
@@ -194,20 +187,16 @@ public class AdjacencyMethodHandler implements MethodHandler {
             final String label = annotation.label();
             final TypeResolver resolver = thiz.getGraph().getTypeResolver();
 
-            return thiz.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?,?>>() {
-                @Nullable
-                @Override
-                public GraphTraversal<?,?> apply(@Nullable final GraphTraversal<? extends Vertex, ? extends Vertex> input) {
-                    switch(direction) {
-                        case IN:
-                            return resolver.hasType(input.in(label), type);
-                        case OUT:
-                            return resolver.hasType(input.out(label), type);
-                        case BOTH:
-                            return resolver.hasType(input.both(label), type);
-                        default:
-                            throw new IllegalStateException("Direction not recognized.");
-                    }
+            return thiz.traverse(input -> {
+                switch(direction) {
+                    case IN:
+                        return resolver.hasType(input.in(label), type);
+                    case OUT:
+                        return resolver.hasType(input.out(label), type);
+                    case BOTH:
+                        return resolver.hasType(input.both(label), type);
+                    default:
+                        throw new IllegalStateException("Direction not recognized.");
                 }
             }).frame(type);
         }
@@ -222,20 +211,16 @@ public class AdjacencyMethodHandler implements MethodHandler {
             final Direction direction = annotation.direction();
             final String label = annotation.label();
 
-            return thiz.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?,?>>() {
-                @Nullable
-                @Override
-                public GraphTraversal<?,?> apply(@Nullable final GraphTraversal<? extends Vertex, ? extends Vertex> input) {
-                    switch(direction) {
-                        case IN:
-                            return input.in(label);
-                        case OUT:
-                            return input.out(label);
-                        case BOTH:
-                            return input.both(label);
-                        default:
-                            throw new IllegalStateException("Direction not recognized.");
-                    }
+            return thiz.traverse(input -> {
+                switch(direction) {
+                    case IN:
+                        return input.in(label);
+                    case OUT:
+                        return input.out(label);
+                    case BOTH:
+                        return input.both(label);
+                    default:
+                        throw new IllegalStateException("Direction not recognized.");
                 }
             }).next(VertexFrame.class);
         }
@@ -251,20 +236,16 @@ public class AdjacencyMethodHandler implements MethodHandler {
             final String label = annotation.label();
             final TypeResolver resolver = thiz.getGraph().getTypeResolver();
 
-            return thiz.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?,?>>() {
-                @Nullable
-                @Override
-                public GraphTraversal<?,?> apply(@Nullable final GraphTraversal<? extends Vertex, ? extends Vertex> input) {
-                    switch(direction) {
-                        case IN:
-                            return resolver.hasType(input.in(label), type);
-                        case OUT:
-                            return resolver.hasType(input.out(label), type);
-                        case BOTH:
-                            return resolver.hasType(input.both(label), type);
-                        default:
-                            throw new IllegalStateException("Direction not recognized.");
-                    }
+            return thiz.traverse(input -> {
+                switch(direction) {
+                    case IN:
+                        return resolver.hasType(input.in(label), type);
+                    case OUT:
+                        return resolver.hasType(input.out(label), type);
+                    case BOTH:
+                        return resolver.hasType(input.both(label), type);
+                    default:
+                        throw new IllegalStateException("Direction not recognized.");
                 }
             }).next(type);
         }

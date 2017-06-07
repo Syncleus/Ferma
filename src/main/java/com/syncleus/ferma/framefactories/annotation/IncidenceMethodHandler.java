@@ -274,29 +274,11 @@ public class IncidenceMethodHandler implements MethodHandler {
 
             switch (direction) {
                 case BOTH:
-                    return thiz.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>>() {
-                        @Nullable
-                        @Override
-                        public GraphTraversal<?, ?> apply(@Nullable final GraphTraversal<? extends Vertex, ? extends Vertex> input) {
-                            return input.bothE(label);
-                        }
-                    }).frame(VertexFrame.class);
+                    return thiz.traverse(input -> input.bothE(label)).frame(VertexFrame.class);
                 case IN:
-                    return thiz.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>>() {
-                        @Nullable
-                        @Override
-                        public GraphTraversal<?, ?> apply(@Nullable final GraphTraversal<? extends Vertex, ? extends Vertex> input) {
-                            return input.inE(label);
-                        }
-                    }).frame(VertexFrame.class);
+                    return thiz.traverse(input -> input.inE(label)).frame(VertexFrame.class);
                 case OUT:
-                    return thiz.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>>() {
-                        @Nullable
-                        @Override
-                        public GraphTraversal<?, ?> apply(@Nullable final GraphTraversal<? extends Vertex, ? extends Vertex> input) {
-                            return input.outE(label);
-                        }
-                    }).frame(VertexFrame.class);
+                    return thiz.traverse(input -> input.outE(label)).frame(VertexFrame.class);
                 default:
                     throw new IllegalStateException(method.getName() + " is annotated with a direction other than BOTH, IN, or OUT.");
             }
@@ -315,29 +297,11 @@ public class IncidenceMethodHandler implements MethodHandler {
 
             switch (direction) {
                 case BOTH:
-                    return thiz.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>>() {
-                        @Nullable
-                        @Override
-                        public GraphTraversal<?, ?> apply(@Nullable final GraphTraversal<? extends Vertex, ? extends Vertex> input) {
-                            return resolver.hasType(input.bothE(label), type);
-                        }
-                    }).frame(type);
+                    return thiz.traverse(input -> resolver.hasType(input.bothE(label), type)).frame(type);
                 case IN:
-                    return thiz.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>>() {
-                        @Nullable
-                        @Override
-                        public GraphTraversal<?, ?> apply(@Nullable final GraphTraversal<? extends Vertex, ? extends Vertex> input) {
-                            return resolver.hasType(input.inE(label), type);
-                        }
-                    }).frame(type);
+                    return thiz.traverse(input -> resolver.hasType(input.inE(label), type)).frame(type);
                 case OUT:
-                    return thiz.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>>() {
-                        @Nullable
-                        @Override
-                        public GraphTraversal<?, ?> apply(@Nullable final GraphTraversal<? extends Vertex, ? extends Vertex> input) {
-                            return resolver.hasType(input.outE(label), type);
-                        }
-                    }).frame(type);
+                    return thiz.traverse(input -> resolver.hasType(input.outE(label), type)).frame(type);
                 default:
                     throw new IllegalStateException(method.getName() + " is annotated with a direction other than BOTH, IN, or OUT.");
             }
@@ -355,29 +319,11 @@ public class IncidenceMethodHandler implements MethodHandler {
 
             switch (direction) {
                 case BOTH:
-                    return thiz.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>>() {
-                        @Nullable
-                        @Override
-                        public GraphTraversal<?, ?> apply(@Nullable final GraphTraversal<? extends Vertex, ? extends Vertex> input) {
-                            return input.bothE(label);
-                        }
-                    }).next(VertexFrame.class);
+                    return thiz.traverse(input -> input.bothE(label)).next(VertexFrame.class);
                 case IN:
-                    return thiz.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>>() {
-                        @Nullable
-                        @Override
-                        public GraphTraversal<?, ?> apply(@Nullable final GraphTraversal<? extends Vertex, ? extends Vertex> input) {
-                            return input.inE(label);
-                        }
-                    }).next(VertexFrame.class);
+                    return thiz.traverse(input -> input.inE(label)).next(VertexFrame.class);
                 case OUT:
-                    return thiz.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>>() {
-                        @Nullable
-                        @Override
-                        public GraphTraversal<?, ?> apply(@Nullable final GraphTraversal<? extends Vertex, ? extends Vertex> input) {
-                            return input.outE(label);
-                        }
-                    }).next(VertexFrame.class);
+                    return thiz.traverse(input -> input.outE(label)).next(VertexFrame.class);
                 default:
                     throw new IllegalStateException(method.getName() + " is annotated with a direction other than BOTH, IN, or OUT.");
             }
@@ -396,29 +342,11 @@ public class IncidenceMethodHandler implements MethodHandler {
 
             switch (direction) {
                 case BOTH:
-                    return thiz.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>>() {
-                        @Nullable
-                        @Override
-                        public GraphTraversal<?, ?> apply(@Nullable final GraphTraversal<? extends Vertex, ? extends Vertex> input) {
-                            return resolver.hasType(input.bothE(label), type);
-                        }
-                    }).next(type);
+                    return thiz.traverse(input -> resolver.hasType(input.bothE(label), type)).next(type);
                 case IN:
-                    return thiz.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>>() {
-                        @Nullable
-                        @Override
-                        public GraphTraversal<?, ?> apply(@Nullable final GraphTraversal<? extends Vertex, ? extends Vertex> input) {
-                            return resolver.hasType(input.inE(label), type);
-                        }
-                    }).next(type);
+                    return thiz.traverse(input -> resolver.hasType(input.inE(label), type)).next(type);
                 case OUT:
-                    return thiz.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>>() {
-                        @Nullable
-                        @Override
-                        public GraphTraversal<?, ?> apply(@Nullable final GraphTraversal<? extends Vertex, ? extends Vertex> input) {
-                            return resolver.hasType(input.outE(label), type);
-                        }
-                    }).next(type);
+                    return thiz.traverse(input -> resolver.hasType(input.outE(label), type)).next(type);
                 default:
                     throw new IllegalStateException(method.getName() + " is annotated with a direction other than BOTH, IN, or OUT.");
             }

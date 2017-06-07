@@ -32,13 +32,8 @@ import com.google.common.collect.Lists;
 import javax.annotation.Nullable;
 
 public class FramedVertexTest {
-    private static final Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>> OUT_TRAVERSAL =  new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>>() {
-        @Nullable
-        @Override
-        public GraphTraversal<?, ?> apply(@Nullable GraphTraversal<? extends Vertex, ? extends Vertex> input) {
-            return input.out();
-        }
-    };
+    private static final Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>>
+        OUT_TRAVERSAL = input -> input.out();
 
     private FramedGraph fg;
     private Person p1;

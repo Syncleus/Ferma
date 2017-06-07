@@ -41,13 +41,8 @@ public class IncidenceMethodHandlerTest {
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
-        final List<? extends God> gods = framedGraph.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
-            @Nullable
-            @Override
-            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
-                return input.V().has("name", "jupiter");
-            }
-        }).toList(God.class);
+        final List<? extends God> gods = framedGraph.traverse(
+            input -> input.V().has("name", "jupiter")).toList(God.class);
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father != null);
@@ -67,13 +62,8 @@ public class IncidenceMethodHandlerTest {
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
-        final List<? extends God> gods = framedGraph.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
-            @Nullable
-            @Override
-            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
-                return input.V().has("name", "jupiter");
-            }
-        }).toList(God.class);
+        final List<? extends God> gods = framedGraph.traverse(
+            input -> input.V().has("name", "jupiter")).toList(God.class);
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father != null);
@@ -95,13 +85,8 @@ public class IncidenceMethodHandlerTest {
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
-        final List<? extends God> gods = framedGraph.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
-            @Nullable
-            @Override
-            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
-                return input.V().has("name", "jupiter");
-            }
-        }).toList(God.class);
+        final List<? extends God> gods = framedGraph.traverse(
+            input -> input.V().has("name", "jupiter")).toList(God.class);
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father != null);
@@ -124,13 +109,8 @@ public class IncidenceMethodHandlerTest {
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
-        final List<? extends God> gods = framedGraph.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
-            @Nullable
-            @Override
-            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
-                return input.V().has("name", "jupiter");
-            }
-        }).toList(God.class);
+        final List<? extends God> gods = framedGraph.traverse(
+            input -> input.V().has("name", "jupiter")).toList(God.class);
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father != null);
@@ -148,13 +128,8 @@ public class IncidenceMethodHandlerTest {
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
-        final List<? extends God> gods = framedGraph.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
-            @Nullable
-            @Override
-            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
-                return input.V().has("name", "jupiter");
-            }
-        }).toList(God.class);
+        final List<? extends God> gods = framedGraph.traverse(
+            input -> input.V().has("name", "jupiter")).toList(God.class);
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father != null);
@@ -174,13 +149,8 @@ public class IncidenceMethodHandlerTest {
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
-        final List<? extends God> gods = framedGraph.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
-            @Nullable
-            @Override
-            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
-                return input.V().has("name", "jupiter");
-            }
-        }).toList(God.class);
+        final List<? extends God> gods = framedGraph.traverse(
+            input -> input.V().has("name", "jupiter")).toList(God.class);
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father != null);

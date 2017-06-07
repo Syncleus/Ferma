@@ -90,13 +90,8 @@ public class AbstractElementFrameTest {
 
     @Test
     public void testVById() {
-        final Person person = fg.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
-            @Nullable
-            @Override
-            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
-                return input.V(p1.<Long>getId());
-            }
-        }).next(Person.class);
+        final Person person = fg.traverse(
+            input -> input.V(p1.<Long>getId())).next(Person.class);
         Assert.assertEquals(p1, person);
     }
 
@@ -115,25 +110,15 @@ public class AbstractElementFrameTest {
 
     @Test
     public void testVByIdExplicit() {
-        final Person person = fg.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
-            @Nullable
-            @Override
-            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
-                return input.V(p1.<Long>getId());
-            }
-        }).nextExplicit(Person.class);
+        final Person person = fg.traverse(
+            input -> input.V(p1.<Long>getId())).nextExplicit(Person.class);
         Assert.assertEquals(p1, person);
     }
 
     @Test
     public void testEByIdExplicit() {
-        final Knows knows = fg.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
-            @Nullable
-            @Override
-            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
-                return input.E(e1.<Long>getId());
-            }
-        }).nextExplicit(Knows.class);
+        final Knows knows = fg.traverse(
+            input -> input.E(e1.<Long>getId())).nextExplicit(Knows.class);
         Assert.assertEquals(e1, knows);
     }
 

@@ -38,13 +38,8 @@ public class AdjacencyMethodHandlerTest {
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
-        final List<? extends God> gods = framedGraph.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
-            @Nullable
-            @Override
-            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
-                return input.V().has("name", "jupiter");
-            }
-        }).toList(God.class);
+        final List<? extends God> gods = framedGraph.traverse(
+            input -> input.V().has("name", "jupiter")).toList(God.class);
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father != null);
@@ -67,13 +62,8 @@ public class AdjacencyMethodHandlerTest {
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
-        final List<? extends God> gods = framedGraph.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
-            @Nullable
-            @Override
-            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
-                return input.V().has("name", "jupiter");
-            }
-        }).toList(God.class);
+        final List<? extends God> gods = framedGraph.traverse(
+            input -> input.V().has("name", "jupiter")).toList(God.class);
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father != null);
@@ -96,13 +86,8 @@ public class AdjacencyMethodHandlerTest {
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
-        final List<? extends God> gods = framedGraph.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
-            @Nullable
-            @Override
-            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
-                return input.V().has("name", "jupiter");
-            }
-        }).toList(God.class);
+        final List<? extends God> gods = framedGraph.traverse(
+            input -> input.V().has("name", "jupiter")).toList(God.class);
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father != null);
@@ -125,13 +110,8 @@ public class AdjacencyMethodHandlerTest {
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
-        final List<? extends GodAlternative> gods = framedGraph.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
-            @Nullable
-            @Override
-            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
-                return input.V().has("name", "jupiter");
-            }
-        }).toList(GodAlternative.class);
+        final List<? extends GodAlternative> gods = framedGraph.traverse(
+            input -> input.V().has("name", "jupiter")).toList(GodAlternative.class);
 
         final GodAlternative father = gods.iterator().next();
         Assert.assertTrue(father != null);
@@ -155,13 +135,8 @@ public class AdjacencyMethodHandlerTest {
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
-        final List<? extends GodAlternative> gods = framedGraph.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
-            @Nullable
-            @Override
-            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
-                return input.V().has("name", "jupiter");
-            }
-        }).toList(GodAlternative.class);
+        final List<? extends GodAlternative> gods = framedGraph.traverse(
+            input -> input.V().has("name", "jupiter")).toList(GodAlternative.class);
 
         final GodAlternative father = gods.iterator().next();
         Assert.assertTrue(father != null);
@@ -179,13 +154,8 @@ public class AdjacencyMethodHandlerTest {
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
-        final List<? extends God> gods = framedGraph.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
-            @Nullable
-            @Override
-            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
-                return input.V().has("name", "jupiter");
-            }
-        }).toList(God.class);
+        final List<? extends God> gods = framedGraph.traverse(
+            input -> input.V().has("name", "jupiter")).toList(God.class);
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father != null);
@@ -207,13 +177,8 @@ public class AdjacencyMethodHandlerTest {
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
-        final List<? extends God> gods = framedGraph.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
-            @Nullable
-            @Override
-            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
-                return input.V().has("name", "jupiter");
-            }
-        }).toList(God.class);
+        final List<? extends God> gods = framedGraph.traverse(
+            input -> input.V().has("name", "jupiter")).toList(God.class);
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father != null);
@@ -235,13 +200,8 @@ public class AdjacencyMethodHandlerTest {
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
-        final List<? extends God> gods = framedGraph.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
-            @Nullable
-            @Override
-            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
-                return input.V().has("name", "jupiter");
-            }
-        }).toList(God.class);
+        final List<? extends God> gods = framedGraph.traverse(
+            input -> input.V().has("name", "jupiter")).toList(God.class);
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father != null);
@@ -259,13 +219,8 @@ public class AdjacencyMethodHandlerTest {
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
-        final List<? extends God> gods = framedGraph.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
-            @Nullable
-            @Override
-            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
-                return input.V().has("name", "jupiter");
-            }
-        }).toList(God.class);
+        final List<? extends God> gods = framedGraph.traverse(
+            input -> input.V().has("name", "jupiter")).toList(God.class);
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father != null);
@@ -285,13 +240,8 @@ public class AdjacencyMethodHandlerTest {
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
-        final List<? extends God> gods = framedGraph.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
-            @Nullable
-            @Override
-            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
-                return input.V().has("name", "jupiter");
-            }
-        }).toList(God.class);
+        final List<? extends God> gods = framedGraph.traverse(
+            input -> input.V().has("name", "jupiter")).toList(God.class);
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father != null);
@@ -313,13 +263,8 @@ public class AdjacencyMethodHandlerTest {
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
-        final List<? extends God> gods = framedGraph.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
-            @Nullable
-            @Override
-            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
-                return input.V().has("name", "jupiter");
-            }
-        }).toList(God.class);
+        final List<? extends God> gods = framedGraph.traverse(
+            input -> input.V().has("name", "jupiter")).toList(God.class);
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father != null);
@@ -339,13 +284,8 @@ public class AdjacencyMethodHandlerTest {
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
-        final List<? extends God> gods = framedGraph.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
-            @Nullable
-            @Override
-            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
-                return input.V().has("name", "jupiter");
-            }
-        }).toList(God.class);
+        final List<? extends God> gods = framedGraph.traverse(
+            input -> input.V().has("name", "jupiter")).toList(God.class);
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father != null);
@@ -367,13 +307,8 @@ public class AdjacencyMethodHandlerTest {
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
-        final List<? extends God> gods = framedGraph.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
-            @Nullable
-            @Override
-            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
-                return input.V().has("name", "jupiter");
-            }
-        }).toList(God.class);
+        final List<? extends God> gods = framedGraph.traverse(
+            input -> input.V().has("name", "jupiter")).toList(God.class);
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father != null);
@@ -398,13 +333,8 @@ public class AdjacencyMethodHandlerTest {
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
-        final List<? extends God> gods = framedGraph.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
-            @Nullable
-            @Override
-            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
-                return input.V().has("name", "jupiter");
-            }
-        }).toList(God.class);
+        final List<? extends God> gods = framedGraph.traverse(
+            input -> input.V().has("name", "jupiter")).toList(God.class);
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father != null);
@@ -433,13 +363,8 @@ public class AdjacencyMethodHandlerTest {
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
-        final List<? extends God> gods = framedGraph.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
-            @Nullable
-            @Override
-            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
-                return input.V().has("name", "jupiter");
-            }
-        }).toList(God.class);
+        final List<? extends God> gods = framedGraph.traverse(
+            input -> input.V().has("name", "jupiter")).toList(God.class);
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father != null);
@@ -467,13 +392,8 @@ public class AdjacencyMethodHandlerTest {
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, exceptionTypes);
 
-        final List<? extends BadGetSonsArgumentClass> gods = framedGraph.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
-            @Nullable
-            @Override
-            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
-                return input.V().has("name", "jupiter");
-            }
-        }).toList(BadGetSonsArgumentClass.class);
+        final List<? extends BadGetSonsArgumentClass> gods = framedGraph.traverse(
+            input -> input.V().has("name", "jupiter")).toList(BadGetSonsArgumentClass.class);
 
         final BadGetSonsArgumentClass father = gods.iterator().next();
     }
@@ -488,13 +408,8 @@ public class AdjacencyMethodHandlerTest {
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, exceptionTypes);
 
-        final List<? extends BadGetSonsArgumentInterface> gods = framedGraph.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
-            @Nullable
-            @Override
-            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
-                return input.V().has("name", "jupiter");
-            }
-        }).toList(BadGetSonsArgumentInterface.class);
+        final List<? extends BadGetSonsArgumentInterface> gods = framedGraph.traverse(
+            input -> input.V().has("name", "jupiter")).toList(BadGetSonsArgumentInterface.class);
 
         final BadGetSonsArgumentInterface father = gods.iterator().next();
     }
@@ -509,13 +424,8 @@ public class AdjacencyMethodHandlerTest {
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, exceptionTypes);
 
-        final List<? extends BadGetSonsArgumentInterface> gods = framedGraph.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
-            @Nullable
-            @Override
-            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
-                return input.V().has("name", "jupiter");
-            }
-        }).toList(BadGetSonsArgumentInterface.class);
+        final List<? extends BadGetSonsArgumentInterface> gods = framedGraph.traverse(
+            input -> input.V().has("name", "jupiter")).toList(BadGetSonsArgumentInterface.class);
 
         final BadGetSonsArgumentInterface father = gods.iterator().next();
     }
@@ -530,13 +440,8 @@ public class AdjacencyMethodHandlerTest {
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, exceptionTypes);
 
-        final List<? extends BadGetSonsArgumentInterface> gods = framedGraph.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
-            @Nullable
-            @Override
-            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
-                return input.V().has("name", "jupiter");
-            }
-        }).toList(BadGetSonsArgumentInterface.class);
+        final List<? extends BadGetSonsArgumentInterface> gods = framedGraph.traverse(
+            input -> input.V().has("name", "jupiter")).toList(BadGetSonsArgumentInterface.class);
 
         final BadGetSonsArgumentInterface father = gods.iterator().next();
     }
@@ -551,13 +456,8 @@ public class AdjacencyMethodHandlerTest {
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, exceptionTypes);
 
-        final List<? extends BadGetSonsArgumentInterface> gods = framedGraph.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
-            @Nullable
-            @Override
-            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
-                return input.V().has("name", "jupiter");
-            }
-        }).toList(BadGetSonsArgumentInterface.class);
+        final List<? extends BadGetSonsArgumentInterface> gods = framedGraph.traverse(
+            input -> input.V().has("name", "jupiter")).toList(BadGetSonsArgumentInterface.class);
 
         final BadGetSonsArgumentInterface father = gods.iterator().next();
     }
@@ -572,13 +472,8 @@ public class AdjacencyMethodHandlerTest {
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, exceptionTypes);
 
-        final List<? extends BadGetSonsArgumentInterface> gods = framedGraph.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
-            @Nullable
-            @Override
-            public GraphTraversal<?, ?> apply(@Nullable GraphTraversalSource input) {
-                return input.V().has("name", "jupiter");
-            }
-        }).toList(BadGetSonsArgumentInterface.class);
+        final List<? extends BadGetSonsArgumentInterface> gods = framedGraph.traverse(
+            input -> input.V().has("name", "jupiter")).toList(BadGetSonsArgumentInterface.class);
 
         final BadGetSonsArgumentInterface father = gods.iterator().next();
     }

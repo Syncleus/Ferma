@@ -101,11 +101,11 @@ public class Person extends AbstractVertexFrame {
   }
 
   public Knows addKnows(Person friend) {
-    return addEdge("knows", friend, Knows.class);
+    return addFramedEdge("knows", friend, Knows.class);
   }
 }
 
-public class Knows extends EdgeFrame {
+public class Knows extends AbstractEdgeFrame {
   public void setYears(int years) {
     setProperty("years", years);
   }
@@ -120,10 +120,10 @@ And here is how you interact with the framed elements:
 
 ```java
 public void testUntyped() {
-  Graph g = new TinkerGraph();
+  Graph graph = TinkerGraph.open();
 
   // implies untyped mode
-  FramedGraph fg = new DelegatingFramedGraph(g);
+  FramedGraph fg = new DelegatingFramedGraph(graph);
 
   Person p1 = fg.addFramedVertex(Person.class);
   p1.setName("Jeff");
@@ -158,10 +158,10 @@ Using simple mode will save the type of Java class the element was created with 
     
 ```java
 public void testSimpleTyping() {
-  Graph g = new TinkerGraph();
+  Graph graph = TinkerGraph.open();
 
   // implies simple mode
-  FramedGraph fg = new DelegatingFramedGraph(g, true, false);
+  FramedGraph fg = new DelegatingFramedGraph(graph, true, false);
 
   Person p1 = fg.addFramedVertex(Programmer.class);
   p1.setName("Jeff");
@@ -195,17 +195,17 @@ public abstract class Person extends AbstractVertexFrame {
   @Property("name")
   public abstract void setName(String name);
 
-  @Adjacency("knows")
+  @Adjacency(label = "knows")
   public abstract Iterator<Person> getKnowsPeople();
 
-  @Incidence("knows")
+  @Incidence(label = "knows")
   public abstract Iterator<Knows> getKnows();
 
-  @Incidence("knows")
+  @Incidence(label = "knows")
   public abstract Knows addKnows(Person friend);
 
-  public List<Person> getFriendsNamedBill() {
-    return traverse((v) -> v.out("knows").has("name", "bill").toList(Person.class);
+  public List<? extends Person> getFriendsNamedBill() {
+      return this.traverse(input -> input.out("knows").has("name", "bill")).toList(Person.class);
   }
 }
 
@@ -220,7 +220,7 @@ public abstract class Knows extends AbstractEdgeFrame {
   public abstract Person getIn();
 
   @OutVertex
-  public abstract Person getIn();
+  public abstract Person getOut();
 }
 
 public abstract class Programmer extends Person {
@@ -234,13 +234,13 @@ construct the byte-code for any abstract annotated methods.
 ```java
 public void testAnnotatedTyping() {
   Set<Class<?>> types = new HashSet<Class<?>>(Arrays.asList(new Class<?>[]{
-                                                                    Person.class,
-                                                                    Programmer.class,
-                                                                    Knows.class}));
-  Graph g = new TinkerGraph();
+                Person.class,
+                Programmer.class,
+                Knows.class}));
+  Graph graph = TinkerGraph.open();
 
   //implies annotated mode
-  FramedGraph fg = new DelegatingFramedGraph(g, true, types);
+  FramedGraph fg = new DelegatingFramedGraph(graph, true, types);
 
   Person p1 = fg.addFramedVertex(Programmer.class);
   p1.setName("Jeff");
@@ -251,8 +251,8 @@ public void testAnnotatedTyping() {
   Person jeff = fg.traverse((g) -> g.V().has("name", "Jeff")).next(Person.class);
   Person julia = fg.traverse((g) -> g.V().has("name", "Julia")).next(Person.class);
 
-  Assert.assertEquals(Programmer.class, jeff.getClass());
-  Assert.assertEquals(Person.class, julia.getClass());
+  Assert.assertTrue(Programmer.class.isAssignableFrom(jeff.getClass()));
+  Assert.assertTrue(Person.class.isAssignableFrom(julia.getClass()));
 }
 ```
 

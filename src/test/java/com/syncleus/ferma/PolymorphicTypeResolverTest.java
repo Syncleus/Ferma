@@ -43,26 +43,14 @@ public class PolymorphicTypeResolverTest {
         framedGraph.addFramedVertex(Programmer.class);
 
         //make sure the newly added node is actually a programmer
-        final Person programmer = framedGraph.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
-            @Nullable
-            @Override
-            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
-                return input.V();
-            }
-        }).next(Person.class);
+        final Person programmer = framedGraph.traverse(input -> input.V()).next(Person.class);
         Assert.assertTrue(programmer instanceof Programmer);
 
         //change the type resolution to person
         programmer.setTypeResolution(Person.class);
 
         //make sure the newly added node is not actually a programmer
-        final Person person = framedGraph.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
-            @Nullable
-            @Override
-            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
-                return input.V();
-            }
-        }).next(Person.class);
+        final Person person = framedGraph.traverse(input -> input.V()).next(Person.class);
         Assert.assertFalse(person instanceof Programmer);
     }
     
@@ -78,20 +66,10 @@ public class PolymorphicTypeResolverTest {
         final Person p2 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
         p2.setName("Julia");
 
-        final Person bryn = fg.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
-            @Nullable
-            @Override
-            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
-                return input.V().has("name", "Bryn");
-            }
-        }).next(Person.class);
-        final Person julia = fg.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
-            @Nullable
-            @Override
-            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
-                return input.V().has("name", "Julia");
-            }
-        }).next(Person.class);
+        final Person bryn = fg.traverse(
+            input -> input.V().has("name", "Bryn")).next(Person.class);
+        final Person julia = fg.traverse(
+            input -> input.V().has("name", "Julia")).next(Person.class);
 
         Assert.assertEquals(Programmer.class, bryn.getClass());
         Assert.assertEquals(Person.class, julia.getClass());
@@ -114,20 +92,8 @@ public class PolymorphicTypeResolverTest {
         final Person p2 = fg.addFramedVertex(Person.class);
         p2.setName("Julia");
 
-        final Person bryn = fg.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
-            @Nullable
-            @Override
-            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
-                return input.V().has("name", "Bryn");
-            }
-        }).next(Person.class);
-        final Person julia = fg.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
-            @Nullable
-            @Override
-            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
-                return input.V().has("name", "Julia");
-            }
-        }).next(Person.class);
+        final Person bryn = fg.traverse(input -> input.V().has("name", "Bryn")).next(Person.class);
+        final Person julia = fg.traverse(input -> input.V().has("name", "Julia")).next(Person.class);
 
         Assert.assertEquals(Programmer.class, bryn.getClass());
         Assert.assertEquals(Person.class, julia.getClass());
@@ -150,20 +116,8 @@ public class PolymorphicTypeResolverTest {
         final Person p2 = fg.addFramedVertexExplicit(Person.DEFAULT_INITIALIZER);
         p2.setName("Julia");
 
-        final Person bryn = fg.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
-            @Nullable
-            @Override
-            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
-                return input.V().has("name", "Bryn");
-            }
-        }).next(Person.class);
-        final Person julia = fg.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
-            @Nullable
-            @Override
-            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
-                return input.V().has("name", "Julia");
-            }
-        }).next(Person.class);
+        final Person bryn = fg.traverse(input -> input.V().has("name", "Bryn")).next(Person.class);
+        final Person julia = fg.traverse(input -> input.V().has("name", "Julia")).next(Person.class);
 
         Assert.assertEquals(Person.class, bryn.getClass());
         Assert.assertEquals(Person.class, julia.getClass());
@@ -186,20 +140,8 @@ public class PolymorphicTypeResolverTest {
         final Person p2 = fg.addFramedVertexExplicit(Person.class);
         p2.setName("Julia");
 
-        final Person bryn = fg.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
-            @Nullable
-            @Override
-            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
-                return input.V().has("name", "Bryn");
-            }
-        }).next(Person.class);
-        final Person julia = fg.traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
-            @Nullable
-            @Override
-            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
-                return input.V().has("name", "Julia");
-            }
-        }).next(Person.class);
+        final Person bryn = fg.traverse(input -> input.V().has("name", "Bryn")).next(Person.class);
+        final Person julia = fg.traverse(input -> input.V().has("name", "Julia")).next(Person.class);
 
         Assert.assertEquals(Person.class, bryn.getClass());
         Assert.assertEquals(Person.class, julia.getClass());

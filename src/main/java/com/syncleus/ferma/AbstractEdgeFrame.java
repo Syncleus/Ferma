@@ -23,17 +23,13 @@
  */
 package com.syncleus.ferma;
 
-import java.util.function.Function;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
-import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
 import org.apache.tinkerpop.gremlin.structure.Edge;
-import org.apache.tinkerpop.gremlin.structure.Element;
 
-import javax.annotation.Nullable;
-import java.util.Iterator;
+import java.util.function.Function;
 
 /**
  * The base class that all edge frames must extend.
@@ -88,13 +84,7 @@ public abstract class AbstractEdgeFrame extends AbstractElementFrame implements 
 
     @Override
     public <T extends Traversable<?, ?>> T traverse(final Function<GraphTraversal<? extends Edge, ? extends Edge>, GraphTraversal<?, ?>> traverser) {
-        return this.getGraph().traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
-            @Nullable
-            @Override
-            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
-                return traverser.apply(input.E(getElement().id()));
-            }
-        });
+        return this.getGraph().traverse(input -> traverser.apply(input.E(getElement().id())));
     }
 
     @Override

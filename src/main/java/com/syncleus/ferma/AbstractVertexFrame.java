@@ -271,13 +271,7 @@ public abstract class AbstractVertexFrame extends AbstractElementFrame implement
 
     @Override
     public <T extends Traversable<?, ?>> T traverse(final Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>> traverser) {
-        return this.getGraph().traverse(new Function<GraphTraversalSource, GraphTraversal<?, ?>>() {
-            @Nullable
-            @Override
-            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversalSource input) {
-                return traverser.apply(input.V(getElement().id()));
-            }
-        });
+        return this.getGraph().traverse(input -> traverser.apply(input.V(getElement().id())));
     }
 
     @Override

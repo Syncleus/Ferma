@@ -37,43 +37,19 @@ public class Person extends AbstractVertexFrame {
     }
 
     public Iterator<? extends Person> getKnows() {
-        return this.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>>() {
-            @Nullable
-            @Override
-            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversal<? extends Vertex, ? extends Vertex> input) {
-                return input.out("knows");
-            }
-        }).frame(Person.class);
+        return this.traverse(input -> input.out("knows")).frame(Person.class);
     }
 
     public Iterator<? extends Person> getKnowsExplicit() {
-        return this.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>>() {
-            @Nullable
-            @Override
-            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversal<? extends Vertex, ? extends Vertex> input) {
-                return input.out("knows");
-            }
-        }).frameExplicit(Person.class);
+        return this.traverse(input -> input.out("knows")).frameExplicit(Person.class);
     }
 
     public List<? extends Knows> getKnowsList() {
-        return this.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>>() {
-            @Nullable
-            @Override
-            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversal<? extends Vertex, ? extends Vertex> input) {
-                return input.outE("knows");
-            }
-        }).toList(Knows.class);
+        return this.traverse(input -> input.outE("knows")).toList(Knows.class);
     }
 
     public List<? extends Knows> getKnowsListExplicit() {
-        return this.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>>() {
-            @Nullable
-            @Override
-            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversal<? extends Vertex, ? extends Vertex> input) {
-                return input.outE("knows");
-            }
-        }).toListExplicit(Knows.class);
+        return this.traverse(input -> input.outE("knows")).toListExplicit(Knows.class);
     }
 
     public List<? extends Person> getKnowsCollectionVertices() {
@@ -85,23 +61,11 @@ public class Person extends AbstractVertexFrame {
     }
 
     public Person getFirst() {
-        return this.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>>() {
-            @Nullable
-            @Override
-            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversal<? extends Vertex, ? extends Vertex> input) {
-                return input.out("knows");
-            }
-        }).next(Person.class);
+        return this.traverse(input -> input.out("knows")).next(Person.class);
     }
 
     public Person getFirstExplicit() {
-        return this.traverse(new Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>>() {
-            @Nullable
-            @Override
-            public GraphTraversal<?, ?> apply(@Nullable final GraphTraversal<? extends Vertex, ? extends Vertex> input) {
-                return input.out("knows");
-            }
-        }).nextExplicit(Person.class);
+        return this.traverse(input -> input.out("knows")).nextExplicit(Person.class);
     }
 
     public Knows addKnows(final Person friend) {
@@ -111,5 +75,4 @@ public class Person extends AbstractVertexFrame {
     public Knows addKnowsExplicit(final Person friend) {
         return addFramedEdgeExplicit("knows", friend, Knows.DEFAULT_INITIALIZER);
     }
-
 }

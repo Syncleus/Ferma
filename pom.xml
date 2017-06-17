@@ -251,6 +251,9 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
+                        <configuration>
+                            <keyname>8762A2BFD91F0468</keyname>
+                        </configuration>
                     </plugin>
                 </plugins>
             </build>

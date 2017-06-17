@@ -12,7 +12,7 @@
     <groupId>com.syncleus.ferma</groupId>
     <artifactId>ferma</artifactId>
     <packaging>jar</packaging>
-    <version>3.0.3-SNAPSHOT</version>
+    <version>3.0.3</version>
 
     <name>Ferma</name>
     <description>An ORM for the Tinkerpop3 graph stack.</description>
@@ -35,6 +35,7 @@
         <connection>scm:git:https://github.com/Syncleus/Ferma</connection>
         <developerConnection>scm:git:ssh://github.com/Syncleus/Ferma</developerConnection>
         <url>https://github.com/Syncleus/Ferma.git</url>
+        <tag>v3.0.3</tag>
     </scm>
 
     <ciManagement>

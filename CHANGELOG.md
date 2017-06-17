@@ -2,6 +2,16 @@
 
 ## 3.0.3
 
+* Updated the following dependencies
+  * gson: 2.8.0 -> 2.8.1
+  * guava: 20.0 -> 22.0
+  * byte-buddy: 1.5.12 -> 1.7.1
+  * gremlin-core: 3.2.3 -> 3.2.4
+  * tinkergraph-gremlin: 3.2.4 -> 3.2.4
+  * reflections: 0.9.10 -> 0.9.11
+  * maven-license-plugin: 1.9.0 -> 1.10.b1
+* Updated internal traversal code to use the new lambda syntax.
+
 ## 3.0.2
 
 * Updated package dependencies, specifically Byte Buddy, mostly performance improvements.

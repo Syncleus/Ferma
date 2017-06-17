@@ -2,6 +2,13 @@
 
 ## 2.2.2
 
+* Updated the following dependencies
+  * gson: 2.8.0 -> 2.8.1
+  * guava: 20.0 -> 22.0
+  * byte-buddy: 1.5.12 -> 1.7.1
+  * reflections: 0.9.10 -> 0.9.11
+  * maven-license-plugin: 1.9.0 -> 1.10.b1
+
 ## 2.2.1
 
 * Updated package dependencies, specifically Byte Buddy, mostly performance improvements.

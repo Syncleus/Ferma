@@ -10,7 +10,7 @@
   * tinkergraph-gremlin: 3.2.4 -> 3.2.4
   * reflections: 0.9.10 -> 0.9.11
   * maven-license-plugin: 1.9.0 -> 1.10.b1
-* Updated internal traversal code to use the new lambda syntax.
+* Changed internal traversal code to use the new lambda syntax.
 
 ## 3.0.2
 

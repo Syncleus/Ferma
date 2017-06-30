@@ -46,7 +46,8 @@ public interface ElementFrame {
 
     /**
      * Set the underlying element.
-     * @param element
+     *
+     * @param element Raw graph element
      */
 	void setElement(Element element);
 

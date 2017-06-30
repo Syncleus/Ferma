@@ -1,6 +1,9 @@
 # Ferma Changelog
 
-## 2.2.3
+## 2.3.0
+
+* Updated Ferma 2.3.0 to utilize Java 8.
+* Added transaction interfaces which are used by ferma extensions.
 
 ## 2.2.2
 

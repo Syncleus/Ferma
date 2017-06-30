@@ -207,13 +207,15 @@ abstract class AbstractVertexTraversal<C, S, M> extends AbstractTraversal<Vertex
 
     @Override
     public <N> VertexTraversal<Collection<? extends N>, Collection<? extends N>, M> aggregate(final Collection<? super N> aggregate, final TraversalFunction<VertexFrame, ? extends N> aggregateFunction) {
-        return (VertexTraversal<Collection<? extends N>, Collection<? extends N>, M>) super.aggregate(aggregate, aggregateFunction);
+        Traversal<VertexFrame, ?, ?, M> traversal = super.aggregate(aggregate, aggregateFunction);
+        return (VertexTraversal<Collection<? extends N>, Collection<? extends N>, M>) traversal;
 
     }
 
     @Override
     public <N> VertexTraversal<Collection<? extends N>, Collection<? extends N>, M> aggregate(final TraversalFunction<VertexFrame, ? extends N> aggregateFunction) {
-        return (VertexTraversal<Collection<? extends N>, Collection<? extends N>, M>) super.aggregate(aggregateFunction);
+        Traversal<VertexFrame, ?, ?, M> traversal = super.aggregate(aggregateFunction);
+        return (VertexTraversal<Collection<? extends N>, Collection<? extends N>, M>) traversal;
 
     }
 

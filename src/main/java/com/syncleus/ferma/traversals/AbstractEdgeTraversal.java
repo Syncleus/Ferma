@@ -376,13 +376,15 @@ abstract class AbstractEdgeTraversal<C, S, M> extends AbstractTraversal<EdgeFram
 
     @Override
     public <N> EdgeTraversal<Collection<? extends N>, Collection<? extends N>, M> aggregate(final Collection<? super N> aggregate, final TraversalFunction<EdgeFrame, ? extends N> aggregateFunction) {
-        return (EdgeTraversal<Collection<? extends N>, Collection<? extends N>, M>) super.aggregate(aggregate, aggregateFunction);
+        Traversal<EdgeFrame, ?, ?, M> traversal = super.aggregate(aggregate, aggregateFunction);
+        return (EdgeTraversal<Collection<? extends N>, Collection<? extends N>, M>)traversal;
 
     }
 
     @Override
     public <N> EdgeTraversal<Collection<? extends N>, Collection<? extends N>, M> aggregate(final TraversalFunction<EdgeFrame, ? extends N> aggregateFunction) {
-        return (EdgeTraversal<Collection<? extends N>, Collection<? extends N>, M>) super.aggregate(aggregateFunction);
+        Traversal<EdgeFrame, ?, ?, M> traversal = super.aggregate(aggregateFunction);
+        return (EdgeTraversal<Collection<? extends N>, Collection<? extends N>, M>)traversal;
 
     }
 

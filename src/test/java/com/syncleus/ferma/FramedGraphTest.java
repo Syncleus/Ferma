@@ -17,11 +17,11 @@ package com.syncleus.ferma;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import java.util.Collection;
 import java.util.List;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Answers;
@@ -59,11 +59,11 @@ public class FramedGraphTest {
         final Person bryn = fg.v().has("name", "Bryn").next(Person.class);
 
 
-        Assert.assertEquals("Bryn", bryn.getName());
-        Assert.assertEquals(15, bryn.getKnowsList().get(0).getYears());
+        assertEquals("Bryn", bryn.getName());
+        assertEquals(15, bryn.getKnowsList().get(0).getYears());
 
         final Collection<? extends Integer> knowsCollection = fg.v().has("name", "Julia").bothE().property("years", Integer.class).aggregate().cap();
-        Assert.assertEquals(1, knowsCollection.size());
+        assertEquals(1, knowsCollection.size());
     }
     
     @Test
@@ -81,11 +81,11 @@ public class FramedGraphTest {
         final Person bryn = fg.v().has("name", "Bryn").next(Person.class);
 
 
-        Assert.assertEquals("Bryn", bryn.getName());
-        Assert.assertEquals(15, bryn.getKnowsList().get(0).getYears());
+        assertEquals("Bryn", bryn.getName());
+        assertEquals(15, bryn.getKnowsList().get(0).getYears());
 
         final Collection<? extends Integer> knowsCollection = fg.v().has("name", "Julia").bothE().property("years", Integer.class).aggregate().cap();
-        Assert.assertEquals(1, knowsCollection.size());
+        assertEquals(1, knowsCollection.size());
     }
 
     @Test
@@ -103,11 +103,11 @@ public class FramedGraphTest {
         final Person bryn = fg.v().has("name", "Bryn").nextExplicit(Person.class);
 
 
-        Assert.assertEquals("Bryn", bryn.getName());
-        Assert.assertEquals(15, bryn.getKnowsListExplicit().get(0).getYears());
+        assertEquals("Bryn", bryn.getName());
+        assertEquals(15, bryn.getKnowsListExplicit().get(0).getYears());
 
         final Collection<? extends Integer> knowsCollection = fg.v().has("name", "Julia").bothE().property("years", Integer.class).aggregate().cap();
-        Assert.assertEquals(1, knowsCollection.size());
+        assertEquals(1, knowsCollection.size());
     }
     
     @Test
@@ -125,11 +125,11 @@ public class FramedGraphTest {
         final Person bryn = fg.v().has("name", "Bryn").nextExplicit(Person.class);
 
 
-        Assert.assertEquals("Bryn", bryn.getName());
-        Assert.assertEquals(15, bryn.getKnowsListExplicit().get(0).getYears());
+        assertEquals("Bryn", bryn.getName());
+        assertEquals(15, bryn.getKnowsListExplicit().get(0).getYears());
 
         final Collection<? extends Integer> knowsCollection = fg.v().has("name", "Julia").bothE().property("years", Integer.class).aggregate().cap();
-        Assert.assertEquals(1, knowsCollection.size());
+        assertEquals(1, knowsCollection.size());
     }
 
     @Test
@@ -176,11 +176,11 @@ public class FramedGraphTest {
         final Person bryn = fg.v().has("name", "Bryn").next(Person.class);
         final Person julia = fg.v().has("name", "Julia").next(Person.class);
 
-        Assert.assertEquals(Programmer.class, bryn.getClass());
-        Assert.assertEquals(Person.class, julia.getClass());
+        assertEquals(Programmer.class, bryn.getClass());
+        assertEquals(Person.class, julia.getClass());
         
-        Assert.assertNotNull(bryn.getElement().getProperty(PolymorphicTypeResolver.TYPE_RESOLUTION_KEY));
-        Assert.assertNotNull(julia.getElement().getProperty(PolymorphicTypeResolver.TYPE_RESOLUTION_KEY));
+        assertNotNull(bryn.getElement().getProperty(PolymorphicTypeResolver.TYPE_RESOLUTION_KEY));
+        assertNotNull(julia.getElement().getProperty(PolymorphicTypeResolver.TYPE_RESOLUTION_KEY));
     }
     
     @Test
@@ -197,11 +197,11 @@ public class FramedGraphTest {
         final Person bryn = fg.v().has("name", "Bryn").next(Person.class);
         final Person julia = fg.v().has("name", "Julia").next(Person.class);
 
-        Assert.assertEquals(Programmer.class, bryn.getClass());
-        Assert.assertEquals(Person.class, julia.getClass());
+        assertEquals(Programmer.class, bryn.getClass());
+        assertEquals(Person.class, julia.getClass());
         
-        Assert.assertNotNull(bryn.getElement().getProperty(PolymorphicTypeResolver.TYPE_RESOLUTION_KEY));
-        Assert.assertNotNull(julia.getElement().getProperty(PolymorphicTypeResolver.TYPE_RESOLUTION_KEY));
+        assertNotNull(bryn.getElement().getProperty(PolymorphicTypeResolver.TYPE_RESOLUTION_KEY));
+        assertNotNull(julia.getElement().getProperty(PolymorphicTypeResolver.TYPE_RESOLUTION_KEY));
     }
 
     @Test
@@ -218,11 +218,11 @@ public class FramedGraphTest {
         final Person bryn = fg.v().has("name", "Bryn").next(Person.class);
         final Person julia = fg.v().has("name", "Julia").next(Person.class);
 
-        Assert.assertEquals(Person.class, bryn.getClass());
-        Assert.assertEquals(Person.class, julia.getClass());
+        assertEquals(Person.class, bryn.getClass());
+        assertEquals(Person.class, julia.getClass());
         
-        Assert.assertNull(bryn.getElement().getProperty(PolymorphicTypeResolver.TYPE_RESOLUTION_KEY));
-        Assert.assertNull(julia.getElement().getProperty(PolymorphicTypeResolver.TYPE_RESOLUTION_KEY));
+        assertNull(bryn.getElement().getProperty(PolymorphicTypeResolver.TYPE_RESOLUTION_KEY));
+        assertNull(julia.getElement().getProperty(PolymorphicTypeResolver.TYPE_RESOLUTION_KEY));
     }
     
     @Test
@@ -239,11 +239,11 @@ public class FramedGraphTest {
         final Person bryn = fg.v().has("name", "Bryn").next(Person.class);
         final Person julia = fg.v().has("name", "Julia").next(Person.class);
 
-        Assert.assertEquals(Person.class, bryn.getClass());
-        Assert.assertEquals(Person.class, julia.getClass());
+        assertEquals(Person.class, bryn.getClass());
+        assertEquals(Person.class, julia.getClass());
         
-        Assert.assertNull(bryn.getElement().getProperty(PolymorphicTypeResolver.TYPE_RESOLUTION_KEY));
-        Assert.assertNull(julia.getElement().getProperty(PolymorphicTypeResolver.TYPE_RESOLUTION_KEY));
+        assertNull(bryn.getElement().getProperty(PolymorphicTypeResolver.TYPE_RESOLUTION_KEY));
+        assertNull(julia.getElement().getProperty(PolymorphicTypeResolver.TYPE_RESOLUTION_KEY));
     }
 
     @Test
@@ -260,11 +260,11 @@ public class FramedGraphTest {
         final Person bryn = fg.v().has("name", "Bryn").nextExplicit(Person.class);
         final Person julia = fg.v().has("name", "Julia").nextExplicit(Person.class);
 
-        Assert.assertEquals(Person.class, bryn.getClass());
-        Assert.assertEquals(Person.class, julia.getClass());
+        assertEquals(Person.class, bryn.getClass());
+        assertEquals(Person.class, julia.getClass());
         
-        Assert.assertNotNull(bryn.getElement().getProperty(PolymorphicTypeResolver.TYPE_RESOLUTION_KEY));
-        Assert.assertNotNull(julia.getElement().getProperty(PolymorphicTypeResolver.TYPE_RESOLUTION_KEY));
+        assertNotNull(bryn.getElement().getProperty(PolymorphicTypeResolver.TYPE_RESOLUTION_KEY));
+        assertNotNull(julia.getElement().getProperty(PolymorphicTypeResolver.TYPE_RESOLUTION_KEY));
     }
     
     @Test
@@ -281,11 +281,11 @@ public class FramedGraphTest {
         final Person bryn = fg.v().has("name", "Bryn").nextExplicit(Person.class);
         final Person julia = fg.v().has("name", "Julia").nextExplicit(Person.class);
 
-        Assert.assertEquals(Person.class, bryn.getClass());
-        Assert.assertEquals(Person.class, julia.getClass());
+        assertEquals(Person.class, bryn.getClass());
+        assertEquals(Person.class, julia.getClass());
         
-        Assert.assertNotNull(bryn.getElement().getProperty(PolymorphicTypeResolver.TYPE_RESOLUTION_KEY));
-        Assert.assertNotNull(julia.getElement().getProperty(PolymorphicTypeResolver.TYPE_RESOLUTION_KEY));
+        assertNotNull(bryn.getElement().getProperty(PolymorphicTypeResolver.TYPE_RESOLUTION_KEY));
+        assertNotNull(julia.getElement().getProperty(PolymorphicTypeResolver.TYPE_RESOLUTION_KEY));
     }
 
     @Test
@@ -301,7 +301,7 @@ public class FramedGraphTest {
             }
         }, new PolymorphicTypeResolver());
         final Person person = fg.addFramedVertex(null, Person.DEFAULT_INITIALIZER);
-        Assert.assertEquals(o, person);
+        assertEquals(o, person);
     }
     
     @Test
@@ -317,7 +317,7 @@ public class FramedGraphTest {
             }
         }, new PolymorphicTypeResolver());
         final Person person = fg.addFramedVertex(Person.class);
-        Assert.assertEquals(o, person);
+        assertEquals(o, person);
     }
 
     @Test
@@ -333,7 +333,7 @@ public class FramedGraphTest {
             }
         }, new PolymorphicTypeResolver());
         final Person person = fg.addFramedVertexExplicit(Person.DEFAULT_INITIALIZER);
-        Assert.assertEquals(o, person);
+        assertEquals(o, person);
     }
     
     @Test
@@ -349,7 +349,7 @@ public class FramedGraphTest {
             }
         }, new PolymorphicTypeResolver());
         final Person person = fg.addFramedVertexExplicit(Person.class);
-        Assert.assertEquals(o, person);
+        assertEquals(o, person);
     }
 
     @Mock(answer = Answers.RETURNS_MOCKS)
@@ -391,11 +391,12 @@ public class FramedGraphTest {
         final VertexFrame bryn = fg.v().has("name", "Bryn").next();
 
 
-        Assert.assertEquals("Bryn", bryn.getProperty("name"));
-        Assert.assertEquals(15, bryn.outE("knows").toList().get(0).getProperty("years"));
+        assertEquals("Bryn", bryn.getProperty("name"));
+        int value = bryn.outE("knows").toList().get(0).getProperty("years");
+        assertEquals(15, value);
 
         final Collection<? extends Integer> knowsCollection = fg.v().has("name", "Julia").bothE().property("years", Integer.class).aggregate().cap();
-        Assert.assertEquals(1, knowsCollection.size());
+        assertEquals(1, knowsCollection.size());
     }
 
     @Test
@@ -413,11 +414,12 @@ public class FramedGraphTest {
         final VertexFrame bryn = fg.v().has("name", "Bryn").next();
 
 
-        Assert.assertEquals("Bryn", bryn.getProperty("name"));
-        Assert.assertEquals(15, bryn.outE("knows").toList().get(0).getProperty("years"));
+        assertEquals("Bryn", bryn.getProperty("name"));
+        int value = bryn.outE("knows").toList().get(0).getProperty("years");
+        assertEquals(15, value);
 
         final Collection<? extends Integer> knowsCollection = fg.v().has("name", "Julia").bothE().property("years", Integer.class).aggregate().cap();
-        Assert.assertEquals(1, knowsCollection.size());
+        assertEquals(1, knowsCollection.size());
     }
 
     @Test

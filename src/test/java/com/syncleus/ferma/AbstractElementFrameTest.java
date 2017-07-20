@@ -15,7 +15,9 @@
  */
 package com.syncleus.ferma;
 
-import org.junit.Assert;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockitoAnnotations;
@@ -45,83 +47,89 @@ public class AbstractElementFrameTest {
 
     @Test
     public void testGetId() {
-        Assert.assertEquals("0", p1.getId());
+        assertEquals("0", p1.getId());
 
     }
 
     @Test
     public void testGetPropertyKeys() {
-        Assert.assertEquals(Sets.newHashSet("name"), p1.getPropertyKeys());
+        assertEquals(Sets.newHashSet("name"), p1.getPropertyKeys());
     }
 
     @Test
     public void testGetProperty() {
-        Assert.assertEquals("Bryn", p1.getProperty("name"));
+        assertEquals("Bryn", p1.getProperty("name"));
     }
 
     @Test
     public void testSetProperty() {
         p1.setProperty("name", "Bryn Cooke");
-        Assert.assertEquals("Bryn Cooke", p1.getProperty("name"));
+        assertEquals("Bryn Cooke", p1.getProperty("name"));
     }
 
     @Test
     public void testSetPropertyNull() {
         p1.setProperty("name", null);
-        Assert.assertNull(p1.getProperty("name"));
+        assertNull(p1.getProperty("name"));
     }
 
     @Test
     public void testV() {
-        Assert.assertEquals(2, p1.v().count());
+        assertEquals(2, p1.v().count());
     }
 
     @Test
     public void testE() {
-        Assert.assertEquals(1, p1.e().count());
+        assertEquals(1, p1.e().count());
     }
 
     @Test
     public void testv() {
-        Assert.assertEquals(p1, p1.v(p1.getId()).next(Person.class));
+        Object id = p1.getId();
+        assertEquals(p1, p1.v(id).next(Person.class));
     }
 
     @Test
     public void teste() {
-        Assert.assertEquals(e1, p1.e(e1.getId()).next(Knows.class));
+        Object id = e1.getId();
+        assertEquals(e1, p1.e(id).next(Knows.class));
     }
 
     @Test
     public void testvExplicit() {
-        Assert.assertEquals(p1, p1.v(p1.getId()).nextExplicit(Person.class));
+        Object id = p1.getId();
+        assertEquals(p1, p1.v(id).nextExplicit(Person.class));
     }
 
     @Test
     public void testeExplicit() {
-        Assert.assertEquals(e1, p1.e(e1.getId()).nextExplicit(Knows.class));
+        Object id = e1.getId();
+        assertEquals(e1, p1.e(id).nextExplicit(Knows.class));
     }
 
     @Test
     public void testRemove() {
         p1.remove();
-        Assert.assertEquals(1, p1.v().count());
+        assertEquals(1, p1.v().count());
     }
 
     @Test
     public void testReframe() {
         final TVertex v1 = p1.reframe(TVertex.class);
-        Assert.assertEquals(p1.getId(), v1.getId());
+        Object id = p1.getId();
+        assertEquals(id, v1.getId());
     }
 
     @Test
     public void testReframeExplicit() {
         final TVertex v1 = p1.reframeExplicit(TVertex.class);
-        Assert.assertEquals(p1.getId(), v1.getId());
+        Object id = p1.getId();
+        assertEquals(id, v1.getId());
     }
 
     @Test
     public void testvNull() {
-        Assert.assertNull(p1.v("noId").next());
+        assertNull(p1.v("noId").next());
     }
 
 }

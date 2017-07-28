@@ -27,7 +27,7 @@ to use.
 
 ```bash
 
-npm i -g commitizen cz-customizable
+npm install -g commitizen@2.8.6 cz-customizable@4.0.0
 ```
 
 Below is an example of Commitizen in action. It replaces your usual `git commit` command

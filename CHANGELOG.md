@@ -1,5 +1,7 @@
 # Ferma Changelog
 
+## 2.3.1
+
 ## 2.3.0
 
 * Updated Ferma 2.3.0 to utilize Java 8.

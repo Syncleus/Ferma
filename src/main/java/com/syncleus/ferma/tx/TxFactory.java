@@ -15,7 +15,12 @@
  */
 package com.syncleus.ferma.tx;
 
+/**
+ * Interface which can be used for custom transaction factories in 
+ * order to provide various ways of executing transaction handlers.
+ */
 public interface TxFactory {
+
     /**
      * Return a new autoclosable transaction handler. This object should be used within a try-with-resource block.
      * 
@@ -31,5 +36,53 @@ public interface TxFactory {
      * @return Created transaction
      */
     Tx tx();
+    
+    /**
+     * Execute the txHandler within the scope of a transaction and call 
+     * the result handler once the transaction handler code has finished.
+     * 
+     * @param txHandler
+     *            Handler that will be executed within the scope of the transaction.
+     * @return Object which was returned by the handler
+     */
+    <T> T tx(TxHandler<T> txHandler);
+
+    /**
+     * Execute the txHandler within the scope of a transaction.
+     * 
+     * @param txHandler
+     *            Handler that will be executed within the scope of the transaction.
+     */
+    default void tx(TxHandler0 txHandler) {
+        tx((tx) -> {
+            txHandler.handle();
+        });
+    }
+
+    /**
+     * Execute the txHandler within the scope of a transaction.
+     * 
+     * @param txHandler
+     *            Handler that will be executed within the scope of the transaction.
+     * @return Result of the handler
+     */
+    default <T> T tx(TxHandler1<T> txHandler) {
+        return tx((tx) -> {
+            return txHandler.handle();
+        });
+    }
+
+    /**
+     * Execute the txHandler within the scope of a transaction.
+     * 
+     * @param txHandler
+     *            Handler that will be executed within the scope of the transaction.
+     */
+    default void tx(TxHandler2 txHandler) {
+        tx((tx) -> {
+            txHandler.handle(tx);
+            return null;
+        });
+    }
 
 }

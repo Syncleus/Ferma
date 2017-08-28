@@ -31,51 +31,62 @@ public class DelegatingTransaction implements WrappedTransaction {
 
     @Override
     public void open() {
-        this.delegate.open();
+        this.getDelegate().open();
     }
 
     @Override
     public void commit() {
-        this.delegate.commit();
+        this.getDelegate().commit();
     }
 
     @Override
     public void rollback() {
-        this.delegate.rollback();
+        this.getDelegate().rollback();
     }
 
     @Override
     public WrappedFramedGraph<? extends Graph> createThreadedTx() {
-        return new DelegatingFramedGraph<>(this.delegate.createThreadedTx(), this.parentGraph.getBuilder(), this.parentGraph.getTypeResolver());
+        return new DelegatingFramedGraph<>(this.getDelegate().createThreadedTx(), this.getGraph().getBuilder(), this.getGraph().getTypeResolver());
     }
 
     @Override
     public boolean isOpen() {
-        return this.delegate.isOpen();
+        return this.getDelegate().isOpen();
     }
 
     @Override
     public void readWrite() {
-        this.delegate.readWrite();
+        this.getDelegate().readWrite();
     }
 
     @Override
     public void close() {
-        this.delegate.close();
+        this.getDelegate().close();
     }
 
     @Override
     public void addTransactionListener(final Consumer<Transaction.Status> listener) {
-        this.delegate.addTransactionListener(listener);
+        this.getDelegate().addTransactionListener(listener);
     }
 
     @Override
     public void removeTransactionListener(final Consumer<Transaction.Status> listener) {
-        this.delegate.removeTransactionListener(listener);
+        this.getDelegate().removeTransactionListener(listener);
     }
 
     @Override
     public void clearTransactionListeners() {
-        this.delegate.clearTransactionListeners();
+        this.getDelegate().clearTransactionListeners();
     }
+
+    @Override
+    public Transaction getDelegate() {
+        return delegate;
+    }
+
+    @Override
+    public WrappedFramedGraph<? extends Graph> getGraph() {
+        return parentGraph;
+    }
+
 }

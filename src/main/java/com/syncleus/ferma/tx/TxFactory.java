@@ -45,7 +45,7 @@ public interface TxFactory {
      *            Handler that will be executed within the scope of the transaction.
      * @return Object which was returned by the handler
      */
-    <T> T tx(TxHandler<T> txHandler);
+    <T> T tx(TxAction<T> txHandler);
 
     /**
      * Execute the txHandler within the scope of a transaction.
@@ -53,7 +53,7 @@ public interface TxFactory {
      * @param txHandler
      *            Handler that will be executed within the scope of the transaction.
      */
-    default void tx(TxHandler0 txHandler) {
+    default void tx(TxAction0 txHandler) {
         tx((tx) -> {
             txHandler.handle();
         });
@@ -66,7 +66,7 @@ public interface TxFactory {
      *            Handler that will be executed within the scope of the transaction.
      * @return Result of the handler
      */
-    default <T> T tx(TxHandler1<T> txHandler) {
+    default <T> T tx(TxAction1<T> txHandler) {
         return tx((tx) -> {
             return txHandler.handle();
         });
@@ -78,7 +78,7 @@ public interface TxFactory {
      * @param txHandler
      *            Handler that will be executed within the scope of the transaction.
      */
-    default void tx(TxHandler2 txHandler) {
+    default void tx(TxAction2 txHandler) {
         tx((tx) -> {
             txHandler.handle(tx);
             return null;

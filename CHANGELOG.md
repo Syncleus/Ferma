@@ -14,6 +14,7 @@
 * Updated the following dependencies
   * tinkergraph-gremlin: 3.2.4 -> 3.2.5
 
+* Methods set with the Property annotation now accept null values.
 
 ## 3.0.3
 

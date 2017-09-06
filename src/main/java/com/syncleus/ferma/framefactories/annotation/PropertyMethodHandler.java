@@ -108,7 +108,7 @@ public class PropertyMethodHandler implements MethodHandler {
             final Property annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Property.class);
             final String value = annotation.value();
 
-            if (obj.getClass().isEnum())
+            if ((obj != null) && (obj.getClass().isEnum()))
                 thiz.setProperty(value, ((Enum<?>) obj).name());
             else
                 thiz.setProperty(value, obj);

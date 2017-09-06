@@ -108,7 +108,7 @@ public class TxFactoryTest implements TxFactory {
     }
 
     @Override
-    public <T> T tx(TxHandler<T> txHandler) {
+    public <T> T tx(TxAction<T> txHandler) {
         try (Tx tx = tx()) {
             try {
                 return txHandler.handle(mock);

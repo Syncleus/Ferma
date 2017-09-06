@@ -49,16 +49,18 @@ public interface TxFactory {
     /**
      * Create a new transaction.
      * 
-     * @return
+     * @return new transaction.
      */
     Tx createTx();
 
+
     /**
-     * Execute the txHandler within the scope of a transaction and call 
+     * Execute the txHandler within the scope of a transaction and call
      * the result handler once the transaction handler code has finished.
-     * 
+     *
      * @param txHandler
      *            Handler that will be executed within the scope of the transaction.
+     * @param <T> Type of the object returned by the handler
      * @return Object which was returned by the handler
      */
     <T> T tx(TxAction<T> txHandler);
@@ -80,6 +82,7 @@ public interface TxFactory {
      * 
      * @param txHandler
      *            Handler that will be executed within the scope of the transaction.
+     * @param <T> type of the object returned by the handler.
      * @return Result of the handler
      */
     default <T> T tx(TxAction1<T> txHandler) {

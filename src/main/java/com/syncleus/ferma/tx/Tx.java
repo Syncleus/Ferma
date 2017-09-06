@@ -63,8 +63,6 @@ public interface Tx extends WrappedTransaction {
 
     /**
      * Invoke rollback or commit when closing the autoclosable. By default a rollback will be invoked.
-     * 
-     * @throws IOException
      */
     @Override
     void close();

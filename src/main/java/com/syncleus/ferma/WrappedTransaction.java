@@ -100,13 +100,13 @@ public interface WrappedTransaction extends AutoCloseable {
 
     /**
      * Returns the raw wrapped tinkerpop transaction.
-     * @return
+     * @return wrapped tinkerpop transaction.
      */
      Transaction getDelegate();
 
      /**
       * Returns the parent graph for the transaction.
-      * @return
+      * @return parent graph.
       */
      WrappedFramedGraph<? extends Graph> getGraph();
 }

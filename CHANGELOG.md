@@ -4,6 +4,10 @@
 
 * Renamed functional interfaces for transactions from TxHandler to TxAction to conform with Ferma 3.1.0 changes.
 * Methods annotated with the Property annotation can now accept null arguments.
+* Updated the following dependencies
+  * syncleus-pom: 3 -> 4
+  * guava: 22.0 -> 23.0
+  * byte-buddy: 1.7.1 -> 1.7.5
 
 ## 2.3.0
 

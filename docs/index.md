@@ -63,6 +63,9 @@ including the following.
 
 Ferma Javadocs:
 [latest](http://www.javadoc.io/doc/com.syncleus.ferma/ferma) -
+[3.1.0](http://www.javadoc.io/doc/com.syncleus.ferma/ferma/3.1.0) -
+[3.0.3](http://www.javadoc.io/doc/com.syncleus.ferma/ferma/3.0.3) -
+[3.0.2](http://www.javadoc.io/doc/com.syncleus.ferma/ferma/3.0.2) -
 [3.0.1](http://www.javadoc.io/doc/com.syncleus.ferma/ferma/3.0.1) -
 [3.0.0](http://www.javadoc.io/doc/com.syncleus.ferma/ferma/3.0.0) -
 [2.2.0](http://www.javadoc.io/doc/com.syncleus.ferma/ferma/2.2.0) -

@@ -12,7 +12,10 @@
   contain examples how these classes and methods can be used.
 
 * Updated the following dependencies
-  * tinkergraph-gremlin: 3.2.4 -> 3.2.5
+  * guava 22.0 -> 23.0
+  * byte-buddy 1.7.1 -> 1.7.5
+  * gremlin-core 3.2.5 -> 3.3.0
+  * tinkergraph-gremlin 3.2.4 -> 3.3.0
 
 * Methods set with the Property annotation now accept null values.
 

@@ -1,6 +1,19 @@
 # Ferma Changelog
 
-## 3.0.4
+## 3.1.0
+
+* Added abstraction code for tinkerpop transactions which ease usage of transactions within ferma.
+  The new code provides functional interfaces for transactions and methods which allow 
+  access to transactions from nested functions without the need to pass the original transaction object along.
+  Once a transaction has been opened it can be accessed from anywhere within the same thread 
+  via the `Tx.getActive()` method.
+
+  The `TxFactoryTest` class and the [ferma-orientdb extension](https://github.com/syncleus/ferma-orientdb) 
+  contain examples how these classes and methods can be used.
+
+* Updated the following dependencies
+  * tinkergraph-gremlin: 3.2.4 -> 3.2.5
+
 
 ## 3.0.3
 

@@ -15,9 +15,11 @@
  */
 package com.syncleus.ferma;
 
-import org.apache.tinkerpop.gremlin.structure.Graph;
-import org.apache.tinkerpop.gremlin.structure.util.AbstractTransaction;
 import java.util.function.Consumer;
+
+import org.apache.tinkerpop.gremlin.structure.Graph;
+import org.apache.tinkerpop.gremlin.structure.Transaction;
+import org.apache.tinkerpop.gremlin.structure.util.AbstractTransaction;
 
 /**
  * A set of methods that allow for control of transactional behavior of a {@link WrappedFramedGraph} instance. Providers may
@@ -95,4 +97,16 @@ public interface WrappedTransaction extends AutoCloseable {
      * Removes all transaction listeners.
      */
     public void clearTransactionListeners();
+
+    /**
+     * Returns the raw wrapped tinkerpop transaction.
+     * @return
+     */
+     Transaction getDelegate();
+
+     /**
+      * Returns the parent graph for the transaction.
+      * @return
+      */
+     WrappedFramedGraph<? extends Graph> getGraph();
 }

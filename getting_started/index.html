@@ -254,8 +254,8 @@
       
         
   <li>
-    <a class="" title="@Propery" href="../annotations/property/">
-      @Propery
+    <a class="" title="@Property" href="../annotations/property/">
+      @Property
     </a>
     
   </li>
@@ -356,7 +356,7 @@ public class Knows extends EdgeFrame {
   Knows knows = p1.addKnows(p2);
   knows.setYears(15);
 
-  Person jeff = fg.traverse((g) -&gt; g.v().has(&quot;name&quot;, &quot;Jeff&quot;)).next(Person.class);
+  Person jeff = fg.traverse((g) -&gt; g.V().has(&quot;name&quot;, &quot;Jeff&quot;)).next(Person.class);
 
 
   Assert.assertEquals(&quot;Jeff&quot;, jeff.getName());
@@ -383,8 +383,8 @@ public class Knows extends EdgeFrame {
   Person p2 = fg.addFramedVertex(Person.class);
   p2.setName(&quot;Julia&quot;);
 
-  Person jeff = fg.traverse((g) -&gt; g.v().has(&quot;name&quot;, &quot;Jeff&quot;)).next(Person.class);
-  Person julia = fg.traverse((g) -&gt; g.v().has(&quot;name&quot;, &quot;Julia&quot;)).next(Person.class);
+  Person jeff = fg.traverse((g) -&gt; g.V().has(&quot;name&quot;, &quot;Jeff&quot;)).next(Person.class);
+  Person julia = fg.traverse((g) -&gt; g.V().has(&quot;name&quot;, &quot;Julia&quot;)).next(Person.class);
 
   Assert.assertEquals(Programmer.class, jeff.getClass());
   Assert.assertEquals(Person.class, julia.getClass());
@@ -450,8 +450,8 @@ public abstract class Programmer extends Person {
   Person p2 = fg.addFramedVertex(Person.class);
   p2.setName(&quot;Julia&quot;);
 
-  Person jeff = fg.traverse((g) -&gt; g.v().has(&quot;name&quot;, &quot;Jeff&quot;)).next(Person.class);
-  Person julia = fg.traverse((g) -&gt; g.v().has(&quot;name&quot;, &quot;Julia&quot;)).next(Person.class);
+  Person jeff = fg.traverse((g) -&gt; g.V().has(&quot;name&quot;, &quot;Jeff&quot;)).next(Person.class);
+  Person julia = fg.traverse((g) -&gt; g.V().has(&quot;name&quot;, &quot;Julia&quot;)).next(Person.class);
 
   Assert.assertEquals(Programmer.class, jeff.getClass());
   Assert.assertEquals(Person.class, julia.getClass());

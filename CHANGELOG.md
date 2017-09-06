@@ -1,5 +1,7 @@
 # Ferma Changelog
 
+## 3.1.1
+
 ## 3.1.0
 
 * Added abstraction code for tinkerpop transactions which ease usage of transactions within ferma.

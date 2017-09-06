@@ -1,5 +1,7 @@
 # Ferma Changelog
 
+## 2.4.1
+
 ## 2.4.0
 
 * Renamed functional interfaces for transactions from TxHandler to TxAction to conform with Ferma 3.1.0 changes.

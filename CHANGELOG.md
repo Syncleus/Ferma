@@ -2,6 +2,9 @@
 
 ## 3.1.1
 
+* Added nexus staging deployment plugin.
+* Removed explicit version from licensing plugin.
+
 ## 3.1.0
 
 * Added abstraction code for tinkerpop transactions which ease usage of transactions within ferma.

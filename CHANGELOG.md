@@ -4,6 +4,7 @@
 
 * Added nexus staging deployment plugin.
 * Removed explicit version from licensing plugin.
+* Pom now requires maven version 3.0.4.
 
 ## 2.4.0
 

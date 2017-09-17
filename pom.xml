@@ -13,6 +13,10 @@
     <packaging>jar</packaging>
     <version>2.4.1-SNAPSHOT</version>
 
+    <prerequisites>
+        <maven>3.0.4</maven>
+    </prerequisites>
+
     <name>Ferma</name>
     <description>An ORM for the Tinkerpop3 graph stack.</description>
     <url>https://github.com/Syncleus/Ferma.git</url>

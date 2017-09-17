@@ -2,6 +2,9 @@
 
 ## 2.4.1
 
+* Added nexus staging deployment plugin.
+* Removed explicit version from licensing plugin.
+
 ## 2.4.0
 
 * Renamed functional interfaces for transactions from TxHandler to TxAction to conform with Ferma 3.1.0 changes.

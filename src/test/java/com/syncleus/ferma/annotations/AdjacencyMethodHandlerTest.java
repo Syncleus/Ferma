@@ -30,6 +30,7 @@ import java.util.*;
 public class AdjacencyMethodHandlerTest {
 
     private static final Set<Class<?>> TEST_TYPES = new HashSet<>(Arrays.asList(new Class<?>[]{God.class, FatherEdge.class, GodExtended.class, GodAlternative.class}));
+    private static final String TEST_MODEL_PACKAGE = "com.syncleus.ferma";
 
     @Test
     public void testGetSonsDefault() {

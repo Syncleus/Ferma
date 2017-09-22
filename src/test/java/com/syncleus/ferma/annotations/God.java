@@ -20,6 +20,7 @@ import org.apache.tinkerpop.gremlin.structure.Direction;
 
 import java.util.Iterator;
 
+@GraphElement
 public interface God extends VertexFrame {
     static final ClassInitializer<God> DEFAULT_INITIALIZER = new DefaultClassInitializer(God.class);
 

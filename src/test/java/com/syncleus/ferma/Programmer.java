@@ -15,6 +15,9 @@
  */
 package com.syncleus.ferma;
 
+import com.syncleus.ferma.annotations.GraphElement;
+
+@GraphElement
 public class Programmer extends Person {
     static final ClassInitializer<Programmer> DEFAULT_INITIALIZER = new DefaultClassInitializer(Programmer.class);
 }

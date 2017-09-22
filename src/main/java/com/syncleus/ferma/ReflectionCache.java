@@ -15,6 +15,7 @@
  */
 package com.syncleus.ferma;
 
+import com.syncleus.ferma.annotations.GraphElement;
 import org.reflections.Reflections;
 import org.reflections.scanners.SubTypesScanner;
 import org.reflections.scanners.TypeAnnotationsScanner;
@@ -42,6 +43,12 @@ public class ReflectionCache extends Reflections {
         super(assembleConfig(assembleClassUrls(annotatedTypes)));
 
         this.hierarchy = constructHierarchy(annotatedTypes);
+    }
+
+    public ReflectionCache(final String modelPackage) {
+        super(modelPackage);
+
+        this.hierarchy = constructHierarchy(this.getTypesAnnotatedWith(GraphElement.class));
     }
 
     public Set<? extends String> getSubTypeNames(final Class<?> type) {

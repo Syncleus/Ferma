@@ -170,15 +170,19 @@ public class DelegatingFramedGraph<G extends Graph> implements WrappedFramedGrap
      *            The types to be consider for type resolution.
      */
     public DelegatingFramedGraph(final G delegate, final Collection<? extends Class<?>> types) {
-        this.delegate = delegate;
+        this(delegate, new ReflectionCache(types), true, true);
+    }
 
-        if( types == null )
-            throw new IllegalArgumentException("types can not be null");
-
-        final ReflectionCache reflections = new ReflectionCache(types);
-        this.defaultResolver = new PolymorphicTypeResolver(reflections);
-        this.untypedResolver = new UntypedTypeResolver();
-        this.builder = new AnnotationFrameFactory(reflections);
+    /**
+     * Construct a Typed framed graph with the specified type resolution and with annotation support
+     *
+     * @param delegate
+     *            The graph to wrap.
+     * @param modelPackage
+     *            The package scanned for classes to be considered for type resolution.
+     */
+    public DelegatingFramedGraph(final G delegate, final String modelPackage) {
+        this(delegate, new ReflectionCache(modelPackage), true, true);
     }
 
     /**

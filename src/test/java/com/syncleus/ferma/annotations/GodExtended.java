@@ -18,6 +18,7 @@ package com.syncleus.ferma.annotations;
 import com.syncleus.ferma.ClassInitializer;
 import com.syncleus.ferma.DefaultClassInitializer;
 
+@GraphElement
 public interface GodExtended extends GodIntermediate {
     static final ClassInitializer<GodExtended> DEFAULT_INITIALIZER = new DefaultClassInitializer(GodExtended.class);
 

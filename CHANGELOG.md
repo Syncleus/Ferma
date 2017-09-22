@@ -1,10 +1,11 @@
 # Ferma Changelog
 
-## 3.1.1
+## 3.2.0
 
 * Added nexus staging deployment plugin.
 * Removed explicit version from licensing plugin.
 * Pom updated to require maven 3.0.4
+* Added additional constructor to DelegatingFramedGraph which accepts a package name to scan instead of needing to explicitly pass all the model's classes as a set.
 
 ## 3.1.0
 

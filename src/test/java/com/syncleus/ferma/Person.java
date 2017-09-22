@@ -17,6 +17,7 @@ package com.syncleus.ferma;
 
 import java.util.function.Function;
 import com.google.common.collect.Lists;
+import com.syncleus.ferma.annotations.GraphElement;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
 import org.apache.tinkerpop.gremlin.structure.Element;
 import org.apache.tinkerpop.gremlin.structure.Vertex;
@@ -25,6 +26,7 @@ import javax.annotation.Nullable;
 import java.util.Iterator;
 import java.util.List;
 
+@GraphElement
 public class Person extends AbstractVertexFrame {
     static final ClassInitializer<Person> DEFAULT_INITIALIZER = new DefaultClassInitializer(Person.class);
 

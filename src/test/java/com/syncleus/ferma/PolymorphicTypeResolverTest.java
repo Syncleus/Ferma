@@ -16,6 +16,9 @@
 package com.syncleus.ferma;
 
 import java.util.function.Function;
+
+import com.syncleus.ferma.annotations.God;
+import com.syncleus.ferma.annotations.GodExtended;
 import com.syncleus.ferma.typeresolvers.PolymorphicTypeResolver;
 import com.syncleus.ferma.framefactories.annotation.AnnotationFrameFactory;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
@@ -32,6 +35,7 @@ import java.util.*;
 public class PolymorphicTypeResolverTest {
 
     private static final Set<Class<?>> TEST_TYPES = new HashSet<>(Arrays.asList(new Class<?>[]{Person.class, Programmer.class}));
+    private static final String TEST_MODEL_PACKAGE = "com.syncleus.ferma";
     private static final String CUSTOM_TYPE_KEY = "some_custom_type_key";
 
     @Test
@@ -52,6 +56,67 @@ public class PolymorphicTypeResolverTest {
         //make sure the newly added node is not actually a programmer
         final Person person = framedGraph.traverse(input -> input.V()).next(Person.class);
         Assert.assertFalse(person instanceof Programmer);
+    }
+
+    @Test
+    public void testHasTypeParentFromPackage() {
+        final Graph godGraph = TinkerGraph.open();
+        final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_MODEL_PACKAGE);
+
+        //add a single node to the graph, a programmer.
+        framedGraph.addFramedVertex(Programmer.class);
+
+        //make sure the newly added node is actually a programmer
+        final Person programmer = framedGraph.traverse(input -> framedGraph.getTypeResolver().hasType(input.V(), Person.class)).next(Person.class);
+        Assert.assertTrue(programmer instanceof Programmer);
+
+        //change the type resolution to person
+        programmer.setTypeResolution(Person.class);
+
+        //make sure the newly added node is not actually a programmer
+        final Person person = framedGraph.traverse(input -> input.V()).next(Person.class);
+        Assert.assertFalse(person instanceof Programmer);
+    }
+
+    @Test
+    public void testHasTypeChildFromPackage() {
+        final Graph godGraph = TinkerGraph.open();
+        final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_MODEL_PACKAGE);
+
+        //add a single node to the graph, a programmer.
+        framedGraph.addFramedVertex(Programmer.class);
+
+        //make sure the newly added node is actually a programmer
+        final Person programmer = framedGraph.traverse(input -> framedGraph.getTypeResolver().hasType(input.V(), Programmer.class)).next(Person.class);
+        Assert.assertTrue(programmer instanceof Programmer);
+
+        //change the type resolution to person
+        programmer.setTypeResolution(Person.class);
+
+        //make sure the newly added node is not actually a programmer
+        final Person person = framedGraph.traverse(input -> input.V()).next(Person.class);
+        Assert.assertFalse(person instanceof Programmer);
+    }
+
+
+    @Test
+    public void testHasTypeParentFromPackageRecursively() {
+        final Graph godGraph = TinkerGraph.open();
+        final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_MODEL_PACKAGE);
+
+        //add a single node to the graph, a programmer.
+        framedGraph.addFramedVertex(GodExtended.class);
+
+        //make sure the newly added node is actually a programmer
+        final God god = framedGraph.traverse(input -> framedGraph.getTypeResolver().hasType(input.V(), God.class)).next(God.class);
+        Assert.assertTrue(god instanceof GodExtended);
+
+        //change the type resolution to person
+        god.setTypeResolution(God.class);
+
+        //make sure the newly added node is not actually a programmer
+        final Person godAgain = framedGraph.traverse(input -> input.V()).next(Person.class);
+        Assert.assertFalse(godAgain instanceof GodExtended);
     }
     
     @Test

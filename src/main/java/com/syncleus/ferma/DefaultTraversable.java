@@ -15,15 +15,12 @@
  */
 package com.syncleus.ferma;
 
+import java.util.*;
 import java.util.function.Function;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
 import org.apache.tinkerpop.gremlin.structure.Element;
-import java.util.Iterator;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Set;
 
 public class DefaultTraversable<PE, E> implements Traversable<PE, E>{
     final private GraphTraversal<PE, E> baseTraversal;
@@ -59,18 +56,26 @@ public class DefaultTraversable<PE, E> implements Traversable<PE, E>{
 
     @Override
     public <N> N nextOrDefault(final Class<N> kind, final N defaultValue) {
-        if (baseTraversal.hasNext())
-            return next(kind);
-        else
+        try {
+            if (baseTraversal.hasNext())
+                return next(kind);
+            else
+                return defaultValue;
+        } catch (IllegalAccessError e) {
             return defaultValue;
+        }
     }
 
     @Override
     public <N> N nextOrDefaultExplicit(final Class<N> kind, final N defaultValue) {
-        if (baseTraversal.hasNext())
-            return nextExplicit(kind);
-        else
+        try {
+            if (baseTraversal.hasNext())
+                return nextExplicit(kind);
+            else
+                return defaultValue;
+        } catch (IllegalAccessError e) {
             return defaultValue;
+        }
     }
 
     @Override
@@ -125,22 +130,30 @@ public class DefaultTraversable<PE, E> implements Traversable<PE, E>{
 
     @Override
     public <N> List<? extends N> next(final int amount, final Class<N> kind) {
-        return Lists.transform((List<Element>) this.baseTraversal.next(amount), new com.google.common.base.Function<Element, N>() {
-            @Override
-            public N apply(final Element input) {
-                return parentGraph.frameElement(input, kind);
-            }
-        });
+        try {
+            return Lists.transform((List<Element>) this.baseTraversal.next(amount), new com.google.common.base.Function<Element, N>() {
+                @Override
+                public N apply(final Element input) {
+                    return parentGraph.frameElement(input, kind);
+                }
+            });
+        } catch (IllegalAccessError e) {
+            return Collections.emptyList();
+        }
     }
 
     @Override
     public <N> List<? extends N> nextExplicit(final int amount, final Class<N> kind) {
-        return Lists.transform((List<Element>) this.baseTraversal.next(amount), new com.google.common.base.Function<Element, N>() {
-            @Override
-            public N apply(final Element input) {
-                return parentGraph.frameElementExplicit(input, kind);
-            }
-        });
+        try {
+            return Lists.transform((List<Element>) this.baseTraversal.next(amount), new com.google.common.base.Function<Element, N>() {
+                @Override
+                public N apply(final Element input) {
+                    return parentGraph.frameElementExplicit(input, kind);
+                }
+            });
+        } catch (IllegalAccessError e) {
+            return Collections.emptyList();
+        }
     }
 
     @Override
@@ -175,22 +188,30 @@ public class DefaultTraversable<PE, E> implements Traversable<PE, E>{
 
     @Override
     public <N> List<? extends N> toList(final Class<N> kind) {
-        return Lists.transform((List<Element>) this.baseTraversal.toList(), new com.google.common.base.Function<Element, N>() {
-            @Override
-            public N apply(final Element input) {
-                return parentGraph.frameElement(input, kind);
-            }
-        });
+        try {
+            return Lists.transform((List<Element>) this.baseTraversal.toList(), new com.google.common.base.Function<Element, N>() {
+                @Override
+                public N apply(final Element input) {
+                    return parentGraph.frameElement(input, kind);
+                }
+            });
+        } catch (IllegalAccessError e) {
+            return Collections.emptyList();
+        }
     }
 
     @Override
     public <N> List<? extends N> toListExplicit(final Class<N> kind) {
-        return Lists.transform((List<Element>) this.baseTraversal.toList(), new com.google.common.base.Function<Element, N>() {
-            @Override
-            public N apply(final Element input) {
-                return parentGraph.frameElementExplicit(input, kind);
-            }
-        });
+        try {
+            return Lists.transform((List<Element>) this.baseTraversal.toList(), new com.google.common.base.Function<Element, N>() {
+                @Override
+                public N apply(final Element input) {
+                    return parentGraph.frameElementExplicit(input, kind);
+                }
+            });
+        } catch (IllegalAccessError e) {
+            return Collections.emptyList();
+        }
     }
 
     @Override

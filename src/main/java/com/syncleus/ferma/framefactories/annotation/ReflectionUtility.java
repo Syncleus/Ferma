@@ -21,10 +21,7 @@ import com.syncleus.ferma.annotations.Property;
 import org.apache.tinkerpop.gremlin.structure.Vertex;
 
 import java.lang.reflect.*;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class ReflectionUtility {
 
@@ -162,8 +159,12 @@ public class ReflectionUtility {
         return method.getName().startsWith(ADD);
     }
 
-    public static boolean acceptsIterator(final Method method) {
-        return 1 == method.getParameterTypes().length && Iterator.class.isAssignableFrom(method.getParameterTypes()[0]);
+    public static boolean acceptsIterator(final Method method, int parameterIndex) {
+        return (parameterIndex + 1) == method.getParameterTypes().length && Iterator.class.isAssignableFrom(method.getParameterTypes()[parameterIndex]);
+    }
+
+    public static boolean acceptsIterable(final Method method, int parameterIndex) {
+        return (parameterIndex + 1) == method.getParameterTypes().length && Iterable.class.isAssignableFrom(method.getParameterTypes()[parameterIndex]);
     }
 
     public static boolean returnsIterator(final Method method) {
@@ -176,14 +177,6 @@ public class ReflectionUtility {
 
     public static boolean returnsSet(final Method method) {
         return Set.class.isAssignableFrom(method.getReturnType());
-    }
-
-    public static boolean returnsVertex(final Method method) {
-        return Vertex.class.isAssignableFrom(method.getReturnType());
-    }
-
-    public static boolean returnsMap(final Method method) {
-        return Map.class.isAssignableFrom(method.getReturnType());
     }
 
     public static Type getType(final Type[] types, final int pos) {

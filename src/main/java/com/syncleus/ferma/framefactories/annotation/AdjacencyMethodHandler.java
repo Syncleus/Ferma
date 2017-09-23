@@ -15,8 +15,6 @@
  */
 package com.syncleus.ferma.framefactories.annotation;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import com.syncleus.ferma.ClassInitializer;
 import com.syncleus.ferma.VertexFrame;
 import com.syncleus.ferma.annotations.Adjacency;
@@ -33,7 +31,6 @@ import org.apache.tinkerpop.gremlin.structure.Edge;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -111,10 +108,12 @@ public class AdjacencyMethodHandler implements MethodHandler {
             if (arguments == null || arguments.length == 0)
                 throw new IllegalStateException(method.getName() + " was annotated with @Adjacency but had no arguments.");
             else if (arguments.length == 1) {
-                if (!(Iterator.class.isAssignableFrom(arguments[0].getType())))
-                    throw new IllegalStateException(method.getName() + " was annotated with @Adjacency, had a single argument, but that argument was not of the type Class");
+                if (ReflectionUtility.acceptsIterator(method, 0))
+                    return this.setVertexIterator(builder, method, annotation);
+                if (ReflectionUtility.acceptsIterable(method, 0))
+                    return this.setVertexIterable(builder, method, annotation);
 
-                return this.setVertex(builder, method, annotation);
+                throw new IllegalStateException(method.getName() + " was annotated with @Adjacency, had a single argument, but that argument was not of the type Iterator or Iterable");
             }
             else
                 throw new IllegalStateException(method.getName() + " was annotated with @Adjacency but had more than 1 arguments.");
@@ -174,8 +173,12 @@ public class AdjacencyMethodHandler implements MethodHandler {
         return builder.method(ElementMatchers.is(method)).intercept(MethodDelegation.to(AddVertexByObjectTypedEdgeInterceptor.class));
     }
 
-    private <E> DynamicType.Builder<E> setVertex(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
-        return builder.method(ElementMatchers.is(method)).intercept(MethodDelegation.to(SetVertexInterceptor.class));
+    private <E> DynamicType.Builder<E> setVertexIterator(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
+        return builder.method(ElementMatchers.is(method)).intercept(MethodDelegation.to(SetVertexIteratorInterceptor.class));
+    }
+
+    private <E> DynamicType.Builder<E> setVertexIterable(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
+        return builder.method(ElementMatchers.is(method)).intercept(MethodDelegation.to(SetVertexIterableInterceptor.class));
     }
 
     private <E> DynamicType.Builder<E> removeVertex(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
@@ -531,7 +534,7 @@ public class AdjacencyMethodHandler implements MethodHandler {
         }
     }
 
-    public static final class SetVertexInterceptor {
+    public static final class SetVertexIteratorInterceptor {
 
         @RuntimeType
         public static void setVertex(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final Iterator vertexSet) {
@@ -564,6 +567,51 @@ public class AdjacencyMethodHandler implements MethodHandler {
                 case OUT:
                     thiz.unlinkOut(null, label);
                     ((Iterator<? extends VertexFrame>)vertexSet).forEachRemaining(new Consumer<VertexFrame>() {
+                        @Override
+                        public void accept(VertexFrame vertexFrame) {
+                            thiz.getGraph().addFramedEdge(thiz, vertexFrame, label);
+                        }
+                    });
+                    break;
+                default:
+                    throw new IllegalStateException(method.getName() + " is annotated with a direction other than BOTH, IN, or OUT.");
+            }
+        }
+    }
+
+    public static final class SetVertexIterableInterceptor {
+
+        @RuntimeType
+        public static void setVertex(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final Iterable vertexSet) {
+            assert thiz instanceof CachesReflection;
+            final Adjacency annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Adjacency.class);
+            final Direction direction = annotation.direction();
+            final String label = annotation.label();
+
+
+            switch (direction) {
+                case BOTH:
+                    thiz.unlinkBoth(null, label);
+                    ((Iterator<? extends VertexFrame>)vertexSet.iterator()).forEachRemaining(new Consumer<VertexFrame>() {
+                        @Override
+                        public void accept(VertexFrame vertexFrame) {
+                            thiz.getGraph().addFramedEdge(vertexFrame, thiz, label);
+                            thiz.getGraph().addFramedEdge(thiz, vertexFrame, label);
+                        }
+                    });
+                    break;
+                case IN:
+                    thiz.unlinkIn(null, label);
+                    ((Iterator<? extends VertexFrame>)vertexSet.iterator()).forEachRemaining(new Consumer<VertexFrame>() {
+                        @Override
+                        public void accept(VertexFrame vertexFrame) {
+                            thiz.getGraph().addFramedEdge(vertexFrame, thiz, label);
+                        }
+                    });
+                    break;
+                case OUT:
+                    thiz.unlinkOut(null, label);
+                    ((Iterator<? extends VertexFrame>)vertexSet.iterator()).forEachRemaining(new Consumer<VertexFrame>() {
                         @Override
                         public void accept(VertexFrame vertexFrame) {
                             thiz.getGraph().addFramedEdge(thiz, vertexFrame, label);

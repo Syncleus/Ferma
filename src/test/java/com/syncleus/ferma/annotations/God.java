@@ -101,6 +101,9 @@ public interface God extends VertexFrame {
     @Adjacency(label = "father", direction = Direction.IN)
     void setSons(Iterator<? extends God> vertexSet);
 
+    @Adjacency(label = "father", direction = Direction.IN)
+    void setSonsList(List<? extends God> vertexList);
+
     @Adjacency(label = "father", direction = Direction.IN, operation = Adjacency.Operation.SET)
     void applySons(Iterator<? extends God> vertexSet);
 

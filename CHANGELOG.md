@@ -10,8 +10,10 @@
 * Added `operation` parameter to the following annotations: `@Adjacency`, `@Incidence`, `@Property`. Setting the
   parameter will override the auto discovery of the method prefix previously used to discovery the operation of the
   method.
-* Methods annotated with the `@Adjacency` annotation can now return a `List` or a `Set` in addition to the usual
+* Getter methods annotated with the `@Adjacency` annotation can now return a `List` or a `Set` in addition to the usual
   `Iterator` return type.
+* Setter methods annotated with the `@Adjacency` annotation can now accept `Iterable` parameters such as `Collection`, 
+  `List`, or `Set` in addition to the usual `Iterator` type.
 * Methods annotated with the `@Incidence` annotation can now return a `List` or a `Set` in addition to the usual
   `Iterator` return type.
 

@@ -498,6 +498,36 @@ public class AdjacencyMethodHandlerTest {
     }
 
     @Test
+    public void testSetSonsList() {
+        final TinkerGraph godGraph = TinkerGraph.open();
+        GodGraphLoader.load(godGraph);
+
+        final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
+
+        final List<? extends God> gods = framedGraph.traverse(
+            input -> input.V().has("name", "jupiter")).toList(God.class);
+
+        final God father = gods.iterator().next();
+        Assert.assertTrue(father != null);
+        final VertexFrame fatherVertex = father;
+        Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
+
+        God child = father.getSon(God.class);
+        Assert.assertNotNull(child);
+        Assert.assertTrue(child instanceof VertexFrame);
+        final VertexFrame childVertex = child;
+        Assert.assertEquals(childVertex.getElement().property("name").value(), "hercules");
+        Assert.assertTrue(child instanceof GodExtended);
+
+        father.setSonsList(Arrays.asList(framedGraph.addFramedVertex(God.DEFAULT_INITIALIZER)));
+
+        child = father.getSon(God.class);
+
+        Assert.assertNotNull(child);
+        Assert.assertNull(child.getName());
+    }
+
+    @Test
     public void testApplySons() {
         final TinkerGraph godGraph = TinkerGraph.open();
         GodGraphLoader.load(godGraph);

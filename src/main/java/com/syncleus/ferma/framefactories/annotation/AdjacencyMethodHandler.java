@@ -33,6 +33,7 @@ import org.apache.tinkerpop.gremlin.structure.Edge;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -214,7 +215,7 @@ public class AdjacencyMethodHandler implements MethodHandler {
             final Direction direction = annotation.direction();
             final String label = annotation.label();
 
-            return Lists.newArrayList(thiz.traverse(input -> {
+            return Collections.unmodifiableList(Lists.newArrayList(thiz.traverse(input -> {
                 switch (direction) {
                     case IN:
                         return input.in(label);
@@ -225,7 +226,7 @@ public class AdjacencyMethodHandler implements MethodHandler {
                     default:
                         throw new IllegalStateException("Direction not recognized.");
                 }
-            }).frame(VertexFrame.class));
+            }).frame(VertexFrame.class)));
         }
     }
 
@@ -238,7 +239,7 @@ public class AdjacencyMethodHandler implements MethodHandler {
             final Direction direction = annotation.direction();
             final String label = annotation.label();
 
-            return Sets.newHashSet(thiz.traverse(input -> {
+            return Collections.unmodifiableSet(Sets.newHashSet(thiz.traverse(input -> {
                 switch (direction) {
                     case IN:
                         return input.in(label);
@@ -249,7 +250,7 @@ public class AdjacencyMethodHandler implements MethodHandler {
                     default:
                         throw new IllegalStateException("Direction not recognized.");
                 }
-            }).frame(VertexFrame.class));
+            }).frame(VertexFrame.class)));
         }
     }
 
@@ -288,7 +289,7 @@ public class AdjacencyMethodHandler implements MethodHandler {
             final String label = annotation.label();
             final TypeResolver resolver = thiz.getGraph().getTypeResolver();
 
-            return Lists.newArrayList(thiz.traverse(input -> {
+            return Collections.unmodifiableList(Lists.newArrayList(thiz.traverse(input -> {
                 switch(direction) {
                     case IN:
                         return resolver.hasType(input.in(label), type);
@@ -299,7 +300,7 @@ public class AdjacencyMethodHandler implements MethodHandler {
                     default:
                         throw new IllegalStateException("Direction not recognized.");
                 }
-            }).frame(type));
+            }).frame(type)));
         }
     }
 
@@ -313,7 +314,7 @@ public class AdjacencyMethodHandler implements MethodHandler {
             final String label = annotation.label();
             final TypeResolver resolver = thiz.getGraph().getTypeResolver();
 
-            return Sets.newHashSet(thiz.traverse(input -> {
+            return Collections.unmodifiableSet(Sets.newHashSet(thiz.traverse(input -> {
                 switch(direction) {
                     case IN:
                         return resolver.hasType(input.in(label), type);
@@ -324,7 +325,7 @@ public class AdjacencyMethodHandler implements MethodHandler {
                     default:
                         throw new IllegalStateException("Direction not recognized.");
                 }
-            }).frame(type));
+            }).frame(type)));
         }
     }
 

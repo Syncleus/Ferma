@@ -19,6 +19,8 @@ import com.syncleus.ferma.*;
 import org.apache.tinkerpop.gremlin.structure.Direction;
 
 import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 @GraphElement
 public interface God extends VertexFrame {
@@ -51,6 +53,12 @@ public interface God extends VertexFrame {
     @Adjacency(label = "father", direction = Direction.IN)
     Iterator<? extends God> getSons();
 
+    @Adjacency(label = "father", direction = Direction.IN)
+    List<? extends God> getSonsList();
+
+    @Adjacency(label = "father", direction = Direction.IN)
+    Set<? extends God> getSonsSet();
+
     @Adjacency(label = "father", direction = Direction.IN, operation = Adjacency.Operation.GET)
     Iterator<? extends God> obtainSons();
 
@@ -59,6 +67,12 @@ public interface God extends VertexFrame {
 
     @Adjacency(label = "father", direction = Direction.IN)
     <N extends God> Iterator<? extends N> getSons(Class<? extends N> type);
+
+    @Adjacency(label = "father", direction = Direction.IN)
+    <N extends God> List<? extends N> getSonsList(Class<? extends N> type);
+
+    @Adjacency(label = "father", direction = Direction.IN)
+    <N extends God> Set<? extends N> getSonsSet(Class<? extends N> type);
 
     @Adjacency(label = "father", direction = Direction.OUT)
     <N extends God> Iterator<? extends N> getParents();

@@ -22,7 +22,9 @@ import org.apache.tinkerpop.gremlin.structure.Vertex;
 
 import java.lang.reflect.*;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class ReflectionUtility {
 
@@ -166,6 +168,14 @@ public class ReflectionUtility {
 
     public static boolean returnsIterator(final Method method) {
         return Iterator.class.isAssignableFrom(method.getReturnType());
+    }
+
+    public static boolean returnsList(final Method method) {
+        return List.class.isAssignableFrom(method.getReturnType());
+    }
+
+    public static boolean returnsSet(final Method method) {
+        return Set.class.isAssignableFrom(method.getReturnType());
     }
 
     public static boolean returnsVertex(final Method method) {

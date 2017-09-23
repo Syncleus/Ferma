@@ -15,6 +15,8 @@
  */
 package com.syncleus.ferma.framefactories.annotation;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import com.syncleus.ferma.ClassInitializer;
 import com.syncleus.ferma.VertexFrame;
 import com.syncleus.ferma.annotations.Adjacency;
@@ -32,6 +34,8 @@ import org.apache.tinkerpop.gremlin.structure.Edge;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 import java.util.function.Consumer;
 
 /**
@@ -71,8 +75,12 @@ public class AdjacencyMethodHandler implements MethodHandler {
                 throw new IllegalStateException(method.getName() + " was annotated with @Adjacency but had more than 1 arguments.");
         else if (ReflectionUtility.isGetMethod(method))
             if (arguments == null || arguments.length == 0) {
-                if (Iterator.class.isAssignableFrom(method.getReturnType()))
-                    return this.getVertexesDefault(builder, method, annotation);
+                if( ReflectionUtility.returnsIterator(method) )
+                    return this.getVertexesIteratorDefault(builder, method, annotation);
+                else if( ReflectionUtility.returnsList(method) )
+                    return this.getVertexesListDefault(builder, method, annotation);
+                else if( ReflectionUtility.returnsSet(method) )
+                    return this.getVertexesSetDefault(builder, method, annotation);
 
                 return this.getVertexDefault(builder, method, annotation);
             }
@@ -80,8 +88,12 @@ public class AdjacencyMethodHandler implements MethodHandler {
                 if (!(Class.class.isAssignableFrom(arguments[0].getType())))
                     throw new IllegalStateException(method.getName() + " was annotated with @Adjacency, had a single argument, but that argument was not of the type Class");
 
-                if (Iterator.class.isAssignableFrom(method.getReturnType()))
-                    return this.getVertexesByType(builder, method, annotation);
+                if (ReflectionUtility.returnsIterator(method))
+                    return this.getVertexesIteratorByType(builder, method, annotation);
+                else if( ReflectionUtility.returnsList(method) )
+                    return this.getVertexesListByType(builder, method, annotation);
+                else if( ReflectionUtility.returnsSet(method) )
+                    return this.getVertexesSetByType(builder, method, annotation);
 
                 return this.getVertexByType(builder, method, annotation);
             }
@@ -109,16 +121,32 @@ public class AdjacencyMethodHandler implements MethodHandler {
             throw new IllegalStateException(method.getName() + " was annotated with @Adjacency but did not begin with either of the following keywords: add, get, remove");
     }
 
-    private <E> DynamicType.Builder<E> getVertexesDefault(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
-        return builder.method(ElementMatchers.is(method)).intercept(MethodDelegation.to(GetVertexesDefaultInterceptor.class));
+    private <E> DynamicType.Builder<E> getVertexesIteratorDefault(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
+        return builder.method(ElementMatchers.is(method)).intercept(MethodDelegation.to(GetVertexesIteratorDefaultInterceptor.class));
+    }
+
+    private <E> DynamicType.Builder<E> getVertexesListDefault(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
+        return builder.method(ElementMatchers.is(method)).intercept(MethodDelegation.to(GetVertexesListDefaultInterceptor.class));
+    }
+
+    private <E> DynamicType.Builder<E> getVertexesSetDefault(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
+        return builder.method(ElementMatchers.is(method)).intercept(MethodDelegation.to(GetVertexesSetDefaultInterceptor.class));
     }
 
     private <E> DynamicType.Builder<E> getVertexDefault(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
         return builder.method(ElementMatchers.is(method)).intercept(MethodDelegation.to(GetVertexDefaultInterceptor.class));
     }
 
-    private <E> DynamicType.Builder<E> getVertexesByType(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
-        return builder.method(ElementMatchers.is(method)).intercept(MethodDelegation.to(GetVertexesByTypeInterceptor.class));
+    private <E> DynamicType.Builder<E> getVertexesIteratorByType(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
+        return builder.method(ElementMatchers.is(method)).intercept(MethodDelegation.to(GetVertexesIteratorByTypeInterceptor.class));
+    }
+
+    private <E> DynamicType.Builder<E> getVertexesListByType(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
+        return builder.method(ElementMatchers.is(method)).intercept(MethodDelegation.to(GetVertexesListByTypeInterceptor.class));
+    }
+
+    private <E> DynamicType.Builder<E> getVertexesSetByType(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
+        return builder.method(ElementMatchers.is(method)).intercept(MethodDelegation.to(GetVertexesSetByTypeInterceptor.class));
     }
 
     private <E> DynamicType.Builder<E> getVertexByType(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
@@ -153,7 +181,7 @@ public class AdjacencyMethodHandler implements MethodHandler {
         return builder.method(ElementMatchers.is(method)).intercept(MethodDelegation.to(RemoveVertexInterceptor.class));
     }
 
-    public static final class GetVertexesDefaultInterceptor {
+    public static final class GetVertexesIteratorDefaultInterceptor {
 
         @RuntimeType
         public static Iterator getVertexes(@This final VertexFrame thiz, @Origin final Method method) {
@@ -177,7 +205,55 @@ public class AdjacencyMethodHandler implements MethodHandler {
         }
     }
 
-    public static final class GetVertexesByTypeInterceptor {
+    public static final class GetVertexesListDefaultInterceptor {
+
+        @RuntimeType
+        public static List getVertexes(@This final VertexFrame thiz, @Origin final Method method) {
+            assert thiz instanceof CachesReflection;
+            final Adjacency annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Adjacency.class);
+            final Direction direction = annotation.direction();
+            final String label = annotation.label();
+
+            return Lists.newArrayList(thiz.traverse(input -> {
+                switch (direction) {
+                    case IN:
+                        return input.in(label);
+                    case OUT:
+                        return input.out(label);
+                    case BOTH:
+                        return input.both(label);
+                    default:
+                        throw new IllegalStateException("Direction not recognized.");
+                }
+            }).frame(VertexFrame.class));
+        }
+    }
+
+    public static final class GetVertexesSetDefaultInterceptor {
+
+        @RuntimeType
+        public static Set getVertexes(@This final VertexFrame thiz, @Origin final Method method) {
+            assert thiz instanceof CachesReflection;
+            final Adjacency annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Adjacency.class);
+            final Direction direction = annotation.direction();
+            final String label = annotation.label();
+
+            return Sets.newHashSet(thiz.traverse(input -> {
+                switch (direction) {
+                    case IN:
+                        return input.in(label);
+                    case OUT:
+                        return input.out(label);
+                    case BOTH:
+                        return input.both(label);
+                    default:
+                        throw new IllegalStateException("Direction not recognized.");
+                }
+            }).frame(VertexFrame.class));
+        }
+    }
+
+    public static final class GetVertexesIteratorByTypeInterceptor {
 
         @RuntimeType
         public static Iterator getVertexes(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final Class type) {
@@ -199,6 +275,56 @@ public class AdjacencyMethodHandler implements MethodHandler {
                         throw new IllegalStateException("Direction not recognized.");
                 }
             }).frame(type);
+        }
+    }
+
+    public static final class GetVertexesListByTypeInterceptor {
+
+        @RuntimeType
+        public static List getVertexes(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final Class type) {
+            assert thiz instanceof CachesReflection;
+            final Adjacency annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Adjacency.class);
+            final Direction direction = annotation.direction();
+            final String label = annotation.label();
+            final TypeResolver resolver = thiz.getGraph().getTypeResolver();
+
+            return Lists.newArrayList(thiz.traverse(input -> {
+                switch(direction) {
+                    case IN:
+                        return resolver.hasType(input.in(label), type);
+                    case OUT:
+                        return resolver.hasType(input.out(label), type);
+                    case BOTH:
+                        return resolver.hasType(input.both(label), type);
+                    default:
+                        throw new IllegalStateException("Direction not recognized.");
+                }
+            }).frame(type));
+        }
+    }
+
+    public static final class GetVertexesSetByTypeInterceptor {
+
+        @RuntimeType
+        public static Set getVertexes(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final Class type) {
+            assert thiz instanceof CachesReflection;
+            final Adjacency annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Adjacency.class);
+            final Direction direction = annotation.direction();
+            final String label = annotation.label();
+            final TypeResolver resolver = thiz.getGraph().getTypeResolver();
+
+            return Sets.newHashSet(thiz.traverse(input -> {
+                switch(direction) {
+                    case IN:
+                        return resolver.hasType(input.in(label), type);
+                    case OUT:
+                        return resolver.hasType(input.out(label), type);
+                    case BOTH:
+                        return resolver.hasType(input.both(label), type);
+                    default:
+                        throw new IllegalStateException("Direction not recognized.");
+                }
+            }).frame(type));
         }
     }
 

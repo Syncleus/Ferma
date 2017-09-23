@@ -56,6 +56,54 @@ public class AdjacencyMethodHandlerTest {
     }
 
     @Test
+    public void testGetSonsListDefault() {
+        final TinkerGraph godGraph = TinkerGraph.open();
+        GodGraphLoader.load(godGraph);
+
+        final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
+
+        final List<? extends God> gods = framedGraph.traverse(
+            input -> input.V().has("name", "jupiter")).toList(God.class);
+
+        final God father = gods.iterator().next();
+        Assert.assertTrue(father != null);
+        final VertexFrame fatherVertex = father;
+        Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
+
+        final List<? extends God> children = father.getSonsList();
+        Assert.assertFalse(children.isEmpty());
+        final God child = children.get(0);
+        Assert.assertTrue(child != null);
+        final VertexFrame childVertex = child;
+        Assert.assertEquals(childVertex.getElement().property("name").value(), "hercules");
+        Assert.assertTrue(child instanceof GodExtended);
+    }
+
+    @Test
+    public void testGetSonsSetDefault() {
+        final TinkerGraph godGraph = TinkerGraph.open();
+        GodGraphLoader.load(godGraph);
+
+        final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
+
+        final List<? extends God> gods = framedGraph.traverse(
+            input -> input.V().has("name", "jupiter")).toList(God.class);
+
+        final God father = gods.iterator().next();
+        Assert.assertTrue(father != null);
+        final VertexFrame fatherVertex = father;
+        Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
+
+        final Set<? extends God> children = father.getSonsSet();
+        Assert.assertFalse(children.isEmpty());
+        final God child = children.iterator().next();
+        Assert.assertTrue(child != null);
+        final VertexFrame childVertex = child;
+        Assert.assertEquals(childVertex.getElement().property("name").value(), "hercules");
+        Assert.assertTrue(child instanceof GodExtended);
+    }
+
+    @Test
     public void testGetSonsByType() {
         final TinkerGraph godGraph = TinkerGraph.open();
         GodGraphLoader.load(godGraph);
@@ -73,6 +121,54 @@ public class AdjacencyMethodHandlerTest {
         final Iterator<? extends God> childIterator = father.getSons(God.class);
         Assert.assertTrue(childIterator.hasNext());
         final God child = childIterator.next();
+        Assert.assertTrue(child != null);
+        final VertexFrame childVertex = child;
+        Assert.assertEquals(childVertex.getElement().property("name").value(), "hercules");
+        Assert.assertTrue(child instanceof GodExtended);
+    }
+
+    @Test
+    public void testGetSonsListByType() {
+        final TinkerGraph godGraph = TinkerGraph.open();
+        GodGraphLoader.load(godGraph);
+
+        final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
+
+        final List<? extends God> gods = framedGraph.traverse(
+            input -> input.V().has("name", "jupiter")).toList(God.class);
+
+        final God father = gods.iterator().next();
+        Assert.assertTrue(father != null);
+        final VertexFrame fatherVertex = father;
+        Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
+
+        final List<? extends God> children = father.getSonsList(God.class);
+        Assert.assertFalse(children.isEmpty());
+        final God child = children.get(0);
+        Assert.assertTrue(child != null);
+        final VertexFrame childVertex = child;
+        Assert.assertEquals(childVertex.getElement().property("name").value(), "hercules");
+        Assert.assertTrue(child instanceof GodExtended);
+    }
+
+    @Test
+    public void testGetSonsSetByType() {
+        final TinkerGraph godGraph = TinkerGraph.open();
+        GodGraphLoader.load(godGraph);
+
+        final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
+
+        final List<? extends God> gods = framedGraph.traverse(
+            input -> input.V().has("name", "jupiter")).toList(God.class);
+
+        final God father = gods.iterator().next();
+        Assert.assertTrue(father != null);
+        final VertexFrame fatherVertex = father;
+        Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
+
+        final Set<? extends God> children = father.getSonsSet(God.class);
+        Assert.assertFalse(children.isEmpty());
+        final God child = children.iterator().next();
         Assert.assertTrue(child != null);
         final VertexFrame childVertex = child;
         Assert.assertEquals(childVertex.getElement().property("name").value(), "hercules");

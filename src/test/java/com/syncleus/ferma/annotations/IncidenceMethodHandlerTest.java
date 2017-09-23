@@ -79,6 +79,29 @@ public class IncidenceMethodHandlerTest {
     }
 
     @Test
+    public void testObtainSonEdgesByType() {
+        final TinkerGraph godGraph = TinkerGraph.open();
+        GodGraphLoader.load(godGraph);
+
+        final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
+
+        final List<? extends God> gods = framedGraph.traverse(
+            input -> input.V().has("name", "jupiter")).toList(God.class);
+
+        final God father = gods.iterator().next();
+        Assert.assertTrue(father != null);
+        final VertexFrame fatherVertex = father;
+        Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
+
+        final Iterator<? extends FatherEdge> childEdgeIterator = father.obtainSonEdges(FatherEdge.class);
+        Assert.assertTrue(childEdgeIterator.hasNext());
+        final FatherEdge childEdge = childEdgeIterator.next();
+        Assert.assertTrue(childEdge != null);
+        final EdgeFrame edge = childEdge;
+        Assert.assertEquals(edge.getElement().outVertex().property("name").value(), "hercules");
+    }
+
+    @Test
     public void testGetSonEdgesExtended() {
         final TinkerGraph godGraph = TinkerGraph.open();
         GodGraphLoader.load(godGraph);
@@ -166,5 +189,59 @@ public class IncidenceMethodHandlerTest {
         father.removeSonEdge(child);
 
         Assert.assertFalse(father.getSonEdges(FatherEdge.class).hasNext());
+    }
+
+    @Test
+    public void testDeleteSonEdge() {
+        final TinkerGraph godGraph = TinkerGraph.open();
+        GodGraphLoader.load(godGraph);
+
+        final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
+
+        final List<? extends God> gods = framedGraph.traverse(
+            input -> input.V().has("name", "jupiter")).toList(God.class);
+
+        final God father = gods.iterator().next();
+        Assert.assertTrue(father != null);
+        final VertexFrame fatherVertex = father;
+        Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
+
+        final FatherEdge child = father.getSonEdge(FatherEdge.class);
+        Assert.assertNotNull(child);
+        Assert.assertTrue(child instanceof EdgeFrame);
+        final EdgeFrame childEdge = child;
+        Assert.assertEquals(childEdge.getRawTraversal().outV().next().property("name").value(), "hercules");
+
+        father.deleteSonEdge(child);
+
+        Assert.assertFalse(father.getSonEdges(FatherEdge.class).hasNext());
+    }
+
+    @Test
+    public void testIncludeSonEdge() {
+        final TinkerGraph godGraph = TinkerGraph.open();
+        GodGraphLoader.load(godGraph);
+
+        final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
+
+        final List<? extends God> gods = framedGraph.traverse(
+            input -> input.V().has("name", "jupiter")).toList(God.class);
+
+        final God father = gods.iterator().next();
+        Assert.assertTrue(father != null);
+        final VertexFrame fatherVertex = father;
+        Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
+
+        final FatherEdge fatherEdge = father.getSonEdge(FatherEdge.class);
+        Assert.assertNotNull(fatherEdge);
+        Assert.assertEquals(fatherEdge.getRawTraversal().outV().next().property("name").value(), "hercules");
+        final God child = fatherEdge.getSon();
+
+        father.deleteSonEdge(fatherEdge);
+
+        Assert.assertFalse(father.getSonEdges(FatherEdge.class).hasNext());
+
+        father.includeSonEdge(child, FatherEdge.DEFAULT_INITIALIZER);
+        Assert.assertTrue(father.getSonEdges(FatherEdge.class).hasNext());
     }
 }

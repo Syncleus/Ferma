@@ -21,11 +21,27 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Property annotations are for getter and setters to manipulate the property value of an Element.
+ * Property annotations are for getter and setters to manipulate the property value of an Element. They can also be used
+ * on methods intended to remove the property all together.
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface Property {
-
+    /**
+     * The name of the property.
+     *
+     * @return The property's name
+     */
     String value();
+
+    /**
+     * The operation the method is performing on the property.
+     *
+     * @return The operation to be performed.
+     */
+    Operation operation() default Operation.AUTO;
+
+    enum Operation {
+        GET, SET, REMOVE, AUTO
+    };
 }

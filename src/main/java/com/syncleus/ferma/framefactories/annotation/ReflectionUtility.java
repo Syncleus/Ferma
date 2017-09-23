@@ -15,6 +15,9 @@
  */
 package com.syncleus.ferma.framefactories.annotation;
 
+import com.syncleus.ferma.annotations.Adjacency;
+import com.syncleus.ferma.annotations.Incidence;
+import com.syncleus.ferma.annotations.Property;
 import org.apache.tinkerpop.gremlin.structure.Vertex;
 
 import java.lang.reflect.*;
@@ -31,16 +34,130 @@ public class ReflectionUtility {
     private static final String CAN = "can";
 
     public static boolean isGetMethod(final Method method) {
+        final Property propertyAnnotation = method.getAnnotation(Property.class);
+        if( propertyAnnotation != null ) {
+            final Property.Operation operation = propertyAnnotation.operation();
+            if( operation != null && operation != Property.Operation.AUTO ) {
+                if( operation == Property.Operation.GET)
+                    return true;
+                else
+                    return false;
+            }
+        }
+
+        final Incidence incidenceAnnotation = method.getAnnotation(Incidence.class);
+        if( incidenceAnnotation != null ) {
+            final Incidence.Operation operation = incidenceAnnotation.operation();
+            if( operation != null && operation != Incidence.Operation.AUTO ) {
+                if( operation == Incidence.Operation.GET)
+                    return true;
+                else
+                    return false;
+            }
+        }
+
+        final Adjacency adjacencyAnnotation = method.getAnnotation(Adjacency.class);
+        if( adjacencyAnnotation != null ) {
+            final Adjacency.Operation operation = adjacencyAnnotation.operation();
+            if( operation != null && operation != Adjacency.Operation.AUTO ) {
+                if( operation == Adjacency.Operation.GET)
+                    return true;
+                else
+                    return false;
+            }
+        }
+
         final Class<?> returnType = method.getReturnType();
         return (method.getName().startsWith(GET) || (returnType == Boolean.class || returnType == Boolean.TYPE) && (method.getName().startsWith(IS) || method.getName().startsWith(CAN)));
     }
 
     public static boolean isSetMethod(final Method method) {
+        Property propertyAnnotation = method.getAnnotation(Property.class);
+        if( propertyAnnotation != null ) {
+            Property.Operation operation = propertyAnnotation.operation();
+            if( operation != null && operation != Property.Operation.AUTO  ) {
+                if( operation == Property.Operation.SET)
+                    return true;
+                else
+                    return false;
+            }
+        }
+
+        final Adjacency adjacencyAnnotation = method.getAnnotation(Adjacency.class);
+        if( adjacencyAnnotation != null ) {
+            final Adjacency.Operation operation = adjacencyAnnotation.operation();
+            if( operation != null && operation != Adjacency.Operation.AUTO ) {
+                if( operation == Adjacency.Operation.SET)
+                    return true;
+                else
+                    return false;
+            }
+        }
+
         return method.getName().startsWith(SET);
     }
 
     public static boolean isRemoveMethod(final Method method) {
+        Property propertyAnnotation = method.getAnnotation(Property.class);
+        if( propertyAnnotation != null ) {
+            Property.Operation operation = propertyAnnotation.operation();
+            if( operation != null && operation != Property.Operation.AUTO  ) {
+                if( operation == Property.Operation.REMOVE)
+                    return true;
+                else
+                    return false;
+            }
+        }
+
+        final Incidence incidenceAnnotation = method.getAnnotation(Incidence.class);
+        if( incidenceAnnotation != null ) {
+            final Incidence.Operation operation = incidenceAnnotation.operation();
+            if( operation != null && operation != Incidence.Operation.AUTO ) {
+                if( operation == Incidence.Operation.REMOVE)
+                    return true;
+                else
+                    return false;
+            }
+        }
+
+        final Adjacency adjacencyAnnotation = method.getAnnotation(Adjacency.class);
+        if( adjacencyAnnotation != null ) {
+            final Adjacency.Operation operation = adjacencyAnnotation.operation();
+            if( operation != null && operation != Adjacency.Operation.AUTO ) {
+                if( operation == Adjacency.Operation.REMOVE)
+                    return true;
+                else
+                    return false;
+            }
+        }
+
         return method.getName().startsWith(REMOVE);
+    }
+
+    public static boolean isAddMethod(final Method method) {
+        final Incidence incidenceAnnotation = method.getAnnotation(Incidence.class);
+        if( incidenceAnnotation != null ) {
+            final Incidence.Operation operation = incidenceAnnotation.operation();
+            if( operation != null && operation != Incidence.Operation.AUTO ) {
+                if( operation == Incidence.Operation.ADD)
+                    return true;
+                else
+                    return false;
+            }
+        }
+
+        final Adjacency adjacencyAnnotation = method.getAnnotation(Adjacency.class);
+        if( adjacencyAnnotation != null ) {
+            final Adjacency.Operation operation = adjacencyAnnotation.operation();
+            if( operation != null && operation != Adjacency.Operation.AUTO ) {
+                if( operation == Adjacency.Operation.ADD)
+                    return true;
+                else
+                    return false;
+            }
+        }
+
+        return method.getName().startsWith(ADD);
     }
 
     public static boolean acceptsIterator(final Method method) {
@@ -57,10 +174,6 @@ public class ReflectionUtility {
 
     public static boolean returnsMap(final Method method) {
         return Map.class.isAssignableFrom(method.getReturnType());
-    }
-
-    public static boolean isAddMethod(final Method method) {
-        return method.getName().startsWith(ADD);
     }
 
     public static Type getType(final Type[] types, final int pos) {

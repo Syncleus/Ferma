@@ -63,7 +63,7 @@ public class IncidenceMethodHandler implements MethodHandler {
                     return this.addEdgeByObjectUntypedEdge(builder, method, annotation);
             else if (arguments.length == 2) {
                 if (!(ClassInitializer.class.isAssignableFrom(arguments[1].getType())))
-                    throw new IllegalStateException(method.getName() + " was annotated with @Adjacency, had two arguments, but the second argument was not of the type ClassInitializer");
+                    throw new IllegalStateException(method.getName() + " was annotated with @Incidence, had two arguments, but the second argument was not of the type ClassInitializer");
 
                 if (ClassInitializer.class.isAssignableFrom(arguments[0].getType()))
                     return this.addEdgeByTypeTypedEdge(builder, method, annotation);
@@ -71,7 +71,7 @@ public class IncidenceMethodHandler implements MethodHandler {
                     return this.addEdgeByObjectTypedEdge(builder, method, annotation);
             }
             else
-                throw new IllegalStateException(method.getName() + " was annotated with @Adjacency but had more than 1 arguments.");
+                throw new IllegalStateException(method.getName() + " was annotated with @Incidence but had more than 1 arguments.");
         if (ReflectionUtility.isGetMethod(method))
             if (arguments == null || arguments.length == 0)
                 if (Iterator.class.isAssignableFrom(method.getReturnType()))

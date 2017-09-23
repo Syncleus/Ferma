@@ -54,4 +54,15 @@ public @interface Adjacency {
      * @since 2.0.0
      */
     Direction direction() default Direction.OUT;
+
+    /**
+     * The operation the method is performing on the vertex.
+     *
+     * @return The operation to be performed.
+     */
+    Adjacency.Operation operation() default Adjacency.Operation.AUTO;
+
+    enum Operation {
+        GET, ADD, REMOVE, SET, AUTO
+    };
 }

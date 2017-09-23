@@ -5,7 +5,11 @@
 * Added nexus staging deployment plugin.
 * Removed explicit version from licensing plugin.
 * Pom updated to require maven 3.0.4
-* Added additional constructor to DelegatingFramedGraph which accepts a package name to scan instead of needing to explicitly pass all the model's classes as a set.
+* Added additional constructor to DelegatingFramedGraph which accepts a package name to scan instead of needing to
+  explicitly pass all the model's classes as a set.
+* Added `operation` parameter to the following annotations: `@Adjacency`, `@Incidence`, `@Property`. Setting the
+  parameter will override the auto discovery of the method prefix previously used to discovery the operation of the
+  method.
 
 ## 3.1.0
 

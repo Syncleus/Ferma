@@ -27,11 +27,20 @@ public interface God extends VertexFrame {
     @Property("name")
     String getName();
 
+    @Property(value = "name", operation = Property.Operation.GET)
+    String obtainName();
+
     @Property("name")
     void setName(String newName);
 
+    @Property(value = "name", operation = Property.Operation.SET)
+    void applyName(String newName);
+
     @Property("name")
     void removeName();
+
+    @Property(value = "name", operation = Property.Operation.REMOVE)
+    void deleteName();
 
     @Property("age")
     Integer getAge();
@@ -41,6 +50,9 @@ public interface God extends VertexFrame {
 
     @Adjacency(label = "father", direction = Direction.IN)
     Iterator<? extends God> getSons();
+
+    @Adjacency(label = "father", direction = Direction.IN, operation = Adjacency.Operation.GET)
+    Iterator<? extends God> obtainSons();
 
     @Adjacency(label = "father", direction = Direction.IN)
     God getSon();
@@ -57,6 +69,9 @@ public interface God extends VertexFrame {
     @Adjacency(label = "father", direction = Direction.IN)
     <N extends God> N addSon(ClassInitializer<? extends N> type);
 
+    @Adjacency(label = "father", direction = Direction.IN, operation = Adjacency.Operation.ADD)
+    <N extends God> N includeSon(ClassInitializer<? extends N> type);
+
     @Adjacency(label = "father", direction = Direction.IN)
     <N extends God> N addSon(ClassInitializer<? extends N> type, ClassInitializer<? extends FatherEdge> edge);
 
@@ -72,8 +87,14 @@ public interface God extends VertexFrame {
     @Adjacency(label = "father", direction = Direction.IN)
     void setSons(Iterator<? extends God> vertexSet);
 
+    @Adjacency(label = "father", direction = Direction.IN, operation = Adjacency.Operation.SET)
+    void applySons(Iterator<? extends God> vertexSet);
+
     @Adjacency(label = "father", direction = Direction.IN)
     void removeSon(God son);
+
+    @Adjacency(label = "father", direction = Direction.IN, operation = Adjacency.Operation.REMOVE)
+    void deleteSon(God son);
 
     @Incidence(label = "father", direction = Direction.IN)
     Iterator<? extends EdgeFrame> getSonEdges();
@@ -89,4 +110,13 @@ public interface God extends VertexFrame {
 
     @Incidence(label = "father", direction = Direction.IN)
     void removeSonEdge(FatherEdge edge);
+
+    @Incidence(label = "father", direction = Direction.IN, operation = Incidence.Operation.GET)
+    <N extends FatherEdge> Iterator<? extends N> obtainSonEdges(Class<? extends N> type);
+
+    @Incidence(label = "father", direction = Direction.IN, operation = Incidence.Operation.REMOVE)
+    void deleteSonEdge(FatherEdge edge);
+
+    @Incidence(label = "father", direction = Direction.IN, operation = Incidence.Operation.ADD)
+    void includeSonEdge(God son, ClassInitializer<? extends FatherEdge> type);
 }

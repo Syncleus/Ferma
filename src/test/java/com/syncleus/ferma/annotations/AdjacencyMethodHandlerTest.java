@@ -30,7 +30,6 @@ import java.util.*;
 public class AdjacencyMethodHandlerTest {
 
     private static final Set<Class<?>> TEST_TYPES = new HashSet<>(Arrays.asList(new Class<?>[]{God.class, FatherEdge.class, GodExtended.class, GodAlternative.class}));
-    private static final String TEST_MODEL_PACKAGE = "com.syncleus.ferma";
 
     @Test
     public void testGetSonsDefault() {
@@ -72,6 +71,30 @@ public class AdjacencyMethodHandlerTest {
         Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
 
         final Iterator<? extends God> childIterator = father.getSons(God.class);
+        Assert.assertTrue(childIterator.hasNext());
+        final God child = childIterator.next();
+        Assert.assertTrue(child != null);
+        final VertexFrame childVertex = child;
+        Assert.assertEquals(childVertex.getElement().property("name").value(), "hercules");
+        Assert.assertTrue(child instanceof GodExtended);
+    }
+
+    @Test
+    public void testObtainSonsByType() {
+        final TinkerGraph godGraph = TinkerGraph.open();
+        GodGraphLoader.load(godGraph);
+
+        final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
+
+        final List<? extends God> gods = framedGraph.traverse(
+            input -> input.V().has("name", "jupiter")).toList(God.class);
+
+        final God father = gods.iterator().next();
+        Assert.assertTrue(father != null);
+        final VertexFrame fatherVertex = father;
+        Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
+
+        final Iterator<? extends God> childIterator = father.obtainSons();
         Assert.assertTrue(childIterator.hasNext());
         final God child = childIterator.next();
         Assert.assertTrue(child != null);
@@ -279,6 +302,27 @@ public class AdjacencyMethodHandlerTest {
     }
 
     @Test
+    public void testincludeSon() {
+        final TinkerGraph godGraph = TinkerGraph.open();
+        GodGraphLoader.load(godGraph);
+
+        final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
+
+        final List<? extends God> gods = framedGraph.traverse(
+            input -> input.V().has("name", "jupiter")).toList(God.class);
+
+        final God father = gods.iterator().next();
+        Assert.assertTrue(father != null);
+        final VertexFrame fatherVertex = father;
+        Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
+
+        final God child = father.includeSon(God.DEFAULT_INITIALIZER);
+        Assert.assertTrue(child != null);
+        final VertexFrame childVertex = child;
+        Assert.assertFalse(childVertex.getElement().property("name").isPresent());
+    }
+
+    @Test
     public void testAddSonByObjectTypedEdge() {
         final TinkerGraph godGraph = TinkerGraph.open();
         GodGraphLoader.load(godGraph);
@@ -358,6 +402,36 @@ public class AdjacencyMethodHandlerTest {
     }
 
     @Test
+    public void testApplySons() {
+        final TinkerGraph godGraph = TinkerGraph.open();
+        GodGraphLoader.load(godGraph);
+
+        final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
+
+        final List<? extends God> gods = framedGraph.traverse(
+            input -> input.V().has("name", "jupiter")).toList(God.class);
+
+        final God father = gods.iterator().next();
+        Assert.assertTrue(father != null);
+        final VertexFrame fatherVertex = father;
+        Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
+
+        God child = father.getSon(God.class);
+        Assert.assertNotNull(child);
+        Assert.assertTrue(child instanceof VertexFrame);
+        final VertexFrame childVertex = child;
+        Assert.assertEquals(childVertex.getElement().property("name").value(), "hercules");
+        Assert.assertTrue(child instanceof GodExtended);
+
+        father.applySons(Arrays.asList(framedGraph.addFramedVertex(God.DEFAULT_INITIALIZER)).iterator());
+
+        child = father.getSon(God.class);
+
+        Assert.assertNotNull(child);
+        Assert.assertNull(child.getName());
+    }
+
+    @Test
     public void testRemoveSon() {
         final TinkerGraph godGraph = TinkerGraph.open();
         GodGraphLoader.load(godGraph);
@@ -380,6 +454,32 @@ public class AdjacencyMethodHandlerTest {
         Assert.assertTrue(child instanceof GodExtended);
 
         father.removeSon(child);
+        Assert.assertFalse(father.getSons(God.class).hasNext());
+    }
+
+    @Test
+    public void testDeleteSon() {
+        final TinkerGraph godGraph = TinkerGraph.open();
+        GodGraphLoader.load(godGraph);
+
+        final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
+
+        final List<? extends God> gods = framedGraph.traverse(
+            input -> input.V().has("name", "jupiter")).toList(God.class);
+
+        final God father = gods.iterator().next();
+        Assert.assertTrue(father != null);
+        final VertexFrame fatherVertex = father;
+        Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
+
+        final God child = father.getSon(God.class);
+        Assert.assertNotNull(child);
+        Assert.assertTrue(child instanceof VertexFrame);
+        final VertexFrame childVertex = child;
+        Assert.assertEquals(childVertex.getElement().property("name").value(), "hercules");
+        Assert.assertTrue(child instanceof GodExtended);
+
+        father.deleteSon(child);
         Assert.assertFalse(father.getSons(God.class).hasNext());
     }
 

@@ -55,4 +55,15 @@ public @interface Incidence {
      * @since 2.0.0
      */
     Direction direction() default Direction.OUT;
+
+    /**
+     * The operation the method is performing on the vertex.
+     *
+     * @return The operation to be performed.
+     */
+    Operation operation() default Operation.AUTO;
+
+    enum Operation {
+        GET, ADD, REMOVE, AUTO
+    };
 }

@@ -114,7 +114,19 @@ public interface God extends VertexFrame {
     Iterator<? extends EdgeFrame> getSonEdges();
 
     @Incidence(label = "father", direction = Direction.IN)
+    List<? extends EdgeFrame> getSonEdgesList();
+
+    @Incidence(label = "father", direction = Direction.IN)
+    Set<? extends EdgeFrame> getSonEdgesSet();
+
+    @Incidence(label = "father", direction = Direction.IN)
     <N extends FatherEdge> Iterator<? extends N> getSonEdges(Class<? extends N> type);
+
+    @Incidence(label = "father", direction = Direction.IN)
+    <N extends FatherEdge> List<? extends N> getSonEdgesList(Class<? extends N> type);
+
+    @Incidence(label = "father", direction = Direction.IN)
+    <N extends FatherEdge> Set<? extends N> getSonEdgesSet(Class<? extends N> type);
 
     @Incidence(label = "father", direction = Direction.IN)
     EdgeFrame getSonEdge();

@@ -15,7 +15,6 @@
  */
 package com.syncleus.ferma.framefactories.annotation;
 
-import java.util.function.Function;
 import com.syncleus.ferma.typeresolvers.TypeResolver;
 import com.syncleus.ferma.*;
 import com.syncleus.ferma.annotations.Incidence;
@@ -28,14 +27,11 @@ import net.bytebuddy.implementation.bind.annotation.This;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 import net.bytebuddy.matcher.ElementMatchers;
-import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
 import org.apache.tinkerpop.gremlin.structure.Direction;
-import org.apache.tinkerpop.gremlin.structure.Element;
-import org.apache.tinkerpop.gremlin.structure.Vertex;
-
-import javax.annotation.Nullable;
 
 /**
  * A TinkerPop method handler that implemented the Incidence Annotation.
@@ -73,17 +69,26 @@ public class IncidenceMethodHandler implements MethodHandler {
             else
                 throw new IllegalStateException(method.getName() + " was annotated with @Incidence but had more than 1 arguments.");
         if (ReflectionUtility.isGetMethod(method))
-            if (arguments == null || arguments.length == 0)
-                if (Iterator.class.isAssignableFrom(method.getReturnType()))
-                    return this.getEdgesDefault(builder, method, annotation);
-                else
-                    return this.getEdgeDefault(builder, method, annotation);
+            if (arguments == null || arguments.length == 0) {
+                if (ReflectionUtility.returnsIterator(method))
+                    return this.getEdgesIteratorDefault(builder, method, annotation);
+                else if (ReflectionUtility.returnsList(method))
+                    return this.getEdgesListDefault(builder, method, annotation);
+                else if (ReflectionUtility.returnsSet(method))
+                    return this.getEdgesSetDefault(builder, method, annotation);
+
+                return this.getEdgeDefault(builder, method, annotation);
+            }
             else if (arguments.length == 1) {
                 if (!(Class.class.isAssignableFrom(arguments[0].getType())))
                     throw new IllegalStateException(method.getName() + " was annotated with @Incidence, had a single argument, but that argument was not of the type Class");
 
-                if (Iterator.class.isAssignableFrom(method.getReturnType()))
-                    return this.getEdgesByType(builder, method, annotation);
+                if (ReflectionUtility.returnsIterator(method))
+                    return this.getEdgesIteratorByType(builder, method, annotation);
+                else if (ReflectionUtility.returnsList(method))
+                    return this.getEdgesListByType(builder, method, annotation);
+                else if (ReflectionUtility.returnsSet(method))
+                    return this.getEdgesSetByType(builder, method, annotation);
 
                 return this.getEdgeByType(builder, method, annotation);
             }
@@ -120,12 +125,28 @@ public class IncidenceMethodHandler implements MethodHandler {
         return builder.method(ElementMatchers.is(method)).intercept(MethodDelegation.to(AddEdgeByObjectTypedEdgeInterceptor.class));
     }
 
-    private <E> DynamicType.Builder<E> getEdgesDefault(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
-        return builder.method(ElementMatchers.is(method)).intercept(MethodDelegation.to(GetEdgesDefaultInterceptor.class));
+    private <E> DynamicType.Builder<E> getEdgesIteratorDefault(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
+        return builder.method(ElementMatchers.is(method)).intercept(MethodDelegation.to(GetEdgesIteratorDefaultInterceptor.class));
     }
 
-    private <E> DynamicType.Builder<E> getEdgesByType(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
-        return builder.method(ElementMatchers.is(method)).intercept(MethodDelegation.to(GetEdgesByTypeInterceptor.class));
+    private <E> DynamicType.Builder<E> getEdgesListDefault(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
+        return builder.method(ElementMatchers.is(method)).intercept(MethodDelegation.to(GetEdgesListDefaultInterceptor.class));
+    }
+
+    private <E> DynamicType.Builder<E> getEdgesSetDefault(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
+        return builder.method(ElementMatchers.is(method)).intercept(MethodDelegation.to(GetEdgesSetDefaultInterceptor.class));
+    }
+
+    private <E> DynamicType.Builder<E> getEdgesIteratorByType(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
+        return builder.method(ElementMatchers.is(method)).intercept(MethodDelegation.to(GetEdgesIteratorByTypeInterceptor.class));
+    }
+
+    private <E> DynamicType.Builder<E> getEdgesListByType(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
+        return builder.method(ElementMatchers.is(method)).intercept(MethodDelegation.to(GetEdgesListByTypeInterceptor.class));
+    }
+
+    private <E> DynamicType.Builder<E> getEdgesSetByType(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
+        return builder.method(ElementMatchers.is(method)).intercept(MethodDelegation.to(GetEdgesSetByTypeInterceptor.class));
     }
 
     private <E> DynamicType.Builder<E> getEdgeDefault(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
@@ -263,7 +284,7 @@ public class IncidenceMethodHandler implements MethodHandler {
         }
     }
 
-    public static final class GetEdgesDefaultInterceptor {
+    public static final class GetEdgesIteratorDefaultInterceptor {
 
         @RuntimeType
         public static Iterator getEdges(@This final VertexFrame thiz, @Origin final Method method) {
@@ -285,7 +306,51 @@ public class IncidenceMethodHandler implements MethodHandler {
         }
     }
 
-    public static final class GetEdgesByTypeInterceptor {
+    public static final class GetEdgesListDefaultInterceptor {
+
+        @RuntimeType
+        public static List getEdges(@This final VertexFrame thiz, @Origin final Method method) {
+            assert thiz instanceof CachesReflection;
+            final Incidence annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Incidence.class);
+            final Direction direction = annotation.direction();
+            final String label = annotation.label();
+
+            switch (direction) {
+                case BOTH:
+                    return thiz.traverse(input -> input.bothE(label)).toList(VertexFrame.class);
+                case IN:
+                    return thiz.traverse(input -> input.inE(label)).toList(VertexFrame.class);
+                case OUT:
+                    return thiz.traverse(input -> input.outE(label)).toList(VertexFrame.class);
+                default:
+                    throw new IllegalStateException(method.getName() + " is annotated with a direction other than BOTH, IN, or OUT.");
+            }
+        }
+    }
+
+    public static final class GetEdgesSetDefaultInterceptor {
+
+        @RuntimeType
+        public static Set getEdges(@This final VertexFrame thiz, @Origin final Method method) {
+            assert thiz instanceof CachesReflection;
+            final Incidence annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Incidence.class);
+            final Direction direction = annotation.direction();
+            final String label = annotation.label();
+
+            switch (direction) {
+                case BOTH:
+                    return thiz.traverse(input -> input.bothE(label)).toSet(VertexFrame.class);
+                case IN:
+                    return thiz.traverse(input -> input.inE(label)).toSet(VertexFrame.class);
+                case OUT:
+                    return thiz.traverse(input -> input.outE(label)).toSet(VertexFrame.class);
+                default:
+                    throw new IllegalStateException(method.getName() + " is annotated with a direction other than BOTH, IN, or OUT.");
+            }
+        }
+    }
+
+    public static final class GetEdgesIteratorByTypeInterceptor {
 
         @RuntimeType
         public static Iterator getEdges(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final Class type) {
@@ -302,6 +367,52 @@ public class IncidenceMethodHandler implements MethodHandler {
                     return thiz.traverse(input -> resolver.hasType(input.inE(label), type)).frame(type);
                 case OUT:
                     return thiz.traverse(input -> resolver.hasType(input.outE(label), type)).frame(type);
+                default:
+                    throw new IllegalStateException(method.getName() + " is annotated with a direction other than BOTH, IN, or OUT.");
+            }
+        }
+    }
+
+    public static final class GetEdgesListByTypeInterceptor {
+
+        @RuntimeType
+        public static List getEdges(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final Class type) {
+            assert thiz instanceof CachesReflection;
+            final Incidence annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Incidence.class);
+            final Direction direction = annotation.direction();
+            final String label = annotation.label();
+            final TypeResolver resolver = thiz.getGraph().getTypeResolver();
+
+            switch (direction) {
+                case BOTH:
+                    return thiz.traverse(input -> resolver.hasType(input.bothE(label), type)).toList(type);
+                case IN:
+                    return thiz.traverse(input -> resolver.hasType(input.inE(label), type)).toList(type);
+                case OUT:
+                    return thiz.traverse(input -> resolver.hasType(input.outE(label), type)).toList(type);
+                default:
+                    throw new IllegalStateException(method.getName() + " is annotated with a direction other than BOTH, IN, or OUT.");
+            }
+        }
+    }
+
+    public static final class GetEdgesSetByTypeInterceptor {
+
+        @RuntimeType
+        public static Set getEdges(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final Class type) {
+            assert thiz instanceof CachesReflection;
+            final Incidence annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Incidence.class);
+            final Direction direction = annotation.direction();
+            final String label = annotation.label();
+            final TypeResolver resolver = thiz.getGraph().getTypeResolver();
+
+            switch (direction) {
+                case BOTH:
+                    return thiz.traverse(input -> resolver.hasType(input.bothE(label), type)).toSet(type);
+                case IN:
+                    return thiz.traverse(input -> resolver.hasType(input.inE(label), type)).toSet(type);
+                case OUT:
+                    return thiz.traverse(input -> resolver.hasType(input.outE(label), type)).toSet(type);
                 default:
                     throw new IllegalStateException(method.getName() + " is annotated with a direction other than BOTH, IN, or OUT.");
             }

@@ -56,6 +56,48 @@ public class IncidenceMethodHandlerTest {
     }
 
     @Test
+    public void testGetSonEdgesListDefault() {
+        final TinkerGraph godGraph = TinkerGraph.open();
+        GodGraphLoader.load(godGraph);
+
+        final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
+
+        final List<? extends God> gods = framedGraph.traverse(
+            input -> input.V().has("name", "jupiter")).toList(God.class);
+
+        final God father = gods.iterator().next();
+        Assert.assertTrue(father != null);
+        final VertexFrame fatherVertex = father;
+        Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
+
+        final List<? extends EdgeFrame> edgesList = father.getSonEdgesList();
+        Assert.assertFalse(edgesList.isEmpty());
+        final EdgeFrame childEdge = edgesList.get(0);
+        Assert.assertEquals(childEdge.getElement().outVertex().property("name").value(), "hercules");
+    }
+
+    @Test
+    public void testGetSonEdgesSetDefault() {
+        final TinkerGraph godGraph = TinkerGraph.open();
+        GodGraphLoader.load(godGraph);
+
+        final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
+
+        final List<? extends God> gods = framedGraph.traverse(
+            input -> input.V().has("name", "jupiter")).toList(God.class);
+
+        final God father = gods.iterator().next();
+        Assert.assertTrue(father != null);
+        final VertexFrame fatherVertex = father;
+        Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
+
+        final Set<? extends EdgeFrame> sonEdgesSet = father.getSonEdgesSet();
+        Assert.assertFalse(sonEdgesSet.isEmpty());
+        final EdgeFrame childEdge = sonEdgesSet.iterator().next();
+        Assert.assertEquals(childEdge.getElement().outVertex().property("name").value(), "hercules");
+    }
+
+    @Test
     public void testGetSonEdgesByType() {
         final TinkerGraph godGraph = TinkerGraph.open();
         GodGraphLoader.load(godGraph);
@@ -73,6 +115,52 @@ public class IncidenceMethodHandlerTest {
         final Iterator<? extends FatherEdge> childEdgeIterator = father.getSonEdges(FatherEdge.class);
         Assert.assertTrue(childEdgeIterator.hasNext());
         final FatherEdge childEdge = childEdgeIterator.next();
+        Assert.assertTrue(childEdge != null);
+        final EdgeFrame edge = childEdge;
+        Assert.assertEquals(edge.getElement().outVertex().property("name").value(), "hercules");
+    }
+
+    @Test
+    public void testGetSonEdgesListByType() {
+        final TinkerGraph godGraph = TinkerGraph.open();
+        GodGraphLoader.load(godGraph);
+
+        final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
+
+        final List<? extends God> gods = framedGraph.traverse(
+            input -> input.V().has("name", "jupiter")).toList(God.class);
+
+        final God father = gods.iterator().next();
+        Assert.assertTrue(father != null);
+        final VertexFrame fatherVertex = father;
+        Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
+
+        final List<? extends FatherEdge> childEdges = father.getSonEdgesList(FatherEdge.class);
+        Assert.assertFalse(childEdges.isEmpty());
+        final FatherEdge childEdge = childEdges.get(0);
+        Assert.assertTrue(childEdge != null);
+        final EdgeFrame edge = childEdge;
+        Assert.assertEquals(edge.getElement().outVertex().property("name").value(), "hercules");
+    }
+
+    @Test
+    public void testGetSonEdgesSetByType() {
+        final TinkerGraph godGraph = TinkerGraph.open();
+        GodGraphLoader.load(godGraph);
+
+        final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
+
+        final List<? extends God> gods = framedGraph.traverse(
+            input -> input.V().has("name", "jupiter")).toList(God.class);
+
+        final God father = gods.iterator().next();
+        Assert.assertTrue(father != null);
+        final VertexFrame fatherVertex = father;
+        Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
+
+        final Set<? extends FatherEdge> childEdges = father.getSonEdgesSet(FatherEdge.class);
+        Assert.assertFalse(childEdges.isEmpty());
+        final FatherEdge childEdge = childEdges.iterator().next();
         Assert.assertTrue(childEdge != null);
         final EdgeFrame edge = childEdge;
         Assert.assertEquals(edge.getElement().outVertex().property("name").value(), "hercules");

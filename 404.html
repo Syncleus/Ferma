@@ -10,28 +10,26 @@
         <meta name="description" content="An ORM / OGM for the TinkerPop graph stack.">
       
       
-        <link rel="canonical" href="http://syncleus.com/Ferma/annotations/overview/">
-      
       
         <meta name="author" content="Syncleus">
       
       
-        <link rel="shortcut icon" href="../../assets/images/favicon.png">
+        <link rel="shortcut icon" href="/Ferma/assets/images/favicon.png">
       
       <meta name="generator" content="mkdocs-0.16.3, mkdocs-material-1.10.1">
     
     
       
-        <title>Overview - Ferma</title>
+        <title>Ferma</title>
       
     
     
-      <script src="../../assets/javascripts/modernizr-e826f8942a.js"></script>
+      <script src="/Ferma/assets/javascripts/modernizr-e826f8942a.js"></script>
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/application-a20f419c8e.css">
+      <link rel="stylesheet" href="/Ferma/assets/stylesheets/application-a20f419c8e.css">
       
-        <link rel="stylesheet" href="../../assets/stylesheets/application-23f75ab9c7.palette.css">
+        <link rel="stylesheet" href="/Ferma/assets/stylesheets/application-23f75ab9c7.palette.css">
       
     
     
@@ -72,7 +70,7 @@
         <a href="http://syncleus.com/Ferma" title="Ferma" class="md-header-nav__button md-logo">
           
             
-              <img src="../../images/ferma-logo.svg" width="24" height="24">
+              <img src="/Ferma/images/ferma-logo.svg" width="24" height="24">
             
           
         </a>
@@ -84,13 +82,7 @@
         <span class="md-flex__ellipsis md-header-nav__title">
           
             
-              
-                <span class="md-header-nav__parent">
-                  Core Annotations
-                </span>
-              
-            
-            Overview
+            Ferma
           
         </span>
       </div>
@@ -164,7 +156,7 @@
     <div class="md-nav__button md-logo">
       
         
-          <img src="../../images/ferma-logo.svg">
+          <img src="/Ferma/images/ferma-logo.svg">
         
       
     </div>
@@ -201,7 +193,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../.." title="Home" class="md-nav__link">
+    <a href="/Ferma/" title="Home" class="md-nav__link">
       Home
     </a>
   </li>
@@ -213,7 +205,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../getting_started/" title="Getting Started" class="md-nav__link">
+    <a href="/Ferma/getting_started/" title="Getting Started" class="md-nav__link">
       Getting Started
     </a>
   </li>
@@ -225,7 +217,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../comparing_the_alternatives/" title="Comparing the Alternatives" class="md-nav__link">
+    <a href="/Ferma/comparing_the_alternatives/" title="Comparing the Alternatives" class="md-nav__link">
       Comparing the Alternatives
     </a>
   </li>
@@ -235,12 +227,10 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+  <li class="md-nav__item md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" checked>
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
     
     <label class="md-nav__link" for="nav-4">
       Core Annotations
@@ -256,18 +246,11 @@
           
           
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
-    
-    
-    <a href="./" title="Overview" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="/Ferma/annotations/overview/" title="Overview" class="md-nav__link">
       Overview
     </a>
-    
   </li>
 
         
@@ -277,7 +260,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../adjacency/" title="@Adjacency" class="md-nav__link">
+    <a href="/Ferma/annotations/adjacency/" title="@Adjacency" class="md-nav__link">
       @Adjacency
     </a>
   </li>
@@ -289,7 +272,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../property/" title="@Property" class="md-nav__link">
+    <a href="/Ferma/annotations/property/" title="@Property" class="md-nav__link">
       @Property
     </a>
   </li>
@@ -306,7 +289,7 @@
 
 
   <li class="md-nav__item">
-    <a href="../../glossary/" title="Glossary" class="md-nav__link">
+    <a href="/Ferma/glossary/" title="Glossary" class="md-nav__link">
       Glossary
     </a>
   </li>
@@ -319,46 +302,21 @@
               </div>
             
             
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-<nav class="md-nav md-nav--secondary">
-  
-  
-  
-</nav>
-                  </div>
-                </div>
-              </div>
-            
           
           <div class="md-content">
             <article class="md-content__inner md-typeset">
               
-                
-                  <a href="https://github.com/Syncleus/Ferma/edit/master/docs/annotations/overview.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
-                
-                
-                  <h1>Overview</h1>
-                
-                <p>The Ferma schema is defined by a collection of interfaces and classes written by the user. Each method will interact with the underlying graph to either modify the graph in some way, or to retrieve an element or property from the graph. There are two techniques for defining how these methods behave. Either you can explicitly implement the method, or you can leave the method as abstract and annotate the method in order to allow Ferma to implement the method for you. Here we will define the annotations available to you and how they work, along with a few examples.</p>
-<p>The behavior of an annotated method is dictated not only by the annotation applied to it but also the method's signature. Therefore an annotated method will behave differently if it's return type, arguments, or even if the method name were to change. It is important to note that when a method is explicitly defined (doesnt use an annotation) then the method signature can be anything.</p>
-<p>Method names that are annotated must have one of the following prefixes: add, get, remove, set, is, can.</p>
-<p>Below specifies that annotations that can be used when defining a Frame's interface. By specifying the method argument and return types, the underlying graph is constrained to the interface specification.</p>
-                
-                  
-                
-              
+  <h1>404 - Not found</h1>
+
               
                 
                   <h2 id="__comments">Comments</h2>
                   <div id="disqus_thread"></div>
 <script>
   var disqus_config = function () {
-    this.page.url = "http://syncleus.com/Ferma/annotations/overview/";
+    this.page.url = "";
     this.page.identifier =
-      "/annotations/overview/";
+      "";
   };
   (function() {
     var d = document, s = d.createElement("script");
@@ -376,41 +334,6 @@
       
         
 <footer class="md-footer">
-  
-    <div class="md-footer-nav">
-      <nav class="md-footer-nav__inner md-grid">
-        
-          <a href="../../comparing_the_alternatives/" title="Comparing the Alternatives" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
-            <div class="md-flex__cell md-flex__cell--shrink">
-              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
-            </div>
-            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
-              <span class="md-flex__ellipsis">
-                <span class="md-footer-nav__direction">
-                  Previous
-                </span>
-                Comparing the Alternatives
-              </span>
-            </div>
-          </a>
-        
-        
-          <a href="../adjacency/" title="@Adjacency" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
-            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
-              <span class="md-flex__ellipsis">
-                <span class="md-footer-nav__direction">
-                  Next
-                </span>
-                @Adjacency
-              </span>
-            </div>
-            <div class="md-flex__cell md-flex__cell--shrink">
-              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
-            </div>
-          </a>
-        
-      </nav>
-    </div>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
@@ -443,10 +366,10 @@
       
     </div>
     
-      <script src="../../assets/javascripts/application-f3ab9e5ff8.js"></script>
+      <script src="/Ferma/assets/javascripts/application-f3ab9e5ff8.js"></script>
       
       
-      <script>app.initialize({url:{base:"../.."}})</script>
+      <script>app.initialize({url:{base:"/Ferma"}})</script>
       
     
     

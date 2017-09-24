@@ -3,32 +3,24 @@
 
     
     <url>
-     <loc>/</loc>
-     <lastmod>2017-09-06</lastmod>
+     <loc>http://syncleus.com/Ferma/</loc>
+     <lastmod>2017-09-24</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
 
     
     <url>
-     <loc>/getting_started/</loc>
-     <lastmod>2017-09-06</lastmod>
+     <loc>http://syncleus.com/Ferma/getting_started/</loc>
+     <lastmod>2017-09-24</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
 
     
     <url>
-     <loc>/comparing_the_alternatives/</loc>
-     <lastmod>2017-09-06</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    
-
-    
-    <url>
-     <loc>/glossary/</loc>
-     <lastmod>2017-09-06</lastmod>
+     <loc>http://syncleus.com/Ferma/comparing_the_alternatives/</loc>
+     <lastmod>2017-09-24</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -36,23 +28,31 @@
     
         
     <url>
-     <loc>/annotations/overview/</loc>
-     <lastmod>2017-09-06</lastmod>
+     <loc>http://syncleus.com/Ferma/annotations/overview/</loc>
+     <lastmod>2017-09-24</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>/annotations/property/</loc>
-     <lastmod>2017-09-06</lastmod>
+     <loc>http://syncleus.com/Ferma/annotations/adjacency/</loc>
+     <lastmod>2017-09-24</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>/annotations/adjacency/</loc>
-     <lastmod>2017-09-06</lastmod>
+     <loc>http://syncleus.com/Ferma/annotations/property/</loc>
+     <lastmod>2017-09-24</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
+    
+
+    
+    <url>
+     <loc>http://syncleus.com/Ferma/glossary/</loc>
+     <lastmod>2017-09-24</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
     
 
 </urlset>

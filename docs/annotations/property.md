@@ -1,10 +1,13 @@
 Valid on frames: Edge and Vertex
 
-Allowed prefixes: `get`, `is`, `can`, `set`, `remove`
+Allowed prefixes when operation is AUTO: `get`, `is`, `can`, `set`, `remove`
 
 Annotation arguments:
 
 `value` - The name of the property
+
+`operation` - The operation the method will perform. Must be one of the following: `GET`, `SET`, `REMOVE`, `AUTO`.
+Defaults to `AUTO`.
 
 The following would bind the method it is used on to the property named `foo`:
 
@@ -14,12 +17,12 @@ The following would bind the method it is used on to the property named `foo`:
 ```
 
 
-## get prefix
+## GET Operation
 
-Valid method signatures: `()`
+Valid method signatures: `( )`
 
 
-### ()
+### Signature: `( )`
 
 Valid return types: *Any Object*
 
@@ -29,26 +32,31 @@ example:
 
 ```java
 @Property("Foo")
-Bar getFoobar()
+Bar getFoobar();
 ```
 
 ```java
 @Property("Foo")
-<E extends Bar> E getFoobar()
+<E extends Bar> E getFoobar();
 ```
 
 ```java
 @Property("Foo")
-<E> E getFoobar()
+<E> E getFoobar();
+```
+
+```java
+@Property(value = "Foo", operation = Property.Operation.GET)
+Bar obtainFoobar();
 ```
 
 
-## is prefix
+## GET Operation (is prefix)
 
-Valid method signatures: `()`
+Valid method signatures: `( )`
 
 
-### ()
+### Signature: `( )`
 
 Valid return types: `boolean`
 
@@ -58,16 +66,21 @@ example:
 
 ```java
 @Property("Foobared")
-boolean isFoobared()
+boolean isFoobared();
+```
+
+```java
+@Property(value = "Foo", operation = Property.Operation.GET)
+boolean obtainFoobared();
 ```
 
 
-## set prefix
+## SET Operation
 
 Valid method signatures: `(Object)`
 
 
-### (Object)
+### Signature: `(Object)`
 
 Valid return types: `void`
 
@@ -77,26 +90,36 @@ example:
 
 ```java
 @Property("Foo")
-void setFoobar(Bar foobar)
+void setFoobar(Bar foobar);
 ```
 
 ```java
 @Property("Foo")
-<E extends Bar> void setFoobar(E foobar)
+<E extends Bar> void setFoobar(E foobar);
 ```
 
 ```java
 @Property("Foo")
-<E extends VectorFrame> void setFoobar(E foobar)
+<E extends VectorFrame> void setFoobar(E foobar);
+```
+
+```java
+@Property("Foo")
+void setFoobar(Bar foobar);
+```
+
+```java
+@Property(value = "Foo", operation = Property.Operation.SET)
+void applyFoobar(Bar foobar);
 ```
 
 
-## remove prefix
+## REMOVE Operation
 
-Valid method signatures: `()`
+Valid method signatures: `( )`
 
 
-### ()
+### Signature: `( )`
 
 Valid return types: `void`
 
@@ -106,5 +129,10 @@ example:
 
 ```java
 @Property("Foo")
-void removeFoobar()
+void removeFoobar();
+```
+
+```java
+@Property(value = "Foo", operation = Property.Operation.REMOVE)
+void removeFoobar();
 ```

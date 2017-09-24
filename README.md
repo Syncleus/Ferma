@@ -196,10 +196,10 @@ public abstract class Person extends AbstractVertexFrame {
   public abstract void setName(String name);
 
   @Adjacency(label = "knows")
-  public abstract Iterator<Person> getKnowsPeople();
+  public abstract List<Person> getKnowsPeople();
 
   @Incidence(label = "knows")
-  public abstract Iterator<Knows> getKnows();
+  public abstract List<Knows> getKnows();
 
   @Incidence(label = "knows")
   public abstract Knows addKnows(Person friend);
@@ -242,17 +242,18 @@ public void testAnnotatedTyping() {
   //implies annotated mode
   FramedGraph fg = new DelegatingFramedGraph(graph, true, types);
 
-  Person p1 = fg.addFramedVertex(Programmer.class);
-  p1.setName("Jeff");
+  Person jeff = fg.addFramedVertex(Programmer.class);
+  jeff.setName("Jeff");
 
-  Person p2 = fg.addFramedVertex(Person.class);
-  p2.setName("Julia");
+  Person julia = fg.addFramedVertex(Person.class);
+  julia.setName("Julia");
+  julia.addKnows(p1)
 
-  Person jeff = fg.traverse((g) -> g.V().has("name", "Jeff")).next(Person.class);
-  Person julia = fg.traverse((g) -> g.V().has("name", "Julia")).next(Person.class);
+  Person juliaAgain = fg.traverse((g) -> g.V().has("name", "Julia")).next(Person.class);
+  Person jeffAgain = juliaAgain.getKnowsPeople().get(0);
 
-  Assert.assertTrue(Programmer.class.isAssignableFrom(jeff.getClass()));
-  Assert.assertTrue(Person.class.isAssignableFrom(julia.getClass()));
+  Assert.assertTrue(Programmer.class.isAssignableFrom(jeffAgain.getClass()));
+  Assert.assertTrue(Person.class.isAssignableFrom(juliaAgain.getClass()));
 }
 ```
 

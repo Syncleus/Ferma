@@ -15,21 +15,16 @@
  */
 package com.syncleus.ferma;
 
-import java.util.function.Function;
 
 import com.syncleus.ferma.annotations.God;
 import com.syncleus.ferma.annotations.GodExtended;
 import com.syncleus.ferma.typeresolvers.PolymorphicTypeResolver;
 import com.syncleus.ferma.framefactories.annotation.AnnotationFrameFactory;
-import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
-import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
-import org.apache.tinkerpop.gremlin.structure.Element;
 import org.apache.tinkerpop.gremlin.structure.Graph;
 import org.apache.tinkerpop.gremlin.tinkergraph.structure.TinkerGraph;
 import org.junit.Assert;
 import org.junit.Test;
 
-import javax.annotation.Nullable;
 import java.util.*;
 
 public class PolymorphicTypeResolverTest {

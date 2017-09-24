@@ -143,6 +143,9 @@ public interface God extends VertexFrame {
     @Incidence(label = "father", direction = Direction.IN)
     void removeSonEdge(FatherEdge edge);
 
+    @Adjacency(label = "father", direction = Direction.IN)
+    void removeEverySon();
+
     @Incidence(label = "father", direction = Direction.IN, operation = Incidence.Operation.GET)
     <N extends FatherEdge> Iterator<? extends N> obtainSonEdges(Class<? extends N> type);
 

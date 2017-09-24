@@ -99,7 +99,7 @@ public class AdjacencyMethodHandler implements MethodHandler {
                 throw new IllegalStateException(method.getName() + " was annotated with @Adjacency but had more than 1 arguments.");
         else if (ReflectionUtility.isRemoveMethod(method))
             if (arguments == null || arguments.length == 0)
-                throw new IllegalStateException(method.getName() + " was annotated with @Adjacency but had no arguments.");
+                return this.removeAll(builder, method, annotation);
             else if (arguments.length == 1)
                 return this.removeVertex(builder, method, annotation);
             else
@@ -189,6 +189,10 @@ public class AdjacencyMethodHandler implements MethodHandler {
 
     private <E> DynamicType.Builder<E> removeVertex(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
         return builder.method(ElementMatchers.is(method)).intercept(MethodDelegation.to(RemoveVertexInterceptor.class));
+    }
+
+    private <E> DynamicType.Builder<E> removeAll(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
+        return builder.method(ElementMatchers.is(method)).intercept(MethodDelegation.to(RemoveAllInterceptor.class));
     }
 
     public static final class GetVertexesIteratorDefaultInterceptor {
@@ -695,6 +699,49 @@ public class AdjacencyMethodHandler implements MethodHandler {
                         public void accept(final Edge edge) {
                             if (null == removeVertex || edge.inVertex().id().equals(removeVertex.getId()))
                                 edge.remove();
+                        }
+                    });
+                    break;
+                default:
+                    throw new IllegalStateException(method.getName() + " is annotated with a direction other than BOTH, IN, or OUT.");
+            }
+        }
+    }
+
+    public static final class RemoveAllInterceptor {
+
+        @RuntimeType
+        public static void removeVertex(@This final VertexFrame thiz, @Origin final Method method) {
+            assert thiz instanceof CachesReflection;
+            final Adjacency annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Adjacency.class);
+            final Direction direction = annotation.direction();
+            final String label = annotation.label();
+
+            switch (direction) {
+                case BOTH:
+                    final Iterator<Edge> bothEdges = thiz.getRawTraversal().bothE(label);
+                    bothEdges.forEachRemaining(new Consumer<Edge>() {
+                        @Override
+                        public void accept(final Edge edge) {
+                            edge.remove();
+                        }
+                    });
+                    break;
+                case IN:
+                    final Iterator<Edge> inEdges = thiz.getRawTraversal().inE(label);
+                    inEdges.forEachRemaining(new Consumer<Edge>() {
+                        @Override
+                        public void accept(final Edge edge) {
+                            edge.remove();
+                        }
+                    });
+                    break;
+                case OUT:
+                    final Iterator<Edge> outEdges = thiz.getRawTraversal().outE(label);
+                    outEdges.forEachRemaining(new Consumer<Edge>() {
+                        @Override
+                        public void accept(final Edge edge) {
+                            edge.remove();
                         }
                     });
                     break;

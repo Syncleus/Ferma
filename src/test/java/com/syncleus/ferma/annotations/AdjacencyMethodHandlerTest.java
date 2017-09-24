@@ -15,16 +15,12 @@
  */
 package com.syncleus.ferma.annotations;
 
-import java.util.function.Function;
 import com.syncleus.ferma.*;
-import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
-import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
 import org.apache.tinkerpop.gremlin.structure.Direction;
 import org.apache.tinkerpop.gremlin.tinkergraph.structure.TinkerGraph;
 import org.junit.Assert;
 import org.junit.Test;
 
-import javax.annotation.Nullable;
 import java.util.*;
 
 public class AdjacencyMethodHandlerTest {
@@ -616,6 +612,25 @@ public class AdjacencyMethodHandlerTest {
 
         father.removeSon(child);
         Assert.assertFalse(father.getSons(God.class).hasNext());
+    }
+
+    @Test
+    public void testRemoveEverySon() {
+        final TinkerGraph godGraph = TinkerGraph.open();
+        GodGraphLoader.load(godGraph);
+
+        final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
+
+        final List<? extends God> gods = framedGraph.traverse(
+            input -> input.V().has("name", "jupiter")).toList(God.class);
+
+        final God father = gods.iterator().next();
+        Assert.assertTrue(father != null);
+        father.addSon(God.DEFAULT_INITIALIZER);
+
+        Assert.assertEquals(2, father.getSonsList(God.class).size());
+        father.removeEverySon();
+        Assert.assertEquals(0, father.getSonsList(God.class).size());
     }
 
     @Test

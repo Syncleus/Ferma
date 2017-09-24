@@ -110,8 +110,10 @@ public class AdjacencyMethodHandler implements MethodHandler {
             else if (arguments.length == 1) {
                 if (ReflectionUtility.acceptsIterator(method, 0))
                     return this.setVertexIterator(builder, method, annotation);
-                if (ReflectionUtility.acceptsIterable(method, 0))
+                else if (ReflectionUtility.acceptsIterable(method, 0))
                     return this.setVertexIterable(builder, method, annotation);
+                else if (ReflectionUtility.acceptsVertexFrame(method, 0))
+                    return this.setVertexVertexFrame(builder, method, annotation);
 
                 throw new IllegalStateException(method.getName() + " was annotated with @Adjacency, had a single argument, but that argument was not of the type Iterator or Iterable");
             }
@@ -179,6 +181,10 @@ public class AdjacencyMethodHandler implements MethodHandler {
 
     private <E> DynamicType.Builder<E> setVertexIterable(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
         return builder.method(ElementMatchers.is(method)).intercept(MethodDelegation.to(SetVertexIterableInterceptor.class));
+    }
+
+    private <E> DynamicType.Builder<E> setVertexVertexFrame(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
+        return builder.method(ElementMatchers.is(method)).intercept(MethodDelegation.to(SetVertexVertexFrameInterceptor.class));
     }
 
     private <E> DynamicType.Builder<E> removeVertex(final DynamicType.Builder<E> builder, final Method method, final Annotation annotation) {
@@ -411,7 +417,6 @@ public class AdjacencyMethodHandler implements MethodHandler {
     }
 
     public static final class AddVertexByTypeUntypedEdgeInterceptor {
-
         @RuntimeType
         public static Object addVertex(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(value = 0) final ClassInitializer vertexType) {
             final Object newNode = thiz.getGraph().addFramedVertex(vertexType);
@@ -445,7 +450,6 @@ public class AdjacencyMethodHandler implements MethodHandler {
     }
 
     public static final class AddVertexByTypeTypedEdgeInterceptor {
-
         @RuntimeType
         public static Object addVertex(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final ClassInitializer vertexType, @RuntimeType @Argument(1) final ClassInitializer edgeType) {
             final Object newNode = thiz.getGraph().addFramedVertex(vertexType);
@@ -617,6 +621,36 @@ public class AdjacencyMethodHandler implements MethodHandler {
                             thiz.getGraph().addFramedEdge(thiz, vertexFrame, label);
                         }
                     });
+                    break;
+                default:
+                    throw new IllegalStateException(method.getName() + " is annotated with a direction other than BOTH, IN, or OUT.");
+            }
+        }
+    }
+
+    public static final class SetVertexVertexFrameInterceptor {
+
+        @RuntimeType
+        public static void setVertex(@This final VertexFrame thiz, @Origin final Method method, @RuntimeType @Argument(0) final VertexFrame vertexFrame) {
+            assert thiz instanceof CachesReflection;
+            final Adjacency annotation = ((CachesReflection) thiz).getReflectionCache().getAnnotation(method, Adjacency.class);
+            final Direction direction = annotation.direction();
+            final String label = annotation.label();
+
+
+            switch (direction) {
+                case BOTH:
+                    thiz.unlinkBoth(null, label);
+                    thiz.getGraph().addFramedEdge(vertexFrame, thiz, label);
+                    thiz.getGraph().addFramedEdge(thiz, vertexFrame, label);
+                    break;
+                case IN:
+                    thiz.unlinkIn(null, label);
+                    thiz.getGraph().addFramedEdge(vertexFrame, thiz, label);
+                    break;
+                case OUT:
+                    thiz.unlinkOut(null, label);
+                    thiz.getGraph().addFramedEdge(thiz, vertexFrame, label);
                     break;
                 default:
                     throw new IllegalStateException(method.getName() + " is annotated with a direction other than BOTH, IN, or OUT.");

@@ -14,6 +14,8 @@
   `Iterator` return type.
 * Setter methods annotated with the `@Adjacency` annotation can now accept `Iterable` parameters such as `Collection`, 
   `List`, or `Set` in addition to the usual `Iterator` type.
+* Setter methods annotated with the `@Adjacency` annotation can now accept `VertexFrame` parameters including other
+  vertex in the users custom model.
 * Methods annotated with the `@Incidence` annotation can now return a `List` or a `Set` in addition to the usual
   `Iterator` return type.
 

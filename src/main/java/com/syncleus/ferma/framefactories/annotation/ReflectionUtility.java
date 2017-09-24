@@ -15,6 +15,7 @@
  */
 package com.syncleus.ferma.framefactories.annotation;
 
+import com.syncleus.ferma.VertexFrame;
 import com.syncleus.ferma.annotations.Adjacency;
 import com.syncleus.ferma.annotations.Incidence;
 import com.syncleus.ferma.annotations.Property;
@@ -165,6 +166,10 @@ public class ReflectionUtility {
 
     public static boolean acceptsIterable(final Method method, int parameterIndex) {
         return (parameterIndex + 1) == method.getParameterTypes().length && Iterable.class.isAssignableFrom(method.getParameterTypes()[parameterIndex]);
+    }
+
+    public static boolean acceptsVertexFrame(final Method method, int parameterIndex) {
+        return (parameterIndex + 1) == method.getParameterTypes().length && VertexFrame.class.isAssignableFrom(method.getParameterTypes()[parameterIndex]);
     }
 
     public static boolean returnsIterator(final Method method) {

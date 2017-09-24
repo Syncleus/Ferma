@@ -247,7 +247,7 @@ public void testAnnotatedTyping() {
 
   Person julia = fg.addFramedVertex(Person.class);
   julia.setName("Julia");
-  julia.addKnows(p1)
+  julia.addKnows(jeff);
 
   Person juliaAgain = fg.traverse((g) -> g.V().has("name", "Julia")).next(Person.class);
   Person jeffAgain = juliaAgain.getKnowsPeople().get(0);

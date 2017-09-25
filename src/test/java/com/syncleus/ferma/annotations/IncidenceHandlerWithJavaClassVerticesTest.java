@@ -19,12 +19,15 @@ import com.syncleus.ferma.AbstractEdgeFrame;
 import com.syncleus.ferma.FramedGraph;
 import com.syncleus.ferma.TEdge;
 import com.syncleus.ferma.graphtypes.javaclass.ExtendsEdge;
+import com.syncleus.ferma.graphtypes.javaclass.ImplementsEdge;
 import com.syncleus.ferma.graphtypes.javaclass.JavaClassVertex;
 import com.syncleus.ferma.graphtypes.javaclass.JavaGraphFactory;
+import com.syncleus.ferma.graphtypes.javaclass.JavaInterfaceVertex;
 import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -67,6 +70,69 @@ public class IncidenceHandlerWithJavaClassVerticesTest {
         Assert.assertNotNull(listParentEdge);
         Assert.assertEquals(ArrayList.class.getName(), listParentEdge.getSubClass().getFullyQualifiedName());
         Assert.assertEquals(Object.class.getName(), listParentEdge.getSuperClass().getFullyQualifiedName());
+    }
+    
+    @Test
+    public void testAddEdgeDefault() {
+        FramedGraph graph = JavaGraphFactory.INSTANCE.load();
+        JavaClassVertex list = findClassVertex(graph, ArrayList.class);
+        TEdge implTedge = list.implementNewInterface();
+        ImplementsEdge implEdge = implTedge.reframe(ImplementsEdge.class);
+        implEdge.getInterface().setFullyQualifiedName(Iterable.class.getName());
+        JavaInterfaceVertex iterable = findInterfaceVertex(graph, Iterable.class);
+        Assert.assertNotNull(iterable);
+        Assert.assertEquals(Iterable.class.getName(), iterable.getFullyQualifiedName());
+    }
+    
+    @Test
+    public void testAddUntypedEdgeTypedVertex() {
+        FramedGraph graph = JavaGraphFactory.INSTANCE.load();
+        JavaClassVertex list = findClassVertex(graph, ArrayList.class);
+        TEdge implTedge = list.implementNewType(JavaInterfaceVertex.DEFAULT_INITIALIZER);
+        ImplementsEdge implEdge = implTedge.reframe(ImplementsEdge.class);
+        implEdge.getInterface().setFullyQualifiedName(Iterable.class.getName());
+        JavaInterfaceVertex iterable = findInterfaceVertex(graph, Iterable.class);
+        Assert.assertNotNull(iterable);
+        Assert.assertEquals(Iterable.class.getName(), iterable.getFullyQualifiedName());
+    }
+    
+    @Test
+    public void testAddTypedEdgeTypedVertex() {
+        FramedGraph graph = JavaGraphFactory.INSTANCE.load();
+        JavaClassVertex list = findClassVertex(graph, ArrayList.class);
+        ImplementsEdge implEdge = list.createTypeWithRelation(JavaInterfaceVertex.DEFAULT_INITIALIZER, ImplementsEdge.DEFAULT_INITIALIZER);
+        implEdge.getInterface().setFullyQualifiedName(Iterable.class.getName());
+        JavaInterfaceVertex iterable = findInterfaceVertex(graph, Iterable.class);
+        Assert.assertNotNull(iterable);
+        Assert.assertEquals(Iterable.class.getName(), iterable.getFullyQualifiedName());
+    }
+    
+    @Test
+    public void testAddEdgeByObjectUntypedEdge() {
+        FramedGraph graph = JavaGraphFactory.INSTANCE.load();
+        JavaClassVertex list = findClassVertex(graph, ArrayList.class);
+        JavaInterfaceVertex iterable = graph.addFramedVertex(JavaInterfaceVertex.class);
+        iterable.setFullyQualifiedName(Iterable.class.getName());
+        list.implementInterface(iterable);
+        
+        List<JavaClassVertex> iterableImplementors = findImplementors(graph, Iterable.class);
+        Assert.assertEquals(1, iterableImplementors.size());
+        JavaClassVertex actualIterableImplementor = iterableImplementors.get(0);
+        Assert.assertEquals(ArrayList.class.getName(), actualIterableImplementor.getFullyQualifiedName());
+    }
+    
+    private List<JavaClassVertex> findImplementors(FramedGraph graph, Class<?> ifaceClass) {
+        List<? extends ImplementsEdge> implEdges = graph.traverse(
+                input -> input.E().hasLabel("implements")).toList(ImplementsEdge.class);
+        
+        return implEdges.stream()
+                .filter(edge -> edge.getInterface().getFullyQualifiedName().equals(ifaceClass.getName()))
+                .map(ImplementsEdge::getImplementor)
+                .collect(Collectors.toList());
+    }
+    
+    private JavaInterfaceVertex findInterfaceVertex(FramedGraph graph, Class<?> javaClass) {
+        return findVertex(graph, "fqn", javaClass.getName(), JavaInterfaceVertex.class);
     }
     
     private JavaClassVertex findClassVertex(FramedGraph graph, Class<?> javaClass) {

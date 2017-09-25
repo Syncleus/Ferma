@@ -18,11 +18,11 @@ package com.syncleus.ferma.graphtypes.javaclass;
 import com.syncleus.ferma.AbstractEdgeFrame;
 import com.syncleus.ferma.ClassInitializer;
 import com.syncleus.ferma.GenericClassInitializer;
+import com.syncleus.ferma.TEdge;
 import com.syncleus.ferma.annotations.Adjacency;
 import com.syncleus.ferma.annotations.Incidence;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 import org.apache.tinkerpop.gremlin.structure.Direction;
 
 /**
@@ -43,4 +43,13 @@ public interface JavaClassVertex extends JavaTypeVertex {
     // Makes sense to use it with singleton iterator only
     @Adjacency(label = "extends", direction = Direction.OUT)
     public void setSuperClasses(Iterator<JavaClassVertex> superClasses);
+    
+    @Incidence(label = "implements", direction = Direction.OUT, operation = Incidence.Operation.ADD)
+    public TEdge implementNewInterface();
+    
+    @Incidence(label = "implements", direction = Direction.OUT, operation = Incidence.Operation.ADD)
+    public TEdge implementNewType(ClassInitializer<? extends JavaInterfaceVertex> typeInitializer);
+    
+    @Incidence(label = "implements", direction = Direction.OUT, operation = Incidence.Operation.ADD)
+    TEdge implementInterface(JavaInterfaceVertex iface);
 }

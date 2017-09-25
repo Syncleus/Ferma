@@ -15,22 +15,11 @@
  */
 package com.syncleus.ferma.graphtypes.javaclass;
 
-import com.syncleus.ferma.ClassInitializer;
-import com.syncleus.ferma.DefaultClassInitializer;
-import com.syncleus.ferma.annotations.InVertex;
-import com.syncleus.ferma.annotations.OutVertex;
-
 /**
- *
+ * Marker interface for edges that describe relations between java types (e.g. inheritance)
+ * 
  * @author rqpa
  */
-public interface ExtendsEdge extends JavaTypeRelationsEdge{
-    public static final ClassInitializer<ExtendsEdge> DEFAULT_INITIALIZER = new DefaultClassInitializer<>(ExtendsEdge.class);
-    
-    @InVertex
-    JavaClassVertex getSuperClass();
-    
-    @OutVertex
-    JavaClassVertex getSubClass();
+public interface JavaTypeRelationsEdge {
     
 }

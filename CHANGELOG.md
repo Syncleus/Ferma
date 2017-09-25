@@ -20,6 +20,8 @@
   vertex in the users custom model.
 * Methods annotated with the `@Incidence` annotation can now return a `List` or a `Set` in addition to the usual
   `Iterator` return type.
+* Removed the upper bound on traversal generics. The travese function's argument has changed from
+  `GraphTraversal<? extends Vertex, ? extends Vertex>` to `GraphTraversal<Vertex, Vertex>`.
 
 ## 3.1.0
 

@@ -83,7 +83,7 @@ public abstract class AbstractEdgeFrame extends AbstractElementFrame implements 
     }
 
     @Override
-    public <T extends Traversable<?, ?>> T traverse(final Function<GraphTraversal<? extends Edge, ? extends Edge>, GraphTraversal<?, ?>> traverser) {
+    public <T extends Traversable<?, ?>> T traverse(final Function<GraphTraversal<Edge, Edge>, GraphTraversal<?, ?>> traverser) {
         return this.getGraph().traverse(input -> traverser.apply(input.E(getElement().id())));
     }
 

@@ -421,7 +421,7 @@ public interface VertexFrame extends ElementFrame {
      */
     <T> T reframeExplicit(Class<T> kind);
 
-    <T extends Traversable<?, ?>> T traverse(Function<GraphTraversal<? extends Vertex, ? extends Vertex>, GraphTraversal<?, ?>> traverser);
+    <T extends Traversable<?, ?>> T traverse(Function<GraphTraversal<Vertex, Vertex>, GraphTraversal<?, ?>> traverser);
 
     GraphTraversal<? extends Vertex, ? extends Vertex> getRawTraversal();
 }

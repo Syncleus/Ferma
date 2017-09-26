@@ -1,16 +1,22 @@
 site_name: Ferma
 theme: material
-repo_name: 'GitHub'
+repo_name: 'Syncleus/Ferma'
 repo_url: 'https://github.com/Syncleus/Ferma'
 site_dir: 'target/mkdocs'
+edit_uri: 'edit/master/docs'
+site_description: 'An ORM / OGM for the TinkerPop graph stack.'
+site_author: 'Syncleus'
+copyright: 'Copyright &copy; 2004 - 2017 Syncleus, Inc.'
+site_url: 'http://syncleus.com/Ferma'
 pages:
     - Home: index.md
     - Getting Started: getting_started.md
     - Comparing the Alternatives: comparing_the_alternatives.md
     - Core Annotations:
         - Overview: annotations/overview.md
+        - '@Adjacency': annotations/adjacency.md
+        - '@Incidence': annotations/incidence.md
         - '@Property': annotations/property.md
-        - '@adjacency': annotations/adjacency.md
     - Glossary: glossary.md
 extra:
   version: '3.2.0'
@@ -22,9 +28,26 @@ extra:
     accent: 'deep orange'
   author:
     github: 'Syncleus'
+  social:
+    - type: 'github'
+      link: 'https://github.com/Syncleus'
+  disqus: 'syncleus'
 
 markdown_extensions:
-  - codehilite(css_class=code)
+  - codehilite
   - admonition
-  - toc:
-      permalink: '#'
+  - toc(permalink=true)
+  - pymdownx.arithmatex
+  - pymdownx.betterem(smart_enable=all)
+  - pymdownx.caret
+  - pymdownx.critic
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_generator: !!python/name:pymdownx.emoji.to_svg
+  - pymdownx.inlinehilite
+  - pymdownx.magiclink
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences
+  - pymdownx.tasklist(custom_checkbox=true)
+  - pymdownx.tilde

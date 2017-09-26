@@ -280,6 +280,18 @@
           
           
 
+
+  <li class="md-nav__item">
+    <a href="../incidence/" title="@Incidence" class="md-nav__link">
+      @Incidence
+    </a>
+  </li>
+
+        
+          
+          
+          
+
   
 
 
@@ -539,13 +551,14 @@
                 
                   <h1>@Property</h1>
                 
-                <p>Valid on frames: Edge and Vertex</p>
+                <p>Valid on frames: <strong>Edge</strong> and <strong>Vertex</strong></p>
 <p>Allowed prefixes when operation is AUTO: <code class="codehilite">get</code>, <code class="codehilite">is</code>, <code class="codehilite">can</code>, <code class="codehilite">set</code>, <code class="codehilite">remove</code></p>
 <p>Annotation arguments:</p>
 <p><code class="codehilite">value</code> - The name of the property</p>
 <p><code class="codehilite">operation</code> - The operation the method will perform. Must be one of the following: <code class="codehilite">GET</code>, <code class="codehilite">SET</code>, <code class="codehilite">REMOVE</code>, <code class="codehilite">AUTO</code>.
 Defaults to <code class="codehilite">AUTO</code>.</p>
 <p>The following would bind the method it is used on to the property named <code class="codehilite">foo</code>:</p>
+<p>example:</p>
 <div class="codehilite"><pre><span></span><span class="nd">@Property</span><span class="o">(</span><span class="s">&quot;foo&quot;</span><span class="o">)</span>
 <span class="c1">//Method declared here</span>
 </pre></div>
@@ -553,7 +566,7 @@ Defaults to <code class="codehilite">AUTO</code>.</p>
 <h2 id="get-operation">GET Operation<a class="headerlink" href="#get-operation" title="Permanent link">&para;</a></h2>
 <p>Valid method signatures: <code class="codehilite">( )</code></p>
 <h3 id="signature">Signature: <code class="codehilite">( )</code><a class="headerlink" href="#signature" title="Permanent link">&para;</a></h3>
-<p>Valid return types: <em>Any Object</em></p>
+<p>Valid return types: <code class="codehilite">Object</code> or any primitive.</p>
 <p>Get the property value of an element. Used when property is not a boolean value.</p>
 <p>example:</p>
 <div class="codehilite"><pre><span></span><span class="nd">@Property</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
@@ -659,7 +672,7 @@ Defaults to <code class="codehilite">AUTO</code>.</p>
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../adjacency/" title="@Adjacency" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../incidence/" title="@Incidence" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -668,7 +681,7 @@ Defaults to <code class="codehilite">AUTO</code>.</p>
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                @Adjacency
+                @Incidence
               </span>
             </div>
           </a>
@@ -696,7 +709,7 @@ Defaults to <code class="codehilite">AUTO</code>.</p>
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            (c) 2004 - 2017 Syncleus, Inc.
+            Copyright &copy; 2004 - 2017 Syncleus, Inc.
           </div>
         
         powered by

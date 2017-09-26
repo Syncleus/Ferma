@@ -369,6 +369,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../annotations/incidence/" title="@Incidence" class="md-nav__link">
+      @Incidence
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../annotations/property/" title="@Property" class="md-nav__link">
       @Property
     </a>
@@ -497,9 +509,15 @@
                 
                   <h1>Comparing the Alternatives</h1>
                 
-                <p>There are several OGM/ORM options out there. For the purposes of this document we will focus only on those that have a stable release, or are close to a stable release. At the time of this writing those are: Tinkerpop Framed and Totorom.</p>
+                <p>There are several OGM/ORM options out there. For the purposes of this document we will focus only on those that have a
+stable release, or are close to a stable release. At the time of this writing those are: Tinkerpop Framed and Totorom.</p>
 <h2 id="benchmarks">Benchmarks<a class="headerlink" href="#benchmarks" title="Permanent link">&para;</a></h2>
-<p>We maintain an informal project for benchmarking Ferma against other OGM available, you can find the <a href="https://github.com/Syncleus/Ferma-benchmark">source here</a>. However below is a matrix breakdown of the results. Instead of showing raw execution time we show the ratio of each OGM compared to Ferma. Therefore if the table lists 1x then it means the framework has the same execution time as Ferma, if it lists 2x then it took twice as long to execute, and if it indicates 0.5x then it took half the time to execute. Obviously any value less than 1x indicates the OGM out performed Ferma and any value greater than 1x indicates Ferma had the superior performance tiimes.</p>
+<p>We maintain an informal project for benchmarking Ferma against other OGM available, you can find the
+<a href="https://github.com/Syncleus/Ferma-benchmark">source here</a>. However below is a matrix breakdown of the results. Instead
+of showing raw execution time we show the ratio of each OGM compared to Ferma. Therefore if the table lists 1x then it
+means the framework has the same execution time as Ferma, if it lists 2x then it took twice as long to execute, and if
+it indicates 0.5x then it took half the time to execute. Obviously any value less than 1x indicates the OGM out
+performed Ferma and any value greater than 1x indicates Ferma had the superior performance tiimes.</p>
 <table>
 <thead>
 <tr>
@@ -560,9 +578,14 @@
 </tr>
 </tbody>
 </table>
-<p>As can be seen Ferma out performs all the alternative solutions considerably by several orders of magnitude. While results do vary slightly from system to system these results are pretty close to typical. Go ahead, check out the benchmark program and run it for yourself!</p>
+<p>As can be seen Ferma out performs all the alternative solutions considerably by several orders of magnitude. While
+results do vary slightly from system to system these results are pretty close to typical. Go ahead, check out the
+benchmark program and run it for yourself!</p>
 <h2 id="feature-breakdown">Feature Breakdown<a class="headerlink" href="#feature-breakdown" title="Permanent link">&para;</a></h2>
-<p>Despite the superior performance of Ferma it also supports all the features provided by the alternatives out there, not to mention several novel features. The following gives a quick breakdown of the features of the various frameworks. We also include a bit later in the document some Ferma examples showing the various features in action. All of the examples below use the domain model <a href="Ferma:Domain_Example">found here</a>.</p>
+<p>Despite the superior performance of Ferma it also supports all the features provided by the alternatives out there, not
+to mention several novel features. The following gives a quick breakdown of the features of the various frameworks. We
+also include a bit later in the document some Ferma examples showing the various features in action. All of the examples
+below use the domain model <a href="Ferma:Domain_Example">found here</a>.</p>
 <table>
 <thead>
 <tr>
@@ -639,7 +662,8 @@
 </tr>
 </tbody>
 </table>
-<p>* While Peapod does support querying for all instances of a type, and its subtypes, it does not support a mechanism to query for a specific type while excluding subtypes.</p>
+<p>* While Peapod does support querying for all instances of a type, and its subtypes, it does not support a mechanism to
+query for a specific type while excluding subtypes.</p>
 <h3 id="type-information-encoded-into-graph">Type information encoded into graph<a class="headerlink" href="#type-information-encoded-into-graph" title="Permanent link">&para;</a></h3>
 <div class="codehilite"><pre><span></span><span class="n">Set</span><span class="o">&lt;</span><span class="n">Class</span><span class="o">&lt;?&gt;&gt;</span> <span class="n">types</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashSet</span><span class="o">&lt;</span><span class="n">Class</span><span class="o">&lt;?&gt;&gt;(</span><span class="n">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="k">new</span> <span class="n">Class</span><span class="o">&lt;?&gt;[]{</span><span class="n">Person</span><span class="o">.</span><span class="na">class</span><span class="o">}));</span>
 <span class="n">Graph</span> <span class="n">g</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TinkerGraph</span><span class="o">();</span>
@@ -802,7 +826,7 @@
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            (c) 2004 - 2017 Syncleus, Inc.
+            Copyright &copy; 2004 - 2017 Syncleus, Inc.
           </div>
         
         powered by

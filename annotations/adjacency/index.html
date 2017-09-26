@@ -442,6 +442,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../incidence/" title="@Incidence" class="md-nav__link">
+      @Incidence
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../property/" title="@Property" class="md-nav__link">
       @Property
     </a>
@@ -637,13 +649,15 @@
                 
                   <h1>@Adjacency</h1>
                 
-                <p>Valid on frames: Vertex</p>
+                <p>Valid on frames: <strong>Vertex</strong></p>
 <p>Allowed prefixes when operation is AUTO: <code class="codehilite">add</code>, <code class="codehilite">get</code>, <code class="codehilite">remove</code>, <code class="codehilite">set</code></p>
 <p>Annotation arguments:</p>
-<p><code class="codehilite">value</code> - The label assigned to the edge which connects the adjacent nodes.</p>
-<p><code class="codehilite">direction</code> - The direction for the edge which creates the adjacency. It can be assigned any of the values from @org.apache.tinkerpop.gremlin.structure.Direction@.</p>
-<p><code class="codehilite">operation</code> - The operation the method will perform. Must be one of the following: <code class="codehilite">GET</code>, <code class="codehilite">ADD</code>, <code class="codehilite">SET</code>, <code class="codehilite">REMOVE</code>, <code class="codehilite">AUTO</code>.
-Defaults to <code class="codehilite">AUTO</code>.</p>
+<p><code class="codehilite">label</code> - The label assigned to the edge which connects the adjacent nodes.</p>
+<p><code class="codehilite">direction</code> - The direction for the edge which creates the adjacency. It can be assigned any of the values from
+              @org.apache.tinkerpop.gremlin.structure.Direction@.</p>
+<p><code class="codehilite">operation</code> - The operation the method will perform. Must be one of the following: <code class="codehilite">GET</code>, <code class="codehilite">ADD</code>, <code class="codehilite">SET</code>, <code class="codehilite">REMOVE</code>,
+              <code class="codehilite">AUTO</code>. Defaults to <code class="codehilite">AUTO</code>.</p>
+<p>example:</p>
 <div class="codehilite"><pre><span></span><span class="nd">@Adjacency</span><span class="o">(</span><span class="s">&quot;foo&quot;</span><span class="o">)</span>
 <span class="c1">//Method declared here</span>
 </pre></div>
@@ -653,8 +667,13 @@ Defaults to <code class="codehilite">AUTO</code>.</p>
 <p>Adds a node as an adjacency to the current node, and the returns the newly connected node.</p>
 <h3 id="signature">Signature: <code class="codehilite">( )</code><a class="headerlink" href="#signature" title="Permanent link">&para;</a></h3>
 <p>Valid return types: <code class="codehilite">VertexFrame</code></p>
-<p>Creates a new vertex without any type information as well as an untyped edge to connect to it. The newly created VertexFrame is returned.</p>
-<p>Since the returned <code class="codehilite">VertexFrame</code> is always untyped the return type must be either <code class="codehilite">VertexFrame</code> or <code class="codehilite">TVertex</code> specifically.</p>
+<p>Creates a new vertex without any type information as well as an untyped edge to connect to it. The newly created
+<code class="codehilite">VertexFrame</code> is returned.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Since the returned <code class="codehilite">VertexFrame</code> is always untyped the return type must be either <code class="codehilite">VertexFrame</code> or <code class="codehilite">TVertex</code>
+specifically.</p>
+</div>
 <p>example:</p>
 <div class="codehilite"><pre><span></span><span class="nd">@Adjacency</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
 <span class="n">VertexFrame</span> <span class="nf">addFoobar</span><span class="o">();</span>
@@ -666,14 +685,16 @@ Defaults to <code class="codehilite">AUTO</code>.</p>
 
 <h3 id="signature-vertexframe">Signature: <code class="codehilite">(VertexFrame)</code><a class="headerlink" href="#signature-vertexframe" title="Permanent link">&para;</a></h3>
 <p>Valid return types: <code class="codehilite">VertexFrame</code></p>
-<p>Creates a new edge without any type information and connects it between this vertex the vertex specified as an argument to the method. The frame returned is the same as the frame given in the argument, it is only there for compatability with other add methods. This method can also have a <code class="codehilite">void</code> return type.</p>
+<p>Creates a new edge without any type information and connects it between this vertex the vertex specified as an argument
+to the method. The frame returned is the same as the frame given in the argument, it is only there for compatability
+with other add methods. This method can also have a <code class="codehilite">void</code> return type.</p>
 <p>examples:</p>
 <div class="codehilite"><pre><span></span><span class="nd">@Adjacency</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
-<span class="n">Bar</span> <span class="nf">addFoobar</span><span class="o">(</span><span class="n">Bar</span> <span class="n">existingVertex</span><span class="o">);</span>
+<span class="n">BarVertex</span> <span class="nf">addFoobar</span><span class="o">(</span><span class="n">BarVertex</span> <span class="n">existingVertex</span><span class="o">);</span>
 </pre></div>
 
 <div class="codehilite"><pre><span></span><span class="nd">@Adjacency</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
-<span class="o">&lt;</span><span class="n">E</span> <span class="kd">extends</span> <span class="n">Bar</span><span class="o">&gt;</span> <span class="n">E</span> <span class="nf">addFoobar</span><span class="o">(</span><span class="n">E</span> <span class="n">existingVertex</span><span class="o">);</span>
+<span class="o">&lt;</span><span class="n">E</span> <span class="kd">extends</span> <span class="n">BarVertex</span><span class="o">&gt;</span> <span class="n">E</span> <span class="nf">addFoobar</span><span class="o">(</span><span class="n">E</span> <span class="n">existingVertex</span><span class="o">);</span>
 </pre></div>
 
 <div class="codehilite"><pre><span></span><span class="nd">@Adjacency</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
@@ -681,19 +702,21 @@ Defaults to <code class="codehilite">AUTO</code>.</p>
 </pre></div>
 
 <div class="codehilite"><pre><span></span><span class="nd">@Adjacency</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&quot;Foo&quot;</span><span class="o">,</span> <span class="n">operation</span> <span class="o">=</span> <span class="n">Adjacency</span><span class="o">.</span><span class="na">Operation</span><span class="o">.</span><span class="na">ADD</span><span class="o">)</span>
-<span class="n">Bar</span> <span class="n">E</span> <span class="nf">includeFoobar</span><span class="o">(</span><span class="n">Bar</span> <span class="n">existingVertex</span><span class="o">);</span>
+<span class="n">BarVertex</span> <span class="nf">includeFoobar</span><span class="o">(</span><span class="n">BarVertex</span> <span class="n">existingVertex</span><span class="o">);</span>
 </pre></div>
 
 <h3 id="signature-classinitializer">Signature: <code class="codehilite">(ClassInitializer)</code><a class="headerlink" href="#signature-classinitializer" title="Permanent link">&para;</a></h3>
 <p>Valid return types: <code class="codehilite">VertexFrame</code></p>
-<p>Creates a new edge without any type information and connects it between this vertex and a newly created vertex. The newly created vertex will have a type, as well as be initiated, according to the details specified in the ClassInitializer argument. Java generics can, and should, be used to narrow the return type.</p>
+<p>Creates a new edge without any type information and connects it between this vertex and a newly created vertex. The
+newly created vertex will have a type, as well as be initiated, according to the details specified in the
+ClassInitializer argument. Java generics can, and should, be used to narrow the return type.</p>
 <p>example:</p>
 <div class="codehilite"><pre><span></span><span class="nd">@Adjacency</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
-<span class="n">Bar</span> <span class="nf">addFoobar</span><span class="o">(</span><span class="n">ClassInitializer</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">Bar</span><span class="o">&gt;</span> <span class="n">vertexInitializer</span><span class="o">);</span>
+<span class="n">BarVertex</span> <span class="nf">addFoobar</span><span class="o">(</span><span class="n">ClassInitializer</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">BarVertex</span><span class="o">&gt;</span> <span class="n">vertexInitializer</span><span class="o">);</span>
 </pre></div>
 
 <div class="codehilite"><pre><span></span><span class="nd">@Adjacency</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
-<span class="o">&lt;</span><span class="n">E</span> <span class="kd">extends</span> <span class="n">Bar</span><span class="o">&gt;</span> <span class="n">E</span> <span class="nf">addFoobar</span><span class="o">(</span><span class="n">ClassInitializer</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">E</span><span class="o">&gt;</span> <span class="n">vertexInitializer</span><span class="o">);</span>
+<span class="o">&lt;</span><span class="n">E</span> <span class="kd">extends</span> <span class="n">BarVertex</span><span class="o">&gt;</span> <span class="n">E</span> <span class="nf">addFoobar</span><span class="o">(</span><span class="n">ClassInitializer</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">E</span><span class="o">&gt;</span> <span class="n">vertexInitializer</span><span class="o">);</span>
 </pre></div>
 
 <div class="codehilite"><pre><span></span><span class="nd">@Adjacency</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
@@ -701,31 +724,34 @@ Defaults to <code class="codehilite">AUTO</code>.</p>
 </pre></div>
 
 <div class="codehilite"><pre><span></span><span class="nd">@Adjacency</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&quot;Foo&quot;</span><span class="o">,</span> <span class="n">operation</span> <span class="o">=</span> <span class="n">Adjacency</span><span class="o">.</span><span class="na">Operation</span><span class="o">.</span><span class="na">ADD</span><span class="o">)</span>
-<span class="n">Bar</span> <span class="nf">includeFoobar</span><span class="o">(</span><span class="n">ClassInitializer</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">Bar</span><span class="o">&gt;</span> <span class="n">vertexInitializer</span><span class="o">);</span>
+<span class="n">BarVertex</span> <span class="nf">includeFoobar</span><span class="o">(</span><span class="n">ClassInitializer</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">BarVertex</span><span class="o">&gt;</span> <span class="n">vertexInitializer</span><span class="o">);</span>
 </pre></div>
 
 <h3 id="signature-classinitializer-classinitializer">Signature: <code class="codehilite">(ClassInitializer, ClassInitializer)</code><a class="headerlink" href="#signature-classinitializer-classinitializer" title="Permanent link">&para;</a></h3>
 <p>Valid return types: <code class="codehilite">VertexFrame</code></p>
-<p>Creates a new edge and connects this to a new vertex. The newly created vertex will have a type, as well as be initiated, according to the details specified in the first ClassInitializer argument. Similarly the newly created edge will hava type, and be initiated using, the second ClassInitializer argument. Java generics can, and should, be used to narrow the return type.</p>
+<p>Creates a new edge and connects this to a new vertex. The newly created vertex will have a type, as well as be
+initiated, according to the details specified in the first ClassInitializer argument. Similarly the newly created edge
+will hava a type, and be initiated, using the second ClassInitializer argument. Java generics can, and should, be used
+to narrow the return type.</p>
 <p>example:</p>
 <div class="codehilite"><pre><span></span><span class="nd">@Adjacency</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
-<span class="n">Bar</span> <span class="nf">addFoobar</span><span class="o">(</span><span class="n">ClassInitializer</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">Bar</span><span class="o">&gt;</span> <span class="n">vertexInitializer</span><span class="o">,</span>
-              <span class="n">ClassInitializer</span><span class="o">&lt;?&gt;</span> <span class="n">edgeInitializer</span><span class="o">);</span>
+<span class="n">BarVertex</span> <span class="nf">addFoobar</span><span class="o">(</span><span class="n">ClassInitializer</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">BarVertex</span><span class="o">&gt;</span> <span class="n">vertexInitializer</span><span class="o">,</span>
+                    <span class="n">ClassInitializer</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">FooEdge</span><span class="o">&gt;</span> <span class="n">edgeInitializer</span><span class="o">);</span>
 </pre></div>
 
 <div class="codehilite"><pre><span></span><span class="nd">@Adjacency</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
-<span class="o">&lt;</span><span class="n">E</span> <span class="kd">extends</span> <span class="n">Bar</span><span class="o">&gt;</span> <span class="n">E</span> <span class="nf">addFoobar</span><span class="o">(</span><span class="n">ClassInitializer</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">E</span><span class="o">&gt;</span> <span class="n">vertexInitializer</span><span class="o">,</span>
-                            <span class="n">ClassInitializer</span><span class="o">&lt;?&gt;</span> <span class="n">edgeInitializer</span><span class="o">);</span>
+<span class="o">&lt;</span><span class="n">E</span> <span class="kd">extends</span> <span class="n">BarVertex</span><span class="o">&gt;</span> <span class="n">E</span> <span class="nf">addFoobar</span><span class="o">(</span><span class="n">ClassInitializer</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">E</span><span class="o">&gt;</span> <span class="n">vertexInitializer</span><span class="o">,</span>
+                                  <span class="n">ClassInitializer</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">FooEdge</span><span class="o">&gt;</span> <span class="n">edgeInitializer</span><span class="o">);</span>
 </pre></div>
 
 <div class="codehilite"><pre><span></span><span class="nd">@Adjacency</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
 <span class="o">&lt;</span><span class="n">E</span> <span class="kd">extends</span> <span class="n">VertexFrame</span><span class="o">&gt;</span> <span class="n">E</span> <span class="nf">addFoobar</span><span class="o">(</span><span class="n">ClassInitializer</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">E</span><span class="o">&gt;</span> <span class="n">vertexInitializer</span><span class="o">,</span>
-                                    <span class="n">ClassInitializer</span><span class="o">&lt;?&gt;</span> <span class="n">edgeInitializer</span><span class="o">);</span>
+                                    <span class="n">ClassInitializer</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">FooEdge</span><span class="o">&gt;</span> <span class="n">edgeInitializer</span><span class="o">);</span>
 </pre></div>
 
 <div class="codehilite"><pre><span></span><span class="nd">@Adjacency</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&quot;Foo&quot;</span><span class="o">,</span> <span class="n">operation</span> <span class="o">=</span> <span class="n">Adjacency</span><span class="o">.</span><span class="na">Operation</span><span class="o">.</span><span class="na">ADD</span><span class="o">)</span>
-<span class="n">Bar</span> <span class="nf">includeFoobar</span><span class="o">(</span><span class="n">ClassInitializer</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">Bar</span><span class="o">&gt;</span> <span class="n">vertexInitializer</span><span class="o">,</span>
-              <span class="n">ClassInitializer</span><span class="o">&lt;?&gt;</span> <span class="n">edgeInitializer</span><span class="o">);</span>
+<span class="n">BarVertex</span> <span class="nf">includeFoobar</span><span class="o">(</span><span class="n">ClassInitializer</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">BarVertex</span><span class="o">&gt;</span> <span class="n">vertexInitializer</span><span class="o">,</span>
+                        <span class="n">ClassInitializer</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">FooEdge</span><span class="o">&gt;</span> <span class="n">edgeInitializer</span><span class="o">);</span>
 </pre></div>
 
 <h2 id="get-operation">GET Operation<a class="headerlink" href="#get-operation" title="Permanent link">&para;</a></h2>
@@ -733,7 +759,10 @@ Defaults to <code class="codehilite">AUTO</code>.</p>
 <p>Get's one or more adjacent vertex from the graph.</p>
 <h3 id="signature_1">Signature: <code class="codehilite">( )</code><a class="headerlink" href="#signature_1" title="Permanent link">&para;</a></h3>
 <p>Valid return types: <code class="codehilite">VertexFrame</code> or <code class="codehilite">Iterator</code> or <code class="codehilite">List</code> or <code class="codehilite">Set</code></p>
-<p>Retrieves one or more of the adjacent vertex. If the return type is a single Frame then only the first instance is returned. If the return type is an <code class="codehilite">Iterator</code> or <code class="codehilite">Iterable</code> then it will supply all matching vertex. When using an <code class="codehilite">Iterator</code> or <code class="codehilite">Iterable</code> it is encouraged, but not required, to use generics. The returned frames will always be instantiated as the type encoded in the graph if there is one.</p>
+<p>Retrieves one or more of the adjacent vertex. If the return type is a single Frame then only the first instance is
+returned. If the return type is an <code class="codehilite">Iterator</code> or <code class="codehilite">Iterable</code> then it will supply all matching vertex. When using an
+<code class="codehilite">Iterator</code> or <code class="codehilite">Iterable</code> it is encouraged, but not required, to use generics. The returned frames will always be
+instantiated as the type encoded in the graph if there is one.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>If a type is specified in the arguments is a superclass of the returned element then an exception will be thrown.
@@ -742,11 +771,11 @@ VertexFrame is always a safe return type for this method.</p>
 </div>
 <p>example:</p>
 <div class="codehilite"><pre><span></span><span class="nd">@Adjacency</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
-<span class="n">Bar</span> <span class="nf">getFoobar</span><span class="o">();</span>
+<span class="n">BarVertex</span> <span class="nf">getFoobar</span><span class="o">();</span>
 </pre></div>
 
 <div class="codehilite"><pre><span></span><span class="nd">@Adjacency</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
-<span class="o">&lt;</span><span class="n">E</span> <span class="kd">extends</span> <span class="n">Bar</span><span class="o">&gt;</span> <span class="n">E</span> <span class="nf">getFoobar</span><span class="o">();</span>
+<span class="o">&lt;</span><span class="n">E</span> <span class="kd">extends</span> <span class="n">BarVertex</span><span class="o">&gt;</span> <span class="n">E</span> <span class="nf">getFoobar</span><span class="o">();</span>
 </pre></div>
 
 <div class="codehilite"><pre><span></span><span class="nd">@Adjacency</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
@@ -754,11 +783,11 @@ VertexFrame is always a safe return type for this method.</p>
 </pre></div>
 
 <div class="codehilite"><pre><span></span><span class="nd">@Adjacency</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
-<span class="n">Iterator</span><span class="o">&lt;</span><span class="n">Bar</span><span class="o">&gt;</span> <span class="nf">getFoobar</span><span class="o">();</span>
+<span class="n">Iterator</span><span class="o">&lt;</span><span class="n">BarVertex</span><span class="o">&gt;</span> <span class="nf">getFoobar</span><span class="o">();</span>
 </pre></div>
 
 <div class="codehilite"><pre><span></span><span class="nd">@Adjacency</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
-<span class="o">&lt;</span><span class="n">E</span> <span class="kd">extends</span> <span class="n">Bar</span><span class="o">&gt;</span> <span class="n">Iterator</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span> <span class="nf">getFoobar</span><span class="o">();</span>
+<span class="o">&lt;</span><span class="n">E</span> <span class="kd">extends</span> <span class="n">BarVertex</span><span class="o">&gt;</span> <span class="n">Iterator</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span> <span class="nf">getFoobar</span><span class="o">();</span>
 </pre></div>
 
 <div class="codehilite"><pre><span></span><span class="nd">@Adjacency</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
@@ -766,28 +795,34 @@ VertexFrame is always a safe return type for this method.</p>
 </pre></div>
 
 <div class="codehilite"><pre><span></span><span class="nd">@Adjacency</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
-<span class="n">List</span><span class="o">&lt;</span><span class="n">Bar</span><span class="o">&gt;</span> <span class="nf">getFoobar</span><span class="o">();</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">BarVertex</span><span class="o">&gt;</span> <span class="nf">getFoobar</span><span class="o">();</span>
 </pre></div>
 
 <div class="codehilite"><pre><span></span><span class="nd">@Adjacency</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
-<span class="n">Set</span><span class="o">&lt;</span><span class="n">Bar</span><span class="o">&gt;</span> <span class="nf">getFoobar</span><span class="o">();</span>
+<span class="n">Set</span><span class="o">&lt;</span><span class="n">BarVertex</span><span class="o">&gt;</span> <span class="nf">getFoobar</span><span class="o">();</span>
 </pre></div>
 
 <div class="codehilite"><pre><span></span><span class="nd">@Adjacency</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&quot;Foo&quot;</span><span class="o">,</span> <span class="n">operation</span> <span class="o">=</span> <span class="n">Adjacency</span><span class="o">.</span><span class="na">Operation</span><span class="o">.</span><span class="na">GET</span><span class="o">)</span>
-<span class="n">Bar</span> <span class="nf">obtainFoobar</span><span class="o">();</span>
+<span class="n">BarVertex</span> <span class="nf">obtainFoobar</span><span class="o">();</span>
 </pre></div>
 
 <h3 id="signature-class">Signature: <code class="codehilite">(Class)</code><a class="headerlink" href="#signature-class" title="Permanent link">&para;</a></h3>
 <p>Valid return types: <code class="codehilite">VertexFrame</code> or <code class="codehilite">Iterator</code> or <code class="codehilite">List</code> or <code class="codehilite">Set</code></p>
-<p>Retrieves one or more of the adjacent vertex. If the return type is a specific Frame, an <code class="codehilite">Object</code>, or a <code class="codehilite">VertexFrame</code> then only the first instance is returned. If the return type is an iterator then it will iterate over all matches vertex. When using an Iterator it is encouraged to use generics.</p>
-<p>The Class argument of the method specifes a filter such that only vertex which are of a matching type, or a subtype, to that of the argument will be returned.</p>
+<p>Retrieves one or more of the adjacent vertex. If the return type is a specific Frame, an <code class="codehilite">Object</code>, or a <code class="codehilite">VertexFrame</code>
+then only the first instance is returned. If the return type is an iterator then it will iterate over all matches
+vertex. When using an Iterator it is encouraged to use generics.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The Class argument of the method specifes a filter such that only vertex which are of a matching type, or a subtype,
+to that of the argument will be returned.</p>
+</div>
 <p>example:</p>
 <div class="codehilite"><pre><span></span><span class="nd">@Adjacency</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
-<span class="n">Bar</span> <span class="nf">getFoobar</span><span class="o">(</span><span class="n">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">Bar</span><span class="o">&gt;</span> <span class="n">filter</span><span class="o">);</span>
+<span class="n">BarVertex</span> <span class="nf">getFoobar</span><span class="o">(</span><span class="n">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">BarVertex</span><span class="o">&gt;</span> <span class="n">filter</span><span class="o">);</span>
 </pre></div>
 
 <div class="codehilite"><pre><span></span><span class="nd">@Adjacency</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
-<span class="o">&lt;</span><span class="n">E</span> <span class="kd">extends</span> <span class="n">Bar</span><span class="o">&gt;</span> <span class="n">E</span> <span class="nf">getFoobar</span><span class="o">(</span><span class="n">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">E</span><span class="o">&gt;</span> <span class="n">filter</span><span class="o">);</span>
+<span class="o">&lt;</span><span class="n">E</span> <span class="kd">extends</span> <span class="n">BarVertex</span><span class="o">&gt;</span> <span class="n">E</span> <span class="nf">getFoobar</span><span class="o">(</span><span class="n">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">E</span><span class="o">&gt;</span> <span class="n">filter</span><span class="o">);</span>
 </pre></div>
 
 <div class="codehilite"><pre><span></span><span class="nd">@Adjacency</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
@@ -795,11 +830,11 @@ VertexFrame is always a safe return type for this method.</p>
 </pre></div>
 
 <div class="codehilite"><pre><span></span><span class="nd">@Adjacency</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
-<span class="n">Iterator</span><span class="o">&lt;</span><span class="n">Bar</span><span class="o">&gt;</span> <span class="nf">getFoobar</span><span class="o">(</span><span class="n">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">Bar</span><span class="o">&gt;</span> <span class="n">filter</span><span class="o">);</span>
+<span class="n">Iterator</span><span class="o">&lt;</span><span class="n">BarVertex</span><span class="o">&gt;</span> <span class="nf">getFoobar</span><span class="o">(</span><span class="n">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">BarVertex</span><span class="o">&gt;</span> <span class="n">filter</span><span class="o">);</span>
 </pre></div>
 
 <div class="codehilite"><pre><span></span><span class="nd">@Adjacency</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
-<span class="o">&lt;</span><span class="n">E</span> <span class="kd">extends</span> <span class="n">Bar</span><span class="o">&gt;</span> <span class="n">Iterator</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span> <span class="nf">getFoobar</span><span class="o">(</span><span class="n">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">E</span><span class="o">&gt;</span> <span class="n">filter</span><span class="o">);</span>
+<span class="o">&lt;</span><span class="n">E</span> <span class="kd">extends</span> <span class="n">BarVertex</span><span class="o">&gt;</span> <span class="n">Iterator</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span> <span class="nf">getFoobar</span><span class="o">(</span><span class="n">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">E</span><span class="o">&gt;</span> <span class="n">filter</span><span class="o">);</span>
 </pre></div>
 
 <div class="codehilite"><pre><span></span><span class="nd">@Adjacency</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
@@ -807,15 +842,15 @@ VertexFrame is always a safe return type for this method.</p>
 </pre></div>
 
 <div class="codehilite"><pre><span></span><span class="nd">@Adjacency</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
-<span class="n">List</span><span class="o">&lt;</span><span class="n">Bar</span><span class="o">&gt;</span> <span class="nf">getFoobar</span><span class="o">(</span><span class="n">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">Bar</span><span class="o">&gt;</span> <span class="n">filter</span><span class="o">);</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">BarVertex</span><span class="o">&gt;</span> <span class="nf">getFoobar</span><span class="o">(</span><span class="n">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">BarVertex</span><span class="o">&gt;</span> <span class="n">filter</span><span class="o">);</span>
 </pre></div>
 
 <div class="codehilite"><pre><span></span><span class="nd">@Adjacency</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
-<span class="n">Set</span><span class="o">&lt;</span><span class="n">Bar</span><span class="o">&gt;</span> <span class="nf">getFoobar</span><span class="o">(</span><span class="n">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">Bar</span><span class="o">&gt;</span> <span class="n">filter</span><span class="o">);</span>
+<span class="n">Set</span><span class="o">&lt;</span><span class="n">BarVertex</span><span class="o">&gt;</span> <span class="nf">getFoobar</span><span class="o">(</span><span class="n">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">BarVertex</span><span class="o">&gt;</span> <span class="n">filter</span><span class="o">);</span>
 </pre></div>
 
 <div class="codehilite"><pre><span></span><span class="nd">@Adjacency</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&quot;Foo&quot;</span><span class="o">,</span> <span class="n">operation</span> <span class="o">=</span> <span class="n">Adjacency</span><span class="o">.</span><span class="na">Operation</span><span class="o">.</span><span class="na">GET</span><span class="o">)</span>
-<span class="n">Bar</span> <span class="nf">obtainFoobar</span><span class="o">(</span><span class="n">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">Bar</span><span class="o">&gt;</span> <span class="n">filter</span><span class="o">);</span>
+<span class="n">BarVertex</span> <span class="nf">obtainFoobar</span><span class="o">(</span><span class="n">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">BarVertex</span><span class="o">&gt;</span> <span class="n">filter</span><span class="o">);</span>
 </pre></div>
 
 <h2 id="remove-operation">REMOVE Operation<a class="headerlink" href="#remove-operation" title="Permanent link">&para;</a></h2>
@@ -839,11 +874,11 @@ VertexFrame is always a safe return type for this method.</p>
 and has the specified label.</p>
 <p>example:</p>
 <div class="codehilite"><pre><span></span><span class="nd">@Adjacency</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
-<span class="kt">void</span> <span class="nf">removeFoobar</span><span class="o">(</span><span class="n">Bar</span> <span class="n">vertex</span><span class="o">);</span>
+<span class="kt">void</span> <span class="nf">removeFoobar</span><span class="o">(</span><span class="n">BarVertex</span> <span class="n">vertex</span><span class="o">);</span>
 </pre></div>
 
 <div class="codehilite"><pre><span></span><span class="nd">@Adjacency</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
-<span class="o">&lt;</span><span class="n">E</span> <span class="kd">extends</span> <span class="n">Bar</span><span class="o">&gt;</span> <span class="kt">void</span> <span class="nf">removeFoobar</span><span class="o">(</span><span class="n">E</span> <span class="n">vertex</span><span class="o">);</span>
+<span class="o">&lt;</span><span class="n">E</span> <span class="kd">extends</span> <span class="n">BarVertex</span><span class="o">&gt;</span> <span class="kt">void</span> <span class="nf">removeFoobar</span><span class="o">(</span><span class="n">E</span> <span class="n">vertex</span><span class="o">);</span>
 </pre></div>
 
 <div class="codehilite"><pre><span></span><span class="nd">@Adjacency</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
@@ -851,7 +886,7 @@ and has the specified label.</p>
 </pre></div>
 
 <div class="codehilite"><pre><span></span><span class="nd">@Adjacency</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&quot;Foo&quot;</span><span class="o">,</span> <span class="n">operation</span> <span class="o">=</span> <span class="n">Adjacency</span><span class="o">.</span><span class="na">Operation</span><span class="o">.</span><span class="na">REMOVE</span><span class="o">)</span>
-<span class="kt">void</span> <span class="nf">removeFoobar</span><span class="o">(</span><span class="n">Bar</span> <span class="n">vertex</span><span class="o">);</span>
+<span class="kt">void</span> <span class="nf">removeFoobar</span><span class="o">(</span><span class="n">BarVertex</span> <span class="n">vertex</span><span class="o">);</span>
 </pre></div>
 
 <h2 id="set-operation">SET Operation<a class="headerlink" href="#set-operation" title="Permanent link">&para;</a></h2>
@@ -866,29 +901,32 @@ If the specified vertex is already an adjacency than any edges already connected
 created edges will not encode a type.</p>
 <p>example:</p>
 <div class="codehilite"><pre><span></span><span class="nd">@Adjacency</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
-<span class="kt">void</span> <span class="nf">setFoobar</span><span class="o">(</span><span class="n">Bar</span> <span class="n">vertex</span><span class="o">);</span>
+<span class="kt">void</span> <span class="nf">setFoobar</span><span class="o">(</span><span class="n">BarVertex</span> <span class="n">vertex</span><span class="o">);</span>
 </pre></div>
 
 <div class="codehilite"><pre><span></span><span class="nd">@Adjacency</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
-<span class="o">&lt;</span><span class="n">E</span> <span class="kd">extends</span> <span class="n">Bar</span><span class="o">&gt;</span> <span class="kt">void</span> <span class="nf">setFoobar</span><span class="o">(</span><span class="n">E</span> <span class="n">vertex</span><span class="o">);</span>
+<span class="o">&lt;</span><span class="n">E</span> <span class="kd">extends</span> <span class="n">BarVertex</span><span class="o">&gt;</span> <span class="kt">void</span> <span class="nf">setFoobar</span><span class="o">(</span><span class="n">E</span> <span class="n">vertex</span><span class="o">);</span>
 </pre></div>
 
 <div class="codehilite"><pre><span></span><span class="nd">@Adjacency</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&quot;Foo&quot;</span><span class="o">,</span> <span class="n">operation</span> <span class="o">=</span> <span class="n">Adjacency</span><span class="o">.</span><span class="na">Operation</span><span class="o">.</span><span class="na">SET</span><span class="o">)</span>
-<span class="kt">void</span> <span class="nf">assignFoobar</span><span class="o">(</span><span class="n">Bar</span> <span class="n">vertex</span><span class="o">);</span>
+<span class="kt">void</span> <span class="nf">assignFoobar</span><span class="o">(</span><span class="n">BarVertex</span> <span class="n">vertex</span><span class="o">);</span>
 </pre></div>
 
 <h3 id="signature-iterator">Signature: <code class="codehilite">(Iterator)</code><a class="headerlink" href="#signature-iterator" title="Permanent link">&para;</a></h3>
 <p>Valid return types: <code class="codehilite">void</code></p>
-<p>The argument for this method must be an <code class="codehilite">Iterator</code> which iterates over vertex Frames. It is suggested you specify a Generic Type for the Iterator for usability.</p>
-<p>This method will iterate over all the vertex specified in the Iterator argument and create new edges to connect to it. The edges in the graph will not encode a type.</p>
-<p>Any existing edges matching the specified label that do not connect to one of the <code class="codehilite">VertexFrame</code> provided by the iterator will be removed.</p>
+<p>The argument for this method must be an <code class="codehilite">Iterator</code> which iterates over vertex Frames. It is suggested you specify a
+Generic Type for the Iterator for usability.</p>
+<p>This method will iterate over all the vertex specified in the Iterator argument and create new edges to connect to it.
+The edges in the graph will not encode a type.</p>
+<p>Any existing edges matching the specified label that do not connect to one of the <code class="codehilite">VertexFrame</code> provided by the iterator
+will be removed.</p>
 <p>example:</p>
 <div class="codehilite"><pre><span></span><span class="nd">@Adjacency</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
-<span class="kt">void</span> <span class="nf">setFoobar</span><span class="o">(</span><span class="n">Iterator</span><span class="o">&lt;</span><span class="n">Bar</span><span class="o">&gt;</span> <span class="n">vertex</span><span class="o">);</span>
+<span class="kt">void</span> <span class="nf">setFoobar</span><span class="o">(</span><span class="n">Iterator</span><span class="o">&lt;</span><span class="n">BaBarVertexr</span><span class="o">&gt;</span> <span class="n">vertex</span><span class="o">);</span>
 </pre></div>
 
 <div class="codehilite"><pre><span></span><span class="nd">@Adjacency</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
-<span class="o">&lt;</span><span class="n">E</span> <span class="kd">extends</span> <span class="n">Bar</span><span class="o">&gt;</span> <span class="kt">void</span> <span class="nf">setFoobar</span><span class="o">(</span><span class="n">Iterator</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">E</span><span class="o">&gt;</span> <span class="n">vertex</span><span class="o">);</span>
+<span class="o">&lt;</span><span class="n">E</span> <span class="kd">extends</span> <span class="n">BarVertex</span><span class="o">&gt;</span> <span class="kt">void</span> <span class="nf">setFoobar</span><span class="o">(</span><span class="n">Iterator</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">E</span><span class="o">&gt;</span> <span class="n">vertex</span><span class="o">);</span>
 </pre></div>
 
 <div class="codehilite"><pre><span></span><span class="nd">@Adjacency</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
@@ -897,29 +935,32 @@ created edges will not encode a type.</p>
 
 <h3 id="signature-iterable">Signature: <code class="codehilite">(Iterable)</code><a class="headerlink" href="#signature-iterable" title="Permanent link">&para;</a></h3>
 <p>Valid return types: <code class="codehilite">void</code></p>
-<p>The argument for this method must be an <code class="codehilite">Iterable</code> or a subclass of <code class="codehilite">Iterable</code> which iterates over vertex Frames. It is suggested you specify a Generic Type for the Iterator for usability.</p>
+<p>The argument for this method must be an <code class="codehilite">Iterable</code> or a subclass of <code class="codehilite">Iterable</code> which iterates over vertex Frames. It is
+suggested you specify a Generic Type for the Iterator for usability.</p>
 <p>Since all Java collections inherit from the <code class="codehilite">Iterable</code> interface they can also be used as parameters to these methods.</p>
-<p>This method will iterate over all the vertex specified in the <code class="codehilite">Iterable</code> argument and create new edges to connect to it. The edges in the graph will not encode a type.</p>
-<p>Any existing edges matching the specified label that do not connect to one of the <code class="codehilite">VertexFrame</code> provided by the iterator will be removed.</p>
+<p>This method will iterate over all the vertex specified in the <code class="codehilite">Iterable</code> argument and create new edges to connect to it.
+The edges in the graph will not encode a type.</p>
+<p>Any existing edges matching the specified label that do not connect to one of the <code class="codehilite">VertexFrame</code> provided by the iterator
+will be removed.</p>
 <p>example:</p>
 <div class="codehilite"><pre><span></span><span class="nd">@Adjacency</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
-<span class="kt">void</span> <span class="nf">setFoobar</span><span class="o">(</span><span class="n">Iterable</span><span class="o">&lt;</span><span class="n">Bar</span><span class="o">&gt;</span> <span class="n">vertex</span><span class="o">);</span>
+<span class="kt">void</span> <span class="nf">setFoobar</span><span class="o">(</span><span class="n">Iterable</span><span class="o">&lt;</span><span class="n">BarVertex</span><span class="o">&gt;</span> <span class="n">vertex</span><span class="o">);</span>
 </pre></div>
 
 <div class="codehilite"><pre><span></span><span class="nd">@Adjacency</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
-<span class="kt">void</span> <span class="nf">setFoobar</span><span class="o">(</span><span class="n">Collection</span><span class="o">&lt;</span><span class="n">Bar</span><span class="o">&gt;</span> <span class="n">vertex</span><span class="o">);</span>
+<span class="kt">void</span> <span class="nf">setFoobar</span><span class="o">(</span><span class="n">Collection</span><span class="o">&lt;</span><span class="n">BarVertex</span><span class="o">&gt;</span> <span class="n">vertex</span><span class="o">);</span>
 </pre></div>
 
 <div class="codehilite"><pre><span></span><span class="nd">@Adjacency</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
-<span class="kt">void</span> <span class="nf">setFoobar</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Bar</span><span class="o">&gt;</span> <span class="n">vertex</span><span class="o">);</span>
+<span class="kt">void</span> <span class="nf">setFoobar</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">BarVertex</span><span class="o">&gt;</span> <span class="n">vertex</span><span class="o">);</span>
 </pre></div>
 
 <div class="codehilite"><pre><span></span><span class="nd">@Adjacency</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
-<span class="kt">void</span> <span class="nf">setFoobar</span><span class="o">(</span><span class="n">Set</span><span class="o">&lt;</span><span class="n">Bar</span><span class="o">&gt;</span> <span class="n">vertex</span><span class="o">);</span>
+<span class="kt">void</span> <span class="nf">setFoobar</span><span class="o">(</span><span class="n">Set</span><span class="o">&lt;</span><span class="n">BarVertex</span><span class="o">&gt;</span> <span class="n">vertex</span><span class="o">);</span>
 </pre></div>
 
 <div class="codehilite"><pre><span></span><span class="nd">@Adjacency</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
-<span class="o">&lt;</span><span class="n">E</span> <span class="kd">extends</span> <span class="n">Bar</span><span class="o">&gt;</span> <span class="kt">void</span> <span class="nf">setFoobar</span><span class="o">(</span><span class="n">Iterable</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">E</span><span class="o">&gt;</span> <span class="n">vertex</span><span class="o">);</span>
+<span class="o">&lt;</span><span class="n">E</span> <span class="kd">extends</span> <span class="n">BarVertex</span><span class="o">&gt;</span> <span class="kt">void</span> <span class="nf">setFoobar</span><span class="o">(</span><span class="n">Iterable</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">E</span><span class="o">&gt;</span> <span class="n">vertex</span><span class="o">);</span>
 </pre></div>
 
 <div class="codehilite"><pre><span></span><span class="nd">@Adjacency</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
@@ -974,13 +1015,13 @@ created edges will not encode a type.</p>
           </a>
         
         
-          <a href="../property/" title="@Property" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../incidence/" title="@Incidence" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                @Property
+                @Incidence
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
@@ -996,7 +1037,7 @@ created edges will not encode a type.</p>
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            (c) 2004 - 2017 Syncleus, Inc.
+            Copyright &copy; 2004 - 2017 Syncleus, Inc.
           </div>
         
         powered by

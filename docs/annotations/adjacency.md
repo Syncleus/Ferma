@@ -7,7 +7,7 @@ Annotation arguments:
 `label` - The label assigned to the edge which connects the adjacent nodes.
 
 `direction` - The direction for the edge which creates the adjacency. It can be assigned any of the values from
-              @org.apache.tinkerpop.gremlin.structure.Direction@.
+              `org.apache.tinkerpop.gremlin.structure.Direction`.
 
 `operation` - The operation the method will perform. Must be one of the following: `GET`, `ADD`, `SET`, `REMOVE`,
               `AUTO`. Defaults to `AUTO`.

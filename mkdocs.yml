@@ -17,6 +17,8 @@ pages:
         - '@Adjacency': annotations/adjacency.md
         - '@GraphElement': annotations/graphelement.md
         - '@Incidence': annotations/incidence.md
+        - '@InVertex': annotations/invertex.md
+        - '@OutVertex': annotations/outvertex.md
         - '@Property': annotations/property.md
     - Glossary: glossary.md
 extra:

@@ -11,8 +11,6 @@ Defaults to `AUTO`.
 
 The following would bind the method it is used on to the property named `foo`:
 
-example:
-
 ```java
 @Property("foo")
 //Method declared here

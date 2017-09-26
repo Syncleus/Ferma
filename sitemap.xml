@@ -52,6 +52,18 @@
     </url>
         
     <url>
+     <loc>http://syncleus.com/Ferma/annotations/invertex/</loc>
+     <lastmod>2017-09-26</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>http://syncleus.com/Ferma/annotations/outvertex/</loc>
+     <lastmod>2017-09-26</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
      <loc>http://syncleus.com/Ferma/annotations/property/</loc>
      <lastmod>2017-09-26</lastmod>
      <changefreq>daily</changefreq>

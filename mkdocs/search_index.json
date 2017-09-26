@@ -231,8 +231,38 @@
             "title": "Signature: (EdgeFrame)"
         }, 
         {
+            "location": "/annotations/invertex/", 
+            "text": "Valid on frames: \nEdge\n\n\nAllowed prefixes when operation is AUTO: \nget\n\n\nThe \n@InVertex\n takes no parameters and is used only on get methods that themself take no parameters. It specifies the\n\nVertexFrame\n at the head of an edge.\n\n\nexample:\n\n\n@InVertex\n\n\n//Method declared here\n\n\n\n\n\nGET Operation\n\n\nValid method signatures: \n( )\n\n\nSignature: \n( )\n\n\nValid return types: \nVertexFrame\n.\n\n\nGet the head vertex of the edge.\n\n\nexample:\n\n\n@InVertex\n\n\nBarVertex\n \ngetFoobar\n();", 
+            "title": "@InVertex"
+        }, 
+        {
+            "location": "/annotations/invertex/#get-operation", 
+            "text": "Valid method signatures:  ( )", 
+            "title": "GET Operation"
+        }, 
+        {
+            "location": "/annotations/invertex/#signature", 
+            "text": "Valid return types:  VertexFrame .  Get the head vertex of the edge.  example:  @InVertex  BarVertex   getFoobar ();", 
+            "title": "Signature: ( )"
+        }, 
+        {
+            "location": "/annotations/outvertex/", 
+            "text": "Valid on frames: \nEdge\n\n\nAllowed prefixes when operation is AUTO: \nget\n\n\nThe \n@OutVertex\n takes no parameters and is used only on get methods that themself take no parameters. It specifies the\n\nVertexFrame\n at the tail of an edge.\n\n\nexample:\n\n\n@OutVertex\n\n\n//Method declared here\n\n\n\n\n\nGET Operation\n\n\nValid method signatures: \n( )\n\n\nSignature: \n( )\n\n\nValid return types: \nVertexFrame\n.\n\n\nGet the tail vertex of the edge.\n\n\nexample:\n\n\n@OutVertex\n\n\nBarVertex\n \ngetFoobar\n();", 
+            "title": "@OutVertex"
+        }, 
+        {
+            "location": "/annotations/outvertex/#get-operation", 
+            "text": "Valid method signatures:  ( )", 
+            "title": "GET Operation"
+        }, 
+        {
+            "location": "/annotations/outvertex/#signature", 
+            "text": "Valid return types:  VertexFrame .  Get the tail vertex of the edge.  example:  @OutVertex  BarVertex   getFoobar ();", 
+            "title": "Signature: ( )"
+        }, 
+        {
             "location": "/annotations/property/", 
-            "text": "Valid on frames: \nEdge\n and \nVertex\n\n\nAllowed prefixes when operation is AUTO: \nget\n, \nis\n, \ncan\n, \nset\n, \nremove\n\n\nAnnotation arguments:\n\n\nvalue\n - The name of the property\n\n\noperation\n - The operation the method will perform. Must be one of the following: \nGET\n, \nSET\n, \nREMOVE\n, \nAUTO\n.\nDefaults to \nAUTO\n.\n\n\nThe following would bind the method it is used on to the property named \nfoo\n:\n\n\nexample:\n\n\n@Property\n(\nfoo\n)\n\n\n//Method declared here\n\n\n\n\n\nGET Operation\n\n\nValid method signatures: \n( )\n\n\nSignature: \n( )\n\n\nValid return types: \nObject\n or any primitive.\n\n\nGet the property value of an element. Used when property is not a boolean value.\n\n\nexample:\n\n\n@Property\n(\nFoo\n)\n\n\nBar\n \ngetFoobar\n();\n\n\n\n\n\n@Property\n(\nFoo\n)\n\n\nE\n \nextends\n \nBar\n \nE\n \ngetFoobar\n();\n\n\n\n\n\n@Property\n(\nFoo\n)\n\n\nE\n \nE\n \ngetFoobar\n();\n\n\n\n\n\n@Property\n(\nvalue\n \n=\n \nFoo\n,\n \noperation\n \n=\n \nProperty\n.\nOperation\n.\nGET\n)\n\n\nBar\n \nobtainFoobar\n();\n\n\n\n\n\nGET Operation (is prefix)\n\n\nValid method signatures: \n( )\n\n\nSignature: \n( )\n\n\nValid return types: \nboolean\n\n\nGet the property value of an element. Used when property is a boolean value.\n\n\nexample:\n\n\n@Property\n(\nFoobared\n)\n\n\nboolean\n \nisFoobared\n();\n\n\n\n\n\n@Property\n(\nvalue\n \n=\n \nFoo\n,\n \noperation\n \n=\n \nProperty\n.\nOperation\n.\nGET\n)\n\n\nboolean\n \nobtainFoobared\n();\n\n\n\n\n\nSET Operation\n\n\nValid method signatures: \n(Object)\n\n\nSignature: \n(Object)\n\n\nValid return types: \nvoid\n\n\nSet the property value of an element. The argument can be any class accepted by the underlying graph.\n\n\nexample:\n\n\n@Property\n(\nFoo\n)\n\n\nvoid\n \nsetFoobar\n(\nBar\n \nfoobar\n);\n\n\n\n\n\n@Property\n(\nFoo\n)\n\n\nE\n \nextends\n \nBar\n \nvoid\n \nsetFoobar\n(\nE\n \nfoobar\n);\n\n\n\n\n\n@Property\n(\nFoo\n)\n\n\nE\n \nextends\n \nVectorFrame\n \nvoid\n \nsetFoobar\n(\nE\n \nfoobar\n);\n\n\n\n\n\n@Property\n(\nFoo\n)\n\n\nvoid\n \nsetFoobar\n(\nBar\n \nfoobar\n);\n\n\n\n\n\n@Property\n(\nvalue\n \n=\n \nFoo\n,\n \noperation\n \n=\n \nProperty\n.\nOperation\n.\nSET\n)\n\n\nvoid\n \napplyFoobar\n(\nBar\n \nfoobar\n);\n\n\n\n\n\nREMOVE Operation\n\n\nValid method signatures: \n( )\n\n\nSignature: \n( )\n\n\nValid return types: \nvoid\n\n\nRemove the property of an element.\n\n\nexample:\n\n\n@Property\n(\nFoo\n)\n\n\nvoid\n \nremoveFoobar\n();\n\n\n\n\n\n@Property\n(\nvalue\n \n=\n \nFoo\n,\n \noperation\n \n=\n \nProperty\n.\nOperation\n.\nREMOVE\n)\n\n\nvoid\n \nremoveFoobar\n();", 
+            "text": "Valid on frames: \nEdge\n and \nVertex\n\n\nAllowed prefixes when operation is AUTO: \nget\n, \nis\n, \ncan\n, \nset\n, \nremove\n\n\nAnnotation arguments:\n\n\nvalue\n - The name of the property\n\n\noperation\n - The operation the method will perform. Must be one of the following: \nGET\n, \nSET\n, \nREMOVE\n, \nAUTO\n.\nDefaults to \nAUTO\n.\n\n\nThe following would bind the method it is used on to the property named \nfoo\n:\n\n\n@Property\n(\nfoo\n)\n\n\n//Method declared here\n\n\n\n\n\nGET Operation\n\n\nValid method signatures: \n( )\n\n\nSignature: \n( )\n\n\nValid return types: \nObject\n or any primitive.\n\n\nGet the property value of an element. Used when property is not a boolean value.\n\n\nexample:\n\n\n@Property\n(\nFoo\n)\n\n\nBar\n \ngetFoobar\n();\n\n\n\n\n\n@Property\n(\nFoo\n)\n\n\nE\n \nextends\n \nBar\n \nE\n \ngetFoobar\n();\n\n\n\n\n\n@Property\n(\nFoo\n)\n\n\nE\n \nE\n \ngetFoobar\n();\n\n\n\n\n\n@Property\n(\nvalue\n \n=\n \nFoo\n,\n \noperation\n \n=\n \nProperty\n.\nOperation\n.\nGET\n)\n\n\nBar\n \nobtainFoobar\n();\n\n\n\n\n\nGET Operation (is prefix)\n\n\nValid method signatures: \n( )\n\n\nSignature: \n( )\n\n\nValid return types: \nboolean\n\n\nGet the property value of an element. Used when property is a boolean value.\n\n\nexample:\n\n\n@Property\n(\nFoobared\n)\n\n\nboolean\n \nisFoobared\n();\n\n\n\n\n\n@Property\n(\nvalue\n \n=\n \nFoo\n,\n \noperation\n \n=\n \nProperty\n.\nOperation\n.\nGET\n)\n\n\nboolean\n \nobtainFoobared\n();\n\n\n\n\n\nSET Operation\n\n\nValid method signatures: \n(Object)\n\n\nSignature: \n(Object)\n\n\nValid return types: \nvoid\n\n\nSet the property value of an element. The argument can be any class accepted by the underlying graph.\n\n\nexample:\n\n\n@Property\n(\nFoo\n)\n\n\nvoid\n \nsetFoobar\n(\nBar\n \nfoobar\n);\n\n\n\n\n\n@Property\n(\nFoo\n)\n\n\nE\n \nextends\n \nBar\n \nvoid\n \nsetFoobar\n(\nE\n \nfoobar\n);\n\n\n\n\n\n@Property\n(\nFoo\n)\n\n\nE\n \nextends\n \nVectorFrame\n \nvoid\n \nsetFoobar\n(\nE\n \nfoobar\n);\n\n\n\n\n\n@Property\n(\nFoo\n)\n\n\nvoid\n \nsetFoobar\n(\nBar\n \nfoobar\n);\n\n\n\n\n\n@Property\n(\nvalue\n \n=\n \nFoo\n,\n \noperation\n \n=\n \nProperty\n.\nOperation\n.\nSET\n)\n\n\nvoid\n \napplyFoobar\n(\nBar\n \nfoobar\n);\n\n\n\n\n\nREMOVE Operation\n\n\nValid method signatures: \n( )\n\n\nSignature: \n( )\n\n\nValid return types: \nvoid\n\n\nRemove the property of an element.\n\n\nexample:\n\n\n@Property\n(\nFoo\n)\n\n\nvoid\n \nremoveFoobar\n();\n\n\n\n\n\n@Property\n(\nvalue\n \n=\n \nFoo\n,\n \noperation\n \n=\n \nProperty\n.\nOperation\n.\nREMOVE\n)\n\n\nvoid\n \nremoveFoobar\n();", 
             "title": "@Property"
         }, 
         {

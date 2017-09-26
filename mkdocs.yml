@@ -15,6 +15,7 @@ pages:
     - Core Annotations:
         - Overview: annotations/overview.md
         - '@Adjacency': annotations/adjacency.md
+        - '@GraphElement': annotations/graphelement.md
         - '@Incidence': annotations/incidence.md
         - '@Property': annotations/property.md
     - Glossary: glossary.md

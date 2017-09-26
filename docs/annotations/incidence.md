@@ -342,3 +342,4 @@ void removeFoobar(FooEdge edge);
 ```java
 @Incidence(value = "Foo", operation = Adjacency.Operation.REMOVE)
 void removeFoobar(FooEdge edge);
+```

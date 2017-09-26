@@ -56,7 +56,7 @@ public interface EdgeFrame extends ElementFrame {
      */
     <T> T reframeExplicit(Class<T> kind);
 
-    <T extends Traversable<?, ?>> T traverse(Function<GraphTraversal<? extends Edge, ? extends Edge>, GraphTraversal<?, ?>> traverser);
+    <T extends Traversable<?, ?>> T traverse(Function<GraphTraversal<Edge, Edge>, GraphTraversal<?, ?>> traverser);
 
     GraphTraversal<? extends Edge, ? extends Edge> getRawTraversal();
 }

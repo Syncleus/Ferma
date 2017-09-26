@@ -57,8 +57,7 @@ including the following.
 -   [Neo4j](http://neo4j.com)
 -   [OrientDB](http://www.orientechnologies.com/orientdb/)
 -   [MongoDB](http://www.mongodb.org)
--   [Oracle
-    NoSQL](http://www.oracle.com/us/products/database/nosql/overview/index.html)
+-   [Oracle NoSQL](http://www.oracle.com/us/products/database/nosql/overview/index.html)
 -   TinkerGraph
 
 Ferma Javadocs:
@@ -84,8 +83,7 @@ Ferma Javadocs:
 
 For support please use
 [Gitter](https://gitter.im/Syncleus/Ferma?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
-or the [official Ferma mailing
-list](https://groups.google.com/a/syncleus.com/forum/#!forum/ferma-list).
+or the [official Ferma mailing list](https://groups.google.com/a/syncleus.com/forum/#!forum/ferma-list).
 
 Please file bugs and feature requests on
 [Github](https://github.com/Syncleus/Ferma/issues).

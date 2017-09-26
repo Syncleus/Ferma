@@ -1,4 +1,4 @@
-Valid on frames: Edge and Vertex
+Valid on frames: **Edge** and **Vertex**
 
 Allowed prefixes when operation is AUTO: `get`, `is`, `can`, `set`, `remove`
 
@@ -24,7 +24,7 @@ Valid method signatures: `( )`
 
 ### Signature: `( )`
 
-Valid return types: *Any Object*
+Valid return types: `Object` or any primitive.
 
 Get the property value of an element. Used when property is not a boolean value.
 

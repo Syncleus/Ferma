@@ -155,11 +155,11 @@ Get's one or more adjacent vertex from the graph.
 
 ### Signature: `( )`
 
-Valid return types: `EdgeFrame` or `Iterator` or `List` or `Set`
+Valid return types: `VertexFrame` or `Iterator` or `List` or `Set`
 
 Retrieves one or more of the adjacent edges. If the return type is a single Frame then only the first instance is
-returned. If the return type is an `Iterator` or `Iterable` then it will supply all matching vertex. When using an
-`Iterator` or `Iterable` it is encouraged, but not required, to use generics. The returned frames will always be
+returned. If the return type is an `Iterator` or `List` or `Set` then it will supply all matching vertex. When using an
+`Iterator` or `List` or `Set` it is encouraged, but not required, to use generics. The returned frames will always be
 instantiated as the type encoded in the graph if there is one.
 
 !!! note

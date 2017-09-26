@@ -22,6 +22,8 @@
   `Iterator` return type.
 * Removed the upper bound on traversal generics. The travese function's argument has changed from
   `GraphTraversal<? extends Vertex, ? extends Vertex>` to `GraphTraversal<Vertex, Vertex>`.
+* Updated the following dependencies
+  * gson: 2.8.1 -> 2.8.2
 
 ## 3.1.0
 

@@ -758,14 +758,14 @@ to narrow the return type.</p>
 <p>Valid method signatures: <code class="codehilite">()</code>, <code class="codehilite">(Class)</code></p>
 <p>Get's one or more adjacent vertex from the graph.</p>
 <h3 id="signature_1">Signature: <code class="codehilite">( )</code><a class="headerlink" href="#signature_1" title="Permanent link">&para;</a></h3>
-<p>Valid return types: <code class="codehilite">VertexFrame</code> or <code class="codehilite">Iterator</code> or <code class="codehilite">List</code> or <code class="codehilite">Set</code></p>
-<p>Retrieves one or more of the adjacent vertex. If the return type is a single Frame then only the first instance is
+<p>Valid return types: <code class="codehilite">EdgeFrame</code> or <code class="codehilite">Iterator</code> or <code class="codehilite">List</code> or <code class="codehilite">Set</code></p>
+<p>Retrieves one or more of the adjacent edges. If the return type is a single Frame then only the first instance is
 returned. If the return type is an <code class="codehilite">Iterator</code> or <code class="codehilite">Iterable</code> then it will supply all matching vertex. When using an
 <code class="codehilite">Iterator</code> or <code class="codehilite">Iterable</code> it is encouraged, but not required, to use generics. The returned frames will always be
 instantiated as the type encoded in the graph if there is one.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If a type is specified in the arguments is a superclass of the returned element then an exception will be thrown.
+<p>If a type is encoded in the in the graph is a superclass of the returned element then an exception will be thrown.
 Therefore the return type specifed should always by the same type, or a superclass, of the expected return type.
 VertexFrame is always a safe return type for this method.</p>
 </div>
@@ -808,9 +808,9 @@ VertexFrame is always a safe return type for this method.</p>
 
 <h3 id="signature-class">Signature: <code class="codehilite">(Class)</code><a class="headerlink" href="#signature-class" title="Permanent link">&para;</a></h3>
 <p>Valid return types: <code class="codehilite">VertexFrame</code> or <code class="codehilite">Iterator</code> or <code class="codehilite">List</code> or <code class="codehilite">Set</code></p>
-<p>Retrieves one or more of the adjacent vertex. If the return type is a specific Frame, an <code class="codehilite">Object</code>, or a <code class="codehilite">VertexFrame</code>
-then only the first instance is returned. If the return type is an iterator then it will iterate over all matches
-vertex. When using an Iterator it is encouraged to use generics.</p>
+<p>Retrieves one or more of the adjacent vertex. If the return type is a single <code class="codehilite">VertexFrame</code> then only the first instance
+is returned. If the return type is an <code class="codehilite">Iterator</code> then it will iterate over all matching vertex. When using an Iterator
+it is encouraged to use generics.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The Class argument of the method specifes a filter such that only vertex which are of a matching type, or a subtype,

@@ -352,6 +352,53 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#get-operation" title="GET Operation" class="md-nav__link">
+    GET Operation
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#signature_1" title="Signature: ( )" class="md-nav__link">
+    Signature: ( )
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#signature-class" title="Signature: (Class)" class="md-nav__link">
+    Signature: (Class)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#remove-operation" title="REMOVE Operation" class="md-nav__link">
+    REMOVE Operation
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#signature-edgeframe" title="Signature: (EdgeFrame)" class="md-nav__link">
+    Signature: (EdgeFrame)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
       
       
         <li class="md-nav__item">
@@ -462,6 +509,53 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#get-operation" title="GET Operation" class="md-nav__link">
+    GET Operation
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#signature_1" title="Signature: ( )" class="md-nav__link">
+    Signature: ( )
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#signature-class" title="Signature: (Class)" class="md-nav__link">
+    Signature: (Class)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#remove-operation" title="REMOVE Operation" class="md-nav__link">
+    REMOVE Operation
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#signature-edgeframe" title="Signature: (EdgeFrame)" class="md-nav__link">
+    Signature: (EdgeFrame)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
       
       
         <li class="md-nav__item">
@@ -522,7 +616,7 @@ specifically.</p>
 </pre></div>
 
 <h3 id="signature-vertexframe">Signature: <code class="codehilite">(VertexFrame)</code><a class="headerlink" href="#signature-vertexframe" title="Permanent link">&para;</a></h3>
-<p>Valid return types: <code class="codehilite">VertexFrame</code></p>
+<p>Valid return types: <code class="codehilite">EdgeFrame</code></p>
 <p>Creates a new edge without any type information and connects it between this vertex the vertex specified as an argument
 to the method. The frame returned is the newly created <code class="codehilite">TEdge</code>.</p>
 <p>examples:</p>
@@ -547,7 +641,7 @@ to the method. The frame returned is the newly created <code class="codehilite">
 </pre></div>
 
 <h3 id="signature-classinitializer">Signature: <code class="codehilite">(ClassInitializer)</code><a class="headerlink" href="#signature-classinitializer" title="Permanent link">&para;</a></h3>
-<p>Valid return types: <code class="codehilite">VertexFrame</code></p>
+<p>Valid return types: <code class="codehilite">EdgeFrame</code></p>
 <p>Creates a new edge without any type information and connects it between this vertex and a newly created vertex. The
 newly created vertex will have a type, as well as be initiated, according to the details specified in the
 ClassInitializer argument. Java generics can, and should, be used to narrow the return type. The returned object will be
@@ -570,7 +664,7 @@ the newly created <code class="codehilite">TEdge</code>.</p>
 </pre></div>
 
 <h3 id="signature-vertexframe-classinitializer">Signature: <code class="codehilite">(VertexFrame, ClassInitializer)</code><a class="headerlink" href="#signature-vertexframe-classinitializer" title="Permanent link">&para;</a></h3>
-<p>Valid return types: <code class="codehilite">VertexFrame</code></p>
+<p>Valid return types: <code class="codehilite">EdgeFrame</code></p>
 <p>Creates a new edge and connects this to an existing vertex. The newly created edge will have a type, as well as be
 initiated, according to the details specified in the ClassInitializer argument. Java generics can, and should, be used
 to narrow the return type. The returned object will be the newly created <code class="codehilite">EdgeFrame</code>.</p>
@@ -596,31 +690,154 @@ to narrow the return type. The returned object will be the newly created <code c
 </pre></div>
 
 <h3 id="signature-classinitializer-classinitializer">Signature: <code class="codehilite">(ClassInitializer, ClassInitializer)</code><a class="headerlink" href="#signature-classinitializer-classinitializer" title="Permanent link">&para;</a></h3>
-<p>Valid return types: <code class="codehilite">VertexFrame</code></p>
+<p>Valid return types: <code class="codehilite">EdgeFrame</code></p>
 <p>Creates a new edge and connects this to a new vertex. The newly created vertex will have a type, as well as be
 initiated, according to the details specified in the first ClassInitializer argument. Similarly the newly created edge
 will hava a type, and be initiated, using the second ClassInitializer argument. Java generics can, and should, be used
 to narrow the return type. The returned object will be the newly created <code class="codehilite">EdgeFrame</code>.</p>
 <p>example:</p>
-<div class="codehilite"><pre><span></span><span class="nd">@Adjacency</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
+<div class="codehilite"><pre><span></span><span class="nd">@Incidence</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
 <span class="n">FooEdge</span> <span class="nf">addFoobar</span><span class="o">(</span><span class="n">ClassInitializer</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">BarVertex</span><span class="o">&gt;</span> <span class="n">vertexInitializer</span><span class="o">,</span>
                     <span class="n">ClassInitializer</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">FooEdge</span><span class="o">&gt;</span> <span class="n">edgeInitializer</span><span class="o">);</span>
 </pre></div>
 
-<div class="codehilite"><pre><span></span><span class="nd">@Adjacency</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
+<div class="codehilite"><pre><span></span><span class="nd">@Incidence</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
 <span class="o">&lt;</span><span class="n">E</span> <span class="kd">extends</span> <span class="n">FooEdge</span><span class="o">&gt;</span> <span class="n">E</span> <span class="nf">addFoobar</span><span class="o">(</span><span class="n">ClassInitializer</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">BarVertex</span><span class="o">&gt;</span> <span class="n">vertexInitializer</span><span class="o">,</span>
                                   <span class="n">ClassInitializer</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">E</span><span class="o">&gt;</span> <span class="n">edgeInitializer</span><span class="o">);</span>
 </pre></div>
 
-<div class="codehilite"><pre><span></span><span class="nd">@Adjacency</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
+<div class="codehilite"><pre><span></span><span class="nd">@Incidence</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
 <span class="o">&lt;</span><span class="n">E</span> <span class="kd">extends</span> <span class="n">EdgeFrame</span><span class="o">&gt;</span> <span class="n">E</span> <span class="nf">addFoobar</span><span class="o">(</span><span class="n">ClassInitializer</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">BarVertex</span><span class="o">&gt;</span> <span class="n">vertexInitializer</span><span class="o">,</span>
                                   <span class="n">ClassInitializer</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">E</span><span class="o">&gt;</span> <span class="n">edgeInitializer</span><span class="o">);</span>
 </pre></div>
 
-<div class="codehilite"><pre><span></span><span class="nd">@Adjacency</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&quot;Foo&quot;</span><span class="o">,</span> <span class="n">operation</span> <span class="o">=</span> <span class="n">Adjacency</span><span class="o">.</span><span class="na">Operation</span><span class="o">.</span><span class="na">ADD</span><span class="o">)</span>
+<div class="codehilite"><pre><span></span><span class="nd">@Incidence</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&quot;Foo&quot;</span><span class="o">,</span> <span class="n">operation</span> <span class="o">=</span> <span class="n">Adjacency</span><span class="o">.</span><span class="na">Operation</span><span class="o">.</span><span class="na">ADD</span><span class="o">)</span>
 <span class="n">FooEdge</span> <span class="nf">includeFoobar</span><span class="o">(</span><span class="n">ClassInitializer</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">BarVertex</span><span class="o">&gt;</span> <span class="n">vertexInitializer</span><span class="o">,</span>
                       <span class="n">ClassInitializer</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">FooEdge</span><span class="o">&gt;</span> <span class="n">edgeInitializer</span><span class="o">);</span>
 </pre></div>
+
+<h2 id="get-operation">GET Operation<a class="headerlink" href="#get-operation" title="Permanent link">&para;</a></h2>
+<p>Valid method signatures: <code class="codehilite">()</code>, <code class="codehilite">(Class)</code></p>
+<p>Get's one or more adjacent edgesd from the graph.</p>
+<h3 id="signature_1">Signature: <code class="codehilite">( )</code><a class="headerlink" href="#signature_1" title="Permanent link">&para;</a></h3>
+<p>Valid return types: <code class="codehilite">VertexFrame</code> or <code class="codehilite">Iterator</code> or <code class="codehilite">List</code> or <code class="codehilite">Set</code></p>
+<p>Retrieves one or more of the adjacent vertex. If the return type is a single Frame then only the first instance is
+returned. If the return type is an <code class="codehilite">Iterator</code> or <code class="codehilite">List</code> or <code class="codehilite">Set</code> then it will supply all matching edges. When using an
+<code class="codehilite">Iterator</code> or <code class="codehilite">List</code> or <code class="codehilite">Set</code> it is encouraged, but not required, to use generics. The returned frames will always be
+instantiated as the type encoded in the graph if there is one.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If a type is encoded in the in the graph is a superclass of the returned element then an exception will be thrown.
+Therefore the return type specifed should always by the same type, or a superclass, of the expected return type.
+VertexFrame is always a safe return type for this method.</p>
+</div>
+<p>example:</p>
+<div class="codehilite"><pre><span></span><span class="nd">@Incidence</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
+<span class="n">FooEdge</span> <span class="nf">getFoobar</span><span class="o">();</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span><span class="nd">@Incidence</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
+<span class="o">&lt;</span><span class="n">E</span> <span class="kd">extends</span> <span class="n">FooEdge</span><span class="o">&gt;</span> <span class="n">E</span> <span class="nf">getFoobar</span><span class="o">();</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span><span class="nd">@Incidence</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
+<span class="o">&lt;</span><span class="n">E</span> <span class="kd">extends</span> <span class="n">EdgeFrame</span><span class="o">&gt;</span> <span class="n">E</span> <span class="nf">getFoobar</span><span class="o">();</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span><span class="nd">@Incidence</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
+<span class="n">Iterator</span><span class="o">&lt;</span><span class="n">FooEdge</span><span class="o">&gt;</span> <span class="nf">getFoobar</span><span class="o">();</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span><span class="nd">@Incidence</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
+<span class="o">&lt;</span><span class="n">E</span> <span class="kd">extends</span> <span class="n">FooEdge</span><span class="o">&gt;</span> <span class="n">Iterator</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span> <span class="nf">getFoobar</span><span class="o">();</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span><span class="nd">@Incidence</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
+<span class="o">&lt;</span><span class="n">E</span> <span class="kd">extends</span> <span class="n">EdgeFrame</span><span class="o">&gt;</span> <span class="n">Iterator</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span> <span class="nf">getFoobar</span><span class="o">();</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span><span class="nd">@Incidence</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">FooEdge</span><span class="o">&gt;</span> <span class="nf">getFoobar</span><span class="o">();</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span><span class="nd">@Incidence</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
+<span class="n">Set</span><span class="o">&lt;</span><span class="n">FooEdge</span><span class="o">&gt;</span> <span class="nf">getFoobar</span><span class="o">();</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span><span class="nd">@Incidence</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&quot;Foo&quot;</span><span class="o">,</span> <span class="n">operation</span> <span class="o">=</span> <span class="n">Adjacency</span><span class="o">.</span><span class="na">Operation</span><span class="o">.</span><span class="na">GET</span><span class="o">)</span>
+<span class="n">FooEdge</span> <span class="nf">obtainFoobar</span><span class="o">();</span>
+</pre></div>
+
+<h3 id="signature-class">Signature: <code class="codehilite">(Class)</code><a class="headerlink" href="#signature-class" title="Permanent link">&para;</a></h3>
+<p>Valid return types: <code class="codehilite">VertexFrame</code> or <code class="codehilite">Iterator</code> or <code class="codehilite">List</code> or <code class="codehilite">Set</code></p>
+<p>Retrieves one or more of the adjacent edges. If the return type is a single <code class="codehilite">EdgeFrame</code> then only the first instance
+is returned. If the return type is an <code class="codehilite">Iterator</code> then it will iterate over all matching vertex. When using an Iterator
+it is encouraged to use generics.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The Class argument of the method specifes a filter such that only vertex which are of a matching type, or a subtype,
+to that of the argument will be returned.</p>
+</div>
+<p>example:</p>
+<div class="codehilite"><pre><span></span><span class="nd">@Incidence</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
+<span class="n">FooEdge</span> <span class="nf">getFoobar</span><span class="o">(</span><span class="n">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">FooEdge</span><span class="o">&gt;</span> <span class="n">filter</span><span class="o">);</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span><span class="nd">@Incidence</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
+<span class="o">&lt;</span><span class="n">E</span> <span class="kd">extends</span> <span class="n">FooEdge</span><span class="o">&gt;</span> <span class="n">E</span> <span class="nf">getFoobar</span><span class="o">(</span><span class="n">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">E</span><span class="o">&gt;</span> <span class="n">filter</span><span class="o">);</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span><span class="nd">@Incidence</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
+<span class="o">&lt;</span><span class="n">E</span> <span class="kd">extends</span> <span class="n">FooEdge</span><span class="o">&gt;</span> <span class="n">E</span> <span class="nf">getFoobar</span><span class="o">(</span><span class="n">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">E</span><span class="o">&gt;</span> <span class="n">filter</span><span class="o">);</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span><span class="nd">@Incidence</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
+<span class="n">Iterator</span><span class="o">&lt;</span><span class="n">FooEdge</span><span class="o">&gt;</span> <span class="nf">getFoobar</span><span class="o">(</span><span class="n">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">FooEdge</span><span class="o">&gt;</span> <span class="n">filter</span><span class="o">);</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span><span class="nd">@Incidence</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
+<span class="o">&lt;</span><span class="n">E</span> <span class="kd">extends</span> <span class="n">FooEdge</span><span class="o">&gt;</span> <span class="n">Iterator</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span> <span class="nf">getFoobar</span><span class="o">(</span><span class="n">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">E</span><span class="o">&gt;</span> <span class="n">filter</span><span class="o">);</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span><span class="nd">@Incidence</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
+<span class="o">&lt;</span><span class="n">E</span> <span class="kd">extends</span> <span class="n">EdgeFrame</span><span class="o">&gt;</span> <span class="n">Iterator</span><span class="o">&lt;</span><span class="n">E</span><span class="o">&gt;</span> <span class="nf">getFoobar</span><span class="o">(</span><span class="n">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">E</span><span class="o">&gt;</span> <span class="n">filter</span><span class="o">);</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span><span class="nd">@Incidence</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">FooEdge</span><span class="o">&gt;</span> <span class="nf">getFoobar</span><span class="o">(</span><span class="n">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">FooEdge</span><span class="o">&gt;</span> <span class="n">filter</span><span class="o">);</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span><span class="nd">@Incidence</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
+<span class="n">Set</span><span class="o">&lt;</span><span class="n">FooEdge</span><span class="o">&gt;</span> <span class="nf">getFoobar</span><span class="o">(</span><span class="n">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">FooEdge</span><span class="o">&gt;</span> <span class="n">filter</span><span class="o">);</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span><span class="nd">@Incidence</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&quot;Foo&quot;</span><span class="o">,</span> <span class="n">operation</span> <span class="o">=</span> <span class="n">Adjacency</span><span class="o">.</span><span class="na">Operation</span><span class="o">.</span><span class="na">GET</span><span class="o">)</span>
+<span class="n">FooEdge</span> <span class="nf">obtainFoobar</span><span class="o">(</span><span class="n">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">FooEdge</span><span class="o">&gt;</span> <span class="n">filter</span><span class="o">);</span>
+</pre></div>
+
+<h2 id="remove-operation">REMOVE Operation<a class="headerlink" href="#remove-operation" title="Permanent link">&para;</a></h2>
+<p>Valid method signatures: <code class="codehilite">(EdgeFrame)</code></p>
+<p>Removes an edges which cause an adjacency, leaving the vertex in place.</p>
+<h3 id="signature-edgeframe">Signature: <code class="codehilite">(EdgeFrame)</code><a class="headerlink" href="#signature-edgeframe" title="Permanent link">&para;</a></h3>
+<p>Valid return types: <code class="codehilite">void</code></p>
+<p>Removes the edge specified in the argument. This is entirely equivelant to just calling the <code class="codehilite">remove()</code> method on the
+<code class="codehilite">EdgeFrame</code></p>
+<p>example:</p>
+<div class="codehilite"><pre><span></span><span class="nd">@Incidence</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
+<span class="kt">void</span> <span class="nf">removeFoobar</span><span class="o">(</span><span class="n">FooEdge</span> <span class="n">edge</span><span class="o">);</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span><span class="nd">@Incidence</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
+<span class="o">&lt;</span><span class="n">E</span> <span class="kd">extends</span> <span class="n">FooEdge</span><span class="o">&gt;</span> <span class="kt">void</span> <span class="nf">removeFoobar</span><span class="o">(</span><span class="n">E</span> <span class="n">edge</span><span class="o">);</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span><span class="nd">@Incidence</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
+<span class="o">&lt;</span><span class="n">E</span> <span class="kd">extends</span> <span class="n">EdgeFrame</span><span class="o">&gt;</span> <span class="kt">void</span> <span class="nf">removeFoobar</span><span class="o">(</span><span class="n">E</span> <span class="n">edge</span><span class="o">);</span>
+</pre></div>
+
+<p>```java
+@Incidence(value = "Foo", operation = Adjacency.Operation.REMOVE)
+void removeFoobar(FooEdge edge);</p>
                 
                   
                 

@@ -40,6 +40,12 @@
     </url>
         
     <url>
+     <loc>http://syncleus.com/Ferma/annotations/graphelement/</loc>
+     <lastmod>2017-09-26</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
      <loc>http://syncleus.com/Ferma/annotations/incidence/</loc>
      <lastmod>2017-09-26</lastmod>
      <changefreq>daily</changefreq>

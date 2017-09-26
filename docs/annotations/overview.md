@@ -9,7 +9,7 @@ signature. Therefore an annotated method will behave differently if it's return 
 name were to change. It is important to note that when a method is explicitly defined (doesnt use an annotation) then
 the method signature can be anything.
 
-Method names that are annotated must have one of the following prefixes: add, get, remove, set, is, can.
-
-Below specifies that annotations that can be used when defining a Frame's interface. By specifying the method argument
-and return types, the underlying graph is constrained to the interface specification.
+Method names that are annotated must have one of the following prefixes: add, get, remove, set, is. Exactly which 
+prefixes are varies from one annotation to the next so see the annotations detailed documentation to make that
+determination. It is also possible to override this behavior by setting the operation argument availible on most
+annotations which defaults to `AUTO` when not specified.

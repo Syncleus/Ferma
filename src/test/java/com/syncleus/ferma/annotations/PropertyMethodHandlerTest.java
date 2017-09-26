@@ -19,6 +19,9 @@ import java.util.function.Function;
 import com.syncleus.ferma.DelegatingFramedGraph;
 import com.syncleus.ferma.FramedGraph;
 import com.syncleus.ferma.VertexFrame;
+import com.syncleus.ferma.graphtypes.javaclass.JavaAccessModifier;
+import com.syncleus.ferma.graphtypes.javaclass.JavaGraphLoader;
+import com.syncleus.ferma.graphtypes.javaclass.JavaTypeVertex;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
 import org.apache.tinkerpop.gremlin.structure.Graph;
@@ -153,5 +156,16 @@ public class PropertyMethodHandlerTest {
         father.deleteName();
 
         Assert.assertNull(fatherVertex.getProperty("name"));
+    }
+    
+    @Test
+    public void testGetSetEnumProperty() {
+        FramedGraph javaTypesGraph = JavaGraphLoader.INSTANCE.load();
+        List<? extends JavaTypeVertex> collectionList = javaTypesGraph.traverse(
+                input -> input.V().has("fqn", Collection.class.getName())).toList(JavaTypeVertex.class);
+        JavaTypeVertex collectionVertex = collectionList.get(0);
+        Assert.assertEquals(JavaAccessModifier.PUBLIC, collectionVertex.getAccessModifier());
+        collectionVertex.setAccessModifier(JavaAccessModifier.PROTECTED);
+        Assert.assertEquals(JavaAccessModifier.PROTECTED, collectionVertex.getAccessModifier());
     }
 }

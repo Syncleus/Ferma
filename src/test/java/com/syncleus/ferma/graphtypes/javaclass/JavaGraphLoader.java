@@ -36,17 +36,17 @@ import org.apache.tinkerpop.gremlin.tinkergraph.structure.TinkerGraph;
  *
  * @author rqpa
  */
-public class JavaGraphFactory {
+public class JavaGraphLoader {
      
     private static final Set<Class<?>> JAVA_TYPE_TYPES = new HashSet<>(Arrays.asList(
             ExtendsEdge.class, 
             ImplementsEdge.class, 
             JavaClassVertex.class,
             JavaInterfaceVertex.class));
-    public static final JavaGraphFactory INSTANCE = new JavaGraphFactory();
+    public static final JavaGraphLoader INSTANCE = new JavaGraphLoader();
     protected final static String TYPE_RESOLUTION_KEY = PolymorphicTypeResolver.TYPE_RESOLUTION_KEY;
     
-    protected JavaGraphFactory() {
+    protected JavaGraphLoader() {
         // Singleton
     }
     
@@ -64,17 +64,17 @@ public class JavaGraphFactory {
         Vertex abstrList = makeClass(graph, abstrCollection, AbstractList.class, list);
         Vertex abstrSeqList = makeClass(graph, abstrList, AbstractSequentialList.class, list);
         Vertex arrayList = makeClass(graph, abstrList, ArrayList.class, list);
-        Vertex linkedList = makeClass(graph, abstrSeqList, LinkedList.class, list);
+        Vertex linkedList = makeClass(graph, abstrSeqList, LinkedList.class, list, collection);
         
         return framedGraph;
     }
     
     private Vertex makeInterface(Graph graph, Class<?> javaInterface) {
-        return makeType(graph, JavaInterfaceVertex.class, javaInterface);
+        return makeType(graph, JavaInterfaceVertex.class, javaInterface, JavaAccessModifier.PUBLIC);
     }
     
     private Vertex makeClass(Graph graph, Vertex superClass, Class<?> javaClass, Vertex... implementedInterfaces) {
-        Vertex classVertex = makeType(graph, JavaClassVertex.class, javaClass);
+        Vertex classVertex = makeType(graph, JavaClassVertex.class, javaClass, JavaAccessModifier.PUBLIC);
         
         for (Vertex implInterface : implementedInterfaces) {
             classVertex.addEdge("implements", implInterface, TYPE_RESOLUTION_KEY, ImplementsEdge.class.getName());
@@ -86,10 +86,11 @@ public class JavaGraphFactory {
         return classVertex;
     }
     
-    private <T extends JavaTypeVertex> Vertex makeType(Graph graph, Class<T> vertexType, Class<?> javaType) {
+    private <T extends JavaTypeVertex> Vertex makeType(Graph graph, Class<T> vertexType, Class<?> javaType, JavaAccessModifier accessModifier) {
         Vertex type = graph.addVertex(
                 TYPE_RESOLUTION_KEY, vertexType.getName(),
-                "fqn", javaType.getName());
+                "fqn", javaType.getName(),
+                "accessModifier", accessModifier.name());
         return type;
     }
 }

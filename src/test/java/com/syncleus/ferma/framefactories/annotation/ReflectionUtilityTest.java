@@ -15,6 +15,8 @@
  */
 package com.syncleus.ferma.framefactories.annotation;
 
+import com.syncleus.ferma.annotations.God;
+import com.syncleus.ferma.graphtypes.network.ComputerVertex;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -40,7 +42,7 @@ public class ReflectionUtilityTest {
     
     private static Method getMethod(Class<?> clazz, String methodName) {
         return Stream.of(clazz.getMethods())
-                .filter(m -> m.getName().equals("foo"))
+                .filter(m -> m.getName().equals(methodName))
                 .findFirst()
                 .orElse(null);
     }
@@ -75,6 +77,21 @@ public class ReflectionUtilityTest {
                 Number.class, // List has no upper bounds
                 wildCardType,
                 0);
+    }
+    
+    @Test
+    public void testIsSetMethod() {
+        Assert.assertTrue(ReflectionUtility.isSetMethod(getMethod(ComputerVertex.class, "setName")));
+        Assert.assertTrue(ReflectionUtility.isSetMethod(getMethod(God.class, "applyName")));
+        Assert.assertFalse(ReflectionUtility.isSetMethod(getMethod(ComputerVertex.class, "disconnectFromNetwork")));
+    }
+    
+    @Test
+    public void testIsRemoveMethod() {
+        Assert.assertTrue(ReflectionUtility.isRemoveMethod(getMethod(God.class, "removeSonEdge")));
+        Assert.assertTrue(ReflectionUtility.isRemoveMethod(getMethod(God.class, "deleteSonEdge")));
+        Assert.assertTrue(ReflectionUtility.isRemoveMethod(getMethod(ComputerVertex.class, "disconnectFromNetwork")));
+        Assert.assertFalse(ReflectionUtility.isRemoveMethod(getMethod(ComputerVertex.class, "setName")));
     }
     
     

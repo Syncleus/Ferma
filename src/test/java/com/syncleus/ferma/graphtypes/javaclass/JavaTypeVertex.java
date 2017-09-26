@@ -16,8 +16,10 @@
 package com.syncleus.ferma.graphtypes.javaclass;
 
 import com.syncleus.ferma.ClassInitializer;
+import com.syncleus.ferma.VertexFrame;
 import com.syncleus.ferma.annotations.Incidence;
 import com.syncleus.ferma.annotations.Property;
+import java.util.Iterator;
 import org.apache.tinkerpop.gremlin.structure.Direction;
 
 /**
@@ -32,9 +34,16 @@ public interface JavaTypeVertex {
     @Property(value = "fqn")
     void setFullyQualifiedName(String fqn);
     
+    @Property(value = "accessModifier")
+    JavaAccessModifier getAccessModifier();
+    
+    @Property(value = "accessModifier")
+    void setAccessModifier(JavaAccessModifier accessModifier);
+    
     @Incidence(label = "related", direction = Direction.OUT, operation = Incidence.Operation.ADD)
     <EdgeType extends JavaTypeRelationsEdge, VertexType extends JavaTypeVertex> EdgeType createTypeWithRelation(
             ClassInitializer<VertexType> vertexInitializer,
             ClassInitializer<EdgeType> edgeInitializer
     );
+    
 }

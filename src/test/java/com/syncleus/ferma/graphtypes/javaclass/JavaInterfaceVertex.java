@@ -16,7 +16,11 @@
 package com.syncleus.ferma.graphtypes.javaclass;
 
 import com.syncleus.ferma.ClassInitializer;
-import com.syncleus.ferma.DefaultClassInitializer;
+import com.syncleus.ferma.EdgeFrame;
+import com.syncleus.ferma.VertexFrame;
+import com.syncleus.ferma.annotations.Incidence;
+import java.util.Iterator;
+import org.apache.tinkerpop.gremlin.structure.Direction;
 
 /**
  *
@@ -24,6 +28,18 @@ import com.syncleus.ferma.DefaultClassInitializer;
  */
 public interface JavaInterfaceVertex extends JavaTypeVertex {
     
-    public static final ClassInitializer<JavaInterfaceVertex> DEFAULT_INITIALIZER = new DefaultClassInitializer<>(JavaInterfaceVertex.class);
+    public static final ClassInitializer<JavaInterfaceVertex> DEFAULT_INITIALIZER = new JavaTypeVertexInitializer<>(JavaInterfaceVertex.class);
     
+    @Incidence(label = "implements", direction = Direction.BOTH, operation = Incidence.Operation.GET)
+    EdgeFrame getAnyImplementsEdge();
+    
+    @Incidence(label = "implements", direction = Direction.BOTH, operation = Incidence.Operation.GET)
+    <T extends ImplementsEdge> T getAnyImplementsEdge(Class<T> edgeType);
+    
+    
+    @Incidence(label = "implements", direction = Direction.IN, operation = Incidence.Operation.GET)
+    Iterator<VertexFrame> getImplementors();
+    
+    @Incidence(label = "implements", direction = Direction.IN, operation = Incidence.Operation.GET)
+    <V extends JavaClassVertex> Iterator<V> getImplementors(Class<V> type);
 }

@@ -52,7 +52,7 @@ VertexFrame addFoobar();
 
 ### Signature: `(VertexFrame)`
 
-Valid return types: `VertexFrame`
+Valid return types: `VertexFrame` or `void`
 
 Creates a new edge without any type information and connects it between this vertex the vertex specified as an argument
 to the method. The frame returned is the same as the frame given in the argument, it is only there for compatability
@@ -77,9 +77,8 @@ BarVertex addFoobar(BarVertex existingVertex);
 
 ```java
 @Adjacency(value = "Foo", operation = Adjacency.Operation.ADD)
-BarVertex includeFoobar(BarVertex existingVertex);
+void includeFoobar(BarVertex existingVertex);
 ```
-
 
 ### Signature: `(ClassInitializer)`
 
@@ -143,6 +142,41 @@ BarVertex addFoobar(ClassInitializer<? extends BarVertex> vertexInitializer,
 ```java
 @Adjacency(value = "Foo", operation = Adjacency.Operation.ADD)
 BarVertex includeFoobar(ClassInitializer<? extends BarVertex> vertexInitializer,
+                        ClassInitializer<? extends FooEdge> edgeInitializer);
+```
+
+### Signature: `(VertexFrame, ClassInitializer)`
+
+Valid return types: `VertexFrame` or `void`
+
+Creates a new edge and connects this to an existing vertex. The newly created edge will have a type, as well as be
+initiated, according to the details specified in the `ClassInitializer` argument. The `VertexFrame` specified in the first
+argument will simply be returned. A `void` return type is also valid. Java generics can, and should, be used
+to narrow the return type as well as to restrict the `ClassInitializer`.
+
+example:
+
+```java
+@Adjacency("Foo")
+BarVertex addFoobar(BarVertex vertex,
+                    ClassInitializer<? extends FooEdge> edgeInitializer);
+```
+
+```java
+@Adjacency("Foo")
+<E extends BarVertex> E addFoobar(BarVertex vertex,
+                                  ClassInitializer<? extends FooEdge> edgeInitializer);
+```
+
+```java
+@Adjacency("Foo")
+<E extends VertexFrame> E addFoobar(BarVertex vertex,
+                                    ClassInitializer<? extends FooEdge> edgeInitializer);
+```
+
+```java
+@Adjacency(value = "Foo", operation = Adjacency.Operation.ADD)
+void includeFoobar(BarVertex vertex,
                         ClassInitializer<? extends FooEdge> edgeInitializer);
 ```
 

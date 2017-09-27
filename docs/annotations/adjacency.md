@@ -21,7 +21,8 @@ example:
 
 ## ADD Operation
 
-Valid method signatures: `( )`, `(VertexFrame)`, `(ClassInitializer)`, `(ClassInitializer, ClassInitializer)`
+Valid method signatures: `( )`, `(VertexFrame)`, `(ClassInitializer)`, `(ClassInitializer, ClassInitializer)`,
+`(VertexFrame, ClassInitializer)`
 
 Adds a node as an adjacency to the current node, and the returns the newly connected node.
 

@@ -47,7 +47,7 @@ VertexFrame addFoobar();
 
 ```java
 @Adjacency(value = "Foo", operation = Adjacency.Operation.ADD)
-VertexFrame addFoobar();
+VertexFrame includeFoobar();
 ```
 
 
@@ -72,7 +72,7 @@ BarVertex addFoobar(BarVertex existingVertex);
 ```
 
 ```java
-@Adjacency("Foo")
+@Adjacency("Foo", direction = Direction.IN)
 <E extends VertexFrame> E addFoobar(E existingVertex);
 ```
 
@@ -102,7 +102,7 @@ BarVertex addFoobar(ClassInitializer<? extends BarVertex> vertexInitializer);
 ```
 
 ```java
-@Adjacency("Foo")
+@Adjacency("Foo", direction = Direction.IN)
 <E extends VertexFrame> E addFoobar(ClassInitializer<? extends E> vertexInitializer);
 ```
 
@@ -135,7 +135,7 @@ BarVertex addFoobar(ClassInitializer<? extends BarVertex> vertexInitializer,
 ```
 
 ```java
-@Adjacency("Foo")
+@Adjacency("Foo", direction = Direction.IN)
 <E extends VertexFrame> E addFoobar(ClassInitializer<? extends E> vertexInitializer,
                                     ClassInitializer<? extends FooEdge> edgeInitializer);
 ```
@@ -170,7 +170,7 @@ BarVertex addFoobar(BarVertex vertex,
 ```
 
 ```java
-@Adjacency("Foo")
+@Adjacency("Foo", direction = Direction.IN)
 <E extends VertexFrame> E addFoobar(BarVertex vertex,
                                     ClassInitializer<? extends FooEdge> edgeInitializer);
 ```
@@ -240,7 +240,7 @@ List<BarVertex> getFoobar();
 ```
 
 ```java
-@Adjacency("Foo")
+@Adjacency("Foo", direction = Direction.IN)
 Set<BarVertex> getFoobar();
 ```
 
@@ -300,7 +300,7 @@ List<BarVertex> getFoobar(Class<? extends BarVertex> filter);
 ```
 
 ```java
-@Adjacency("Foo")
+@Adjacency("Foo", direction = Direction.IN)
 Set<BarVertex> getFoobar(Class<? extends BarVertex> filter);
 ```
 
@@ -355,7 +355,7 @@ void removeFoobar(BarVertex vertex);
 ```
 
 ```java
-@Adjacency("Foo")
+@Adjacency("Foo", direction = Direction.IN)
 <E extends VertexFrame> void removeFoobar(E vertex);
 ```
 
@@ -390,7 +390,7 @@ void setFoobar(BarVertex vertex);
 ```
 
 ```java
-@Adjacency("Foo")
+@Adjacency("Foo", direction = Direction.IN)
 <E extends BarVertex> void setFoobar(E vertex);
 ```
 
@@ -420,13 +420,13 @@ void setFoobar(Iterator<BaBarVertexr> vertex);
 ```
 
 ```java
-@Adjacency("Foo")
+@Adjacency("Foo", direction = Direction.IN)
 <E extends BarVertex> void setFoobar(Iterator<? extends E> vertex);
 ```
 
 ```java
-@Adjacency("Foo")
-<E extends VertexFrame> void setFoobar(Iterator<? extends E> vertex);
+@Adjacency("Foo", operation = Adjacency.Operation.SET)
+<E extends VertexFrame> void includeFoobar(Iterator<? extends E> vertex);
 ```
 
 ### Signature: `(Iterable)`
@@ -467,12 +467,12 @@ void setFoobar(Set<BarVertex> vertex);
 ```
 
 ```java
-@Adjacency("Foo")
+@Adjacency("Foo", direction = Direction.IN)
 <E extends BarVertex> void setFoobar(Iterable<? extends E> vertex);
 ```
 
 ```java
-@Adjacency("Foo")
-<E extends VertexFrame> void setFoobar(Iterable<? extends E> vertex);
+@Adjacency("Foo", operation = Adjacency.Operation.SET)
+<E extends VertexFrame> void includeFoobar(Iterable<? extends E> vertex);
 ```
 

@@ -668,7 +668,7 @@ to the method. The frame returned is the newly created <code class="codehilite">
 <span class="n">EdgeFrame</span> <span class="nf">addFoobar</span><span class="o">(</span><span class="n">BarVertex</span> <span class="n">existingVertex</span><span class="o">);</span>
 </pre></div>
 
-<div class="codehilite"><pre><span></span><span class="nd">@Incidence</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
+<div class="codehilite"><pre><span></span><span class="nd">@Incidence</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">,</span> <span class="n">direction</span> <span class="o">=</span> <span class="n">Direction</span><span class="o">.</span><span class="na">IN</span><span class="o">)</span>
 <span class="o">&lt;</span><span class="n">E</span> <span class="kd">extends</span> <span class="n">EdgeFrame</span><span class="o">&gt;</span> <span class="n">E</span> <span class="nf">addFoobar</span><span class="o">(</span><span class="n">BarVertex</span> <span class="n">existingVertex</span><span class="o">);</span>
 </pre></div>
 
@@ -691,7 +691,7 @@ the newly created <code class="codehilite">TEdge</code>.</p>
 <span class="o">&lt;</span><span class="n">E</span> <span class="kd">extends</span> <span class="n">FooEdge</span><span class="o">&gt;</span> <span class="n">E</span> <span class="nf">addFoobar</span><span class="o">(</span><span class="n">ClassInitializer</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">BarVertex</span><span class="o">&gt;</span> <span class="n">vertexInitializer</span><span class="o">);</span>
 </pre></div>
 
-<div class="codehilite"><pre><span></span><span class="nd">@Incidence</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
+<div class="codehilite"><pre><span></span><span class="nd">@Incidence</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">,</span> <span class="n">direction</span> <span class="o">=</span> <span class="n">Direction</span><span class="o">.</span><span class="na">IN</span><span class="o">)</span>
 <span class="o">&lt;</span><span class="n">E</span> <span class="kd">extends</span> <span class="n">FooEdge</span><span class="o">&gt;</span> <span class="n">E</span> <span class="nf">addFoobar</span><span class="o">(</span><span class="n">ClassInitializer</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">BarVertex</span><span class="o">&gt;</span> <span class="n">vertexInitializer</span><span class="o">);</span>
 </pre></div>
 
@@ -715,7 +715,7 @@ to narrow the return type. The returned object will be the newly created <code c
                                 <span class="n">ClassInitializer</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">E</span><span class="o">&gt;</span> <span class="n">edgeInitializer</span><span class="o">);</span>
 </pre></div>
 
-<div class="codehilite"><pre><span></span><span class="nd">@Incidence</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
+<div class="codehilite"><pre><span></span><span class="nd">@Incidence</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">,</span> <span class="n">direction</span> <span class="o">=</span> <span class="n">Direction</span><span class="o">.</span><span class="na">IN</span><span class="o">)</span>
 <span class="o">&lt;</span><span class="n">E</span> <span class="kd">extends</span> <span class="n">EdgeFrame</span><span class="o">&gt;</span> <span class="n">E</span> <span class="nf">addFoobar</span><span class="o">(</span><span class="n">VertexFrame</span> <span class="n">vertex</span><span class="o">,</span>
                                   <span class="n">ClassInitializer</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">E</span><span class="o">&gt;</span> <span class="n">edgeInitializer</span><span class="o">);</span>
 </pre></div>
@@ -742,7 +742,7 @@ to narrow the return type. The returned object will be the newly created <code c
                                   <span class="n">ClassInitializer</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">E</span><span class="o">&gt;</span> <span class="n">edgeInitializer</span><span class="o">);</span>
 </pre></div>
 
-<div class="codehilite"><pre><span></span><span class="nd">@Incidence</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
+<div class="codehilite"><pre><span></span><span class="nd">@Incidence</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">,</span> <span class="n">direction</span> <span class="o">=</span> <span class="n">Direction</span><span class="o">.</span><span class="na">IN</span><span class="o">)</span>
 <span class="o">&lt;</span><span class="n">E</span> <span class="kd">extends</span> <span class="n">EdgeFrame</span><span class="o">&gt;</span> <span class="n">E</span> <span class="nf">addFoobar</span><span class="o">(</span><span class="n">ClassInitializer</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">BarVertex</span><span class="o">&gt;</span> <span class="n">vertexInitializer</span><span class="o">,</span>
                                   <span class="n">ClassInitializer</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">E</span><span class="o">&gt;</span> <span class="n">edgeInitializer</span><span class="o">);</span>
 </pre></div>
@@ -796,7 +796,7 @@ VertexFrame is always a safe return type for this method.</p>
 <span class="n">List</span><span class="o">&lt;</span><span class="n">FooEdge</span><span class="o">&gt;</span> <span class="nf">getFoobar</span><span class="o">();</span>
 </pre></div>
 
-<div class="codehilite"><pre><span></span><span class="nd">@Incidence</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
+<div class="codehilite"><pre><span></span><span class="nd">@Incidence</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">,</span> <span class="n">direction</span> <span class="o">=</span> <span class="n">Direction</span><span class="o">.</span><span class="na">IN</span><span class="o">)</span>
 <span class="n">Set</span><span class="o">&lt;</span><span class="n">FooEdge</span><span class="o">&gt;</span> <span class="nf">getFoobar</span><span class="o">();</span>
 </pre></div>
 
@@ -843,7 +843,7 @@ to that of the argument will be returned.</p>
 <span class="n">List</span><span class="o">&lt;</span><span class="n">FooEdge</span><span class="o">&gt;</span> <span class="nf">getFoobar</span><span class="o">(</span><span class="n">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">FooEdge</span><span class="o">&gt;</span> <span class="n">filter</span><span class="o">);</span>
 </pre></div>
 
-<div class="codehilite"><pre><span></span><span class="nd">@Incidence</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
+<div class="codehilite"><pre><span></span><span class="nd">@Incidence</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">,</span> <span class="n">direction</span> <span class="o">=</span> <span class="n">Direction</span><span class="o">.</span><span class="na">IN</span><span class="o">)</span>
 <span class="n">Set</span><span class="o">&lt;</span><span class="n">FooEdge</span><span class="o">&gt;</span> <span class="nf">getFoobar</span><span class="o">(</span><span class="n">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">FooEdge</span><span class="o">&gt;</span> <span class="n">filter</span><span class="o">);</span>
 </pre></div>
 
@@ -867,7 +867,7 @@ to that of the argument will be returned.</p>
 <span class="o">&lt;</span><span class="n">E</span> <span class="kd">extends</span> <span class="n">FooEdge</span><span class="o">&gt;</span> <span class="kt">void</span> <span class="nf">removeFoobar</span><span class="o">(</span><span class="n">E</span> <span class="n">edge</span><span class="o">);</span>
 </pre></div>
 
-<div class="codehilite"><pre><span></span><span class="nd">@Incidence</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
+<div class="codehilite"><pre><span></span><span class="nd">@Incidence</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">,</span> <span class="n">direction</span> <span class="o">=</span> <span class="n">Direction</span><span class="o">.</span><span class="na">IN</span><span class="o">)</span>
 <span class="o">&lt;</span><span class="n">E</span> <span class="kd">extends</span> <span class="n">EdgeFrame</span><span class="o">&gt;</span> <span class="kt">void</span> <span class="nf">removeFoobar</span><span class="o">(</span><span class="n">E</span> <span class="n">edge</span><span class="o">);</span>
 </pre></div>
 

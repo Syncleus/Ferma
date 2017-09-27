@@ -7,7 +7,7 @@ Annotation arguments:
 `label` - The label assigned to the edge which connects the adjacent nodes.
 
 `direction` - The direction for the edge which creates the adjacency. It can be assigned any of the values from
-              @org.apache.tinkerpop.gremlin.structure.Direction@.
+              `org.apache.tinkerpop.gremlin.structure.Direction`.
 
 `operation` - The operation the method will perform. Must be one of the following: `GET`, `ADD`, `SET`, `REMOVE`,
               `AUTO`. Defaults to `AUTO`.
@@ -21,7 +21,8 @@ example:
 
 ## ADD Operation
 
-Valid method signatures: `( )`, `(VertexFrame)`, `(ClassInitializer)`, `(ClassInitializer, ClassInitializer)`
+Valid method signatures: `( )`, `(VertexFrame)`, `(ClassInitializer)`, `(ClassInitializer, ClassInitializer)`,
+`(VertexFrame, ClassInitializer)`
 
 Adds a node as an adjacency to the current node, and the returns the newly connected node.
 
@@ -46,13 +47,13 @@ VertexFrame addFoobar();
 
 ```java
 @Adjacency(value = "Foo", operation = Adjacency.Operation.ADD)
-VertexFrame addFoobar();
+VertexFrame includeFoobar();
 ```
 
 
 ### Signature: `(VertexFrame)`
 
-Valid return types: `VertexFrame`
+Valid return types: `VertexFrame` or `void`
 
 Creates a new edge without any type information and connects it between this vertex the vertex specified as an argument
 to the method. The frame returned is the same as the frame given in the argument, it is only there for compatability
@@ -71,15 +72,14 @@ BarVertex addFoobar(BarVertex existingVertex);
 ```
 
 ```java
-@Adjacency("Foo")
+@Adjacency("Foo", direction = Direction.IN)
 <E extends VertexFrame> E addFoobar(E existingVertex);
 ```
 
 ```java
 @Adjacency(value = "Foo", operation = Adjacency.Operation.ADD)
-BarVertex includeFoobar(BarVertex existingVertex);
+void includeFoobar(BarVertex existingVertex);
 ```
-
 
 ### Signature: `(ClassInitializer)`
 
@@ -102,7 +102,7 @@ BarVertex addFoobar(ClassInitializer<? extends BarVertex> vertexInitializer);
 ```
 
 ```java
-@Adjacency("Foo")
+@Adjacency("Foo", direction = Direction.IN)
 <E extends VertexFrame> E addFoobar(ClassInitializer<? extends E> vertexInitializer);
 ```
 
@@ -135,7 +135,7 @@ BarVertex addFoobar(ClassInitializer<? extends BarVertex> vertexInitializer,
 ```
 
 ```java
-@Adjacency("Foo")
+@Adjacency("Foo", direction = Direction.IN)
 <E extends VertexFrame> E addFoobar(ClassInitializer<? extends E> vertexInitializer,
                                     ClassInitializer<? extends FooEdge> edgeInitializer);
 ```
@@ -143,6 +143,41 @@ BarVertex addFoobar(ClassInitializer<? extends BarVertex> vertexInitializer,
 ```java
 @Adjacency(value = "Foo", operation = Adjacency.Operation.ADD)
 BarVertex includeFoobar(ClassInitializer<? extends BarVertex> vertexInitializer,
+                        ClassInitializer<? extends FooEdge> edgeInitializer);
+```
+
+### Signature: `(VertexFrame, ClassInitializer)`
+
+Valid return types: `VertexFrame` or `void`
+
+Creates a new edge and connects this to an existing vertex. The newly created edge will have a type, as well as be
+initiated, according to the details specified in the `ClassInitializer` argument. The `VertexFrame` specified in the first
+argument will simply be returned. A `void` return type is also valid. Java generics can, and should, be used
+to narrow the return type as well as to restrict the `ClassInitializer`.
+
+example:
+
+```java
+@Adjacency("Foo")
+BarVertex addFoobar(BarVertex vertex,
+                    ClassInitializer<? extends FooEdge> edgeInitializer);
+```
+
+```java
+@Adjacency("Foo")
+<E extends BarVertex> E addFoobar(E vertex,
+                                  ClassInitializer<? extends FooEdge> edgeInitializer);
+```
+
+```java
+@Adjacency("Foo", direction = Direction.IN)
+<E extends VertexFrame> E addFoobar(BarVertex vertex,
+                                    ClassInitializer<? extends FooEdge> edgeInitializer);
+```
+
+```java
+@Adjacency(value = "Foo", operation = Adjacency.Operation.ADD)
+void includeFoobar(BarVertex vertex,
                         ClassInitializer<? extends FooEdge> edgeInitializer);
 ```
 
@@ -155,11 +190,11 @@ Get's one or more adjacent vertex from the graph.
 
 ### Signature: `( )`
 
-Valid return types: `EdgeFrame` or `Iterator` or `List` or `Set`
+Valid return types: `VertexFrame` or `Iterator` or `List` or `Set`
 
 Retrieves one or more of the adjacent edges. If the return type is a single Frame then only the first instance is
-returned. If the return type is an `Iterator` or `Iterable` then it will supply all matching vertex. When using an
-`Iterator` or `Iterable` it is encouraged, but not required, to use generics. The returned frames will always be
+returned. If the return type is an `Iterator` or `List` or `Set` then it will supply all matching vertex. When using an
+`Iterator` or `List` or `Set` it is encouraged, but not required, to use generics. The returned frames will always be
 instantiated as the type encoded in the graph if there is one.
 
 !!! note
@@ -205,7 +240,7 @@ List<BarVertex> getFoobar();
 ```
 
 ```java
-@Adjacency("Foo")
+@Adjacency("Foo", direction = Direction.IN)
 Set<BarVertex> getFoobar();
 ```
 
@@ -265,7 +300,7 @@ List<BarVertex> getFoobar(Class<? extends BarVertex> filter);
 ```
 
 ```java
-@Adjacency("Foo")
+@Adjacency("Foo", direction = Direction.IN)
 Set<BarVertex> getFoobar(Class<? extends BarVertex> filter);
 ```
 
@@ -320,7 +355,7 @@ void removeFoobar(BarVertex vertex);
 ```
 
 ```java
-@Adjacency("Foo")
+@Adjacency("Foo", direction = Direction.IN)
 <E extends VertexFrame> void removeFoobar(E vertex);
 ```
 
@@ -355,7 +390,7 @@ void setFoobar(BarVertex vertex);
 ```
 
 ```java
-@Adjacency("Foo")
+@Adjacency("Foo", direction = Direction.IN)
 <E extends BarVertex> void setFoobar(E vertex);
 ```
 
@@ -385,13 +420,13 @@ void setFoobar(Iterator<BaBarVertexr> vertex);
 ```
 
 ```java
-@Adjacency("Foo")
+@Adjacency("Foo", direction = Direction.IN)
 <E extends BarVertex> void setFoobar(Iterator<? extends E> vertex);
 ```
 
 ```java
-@Adjacency("Foo")
-<E extends VertexFrame> void setFoobar(Iterator<? extends E> vertex);
+@Adjacency("Foo", operation = Adjacency.Operation.SET)
+<E extends VertexFrame> void includeFoobar(Iterator<? extends E> vertex);
 ```
 
 ### Signature: `(Iterable)`
@@ -432,12 +467,12 @@ void setFoobar(Set<BarVertex> vertex);
 ```
 
 ```java
-@Adjacency("Foo")
+@Adjacency("Foo", direction = Direction.IN)
 <E extends BarVertex> void setFoobar(Iterable<? extends E> vertex);
 ```
 
 ```java
-@Adjacency("Foo")
-<E extends VertexFrame> void setFoobar(Iterable<? extends E> vertex);
+@Adjacency("Foo", operation = Adjacency.Operation.SET)
+<E extends VertexFrame> void includeFoobar(Iterable<? extends E> vertex);
 ```
 

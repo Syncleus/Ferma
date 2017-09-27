@@ -7,7 +7,7 @@ Annotation arguments:
 `label` - The label assigned to the edge which connects the adjacent nodes.
 
 `direction` - The direction for the edge which creates the adjacency. It can be assigned any of the values from
-              @org.apache.tinkerpop.gremlin.structure.Direction@.
+              `org.apache.tinkerpop.gremlin.structure.Direction`.
 
 `operation` - The operation the method will perform. Must be one of the following: `GET`, `ADD`, `SET`, `REMOVE`,
               `AUTO`. Defaults to `AUTO`.
@@ -72,7 +72,7 @@ EdgeFrame addFoobar(BarVertex existingVertex);
 ```
 
 ```java
-@Incidence("Foo")
+@Incidence("Foo", direction = Direction.IN)
 <E extends EdgeFrame> E addFoobar(BarVertex existingVertex);
 ```
 
@@ -103,7 +103,7 @@ FooEdge addFoobar(ClassInitializer<? extends FooEdge> vertexInitializer);
 ```
 
 ```java
-@Incidence("Foo")
+@Incidence("Foo", direction = Direction.IN)
 <E extends FooEdge> E addFoobar(ClassInitializer<? extends BarVertex> vertexInitializer);
 ```
 
@@ -135,7 +135,7 @@ FooEdge addFoobar(BarVertex bar,
 ```
 
 ```java
-@Incidence("Foo")
+@Incidence("Foo", direction = Direction.IN)
 <E extends EdgeFrame> E addFoobar(VertexFrame vertex,
                                   ClassInitializer<? extends E> edgeInitializer);
 ```
@@ -170,7 +170,7 @@ FooEdge addFoobar(ClassInitializer<? extends BarVertex> vertexInitializer,
 ```
 
 ```java
-@Incidence("Foo")
+@Incidence("Foo", direction = Direction.IN)
 <E extends EdgeFrame> E addFoobar(ClassInitializer<? extends BarVertex> vertexInitializer,
                                   ClassInitializer<? extends E> edgeInitializer);
 ```
@@ -240,7 +240,7 @@ List<FooEdge> getFoobar();
 ```
 
 ```java
-@Incidence("Foo")
+@Incidence("Foo", direction = Direction.IN)
 Set<FooEdge> getFoobar();
 ```
 
@@ -300,7 +300,7 @@ List<FooEdge> getFoobar(Class<? extends FooEdge> filter);
 ```
 
 ```java
-@Incidence("Foo")
+@Incidence("Foo", direction = Direction.IN)
 Set<FooEdge> getFoobar(Class<? extends FooEdge> filter);
 ```
 
@@ -335,7 +335,7 @@ void removeFoobar(FooEdge edge);
 ```
 
 ```java
-@Incidence("Foo")
+@Incidence("Foo", direction = Direction.IN)
 <E extends EdgeFrame> void removeFoobar(E edge);
 ```
 

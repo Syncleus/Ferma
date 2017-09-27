@@ -164,7 +164,7 @@ BarVertex addFoobar(BarVertex vertex,
 
 ```java
 @Adjacency("Foo")
-<E extends BarVertex> E addFoobar(BarVertex vertex,
+<E extends BarVertex> E addFoobar(E vertex,
                                   ClassInitializer<? extends FooEdge> edgeInitializer);
 ```
 

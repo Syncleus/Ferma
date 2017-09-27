@@ -215,26 +215,4 @@ public class AdjacencyHandlerWithNetworkGraphTest extends NetworkGraphTestHelper
         assertNoConnection(dev1, dev5);
     }
     
-    private void assertTwoWayConnection(NetworkDeviceVertex dev1, NetworkDeviceVertex dev2) {
-        assertOneWayConnection(dev1, dev2, false);
-        assertOneWayConnection(dev2, dev1, false);
-    }
-    
-    private void assertNoConnection(NetworkDeviceVertex dev1, NetworkDeviceVertex dev2) {
-        assertOneWayConnection(dev1, dev2, true);
-        assertOneWayConnection(dev2, dev1, true);
-    }
-    
-    private void assertOneWayExclusiveConnection(NetworkDeviceVertex from, NetworkDeviceVertex to) {
-        assertOneWayConnection(from, to, false);
-        assertOneWayConnection(to, from, true);
-    }
-    
-    private void assertOneWayConnection(NetworkDeviceVertex from, NetworkDeviceVertex to, boolean assertNonExistent) {
-        Set<String> fromOutConnections = hasOutConnectionsTo(graph, from.getName());
-        Set<String> toInConnections = hasInConnectionsFrom(graph, to.getName());
-        
-        Assert.assertTrue(assertNonExistent ^ fromOutConnections.contains(to.getName()));
-        Assert.assertTrue(assertNonExistent ^ toInConnections.contains(from.getName()));
-    }
 }

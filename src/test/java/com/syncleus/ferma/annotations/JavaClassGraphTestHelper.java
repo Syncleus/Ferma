@@ -20,11 +20,13 @@ import com.syncleus.ferma.graphtypes.javaclass.JavaClassVertex;
 import com.syncleus.ferma.graphtypes.javaclass.JavaGraphLoader;
 import com.syncleus.ferma.graphtypes.javaclass.JavaInterfaceVertex;
 import com.syncleus.ferma.graphtypes.javaclass.invalid.JavaTypeIllegalVertex;
+import java.io.IOException;
 import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+import org.junit.After;
 import org.junit.Before;
 
 /**
@@ -52,6 +54,11 @@ public class JavaClassGraphTestHelper {
         list = findInterfaceVertex(javaClassesGraph, List.class);
         collection = findInterfaceVertex(javaClassesGraph, Collection.class);
         illegal = javaClassesGraph.addFramedVertex(JavaTypeIllegalVertex.class);
+    }
+    
+    @After
+    public void tearDown() throws IOException {
+        javaClassesGraph.close();
     }
     
     protected JavaInterfaceVertex findInterfaceVertex(FramedGraph graph, Class<?> javaClass) {

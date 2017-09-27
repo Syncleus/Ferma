@@ -25,6 +25,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import org.junit.Before;
 import com.syncleus.ferma.graphtypes.network.ComputerVertex;
+import com.syncleus.ferma.graphtypes.network.NetworkDeviceVertex;
+import org.junit.Assert;
 
 /**
  *
@@ -32,7 +34,7 @@ import com.syncleus.ferma.graphtypes.network.ComputerVertex;
  */
 public class NetworkGraphTestHelper {
 
-    protected DelegatingFramedGraph graph;
+    protected DelegatingFramedGraph<?> graph;
     protected ComputerVertex dev1;
     protected ComputerVertex dev2;
     protected ComputerVertex dev3;
@@ -64,6 +66,29 @@ public class NetworkGraphTestHelper {
         return graph
                 .traverse(input -> input.V().has("name", deviceName))
                 .nextOrDefault(ComputerVertex.class, null);
+    }
+    
+    protected void assertTwoWayConnection(NetworkDeviceVertex dev1, NetworkDeviceVertex dev2) {
+        assertOneWayConnection(dev1, dev2, false);
+        assertOneWayConnection(dev2, dev1, false);
+    }
+    
+    protected void assertNoConnection(NetworkDeviceVertex dev1, NetworkDeviceVertex dev2) {
+        assertOneWayConnection(dev1, dev2, true);
+        assertOneWayConnection(dev2, dev1, true);
+    }
+    
+    protected void assertOneWayExclusiveConnection(NetworkDeviceVertex from, NetworkDeviceVertex to) {
+        assertOneWayConnection(from, to, false);
+        assertOneWayConnection(to, from, true);
+    }
+    
+    protected void assertOneWayConnection(NetworkDeviceVertex from, NetworkDeviceVertex to, boolean assertNonExistent) {
+        Set<String> fromOutConnections = hasOutConnectionsTo(graph, from.getName());
+        Set<String> toInConnections = hasInConnectionsFrom(graph, to.getName());
+        
+        Assert.assertTrue(assertNonExistent ^ fromOutConnections.contains(to.getName()));
+        Assert.assertTrue(assertNonExistent ^ toInConnections.contains(from.getName()));
     }
     
     protected Set<String> hasOutConnectionsTo(FramedGraph graph, String deviceName) {

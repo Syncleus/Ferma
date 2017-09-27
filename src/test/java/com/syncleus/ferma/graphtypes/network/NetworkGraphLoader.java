@@ -48,8 +48,8 @@ public class NetworkGraphLoader {
      * DEV5 is connected to DEV2, DEV3, DEV4
      * @return 
      */
-    public DelegatingFramedGraph load() {
-        final DelegatingFramedGraph framedGraph = new DelegatingFramedGraph(TinkerGraph.open(), true, NETWORK_GRAPH_TYPES);
+    public DelegatingFramedGraph<?> load() {
+        final DelegatingFramedGraph<TinkerGraph> framedGraph = new DelegatingFramedGraph(TinkerGraph.open(), true, NETWORK_GRAPH_TYPES);
         
         ComputerVertex dev1 = makeDevice(framedGraph, "DEV1");
         ComputerVertex dev2 = makeDevice(framedGraph, "DEV2");

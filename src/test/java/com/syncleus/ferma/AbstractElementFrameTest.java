@@ -26,6 +26,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockitoAnnotations;
 import com.google.common.collect.Sets;
+import com.syncleus.ferma.graphtypes.javaclass.JavaAccessModifier;
+import com.syncleus.ferma.graphtypes.javaclass.JavaClassVertex;
 import javax.annotation.Nullable;
 import java.util.Iterator;
 
@@ -46,7 +48,6 @@ public class AbstractElementFrameTest {
         p2.setName("Julia");
         e1 = p1.addKnows(p2);
         e1.setYears(15);
-
     }
 
     @Test
@@ -60,16 +61,35 @@ public class AbstractElementFrameTest {
     }
 
     @Test
-    public void testGetProperty() {
+    public void testGetStringProperty() {
         Assert.assertEquals("Bryn", p1.getProperty("name"));
     }
 
     @Test
-    public void testSetProperty() {
+    public void testSetStringProperty() {
         p1.setProperty("name", "Bryn Cooke");
         Assert.assertEquals("Bryn Cooke", p1.getProperty("name"));
     }
+    
+    @Test
+    public void testGetSetTypedIntegerProperty() {
+        doTestGetSetTypedProperty("ageInMonths", Integer.class, 12 * 34);
+    }
+    
+    @Test
+    public void testGetSetTypedEnumProperty() {
+        // No semantic meaning but we test pure functionality so it's ok
+        doTestGetSetTypedProperty("foo", JavaAccessModifier.class, JavaAccessModifier.PRIVATE);
+    }
 
+    private <T> void doTestGetSetTypedProperty(String propName, Class<T> type, T value) {
+        Assert.assertNull(p1.getProperty(propName, type));
+        p1.setProperty(propName, value);
+        Assert.assertEquals(p1.getProperty(propName, type), value);
+        p1.setProperty(propName, null);
+        Assert.assertNull(p1.getProperty(propName, type));
+    }
+    
     @Test
     public void testSetPropertyNull() {
         p1.setProperty("name", null);
@@ -136,9 +156,15 @@ public class AbstractElementFrameTest {
     }
 
     @Test
-    public void testReframeExplicit() {
+    public void testReframeExplicitVertex() {
         final TVertex v1 = p1.reframeExplicit(TVertex.class);
         Assert.assertEquals((Long) p1.getId(), (Long) v1.getId());
+    }
+
+    @Test
+    public void testReframeExplicitEdge() {
+        final TEdge edgeReframed = e1.reframeExplicit(TEdge.class);
+        Assert.assertEquals((Long) e1.getId(), (Long) edgeReframed.getId());
     }
 
     @Test

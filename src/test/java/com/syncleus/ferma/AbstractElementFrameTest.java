@@ -15,10 +15,7 @@
  */
 package com.syncleus.ferma;
 
-import java.util.function.Function;
-import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
-import org.apache.tinkerpop.gremlin.structure.Element;
 import org.apache.tinkerpop.gremlin.structure.Graph;
 import org.apache.tinkerpop.gremlin.tinkergraph.structure.TinkerGraph;
 import org.junit.Assert;
@@ -26,8 +23,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockitoAnnotations;
 import com.google.common.collect.Sets;
-import javax.annotation.Nullable;
-import java.util.Iterator;
+import com.google.gson.JsonObject;
+import com.syncleus.ferma.graphtypes.javaclass.JavaAccessModifier;
 
 public class AbstractElementFrameTest {
 
@@ -46,7 +43,6 @@ public class AbstractElementFrameTest {
         p2.setName("Julia");
         e1 = p1.addKnows(p2);
         e1.setYears(15);
-
     }
 
     @Test
@@ -60,14 +56,39 @@ public class AbstractElementFrameTest {
     }
 
     @Test
-    public void testGetProperty() {
+    public void testGetStringProperty() {
         Assert.assertEquals("Bryn", p1.getProperty("name"));
     }
 
     @Test
-    public void testSetProperty() {
+    public void testSetStringProperty() {
         p1.setProperty("name", "Bryn Cooke");
         Assert.assertEquals("Bryn Cooke", p1.getProperty("name"));
+    }
+    
+    @Test
+    public void testGetSetTypedIntegerProperty() {
+        String propName = "ageInMonths";
+        Class<?> type = Integer.class;
+        Integer value = 12 * 34;
+        Assert.assertNull(p1.getProperty(propName, type));
+        p1.setProperty(propName, value);
+        Assert.assertEquals(p1.getProperty(propName, type), value);
+        p1.setProperty(propName, null);
+        Assert.assertNull(p1.getProperty(propName, type));
+    }
+    
+    @Test
+    public void testGetSetTypedEnumProperty() {
+        // No semantic meaning but we test pure functionality so it's ok
+        String propName = "foo";
+        Class<?> type = JavaAccessModifier.class;
+        JavaAccessModifier value = JavaAccessModifier.PRIVATE;
+        Assert.assertNull(p1.getProperty(propName, type));
+        p1.setProperty(propName, value);
+        Assert.assertEquals(p1.getProperty(propName, type), value);
+        p1.setProperty(propName, null);
+        Assert.assertNull(p1.getProperty(propName, type));
     }
 
     @Test
@@ -136,9 +157,15 @@ public class AbstractElementFrameTest {
     }
 
     @Test
-    public void testReframeExplicit() {
+    public void testReframeExplicitVertex() {
         final TVertex v1 = p1.reframeExplicit(TVertex.class);
         Assert.assertEquals((Long) p1.getId(), (Long) v1.getId());
+    }
+
+    @Test
+    public void testReframeExplicitEdge() {
+        final TEdge edgeReframed = e1.reframeExplicit(TEdge.class);
+        Assert.assertEquals((Long) e1.getId(), (Long) edgeReframed.getId());
     }
 
     @Test
@@ -147,4 +174,19 @@ public class AbstractElementFrameTest {
         Assert.assertEquals((Long) 0L, count);
     }
 
+    @Test
+    public void testVtoJson() {
+        JsonObject actual = p1.toJson();
+        Assert.assertEquals(p1.getId(Long.class).longValue(), actual.get("id").getAsLong());
+        Assert.assertEquals("vertex", actual.get("elementClass").getAsString());
+        Assert.assertEquals(p1.getName(), actual.get("name").getAsString());
+    }
+
+    @Test
+    public void testEtoJson() {
+        JsonObject actual = e1.toJson();
+        Assert.assertEquals(e1.getId(Long.class).longValue(), actual.get("id").getAsLong());
+        Assert.assertEquals("edge", actual.get("elementClass").getAsString());
+        Assert.assertEquals(e1.getYears(), actual.get("years").getAsInt());
+    }
 }

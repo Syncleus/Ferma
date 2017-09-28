@@ -100,7 +100,6 @@ public class DelegatingFrameGraphTest extends NetworkGraphTestHelper {
     }
     
     @Test
-    @Ignore
     public void testAddFramedEdgeExplicitWithKind() {
         NetworkConnectionEdge actual = graph.addFramedEdgeExplicit(
                 dev1,
@@ -112,7 +111,6 @@ public class DelegatingFrameGraphTest extends NetworkGraphTestHelper {
     }
     
     @Test
-    @Ignore
     public void testAddFramedEdgeExplicitWithInitializer() {
         NetworkConnectionEdge actual = graph.addFramedEdgeExplicit(
                 dev1,
@@ -124,7 +122,6 @@ public class DelegatingFrameGraphTest extends NetworkGraphTestHelper {
     }
     
     @Test
-    @Ignore
     public void testAddFramedEdgeExplicitUntyped() {
         TEdge actual = graph.addFramedEdgeExplicit(
                 dev1,

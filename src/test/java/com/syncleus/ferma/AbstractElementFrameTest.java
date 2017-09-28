@@ -15,10 +15,7 @@
  */
 package com.syncleus.ferma;
 
-import java.util.function.Function;
-import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
-import org.apache.tinkerpop.gremlin.structure.Element;
 import org.apache.tinkerpop.gremlin.structure.Graph;
 import org.apache.tinkerpop.gremlin.tinkergraph.structure.TinkerGraph;
 import org.junit.Assert;
@@ -26,10 +23,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockitoAnnotations;
 import com.google.common.collect.Sets;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.syncleus.ferma.graphtypes.javaclass.JavaAccessModifier;
-import com.syncleus.ferma.graphtypes.javaclass.JavaClassVertex;
-import javax.annotation.Nullable;
-import java.util.Iterator;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 public class AbstractElementFrameTest {
 
@@ -173,4 +172,19 @@ public class AbstractElementFrameTest {
         Assert.assertEquals((Long) 0L, count);
     }
 
+    @Test
+    public void testVtoJson() {
+        JsonObject actual = p1.toJson();
+        Assert.assertEquals(p1.getId(Long.class).longValue(), actual.get("id").getAsLong());
+        Assert.assertEquals("vertex", actual.get("elementClass").getAsString());
+        Assert.assertEquals(p1.getName(), actual.get("name").getAsString());
+    }
+
+    @Test
+    public void testEtoJson() {
+        JsonObject actual = e1.toJson();
+        Assert.assertEquals(e1.getId(Long.class).longValue(), actual.get("id").getAsLong());
+        Assert.assertEquals("edge", actual.get("elementClass").getAsString());
+        Assert.assertEquals(e1.getYears(), actual.get("years").getAsInt());
+    }
 }

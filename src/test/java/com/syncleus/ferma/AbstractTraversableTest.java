@@ -85,7 +85,6 @@ public abstract class AbstractTraversableTest extends NetworkGraphTestHelper {
     }
     
     @Test
-    @Ignore
     public void testNextOrAdd() {
         Traversable<?, ?> t = createAdjacentVerticesTraversable(dev6);
         VertexFrame actualDev5 = t.nextOrAdd();

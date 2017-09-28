@@ -130,40 +130,40 @@ public class IncidenceHandlerWithJavaClassVerticesTest extends JavaClassGraphTes
     public void testGetEdgesIteratorDefault() {
         Iterator<EdgeFrame> actualLinkedListIfaces = linkedList.getImplementedInterfaceEdgeFrames();
         Iterator<ImplementsEdge> actialEdgesReframed = new ReframingEdgeIterator<>(actualLinkedListIfaces, ImplementsEdge.class);
-        assertImplementsEdges(javaClassesGraph, linkedList, getLinkedListExpectedImplIfaces(), actialEdgesReframed);
+        assertImplementsEdges(linkedList, getLinkedListExpectedImplIfaces(), actialEdgesReframed);
     }
     
     @Test
     public void testGetEdgesListDefault() {
         Iterator<EdgeFrame> actualLinkedListIfaces = linkedList.getImplementedInterfaceEdgeFramesList().iterator();
         Iterator<ImplementsEdge> actialEdgesReframed = new ReframingEdgeIterator<>(actualLinkedListIfaces, ImplementsEdge.class);
-        assertImplementsEdges(javaClassesGraph, linkedList, getLinkedListExpectedImplIfaces(), actialEdgesReframed);
+        assertImplementsEdges(linkedList, getLinkedListExpectedImplIfaces(), actialEdgesReframed);
     }
     
     @Test
     public void testGetEdgesSetDefault() {
         Iterator<EdgeFrame> actualLinkedListIfaces = linkedList.getImplementedInterfaceEdgeFramesSet().iterator();
         Iterator<ImplementsEdge> actialEdgesReframed = new ReframingEdgeIterator<>(actualLinkedListIfaces, ImplementsEdge.class);
-        assertImplementsEdges(javaClassesGraph, linkedList, getLinkedListExpectedImplIfaces(), actialEdgesReframed);
+        assertImplementsEdges(linkedList, getLinkedListExpectedImplIfaces(), actialEdgesReframed);
     }
     
     
     @Test
     public void testGetEdgesIteratorDefaultTyped() {
         Iterator<ImplementsEdge> actualLinkedListIfaces = linkedList.getImplementedInterfaceEdgeFrames(ImplementsEdge.class);
-        assertImplementsEdges(javaClassesGraph, linkedList, getLinkedListExpectedImplIfaces(), actualLinkedListIfaces);
+        assertImplementsEdges(linkedList, getLinkedListExpectedImplIfaces(), actualLinkedListIfaces);
     }
     
     @Test
     public void testGetEdgesListDefaultTyped() {
         Iterator<ImplementsEdge> actualLinkedListIfaces = linkedList.getImplementedInterfaceEdgeFramesList(ImplementsEdge.class).iterator();
-        assertImplementsEdges(javaClassesGraph, linkedList, getLinkedListExpectedImplIfaces(), actualLinkedListIfaces);
+        assertImplementsEdges(linkedList, getLinkedListExpectedImplIfaces(), actualLinkedListIfaces);
     }
     
     @Test
     public void testGetEdgesSetDefaultTyped() {
         Iterator<ImplementsEdge> actualLinkedListIfaces = linkedList.getImplementedInterfaceEdgeFramesSet(ImplementsEdge.class).iterator();
-        assertImplementsEdges(javaClassesGraph, linkedList, getLinkedListExpectedImplIfaces(), actualLinkedListIfaces);
+        assertImplementsEdges(linkedList, getLinkedListExpectedImplIfaces(), actualLinkedListIfaces);
     }
     
     private Set<String> getLinkedListExpectedImplIfaces() {
@@ -173,7 +173,7 @@ public class IncidenceHandlerWithJavaClassVerticesTest extends JavaClassGraphTes
         return expLinkedListIfaces;
     }
     
-    private void assertImplementsEdges(FramedGraph graph, JavaClassVertex implementor, Set<String> expectedImplementedIfaces, Iterator<ImplementsEdge> actualImplIfaces) {
+    private void assertImplementsEdges(JavaClassVertex implementor, Set<String> expectedImplementedIfaces, Iterator<ImplementsEdge> actualImplIfaces) {
         int actualImplIfacesCount = 0;
         while (actualImplIfaces.hasNext()) {
             ImplementsEdge implEdge = actualImplIfaces.next();

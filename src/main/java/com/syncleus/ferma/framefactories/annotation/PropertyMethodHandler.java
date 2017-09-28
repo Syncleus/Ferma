@@ -32,7 +32,7 @@ import net.bytebuddy.matcher.ElementMatchers;
  *
  * @since 2.0.0
  */
-public class PropertyMethodHandler implements MethodHandler {
+public class PropertyMethodHandler extends AbstractMethodHandler {
 
     @Override
     public Class<Property> getAnnotationType() {

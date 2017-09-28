@@ -39,7 +39,7 @@ import javax.annotation.Nullable;
  *
  * @since 2.0.0
  */
-public class InVertexMethodHandler implements MethodHandler {
+public class InVertexMethodHandler extends AbstractMethodHandler {
 
     @Override
     public Class<InVertex> getAnnotationType() {

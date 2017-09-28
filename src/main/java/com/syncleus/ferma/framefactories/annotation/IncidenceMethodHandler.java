@@ -38,7 +38,7 @@ import org.apache.tinkerpop.gremlin.structure.Direction;
  *
  * @since 2.0.0
  */
-public class IncidenceMethodHandler implements MethodHandler {
+public class IncidenceMethodHandler extends AbstractMethodHandler {
 
     @Override
     public Class<Incidence> getAnnotationType() {

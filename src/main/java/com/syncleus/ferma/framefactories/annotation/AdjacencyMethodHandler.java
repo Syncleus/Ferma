@@ -41,7 +41,7 @@ import java.util.function.Consumer;
  *
  * @since 2.0.0
  */
-public class AdjacencyMethodHandler implements MethodHandler {
+public class AdjacencyMethodHandler extends AbstractMethodHandler {
 
     @Override
     public Class<Adjacency> getAnnotationType() {

@@ -23,6 +23,10 @@
 * Removed the upper bound on traversal generics. The travese function's argument has changed from
   `GraphTraversal<? extends Vertex, ? extends Vertex>` to `GraphTraversal<Vertex, Vertex>`.
 * Expanded documentation to cover all the annotations availible in greater detail, including recent changes.
+* `AnnotationFrameFactory` was redesigned to make it easier to inhereit from the class and add support for additional
+  custom annotations.
+* `AbstractAnnotationFrameFactory` was created to help create custom annotations that replace the existing standard
+  annotations provided by `AnnotationFrameFactory`.
 * Updated the following dependencies
   * gson: 2.8.1 -> 2.8.2
 

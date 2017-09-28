@@ -16,6 +16,8 @@
 package com.syncleus.ferma.framefactories.annotation;
 
 import com.syncleus.ferma.annotations.God;
+import com.syncleus.ferma.graphtypes.javaclass.JavaClassVertex;
+import com.syncleus.ferma.graphtypes.javaclass.JavaTypeVertex;
 import com.syncleus.ferma.graphtypes.network.ComputerVertex;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
@@ -91,7 +93,8 @@ public class ReflectionUtilityTest {
         Assert.assertTrue(ReflectionUtility.isRemoveMethod(getMethod(God.class, "removeSonEdge")));
         Assert.assertTrue(ReflectionUtility.isRemoveMethod(getMethod(God.class, "deleteSonEdge")));
         Assert.assertTrue(ReflectionUtility.isRemoveMethod(getMethod(ComputerVertex.class, "disconnectFromNetwork")));
-        Assert.assertFalse(ReflectionUtility.isRemoveMethod(getMethod(ComputerVertex.class, "setName")));
+        Assert.assertFalse(ReflectionUtility.isRemoveMethod(getMethod(JavaTypeVertex.class, "getFullyQualifiedName")));
+        Assert.assertFalse(ReflectionUtility.isRemoveMethod(getMethod(JavaClassVertex.class, "implementNewInterface")));
     }
     
     

@@ -28,7 +28,7 @@ import org.apache.tinkerpop.gremlin.structure.Direction;
  */
 public interface JavaTypeVertex {
     
-    @Property(value = "fqn")
+    @Property(value = "fqn", operation = Property.Operation.GET)
     String getFullyQualifiedName();
     
     @Property(value = "fqn")

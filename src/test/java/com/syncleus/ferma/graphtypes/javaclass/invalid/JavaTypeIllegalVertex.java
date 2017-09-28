@@ -16,7 +16,6 @@
 package com.syncleus.ferma.graphtypes.javaclass.invalid;
 
 import com.syncleus.ferma.ClassInitializer;
-import com.syncleus.ferma.EdgeFrame;
 import com.syncleus.ferma.annotations.Incidence;
 import com.syncleus.ferma.graphtypes.javaclass.ExtendsEdge;
 import com.syncleus.ferma.graphtypes.javaclass.ImplementsEdge;

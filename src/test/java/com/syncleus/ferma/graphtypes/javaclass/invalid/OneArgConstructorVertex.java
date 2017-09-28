@@ -24,5 +24,6 @@ import com.syncleus.ferma.AbstractVertexFrame;
 public class OneArgConstructorVertex extends AbstractVertexFrame {
     
     public OneArgConstructorVertex(String arg) {
+        
     }
 }

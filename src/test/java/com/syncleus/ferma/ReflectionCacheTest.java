@@ -62,6 +62,10 @@ public class ReflectionCacheTest {
     
     @Test (expected = IllegalArgumentException.class)
     public void testBadConstructorCall() {
-        ReflectionCache cache = new ReflectionCache((Collection) null);
+        createCache(null);
+    }
+    
+    private ReflectionCache createCache(Collection<? extends Class<?>> annotatedTypes) {
+        return new ReflectionCache(annotatedTypes);
     }
 }

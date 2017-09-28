@@ -51,7 +51,7 @@ public class ReflectionUtilityTest {
     
     @Test
     public void testActualTypeWithCollection() throws NoSuchMethodException {
-        doGetActualTypeTest(
+        assertGetActualType(
                 Object.class, // List has no upper bounds
                 Collection.class.getTypeParameters()[0],
                 0);
@@ -65,7 +65,7 @@ public class ReflectionUtilityTest {
     
     @Test
     public void testActualTypeWithParameterizedType() throws NoSuchMethodException, NoSuchFieldException {
-        doGetActualTypeTest(
+        assertGetActualType(
                 Number.class, // List has no upper bounds
                 getMethod(SomeMockClass.class, "foo").getGenericParameterTypes()[0],
                 0);
@@ -75,7 +75,7 @@ public class ReflectionUtilityTest {
     public void testActualTypeWithWildcardType() throws NoSuchMethodException, NoSuchFieldException {
         ParameterizedType paramType = (ParameterizedType) getMethod(SomeMockClass.class, "foo").getGenericParameterTypes()[0];
         Type wildCardType = paramType.getActualTypeArguments()[0];
-        doGetActualTypeTest(
+        assertGetActualType(
                 Number.class, // List has no upper bounds
                 wildCardType,
                 0);
@@ -98,7 +98,7 @@ public class ReflectionUtilityTest {
     }
     
     
-    private void doGetActualTypeTest(Class<?> expected, Type toTest, int pos) {
+    private void assertGetActualType(Class<?> expected, Type toTest, int pos) {
         Class<?> actualType = ReflectionUtility.getActualType(toTest, pos);
         Assert.assertEquals("Types mismatch!", expected, actualType);
     }

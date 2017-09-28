@@ -23,11 +23,6 @@ import com.syncleus.ferma.AbstractVertexFrame;
  */
 public class RouterVertex extends AbstractVertexFrame implements NetworkDeviceVertex {
 
-    public RouterVertex() {
-    }
-
-    
-    
     @Override
     public String getName() {
         return getProperty("name");

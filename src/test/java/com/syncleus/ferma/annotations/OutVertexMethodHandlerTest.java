@@ -19,7 +19,6 @@ import com.syncleus.ferma.DelegatingFramedGraph;
 import com.syncleus.ferma.FramedGraph;
 import com.syncleus.ferma.TVertex;
 import com.syncleus.ferma.VertexFrame;
-import com.syncleus.ferma.graphtypes.javaclass.invalid.NoArgSetInVertexEdge;
 import com.syncleus.ferma.graphtypes.javaclass.invalid.NoArgSetOutVertexEdge;
 import com.syncleus.ferma.graphtypes.javaclass.invalid.OneArgGetOutVertexEdge;
 import org.apache.tinkerpop.gremlin.tinkergraph.structure.TinkerGraph;

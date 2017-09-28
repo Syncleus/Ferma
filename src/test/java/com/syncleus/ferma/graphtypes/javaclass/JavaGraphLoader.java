@@ -63,8 +63,8 @@ public class JavaGraphLoader {
         Vertex abstrCollection = makeClass(graph, obj, AbstractCollection.class, collection);
         Vertex abstrList = makeClass(graph, abstrCollection, AbstractList.class, list);
         Vertex abstrSeqList = makeClass(graph, abstrList, AbstractSequentialList.class, list);
-        Vertex arrayList = makeClass(graph, abstrList, ArrayList.class, list);
-        Vertex linkedList = makeClass(graph, abstrSeqList, LinkedList.class, list, collection);
+        makeClass(graph, abstrList, ArrayList.class, list);
+        makeClass(graph, abstrSeqList, LinkedList.class, list, collection);
         
         return framedGraph;
     }

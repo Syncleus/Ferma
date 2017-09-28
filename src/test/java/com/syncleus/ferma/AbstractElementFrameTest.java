@@ -23,12 +23,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockitoAnnotations;
 import com.google.common.collect.Sets;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.syncleus.ferma.graphtypes.javaclass.JavaAccessModifier;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
 
 public class AbstractElementFrameTest {
 
@@ -72,16 +68,9 @@ public class AbstractElementFrameTest {
     
     @Test
     public void testGetSetTypedIntegerProperty() {
-        doTestGetSetTypedProperty("ageInMonths", Integer.class, 12 * 34);
-    }
-    
-    @Test
-    public void testGetSetTypedEnumProperty() {
-        // No semantic meaning but we test pure functionality so it's ok
-        doTestGetSetTypedProperty("foo", JavaAccessModifier.class, JavaAccessModifier.PRIVATE);
-    }
-
-    private <T> void doTestGetSetTypedProperty(String propName, Class<T> type, T value) {
+        String propName = "ageInMonths";
+        Class<?> type = Integer.class;
+        Integer value = 12 * 34;
         Assert.assertNull(p1.getProperty(propName, type));
         p1.setProperty(propName, value);
         Assert.assertEquals(p1.getProperty(propName, type), value);
@@ -89,6 +78,19 @@ public class AbstractElementFrameTest {
         Assert.assertNull(p1.getProperty(propName, type));
     }
     
+    @Test
+    public void testGetSetTypedEnumProperty() {
+        // No semantic meaning but we test pure functionality so it's ok
+        String propName = "foo";
+        Class<?> type = JavaAccessModifier.class;
+        JavaAccessModifier value = JavaAccessModifier.PRIVATE;
+        Assert.assertNull(p1.getProperty(propName, type));
+        p1.setProperty(propName, value);
+        Assert.assertEquals(p1.getProperty(propName, type), value);
+        p1.setProperty(propName, null);
+        Assert.assertNull(p1.getProperty(propName, type));
+    }
+
     @Test
     public void testSetPropertyNull() {
         p1.setProperty("name", null);

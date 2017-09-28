@@ -19,7 +19,6 @@ import com.syncleus.ferma.DelegatingFramedGraph;
 import com.syncleus.ferma.ReflectionCache;
 import com.syncleus.ferma.TEdge;
 import com.syncleus.ferma.TVertex;
-import com.syncleus.ferma.VertexFrame;
 import com.syncleus.ferma.graphtypes.javaclass.invalid.InvalidFrame;
 import com.syncleus.ferma.graphtypes.javaclass.invalid.OneArgConstructorVertex;
 import org.apache.tinkerpop.gremlin.tinkergraph.structure.TinkerGraph;
@@ -43,12 +42,12 @@ public class AnnotationFrameFactoryTest {
     
     @Test (expected = IllegalArgumentException.class)
     public void testOneArgNonAbstractFrame() {
-        OneArgConstructorVertex v = frameFactory.create(fg.addFramedVertex().getElement(), OneArgConstructorVertex.class);
+        frameFactory.create(fg.addFramedVertex().getElement(), OneArgConstructorVertex.class);
     }
     
     @Test (expected = IllegalStateException.class)
     public void testInvalidAbstractVertexFrame() {
-        InvalidFrame v = frameFactory.create(fg.addFramedVertex().getElement(), InvalidFrame.class);
+        frameFactory.create(fg.addFramedVertex().getElement(), InvalidFrame.class);
     }
     
     @Test (expected = IllegalStateException.class)
@@ -56,6 +55,6 @@ public class AnnotationFrameFactoryTest {
         TVertex v1 = fg.addFramedVertex();
         TVertex v2 = fg.addFramedVertex();
         TEdge e1 = fg.addFramedEdge(v1, v2, "some_label");
-        InvalidFrame e = frameFactory.create(e1.getElement(), InvalidFrame.class);
+        frameFactory.create(e1.getElement(), InvalidFrame.class);
     }
 }

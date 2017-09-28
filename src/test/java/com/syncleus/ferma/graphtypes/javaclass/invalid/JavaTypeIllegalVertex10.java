@@ -17,7 +17,6 @@ package com.syncleus.ferma.graphtypes.javaclass.invalid;
 
 import com.syncleus.ferma.ClassInitializer;
 import com.syncleus.ferma.annotations.Adjacency;
-import com.syncleus.ferma.graphtypes.javaclass.ImplementsEdge;
 import com.syncleus.ferma.graphtypes.javaclass.JavaInterfaceVertex;
 import com.syncleus.ferma.graphtypes.javaclass.JavaTypeVertex;
 import com.syncleus.ferma.graphtypes.javaclass.JavaTypeVertexInitializer;

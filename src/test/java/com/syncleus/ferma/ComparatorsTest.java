@@ -30,8 +30,6 @@ public class ComparatorsTest {
 
     private Person p1;
     private Person p2;
-    private Person p3;
-    private Person p4;
     
     @Before
     public void setUp() {
@@ -40,10 +38,6 @@ public class ComparatorsTest {
         p1.setName("Alice");
         p2 = g.addFramedVertex(Person.DEFAULT_INITIALIZER, T.id, "2");
         p2.setName("Bob");
-        p3 = g.addFramedVertex(Person.DEFAULT_INITIALIZER, T.id, "3");
-        p3.setName("Frank");
-        p4 = g.addFramedVertex(Person.DEFAULT_INITIALIZER, T.id, "4");
-        p4.setName("Zelda");
     }
     
     @Test

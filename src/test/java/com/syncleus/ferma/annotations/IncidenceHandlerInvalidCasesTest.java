@@ -15,17 +15,9 @@
  */
 package com.syncleus.ferma.annotations;
 
-import com.syncleus.ferma.FramedGraph;
 import com.syncleus.ferma.graphtypes.javaclass.ExtendsEdge;
 import com.syncleus.ferma.graphtypes.javaclass.ImplementsEdge;
-import com.syncleus.ferma.graphtypes.javaclass.JavaClassVertex;
-import com.syncleus.ferma.graphtypes.javaclass.JavaGraphLoader;
 import com.syncleus.ferma.graphtypes.javaclass.JavaInterfaceVertex;
-import com.syncleus.ferma.graphtypes.javaclass.invalid.JavaTypeIllegalVertex;
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
-import org.junit.Before;
 import org.junit.Test;
 import com.syncleus.ferma.graphtypes.javaclass.invalid.JavaTypeIllegalVertex1;
 import com.syncleus.ferma.graphtypes.javaclass.invalid.JavaTypeIllegalVertex2;

@@ -16,10 +16,8 @@
 package com.syncleus.ferma.graphtypes.javaclass;
 
 import com.syncleus.ferma.ClassInitializer;
-import com.syncleus.ferma.VertexFrame;
 import com.syncleus.ferma.annotations.Incidence;
 import com.syncleus.ferma.annotations.Property;
-import java.util.Iterator;
 import org.apache.tinkerpop.gremlin.structure.Direction;
 
 /**

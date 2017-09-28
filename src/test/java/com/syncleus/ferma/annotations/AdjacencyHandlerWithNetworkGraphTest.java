@@ -17,11 +17,8 @@ package com.syncleus.ferma.annotations;
 
 import com.syncleus.ferma.VertexFrame;
 import com.syncleus.ferma.graphtypes.network.NetworkConnectionEdge;
-import java.util.Set;
-import org.junit.Assert;
 import org.junit.Test;
 import com.syncleus.ferma.graphtypes.network.ComputerVertex;
-import com.syncleus.ferma.graphtypes.network.NetworkDeviceVertex;
 import com.syncleus.ferma.graphtypes.network.RouterVertex;
 import java.util.Arrays;
 import org.apache.tinkerpop.gremlin.structure.Element;

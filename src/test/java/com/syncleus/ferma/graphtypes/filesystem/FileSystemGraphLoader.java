@@ -44,10 +44,10 @@ public class FileSystemGraphLoader {
         // Vertices
         final DirectoryVertex root = makeDirectory(framedGraph, "");
         final DirectoryVertex home = makeSubDirectory(framedGraph, root, "home");
-        final DirectoryVertex etc = makeSubDirectory(framedGraph, root, "etc");
+        makeSubDirectory(framedGraph, root, "etc");
         final DirectoryVertex userDir = makeSubDirectory(framedGraph, home, USER_NAME);
-        final FileVertex userAdressBook = makeSubFile(framedGraph, userDir, "adress_book.xlsx");
-        final FileVertex userAdressNotes = makeSubFile(framedGraph, userDir, "notes.txt");
+        makeSubFile(framedGraph, userDir, "adress_book.xlsx");
+        makeSubFile(framedGraph, userDir, "notes.txt");
         
         return framedGraph;
     }

@@ -55,15 +55,15 @@ public abstract class AbstractTraversableTest extends NetworkGraphTestHelper {
 
     @Test
     public void testNextOrDefault() {
-        doTestNextOrDefault((t, def) -> t.nextOrDefault(ComputerVertex.class, def));
+        assertNextOrDefault((t, def) -> t.nextOrDefault(ComputerVertex.class, def));
     }
 
     @Test
     public void testNextOrDefaultExplicit() {
-        doTestNextOrDefault((t, def) -> t.nextOrDefaultExplicit(ComputerVertex.class, def));
+        assertNextOrDefault((t, def) -> t.nextOrDefaultExplicit(ComputerVertex.class, def));
     }
 
-    private void doTestNextOrDefault(BiFunction<Traversable<?, ?>, ComputerVertex, ComputerVertex> nextOrDefault) {
+    private void assertNextOrDefault(BiFunction<Traversable<?, ?>, ComputerVertex, ComputerVertex> nextOrDefault) {
         Traversable<?, ?> t = createAdjacentVerticesTraversable(dev2);
         Set<String> dev2Adjacent = new HashSet<>(dev2AdjacentVerticesNames);
         ComputerVertex lastDevice;
@@ -95,20 +95,20 @@ public abstract class AbstractTraversableTest extends NetworkGraphTestHelper {
     
     @Test
     public void testNextOrAddExplicitWithInitializer() {
-        doTestNextOrAddTyped(t -> t.nextOrAddExplicit(ComputerVertex.DEFAULT_INITIALIZER));
+        assertNextOrAddTyped(t -> t.nextOrAddExplicit(ComputerVertex.DEFAULT_INITIALIZER));
     }
     
     @Test
     public void testNextOrAddExplicitWithKind() {
-        doTestNextOrAddTyped(t -> t.nextOrAddExplicit(ComputerVertex.class));
+        assertNextOrAddTyped(t -> t.nextOrAddExplicit(ComputerVertex.class));
     }
     
     @Test
     public void testNextOrAddWithInitializer() {
-        doTestNextOrAddTyped(t -> t.nextOrAdd(ComputerVertex.DEFAULT_INITIALIZER));
+        assertNextOrAddTyped(t -> t.nextOrAdd(ComputerVertex.DEFAULT_INITIALIZER));
     }
     
-    private void doTestNextOrAddTyped(Function<Traversable<?, ?>, ComputerVertex> nextOrAdd) {
+    private void assertNextOrAddTyped(Function<Traversable<?, ?>, ComputerVertex> nextOrAdd) {
         Traversable<?, ?> t = createAdjacentVerticesTraversable(dev6);
         ComputerVertex actualDev5 = nextOrAdd.apply(t);
         Assert.assertEquals(dev5.getName(), actualDev5.getName());
@@ -127,15 +127,15 @@ public abstract class AbstractTraversableTest extends NetworkGraphTestHelper {
     
     @Test
     public void testNextAmount() {
-        doTestNextAmount(Traversable::next);
+        assertNextAmount(Traversable::next);
     }
     
     @Test
     public void testNextAmountExplicit() {
-        doTestNextAmount(Traversable::nextExplicit);
+        assertNextAmount(Traversable::nextExplicit);
     }
     
-    private void  doTestNextAmount(TriFunction<Traversable<?, ?>, Integer, Class<ComputerVertex>, List<? extends ComputerVertex>> listExtractor) {
+    private void  assertNextAmount(TriFunction<Traversable<?, ?>, Integer, Class<ComputerVertex>, List<? extends ComputerVertex>> listExtractor) {
         List<? extends ComputerVertex> l = listExtractor.apply(createAdjacentVerticesTraversable(dev2), 1, ComputerVertex.class);
         Assert.assertEquals(1, l.size());
         Assert.assertTrue(dev2AdjacentVerticesNames.contains(l.get(0).getName()));

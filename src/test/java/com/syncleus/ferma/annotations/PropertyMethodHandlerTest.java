@@ -15,21 +15,22 @@
  */
 package com.syncleus.ferma.annotations;
 
-import java.util.function.Function;
 import com.syncleus.ferma.DelegatingFramedGraph;
 import com.syncleus.ferma.FramedGraph;
 import com.syncleus.ferma.VertexFrame;
 import com.syncleus.ferma.graphtypes.javaclass.JavaAccessModifier;
 import com.syncleus.ferma.graphtypes.javaclass.JavaGraphLoader;
 import com.syncleus.ferma.graphtypes.javaclass.JavaTypeVertex;
-import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
-import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
+import com.syncleus.ferma.graphtypes.javaclass.invalid.NoArgPropertySetter;
+import com.syncleus.ferma.graphtypes.javaclass.invalid.OneArgPropertyGetter;
+import com.syncleus.ferma.graphtypes.javaclass.invalid.OneArgPropertyRemover;
+import com.syncleus.ferma.graphtypes.javaclass.invalid.TwoArgPropertySetter;
+import com.syncleus.ferma.graphtypes.javaclass.invalid.UnresolvablePropertyAccessor;
 import org.apache.tinkerpop.gremlin.structure.Graph;
 import org.apache.tinkerpop.gremlin.tinkergraph.structure.TinkerGraph;
 import org.junit.Assert;
 import org.junit.Test;
 
-import javax.annotation.Nullable;
 import java.util.*;
 
 public class PropertyMethodHandlerTest {
@@ -167,5 +168,35 @@ public class PropertyMethodHandlerTest {
         Assert.assertEquals(JavaAccessModifier.PUBLIC, collectionVertex.getAccessModifier());
         collectionVertex.setAccessModifier(JavaAccessModifier.PROTECTED);
         Assert.assertEquals(JavaAccessModifier.PROTECTED, collectionVertex.getAccessModifier());
+    }
+    
+    @Test (expected = IllegalStateException.class)
+    public void testNoArgSetter() {
+        FramedGraph javaTypesGraph = JavaGraphLoader.INSTANCE.load();
+        javaTypesGraph.addFramedVertex(NoArgPropertySetter.class);
+    }
+    
+    @Test (expected = IllegalStateException.class)
+    public void testTwoArgSetter() {
+        FramedGraph javaTypesGraph = JavaGraphLoader.INSTANCE.load();
+        javaTypesGraph.addFramedVertex(TwoArgPropertySetter.class);
+    }
+    
+    @Test (expected = IllegalStateException.class)
+    public void testOneArgGetter() {
+        FramedGraph javaTypesGraph = JavaGraphLoader.INSTANCE.load();
+        javaTypesGraph.addFramedVertex(OneArgPropertyGetter.class);
+    }
+    
+    @Test (expected = IllegalStateException.class)
+    public void testOneArgRemove() {
+        FramedGraph javaTypesGraph = JavaGraphLoader.INSTANCE.load();
+        javaTypesGraph.addFramedVertex(OneArgPropertyRemover.class);
+    }
+    
+    @Test (expected = IllegalStateException.class)
+    public void testUnresolvableAccessor() {
+        FramedGraph javaTypesGraph = JavaGraphLoader.INSTANCE.load();
+        javaTypesGraph.addFramedVertex(UnresolvablePropertyAccessor.class);
     }
 }

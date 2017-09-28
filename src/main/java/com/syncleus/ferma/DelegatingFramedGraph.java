@@ -313,8 +313,14 @@ public class DelegatingFramedGraph<G extends Graph> implements WrappedFramedGrap
 
     @Override
     public <T> T addFramedVertex(final ClassInitializer<T> initializer, final Object... keyValues) {
-        final T framedVertex = frameNewElement(this.getBaseGraph().addVertex(keyValues), initializer);
-        return framedVertex;
+        if( keyValues != null ) {
+            final T framedVertex = frameNewElement(this.getBaseGraph().addVertex(keyValues), initializer);
+            return framedVertex;
+        }
+        else {
+            final T framedVertex = frameNewElement(this.getBaseGraph().addVertex(), initializer);
+            return framedVertex;
+        }
     }
     
     @Override
@@ -358,7 +364,7 @@ public class DelegatingFramedGraph<G extends Graph> implements WrappedFramedGrap
 
     @Override
     public <T> T addFramedEdgeExplicit(final VertexFrame source, final VertexFrame destination, final String label, final ClassInitializer<T> initializer) {
-        final T framedEdge = frameNewElementExplicit(source.getElement().addEdge(label, destination.getElement(), null), initializer);
+        final T framedEdge = frameNewElementExplicit(source.getElement().addEdge(label, destination.getElement()), initializer);
         return framedEdge;
     }
     

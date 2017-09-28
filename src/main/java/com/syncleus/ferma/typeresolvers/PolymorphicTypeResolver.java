@@ -26,6 +26,7 @@ import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
 import org.apache.tinkerpop.gremlin.structure.Element;
 import org.apache.tinkerpop.gremlin.structure.Property;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
 
@@ -111,11 +112,12 @@ public class PolymorphicTypeResolver implements TypeResolver {
     
     @Override
     public Class<?> resolve(final Element element) {
-        final String typeResolutionName = element.<String>property(this.typeResolutionKey).value();
-        if (typeResolutionName == null)
-            return null;
+        final Property<String> typeResolutionName = element.<String>property(this.typeResolutionKey);
 
-        return this.reflectionCache.forName(typeResolutionName);
+        if( typeResolutionName.isPresent() )
+            return this.reflectionCache.forName(typeResolutionName.value());
+        else
+            return null;
     }
 
     @Override

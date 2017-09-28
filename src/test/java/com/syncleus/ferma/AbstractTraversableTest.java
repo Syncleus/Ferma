@@ -50,7 +50,7 @@ public abstract class AbstractTraversableTest extends NetworkGraphTestHelper {
         
         dev6 = graph.addFramedVertex(ComputerVertex.class);
         dev6.setName("DEV6");
-        graph.addFramedEdge(dev6, dev5, "implements");
+        graph.addFramedEdge(dev6, dev5, "connects");
     }
 
     @Test

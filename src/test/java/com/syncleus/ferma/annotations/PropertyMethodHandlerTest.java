@@ -168,6 +168,8 @@ public class PropertyMethodHandlerTest {
         Assert.assertEquals(JavaAccessModifier.PUBLIC, collectionVertex.getAccessModifier());
         collectionVertex.setAccessModifier(JavaAccessModifier.PROTECTED);
         Assert.assertEquals(JavaAccessModifier.PROTECTED, collectionVertex.getAccessModifier());
+        collectionVertex.setAccessModifier(null);
+        Assert.assertNull(collectionVertex.getAccessModifier());
     }
     
     @Test (expected = IllegalStateException.class)

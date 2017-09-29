@@ -22,20 +22,34 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.*;
+import org.junit.After;
+import org.junit.Before;
 
 public class AdjacencyMethodHandlerTest {
 
     private static final Set<Class<?>> TEST_TYPES = new HashSet<>(Arrays.asList(new Class<?>[]{God.class, FatherEdge.class, GodExtended.class, GodAlternative.class}));
 
+    private TinkerGraph godGraph;
+
+    @Before
+    public void setUp() {
+        godGraph = TinkerGraph.open();
+    }
+
+    @After
+    public void tearDown() {
+        godGraph.close();
+    }
+
     @Test
     public void testGetSonsDefault() {
-        final TinkerGraph godGraph = TinkerGraph.open();
+
         GodGraphLoader.load(godGraph);
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
         final List<? extends God> gods = framedGraph.traverse(
-            input -> input.V().has("name", "jupiter")).toList(God.class);
+                input -> input.V().has("name", "jupiter")).toList(God.class);
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father != null);
@@ -53,13 +67,13 @@ public class AdjacencyMethodHandlerTest {
 
     @Test
     public void testGetSonsListDefault() {
-        final TinkerGraph godGraph = TinkerGraph.open();
+
         GodGraphLoader.load(godGraph);
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
         final List<? extends God> gods = framedGraph.traverse(
-            input -> input.V().has("name", "jupiter")).toList(God.class);
+                input -> input.V().has("name", "jupiter")).toList(God.class);
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father != null);
@@ -77,13 +91,13 @@ public class AdjacencyMethodHandlerTest {
 
     @Test
     public void testGetSonsSetDefault() {
-        final TinkerGraph godGraph = TinkerGraph.open();
+
         GodGraphLoader.load(godGraph);
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
         final List<? extends God> gods = framedGraph.traverse(
-            input -> input.V().has("name", "jupiter")).toList(God.class);
+                input -> input.V().has("name", "jupiter")).toList(God.class);
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father != null);
@@ -101,13 +115,13 @@ public class AdjacencyMethodHandlerTest {
 
     @Test
     public void testGetSonsByType() {
-        final TinkerGraph godGraph = TinkerGraph.open();
+
         GodGraphLoader.load(godGraph);
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
         final List<? extends God> gods = framedGraph.traverse(
-            input -> input.V().has("name", "jupiter")).toList(God.class);
+                input -> input.V().has("name", "jupiter")).toList(God.class);
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father != null);
@@ -125,13 +139,13 @@ public class AdjacencyMethodHandlerTest {
 
     @Test
     public void testGetSonsListByType() {
-        final TinkerGraph godGraph = TinkerGraph.open();
+
         GodGraphLoader.load(godGraph);
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
         final List<? extends God> gods = framedGraph.traverse(
-            input -> input.V().has("name", "jupiter")).toList(God.class);
+                input -> input.V().has("name", "jupiter")).toList(God.class);
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father != null);
@@ -149,13 +163,13 @@ public class AdjacencyMethodHandlerTest {
 
     @Test
     public void testGetSonsSetByType() {
-        final TinkerGraph godGraph = TinkerGraph.open();
+
         GodGraphLoader.load(godGraph);
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
         final List<? extends God> gods = framedGraph.traverse(
-            input -> input.V().has("name", "jupiter")).toList(God.class);
+                input -> input.V().has("name", "jupiter")).toList(God.class);
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father != null);
@@ -173,13 +187,13 @@ public class AdjacencyMethodHandlerTest {
 
     @Test
     public void testObtainSonsByType() {
-        final TinkerGraph godGraph = TinkerGraph.open();
+
         GodGraphLoader.load(godGraph);
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
         final List<? extends God> gods = framedGraph.traverse(
-            input -> input.V().has("name", "jupiter")).toList(God.class);
+                input -> input.V().has("name", "jupiter")).toList(God.class);
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father != null);
@@ -197,13 +211,13 @@ public class AdjacencyMethodHandlerTest {
 
     @Test
     public void testGetSonsExtended() {
-        final TinkerGraph godGraph = TinkerGraph.open();
+
         GodGraphLoader.load(godGraph);
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
         final List<? extends God> gods = framedGraph.traverse(
-            input -> input.V().has("name", "jupiter")).toList(God.class);
+                input -> input.V().has("name", "jupiter")).toList(God.class);
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father != null);
@@ -221,13 +235,13 @@ public class AdjacencyMethodHandlerTest {
 
     @Test
     public void testGetSonsForceAlternative() {
-        final TinkerGraph godGraph = TinkerGraph.open();
+
         GodGraphLoader.load(godGraph);
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
         final List<? extends GodAlternative> gods = framedGraph.traverse(
-            input -> input.V().has("name", "jupiter")).toList(GodAlternative.class);
+                input -> input.V().has("name", "jupiter")).toList(GodAlternative.class);
 
         final GodAlternative father = gods.iterator().next();
         Assert.assertTrue(father != null);
@@ -246,13 +260,13 @@ public class AdjacencyMethodHandlerTest {
 
     @Test
     public void testGetSonsNoLabel() {
-        final TinkerGraph godGraph = TinkerGraph.open();
+
         GodGraphLoader.load(godGraph);
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
         final List<? extends GodAlternative> gods = framedGraph.traverse(
-            input -> input.V().has("name", "jupiter")).toList(GodAlternative.class);
+                input -> input.V().has("name", "jupiter")).toList(GodAlternative.class);
 
         final GodAlternative father = gods.iterator().next();
         Assert.assertTrue(father != null);
@@ -265,13 +279,13 @@ public class AdjacencyMethodHandlerTest {
 
     @Test
     public void testGetSonDefault() {
-        final TinkerGraph godGraph = TinkerGraph.open();
+
         GodGraphLoader.load(godGraph);
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
         final List<? extends God> gods = framedGraph.traverse(
-            input -> input.V().has("name", "jupiter")).toList(God.class);
+                input -> input.V().has("name", "jupiter")).toList(God.class);
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father != null);
@@ -288,13 +302,13 @@ public class AdjacencyMethodHandlerTest {
 
     @Test
     public void testGetSonByType() {
-        final TinkerGraph godGraph = TinkerGraph.open();
+
         GodGraphLoader.load(godGraph);
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
         final List<? extends God> gods = framedGraph.traverse(
-            input -> input.V().has("name", "jupiter")).toList(God.class);
+                input -> input.V().has("name", "jupiter")).toList(God.class);
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father != null);
@@ -311,13 +325,13 @@ public class AdjacencyMethodHandlerTest {
 
     @Test
     public void testAddSonDefault() {
-        final TinkerGraph godGraph = TinkerGraph.open();
+
         GodGraphLoader.load(godGraph);
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
         final List<? extends God> gods = framedGraph.traverse(
-            input -> input.V().has("name", "jupiter")).toList(God.class);
+                input -> input.V().has("name", "jupiter")).toList(God.class);
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father != null);
@@ -330,13 +344,13 @@ public class AdjacencyMethodHandlerTest {
 
     @Test
     public void testAddSonByTypeUntypedEdge() {
-        final TinkerGraph godGraph = TinkerGraph.open();
+
         GodGraphLoader.load(godGraph);
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
         final List<? extends God> gods = framedGraph.traverse(
-            input -> input.V().has("name", "jupiter")).toList(God.class);
+                input -> input.V().has("name", "jupiter")).toList(God.class);
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father != null);
@@ -351,13 +365,13 @@ public class AdjacencyMethodHandlerTest {
 
     @Test
     public void testAddSonByObjectUntypedEdge() {
-        final TinkerGraph godGraph = TinkerGraph.open();
+
         GodGraphLoader.load(godGraph);
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
         final List<? extends God> gods = framedGraph.traverse(
-            input -> input.V().has("name", "jupiter")).toList(God.class);
+                input -> input.V().has("name", "jupiter")).toList(God.class);
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father != null);
@@ -374,13 +388,13 @@ public class AdjacencyMethodHandlerTest {
 
     @Test
     public void testAddSonByTypeTypedEdge() {
-        final TinkerGraph godGraph = TinkerGraph.open();
+
         GodGraphLoader.load(godGraph);
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
         final List<? extends God> gods = framedGraph.traverse(
-            input -> input.V().has("name", "jupiter")).toList(God.class);
+                input -> input.V().has("name", "jupiter")).toList(God.class);
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father != null);
@@ -395,13 +409,13 @@ public class AdjacencyMethodHandlerTest {
 
     @Test
     public void testincludeSon() {
-        final TinkerGraph godGraph = TinkerGraph.open();
+
         GodGraphLoader.load(godGraph);
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
         final List<? extends God> gods = framedGraph.traverse(
-            input -> input.V().has("name", "jupiter")).toList(God.class);
+                input -> input.V().has("name", "jupiter")).toList(God.class);
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father != null);
@@ -416,13 +430,13 @@ public class AdjacencyMethodHandlerTest {
 
     @Test
     public void testAddSonByObjectTypedEdge() {
-        final TinkerGraph godGraph = TinkerGraph.open();
+
         GodGraphLoader.load(godGraph);
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
         final List<? extends God> gods = framedGraph.traverse(
-            input -> input.V().has("name", "jupiter")).toList(God.class);
+                input -> input.V().has("name", "jupiter")).toList(God.class);
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father != null);
@@ -439,13 +453,13 @@ public class AdjacencyMethodHandlerTest {
 
     @Test
     public void testSetSonsEmpty() {
-        final TinkerGraph godGraph = TinkerGraph.open();
+
         GodGraphLoader.load(godGraph);
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
         final List<? extends God> gods = framedGraph.traverse(
-            input -> input.V().has("name", "jupiter")).toList(God.class);
+                input -> input.V().has("name", "jupiter")).toList(God.class);
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father != null);
@@ -465,13 +479,13 @@ public class AdjacencyMethodHandlerTest {
 
     @Test
     public void testSetSons() {
-        final TinkerGraph godGraph = TinkerGraph.open();
+
         GodGraphLoader.load(godGraph);
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
         final List<? extends God> gods = framedGraph.traverse(
-            input -> input.V().has("name", "jupiter")).toList(God.class);
+                input -> input.V().has("name", "jupiter")).toList(God.class);
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father != null);
@@ -495,13 +509,13 @@ public class AdjacencyMethodHandlerTest {
 
     @Test
     public void testSetSon() {
-        final TinkerGraph godGraph = TinkerGraph.open();
+
         GodGraphLoader.load(godGraph);
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
         final List<? extends God> gods = framedGraph.traverse(
-            input -> input.V().has("name", "jupiter")).toList(God.class);
+                input -> input.V().has("name", "jupiter")).toList(God.class);
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father != null);
@@ -530,13 +544,13 @@ public class AdjacencyMethodHandlerTest {
 
     @Test
     public void testSetSonsList() {
-        final TinkerGraph godGraph = TinkerGraph.open();
+
         GodGraphLoader.load(godGraph);
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
         final List<? extends God> gods = framedGraph.traverse(
-            input -> input.V().has("name", "jupiter")).toList(God.class);
+                input -> input.V().has("name", "jupiter")).toList(God.class);
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father != null);
@@ -560,13 +574,13 @@ public class AdjacencyMethodHandlerTest {
 
     @Test
     public void testApplySons() {
-        final TinkerGraph godGraph = TinkerGraph.open();
+
         GodGraphLoader.load(godGraph);
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
         final List<? extends God> gods = framedGraph.traverse(
-            input -> input.V().has("name", "jupiter")).toList(God.class);
+                input -> input.V().has("name", "jupiter")).toList(God.class);
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father != null);
@@ -590,13 +604,13 @@ public class AdjacencyMethodHandlerTest {
 
     @Test
     public void testRemoveSon() {
-        final TinkerGraph godGraph = TinkerGraph.open();
+
         GodGraphLoader.load(godGraph);
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
         final List<? extends God> gods = framedGraph.traverse(
-            input -> input.V().has("name", "jupiter")).toList(God.class);
+                input -> input.V().has("name", "jupiter")).toList(God.class);
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father != null);
@@ -616,13 +630,13 @@ public class AdjacencyMethodHandlerTest {
 
     @Test
     public void testRemoveEverySon() {
-        final TinkerGraph godGraph = TinkerGraph.open();
+
         GodGraphLoader.load(godGraph);
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
         final List<? extends God> gods = framedGraph.traverse(
-            input -> input.V().has("name", "jupiter")).toList(God.class);
+                input -> input.V().has("name", "jupiter")).toList(God.class);
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father != null);
@@ -635,13 +649,13 @@ public class AdjacencyMethodHandlerTest {
 
     @Test
     public void testDeleteSon() {
-        final TinkerGraph godGraph = TinkerGraph.open();
+
         GodGraphLoader.load(godGraph);
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
 
         final List<? extends God> gods = framedGraph.traverse(
-            input -> input.V().has("name", "jupiter")).toList(God.class);
+                input -> input.V().has("name", "jupiter")).toList(God.class);
 
         final God father = gods.iterator().next();
         Assert.assertTrue(father != null);
@@ -664,13 +678,12 @@ public class AdjacencyMethodHandlerTest {
 
         final Set<Class<?>> exceptionTypes = new HashSet<>(Arrays.asList(new Class<?>[]{BadGetSonsArgumentClass.class}));
 
-        final TinkerGraph godGraph = TinkerGraph.open();
         GodGraphLoader.load(godGraph);
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, exceptionTypes);
 
         final List<? extends BadGetSonsArgumentClass> gods = framedGraph.traverse(
-            input -> input.V().has("name", "jupiter")).toList(BadGetSonsArgumentClass.class);
+                input -> input.V().has("name", "jupiter")).toList(BadGetSonsArgumentClass.class);
 
         final BadGetSonsArgumentClass father = gods.iterator().next();
     }
@@ -680,13 +693,12 @@ public class AdjacencyMethodHandlerTest {
 
         final Set<Class<?>> exceptionTypes = new HashSet<>(Arrays.asList(new Class<?>[]{BadGetSonsArgumentInterface.class}));
 
-        final TinkerGraph godGraph = TinkerGraph.open();
         GodGraphLoader.load(godGraph);
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, exceptionTypes);
 
         final List<? extends BadGetSonsArgumentInterface> gods = framedGraph.traverse(
-            input -> input.V().has("name", "jupiter")).toList(BadGetSonsArgumentInterface.class);
+                input -> input.V().has("name", "jupiter")).toList(BadGetSonsArgumentInterface.class);
 
         final BadGetSonsArgumentInterface father = gods.iterator().next();
     }
@@ -696,13 +708,12 @@ public class AdjacencyMethodHandlerTest {
 
         final Set<Class<?>> exceptionTypes = new HashSet<>(Arrays.asList(new Class<?>[]{BadAddSonNoArguments.class}));
 
-        final TinkerGraph godGraph = TinkerGraph.open();
         GodGraphLoader.load(godGraph);
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, exceptionTypes);
 
         final List<? extends BadGetSonsArgumentInterface> gods = framedGraph.traverse(
-            input -> input.V().has("name", "jupiter")).toList(BadGetSonsArgumentInterface.class);
+                input -> input.V().has("name", "jupiter")).toList(BadGetSonsArgumentInterface.class);
 
         final BadGetSonsArgumentInterface father = gods.iterator().next();
     }
@@ -712,13 +723,12 @@ public class AdjacencyMethodHandlerTest {
 
         final Set<Class<?>> exceptionTypes = new HashSet<>(Arrays.asList(new Class<?>[]{BadAddSonArgument.class}));
 
-        final TinkerGraph godGraph = TinkerGraph.open();
         GodGraphLoader.load(godGraph);
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, exceptionTypes);
 
         final List<? extends BadGetSonsArgumentInterface> gods = framedGraph.traverse(
-            input -> input.V().has("name", "jupiter")).toList(BadGetSonsArgumentInterface.class);
+                input -> input.V().has("name", "jupiter")).toList(BadGetSonsArgumentInterface.class);
 
         final BadGetSonsArgumentInterface father = gods.iterator().next();
     }
@@ -728,13 +738,12 @@ public class AdjacencyMethodHandlerTest {
 
         final Set<Class<?>> exceptionTypes = new HashSet<>(Arrays.asList(new Class<?>[]{BadAddSonExtraArgument.class}));
 
-        final TinkerGraph godGraph = TinkerGraph.open();
         GodGraphLoader.load(godGraph);
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, exceptionTypes);
 
         final List<? extends BadGetSonsArgumentInterface> gods = framedGraph.traverse(
-            input -> input.V().has("name", "jupiter")).toList(BadGetSonsArgumentInterface.class);
+                input -> input.V().has("name", "jupiter")).toList(BadGetSonsArgumentInterface.class);
 
         final BadGetSonsArgumentInterface father = gods.iterator().next();
     }
@@ -744,13 +753,12 @@ public class AdjacencyMethodHandlerTest {
 
         final Set<Class<?>> exceptionTypes = new HashSet<>(Arrays.asList(new Class<?>[]{BadSonMethodName.class}));
 
-        final TinkerGraph godGraph = TinkerGraph.open();
         GodGraphLoader.load(godGraph);
 
         final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, exceptionTypes);
 
         final List<? extends BadGetSonsArgumentInterface> gods = framedGraph.traverse(
-            input -> input.V().has("name", "jupiter")).toList(BadGetSonsArgumentInterface.class);
+                input -> input.V().has("name", "jupiter")).toList(BadGetSonsArgumentInterface.class);
 
         final BadGetSonsArgumentInterface father = gods.iterator().next();
     }

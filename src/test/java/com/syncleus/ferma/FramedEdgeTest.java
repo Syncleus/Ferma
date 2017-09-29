@@ -15,9 +15,11 @@
  */
 package com.syncleus.ferma;
 
+import java.io.IOException;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
 import org.apache.tinkerpop.gremlin.structure.Graph;
 import org.apache.tinkerpop.gremlin.tinkergraph.structure.TinkerGraph;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -42,6 +44,11 @@ public class FramedEdgeTest {
         e1 = p1.addKnows(p2);
         e1.setYears(15);
         
+    }
+    
+    @After
+    public void deinit() throws IOException {
+        fg.close();
     }
 
     @Test

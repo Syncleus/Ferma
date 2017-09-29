@@ -186,8 +186,7 @@ public class ReflectionUtility {
 
     public static Type getType(final Type[] types, final int pos) {
         if (pos >= types.length)
-            throw new RuntimeException("No type can be found at position "
-                                             + pos);
+            throw new IndexOutOfBoundsException("No type can be found at position " + pos);
         return types[pos];
     }
 

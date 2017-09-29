@@ -79,7 +79,7 @@ public class DefaultTraversable<PE, E> implements Traversable<PE, E>{
             return this.parentGraph.frameElement((Element) baseTraversal.next(), VertexFrame.class);
         }
         catch (final NoSuchElementException e) {
-            return this.parentGraph.addFramedVertex(null, VertexFrame.class);
+            return this.parentGraph.addFramedVertex(TVertex.DEFAULT_INITIALIZER, null);
         }
     }
 

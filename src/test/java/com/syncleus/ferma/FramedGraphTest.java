@@ -15,16 +15,11 @@
  */
 package com.syncleus.ferma;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.Consumer;
-import java.util.function.Function;
 import com.google.common.collect.Lists;
 import com.syncleus.ferma.framefactories.FrameFactory;
-import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
-import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
 import org.apache.tinkerpop.gremlin.structure.Element;
 import org.apache.tinkerpop.gremlin.structure.Graph;
 import org.apache.tinkerpop.gremlin.tinkergraph.structure.TinkerGraph;
@@ -34,7 +29,6 @@ import org.junit.Test;
 import org.mockito.MockitoAnnotations;
 import com.syncleus.ferma.typeresolvers.PolymorphicTypeResolver;
 
-import javax.annotation.Nullable;
 
 public class FramedGraphTest {
 
@@ -155,21 +149,21 @@ public class FramedGraphTest {
         final Long hasKnowsCount = fg.getTypeResolver().hasType(fg.getRawTraversal().E(), Knows.class).count().next();
         final Long hasNotPersonCount = fg.getTypeResolver().hasNotType(fg.getRawTraversal().V(), Person.class).count().next();
         final Long noPersonCount = fg.getTypeResolver().hasType(fg.getTypeResolver().hasNotType(fg.getRawTraversal().V(), Person.class), Person.class).count().next();
-        assertEquals((Long) 5L, hasNotKnowsCount);
-        assertEquals((Long) 10L, hasKnowsCount);
-        assertEquals((Long) 5L, hasNotPersonCount);
-        assertEquals((Long) 0L, noPersonCount);
+        Assert.assertEquals((Long) 5L, hasNotKnowsCount);
+        Assert.assertEquals((Long) 10L, hasKnowsCount);
+        Assert.assertEquals((Long) 5L, hasNotPersonCount);
+        Assert.assertEquals((Long) 0L, noPersonCount);
 
         final Iterator<? extends Person> persons = fg.traverse(
             input -> fg.getTypeResolver().hasType(input.V(), Person.class)).frameExplicit(Person.class);
 
         final List<Person> personList = Lists.newArrayList(persons);
-        assertEquals(11, personList.size());
+        Assert.assertEquals(11, personList.size());
         // Verify that all found persons have indeed been filtered
         persons.forEachRemaining(new Consumer<Person>() {
             @Override
             public void accept(final Person person) {
-                assertEquals(Person.class.getName(), person.getProperty(PolymorphicTypeResolver.TYPE_RESOLUTION_KEY));
+                Assert.assertEquals(Person.class.getName(), person.getProperty(PolymorphicTypeResolver.TYPE_RESOLUTION_KEY));
             }
         });
     }

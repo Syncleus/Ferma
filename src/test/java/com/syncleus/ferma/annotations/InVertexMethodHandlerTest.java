@@ -15,18 +15,17 @@
  */
 package com.syncleus.ferma.annotations;
 
-import java.util.function.Function;
 import com.syncleus.ferma.DelegatingFramedGraph;
 import com.syncleus.ferma.FramedGraph;
+import com.syncleus.ferma.TVertex;
 import com.syncleus.ferma.VertexFrame;
-import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
-import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
+import com.syncleus.ferma.graphtypes.javaclass.invalid.NoArgSetInVertexEdge;
 import org.apache.tinkerpop.gremlin.tinkergraph.structure.TinkerGraph;
 import org.junit.Assert;
 import org.junit.Test;
 
-import javax.annotation.Nullable;
 import java.util.*;
+import com.syncleus.ferma.graphtypes.javaclass.invalid.OneArgGetInVertexEdge;
 
 public class InVertexMethodHandlerTest {
 
@@ -55,5 +54,21 @@ public class InVertexMethodHandlerTest {
         Assert.assertTrue(father != null);
         fatherVertex = father;
         Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
+    }
+
+    @Test (expected = IllegalStateException.class)
+    public void testSingleArgGetMethod() {
+        DelegatingFramedGraph fg = new DelegatingFramedGraph(TinkerGraph.open(), false, true);
+        TVertex t1 = fg.addFramedVertex();
+        TVertex t2 = fg.addFramedVertex();
+        fg.addFramedEdge(t1, t2, "somename", OneArgGetInVertexEdge.class);
+    }
+    
+    @Test (expected = IllegalStateException.class)
+    public void testNoArgSetMethod() {
+        DelegatingFramedGraph fg = new DelegatingFramedGraph(TinkerGraph.open(), false, true);
+        TVertex t1 = fg.addFramedVertex();
+        TVertex t2 = fg.addFramedVertex();
+        fg.addFramedEdge(t1, t2, "somename", NoArgSetInVertexEdge.class);
     }
 }

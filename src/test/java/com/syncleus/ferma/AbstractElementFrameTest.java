@@ -192,6 +192,27 @@ public class AbstractElementFrameTest {
     }
 
     @Test
+    public void testVtoJson2() {
+        String stringPropName = "custom-string-property";
+        String stringPropValue = "custom-string-value";
+        String charPropName = "custom-char-property";
+        Character charPropValue = 'D';
+        String intPropName = "custom-int-property";
+        int intPropValue = 1234;
+        Person expected = fg.addFramedVertex(Person.DEFAULT_INITIALIZER,
+                T.id, "some-id",
+                stringPropName, stringPropValue,
+                charPropName, charPropValue,
+                intPropName, intPropValue);
+        JsonObject actual = expected.toJson();
+        Assert.assertEquals(expected.getId(String.class), actual.get("id").getAsString());
+        Assert.assertEquals("edge", actual.get("elementClass").getAsString());
+        Assert.assertEquals(expected.getProperty(intPropName), (Integer) actual.get(intPropName).getAsInt());
+        Assert.assertEquals(expected.getProperty(stringPropName), actual.get(stringPropName).getAsString());
+        Assert.assertEquals(expected.getProperty(charPropName), (Character) actual.get(charPropName).getAsCharacter());
+    }
+
+    @Test
     public void testEtoJson() {
         JsonObject actual = e1.toJson();
         Assert.assertEquals(e1.getId(Long.class).longValue(), actual.get("id").getAsLong());

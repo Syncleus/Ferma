@@ -30,6 +30,7 @@ import java.lang.annotation.Annotation;
 import java.util.Collections;
 import net.bytebuddy.dynamic.DynamicType;
 import org.apache.tinkerpop.gremlin.structure.Element;
+import org.apache.tinkerpop.gremlin.structure.Graph;
 import org.apache.tinkerpop.gremlin.tinkergraph.structure.TinkerGraph;
 import org.junit.After;
 import org.junit.Before;
@@ -84,8 +85,8 @@ public class AnnotationFrameFactoryTest {
                 .thenAnswer(inv -> inv.getArgumentAt(0, DynamicType.Builder.class))
                 .getMock();
         AnnotationFrameFactory frameFactory = new AnnotationFrameFactory(new ReflectionCache(), Collections.singleton(custom));
-        DelegatingFramedGraph fg = new DelegatingFramedGraph(TinkerGraph.open(), frameFactory, new PolymorphicTypeResolver());
-        fg.addFramedVertex(God.class);
+        DelegatingFramedGraph framedGraph = new DelegatingFramedGraph(fg.getBaseGraph(), frameFactory, new PolymorphicTypeResolver());
+        framedGraph.addFramedVertex(God.class);
         Mockito.verify(custom, Mockito.atLeast(0)).getAnnotationType();
         Mockito.verify(custom, Mockito.atLeastOnce()).processMethod(Mockito.any(), Mockito.any(), Mockito.any());
     }

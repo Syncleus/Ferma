@@ -15,32 +15,32 @@
  */
 package com.syncleus.ferma.tx;
 
-import org.apache.tinkerpop.gremlin.structure.Graph;
+import org.apache.tinkerpop.gremlin.tinkergraph.structure.TinkerGraph;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.Mockito;
 
-import com.syncleus.ferma.DelegatingFramedGraph;
+/**
+ *
+ * @author rqpa
+ */
+public class TxFramedGraphTest {
+    
+    private DummyGraph graph;
 
-public class DummyGraph extends DelegatingFramedGraph<Graph> implements FramedTxGraph {
-
-    private int totalTxCreated = 0;
-
-    public DummyGraph(Graph delegate) {
-        super(delegate);
+    @Before
+    public void setUp() {
+        graph = new DummyGraph(TinkerGraph.open());
     }
     
-    @Override
-    public Tx tx() {
-        return FramedTxGraph.super.tx();
-    }
-
-    @Override
-    public Tx createTx() {
-        Tx created = new DummyTransaction(null, this);
-        totalTxCreated += 1;
-        return created;
-    }
-
-    public int getTotalTxCreated() {
-        return totalTxCreated;
+    @Test
+    public void testSingleTxCreation() {
+        Tx expected = graph.tx();
+        Assert.assertSame(expected, graph.tx());
+        Assert.assertSame(expected, graph.tx());
+        Assert.assertSame(expected, graph.tx());
+        Assert.assertSame(expected, graph.tx());
     }
     
 }

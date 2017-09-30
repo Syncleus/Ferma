@@ -24,8 +24,11 @@ import org.junit.Test;
 import org.mockito.MockitoAnnotations;
 import com.google.common.collect.Sets;
 import com.google.gson.JsonObject;
+import com.syncleus.ferma.annotations.God;
 import com.syncleus.ferma.graphtypes.javaclass.JavaAccessModifier;
+import java.io.IOException;
 import org.apache.tinkerpop.gremlin.structure.T;
+import org.junit.After;
 
 public class AbstractElementFrameTest {
 
@@ -44,6 +47,11 @@ public class AbstractElementFrameTest {
         p2.setName("Julia");
         e1 = p1.addKnows(p2);
         e1.setYears(15);
+    }
+    
+    @After
+    public void deinit() throws IOException {
+        fg.close();
     }
 
     @Test
@@ -193,18 +201,34 @@ public class AbstractElementFrameTest {
 
     @Test
     public void testEtoJson2() {
-        String propName = "custom-string-property";
-        String propValue = "custom-string-value";
+        String stringPropName = "custom-string-property";
+        String stringPropValue = "custom-string-value";
+        String charPropName = "custom-char-property";
+        Character charPropValue = 'D';
         Person p3 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
         Knows expected = fg.addFramedEdge(p1, p3, "knows", Knows.DEFAULT_INITIALIZER, 
                 "years", 15,
                 T.id, "some-id",
-                propName, propValue);
+                stringPropName, stringPropValue,
+                charPropName, charPropValue);
         JsonObject actual = expected.toJson();
         Assert.assertEquals(expected.getId(String.class), actual.get("id").getAsString());
         Assert.assertEquals("edge", actual.get("elementClass").getAsString());
         Assert.assertEquals(expected.getYears(), actual.get("years").getAsInt());
-        Assert.assertEquals(expected.getProperty(propName), actual.get(propName).getAsString());
-               
+        Assert.assertEquals(expected.getProperty(stringPropName), actual.get(stringPropName).getAsString());
+        Assert.assertEquals(expected.getProperty(charPropName), (Character) actual.get(charPropName).getAsCharacter());
+    }
+    
+    @Test
+    public void testEquals() {
+        Assert.assertFalse(p1.equals(null));
+        Programmer g1 = fg.addFramedVertex(Programmer.class);
+        Assert.assertFalse(p1.equals(g1));
+        Person p4 = fg.frameElement(p1.getElement(), Person.class);
+        Assert.assertTrue(p1.equals(p4));
+        Person p3 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
+        Assert.assertFalse(p1.equals(p3));
+        p1.setElement(null);
+        Assert.assertFalse(p1.equals(p3));
     }
 }

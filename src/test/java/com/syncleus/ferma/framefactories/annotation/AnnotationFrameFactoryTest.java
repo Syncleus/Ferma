@@ -20,6 +20,7 @@ import com.syncleus.ferma.ReflectionCache;
 import com.syncleus.ferma.TEdge;
 import com.syncleus.ferma.TVertex;
 import com.syncleus.ferma.annotations.Adjacency;
+import com.syncleus.ferma.annotations.Friend;
 import com.syncleus.ferma.annotations.God;
 import com.syncleus.ferma.graphtypes.javaclass.invalid.InvalidFrame;
 import com.syncleus.ferma.graphtypes.javaclass.invalid.OneArgConstructorVertex;
@@ -28,6 +29,7 @@ import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.util.Collections;
 import net.bytebuddy.dynamic.DynamicType;
+import org.apache.tinkerpop.gremlin.structure.Element;
 import org.apache.tinkerpop.gremlin.tinkergraph.structure.TinkerGraph;
 import org.junit.After;
 import org.junit.Before;
@@ -87,4 +89,23 @@ public class AnnotationFrameFactoryTest {
         Mockito.verify(custom, Mockito.atLeast(0)).getAnnotationType();
         Mockito.verify(custom, Mockito.atLeastOnce()).processMethod(Mockito.any(), Mockito.any(), Mockito.any());
     }
+    
+    @Test (expected = IllegalStateException.class)
+    public void testBadElementInterfaceFrame() {
+        Element badElement = Mockito.mock(Element.class);
+        frameFactory.create(badElement, God.class);
+    }
+    
+    @Test (expected = IllegalStateException.class)
+    public void testBadElementAbstractClassFrame() {
+        Element badElement = Mockito.mock(Element.class);
+        frameFactory.create(badElement, Friend.class);
+    }
+    
+    @Test (expected = IllegalStateException.class)
+    public void testBadElementBadFrame() {
+        Element badElement = Mockito.mock(Element.class);
+        frameFactory.create(badElement, InvalidFrame.class);
+    }
+    
 }

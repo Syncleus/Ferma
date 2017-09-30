@@ -228,4 +228,5 @@ public class DelegatingFrameGraphTest extends NetworkGraphTestHelper {
                 NetworkConnectionEdge.class);
         assertAllConnections(actual);
     }
+    
 }

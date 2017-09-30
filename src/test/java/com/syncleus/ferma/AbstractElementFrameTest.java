@@ -24,7 +24,6 @@ import org.junit.Test;
 import org.mockito.MockitoAnnotations;
 import com.google.common.collect.Sets;
 import com.google.gson.JsonObject;
-import com.syncleus.ferma.annotations.God;
 import com.syncleus.ferma.graphtypes.javaclass.JavaAccessModifier;
 import java.io.IOException;
 import org.apache.tinkerpop.gremlin.structure.T;

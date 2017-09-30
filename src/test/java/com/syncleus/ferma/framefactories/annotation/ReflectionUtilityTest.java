@@ -39,13 +39,14 @@ public class ReflectionUtilityTest {
 
     private static class SomeMockClass<N extends Number> {
 
-        // Implementation of all methods is completely irrelevant
         public void foo(Function<? extends Number, ? super Comparable> f) {
+            // Implementation is irrelevant
         }
-        
+
         public void noWildcardFunction(Function<Number, Comparable> f) {
+            // Implementation is irrelevant
         }
-        
+
         public Function<Number, Comparable> functionReturningMethod() {
             return null;
         }
@@ -57,13 +58,13 @@ public class ReflectionUtilityTest {
         public boolean canFoo() {
             return true;
         }
-        
+
         public void doesAcceptVertexFrame(VertexFrame frame) {
-            
+            // Implementation is irrelevant
         }
-        
+
         public void doesAcceptEdgeFrame(EdgeFrame frame) {
-            
+            // Implementation is irrelevant
         }
     };
 
@@ -85,15 +86,15 @@ public class ReflectionUtilityTest {
     @Test
     public void testActualTypeWithArray() throws NoSuchMethodException {
         assertGetActualType(
-                Double.class, 
+                Double.class,
                 Double[].class,
                 0);
     }
 
     @Test
-    public void testActualTypeWithNull()  {
+    public void testActualTypeWithNull() {
         assertGetActualType(
-                null, 
+                null,
                 null,
                 0);
     }
@@ -107,7 +108,7 @@ public class ReflectionUtilityTest {
     @Test
     public void testActualTypeWithParameterizedType() throws NoSuchMethodException, NoSuchFieldException {
         assertGetActualType(
-                Number.class, 
+                Number.class,
                 getMethod(SomeMockClass.class, "foo").getGenericParameterTypes()[0],
                 0);
     }
@@ -117,7 +118,7 @@ public class ReflectionUtilityTest {
         ParameterizedType paramType = (ParameterizedType) getMethod(SomeMockClass.class, "foo").getGenericParameterTypes()[0];
         Type wildCardType = paramType.getActualTypeArguments()[0];
         assertGetActualType(
-                Number.class, 
+                Number.class,
                 wildCardType,
                 0);
     }
@@ -126,7 +127,7 @@ public class ReflectionUtilityTest {
     public void testActualTypeParamTypeNoWildcard() throws NoSuchMethodException, NoSuchFieldException {
         ParameterizedType paramType = (ParameterizedType) getMethod(SomeMockClass.class, "noWildcardFunction").getGenericParameterTypes()[0];
         assertGetActualType(
-                Comparable.class, 
+                Comparable.class,
                 paramType,
                 1);
     }
@@ -136,7 +137,7 @@ public class ReflectionUtilityTest {
         ParameterizedType paramType = (ParameterizedType) getMethod(SomeMockClass.class, "foo").getGenericParameterTypes()[0];
         Type wildCardType = paramType.getActualTypeArguments()[1];
         assertGetActualType(
-                Comparable.class, 
+                Comparable.class,
                 wildCardType,
                 0);
     }
@@ -173,39 +174,39 @@ public class ReflectionUtilityTest {
         Assert.assertFalse(ReflectionUtility.acceptsVertexFrame(getMethod(SomeMockClass.class, "doesAcceptVertexFrame"), 1));
         Assert.assertTrue(ReflectionUtility.acceptsVertexFrame(getMethod(SomeMockClass.class, "doesAcceptVertexFrame"), 0));
     }
-    
+
     @Test
     public void testGetTypes() {
-        Type[] expected = new Type[] {
+        Type[] expected = new Type[]{
             Integer.TYPE,
             Double.TYPE,
             Character.TYPE
         };
-        
+
         for (int i = 0; i < expected.length; i++) {
             Assert.assertEquals(ReflectionUtility.getType(expected, i), expected[i]);
         }
     }
-    
-    @Test (expected = IndexOutOfBoundsException.class)
+
+    @Test(expected = IndexOutOfBoundsException.class)
     public void testGetTypesOutOfBounds() {
-        Type[] expected = new Type[] {
+        Type[] expected = new Type[]{
             Integer.TYPE,
             Double.TYPE,
             Character.TYPE
         };
-        
+
         ReflectionUtility.getType(expected, expected.length);
     }
-    
-    @Test (expected = IndexOutOfBoundsException.class)
+
+    @Test(expected = IndexOutOfBoundsException.class)
     public void testGetTypesOutOfBounds2() {
-        Type[] expected = new Type[] {
+        Type[] expected = new Type[]{
             Integer.TYPE,
             Double.TYPE,
             Character.TYPE
         };
-        
+
         ReflectionUtility.getType(expected, -3);
     }
 

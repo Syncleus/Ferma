@@ -30,7 +30,6 @@ import java.lang.annotation.Annotation;
 import java.util.Collections;
 import net.bytebuddy.dynamic.DynamicType;
 import org.apache.tinkerpop.gremlin.structure.Element;
-import org.apache.tinkerpop.gremlin.structure.Graph;
 import org.apache.tinkerpop.gremlin.tinkergraph.structure.TinkerGraph;
 import org.junit.After;
 import org.junit.Before;

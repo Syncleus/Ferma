@@ -42,6 +42,9 @@ public class ReflectionUtilityTest {
         // Implementation of all methods is completely irrelevant
         public void foo(Function<? extends Number, ? super Comparable> f) {
         }
+        
+        public void noWildcardFunction(Function<Number, Comparable> f) {
+        }
 
         public Boolean isFoo() {
             return true;
@@ -76,9 +79,17 @@ public class ReflectionUtilityTest {
     }
 
     @Test
+    public void testActualTypeWithArray() throws NoSuchMethodException {
+        assertGetActualType(
+                Double.class, 
+                Double[].class,
+                0);
+    }
+
+    @Test
     public void testActualTypeWithNull()  {
         assertGetActualType(
-                null, // List has no upper bounds
+                null, 
                 null,
                 0);
     }
@@ -92,17 +103,36 @@ public class ReflectionUtilityTest {
     @Test
     public void testActualTypeWithParameterizedType() throws NoSuchMethodException, NoSuchFieldException {
         assertGetActualType(
-                Number.class, // List has no upper bounds
+                Number.class, 
                 getMethod(SomeMockClass.class, "foo").getGenericParameterTypes()[0],
                 0);
     }
 
     @Test
-    public void testActualTypeWithWildcardType() throws NoSuchMethodException, NoSuchFieldException {
+    public void testActualTypeWithWildcardTypeUpperBounds() throws NoSuchMethodException, NoSuchFieldException {
         ParameterizedType paramType = (ParameterizedType) getMethod(SomeMockClass.class, "foo").getGenericParameterTypes()[0];
         Type wildCardType = paramType.getActualTypeArguments()[0];
         assertGetActualType(
-                Number.class, // List has no upper bounds
+                Number.class, 
+                wildCardType,
+                0);
+    }
+
+    @Test
+    public void testActualTypeParamTypeNoWildcard() throws NoSuchMethodException, NoSuchFieldException {
+        ParameterizedType paramType = (ParameterizedType) getMethod(SomeMockClass.class, "noWildcardFunction").getGenericParameterTypes()[0];
+        assertGetActualType(
+                Comparable.class, 
+                paramType,
+                1);
+    }
+
+    @Test
+    public void testActualTypeWithWildcardTypeLowerBounds() throws NoSuchMethodException, NoSuchFieldException {
+        ParameterizedType paramType = (ParameterizedType) getMethod(SomeMockClass.class, "foo").getGenericParameterTypes()[0];
+        Type wildCardType = paramType.getActualTypeArguments()[1];
+        assertGetActualType(
+                Comparable.class, 
                 wildCardType,
                 0);
     }

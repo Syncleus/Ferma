@@ -78,10 +78,10 @@ public interface ComputerVertex extends NetworkDeviceVertex {
             ClassInitializer<E> edgeInitializer);
     
     @Adjacency(label = "connects", direction = Direction.BOTH)
-    <T extends NetworkDeviceVertex> void setTwoWayConnectionsWith(Iterator<T> connectees);
+    <T extends NetworkDeviceVertex> void setTwoWayConnectionsWithIterator(Iterator<T> connectees);
     
     @Adjacency(label = "connects", direction = Direction.BOTH)
-    <T extends NetworkDeviceVertex> void setTwoWayConnectionsWith(Iterable<T> connectees);
+    <T extends NetworkDeviceVertex> void setTwoWayConnectionsWithIterable(Iterable<T> connectees);
     
     @Adjacency(label = "connects", direction = Direction.OUT)
     <T extends NetworkDeviceVertex> void setOutConnectionsWith(Iterable<T> connectees);

@@ -25,6 +25,7 @@ import org.mockito.MockitoAnnotations;
 import com.google.common.collect.Sets;
 import com.google.gson.JsonObject;
 import com.syncleus.ferma.graphtypes.javaclass.JavaAccessModifier;
+import org.apache.tinkerpop.gremlin.structure.T;
 
 public class AbstractElementFrameTest {
 
@@ -188,5 +189,22 @@ public class AbstractElementFrameTest {
         Assert.assertEquals(e1.getId(Long.class).longValue(), actual.get("id").getAsLong());
         Assert.assertEquals("edge", actual.get("elementClass").getAsString());
         Assert.assertEquals(e1.getYears(), actual.get("years").getAsInt());
+    }
+
+    @Test
+    public void testEtoJson2() {
+        String propName = "custom-string-property";
+        String propValue = "custom-string-value";
+        Person p3 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER);
+        Knows expected = fg.addFramedEdge(p1, p3, "knows", Knows.DEFAULT_INITIALIZER, 
+                "years", 15,
+                T.id, "some-id",
+                propName, propValue);
+        JsonObject actual = expected.toJson();
+        Assert.assertEquals(expected.getId(String.class), actual.get("id").getAsString());
+        Assert.assertEquals("edge", actual.get("elementClass").getAsString());
+        Assert.assertEquals(expected.getYears(), actual.get("years").getAsInt());
+        Assert.assertEquals(expected.getProperty(propName), actual.get(propName).getAsString());
+               
     }
 }

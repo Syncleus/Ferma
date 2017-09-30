@@ -45,6 +45,10 @@ public class ReflectionUtilityTest {
         
         public void noWildcardFunction(Function<Number, Comparable> f) {
         }
+        
+        public Function<Number, Comparable> functionReturningMethod() {
+            return null;
+        }
 
         public Boolean isFoo() {
             return true;
@@ -135,6 +139,16 @@ public class ReflectionUtilityTest {
                 Comparable.class, 
                 wildCardType,
                 0);
+    }
+
+    @Test
+    public void testGetGenericType() throws NoSuchMethodException, NoSuchFieldException {
+        // Maybe we want to add position to getGenericType and not just assume the first
+        // generic type is required?
+        Class actual = ReflectionUtility.getGenericClass(getMethod(SomeMockClass.class, "functionReturningMethod"));
+        Assert.assertEquals(Number.class, actual);
+        actual = ReflectionUtility.getGenericClass(getMethod(SomeMockClass.class, "foo"));
+        Assert.assertEquals(void.class, actual);
     }
 
     @Test

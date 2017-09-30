@@ -206,7 +206,7 @@ public class AbstractElementFrameTest {
                 intPropName, intPropValue);
         JsonObject actual = expected.toJson();
         Assert.assertEquals(expected.getId(String.class), actual.get("id").getAsString());
-        Assert.assertEquals("edge", actual.get("elementClass").getAsString());
+        Assert.assertEquals("vertex", actual.get("elementClass").getAsString());
         Assert.assertEquals(expected.getProperty(intPropName), (Integer) actual.get(intPropName).getAsInt());
         Assert.assertEquals(expected.getProperty(stringPropName), actual.get(stringPropName).getAsString());
         Assert.assertEquals(expected.getProperty(charPropName), (Character) actual.get(charPropName).getAsCharacter());

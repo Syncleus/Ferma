@@ -11,6 +11,7 @@ site_url: 'http://syncleus.com/Ferma'
 pages:
     - Home: index.md
     - Getting Started: getting_started.md
+    - Features: features.md
     - Object Mapping: object_mapping.md
     - Core Annotations:
         - Overview: annotations/overview.md

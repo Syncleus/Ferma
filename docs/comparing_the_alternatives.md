@@ -24,127 +24,21 @@ benchmark program and run it for yourself!
 
 ## Feature Breakdown
 
-Despite the superior performance of Ferma it also supports all the features provided by the alternatives out there, not
-to mention several novel features. The following gives a quick breakdown of the features of the various frameworks. We
-also include a bit later in the document some Ferma examples showing the various features in action. All of the examples
-below use the domain model [found here](Ferma:Domain_Example).
+Ferma also supports all the features provided by the alternatives out there, not to mention several novel features. The
+following gives a quick breakdown of the features of the various frameworks. We also link to some Ferma examples showing
+the various features in action.
 
-|                                                                                                                  | **Ferma**     | **Frames**    | **Totorom**   | **Peapod**    |
-|------------------------------------------------------------------------------------------------------------------|---------------|---------------|---------------|---------------|
-| **[JPA-like Annotations](creating_annotated_domain_models)**                                                     | Supported     | Supported     | Not Supported | Supported     |
-| **[Type information encoded into graph](#type-information-encoded-into-graph)**                                  | Supported     | Supported     | Supported     | Supported     |
-| **[Framing of elements instantiated according to type hierarchy](#framing-instantiated-by-type-hierarchy)**      | Supported     | Supported     | Supported     | Supported     |
-| **[Element queried by type hierarchy](#element-queried-by-type-hierarchy)**                                      | Supported     | Not Supported | Not Supported | Partial \*    |
-| **[Turning off type resolution on a per call basis](#turning-off-type-resolution-per-call)**                     | Supported     | Not Supported | Not Supported | Not Supported |
-| **[Changing the encoded graph type already stored in the database](#changing-type-encoded-in-the-graph)**        | Supported     | Not Supported | Not Supported | Not Supported |
-| **[Customizing the way type information is stored in the graph](#customizing-how-types-are-encoded)**            | Supported     | Not Supported | Not Supported | Not Supported |
-| **Tinkerpop 2 support**                                                                                          | Supported     | Supported     | Supported     | Not Supported |
-| **Tinkerpop 3 support**                                                                                          | Not Supported | Not Supported | Not Supported | Supported     |
+| Feature                                                                                                                     | **Ferma**     | **Frames**    | **Totorom**   | **Peapod**    |
+|-----------------------------------------------------------------------------------------------------------------------------|---------------|---------------|---------------|---------------|
+| **[JPA-like Annotations](features.md#jpa-like-annotations)**                                                                | Supported     | Supported     | Not Supported | Supported     |
+| **[Type information encoded into graph](features.md#type-information-encoded-into-graph)**                                  | Supported     | Supported     | Supported     | Supported     |
+| **[Framing of elements instantiated according to type hierarchy](features.md#framing-instantiated-by-type-hierarchy)**      | Supported     | Supported     | Supported     | Supported     |
+| **[Element queried by type hierarchy](features.md#element-queried-by-type-hierarchy)**                                      | Supported     | Not Supported | Not Supported | Partial \*    |
+| **[Turning off type resolution on a per call basis](features.md#turning-off-type-resolution-per-call)**                     | Supported     | Not Supported | Not Supported | Not Supported |
+| **[Changing the encoded graph type already stored in the database](features.md#changing-type-encoded-in-the-graph)**        | Supported     | Not Supported | Not Supported | Not Supported |
+| **[Customizing the way type information is stored in the graph](features.md#customizing-how-types-are-encoded)**            | Supported     | Not Supported | Not Supported | Not Supported |
+| **Tinkerpop 2 support**                                                                                                     | Supported     | Supported     | Supported     | Not Supported |
+| **Tinkerpop 3 support**                                                                                                     | Supported     | Not Supported | Not Supported | Supported     |
 
 \* While Peapod does support querying for all instances of a type, and its subtypes, it does not support a mechanism to
 query for a specific type while excluding subtypes.
-
-### Type information encoded into graph
-
-```java
-Set<Class<?>> types = new HashSet<Class<?>>(Arrays.asList(new Class<?>[]{Person.class}));
-Graph g = new TinkerGraph();
-FramedGraph fg = new DelegatingFramedGraph(g, types);
-
-fg.addFramedVertex(Person.class);
-Person person = fg.v().next(Program.class);
-
-String personClassName = Person.class.getName();
-String encodedClassName = person.getProperty(PolymorphicTypeResolver.TYPE_RESOLUTION_KEY)
-assert(personClassName.equals(encodedClassName));
-```
-
-### Framing instantiated by type hierarchy
-
-```java
-Set<Class<?>> types = new HashSet<Class<?>>(Arrays.asList(new Class<?>[]{Person.class,
-                                                                         Programmer.class}));
-TinkerGraph g = new TinkerGraph();
-FramedGraph fg = new DelegatingFramedGraph(g, types);
-
-fg.addFramedVertex(Programmer.class);
-
-//make sure the newly added node is actually a programmer
-Person programmer = fg.v().next(Person.class);
-assert(programmer instanceof Programmer);
-```
-
-### Element queried by type hierarchy
-
-```java
-Set<Class<?>> types = new HashSet<Class<?>>(Arrays.asList(new Class<?>[]{Person.class,
-                                                                         Programmer.class}));
-TinkerGraph g = new TinkerGraph();
-FramedGraph fg = new DelegatingFramedGraph(g, types);
-
-fg.addFramedVertex(Programmer.class);
-fg.addFramedVertex(Person.class);
-
-//counts how many people (or subclasses thereof) in the graph.
-assert(fg.v().has(Person.class).count() == 2);
-//counts how many programmers are in the graph
-assert(fg.v().has(Programmer.class).count() == 1);
-```
-
-### Turning off type resolution per call
-
-```java
-Set<Class<?>> types = new HashSet<Class<?>>(Arrays.asList(new Class<?>[]{Person.class,
-                                                                         Programmer.class}));
-TinkerGraph g = new TinkerGraph();
-FramedGraph fg = new DelegatingFramedGraph(g, types);
-
-fg.addFramedVertex(Programmer.class);
-
-//With type resolution is active it should be a programmer
-assert(fg.v().next(Person.class) instanceof Programmer);
-//With type resolution bypassed it is no longer a programmer
-assert(!(fg.v().nextExplicit(Person.class) instanceof Programmer));
-```
-
-### Changing type encoded in the graph
-
-```java
-Set<Class<?>> types = new HashSet<Class<?>>(Arrays.asList(new Class<?>[]{Person.class,
-                                                                         Programmer.class}));
-TinkerGraph g = new TinkerGraph();
-FramedGraph fg = new DelegatingFramedGraph(g, types);
-
-fg.addFramedVertex(Programmer.class);
-
-//make sure the newly added node is actually a programmer
-Person programmer = fg.v().next(Person.class);
-assert(programmer instanceof Programmer);
-
-//change the type resolution to person
-programmer.setTypeResolution(Person.class);
-
-//make sure the newly added node is actually a programmer
-Person person = fg.v().next(Person.class);
-assert(person instanceof Person);
-assert(!(person instanceof Programmer));
-```
-
-### Customizing how types are encoded
-
-```java
-Set<Class<?>> types = new HashSet<Class<?>>(Arrays.asList(new Class<?>[]{Person.class}));
-final ReflectionCache cache = new ReflectionCache(types);
-FrameFactory factory = new AnnotationFrameFactory(cache);
-TypeResolver resolver = new PolymorphicTypeResolver(cache, "customTypeKey");
-Graph g = new TinkerGraph();
-FramedGraph fg = new DelegatingFramedGraph(g, factory, resolver);
-
-fg.addFramedVertex(Person.class);
-Person person = fg.v().next(Program.class);
-
-String personClassName = Person.class.getName();
-String encodedClassName = person.getProperty("customTypeKey")
-assert(personClassName.equals(encodedClassName));
-```
-

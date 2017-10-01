@@ -19,6 +19,14 @@
 
     
     <url>
+     <loc>http://syncleus.com/Ferma/features/</loc>
+     <lastmod>2017-10-01</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
      <loc>http://syncleus.com/Ferma/object_mapping/</loc>
      <lastmod>2017-10-01</lastmod>
      <changefreq>daily</changefreq>

@@ -8,7 +8,7 @@
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.syncleus.ferma/ferma/badge.png?style=flat)](https://maven-badges.herokuapp.com/maven-central/com.syncleus.ferma/ferma/)
 [![Gitter](https://badges.gitter.im/Syncleus/Ferma.svg)](https://gitter.im/Syncleus/Ferma?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
-An ORM / OGM for the TinkerPop graph stack.
+An ORM / OGM for the Apache TinkerPop™ graph stack.
 
 **Licensed under the Apache Software License v2**
 
@@ -28,7 +28,7 @@ boilerplate code as well as handling Java typing transparently. This ensures wha
 persist it to the graph the same Java type will be used when instantiating a class off of the graph.
 
 Ferma is designed to easily replace TinkerPop Frames in existing code, as such, the annotations provided by Ferma are a
-super-set of those provided by TinkerPop Frames.
+super-set of those originally provided by TinkerPop Frames.
 
 Ferma is built directly on top of TinkerPop and allows access to all of the internals. This ensures all the
 TinkerPop features are available to the end-user. The TinkerPop stack provides several tools which can be used to work

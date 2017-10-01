@@ -1,6 +1,6 @@
 ![](images/ferma-logo-text.svg)
 
-An ORM / OGM for the TinkerPop graph stack.
+An ORM / OGM for the Apache TinkerPop™ graph stack.
 
 **Licensed under the Apache Software License v2**
 

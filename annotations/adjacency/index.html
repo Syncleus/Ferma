@@ -970,13 +970,25 @@ and has the specified label.</p>
 <h2 id="set-operation">SET Operation<a class="headerlink" href="#set-operation" title="Permanent link">&para;</a></h2>
 <p>Valid method signatures: <code class="codehilite">(VertexFrame)</code>, <code class="codehilite">(Iterator)</code>, <code class="codehilite">(Iterable)</code></p>
 <p>Creates new edges connected to several vertex and at the same time removes any existing edges. If the any of the vertex
-being set are already an adjacency then the edge will be preserved as-is.</p>
+being set are already an adjacency then the edge will still be removed and recreated.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The set operation methods are equivelant to removing all existing edges of the specified label and direction
+connected to the current vertex and then call add on all the vertex specified by the method's parameters. You will
+loose any existing properties set on all dropped edges as well.</p>
+</div>
 <h3 id="signature-vertexframe_2">Signature: <code class="codehilite">(VertexFrame)</code><a class="headerlink" href="#signature-vertexframe_2" title="Permanent link">&para;</a></h3>
 <p>Valid return types: <code class="codehilite">void</code></p>
 <p>The argument for this method must be a <code class="codehilite">VertexFrame</code> or a class or interface which inherits from that class.</p>
-<p>This method will drop any existing edges with the specified label and create a single new edge to the vertex specified.
-If the specified vertex is already an adjacency than any edges already connected to it will be preserved. Any newly
+<p>This method will drop all existing edges with the specified label and create a single new edge to the vertex specified.
+Of course if the direction is set to both then two new edges are created instead, one in each direction. Any newly
 created edges will not encode a type.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If the vertex specified in the method's argument already has an edge forming an adjacency with this vertex and has
+matching direction and label attributes then that edge will be removed and recreated as a blank untyped edge with
+the same label.</p>
+</div>
 <p>example:</p>
 <div class="codehilite"><pre><span></span><span class="nd">@Adjacency</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
 <span class="kt">void</span> <span class="nf">setFoobar</span><span class="o">(</span><span class="n">BarVertex</span> <span class="n">vertex</span><span class="o">);</span>
@@ -992,15 +1004,19 @@ created edges will not encode a type.</p>
 
 <h3 id="signature-iterator">Signature: <code class="codehilite">(Iterator)</code><a class="headerlink" href="#signature-iterator" title="Permanent link">&para;</a></h3>
 <p>Valid return types: <code class="codehilite">void</code></p>
-<p>The argument for this method must be an <code class="codehilite">Iterator</code> which iterates over vertex Frames. It is suggested you specify a
+<p>The argument for this method must be an <code class="codehilite">Iterator</code> which iterates over Vertex Frames. It is suggested you specify a
 Generic Type for the Iterator for usability.</p>
-<p>This method will iterate over all the vertex specified in the Iterator argument and create new edges to connect to it.
-The edges in the graph will not encode a type.</p>
-<p>Any existing edges matching the specified label that do not connect to one of the <code class="codehilite">VertexFrame</code> provided by the iterator
-will be removed.</p>
+<p>This method will drop all existing edges with the specified lable then iterate over all the vertex specified in the
+<code class="codehilite">Iterator</code> argument and create new edges to connect to them. The edges in the graph will not encode a type.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If any of the vertex specified by this method's argument already has an edge forming an adjacency with this vertex
+and has matching direction and label attributes then that edge will be removed and recreated as a blank untyped edge
+with the same label.</p>
+</div>
 <p>example:</p>
 <div class="codehilite"><pre><span></span><span class="nd">@Adjacency</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
-<span class="kt">void</span> <span class="nf">setFoobar</span><span class="o">(</span><span class="n">Iterator</span><span class="o">&lt;</span><span class="n">BaBarVertexr</span><span class="o">&gt;</span> <span class="n">vertex</span><span class="o">);</span>
+<span class="kt">void</span> <span class="nf">setFoobar</span><span class="o">(</span><span class="n">Iterator</span><span class="o">&lt;</span><span class="n">BarVertexr</span><span class="o">&gt;</span> <span class="n">vertex</span><span class="o">);</span>
 </pre></div>
 
 <div class="codehilite"><pre><span></span><span class="nd">@Adjacency</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">,</span> <span class="n">direction</span> <span class="o">=</span> <span class="n">Direction</span><span class="o">.</span><span class="na">IN</span><span class="o">)</span>
@@ -1014,12 +1030,16 @@ will be removed.</p>
 <h3 id="signature-iterable">Signature: <code class="codehilite">(Iterable)</code><a class="headerlink" href="#signature-iterable" title="Permanent link">&para;</a></h3>
 <p>Valid return types: <code class="codehilite">void</code></p>
 <p>The argument for this method must be an <code class="codehilite">Iterable</code> or a subclass of <code class="codehilite">Iterable</code> which iterates over vertex Frames. It is
-suggested you specify a Generic Type for the Iterator for usability.</p>
-<p>Since all Java collections inherit from the <code class="codehilite">Iterable</code> interface they can also be used as parameters to these methods.</p>
-<p>This method will iterate over all the vertex specified in the <code class="codehilite">Iterable</code> argument and create new edges to connect to it.
-The edges in the graph will not encode a type.</p>
-<p>Any existing edges matching the specified label that do not connect to one of the <code class="codehilite">VertexFrame</code> provided by the iterator
-will be removed.</p>
+suggested you specify a Generic Type for the Iterator for usability. Since all Java collections inherit from the
+<code class="codehilite">Iterable</code> interface any collection type can also be used as a parameter to this methods.</p>
+<p>This method will drop all existing edges with the specified lable then iterate over all the vertex specified in the
+<code class="codehilite">Iterable</code> argument and create new edges to connect to them. The edges in the graph will not encode a type.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If any of the vertex specified by this method's argument already has an edge forming an adjacency with this vertex
+and has matching direction and label attributes then that edge will be removed and recreated as a blank untyped edge
+with the same label.</p>
+</div>
 <p>example:</p>
 <div class="codehilite"><pre><span></span><span class="nd">@Adjacency</span><span class="o">(</span><span class="s">&quot;Foo&quot;</span><span class="o">)</span>
 <span class="kt">void</span> <span class="nf">setFoobar</span><span class="o">(</span><span class="n">Iterable</span><span class="o">&lt;</span><span class="n">BarVertex</span><span class="o">&gt;</span> <span class="n">vertex</span><span class="o">);</span>

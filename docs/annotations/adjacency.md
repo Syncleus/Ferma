@@ -370,7 +370,12 @@ void removeFoobar(BarVertex vertex);
 Valid method signatures: `(VertexFrame)`, `(Iterator)`, `(Iterable)`
 
 Creates new edges connected to several vertex and at the same time removes any existing edges. If the any of the vertex
-being set are already an adjacency then the edge will be preserved as-is.
+being set are already an adjacency then the edge will still be removed and recreated.
+
+!!! warning
+    The set operation methods are equivelant to removing all existing edges of the specified label and direction
+    connected to the current vertex and then call add on all the vertex specified by the method's parameters. You will
+    loose any existing properties set on all dropped edges as well.
 
 ### Signature: `(VertexFrame)`
 
@@ -378,9 +383,14 @@ Valid return types: `void`
 
 The argument for this method must be a `VertexFrame` or a class or interface which inherits from that class.
 
-This method will drop any existing edges with the specified label and create a single new edge to the vertex specified.
-If the specified vertex is already an adjacency than any edges already connected to it will be preserved. Any newly
+This method will drop all existing edges with the specified label and create a single new edge to the vertex specified.
+Of course if the direction is set to both then two new edges are created instead, one in each direction. Any newly
 created edges will not encode a type.
+
+!!! warning
+    If the vertex specified in the method's argument already has an edge forming an adjacency with this vertex and has
+    matching direction and label attributes then that edge will be removed and recreated as a blank untyped edge with
+    the same label.
 
 example:
 
@@ -403,20 +413,22 @@ void assignFoobar(BarVertex vertex);
 
 Valid return types: `void`
 
-The argument for this method must be an `Iterator` which iterates over vertex Frames. It is suggested you specify a
+The argument for this method must be an `Iterator` which iterates over Vertex Frames. It is suggested you specify a
 Generic Type for the Iterator for usability.
 
-This method will iterate over all the vertex specified in the Iterator argument and create new edges to connect to it.
-The edges in the graph will not encode a type.
+This method will drop all existing edges with the specified lable then iterate over all the vertex specified in the
+`Iterator` argument and create new edges to connect to them. The edges in the graph will not encode a type.
 
-Any existing edges matching the specified label that do not connect to one of the `VertexFrame` provided by the iterator
-will be removed.
+!!! warning
+    If any of the vertex specified by this method's argument already has an edge forming an adjacency with this vertex
+    and has matching direction and label attributes then that edge will be removed and recreated as a blank untyped edge
+    with the same label.
 
 example:
 
 ```java
 @Adjacency("Foo")
-void setFoobar(Iterator<BaBarVertexr> vertex);
+void setFoobar(Iterator<BarVertexr> vertex);
 ```
 
 ```java
@@ -434,15 +446,16 @@ void setFoobar(Iterator<BaBarVertexr> vertex);
 Valid return types: `void`
 
 The argument for this method must be an `Iterable` or a subclass of `Iterable` which iterates over vertex Frames. It is
-suggested you specify a Generic Type for the Iterator for usability.
+suggested you specify a Generic Type for the Iterator for usability. Since all Java collections inherit from the
+`Iterable` interface any collection type can also be used as a parameter to this methods.
 
-Since all Java collections inherit from the `Iterable` interface they can also be used as parameters to these methods.
+This method will drop all existing edges with the specified lable then iterate over all the vertex specified in the
+`Iterable` argument and create new edges to connect to them. The edges in the graph will not encode a type.
 
-This method will iterate over all the vertex specified in the `Iterable` argument and create new edges to connect to it.
-The edges in the graph will not encode a type.
-
-Any existing edges matching the specified label that do not connect to one of the `VertexFrame` provided by the iterator
-will be removed.
+!!! warning
+    If any of the vertex specified by this method's argument already has an edge forming an adjacency with this vertex
+    and has matching direction and label attributes then that edge will be removed and recreated as a blank untyped edge
+    with the same label.
 
 example:
 

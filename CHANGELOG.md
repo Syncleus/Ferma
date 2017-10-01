@@ -2,6 +2,15 @@
 
 ## 3.2.1
 
+* Removed `throws exception` from the signature of the TxActions.
+* Fixed a bug where the `VertexFrame.toJson()` and `EdgeFrame.toJson()` methods wouldn't encode properties that werent
+  of the type `Number` or `String`
+* When constructing a `DelegatingFramedGraph` if a the delegate graph argument is null the constructor now throws an
+  exception.
+* `AbstractAnnotationFrameFactory.constructClass()` method now throws an exception if the element argument is neither an
+  `Edge` or a `Vertex`.
+* Added several more unit tests bring test coverage up an additional 5%.
+
 ## 3.2.0
 
 * Added nexus staging deployment plugin.

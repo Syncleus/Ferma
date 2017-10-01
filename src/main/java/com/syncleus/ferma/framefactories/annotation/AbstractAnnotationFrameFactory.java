@@ -84,9 +84,11 @@ public class AbstractAnnotationFrameFactory implements FrameFactory {
             else
                 throw new IllegalStateException("class is neither an Edge or a vertex!");
         else {
-            if (element instanceof Vertex && !VertexFrame.class.isAssignableFrom(clazz))
+            if( !(element instanceof Vertex || element instanceof Edge) )
+                throw new IllegalStateException("element is neither an edge nor a vertex");
+            else if (element instanceof Vertex && !VertexFrame.class.isAssignableFrom(clazz))
                 throw new IllegalStateException(clazz.getName() + " Class is not a type of VertexFrame");
-            if (element instanceof Edge && !EdgeFrame.class.isAssignableFrom(clazz))
+            else if (element instanceof Edge && !EdgeFrame.class.isAssignableFrom(clazz))
                 throw new IllegalStateException(clazz.getName() + " Class is not a type of EdgeFrame");
             classBuilder = new ByteBuddy().subclass(clazz);
         }

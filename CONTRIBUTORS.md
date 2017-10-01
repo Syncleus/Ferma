@@ -11,3 +11,8 @@
 * Evan Thompson
 * Joshua Shinavier <josh@fortytwo.net>
 * Veselin Yordanov <vesko935@gmail.com>
+
+## Special Thanks
+
+A special thanks to **Bryn Cooke** who developed Totorom, his project was heavily integrated into Ferma during it's
+early development.

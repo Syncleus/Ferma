@@ -1,0 +1,779 @@
+
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="An ORM / OGM for the TinkerPop graph stack.">
+      
+      
+        <link rel="canonical" href="http://syncleus.com/Ferma/object_mapping/">
+      
+      
+        <meta name="author" content="Syncleus">
+      
+      
+        <link rel="shortcut icon" href="../assets/images/favicon.png">
+      
+      <meta name="generator" content="mkdocs-0.16.3, mkdocs-material-1.10.1">
+    
+    
+      
+        <title>Object Mapping - Ferma</title>
+      
+    
+    
+      <script src="../assets/javascripts/modernizr-e826f8942a.js"></script>
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/application-a20f419c8e.css">
+      
+        <link rel="stylesheet" href="../assets/stylesheets/application-23f75ab9c7.palette.css">
+      
+    
+    
+      
+        
+        
+        
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    
+    
+    
+  </head>
+  
+  
+  
+  
+    <body data-md-color-primary="blue" data-md-color-accent="deep-orange">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="drawer">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="search">
+    <label class="md-overlay" data-md-component="overlay" for="drawer"></label>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="http://syncleus.com/Ferma" title="Ferma" class="md-header-nav__button md-logo">
+          
+            
+              <img src="../images/ferma-logo.svg" width="24" height="24">
+            
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <span class="md-flex__ellipsis md-header-nav__title">
+          
+            
+              
+            
+            Object Mapping
+          
+        </span>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="search"></label>
+  <div class="md-search__inner">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" required placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query">
+      <label class="md-icon md-search__icon" for="search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset">&#xE5CD;</button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result" data-md-lang-search="" data-md-lang-tokenizer="[\s\-]+">
+          <div class="md-search-result__meta" data-md-lang-result-none="No matching documents" data-md-lang-result-one="1 matching document" data-md-lang-result-other="# matching documents">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+
+  <a href="https://github.com/Syncleus/Ferma" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      Syncleus/Ferma
+    </div>
+  </a>
+
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="drawer">
+    <div class="md-nav__button md-logo">
+      
+        
+          <img src="../images/ferma-logo.svg">
+        
+      
+    </div>
+    Ferma
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+
+  <a href="https://github.com/Syncleus/Ferma" title="Go to repository" class="md-source" data-md-source="github">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      Syncleus/Ferma
+    </div>
+  </a>
+
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href=".." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../getting_started/" title="Getting Started" class="md-nav__link">
+      Getting Started
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="toc">
+        Object Mapping
+      </label>
+    
+    <a href="./" title="Object Mapping" class="md-nav__link md-nav__link--active">
+      Object Mapping
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#typing" title="Typing" class="md-nav__link">
+    Typing
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#untyped-mode" title="Untyped Mode" class="md-nav__link">
+    Untyped Mode
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#typed-mode" title="Typed Mode" class="md-nav__link">
+    Typed Mode
+  </a>
+  
+</li>
+      
+      
+      
+        <li class="md-nav__item">
+          <a href="#__comments" title="Comments" class="md-nav__link md-nav__link--active">
+            Comments
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      Core Annotations
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        Core Annotations
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../annotations/overview/" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../annotations/adjacency/" title="@Adjacency" class="md-nav__link">
+      @Adjacency
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../annotations/graphelement/" title="@GraphElement" class="md-nav__link">
+      @GraphElement
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../annotations/incidence/" title="@Incidence" class="md-nav__link">
+      @Incidence
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../annotations/invertex/" title="@InVertex" class="md-nav__link">
+      @InVertex
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../annotations/outvertex/" title="@OutVertex" class="md-nav__link">
+      @OutVertex
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../annotations/property/" title="@Property" class="md-nav__link">
+      @Property
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../comparing_the_alternatives/" title="Comparing the Alternatives" class="md-nav__link">
+      Comparing the Alternatives
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../glossary/" title="Glossary" class="md-nav__link">
+      Glossary
+    </a>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#typing" title="Typing" class="md-nav__link">
+    Typing
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#untyped-mode" title="Untyped Mode" class="md-nav__link">
+    Untyped Mode
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#typed-mode" title="Typed Mode" class="md-nav__link">
+    Typed Mode
+  </a>
+  
+</li>
+      
+      
+      
+        <li class="md-nav__item">
+          <a href="#__comments" title="Comments" class="md-nav__link md-nav__link--active">
+            Comments
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/Syncleus/Ferma/edit/master/docs/object_mapping.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                  <h1>Object Mapping</h1>
+                
+                <p>Ferma is an Object-graph Model (OGM). An Object-graph Model is to a Graph Database as an Object-relational Model (ORM)
+is to a Relational Database. That is to say that it maps Java Objects to edges and vertex in a graph database. As a
+natural consequence the Java types become an implied Schema for a Graph Database even if the underlying implementation
+doesnt support the notion of a schema.</p>
+<p>The objects associated with the various types of Edges and Vertex in a graph are collectively called the Graph Data
+Model (GDM). Each Java type in the GDM will usually represent a class of Edges or Vertex in underlying graph. All Edges
+in the model will extend from the <code class="codehilite">EdgeFrame</code> interface and all vertex will extend from <code class="codehilite">VertexFrame</code> interface. The
+individual classes that comprise the GDM are usually simply refered to as Frames.</p>
+<p>The methods defined by a Frame will represent interactions with the underlying graph via traversals that are relative, 
+using the current edge or vertex as their starting point.</p>
+<div class="codehilite"><pre><span></span><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Person</span> <span class="kd">extends</span> <span class="n">VertexFrame</span> <span class="o">{</span>
+  <span class="n">String</span> <span class="nf">getName</span><span class="o">();</span>
+  <span class="n">List</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">Person</span><span class="o">&gt;</span> <span class="nf">getCoworkers</span><span class="o">();</span>
+<span class="o">}</span>
+</pre></div>
+
+<p>In this example Person represents a vertex in the graph with a property indicating their name, and they are associated
+with other vertex in the graph of the same type that represent their coworkers.</p>
+<p>When implementing a vertex as a concrete class you must instead inherit from <code class="codehilite">VertexFrame</code>.</p>
+<div class="codehilite"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Person</span> <span class="kd">extends</span> <span class="n">AbstractVertexFrame</span> <span class="o">{</span>
+  <span class="kd">public</span> <span class="n">String</span> <span class="nf">getName</span><span class="o">()</span> <span class="o">{</span>
+      <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="s">&quot;name&quot;</span><span class="o">);</span>
+  <span class="o">}</span>
+
+  <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">Person</span><span class="o">&gt;</span> <span class="nf">getCoworkers</span><span class="o">()</span> <span class="o">{</span>
+      <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">traverse</span><span class="o">(</span><span class="n">v</span> <span class="o">-&gt;</span> <span class="n">v</span><span class="o">.</span><span class="na">out</span><span class="o">(</span><span class="s">&quot;coworker&quot;</span><span class="o">)).</span><span class="na">toList</span><span class="o">(</span><span class="n">Person</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+
+<p>It is also possible to do the same with inheritance if you want a class and an interface defined.</p>
+<div class="codehilite"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">PersonImpl</span> <span class="kd">extends</span> <span class="n">AbstractVertexFrame</span> <span class="kd">implements</span> <span class="n">Person</span> <span class="o">{</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="n">String</span> <span class="nf">getName</span><span class="o">()</span> <span class="o">{</span>
+      <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="s">&quot;name&quot;</span><span class="o">);</span>
+  <span class="o">}</span>
+
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">Person</span><span class="o">&gt;</span> <span class="nf">getCoworkers</span><span class="o">()</span> <span class="o">{</span>
+      <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">traverse</span><span class="o">(</span><span class="n">v</span> <span class="o">-&gt;</span> <span class="n">v</span><span class="o">.</span><span class="na">out</span><span class="o">(</span><span class="s">&quot;coworker&quot;</span><span class="o">)).</span><span class="na">toList</span><span class="o">(</span><span class="n">Person</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When implementing a Frame a class or abstract class must always extend from either <code class="codehilite">AbstractEdgeFrame</code> or
+<code class="codehilite">AbstractVertexFrame</code>.</p>
+</div>
+<h2 id="typing">Typing<a class="headerlink" href="#typing" title="Permanent link">&para;</a></h2>
+<p>There are two typing modes for ferma and each significantly effect how the user will determine the type of the objects
+pulled from the graph, these modes are called <strong>Typed Mode</strong> and <strong>Untyped Mode</strong>.</p>
+<p>When performing a traversal on a Frame there are several methods provided which automatically encapsulate the underlying
+graph element or elements into a framed equivelant such as a <code class="codehilite">VertexFrame</code> or a <code class="codehilite">EdgeFrame</code>. This may either be a single
+Frame, Iterator, Set, or List of Frames.</p>
+<p>In the earlier example we used a traversal to find all the coworkers, we used the <code class="codehilite">toList()</code> method to frame all the
+underlying vertex into the <code class="codehilite">Person</code> type.</p>
+<div class="codehilite"><pre><span></span><span class="k">this</span><span class="o">.</span><span class="na">traverse</span><span class="o">(</span><span class="n">v</span> <span class="o">-&gt;</span> <span class="n">v</span><span class="o">.</span><span class="na">out</span><span class="o">(</span><span class="s">&quot;coworker&quot;</span><span class="o">)).</span><span class="na">toList</span><span class="o">(</span><span class="n">Person</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+</pre></div>
+
+<p>Traversals have several different methods availible that each frame and collect the underlying elements in different
+ways, those methods, members of the <code class="codehilite">Traversable</code> interface, are the following.</p>
+<div class="codehilite"><pre><span></span><span class="o">&lt;</span><span class="n">N</span><span class="o">&gt;</span> <span class="n">N</span> <span class="nf">next</span><span class="o">(</span><span class="n">Class</span><span class="o">&lt;</span><span class="n">N</span><span class="o">&gt;</span> <span class="n">kind</span><span class="o">);</span>
+<span class="o">&lt;</span><span class="n">N</span><span class="o">&gt;</span> <span class="n">List</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">N</span><span class="o">&gt;</span> <span class="nf">next</span><span class="o">(</span><span class="kt">int</span> <span class="n">amount</span><span class="o">,</span> <span class="n">Class</span><span class="o">&lt;</span><span class="n">N</span><span class="o">&gt;</span> <span class="n">kind</span><span class="o">);</span>
+<span class="o">&lt;</span><span class="n">N</span><span class="o">&gt;</span> <span class="n">N</span> <span class="nf">nextOrDefault</span><span class="o">(</span><span class="n">Class</span><span class="o">&lt;</span><span class="n">N</span><span class="o">&gt;</span> <span class="n">kind</span><span class="o">,</span> <span class="n">N</span> <span class="n">defaultValue</span><span class="o">);</span>
+<span class="n">VertexFrame</span> <span class="nf">nextOrAdd</span><span class="o">();</span>
+<span class="o">&lt;</span><span class="n">N</span><span class="o">&gt;</span> <span class="n">N</span> <span class="nf">nextOrAdd</span><span class="o">(</span><span class="n">ClassInitializer</span><span class="o">&lt;</span><span class="n">N</span><span class="o">&gt;</span> <span class="n">initializer</span><span class="o">);</span>
+<span class="o">&lt;</span><span class="n">N</span><span class="o">&gt;</span> <span class="n">N</span> <span class="nf">nextOrAdd</span><span class="o">(</span><span class="n">Class</span><span class="o">&lt;</span><span class="n">N</span><span class="o">&gt;</span> <span class="n">kind</span><span class="o">);</span>
+<span class="o">&lt;</span><span class="n">N</span><span class="o">&gt;</span> <span class="n">Iterator</span><span class="o">&lt;</span><span class="n">N</span><span class="o">&gt;</span> <span class="nf">frame</span><span class="o">(</span><span class="n">Class</span><span class="o">&lt;</span><span class="n">N</span><span class="o">&gt;</span> <span class="n">kind</span><span class="o">);</span>
+<span class="o">&lt;</span><span class="n">N</span><span class="o">&gt;</span> <span class="n">List</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">N</span><span class="o">&gt;</span> <span class="nf">toList</span><span class="o">(</span><span class="n">Class</span><span class="o">&lt;</span><span class="n">N</span><span class="o">&gt;</span> <span class="n">kind</span><span class="o">);</span>
+<span class="o">&lt;</span><span class="n">N</span><span class="o">&gt;</span> <span class="n">Set</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">N</span><span class="o">&gt;</span> <span class="nf">toSet</span><span class="o">(</span><span class="n">Class</span><span class="o">&lt;</span><span class="n">N</span><span class="o">&gt;</span> <span class="n">kind</span><span class="o">);</span>
+</pre></div>
+
+<p>!! note
+   Each of these methods also have an equivelant method with the suffix <code class="codehilite">Explicit</code>, we will discuss those later as they
+   only become important when we begin to discuss the differences between typed and untyped mode.</p>
+<p>Each of these methods has a slightly different behavior. For full details see the Ferma Javadocs for the Traversable
+class. However, in short, the <code class="codehilite">next(Class)</code> method returns any one of the matching elements and frames it as the
+specified type. It will throw an exception however if no vertexes match. The <code class="codehilite">nextOrDefault</code> varient avoids the
+exception by returning the default value when there are no matches, which can be <code class="codehilite">0</code> or <code class="codehilite">null</code> for example. Similarly
+<code class="codehilite">nextOrAdd</code> will add a new vertex to the underlying graph if the traversal yields no matches. finally <code class="codehilite">frame(Class)</code>,
+<code class="codehilite">toList(Class)</code>, and <code class="codehilite">toSet(Class)</code> will return all elements that match the traversal as either a <code class="codehilite">Iterator</code>, <code class="codehilite">List</code>, 
+or a <code class="codehilite">Set</code>.</p>
+<p>The exact type returned from all the aforementioned calls will always be a Class of the type specified in the argument,
+or a subclass thereof. The exact type of the class instantiated will depend on which typing mode is being used.</p>
+<h3 id="untyped-mode">Untyped Mode<a class="headerlink" href="#untyped-mode" title="Permanent link">&para;</a></h3>
+<p>In untyped mode there is never any Java type information encoded into the underlying graph. This means when you take an
+object off the graph there is no way for Ferma to know what Java type it is associated with and the user must select
+the type manually. Since a Frame just defines a set of behaviors and properties exposed for a particular graph
+element it can sometimes be useful to pick which Frame to use to represent an element based on how you need to interact
+with that element rather than a one to one mapping of element to a specific type. In such a scenario Untyped Mode might
+be the ideal choice.</p>
+<p>In this mode when framing elements from a traversal the type of the element is determined entierly from the parameters
+passed to the methods invoked on the Traversable class. The following is an example of how to frame a vertex as a
+<code class="codehilite">Person</code> class from above.</p>
+<div class="codehilite"><pre><span></span><span class="c1">// Open an untyped Framed Graph</span>
+<span class="n">FramedGraph</span> <span class="n">fg</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DelegatingFramedGraph</span><span class="o">(</span><span class="n">TinkerGraph</span><span class="o">.</span><span class="na">open</span><span class="o">());</span>
+
+<span class="c1">//create a vertex with no type information and a single name property</span>
+<span class="n">VertexFrame</span> <span class="n">vertex</span> <span class="o">=</span> <span class="n">fg</span><span class="o">.</span><span class="na">addFramedVertex</span><span class="o">(</span><span class="n">VertexFrame</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+<span class="n">vertex</span><span class="o">.</span><span class="na">setProperty</span><span class="o">(</span><span class="s">&quot;name&quot;</span><span class="o">,</span> <span class="s">&quot;Jeff&quot;</span><span class="o">);</span>
+
+<span class="c1">//retrieve the vertex we just created but this time frame it as a Person</span>
+<span class="n">Person</span> <span class="n">person</span> <span class="o">=</span> <span class="n">fg</span><span class="o">.</span><span class="na">traverse</span><span class="o">(</span><span class="n">g</span> <span class="o">-&gt;</span> <span class="n">g</span><span class="o">.</span><span class="na">V</span><span class="o">().</span><span class="na">property</span><span class="o">(</span><span class="s">&quot;name&quot;</span><span class="o">,</span> <span class="s">&quot;jeff&quot;</span><span class="o">)).</span><span class="na">nextExplicit</span><span class="o">(</span><span class="n">Person</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+<span class="k">assert</span> <span class="n">person</span><span class="o">.</span><span class="na">getName</span><span class="o">().</span><span class="na">equals</span><span class="o">(</span><span class="s">&quot;Jeff&quot;</span><span class="o">);</span>
+</pre></div>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In untyped mode all the <code class="codehilite">Traversal</code> methods with the suffix of <code class="codehilite">Explicit</code> behave exactly the same as those methods
+without the suffix. Therefore when working in untyped mode it is suggested you only use explicit methods. This way
+if you ever decide to migrate over to typed mode it will not change the behavior of your existing code base and will
+make the migration process much easier. </p>
+</div>
+<h2 id="typed-mode">Typed Mode<a class="headerlink" href="#typed-mode" title="Permanent link">&para;</a></h2>
+<p>Typed mode takes things one step further and allows type information about a Data Model class to be encoded as a
+property on vertex and edges in the underlying graph. This behavior is governed by the <code class="codehilite">PolymorphicTypeResolver</code> which
+encodes the type in a property name which defaults to the value of <code class="codehilite">PolymorphicTypeResolver.TYPE_RESOLUTION_KEY</code> but can
+be explicitly set to any string value of the user's choice. When a class is framed the Type Resolution Key is read and
+the original type is determined, this in turn effects the type used to instantiate the new Frame and may be a specific
+type which is a subclass of the type requested. For example say we have the following model. </p>
+<div class="codehilite"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Person</span> <span class="kd">extends</span> <span class="n">AbstractVertexFrame</span> <span class="o">{</span>
+  <span class="kd">public</span> <span class="n">String</span> <span class="nf">getName</span><span class="o">()</span> <span class="o">{</span>
+      <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="s">&quot;name&quot;</span><span class="o">);</span>
+  <span class="o">}</span>
+
+  <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">Person</span><span class="o">&gt;</span> <span class="nf">getFriends</span><span class="o">()</span> <span class="o">{</span>
+      <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">traverse</span><span class="o">(</span><span class="n">v</span> <span class="o">-&gt;</span> <span class="n">v</span><span class="o">.</span><span class="na">out</span><span class="o">(</span><span class="s">&quot;friend&quot;</span><span class="o">)).</span><span class="na">toList</span><span class="o">(</span><span class="n">Person</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Programmer</span> <span class="kd">extends</span> <span class="n">Person</span> <span class="o">{</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">Programmer</span><span class="o">&gt;</span> <span class="nf">getFriends</span><span class="o">()</span> <span class="o">{</span>
+      <span class="c1">//Programmers don&#39;t have friends :(</span>
+      <span class="k">return</span> <span class="n">Collections</span><span class="o">.</span><span class="na">emptyList</span><span class="o">();</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+
+<p>In this case we can encode a <code class="codehilite">Programmer</code> vertex into the graph and even if we try to retrieve and frame that vertex as a
+<code class="codehilite">VertexFrame</code> or <code class="codehilite">Person</code> in the future the instantiated type will still be <code class="codehilite">Programmer</code>. This allows for a truly
+Polymorphic Graph Data Model that leverages method overriding and class inheritance functiuonality in the model. For
+example the following is possible now in Typed Mode.</p>
+<div class="codehilite"><pre><span></span><span class="c1">// Open typed Framed Graph</span>
+<span class="n">FramedGraph</span> <span class="n">fg</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DelegatingFramedGraph</span><span class="o">(</span><span class="n">TinkerGraph</span><span class="o">.</span><span class="na">open</span><span class="o">(),</span> <span class="kc">true</span><span class="o">,</span> <span class="kc">false</span><span class="o">);</span>
+
+<span class="c1">//create a vertex with no type information and a single name property</span>
+<span class="n">Programmer</span> <span class="n">programmer</span> <span class="o">=</span> <span class="n">fg</span><span class="o">.</span><span class="na">addFramedVertex</span><span class="o">(</span><span class="n">Programmer</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+<span class="n">programmer</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="s">&quot;Jeff&quot;</span><span class="o">);</span>
+
+<span class="c1">//retrieve the vertex we just created and check it is instantiated as a Programer</span>
+<span class="n">Person</span> <span class="n">person</span> <span class="o">=</span> <span class="n">fg</span><span class="o">.</span><span class="na">traverse</span><span class="o">(</span><span class="n">g</span> <span class="o">-&gt;</span> <span class="n">g</span><span class="o">.</span><span class="na">V</span><span class="o">().</span><span class="na">property</span><span class="o">(</span><span class="s">&quot;name&quot;</span><span class="o">,</span> <span class="s">&quot;jeff&quot;</span><span class="o">)).</span><span class="na">next</span><span class="o">(</span><span class="n">Person</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+<span class="k">assert</span> <span class="n">person</span> <span class="k">instanceof</span> <span class="n">Programmer</span><span class="o">;</span>
+<span class="k">assert</span> <span class="n">person</span><span class="o">.</span><span class="na">getFriends</span><span class="o">().</span><span class="na">isEmpty</span><span class="o">();</span>
+</pre></div>
+
+<p>The methods with the <code class="codehilite">Explicit</code> suffix are particularly meaningful for Typed Mode. In this mode they bypass the encoded
+typing completely and instantiate the frame as the type specified instead. The following code snippet provides an
+example using the same model.</p>
+<div class="codehilite"><pre><span></span><span class="c1">// Open typed Framed Graph</span>
+<span class="n">FramedGraph</span> <span class="n">fg</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DelegatingFramedGraph</span><span class="o">(</span><span class="n">TinkerGraph</span><span class="o">.</span><span class="na">open</span><span class="o">(),</span> <span class="kc">true</span><span class="o">,</span> <span class="kc">false</span><span class="o">);</span>
+
+<span class="c1">//create a vertex with no type information and a single name property</span>
+<span class="n">Programmer</span> <span class="n">programmer</span> <span class="o">=</span> <span class="n">fg</span><span class="o">.</span><span class="na">addFramedVertex</span><span class="o">(</span><span class="n">Programmer</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+<span class="n">programmer</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="s">&quot;Jeff&quot;</span><span class="o">);</span>
+
+<span class="c1">//retrieve the vertex we just created, since we are using an excplicit method the type won&#39;t be Programmer this time.</span>
+<span class="n">Person</span> <span class="n">person</span> <span class="o">=</span> <span class="n">fg</span><span class="o">.</span><span class="na">traverse</span><span class="o">(</span><span class="n">g</span> <span class="o">-&gt;</span> <span class="n">g</span><span class="o">.</span><span class="na">V</span><span class="o">().</span><span class="na">property</span><span class="o">(</span><span class="s">&quot;name&quot;</span><span class="o">,</span> <span class="s">&quot;jeff&quot;</span><span class="o">)).</span><span class="na">nextExplicit</span><span class="o">(</span><span class="n">Person</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+<span class="k">assert</span> <span class="o">!(</span><span class="n">person</span> <span class="k">instanceof</span> <span class="n">Programmer</span><span class="o">);</span>
+</pre></div>
+
+<p>The following are the list of explicit method types in the Traversable class.</p>
+<div class="codehilite"><pre><span></span><span class="o">&lt;</span><span class="n">N</span><span class="o">&gt;</span> <span class="n">N</span> <span class="nf">nextExplicit</span><span class="o">(</span><span class="n">Class</span><span class="o">&lt;</span><span class="n">N</span><span class="o">&gt;</span> <span class="n">kind</span><span class="o">);</span>
+<span class="o">&lt;</span><span class="n">N</span><span class="o">&gt;</span> <span class="n">List</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">N</span><span class="o">&gt;</span> <span class="nf">nextExplicit</span><span class="o">(</span><span class="kt">int</span> <span class="n">amount</span><span class="o">,</span> <span class="n">Class</span><span class="o">&lt;</span><span class="n">N</span><span class="o">&gt;</span> <span class="n">kind</span><span class="o">);</span>
+<span class="o">&lt;</span><span class="n">N</span><span class="o">&gt;</span> <span class="n">N</span> <span class="nf">nextOrDefaultExplicit</span><span class="o">(</span><span class="n">Class</span><span class="o">&lt;</span><span class="n">N</span><span class="o">&gt;</span> <span class="n">kind</span><span class="o">,</span> <span class="n">N</span> <span class="n">defaultValue</span><span class="o">);</span>
+<span class="o">&lt;</span><span class="n">N</span><span class="o">&gt;</span> <span class="n">N</span> <span class="nf">nextOrAddExplicit</span><span class="o">(</span><span class="n">ClassInitializer</span><span class="o">&lt;</span><span class="n">N</span><span class="o">&gt;</span> <span class="n">initializer</span><span class="o">);</span>
+<span class="o">&lt;</span><span class="n">N</span><span class="o">&gt;</span> <span class="n">N</span> <span class="nf">nextOrAddExplicit</span><span class="o">(</span><span class="n">Class</span><span class="o">&lt;</span><span class="n">N</span><span class="o">&gt;</span> <span class="n">kind</span><span class="o">);</span>
+<span class="o">&lt;</span><span class="n">N</span><span class="o">&gt;</span> <span class="n">Iterator</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">N</span><span class="o">&gt;</span> <span class="nf">frameExplicit</span><span class="o">(</span><span class="n">Class</span><span class="o">&lt;</span><span class="n">N</span><span class="o">&gt;</span> <span class="n">kind</span><span class="o">);</span>
+<span class="o">&lt;</span><span class="n">N</span><span class="o">&gt;</span> <span class="n">List</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">N</span><span class="o">&gt;</span> <span class="nf">toListExplicit</span><span class="o">(</span><span class="n">Class</span><span class="o">&lt;</span><span class="n">N</span><span class="o">&gt;</span> <span class="n">kind</span><span class="o">);</span>
+<span class="o">&lt;</span><span class="n">N</span><span class="o">&gt;</span> <span class="n">Set</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">N</span><span class="o">&gt;</span> <span class="nf">toSetExplicit</span><span class="o">(</span><span class="n">Class</span><span class="o">&lt;</span><span class="n">N</span><span class="o">&gt;</span> <span class="n">kind</span><span class="o">);</span>
+</pre></div>
+                
+                  
+                
+              
+              
+                
+                  <h2 id="__comments">Comments</h2>
+                  <div id="disqus_thread"></div>
+<script>
+  var disqus_config = function () {
+    this.page.url = "http://syncleus.com/Ferma/object_mapping/";
+    this.page.identifier =
+      "/object_mapping/";
+  };
+  (function() {
+    var d = document, s = d.createElement("script");
+    s.src = "//syncleus.disqus.com/embed.js";
+    s.setAttribute("data-timestamp", +new Date());
+    (d.head || d.body).appendChild(s);
+  })();
+</script>
+                
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../getting_started/" title="Getting Started" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Getting Started
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../annotations/overview/" title="Overview" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Overview
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2004 - 2017 Syncleus, Inc.
+          </div>
+        
+        powered by
+        <a href="http://www.mkdocs.org" title="MkDocs">MkDocs</a>
+        and
+        <a href="http://squidfunk.github.io/mkdocs-material/" title="Material for MkDocs">
+          Material for MkDocs</a>
+      </div>
+      
+        
+  <div class="md-footer-social">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+      <a href="https://github.com/Syncleus" class="md-footer-social__link fa fa-github"></a>
+    
+  </div>
+
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/application-f3ab9e5ff8.js"></script>
+      
+      
+      <script>app.initialize({url:{base:".."}})</script>
+      
+    
+    
+      
+    
+  </body>
+</html>

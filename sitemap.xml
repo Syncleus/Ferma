@@ -19,7 +19,7 @@
 
     
     <url>
-     <loc>http://syncleus.com/Ferma/comparing_the_alternatives/</loc>
+     <loc>http://syncleus.com/Ferma/object_mapping/</loc>
      <lastmod>2017-10-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
@@ -69,6 +69,14 @@
      <changefreq>daily</changefreq>
     </url>
         
+    
+
+    
+    <url>
+     <loc>http://syncleus.com/Ferma/comparing_the_alternatives/</loc>
+     <lastmod>2017-10-01</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
     
 
     

@@ -46,67 +46,39 @@ public class DelegatingFrameGraphSanityTest {
         g.close();
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void testNullDelegate() {
-        try {
-            assertSanity(new DelegatingFramedGraph(null, resolver));
-        } catch (IllegalArgumentException e) {
-            // Illegal args is ok
-        }
+        new DelegatingFramedGraph(null, resolver);
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void testNullResolver() {
-        try {
-            assertSanity(new DelegatingFramedGraph(g, (TypeResolver) null));
-        } catch (IllegalArgumentException e) {
-            // Illegal args is ok
-        }
+        new DelegatingFramedGraph(g, (TypeResolver) null);
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void testNullBuilder() {
-        try {
-            assertSanity(new DelegatingFramedGraph(g, null, resolver));
-        } catch (IllegalArgumentException e) {
-            // Illegal args is ok
-        }
+        new DelegatingFramedGraph(g, null, resolver);
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void testNullReflectionsCache() {
-        try {
-            assertSanity(new DelegatingFramedGraph(g, null, true, true));
-        } catch (IllegalArgumentException e) {
-            // Illegal args is ok
-        }
+        new DelegatingFramedGraph(g, null, true, true);
     }
 
     @Test
     public void testNoTypeResolutionNoAnnotations() {
-        try {
-            assertSanity(new DelegatingFramedGraph(g, new ReflectionCache(), false, false));
-        } catch (IllegalArgumentException e) {
-            // Illegal args is ok
-        }
+        assertSanity(new DelegatingFramedGraph(g, new ReflectionCache(), false, false));
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void testNullTypes() {
-        try {
-            assertSanity(new DelegatingFramedGraph(g, true, null));
-        } catch (IllegalArgumentException e) {
-            // Illegal args is ok
-        }
+        new DelegatingFramedGraph(g, true, null);
     }
 
     @Test
     public void testEmptyTypesSet() {
-        try {
-            assertSanity(new DelegatingFramedGraph(g, false, new HashSet<>()));
-        } catch (IllegalArgumentException e) {
-            // Illegal args is ok
-        }
+        assertSanity(new DelegatingFramedGraph(g, false, new HashSet<>()));
     }
 
     private void assertSanity(DelegatingFramedGraph framed) {

@@ -141,11 +141,7 @@ public class TxFactoryTest implements TxFactory {
     @Override
     public <T> T tx(TxAction<T> txHandler) {
         try (Tx tx = tx()) {
-            try {
-                return txHandler.handle(mock);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
+            return txHandler.handle(mock);
         }
     }
 

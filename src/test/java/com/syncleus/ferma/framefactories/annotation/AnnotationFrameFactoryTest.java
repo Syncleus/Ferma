@@ -29,7 +29,9 @@ import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.util.Collections;
 import net.bytebuddy.dynamic.DynamicType;
+import org.apache.tinkerpop.gremlin.structure.Edge;
 import org.apache.tinkerpop.gremlin.structure.Element;
+import org.apache.tinkerpop.gremlin.structure.Vertex;
 import org.apache.tinkerpop.gremlin.tinkergraph.structure.TinkerGraph;
 import org.junit.After;
 import org.junit.Before;
@@ -103,9 +105,14 @@ public class AnnotationFrameFactoryTest {
     }
     
     @Test (expected = IllegalStateException.class)
-    public void testBadElementBadFrame() {
-        Element badElement = Mockito.mock(Element.class);
-        frameFactory.create(badElement, InvalidFrame.class);
+    public void testVertexBadFrame() {
+        Vertex okElement = Mockito.mock(Vertex.class);
+        frameFactory.create(okElement, InvalidFrame.class);
     }
-    
+
+    @Test (expected = IllegalStateException.class)
+    public void testEdgeBadFrame() {
+        Edge okElement = Mockito.mock(Edge.class);
+        frameFactory.create(okElement, InvalidFrame.class);
+    }
 }

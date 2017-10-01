@@ -16,12 +16,16 @@
 package com.syncleus.ferma;
 
 import java.util.function.Consumer;
+
+import org.apache.tinkerpop.gremlin.structure.Graph;
 import org.apache.tinkerpop.gremlin.structure.Transaction;
 import org.apache.tinkerpop.gremlin.structure.util.wrapped.WrappedGraph;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
+
+import static org.mockito.Mockito.when;
 
 /**
  *
@@ -30,13 +34,19 @@ import org.mockito.Mockito;
 public class DelegatingTransactionTest {
     
     private Transaction gremlinTx;
-    private WrappedFramedGraph<?> framedGraph;
+    private WrappedFramedGraph<Graph> framedGraph;
+    private Graph baseGraph;
     private DelegatingTransaction delegatingTx;
     
     @Before
     public void setUp() {
         gremlinTx = Mockito.mock(Transaction.class);
         framedGraph = Mockito.mock(WrappedFramedGraph.class, Mockito.RETURNS_MOCKS);
+        baseGraph = Mockito.mock(Graph.class, Mockito.RETURNS_MOCKS);
+
+        when(gremlinTx.createThreadedTx()).thenReturn(baseGraph);
+        when(framedGraph.getBaseGraph()).thenReturn(baseGraph);
+
         delegatingTx = new DelegatingTransaction(gremlinTx, framedGraph);
     }
     
@@ -120,7 +130,7 @@ public class DelegatingTransactionTest {
     private void assertDelegatingIsOpenUsage(boolean expectedValue) {
         Transaction tx = Mockito.mock(Transaction.class);
         WrappedFramedGraph<?> graph = Mockito.mock(WrappedFramedGraph.class);
-        Mockito.when(tx.isOpen()).thenReturn(expectedValue);
+        when(tx.isOpen()).thenReturn(expectedValue);
         DelegatingTransaction delTx = new DelegatingTransaction(tx, graph);
         Assert.assertEquals(expectedValue, delTx.isOpen());
         

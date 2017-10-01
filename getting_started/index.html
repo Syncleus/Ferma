@@ -494,7 +494,7 @@ instruct Ferma to dynamically construct byte code to implement the abstract meth
 <h2 id="untyped-mode-example">Untyped Mode Example<a class="headerlink" href="#untyped-mode-example" title="Permanent link">&para;</a></h2>
 <p>In untyped mode there is no automatic typing. Whatever class is explicitly indicated is the type that will be
 instantiated when performing queries. Lets start with a simple example domain.</p>
-<div class="codehilite"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Person</span> <span class="kd">extends</span> <span class="n">VertexFrame</span> <span class="o">{</span>
+<div class="codehilite"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Person</span> <span class="kd">extends</span> <span class="n">AbstractVertexFrame</span> <span class="o">{</span>
   <span class="kd">public</span> <span class="n">String</span> <span class="nf">getName</span><span class="o">()</span> <span class="o">{</span>
     <span class="k">return</span> <span class="n">getProperty</span><span class="o">(</span><span class="s">&quot;name&quot;</span><span class="o">);</span>
   <span class="o">}</span>
@@ -508,11 +508,11 @@ instantiated when performing queries. Lets start with a simple example domain.</
   <span class="o">}</span>
 
   <span class="kd">public</span> <span class="n">Knows</span> <span class="nf">addKnows</span><span class="o">(</span><span class="n">Person</span> <span class="n">friend</span><span class="o">)</span> <span class="o">{</span>
-    <span class="k">return</span> <span class="n">addEdge</span><span class="o">(</span><span class="s">&quot;knows&quot;</span><span class="o">,</span> <span class="n">friend</span><span class="o">,</span> <span class="n">Knows</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+    <span class="k">return</span> <span class="n">addFramedEdge</span><span class="o">(</span><span class="s">&quot;knows&quot;</span><span class="o">,</span> <span class="n">friend</span><span class="o">,</span> <span class="n">Knows</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
   <span class="o">}</span>
 <span class="o">}</span>
 
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Knows</span> <span class="kd">extends</span> <span class="n">EdgeFrame</span> <span class="o">{</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Knows</span> <span class="kd">extends</span> <span class="n">AbstractEdgeFrame</span> <span class="o">{</span>
   <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setYears</span><span class="o">(</span><span class="kt">int</span> <span class="n">years</span><span class="o">)</span> <span class="o">{</span>
     <span class="n">setProperty</span><span class="o">(</span><span class="s">&quot;years&quot;</span><span class="o">,</span> <span class="n">years</span><span class="o">);</span>
   <span class="o">}</span>
@@ -525,10 +525,10 @@ instantiated when performing queries. Lets start with a simple example domain.</
 
 <p>And here is how you interact with the framed elements:</p>
 <div class="codehilite"><pre><span></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">testUntyped</span><span class="o">()</span> <span class="o">{</span>
-  <span class="n">Graph</span> <span class="n">g</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TinkerGraph</span><span class="o">();</span>
+  <span class="n">Graph</span> <span class="n">graph</span> <span class="o">=</span> <span class="n">TinkerGraph</span><span class="o">.</span><span class="na">open</span><span class="o">();</span>
 
   <span class="c1">// implies untyped mode</span>
-  <span class="n">FramedGraph</span> <span class="n">fg</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DelegatingFramedGraph</span><span class="o">(</span><span class="n">g</span><span class="o">);</span>
+  <span class="n">FramedGraph</span> <span class="n">fg</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DelegatingFramedGraph</span><span class="o">(</span><span class="n">graph</span><span class="o">);</span>
 
   <span class="n">Person</span> <span class="n">p1</span> <span class="o">=</span> <span class="n">fg</span><span class="o">.</span><span class="na">addFramedVertex</span><span class="o">(</span><span class="n">Person</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
   <span class="n">p1</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="s">&quot;Jeff&quot;</span><span class="o">);</span>
@@ -557,10 +557,10 @@ reading from the graph.</p>
 
 <p>Using simple mode will save the type of Java class the element was created with for use later:</p>
 <div class="codehilite"><pre><span></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">testSimpleTyping</span><span class="o">()</span> <span class="o">{</span>
-  <span class="n">Graph</span> <span class="n">g</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TinkerGraph</span><span class="o">();</span>
+  <span class="n">Graph</span> <span class="n">graph</span> <span class="o">=</span> <span class="n">TinkerGraph</span><span class="o">.</span><span class="na">open</span><span class="o">();</span>
 
   <span class="c1">// implies simple mode</span>
-  <span class="n">FramedGraph</span> <span class="n">fg</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DelegatingFramedGraph</span><span class="o">(</span><span class="n">g</span><span class="o">,</span> <span class="kc">true</span><span class="o">,</span> <span class="kc">false</span><span class="o">);</span>
+  <span class="n">FramedGraph</span> <span class="n">fg</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DelegatingFramedGraph</span><span class="o">(</span><span class="n">graph</span><span class="o">,</span> <span class="kc">true</span><span class="o">,</span> <span class="kc">false</span><span class="o">);</span>
 
   <span class="n">Person</span> <span class="n">p1</span> <span class="o">=</span> <span class="n">fg</span><span class="o">.</span><span class="na">addFramedVertex</span><span class="o">(</span><span class="n">Programmer</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
   <span class="n">p1</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="s">&quot;Jeff&quot;</span><span class="o">);</span>
@@ -583,28 +583,28 @@ Annotated mode also provides a set of annotations which must be used to define a
 implemented by the engine. Annotated mode provides the same type resolution as provided by simple mode with a bit more
 power to determine parent-child relationships at run time.</p>
 <p>The same example as above done with annotations would look something like this.</p>
-<div class="codehilite"><pre><span></span><span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">Person</span> <span class="kd">extends</span> <span class="n">VertexFrame</span> <span class="o">{</span>
+<div class="codehilite"><pre><span></span><span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">Person</span> <span class="kd">extends</span> <span class="n">AbstractVertexFrame</span> <span class="o">{</span>
   <span class="nd">@Property</span><span class="o">(</span><span class="s">&quot;name&quot;</span><span class="o">)</span>
   <span class="kd">public</span> <span class="kd">abstract</span> <span class="n">String</span> <span class="nf">getName</span><span class="o">();</span>
 
   <span class="nd">@Property</span><span class="o">(</span><span class="s">&quot;name&quot;</span><span class="o">)</span>
   <span class="kd">public</span> <span class="kd">abstract</span> <span class="kt">void</span> <span class="nf">setName</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">);</span>
 
-  <span class="nd">@Adjacency</span><span class="o">(</span><span class="s">&quot;knows&quot;</span><span class="o">)</span>
-  <span class="kd">public</span> <span class="kd">abstract</span> <span class="n">Iterator</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;;</span> <span class="n">getKnowsPeople</span><span class="o">();</span>
+  <span class="nd">@Adjacency</span><span class="o">(</span><span class="n">label</span> <span class="o">=</span> <span class="s">&quot;knows&quot;</span><span class="o">)</span>
+  <span class="kd">public</span> <span class="kd">abstract</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span> <span class="nf">getKnowsPeople</span><span class="o">();</span>
 
-  <span class="nd">@Incidence</span><span class="o">(</span><span class="s">&quot;knows&quot;</span><span class="o">)</span>
-  <span class="kd">public</span> <span class="kd">abstract</span> <span class="n">Iterator</span><span class="o">&lt;</span><span class="n">Knows</span><span class="o">&gt;</span> <span class="nf">getKnows</span><span class="o">();</span>
+  <span class="nd">@Incidence</span><span class="o">(</span><span class="n">label</span> <span class="o">=</span> <span class="s">&quot;knows&quot;</span><span class="o">)</span>
+  <span class="kd">public</span> <span class="kd">abstract</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Knows</span><span class="o">&gt;</span> <span class="nf">getKnows</span><span class="o">();</span>
 
-  <span class="nd">@Incidence</span><span class="o">(</span><span class="s">&quot;knows&quot;</span><span class="o">)</span>
+  <span class="nd">@Incidence</span><span class="o">(</span><span class="n">label</span> <span class="o">=</span> <span class="s">&quot;knows&quot;</span><span class="o">)</span>
   <span class="kd">public</span> <span class="kd">abstract</span> <span class="n">Knows</span> <span class="nf">addKnows</span><span class="o">(</span><span class="n">Person</span> <span class="n">friend</span><span class="o">);</span>
 
-  <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span> <span class="nf">getFriendsNamedBill</span><span class="o">()</span> <span class="o">{</span>
-    <span class="k">return</span> <span class="n">traverse</span><span class="o">((</span><span class="n">v</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">v</span><span class="o">.</span><span class="na">out</span><span class="o">(</span><span class="s">&quot;knows&quot;</span><span class="o">).</span><span class="na">has</span><span class="o">(</span><span class="s">&quot;name&quot;</span><span class="o">,</span> <span class="s">&quot;bill&quot;</span><span class="o">).</span><span class="na">toList</span><span class="o">(</span><span class="n">Person</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+  <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">Person</span><span class="o">&gt;</span> <span class="nf">getFriendsNamedBill</span><span class="o">()</span> <span class="o">{</span>
+      <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">traverse</span><span class="o">(</span><span class="n">input</span> <span class="o">-&gt;</span> <span class="n">input</span><span class="o">.</span><span class="na">out</span><span class="o">(</span><span class="s">&quot;knows&quot;</span><span class="o">).</span><span class="na">has</span><span class="o">(</span><span class="s">&quot;name&quot;</span><span class="o">,</span> <span class="s">&quot;bill&quot;</span><span class="o">)).</span><span class="na">toList</span><span class="o">(</span><span class="n">Person</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
   <span class="o">}</span>
 <span class="o">}</span>
 
-<span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">Knows</span> <span class="kd">extends</span> <span class="n">EdgeFrame</span> <span class="o">{</span>
+<span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">Knows</span> <span class="kd">extends</span> <span class="n">AbstractEdgeFrame</span> <span class="o">{</span>
   <span class="nd">@Property</span><span class="o">(</span><span class="s">&quot;years&quot;</span><span class="o">)</span>
   <span class="kd">public</span> <span class="kd">abstract</span> <span class="kt">void</span> <span class="nf">setYears</span><span class="o">(</span><span class="kt">int</span> <span class="n">years</span><span class="o">);</span>
 
@@ -615,7 +615,7 @@ power to determine parent-child relationships at run time.</p>
   <span class="kd">public</span> <span class="kd">abstract</span> <span class="n">Person</span> <span class="nf">getIn</span><span class="o">();</span>
 
   <span class="nd">@OutVertex</span>
-  <span class="kd">public</span> <span class="kd">abstract</span> <span class="n">Person</span> <span class="nf">getIn</span><span class="o">();</span>
+  <span class="kd">public</span> <span class="kd">abstract</span> <span class="n">Person</span> <span class="nf">getOut</span><span class="o">();</span>
 <span class="o">}</span>
 
 <span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">Programmer</span> <span class="kd">extends</span> <span class="n">Person</span> <span class="o">{</span>
@@ -627,25 +627,26 @@ In this mode you want to tell the engine what classes you will be using so it ca
 construct the byte code for any abstract annotated methods.</p>
 <div class="codehilite"><pre><span></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">testAnnotatedTyping</span><span class="o">()</span> <span class="o">{</span>
   <span class="n">Set</span><span class="o">&lt;</span><span class="n">Class</span><span class="o">&lt;?&gt;&gt;</span> <span class="n">types</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashSet</span><span class="o">&lt;</span><span class="n">Class</span><span class="o">&lt;?&gt;&gt;(</span><span class="n">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="k">new</span> <span class="n">Class</span><span class="o">&lt;?&gt;[]{</span>
-                                                                    <span class="n">Person</span><span class="o">.</span><span class="na">class</span><span class="o">,</span>
-                                                                    <span class="n">Programmer</span><span class="o">.</span><span class="na">class</span><span class="o">,</span>
-                                                                    <span class="n">Knows</span><span class="o">.</span><span class="na">class</span><span class="o">}));</span>
-  <span class="n">Graph</span> <span class="n">g</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TinkerGraph</span><span class="o">();</span>
+                <span class="n">Person</span><span class="o">.</span><span class="na">class</span><span class="o">,</span>
+                <span class="n">Programmer</span><span class="o">.</span><span class="na">class</span><span class="o">,</span>
+                <span class="n">Knows</span><span class="o">.</span><span class="na">class</span><span class="o">}));</span>
+  <span class="n">Graph</span> <span class="n">graph</span> <span class="o">=</span> <span class="n">TinkerGraph</span><span class="o">.</span><span class="na">open</span><span class="o">();</span>
 
   <span class="c1">//implies annotated mode</span>
-  <span class="n">FramedGraph</span> <span class="n">fg</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DelegatingFramedGraph</span><span class="o">(</span><span class="n">g</span><span class="o">,</span> <span class="kc">true</span><span class="o">,</span> <span class="n">types</span><span class="o">);</span>
+  <span class="n">FramedGraph</span> <span class="n">fg</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DelegatingFramedGraph</span><span class="o">(</span><span class="n">graph</span><span class="o">,</span> <span class="kc">true</span><span class="o">,</span> <span class="n">types</span><span class="o">);</span>
 
-  <span class="n">Person</span> <span class="n">p1</span> <span class="o">=</span> <span class="n">fg</span><span class="o">.</span><span class="na">addFramedVertex</span><span class="o">(</span><span class="n">Programmer</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
-  <span class="n">p1</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="s">&quot;Jeff&quot;</span><span class="o">);</span>
+  <span class="n">Person</span> <span class="n">jeff</span> <span class="o">=</span> <span class="n">fg</span><span class="o">.</span><span class="na">addFramedVertex</span><span class="o">(</span><span class="n">Programmer</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+  <span class="n">jeff</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="s">&quot;Jeff&quot;</span><span class="o">);</span>
 
-  <span class="n">Person</span> <span class="n">p2</span> <span class="o">=</span> <span class="n">fg</span><span class="o">.</span><span class="na">addFramedVertex</span><span class="o">(</span><span class="n">Person</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
-  <span class="n">p2</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="s">&quot;Julia&quot;</span><span class="o">);</span>
+  <span class="n">Person</span> <span class="n">julia</span> <span class="o">=</span> <span class="n">fg</span><span class="o">.</span><span class="na">addFramedVertex</span><span class="o">(</span><span class="n">Person</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+  <span class="n">julia</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="s">&quot;Julia&quot;</span><span class="o">);</span>
+  <span class="n">julia</span><span class="o">.</span><span class="na">addKnows</span><span class="o">(</span><span class="n">jeff</span><span class="o">);</span>
 
-  <span class="n">Person</span> <span class="n">jeff</span> <span class="o">=</span> <span class="n">fg</span><span class="o">.</span><span class="na">traverse</span><span class="o">((</span><span class="n">g</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">g</span><span class="o">.</span><span class="na">V</span><span class="o">().</span><span class="na">has</span><span class="o">(</span><span class="s">&quot;name&quot;</span><span class="o">,</span> <span class="s">&quot;Jeff&quot;</span><span class="o">)).</span><span class="na">next</span><span class="o">(</span><span class="n">Person</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
-  <span class="n">Person</span> <span class="n">julia</span> <span class="o">=</span> <span class="n">fg</span><span class="o">.</span><span class="na">traverse</span><span class="o">((</span><span class="n">g</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">g</span><span class="o">.</span><span class="na">V</span><span class="o">().</span><span class="na">has</span><span class="o">(</span><span class="s">&quot;name&quot;</span><span class="o">,</span> <span class="s">&quot;Julia&quot;</span><span class="o">)).</span><span class="na">next</span><span class="o">(</span><span class="n">Person</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+  <span class="n">Person</span> <span class="n">juliaAgain</span> <span class="o">=</span> <span class="n">fg</span><span class="o">.</span><span class="na">traverse</span><span class="o">((</span><span class="n">g</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">g</span><span class="o">.</span><span class="na">V</span><span class="o">().</span><span class="na">has</span><span class="o">(</span><span class="s">&quot;name&quot;</span><span class="o">,</span> <span class="s">&quot;Julia&quot;</span><span class="o">)).</span><span class="na">next</span><span class="o">(</span><span class="n">Person</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+  <span class="n">Person</span> <span class="n">jeffAgain</span> <span class="o">=</span> <span class="n">juliaAgain</span><span class="o">.</span><span class="na">getKnowsPeople</span><span class="o">().</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
 
-  <span class="n">Assert</span><span class="o">.</span><span class="na">assertEquals</span><span class="o">(</span><span class="n">Programmer</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">jeff</span><span class="o">.</span><span class="na">getClass</span><span class="o">());</span>
-  <span class="n">Assert</span><span class="o">.</span><span class="na">assertEquals</span><span class="o">(</span><span class="n">Person</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">julia</span><span class="o">.</span><span class="na">getClass</span><span class="o">());</span>
+  <span class="n">Assert</span><span class="o">.</span><span class="na">assertTrue</span><span class="o">(</span><span class="n">Programmer</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">isAssignableFrom</span><span class="o">(</span><span class="n">jeffAgain</span><span class="o">.</span><span class="na">getClass</span><span class="o">()));</span>
+  <span class="n">Assert</span><span class="o">.</span><span class="na">assertTrue</span><span class="o">(</span><span class="n">Person</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">isAssignableFrom</span><span class="o">(</span><span class="n">juliaAgain</span><span class="o">.</span><span class="na">getClass</span><span class="o">()));</span>
 <span class="o">}</span>
 </pre></div>
                 

@@ -134,7 +134,7 @@ assert person.getName().equals("Jeff");
     if you ever decide to migrate over to typed mode it will not change the behavior of your existing code base and will
     make the migration process much easier. 
 
-## Typed Mode
+### Typed Mode
 
 Typed mode takes things one step further and allows type information about a Data Model class to be encoded as a
 property on vertex and edges in the underlying graph. This behavior is governed by the `PolymorphicTypeResolver` which

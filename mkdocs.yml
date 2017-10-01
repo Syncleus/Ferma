@@ -22,7 +22,7 @@ pages:
         - '@Property': annotations/property.md
     - Glossary: glossary.md
 extra:
-  version: '3.2.0'
+  version: '3.2.1'
   logo: 'images/ferma-logo.svg'
   github:
     download_release: true

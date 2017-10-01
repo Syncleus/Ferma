@@ -21,7 +21,7 @@ public interface Person extends VertexFrame {
 In this example Person represents a vertex in the graph with a property indicating their name, and they are associated
 with other vertex in the graph of the same type that represent their coworkers.
 
-When implementing a vertex as a concrete class you must instead inherit from `VertexFrame`.
+When implementing a vertex as a concrete class you must instead inherit from `AbstractVertexFrame`.
 
 ```java
 public class Person extends AbstractVertexFrame {
@@ -57,12 +57,12 @@ public class PersonImpl extends AbstractVertexFrame implements Person {
 
 ## Typing
 
-There are two typing modes for ferma and each significantly effect how the user will determine the type of the objects
+There are two typing modes for ferma and each significantly effects how the user will determine the type of the objects
 pulled from the graph, these modes are called **Typed Mode** and **Untyped Mode**.
 
 When performing a traversal on a Frame there are several methods provided which automatically encapsulate the underlying
 graph element or elements into a framed equivelant such as a `VertexFrame` or a `EdgeFrame`. This may either be a single
-Frame, Iterator, Set, or List of Frames.
+Frame, `Iterator`, `Set`, or `List` of Frames.
 
 In the earlier example we used a traversal to find all the coworkers, we used the `toList()` method to frame all the
 underlying vertex into the `Person` type.
@@ -86,15 +86,15 @@ VertexFrame nextOrAdd();
 <N> Set<? extends N> toSet(Class<N> kind);
 ```
 
-!! note
-   Each of these methods also have an equivelant method with the suffix `Explicit`, we will discuss those later as they
-   only become important when we begin to discuss the differences between typed and untyped mode.
+!!! note
+    Each of these methods also have an equivelant method with the suffix `Explicit`, we will discuss those later as they
+    only become important when we begin to discuss the differences between Typed Mode and `Untyped Mode`.
 
 Each of these methods has a slightly different behavior. For full details see the Ferma Javadocs for the Traversable
 class. However, in short, the `next(Class)` method returns any one of the matching elements and frames it as the
-specified type. It will throw an exception however if no vertexes match. The `nextOrDefault` varient avoids the
+specified type. It will throw an exception however if no vertex are found. The `nextOrDefault` varient avoids the
 exception by returning the default value when there are no matches, which can be `0` or `null` for example. Similarly
-`nextOrAdd` will add a new vertex to the underlying graph if the traversal yields no matches. finally `frame(Class)`,
+`nextOrAdd` will add a new vertex to the underlying graph if the traversal yields no matches. Finally `frame(Class)`,
 `toList(Class)`, and `toSet(Class)` will return all elements that match the traversal as either a `Iterator`, `List`, 
 or a `Set`.
 
@@ -136,7 +136,7 @@ assert person.getName().equals("Jeff");
 
 ### Typed Mode
 
-Typed mode takes things one step further and allows type information about a Data Model class to be encoded as a
+Typed mode takes things one step further and allows type information about a frame to be encoded as a
 property on vertex and edges in the underlying graph. This behavior is governed by the `PolymorphicTypeResolver` which
 encodes the type in a property name which defaults to the value of `PolymorphicTypeResolver.TYPE_RESOLUTION_KEY` but can
 be explicitly set to any string value of the user's choice. When a class is framed the Type Resolution Key is read and
@@ -165,14 +165,14 @@ public class Programmer extends Person {
 
 In this case we can encode a `Programmer` vertex into the graph and even if we try to retrieve and frame that vertex as a
 `VertexFrame` or `Person` in the future the instantiated type will still be `Programmer`. This allows for a truly
-Polymorphic Graph Data Model that leverages method overriding and class inheritance functiuonality in the model. For
+polymorphic Graph Data Model that leverages method overriding and class inheritance functiuonality in the model. For
 example the following is possible now in Typed Mode.
 
 ```Java
-// Open typed Framed Graph
+// Open a Framed Graph in Typed Mode
 FramedGraph fg = new DelegatingFramedGraph(TinkerGraph.open(), true, false);
 
-//create a vertex with no type information and a single name property
+//create a vertex with type information specifying it as the Programmer type
 Programmer programmer = fg.addFramedVertex(Programmer.class);
 programmer.setName("Jeff");
 
@@ -183,7 +183,7 @@ assert person.getFriends().isEmpty();
 ```
 
 The methods with the `Explicit` suffix are particularly meaningful for Typed Mode. In this mode they bypass the encoded
-typing completely and instantiate the frame as the type specified instead. The following code snippet provides an
+typing completely and instantiate the frame as if in Untyped Mode. The following code snippet provides an
 example using the same model.
 
 ```Java
@@ -210,4 +210,27 @@ The following are the list of explicit method types in the Traversable class.
 <N> Iterator<? extends N> frameExplicit(Class<N> kind);
 <N> List<? extends N> toListExplicit(Class<N> kind);
 <N> Set<? extends N> toSetExplicit(Class<N> kind);
+```
+
+It is also possible to change the type encoded in the underlying graph after the element has already been created. The
+following example demonstrates this feature.
+
+```java
+FramedGraph fg = new DelegatingFramedGraph(TinkerGraph.open(), true, false);
+
+//create a vertex with type information specifying it as the Programmer type
+Programmer programmer = fg.addFramedVertex(Programmer.class);
+programmer.setName("Jeff");
+
+//retrieve the vertex we just created and check it is instantiated as a Programer
+Person person = fg.traverse(g -> g.V().property("name", "jeff")).next(Person.class);
+assert person instanceof Programmer;
+
+//change the type resolution to person
+person.setTypeResolution(Person.class);
+
+//retrieve the vertex again to show the type changed
+person = fg.traverse(g -> g.V().property("name", "jeff")).next(Person.class);
+assert(!(person instanceof Programmer));
+assert(person instanceof Person);
 ```

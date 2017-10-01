@@ -70,9 +70,9 @@ then you can just skip this section.
 
 First ensure the package is prepared for the release process:
 
-* Make sure any references to the version number in the readme is updated
-  * Version number in dependency maven snippet.
-  * Add new version to javadoc version list.
+* Make sure any references to the version number is updated
+  * Version number in dependency maven snippet in `README.md` and `docs/getting_started.md`.
+  * Add new version to javadoc version list in `docs/index.md`.
 * Ensure that none of the dependencies used are snapshots.
 * Update the changelog file.
 * Check that all Ferma libraries used as dependencies point to the latest version.

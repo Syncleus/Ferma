@@ -1,5 +1,7 @@
 # Ferma Changelog
 
+## 3.2.2
+
 ## 3.2.1
 
 * Removed `throws exception` from the signature of the TxActions.

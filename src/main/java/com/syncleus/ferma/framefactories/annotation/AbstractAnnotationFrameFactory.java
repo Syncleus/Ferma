@@ -39,7 +39,7 @@ public class AbstractAnnotationFrameFactory implements FrameFactory {
     private final ReflectionCache reflectionCache;
     private final Map<Class, Class> constructedClassCache = new HashMap<>();
 
-    public AbstractAnnotationFrameFactory(final ReflectionCache reflectionCache, Set<MethodHandler> handlers) {
+    protected AbstractAnnotationFrameFactory(final ReflectionCache reflectionCache, Set<MethodHandler> handlers) {
         this.reflectionCache = reflectionCache;
         for(MethodHandler handler : handlers)
             this.methodHandlers.put(handler.getAnnotationType(), handler);

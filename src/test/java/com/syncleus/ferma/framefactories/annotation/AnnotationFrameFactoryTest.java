@@ -85,7 +85,8 @@ public class AnnotationFrameFactoryTest {
                 .when(custom.processMethod(Mockito.any(), Mockito.any(), Mockito.any()))
                 .thenAnswer(inv -> inv.getArgumentAt(0, DynamicType.Builder.class))
                 .getMock();
-        AnnotationFrameFactory frameFactory = new AnnotationFrameFactory(new ReflectionCache(), Collections.singleton(custom));
+        AbstractAnnotationFrameFactory frameFactory = new AbstractAnnotationFrameFactory(new ReflectionCache(), Collections.singleton(custom)) {
+        };
         DelegatingFramedGraph framedGraph = new DelegatingFramedGraph(fg.getBaseGraph(), frameFactory, new PolymorphicTypeResolver());
         framedGraph.addFramedVertex(God.class);
         Mockito.verify(custom, Mockito.atLeast(0)).getAnnotationType();

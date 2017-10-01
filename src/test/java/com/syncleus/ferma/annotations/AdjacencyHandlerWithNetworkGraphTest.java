@@ -124,7 +124,7 @@ public class AdjacencyHandlerWithNetworkGraphTest extends NetworkGraphTestHelper
         testAddVertexBothVertexTypedEdgeTyped();
         ComputerVertex newDev = findDeviceByName(graph, newDevName);
         // Now make it linked only to devices 2 and 4
-        newDev.setTwoWayConnectionsWith(Arrays.asList(dev2, dev4).iterator());
+        newDev.setTwoWayConnectionsWithIterator(Arrays.asList(dev2, dev4).iterator());
         assertTwoWayConnection(newDev, dev2);
         assertTwoWayConnection(newDev, dev4);
         assertNoConnection(newDev, dev1);
@@ -136,7 +136,7 @@ public class AdjacencyHandlerWithNetworkGraphTest extends NetworkGraphTestHelper
         testAddVertexBothVertexTypedEdgeTyped();
         ComputerVertex newDev = findDeviceByName(graph, newDevName);
         // Now make it linked only to devices 2 and 4
-        newDev.setTwoWayConnectionsWith(Arrays.asList(dev2, dev4));
+        newDev.setTwoWayConnectionsWithIterable(Arrays.asList(dev2, dev4));
         assertTwoWayConnection(newDev, dev2);
         assertTwoWayConnection(newDev, dev4);
         assertNoConnection(newDev, dev1);

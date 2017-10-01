@@ -15,9 +15,11 @@
  */
 package com.syncleus.ferma;
 
+import java.io.IOException;
 import java.util.Comparator;
 import org.apache.tinkerpop.gremlin.structure.T;
 import org.apache.tinkerpop.gremlin.tinkergraph.structure.TinkerGraph;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,14 +32,20 @@ public class ComparatorsTest {
 
     private Person p1;
     private Person p2;
+    private FramedGraph g;
     
     @Before
     public void setUp() {
-        FramedGraph g = new DelegatingFramedGraph(TinkerGraph.open());
+        g = new DelegatingFramedGraph(TinkerGraph.open());
         p1 = g.addFramedVertex(Person.DEFAULT_INITIALIZER, T.id, "1");
         p1.setName("Alice");
         p2 = g.addFramedVertex(Person.DEFAULT_INITIALIZER, T.id, "2");
         p2.setName("Bob");
+    }
+    
+    @After
+    public void tearDown() throws IOException {
+        g.close();
     }
     
     @Test

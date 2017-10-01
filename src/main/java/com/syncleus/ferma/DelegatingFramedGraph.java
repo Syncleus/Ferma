@@ -63,13 +63,14 @@ public class DelegatingFramedGraph<G extends Graph> implements WrappedFramedGrap
      *            The type defaultResolver that will decide the final frame type.
      */
     public DelegatingFramedGraph(final G delegate, final FrameFactory builder, final TypeResolver defaultResolver) {
-       this.delegate = delegate;
-
         if( builder == null )
             throw new IllegalArgumentException("builder can not be null");
         else if( defaultResolver == null )
             throw new IllegalArgumentException("defaultResolver can not be null");
+        else if( delegate == null )
+            throw new IllegalArgumentException("delegate can not be null");
 
+        this.delegate = delegate;
         this.defaultResolver = defaultResolver;
         this.untypedResolver = new UntypedTypeResolver();
         this.builder = builder;

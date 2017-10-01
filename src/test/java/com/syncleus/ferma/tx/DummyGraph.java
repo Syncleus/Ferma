@@ -21,10 +21,12 @@ import com.syncleus.ferma.DelegatingFramedGraph;
 
 public class DummyGraph extends DelegatingFramedGraph<Graph> implements FramedTxGraph {
 
+    private int totalTxCreated = 0;
+
     public DummyGraph(Graph delegate) {
         super(delegate);
     }
-
+    
     @Override
     public Tx tx() {
         return FramedTxGraph.super.tx();
@@ -32,6 +34,13 @@ public class DummyGraph extends DelegatingFramedGraph<Graph> implements FramedTx
 
     @Override
     public Tx createTx() {
-        return new DummyTransaction(null, this);
+        Tx created = new DummyTransaction(null, this);
+        totalTxCreated += 1;
+        return created;
     }
+
+    public int getTotalTxCreated() {
+        return totalTxCreated;
+    }
+    
 }

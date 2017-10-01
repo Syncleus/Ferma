@@ -26,6 +26,8 @@ import java.util.stream.Collectors;
 import org.junit.Before;
 import com.syncleus.ferma.graphtypes.network.ComputerVertex;
 import com.syncleus.ferma.graphtypes.network.NetworkDeviceVertex;
+import java.io.IOException;
+import org.junit.After;
 import org.junit.Assert;
 
 /**
@@ -60,6 +62,11 @@ public class NetworkGraphTestHelper {
         dev1OutConnections.add(dev4.getName());
         dev1OutConnections = Collections.unmodifiableSet(dev1OutConnections);
         dev1InConnections = dev1OutConnections;
+    }
+    
+    @After
+    public void tearDown() throws IOException {
+        graph.close();
     }
     
     protected ComputerVertex findDeviceByName(FramedGraph graph, String deviceName) {

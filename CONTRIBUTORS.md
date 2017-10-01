@@ -10,4 +10,4 @@
 * Johannes Schüth <j.schueth@jotschi.de>
 * Evan Thompson
 * Joshua Shinavier <josh@fortytwo.net>
-* Veselin Iordanov
+* Veselin Yordanov <vesko935@gmail.com>

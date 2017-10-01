@@ -245,8 +245,12 @@ public abstract class AbstractVertexFrame extends AbstractElementFrame implement
             final Object value = getProperty(key);
             if (value instanceof Number)
                 json.addProperty(key, (Number) value);
-            else if (value instanceof String)
-                json.addProperty(key, (String) value);
+            else if(value instanceof Boolean)
+                json.addProperty(key, (Boolean) value);
+            else if(value instanceof Character)
+                json.addProperty(key, (Character) value);
+            else
+                json.addProperty(key, value.toString());
         }
         return json;
     }

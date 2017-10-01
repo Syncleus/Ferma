@@ -28,8 +28,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockitoAnnotations;
 import com.google.common.collect.Lists;
+import java.io.IOException;
 
 import javax.annotation.Nullable;
+import org.junit.After;
 
 public class FramedVertexTest {
     private static final Function<GraphTraversal<Vertex, Vertex>, GraphTraversal<?, ?>> OUT_TRAVERSAL = input -> input.out();
@@ -51,6 +53,11 @@ public class FramedVertexTest {
         e1 = p1.addKnows(p2);
         e1.setYears(15);
 
+    }
+    
+    @After
+    public void deinit() throws IOException {
+        fg.close();
     }
 
     @Test

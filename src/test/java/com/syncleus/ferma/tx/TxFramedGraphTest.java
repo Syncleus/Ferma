@@ -15,9 +15,31 @@
  */
 package com.syncleus.ferma.tx;
 
-@FunctionalInterface
-public interface TxAction0 {
+import org.apache.tinkerpop.gremlin.tinkergraph.structure.TinkerGraph;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
-    void handle();
+/**
+ *
+ * @author rqpa
+ */
+public class TxFramedGraphTest {
+    
+    private DummyGraph graph;
 
+    @Before
+    public void setUp() {
+        graph = new DummyGraph(TinkerGraph.open());
+    }
+    
+    @Test
+    public void testSingleTxCreation() {
+        Tx expected = graph.tx();
+        Assert.assertSame(expected, graph.tx());
+        Assert.assertSame(expected, graph.tx());
+        Assert.assertSame(expected, graph.tx());
+        Assert.assertSame(expected, graph.tx());
+    }
+    
 }

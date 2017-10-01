@@ -21,6 +21,7 @@ import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.verify;
 
 import org.apache.tinkerpop.gremlin.structure.Transaction;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -123,19 +124,24 @@ public class TxFactoryTest implements TxFactory {
         verify(graphMock.tx(), Mockito.never()).commit();
     }
 
+    @Test
+    public void testActiveTxRetrieval() {
+        Tx tx = tx();
+        mock = Mockito.mock(DummyTransaction.class);
+        Assert.assertSame(tx, tx());
+        Assert.assertSame(tx, tx());
+        Assert.assertSame(tx, tx());
+    }
+    
     @Override
     public Tx createTx() {
         return mock;
     }
-
+    
     @Override
     public <T> T tx(TxAction<T> txHandler) {
         try (Tx tx = tx()) {
-            try {
-                return txHandler.handle(mock);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
+            return txHandler.handle(mock);
         }
     }
 

@@ -11,7 +11,7 @@ site_url: 'http://syncleus.com/Ferma'
 pages:
     - Home: index.md
     - Getting Started: getting_started.md
-    - Comparing the Alternatives: comparing_the_alternatives.md
+    - Object Mapping: object_mapping.md
     - Core Annotations:
         - Overview: annotations/overview.md
         - '@Adjacency': annotations/adjacency.md
@@ -20,6 +20,7 @@ pages:
         - '@InVertex': annotations/invertex.md
         - '@OutVertex': annotations/outvertex.md
         - '@Property': annotations/property.md
+    - Comparing the Alternatives: comparing_the_alternatives.md
     - Glossary: glossary.md
 extra:
   version: '3.2.1'

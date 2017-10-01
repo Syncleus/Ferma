@@ -9,7 +9,7 @@
   exception.
 * `AbstractAnnotationFrameFactory.constructClass()` method now throws an exception if the element argument is neither an
   `Edge` or a `Vertex`.
-* Added several more unit tests bring test coverage up an additional 5%.
+* Added several more unit tests bringing test coverage up an additional 5%.
 
 ## 3.2.0
 

@@ -504,10 +504,10 @@ is to a Relational Database. That is to say that it maps Java Objects to edges a
 natural consequence the Java types become an implied Schema for a Graph Database even if the underlying implementation
 doesnt support the notion of a schema.</p>
 <p>The objects associated with the various types of Edges and Vertex in a graph are collectively called the Graph Data
-Model (GDM). Each Java type in the GDM will usually represent a class of Edges or Vertex in underlying graph. All Edges
-in the model will extend from the <code class="codehilite">EdgeFrame</code> interface and all vertex will extend from <code class="codehilite">VertexFrame</code> interface. The
-individual classes that comprise the GDM are usually simply refered to as Frames.</p>
-<p>The methods defined by a Frame will represent interactions with the underlying graph via traversals that are relative, 
+Model (GDM). Each Java type in the GDM will usually represent a class of Edges or Vertex in the underlying graph. All
+Edges in the model will extend from the <code class="codehilite">EdgeFrame</code> interface and all vertex will extend from the <code class="codehilite">VertexFrame</code>
+interface. The individual classes that comprise the GDM are usually simply refered to as frames.</p>
+<p>The methods defined by a frame will represent interactions with the underlying graph via traversals that are relative, 
 using the current edge or vertex as their starting point.</p>
 <div class="codehilite"><pre><span></span><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Person</span> <span class="kd">extends</span> <span class="n">VertexFrame</span> <span class="o">{</span>
   <span class="n">String</span> <span class="nf">getName</span><span class="o">();</span>
@@ -551,10 +551,10 @@ with other vertex in the graph of the same type that represent their coworkers.<
 <h2 id="typing">Typing<a class="headerlink" href="#typing" title="Permanent link">&para;</a></h2>
 <p>There are two typing modes for ferma and each significantly effects how the user will determine the type of the objects
 pulled from the graph, these modes are called <strong>Typed Mode</strong> and <strong>Untyped Mode</strong>.</p>
-<p>When performing a traversal on a Frame there are several methods provided which automatically encapsulate the underlying
-graph element or elements into a framed equivelant such as a <code class="codehilite">VertexFrame</code> or a <code class="codehilite">EdgeFrame</code>. This may either be a single
-Frame, <code class="codehilite">Iterator</code>, <code class="codehilite">Set</code>, or <code class="codehilite">List</code> of Frames.</p>
-<p>In the earlier example we used a traversal to find all the coworkers, we used the <code class="codehilite">toList()</code> method to frame all the
+<p>When performing a traversal on a frame there are several methods provided which automatically encapsulate the underlying
+graph element or elements into a framed equivelant such as a <code class="codehilite">VertexFrame</code> or an <code class="codehilite">EdgeFrame</code>. This may be either a single
+frame, or a group of frames provided by an <code class="codehilite">Iterator</code>, <code class="codehilite">Set</code>, or <code class="codehilite">List</code>.</p>
+<p>In the earlier example we used a traversal to find all the coworkers and we used the <code class="codehilite">toList()</code> method to frame all the
 underlying vertex into the <code class="codehilite">Person</code> type.</p>
 <div class="codehilite"><pre><span></span><span class="k">this</span><span class="o">.</span><span class="na">traverse</span><span class="o">(</span><span class="n">v</span> <span class="o">-&gt;</span> <span class="n">v</span><span class="o">.</span><span class="na">out</span><span class="o">(</span><span class="s">&quot;coworker&quot;</span><span class="o">)).</span><span class="na">toList</span><span class="o">(</span><span class="n">Person</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
 </pre></div>
@@ -575,7 +575,7 @@ ways, those methods, members of the <code class="codehilite">Traversable</code> 
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Each of these methods also have an equivelant method with the suffix <code class="codehilite">Explicit</code>, we will discuss those later as they
-only become important when we begin to discuss the differences between Typed Mode and <code class="codehilite">Untyped Mode</code>.</p>
+only become important when we begin to discuss the differences between Typed Mode and Untyped Mode.</p>
 </div>
 <p>Each of these methods has a slightly different behavior. For full details see the Ferma Javadocs for the Traversable
 class. However, in short, the <code class="codehilite">next(Class)</code> method returns any one of the matching elements and frames it as the
@@ -583,7 +583,7 @@ specified type. It will throw an exception however if no vertex are found. The <
 exception by returning the default value when there are no matches, which can be <code class="codehilite">0</code> or <code class="codehilite">null</code> for example. Similarly
 <code class="codehilite">nextOrAdd</code> will add a new vertex to the underlying graph if the traversal yields no matches. Finally <code class="codehilite">frame(Class)</code>,
 <code class="codehilite">toList(Class)</code>, and <code class="codehilite">toSet(Class)</code> will return all elements that match the traversal as either a <code class="codehilite">Iterator</code>, <code class="codehilite">List</code>, 
-or a <code class="codehilite">Set</code>.</p>
+or <code class="codehilite">Set</code>.</p>
 <p>The exact type returned from all the aforementioned calls will always be a Class of the type specified in the argument,
 or a subclass thereof. The exact type of the class instantiated will depend on which typing mode is being used.</p>
 <h3 id="untyped-mode">Untyped Mode<a class="headerlink" href="#untyped-mode" title="Permanent link">&para;</a></h3>
@@ -664,7 +664,7 @@ example using the same model.</p>
 <div class="codehilite"><pre><span></span><span class="c1">// Open typed Framed Graph</span>
 <span class="n">FramedGraph</span> <span class="n">fg</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DelegatingFramedGraph</span><span class="o">(</span><span class="n">TinkerGraph</span><span class="o">.</span><span class="na">open</span><span class="o">(),</span> <span class="kc">true</span><span class="o">,</span> <span class="kc">false</span><span class="o">);</span>
 
-<span class="c1">//create a vertex with no type information and a single name property</span>
+<span class="c1">//create a vertex with type information specifying it as the Programmer type</span>
 <span class="n">Programmer</span> <span class="n">programmer</span> <span class="o">=</span> <span class="n">fg</span><span class="o">.</span><span class="na">addFramedVertex</span><span class="o">(</span><span class="n">Programmer</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
 <span class="n">programmer</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="s">&quot;Jeff&quot;</span><span class="o">);</span>
 

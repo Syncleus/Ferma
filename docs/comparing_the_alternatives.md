@@ -10,13 +10,17 @@ means the framework has the same execution time as Ferma, if it lists 2x then it
 it indicates 0.5x then it took half the time to execute. Obviously any value less than 1x indicates the OGM out
 performed Ferma and any value greater than 1x indicates Ferma had the superior performance tiimes.
 
-|                                           | **Blueprints** | **Gremlin Pipeline** | **Tinkerpop3** | **Frames**  | **Totorom** | **Peapod**  |
-|-------------------------------------------|----------------|----------------------|----------------|-------------|-------------|-------------|
-| **Get adjacencies via annotation**        | Not capable    | Not capable          | Not capable    | x2.09       | Not capable | x2.65       |
-| **Get verticies (untyped)**               | x0.89          | x3.94                | x16.98         | Not capable | x4.24       | Not capable |
-| **Get verticies (typed)**                 | x0.92          | x3.94                | Not capable    | x0.96       | x4.20       | x20.74      |
-| **Get verticies and call next (untyped)** | x0.79          | x3.87                | x11.74         | Not capable | x4.81       | Not capable |
-| **Get verticies and call next (typed)**   | x0.72          | x2.91                | Not capable    | x1.94       | x3.31       | x16.70      |
+|                                           | **Tinkerpop 2 Blueprints** | **Gremlin Pipeline** | **Tinkerpop3** | **Frames**  | **Totorom** | **Peapod**  |
+|-------------------------------------------|----------------------------|----------------------|----------------|-------------|-------------|-------------|
+| **Get adjacencies via annotation**        | Not capable                | Not capable          | Not capable    | x2.09       | Not capable | x2.65       |
+| **Get verticies (untyped)**               | x0.89                      | x3.94                | x16.98         | Not capable | x4.24       | Not capable |
+| **Get verticies (typed)**                 | x0.92                      | x3.94                | Not capable    | x0.96       | x4.20       | x20.74      |
+| **Get verticies and call next (untyped)** | x0.79                      | x3.87                | x11.74         | Not capable | x4.81       | Not capable |
+| **Get verticies and call next (typed)**   | x0.72                      | x2.91                | Not capable    | x1.94       | x3.31       | x16.70      |
+
+!!! note
+    These bencharks were performed comparing our v2.x branch. These benchmarks need to be updated to reflect changes in
+    Tinkerpop3 as well as the Ferma v3.x branch.
 
 As can be seen Ferma out performs all the alternative solutions considerably by several orders of magnitude. While
 results do vary slightly from system to system these results are pretty close to typical. Go ahead, check out the

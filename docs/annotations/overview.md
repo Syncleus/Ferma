@@ -10,6 +10,6 @@ name were to change. It is important to note that when a method is explicitly de
 the method signature can be anything.
 
 Method names that are annotated must have one of the following prefixes: add, get, remove, set, is. Exactly which 
-prefixes are varies from one annotation to the next so see the annotations detailed documentation to make that
-determination. It is also possible to override this behavior by setting the operation argument availible on most
-annotations which defaults to `AUTO` when not specified.
+prefixes are allowed varies from one annotation to the next so see the annotation's detailed documentation to make that
+determination. It is also possible to override this behavior by setting the `operation` argument available on most
+annotations which defaults to `AUTO`.

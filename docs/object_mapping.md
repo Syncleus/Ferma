@@ -4,11 +4,11 @@ natural consequence the Java types become an implied Schema for a Graph Database
 doesnt support the notion of a schema.
 
 The objects associated with the various types of Edges and Vertex in a graph are collectively called the Graph Data
-Model (GDM). Each Java type in the GDM will usually represent a class of Edges or Vertex in underlying graph. All Edges
-in the model will extend from the `EdgeFrame` interface and all vertex will extend from `VertexFrame` interface. The
-individual classes that comprise the GDM are usually simply refered to as Frames.
+Model (GDM). Each Java type in the GDM will usually represent a class of Edges or Vertex in the underlying graph. All
+Edges in the model will extend from the `EdgeFrame` interface and all vertex will extend from the `VertexFrame`
+interface. The individual classes that comprise the GDM are usually simply refered to as frames.
 
-The methods defined by a Frame will represent interactions with the underlying graph via traversals that are relative, 
+The methods defined by a frame will represent interactions with the underlying graph via traversals that are relative, 
 using the current edge or vertex as their starting point.
 
 ```java
@@ -60,11 +60,11 @@ public class PersonImpl extends AbstractVertexFrame implements Person {
 There are two typing modes for ferma and each significantly effects how the user will determine the type of the objects
 pulled from the graph, these modes are called **Typed Mode** and **Untyped Mode**.
 
-When performing a traversal on a Frame there are several methods provided which automatically encapsulate the underlying
-graph element or elements into a framed equivelant such as a `VertexFrame` or a `EdgeFrame`. This may either be a single
-Frame, `Iterator`, `Set`, or `List` of Frames.
+When performing a traversal on a frame there are several methods provided which automatically encapsulate the underlying
+graph element or elements into a framed equivelant such as a `VertexFrame` or an `EdgeFrame`. This may be either a single
+frame, or a group of frames provided by an `Iterator`, `Set`, or `List`.
 
-In the earlier example we used a traversal to find all the coworkers, we used the `toList()` method to frame all the
+In the earlier example we used a traversal to find all the coworkers and we used the `toList()` method to frame all the
 underlying vertex into the `Person` type.
 
 ```Java
@@ -88,7 +88,7 @@ VertexFrame nextOrAdd();
 
 !!! note
     Each of these methods also have an equivelant method with the suffix `Explicit`, we will discuss those later as they
-    only become important when we begin to discuss the differences between Typed Mode and `Untyped Mode`.
+    only become important when we begin to discuss the differences between Typed Mode and Untyped Mode.
 
 Each of these methods has a slightly different behavior. For full details see the Ferma Javadocs for the Traversable
 class. However, in short, the `next(Class)` method returns any one of the matching elements and frames it as the
@@ -96,7 +96,7 @@ specified type. It will throw an exception however if no vertex are found. The `
 exception by returning the default value when there are no matches, which can be `0` or `null` for example. Similarly
 `nextOrAdd` will add a new vertex to the underlying graph if the traversal yields no matches. Finally `frame(Class)`,
 `toList(Class)`, and `toSet(Class)` will return all elements that match the traversal as either a `Iterator`, `List`, 
-or a `Set`.
+or `Set`.
 
 The exact type returned from all the aforementioned calls will always be a Class of the type specified in the argument,
 or a subclass thereof. The exact type of the class instantiated will depend on which typing mode is being used.
@@ -190,7 +190,7 @@ example using the same model.
 // Open typed Framed Graph
 FramedGraph fg = new DelegatingFramedGraph(TinkerGraph.open(), true, false);
 
-//create a vertex with no type information and a single name property
+//create a vertex with type information specifying it as the Programmer type
 Programmer programmer = fg.addFramedVertex(Programmer.class);
 programmer.setName("Jeff");
 

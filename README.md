@@ -45,6 +45,7 @@ with the Ferma engine.
 
 Ferma also supports any of the many databases compatible with TinkerPop including the following.
 
+ * [JanusGraph](http://janusgraph.org/)
  * [Titan](http://thinkaurelius.github.io/titan/)
  * [Neo4j](http://neo4j.com)
  * [OrientDB](http://www.orientechnologies.com/orientdb/)
@@ -71,7 +72,7 @@ To include Ferma in your project of choice include the following Maven dependenc
     <version>3.2.1</version>
 </dependency>
 ```
-    
+
 
 ## Getting Started
 
@@ -148,14 +149,14 @@ provide type resolution. Basically the type of object you use when adding to the
 reading from the graph.
 
 Say we extend the Person class with the Programmer class.
-    
+
 ```java
 public class Programmer extends Person {
 }
 ```
-    
+
 Using simple mode will save the type of Java class the element was created with for use later:
-    
+
 ```java
 public void testSimpleTyping() {
   Graph graph = TinkerGraph.open();

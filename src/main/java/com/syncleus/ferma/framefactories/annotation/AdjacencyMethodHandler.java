@@ -645,16 +645,20 @@ public class AdjacencyMethodHandler extends AbstractMethodHandler {
             switch (direction) {
                 case BOTH:
                     thiz.unlinkBoth(null, label);
-                    thiz.getGraph().addFramedEdge(vertexFrame, thiz, label);
-                    thiz.getGraph().addFramedEdge(thiz, vertexFrame, label);
+                    if (vertexFrame != null) {
+                        thiz.getGraph().addFramedEdge(vertexFrame, thiz, label);
+                        thiz.getGraph().addFramedEdge(thiz, vertexFrame, label);
+                    }
                     break;
                 case IN:
                     thiz.unlinkIn(null, label);
-                    thiz.getGraph().addFramedEdge(vertexFrame, thiz, label);
+                    if (vertexFrame != null)
+                        thiz.getGraph().addFramedEdge(vertexFrame, thiz, label);
                     break;
                 case OUT:
                     thiz.unlinkOut(null, label);
-                    thiz.getGraph().addFramedEdge(thiz, vertexFrame, label);
+                    if (vertexFrame != null)
+                        thiz.getGraph().addFramedEdge(thiz, vertexFrame, label);
                     break;
                 default:
                     throw new IllegalStateException(method.getName() + " is annotated with a direction other than BOTH, IN, or OUT.");

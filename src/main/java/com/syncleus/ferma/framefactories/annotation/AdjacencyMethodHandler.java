@@ -362,7 +362,7 @@ public class AdjacencyMethodHandler extends AbstractMethodHandler {
                     default:
                         throw new IllegalStateException("Direction not recognized.");
                 }
-            }).next(VertexFrame.class);
+            }).nextOrDefault(VertexFrame.class, null);
         }
     }
 

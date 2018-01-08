@@ -23,9 +23,12 @@
  */
 package com.syncleus.ferma;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Function;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
 import org.apache.tinkerpop.gremlin.structure.*;
@@ -232,6 +235,23 @@ public abstract class AbstractVertexFrame extends AbstractElementFrame implement
         return this.setLinkBothExplicit(new DefaultClassInitializer<>(kind), labels);
     }
 
+    private Object getPropertySupportingMultiproperty(final String name) {
+        final Iterator<VertexProperty<Object>> propertyIterator = getElement().properties(name);
+        List<Object> results = new ArrayList<>();
+        while (propertyIterator.hasNext()) {
+            Property<Object> property = propertyIterator.next();
+            if (property.isPresent()) {
+                results.add(property.value());
+            }
+        }
+
+        if (results.size() == 1) {
+            return results.get(0);
+        } else {
+            return results;
+        }
+    }
+
     @Override
     public JsonObject toJson() {
         final JsonObject json = new JsonObject();
@@ -241,15 +261,27 @@ public abstract class AbstractVertexFrame extends AbstractElementFrame implement
             json.addProperty("id", getId(String.class));
         json.addProperty("elementClass", "vertex");
         for (final String key : getPropertyKeys()) {
-
-            final Object value = getProperty(key);
+            Object value = getPropertySupportingMultiproperty(key);
             if (value instanceof Number)
                 json.addProperty(key, (Number) value);
             else if(value instanceof Boolean)
                 json.addProperty(key, (Boolean) value);
             else if(value instanceof Character)
                 json.addProperty(key, (Character) value);
-            else
+            else if (value instanceof List) {
+                JsonArray jsonArray = new JsonArray();
+                ((List) value).forEach(item -> {
+                    if (item instanceof Number)
+                        jsonArray.add((Number) item);
+                    else if(item instanceof Boolean)
+                        jsonArray.add((Boolean) item);
+                    else if(item instanceof Character)
+                        jsonArray.add((Character) item);
+                    else
+                        jsonArray.add(item.toString());
+                });
+                json.add(key, jsonArray);
+            } else
                 json.addProperty(key, value.toString());
         }
         return json;

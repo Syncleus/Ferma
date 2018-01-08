@@ -17,6 +17,8 @@ package com.syncleus.ferma;
 
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
 import org.apache.tinkerpop.gremlin.structure.Graph;
+import org.apache.tinkerpop.gremlin.structure.Vertex;
+import org.apache.tinkerpop.gremlin.structure.VertexProperty;
 import org.apache.tinkerpop.gremlin.tinkergraph.structure.TinkerGraph;
 import org.junit.Assert;
 import org.junit.Before;
@@ -26,6 +28,8 @@ import com.google.common.collect.Sets;
 import com.google.gson.JsonObject;
 import com.syncleus.ferma.graphtypes.javaclass.JavaAccessModifier;
 import java.io.IOException;
+import java.util.Iterator;
+
 import org.apache.tinkerpop.gremlin.structure.T;
 import org.junit.After;
 
@@ -209,6 +213,31 @@ public class AbstractElementFrameTest {
         Assert.assertEquals(expected.getProperty(intPropName), (Integer) actual.get(intPropName).getAsInt());
         Assert.assertEquals(expected.getProperty(stringPropName), actual.get(stringPropName).getAsString());
         Assert.assertEquals(expected.getProperty(charPropName), (Character) actual.get(charPropName).getAsCharacter());
+    }
+
+    @Test
+    public void testVtoJSonMultiproperty() {
+        String stringPropName = "custom-string-property";
+        String stringPropValue = "custom-string-value";
+        String charPropName = "custom-char-property";
+        Character charPropValue = 'D';
+        String intPropName = "custom-int-property";
+        int intPropValue = 1234;
+        Person expected = fg.addFramedVertex(Person.DEFAULT_INITIALIZER,
+            T.id, "some-id",
+            stringPropName, stringPropValue,
+            charPropName, charPropValue,
+            intPropName, intPropValue);
+        Vertex vertex = expected.getElement();
+
+        String key = "multiproperty";
+        vertex.property(VertexProperty.Cardinality.list, key, "value1");
+        vertex.property(VertexProperty.Cardinality.list, key, "value2");
+        vertex.property(VertexProperty.Cardinality.list, key, "value3");
+        vertex.property(VertexProperty.Cardinality.list, key, "value4");
+
+        JsonObject actual = expected.toJson();
+        Assert.assertNotNull(actual);
     }
 
     @Test

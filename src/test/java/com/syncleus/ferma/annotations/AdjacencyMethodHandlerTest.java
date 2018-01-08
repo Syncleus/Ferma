@@ -90,6 +90,30 @@ public class AdjacencyMethodHandlerTest {
     }
 
     @Test
+    public void testGetSonsIterableDefault() {
+
+        GodGraphLoader.load(godGraph);
+
+        final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
+
+        final List<? extends God> gods = framedGraph.traverse(
+            input -> input.V().has("name", "jupiter")).toList(God.class);
+
+        final God father = gods.iterator().next();
+        Assert.assertTrue(father != null);
+        final VertexFrame fatherVertex = father;
+        Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
+
+        final Iterable<? extends God> children = father.getSonsIterable();
+        Assert.assertTrue(children.iterator().hasNext());
+        final God child = children.iterator().next();
+        Assert.assertTrue(child != null);
+        final VertexFrame childVertex = child;
+        Assert.assertEquals(childVertex.getElement().property("name").value(), "hercules");
+        Assert.assertTrue(child instanceof GodExtended);
+    }
+
+    @Test
     public void testGetSonsSetDefault() {
 
         GodGraphLoader.load(godGraph);

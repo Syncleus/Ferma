@@ -57,6 +57,9 @@ public interface God extends VertexFrame {
     List<? extends God> getSonsList();
 
     @Adjacency(label = "father", direction = Direction.IN)
+    Iterable<? extends God> getSonsIterable();
+
+    @Adjacency(label = "father", direction = Direction.IN)
     Set<? extends God> getSonsSet();
 
     @Adjacency(label = "father", direction = Direction.IN, operation = Adjacency.Operation.GET)

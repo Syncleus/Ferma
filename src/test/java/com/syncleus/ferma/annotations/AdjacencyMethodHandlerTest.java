@@ -324,6 +324,26 @@ public class AdjacencyMethodHandlerTest {
     }
 
     @Test
+    public void testSetSonNull() {
+
+        GodGraphLoader.load(godGraph);
+
+        final FramedGraph framedGraph = new DelegatingFramedGraph(godGraph, TEST_TYPES);
+
+        final List<? extends God> gods = framedGraph.traverse(
+            input -> input.V().has("name", "jupiter")).toList(God.class);
+
+        final God father = gods.iterator().next();
+        Assert.assertTrue(father != null);
+        final VertexFrame fatherVertex = father;
+        Assert.assertEquals(fatherVertex.getProperty("name"), "jupiter");
+
+        father.setSon(null);
+        final God sonNull = father.getSon();
+        Assert.assertNull(sonNull);
+    }
+
+    @Test
     public void testAddSonDefault() {
 
         GodGraphLoader.load(godGraph);

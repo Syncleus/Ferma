@@ -154,4 +154,3 @@ String personClassName = Person.class.getName();
 String encodedClassName = person.getProperty("customTypeKey")
 assert personClassName.equals(encodedClassName);
 ```
-

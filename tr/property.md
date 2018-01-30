@@ -116,7 +116,7 @@ Geçerli dönüş tipleri: `void`
 
 Bir öğenin özelliklerini kaldırın.
 
-example:
+örnek:
 
 ```java
 @Property("Foo")

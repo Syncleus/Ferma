@@ -138,9 +138,9 @@ FooEdge includeFoobar(BarVertex bar,
 
 Valid return types: `EdgeFrame`
 
-Yeni bir kenar oluşturur ve bunu yeni bir köşeye bağlar. The newly created vertex will have a type, as well as be initiated, according to the details specified in the first ClassInitializer argument. Similarly the newly created edge will hava a type, and be initiated, using the second ClassInitializer argument. Java generics can, and should, be used to narrow the return type. The returned object will be the newly created `EdgeFrame`.
+Yeni bir kenar oluşturur ve bunu yeni bir köşeye bağlar. The newly created vertex will have a type, as well as be initiated, according to the details specified in the first ClassInitializer argument. Similarly the newly created edge will hava a type, and be initiated, using the second ClassInitializer argument. Java generics can, and should, be used to narrow the return type. Döndürülen nesne, yeni oluşturulan `EdgeFrame` olacaktır.
 
-example:
+örnek:
 
 ```java
 @Incidence("Foo")
@@ -166,13 +166,13 @@ FooEdge includeFoobar(ClassInitializer<? extends BarVertex> vertexInitializer,
                       ClassInitializer<? extends FooEdge> edgeInitializer);
 ```
 
-## GET Operation
+## İŞLEM alma
 
-Valid method signatures: `()`, `(Class)`
+Geçerli yöntem imzaları: `()`, `(Class)`
 
-Get's one or more adjacent edgesd from the graph.
+Grafikten bir veya daha fazla bitişik kenarı alın.
 
-### Signature: `( )`
+### İmza: `( )`
 
 Valid return types: `VertexFrame` or `Iterator` or `List` or `Set`
 
@@ -282,9 +282,9 @@ Set<FooEdge> getFoobar(Class<? extends FooEdge> filter);
 FooEdge obtainFoobar(Class<? extends FooEdge> filter);
 ```
 
-## REMOVE Operation
+## İşlem KALDIRMA
 
-Valid method signatures: `(EdgeFrame)`
+Geçerli yöntem imzaları: `(EdgeFrame)`
 
 Removes an edges which cause an adjacency, leaving the vertex in place.
 

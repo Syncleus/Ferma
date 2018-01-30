@@ -1,23 +1,23 @@
 Çerveler üzerinde geçerli:**Köşe**
 
-Allowed prefixes when operation is AUTO: `add`, `get`, `remove`, `set`
+İşlem otomatik olduğunda izin verilen önekler: `add`, `get`, `remove`, `set`
 
 Açıklama argümanları:
 
-`label` - The label assigned to the edge which connects the adjacent nodes.
+`label`- Bitişik düğümleri birbirine bağlayan kenara atanan etiketler.
 
 `direction` - The direction for the edge which creates the adjacency. It can be assigned any of the values from `org.apache.tinkerpop.gremlin.structure.Direction`.
 
-`operation` - The operation the method will perform. Must be one of the following: `GET`, `ADD`, `SET`, `REMOVE`, `AUTO`. Defaults to `AUTO`.
+`operation`- Yöntemin gerçekleştireceği süreç. Aşağıdakilerden biri olmalıdır: `GET`, `ADD`, `SET`, `REMOVE`, `AUTO`. Varsayılan değer `AUTO`.
 
-example:
+örnek:
 
 ```java
 @Adjacency("foo")
 //Method declared here
 ```
 
-## ADD Operation
+## İşlem EKLEME
 
 Valid method signatures: `( )`, `(VertexFrame)`, `(ClassInitializer)`, `(ClassInitializer, ClassInitializer)`, `(VertexFrame, ClassInitializer)`
 
@@ -31,7 +31,7 @@ Creates a new vertex without any type information as well as an untyped edge to 
 
 !!! note Since the returned `VertexFrame` is always untyped the return type must be either `VertexFrame` or `TVertex` specifically.
 
-example:
+örnek:
 
 ```java
 @Adjacency("Foo")

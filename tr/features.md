@@ -52,7 +52,7 @@ public void testAnnotatedTyping() {
 }
 ```
 
-## Type information encoded into graph
+## Grafiğe kodlanmış bilgi türleri
 
 ```java
 Set<Class<?>> types = new HashSet<Class<?>>(Arrays.asList(new Class<?>[]{Person.class}));
@@ -82,7 +82,7 @@ Person programmer = fg.traverse(g -> g.V()).next(Person.class);
 assert programmer instanceof Programmer;
 ```
 
-## Element queried by type hierarchy
+## Türü hiyerarşisine göre sorgulanan öğe
 
 ```java
 Set<Class<?>> types = new HashSet<Class<?>>(Arrays.asList(new Class<?>[]{Person.class,

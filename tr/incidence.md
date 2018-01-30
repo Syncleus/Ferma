@@ -1,4 +1,4 @@
-Valid on frames: **Vertex**
+Çerveler üzerinde geçerli:**Vertex**
 
 Allowed prefixes when operation is AUTO: `add`, `get`, `remove`
 

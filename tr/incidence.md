@@ -19,11 +19,11 @@ Açıklama argümanları:
 
 ## İşlem EKLEME
 
-Valid method signatures: `( )`, `(VertexFrame)`, `(ClassInitializer)`, `(VertexFrame, ClassInitializer)`, `(ClassInitializer, ClassInitializer)`
+Geçerli yöntem imzaları: `( )`, `(VertexFrame)`, `(ClassInitializer)`, `(VertexFrame, ClassInitializer)`, `(ClassInitializer, ClassInitializer)`
 
 Adds an edge to edge to a node and returns the new `EdgeFrame`.
 
-### Signature: `( )`
+### İmza: `( )`
 
 Valid return types: `EdgeFrame`
 

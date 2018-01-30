@@ -23,9 +23,9 @@ Valid method signatures: `( )`, `(VertexFrame)`, `(ClassInitializer)`, `(ClassIn
 
 Adds a node as an adjacency to the current node, and the returns the newly connected node.
 
-### Signature: `( )`
+### İmza: `( )`
 
-Valid return types: `VertexFrame`
+Geçerli dönüş tipleri: `VertexFrame`
 
 Creates a new vertex without any type information as well as an untyped edge to connect to it. The newly created `VertexFrame` is returned.
 
@@ -43,13 +43,13 @@ VertexFrame addFoobar();
 VertexFrame includeFoobar();
 ```
 
-### Signature: `(VertexFrame)`
+### İmza: `(VertexFrame)`
 
-Valid return types: `VertexFrame` or `void`
+Geçerli dönüş tipleri: `VertexFrame` or `void`
 
-Creates a new edge without any type information and connects it between this vertex the vertex specified as an argument to the method. The frame returned is the same as the frame given in the argument, it is only there for compatability with other add methods. This method can also have a `void` return type.
+Creates a new edge without any type information and connects it between this vertex the vertex specified as an argument to the method. The frame returned is the same as the frame given in the argument, it is only there for compatability with other add methods. Bu yöntem `void` dönüş tipine de sahip olabilir.
 
-examples:
+örnek:
 
 ```java
 @Adjacency("Foo")
@@ -73,11 +73,11 @@ void includeFoobar(BarVertex existingVertex);
 
 ### Signature: `(ClassInitializer)`
 
-Valid return types: `VertexFrame`
+Geçerli dönüş tipleri: `VertexFrame`
 
-Creates a new edge without any type information and connects it between this vertex and a newly created vertex. The newly created vertex will have a type, as well as be initiated, according to the details specified in the ClassInitializer argument. Java generics can, and should, be used to narrow the return type.
+Herhangi bir tür bilgisi olmadan yeni bir kenar oluşturur ve bu köşe ile yeni oluşturulan bir köşe arasına bağlar. The newly created vertex will have a type, as well as be initiated, according to the details specified in the ClassInitializer argument. Java generics can, and should, be used to narrow the return type.
 
-example:
+örnek:
 
 ```java
 @Adjacency("Foo")

@@ -1,6 +1,6 @@
-Valid on frames: **Vertex**
+Válido en marcos: **Vertex**
 
-Allowed prefixes when operation is AUTO: `add`, `get`, `remove`, `set`
+Permitir prefijos cuando operación está en AUTO: `add`, `get`, `remove`, `set`
 
 Annotation arguments:
 

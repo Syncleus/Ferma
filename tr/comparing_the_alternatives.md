@@ -2,7 +2,7 @@ Orada birkaç OGM/ORM seçeneği vardır. For the purposes of this document we w
 
 ## Benchmarks
 
-We maintain an informal project for benchmarking Ferma against other OGM available, you can find the [source here](https://github.com/Syncleus/Ferma-benchmark). However below is a matrix breakdown of the results. Ham çalıştırma süresini göstermek yerine Ferma ile karşılaştığında her OGM oranını gösteriyoruz. Therefore if the table lists 1x then it means the framework has the same execution time as Ferma, if it lists 2x then it took twice as long to execute, and if it indicates 0.5x then it took half the time to execute. Obviously any value less than 1x indicates the OGM out performed Ferma and any value greater than 1x indicates Ferma had the superior performance tiimes.
+We maintain an informal project for benchmarking Ferma against other OGM available, you can find the [source here](https://github.com/Syncleus/Ferma-benchmark). However below is a matrix breakdown of the results. Ham çalıştırma süresini göstermek yerine Ferma ile karşılaştığında her OGM oranını gösteriyoruz. Bu nedenle tablo 1x listeleniyorsa çerçeve Ferma ile aynı yürütme süresine sahip demektir, eğer 2x listeleniyorsa yürütülmesi iki kat daha uzun sürer eğer 0.5x gösteriyorsa yürütmenin yarısı kadar zaman almış demektir. Obviously any value less than 1x indicates the OGM out performed Ferma and any value greater than 1x indicates Ferma had the superior performance tiimes.
 
 |                                           | **Tinkerpop 2 Blueprints** | **Gremlin Pipeline** | **Tinkerpop3** | **Frames**  | **Totorom** | **Peapod**  |
 | ----------------------------------------- | -------------------------- | -------------------- | -------------- | ----------- | ----------- | ----------- |
@@ -18,7 +18,7 @@ As can be seen Ferma out performs all the alternative solutions considerably by 
 
 ## Feature Breakdown
 
-Ferma also supports all the features provided by the alternatives out there, not to mention several novel features. The following gives a quick breakdown of the features of the various frameworks. We also link to some Ferma examples showing the various features in action.
+Ferma also supports all the features provided by the alternatives out there, not to mention several novel features. Aşağıdaki çeşitli çerçevelerin özelliklerinin hızlı bir dökümü verilmektedir. We also link to some Ferma examples showing the various features in action.
 
 | Feature                                                                                                                | **Ferma** | **Frames**    | **Totorom**   | **Peapod**    |
 | ---------------------------------------------------------------------------------------------------------------------- | --------- | ------------- | ------------- | ------------- |

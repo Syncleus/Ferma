@@ -2,7 +2,7 @@
 
 Allowed prefixes when operation is AUTO: `add`, `get`, `remove`
 
-Annotation arguments:
+Açıklama argümanları:
 
 `label` - The label assigned to the edge which connects the adjacent nodes.
 
@@ -10,14 +10,14 @@ Annotation arguments:
 
 `operation` - The operation the method will perform. Must be one of the following: `GET`, `ADD`, `SET`, `REMOVE`, `AUTO`. Defaults to `AUTO`.
 
-example:
+örnek:
 
 ```java
 @Incidence("foo")
 //Method declared here
 ```
 
-## ADD Operation
+## İşlem EKLEME
 
 Valid method signatures: `( )`, `(VertexFrame)`, `(ClassInitializer)`, `(VertexFrame, ClassInitializer)`, `(ClassInitializer, ClassInitializer)`
 

@@ -1,4 +1,4 @@
-Valid on frames: **Edge** and **Vertex**
+Çerçeveler üzerinde geçerlidir: **Kenar** ve **köşe**
 
 Allowed prefixes when operation is AUTO: `get`, `is`, `can`, `set`, `remove`
 

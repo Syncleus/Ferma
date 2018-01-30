@@ -1,8 +1,8 @@
-Valid on frames: **Edge** and **vertex**
+Çerçeveler üzerinde geçerlidir: **Edge** and **vertex**
 
 The `@GraphElement` annotation takes no parameters and is placed before your class decleration on an `EdgeFrame` or `VertexFrame`. This annotation is mostly leveraged right now when scanning classes in a package to identify frames.
 
-example:
+örnek:
 
 ```java
 @GraphElement

@@ -13,15 +13,15 @@ The `@OutVertex` takes no parameters and is used only on get methods that themse
 
 ## İŞLEM alma
 
-Valid method signatures: `( )`
+Geçerli yöntem imzaları: `( )`
 
-### Signature: `( )`
+### İmza: `( )`
 
-Valid return types: `VertexFrame`.
+Geçerli dönüş tipleri: `VertexFrame`.
 
 Get the tail vertex of the edge.
 
-example:
+örnek:
 
 ```java
 @OutVertex

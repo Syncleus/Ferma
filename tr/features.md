@@ -1,11 +1,11 @@
 Aşağıdaki örnekler Ferma çerçevesinin bazı özelliklerinin hızlı dökümünü vermektedir.
 
 * [JPA- benzeri Ek Açıklamalar](#jpa-like-annotations)
-* [Type information encoded into graph](#type-information-encoded-into-graph)
-* [Framing of elements instantiated according to type hierarchy](#framing-instantiated-by-type-hierarchy)
-* [Element queried by type hierarchy](#element-queried-by-type-hierarchy)
+* [Grafiklere kodlanmış bilgi türleri](#type-information-encoded-into-graph)
+* [Tür hiyerarşisine göre örneklenen elemanların çerçevelenmesi](#framing-instantiated-by-type-hierarchy)
+* [Tür hiyerarşisine göre sorgulanan öğe](#element-queried-by-type-hierarchy)
 * [Turning off type resolution on a per call basis](#turning-off-type-resolution-per-call)
-* [Changing the encoded graph type already stored in the database](#changing-type-encoded-in-the-graph)
+* [Zaten veritabanında saklanan kodlanmış grafik türünün değiştirilmesi](#changing-type-encoded-in-the-graph)
 * [Customizing the way type information is stored in the graph](#customizing-how-types-are-encoded)
 * Tinkerpop 2 support
 * Tinkerpop 3 support

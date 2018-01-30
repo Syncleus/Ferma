@@ -2,7 +2,7 @@ Válido en marcos: **Vertex**
 
 Permitir prefijos cuando operación está en AUTO: `add`, `get`, `remove`, `set`
 
-Annotation arguments:
+Argumentos de anotación:
 
 `label` - The label assigned to the edge which connects the adjacent nodes.
 

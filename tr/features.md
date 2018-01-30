@@ -6,11 +6,11 @@ Aşağıdaki örnekler Ferma çerçevesinin bazı özelliklerinin hızlı dökü
 * [Tür hiyerarşisine göre sorgulanan öğe](#element-queried-by-type-hierarchy)
 * [Turning off type resolution on a per call basis](#turning-off-type-resolution-per-call)
 * [Zaten veritabanında saklanan kodlanmış grafik türünün değiştirilmesi](#changing-type-encoded-in-the-graph)
-* [Customizing the way type information is stored in the graph](#customizing-how-types-are-encoded)
+* [Tür bilgisinin grafikte depolanma biçimini özelleştirme](#customizing-how-types-are-encoded)
 * Tinkerpop 2 support
 * Tinkerpop 3 support
 
-## JPA-like Annotations
+## JPA-benzeri Ek Açıklamalar
 
 ```Java
 public abstract class Person extends AbstractVertexFrame {

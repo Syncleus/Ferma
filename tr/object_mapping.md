@@ -1,6 +1,6 @@
 Ferma bir Nesne-grafik Modelidir (OGM). An Object-graph Model is to a Graph Database as an Object-relational Model (ORM) is to a Relational Database. Yani, Java Nesnelerini bir grafik veritabanındaki kenarlara ve köşeye eşleştirir. Doğal bir sonuç olarak Java türleri, temel uygulama şema kavramı desteklemiyor olsa bile grafik veritabanı için örtülü bir şema haline gelir.
 
-The objects associated with the various types of Edges and Vertex in a graph are collectively called the Graph Data Model (GDM). Each Java type in the GDM will usually represent a class of Edges or Vertex in the underlying graph. All Edges in the model will extend from the `EdgeFrame` interface and all vertex will extend from the `VertexFrame` interface. The individual classes that comprise the GDM are usually simply refered to as frames.
+The objects associated with the various types of Edges and Vertex in a graph are collectively called the Graph Data Model (GDM). Gdm'deki her Java türü genellikle alttaki grafikte kenar veya köşe sınıfını temsil eder. All Edges in the model will extend from the `EdgeFrame` interface and all vertex will extend from the `VertexFrame` interface. GDM'yi oluşturan bireysel sınıflar genellikle çerçeveler olarak adlandırılır.
 
 The methods defined by a frame will represent interactions with the underlying graph via traversals that are relative, using the current edge or vertex as their starting point.
 
@@ -45,7 +45,7 @@ public class PersonImpl extends AbstractVertexFrame implements Person {
 
 !!! Note When implementing a Frame a class or abstract class must always extend from either `AbstractEdgeFrame` or `AbstractVertexFrame`.
 
-## Typing
+## Yazarak
 
 There are two typing modes for ferma and each significantly effects how the user will determine the type of the objects pulled from the graph, these modes are called **Typed Mode** and **Untyped Mode**.
 
@@ -73,13 +73,13 @@ VertexFrame nextOrAdd();
 
 !!! note Each of these methods also have an equivelant method with the suffix `Explicit`, we will discuss those later as they only become important when we begin to discuss the differences between Typed Mode and Untyped Mode.
 
-Each of these methods has a slightly different behavior. For full details see the Ferma Javadocs for the Traversable class. However, in short, the `next(Class)` method returns any one of the matching elements and frames it as the specified type. It will throw an exception however if no vertex are found. The `nextOrDefault` varient avoids the exception by returning the default value when there are no matches, which can be `` or `null` for example. Similarly `nextOrAdd` will add a new vertex to the underlying graph if the traversal yields no matches. Finally `frame(Class)`, `toList(Class)`, and `toSet(Class)` will return all elements that match the traversal as either a `Iterator`, `List`, or `Set`.
+Bu yöntemlerin her biri biraz farklı bir davranışa sahiptir. Ayrıntılı bilgi için, Traversable sınıfı için Ferma Javadocs'a bakın. However, in short, the `next(Class)` method returns any one of the matching elements and frames it as the specified type. Bununla birlikte, herhangi bir köşe bulunmazsa, bir istisna atanır. The `nextOrDefault` varient avoids the exception by returning the default value when there are no matches, which can be `` or `null` for example. Similarly `nextOrAdd` will add a new vertex to the underlying graph if the traversal yields no matches. Finally `frame(Class)`, `toList(Class)`, and `toSet(Class)` will return all elements that match the traversal as either a `Iterator`, `List`, or `Set`.
 
-The exact type returned from all the aforementioned calls will always be a Class of the type specified in the argument, or a subclass thereof. The exact type of the class instantiated will depend on which typing mode is being used.
+The exact type returned from all the aforementioned calls will always be a Class of the type specified in the argument, or a subclass thereof. Oluşturulan sınıfın tam olarak tipi, hangi yazım modunun kullanıldığına bağlı olacaktır.
 
-### Untyped Mode
+### Biçimsiz Mod
 
-In untyped mode there is never any Java type information encoded into the underlying graph. This means when you take an object off the graph there is no way for Ferma to know what Java type it is associated with and the user must select the type manually. Since a Frame just defines a set of behaviors and properties exposed for a particular graph element it can sometimes be useful to pick which Frame to use to represent an element based on how you need to interact with that element rather than a one to one mapping of element to a specific type. In such a scenario Untyped Mode might be the ideal choice.
+Biçimsiz modda, altta yatan grafiğe kodlanmış hiçbir Java tipinde bilgi yoktur. This means when you take an object off the graph there is no way for Ferma to know what Java type it is associated with and the user must select the type manually. Since a Frame just defines a set of behaviors and properties exposed for a particular graph element it can sometimes be useful to pick which Frame to use to represent an element based on how you need to interact with that element rather than a one to one mapping of element to a specific type. In such a scenario Untyped Mode might be the ideal choice.
 
 In this mode when framing elements from a traversal the type of the element is determined entierly from the parameters passed to the methods invoked on the Traversable class. The following is an example of how to frame a vertex as a `Person` class from above.
 

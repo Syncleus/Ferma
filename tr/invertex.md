@@ -1,6 +1,6 @@
-Valid on frames: **Edge**
+Çerçeveler için geçerlidir: **Edge**
 
-Allowed prefixes when operation is AUTO: `get`
+İşlem otomatik olduğunda izin verilen önekler: `get`
 
 The `@InVertex` takes no parameters and is used only on get methods that themself take no parameters. It specifies the `VertexFrame` at the head of an edge.
 
@@ -11,17 +11,17 @@ example:
 //Method declared here
 ```
 
-## GET Operation
+## İŞLEM alma
 
-Valid method signatures: `( )`
+Geçerli yöntem imzaları: `( )`
 
-### Signature: `( )`
+### İmza: `( )`
 
-Valid return types: `VertexFrame`.
+Geçerli dönüş tipleri: `VertexFrame`.
 
-Get the head vertex of the edge.
+Kenarın baş kısmını alın.
 
-example:
+örnek:
 
 ```java
 @InVertex

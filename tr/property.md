@@ -1,12 +1,12 @@
 Çerçeveler üzerinde geçerlidir: **Kenar** ve **köşe**
 
-Allowed prefixes when operation is AUTO: `get`, `is`, `can`, `set`, `remove`
+İşlem otomatik olduğunda izin verilen önekler: `add`, `get`, `remove`, `set`
 
-Annotation arguments:
+Açıklama argümanları:
 
-`value` - The name of the property
+`value` - Özelliğin adı
 
-`operation` - The operation the method will perform. Must be one of the following: `GET`, `SET`, `REMOVE`, `AUTO`. Defaults to `AUTO`.
+`operation` - Yöntemin gerçekleştireceği işlem. Aşağıdakilerden biri olmalı: `GET`, `SET`, `REMOVE`, `AUTO`. Varsayılan değer `AUTO`.
 
 The following would bind the method it is used on to the property named `foo`:
 

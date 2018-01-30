@@ -1,6 +1,6 @@
-The following gives a quick breakdown of some of the features of the Ferma framework along with examples.
+Aşağıdaki örnekler Ferma çerçevesinin bazı özelliklerinin hızlı dökümünü vermektedir.
 
-* [JPA-like Annotations](#jpa-like-annotations)
+* [JPA- benzeri Ek Açıklamalar](#jpa-like-annotations)
 * [Type information encoded into graph](#type-information-encoded-into-graph)
 * [Framing of elements instantiated according to type hierarchy](#framing-instantiated-by-type-hierarchy)
 * [Element queried by type hierarchy](#element-queried-by-type-hierarchy)

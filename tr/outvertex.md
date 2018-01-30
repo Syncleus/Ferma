@@ -1,17 +1,17 @@
-Valid on frames: **Edge**
+Çerçeveler için geçerlidir: **Edge**
 
-Allowed prefixes when operation is AUTO: `get`
+İşlem otomatik olduğunda izin verilen önekler: `get`
 
 The `@OutVertex` takes no parameters and is used only on get methods that themself take no parameters. It specifies the `VertexFrame` at the tail of an edge.
 
-example:
+örnek:
 
 ```java
 @OutVertex
 //Method declared here
 ```
 
-## GET Operation
+## İŞLEM alma
 
 Valid method signatures: `( )`
 

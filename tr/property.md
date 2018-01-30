@@ -8,24 +8,24 @@ Açıklama argümanları:
 
 `operation` - Yöntemin gerçekleştireceği işlem. Aşağıdakilerden biri olmalı: `GET`, `SET`, `REMOVE`, `AUTO`. Varsayılan değer `AUTO`.
 
-The following would bind the method it is used on to the property named `foo`:
+Aşağıdakiler kullanılan yöntemin adlandırılmış özelliğe bağlanmasını sağlar `foo`:
 
 ```java
-@Property("foo")
-//Method declared here
+@Özellik("foo")
+//Burada bildirilen yöntem
 ```
 
-## GET Operation
+## İŞLEM alma
 
-Valid method signatures: `( )`
+Geçerli yöntem imzaları: `( )`
 
-### Signature: `( )`
+### İmza: `( )`
 
-Valid return types: `Object` or any primitive.
+Geçerli dönüş türleri: `Object` veya herhangi bir basit tür.
 
 Get the property value of an element. Used when property is not a boolean value.
 
-example:
+örnek:
 
 ```java
 @Property("Foo")
@@ -47,17 +47,17 @@ Bar getFoobar();
 Bar obtainFoobar();
 ```
 
-## GET Operation (is prefix)
+## İşlem ALMA (önektir)
 
-Valid method signatures: `( )`
+Geçerli yöntem imzaları: `( )`
 
-### Signature: `( )`
+### İmza: `( )`
 
-Valid return types: `boolean`
+Geçerli dönüş tipleri: `boolean`
 
-Get the property value of an element. Used when property is a boolean value.
+Bir öğenin özellik değerini alın. Özellik bir mantıksal değer olduğunda kullanılır.
 
-example:
+örnek:
 
 ```java
 @Property("Foobared")
@@ -69,17 +69,17 @@ boolean isFoobared();
 boolean obtainFoobared();
 ```
 
-## SET Operation
+## İşlem AYARLAMA
 
-Valid method signatures: `(Object)`
+Geçerli yöntem imzaları: `(Object)`
 
-### Signature: `(Object)`
+### İmza: `(Object)`
 
-Valid return types: `void`
+Geçerli dönüş tipleri: `void`
 
-Set the property value of an element. The argument can be any class accepted by the underlying graph.
+Bir öğenin özellik değerini ayarlama. Bağımsız değişken, temel grafik tarafından kabul edilen herhangi bir sınıf olabilir.
 
-example:
+örnek:
 
 ```java
 @Property("Foo")
@@ -106,15 +106,15 @@ void setFoobar(Bar foobar);
 void applyFoobar(Bar foobar);
 ```
 
-## REMOVE Operation
+## İşlem KALDIRMA
 
-Valid method signatures: `( )`
+Geçerli yöntem imzaları: `( )`
 
-### Signature: `( )`
+### İmza: `( )`
 
-Valid return types: `void`
+Geçerli dönüş tipleri: `void`
 
-Remove the property of an element.
+Bir öğenin özelliklerini kaldırın.
 
 example:
 

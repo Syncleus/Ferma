@@ -18,18 +18,18 @@ As can be seen Ferma out performs all the alternative solutions considerably by 
 
 ## Feature Breakdown
 
-Ferma also supports all the features provided by the alternatives out there, not to mention several novel features. Aşağıdaki çeşitli çerçevelerin özelliklerinin hızlı bir dökümü verilmektedir. We also link to some Ferma examples showing the various features in action.
+Ferma ayrıca alternatifler tarafından sağlanan tüm özellikleri de destekliyor, bazı yeni özelliklerden söz etmemektedir. Aşağıdaki çeşitli çerçevelerin özelliklerinin hızlı bir dökümü verilmektedir. Ayrıca hareket halindeki çeşitli özellikleri gösteren bazı Ferma örnekleriyle bağlantı kuruyoruz.
 
-| Feature                                                                                                                | **Ferma** | **Frames**    | **Totorom**   | **Peapod**    |
-| ---------------------------------------------------------------------------------------------------------------------- | --------- | ------------- | ------------- | ------------- |
-| **[JPA-like Annotations](features.md#jpa-like-annotations)**                                                           | Supported | Supported     | Not Supported | Supported     |
-| **[Type information encoded into graph](features.md#type-information-encoded-into-graph)**                             | Supported | Supported     | Supported     | Supported     |
-| **[Framing of elements instantiated according to type hierarchy](features.md#framing-instantiated-by-type-hierarchy)** | Supported | Supported     | Supported     | Supported     |
-| **[Element queried by type hierarchy](features.md#element-queried-by-type-hierarchy)**                                 | Supported | Not Supported | Not Supported | Partial \*  |
-| **[Turning off type resolution on a per call basis](features.md#turning-off-type-resolution-per-call)**                | Supported | Not Supported | Not Supported | Not Supported |
-| **[Changing the encoded graph type already stored in the database](features.md#changing-type-encoded-in-the-graph)**   | Supported | Not Supported | Not Supported | Not Supported |
-| **[Customizing the way type information is stored in the graph](features.md#customizing-how-types-are-encoded)**       | Supported | Not Supported | Not Supported | Not Supported |
-| **Tinkerpop 2 support**                                                                                                | Supported | Supported     | Supported     | Not Supported |
-| **Tinkerpop 3 support**                                                                                                | Supported | Not Supported | Not Supported | Supported     |
+| Feature                                                                                                                | **Ferma** | **Frames**     | **Totorom**    | **Peapod**     |
+| ---------------------------------------------------------------------------------------------------------------------- | --------- | -------------- | -------------- | -------------- |
+| **[JPA-like Annotations](features.md#jpa-like-annotations)**                                                           | Supported | Supported      | Desteklenmeyen | Supported      |
+| **[Type information encoded into graph](features.md#type-information-encoded-into-graph)**                             | Supported | Supported      | Supported      | Supported      |
+| **[Framing of elements instantiated according to type hierarchy](features.md#framing-instantiated-by-type-hierarchy)** | Supported | Supported      | Supported      | Supported      |
+| **[Element queried by type hierarchy](features.md#element-queried-by-type-hierarchy)**                                 | Supported | Desteklenmeyen | Desteklenmeyen | Partial \*   |
+| **[Turning off type resolution on a per call basis](features.md#turning-off-type-resolution-per-call)**                | Supported | Desteklenmeyen | Desteklenmeyen | Desteklenmeyen |
+| **[Changing the encoded graph type already stored in the database](features.md#changing-type-encoded-in-the-graph)**   | Supported | Desteklenmeyen | Desteklenmeyen | Desteklenmeyen |
+| **[Customizing the way type information is stored in the graph](features.md#customizing-how-types-are-encoded)**       | Supported | Desteklenmeyen | Desteklenmeyen | Desteklenmeyen |
+| **Tinkerpop 2 support**                                                                                                | Supported | Supported      | Supported      | Desteklenmeyen |
+| **Tinkerpop 3 support**                                                                                                | Supported | Not Supported  | Desteklenmeyen | Supported      |
 
 \* While Peapod does support querying for all instances of a type, and its subtypes, it does not support a mechanism to query for a specific type while excluding subtypes.

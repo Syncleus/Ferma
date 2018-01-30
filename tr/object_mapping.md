@@ -138,7 +138,7 @@ assert person instanceof Programmer;
 assert person.getFriends().isEmpty();
 ```
 
-The methods with the `Explicit` suffix are particularly meaningful for Typed Mode. In this mode they bypass the encoded typing completely and instantiate the frame as if in Untyped Mode. The following code snippet provides an example using the same model.
+The methods with the `Explicit` suffix are particularly meaningful for Typed Mode. In this mode they bypass the encoded typing completely and instantiate the frame as if in Untyped Mode. Aşağıdaki kod parçacığı, aynı modeli kullanarak bir örnek sağlar.
 
 ```Java
 // Open typed Framed Graph

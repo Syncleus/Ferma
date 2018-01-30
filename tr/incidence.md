@@ -25,7 +25,7 @@ Adds an edge to edge to a node and returns the new `EdgeFrame`.
 
 ### İmza: `( )`
 
-Valid return types: `EdgeFrame`
+Geçerli dönüş tipleri: `EdgeFrame`
 
 Creates a new vertex without any type information as well as an untyped edge to connect to it. The newly created `TEdge` is returned.
 
@@ -138,7 +138,7 @@ FooEdge includeFoobar(BarVertex bar,
 
 Valid return types: `EdgeFrame`
 
-Creates a new edge and connects this to a new vertex. The newly created vertex will have a type, as well as be initiated, according to the details specified in the first ClassInitializer argument. Similarly the newly created edge will hava a type, and be initiated, using the second ClassInitializer argument. Java generics can, and should, be used to narrow the return type. The returned object will be the newly created `EdgeFrame`.
+Yeni bir kenar oluşturur ve bunu yeni bir köşeye bağlar. The newly created vertex will have a type, as well as be initiated, according to the details specified in the first ClassInitializer argument. Similarly the newly created edge will hava a type, and be initiated, using the second ClassInitializer argument. Java generics can, and should, be used to narrow the return type. The returned object will be the newly created `EdgeFrame`.
 
 example:
 

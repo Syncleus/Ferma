@@ -71,9 +71,9 @@ VertexFrame nextOrAdd();
 <N> Set<? extends N> toSet(Class<N> kind);
 ```
 
-!!! note Each of these methods also have an equivelant method with the suffix `Explicit`, we will discuss those later as they only become important when we begin to discuss the differences between Typed Mode and Untyped Mode.
+!!! not Bu yöntemlerin her biri aynı zamanda `Açık` adlı sonek ile eş değer bir yöntemi de içerir; bunları, sonradan yalnızca Yazma Modu ve Yazılmayan Mod arasındaki farkları tartışmaya başladığımızda önemli bir şekilde tartışacağız.
 
-Bu yöntemlerin her biri biraz farklı bir davranışa sahiptir. Ayrıntılı bilgi için, Traversable sınıfı için Ferma Javadocs'a bakın. However, in short, the `next(Class)` method returns any one of the matching elements and frames it as the specified type. Bununla birlikte, herhangi bir köşe bulunmazsa, bir istisna atanır. The `nextOrDefault` varient avoids the exception by returning the default value when there are no matches, which can be `` or `null` for example. Similarly `nextOrAdd` will add a new vertex to the underlying graph if the traversal yields no matches. Finally `frame(Class)`, `toList(Class)`, and `toSet(Class)` will return all elements that match the traversal as either a `Iterator`, `List`, or `Set`.
+Bu yöntemlerin her biri biraz farklı bir davranışa sahiptir. Ayrıntılı bilgi için, Traversable sınıfı için Ferma Javadocs'a bakın. Ancak, kısaca `sonraki(Sınıf)` yöntemi, eşleşen öğelerden birini dönüştürür ve onu belirtilen türde çerçeveler. Bununla birlikte, herhangi bir köşe bulunmazsa, bir istisna atanır. `sonrakiVeyaVarsayılan` değişkeni, örneğin `` veya `null` olabilecek herhangi bir eşleşme olmadığında varsayılan değeri döndürerek istisnadan kaçınır. Similarly `nextOrAdd` will add a new vertex to the underlying graph if the traversal yields no matches. Finally `frame(Class)`, `toList(Class)`, and `toSet(Class)` will return all elements that match the traversal as either a `Iterator`, `List`, or `Set`.
 
 The exact type returned from all the aforementioned calls will always be a Class of the type specified in the argument, or a subclass thereof. Oluşturulan sınıfın tam olarak tipi, hangi yazım modunun kullanıldığına bağlı olacaktır.
 

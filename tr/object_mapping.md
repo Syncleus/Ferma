@@ -138,10 +138,10 @@ assert person instanceof Programmer;
 assert person.getFriends().isEmpty();
 ```
 
-The methods with the `Explicit` suffix are particularly meaningful for Typed Mode. In this mode they bypass the encoded typing completely and instantiate the frame as if in Untyped Mode. Aşağıdaki kod parçacığı, aynı modeli kullanarak bir örnek sağlar.
+`Explicit</O> sonekine sahip yöntemlerin, Yazma Modu için özellikle anlamı vardır. In this mode they bypass the encoded
+typing completely and instantiate the frame as if in Untyped Mode. Aşağıdaki kod parçacığı, aynı modeli kullanarak bir örnek sağlar.</p>
 
-```Java
-// Open typed Framed Graph
+<pre><code class="Java">// Open typed Framed Graph
 FramedGraph fg = new DelegatingFramedGraph(TinkerGraph.open(), true, false);
 
 //create a vertex with type information specifying it as the Programmer type
@@ -151,7 +151,7 @@ programmer.setName("Jeff");
 //retrieve the vertex we just created, since we are using an excplicit method the type won't be Programmer this time.
 Person person = fg.traverse(g -> g.V().property("name", "jeff")).nextExplicit(Person.class);
 assert !(person instanceof Programmer);
-```
+`</pre> 
 
 Geçiş sınıfındaki açık yöntem türlerinin listesi aşağıdadır.
 

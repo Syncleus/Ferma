@@ -19,11 +19,11 @@ Ferma direkt olarak TinkerPop'un üzerine inşa edilmiş ve tüm iç kısımlara
 - verilerin bölünmesi, birleştirilmesi, filtrelenmesi ve dönüştürülmesi için bir veri akışı çerçevesidir
 - **Graph Computer**, a framework for running algorithms against a Graph Database.
 - **OLTP** ve **OLAP** her iki makine için destek.
-- **TinkerGraph** a Graph Database and the reference implementation for TinkerPop.
+- **TinkerGraph** bir Grafik Veritabanı ve TinkerPop için referans uygulamasıdır.
 - Native **Gephi** integration for visualizing graphs.
 - Interfaces for most major Graph Compute Engines including **Hadoop M/R**. **Spark**, and **Giraph**.
 
-Ferma also supports any of the many databases compatible with TinkerPop including the following.
+Ferma, ayrıca aşağıdakileri de içeren TinkerPop ile uyumlu birçok veritabanını da desteklemektedir.
 
 - [Titan](http://thinkaurelius.github.io/titan/)
 - [Neo4j](http://neo4j.com)

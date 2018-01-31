@@ -51,7 +51,7 @@ Ferma için iki yazım modu vardır ve her biri grafiğe çekilen nesnelerin tü
 
 Bir çerçeve üzerinde bir geçiş gerçekleştirirken, temel bir grafik ögesini veya ögeleri, `KöşeÇerçevesi` veya `KenarÇerçevesi` gibi çerçeveli bir eşgörünüm içine otomatik olarak kapsayan birkaç yöntem bulunur. Bu ya tek bir çerçeve ya da `Yineleyici`, `Alıcı` veya `Liste` tarafından sağlanan bir grup çerçeve olabilir.
 
-In the earlier example we used a traversal to find all the coworkers and we used the `toList()` method to frame all the underlying vertex into the `Person` type.
+Önceki örnekte, tüm meslektaşları bulmak için bir geçiş kullandık ve alttaki tüm köşeleri `Kişi` türüne çerçevelemek için `Listeleme()` yöntemini kullandık.
 
 ```Java
 this.traverse(v -> v.out("coworker")).toList(Person.class);

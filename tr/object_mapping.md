@@ -47,7 +47,7 @@ Bir Çerçeve uygulanırken bir sınıfın veya soyut sınıfın daima `SoyutKen
 
 ## Yazarak
 
-There are two typing modes for ferma and each significantly effects how the user will determine the type of the objects pulled from the graph, these modes are called **Typed Mode** and **Untyped Mode**.
+Ferma için iki yazım modu vardır ve her biri grafiğe çekilen nesnelerin türünü kullanıcının nasıl belirleyeceğini önemli derecede etkiler; bu modlara **Yazma Modu** ve **Türsüz Mod** denir.
 
 When performing a traversal on a frame there are several methods provided which automatically encapsulate the underlying graph element or elements into a framed equivelant such as a `VertexFrame` or an `EdgeFrame`. This may be either a single frame, or a group of frames provided by an `Iterator`, `Set`, or `List`.
 

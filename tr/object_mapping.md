@@ -96,7 +96,7 @@ Person person = fg.traverse(g -> g.V().property("name", "jeff")).nextExplicit(Pe
 assert person.getName().equals("Jeff");
 ```
 
-!!! note In untyped mode all the `Traversal` methods with the suffix of `Explicit` behave exactly the same as those methods without the suffix. Therefore when working in untyped mode it is suggested you only use explicit methods. This way if you ever decide to migrate over to typed mode it will not change the behavior of your existing code base and will make the migration process much easier.
+!!! note In untyped mode all the `Traversal` methods with the suffix of `Explicit` behave exactly the same as those methods without the suffix. Bu sebepten dolayı, türü olmayan modda çalışırken yalnızca açık yöntemler kullanmanız önerilir. This way if you ever decide to migrate over to typed mode it will not change the behavior of your existing code base and will make the migration process much easier.
 
 ### Typed Mode
 
@@ -122,7 +122,7 @@ public class Programmer extends Person {
 }
 ```
 
-In this case we can encode a `Programmer` vertex into the graph and even if we try to retrieve and frame that vertex as a `VertexFrame` or `Person` in the future the instantiated type will still be `Programmer`. This allows for a truly polymorphic Graph Data Model that leverages method overriding and class inheritance functiuonality in the model. For example the following is possible now in Typed Mode.
+In this case we can encode a `Programmer` vertex into the graph and even if we try to retrieve and frame that vertex as a `VertexFrame` or `Person` in the future the instantiated type will still be `Programmer`. This allows for a truly polymorphic Graph Data Model that leverages method overriding and class inheritance functiuonality in the model. Örneğin, şu an ki durum Yazma Modun'da mümkündür.
 
 ```Java
 // Open a Framed Graph in Typed Mode
@@ -153,7 +153,7 @@ Person person = fg.traverse(g -> g.V().property("name", "jeff")).nextExplicit(Pe
 assert !(person instanceof Programmer);
 ```
 
-The following are the list of explicit method types in the Traversable class.
+Geçiş sınıfındaki açık yöntem türlerinin listesi aşağıdadır.
 
 ```Java
 <N> N nextExplicit(Class<N> kind);
@@ -166,7 +166,7 @@ The following are the list of explicit method types in the Traversable class.
 <N> Set<? extends N> toSetExplicit(Class<N> kind);
 ```
 
-It is also possible to change the type encoded in the underlying graph after the element has already been created. The following example demonstrates this feature.
+Eleman daha önce oluşturulsa bile daha sonradan temel grafiğe kodlanmış türünü değiştirmek de mümkündür. Aşağıdaki örnek, bu özelliği göstermektedir.
 
 ```java
 FramedGraph fg = new DelegatingFramedGraph(TinkerGraph.open(), true, false);

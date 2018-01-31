@@ -23,7 +23,7 @@ Geçerli yöntem imzaları: `( )`
 
 Geçerli dönüş türleri: `Object` veya herhangi bir basit tür.
 
-Get the property value of an element. Used when property is not a boolean value.
+Bir öğenin özellik değerini alın. Özellik bir boolean değeri olmadığında kullanılır.
 
 örnek:
 

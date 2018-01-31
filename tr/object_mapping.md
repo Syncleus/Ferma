@@ -1,6 +1,6 @@
 Ferma bir Nesne-grafik Modelidir (OGM). Bir Nesne-Grafik Modeli, bir Grafik Veritabanı iken Nesne İlişkisel Modeli (ORM) bir İlişkisel Veritabanıdır. Yani, Java Nesnelerini bir grafik veritabanındaki kenarlara ve köşeye eşleştirir. Doğal bir sonuç olarak Java türleri, temel uygulama şema kavramı desteklemiyor olsa bile grafik veritabanı için örtülü bir şema haline gelir.
 
-Bir grafiğin çeşitli Kenarları ve Noktalarıyla ilişkili nesnelere toplu olarak Grafik Veri Modeli (GDM) adı verilir. Gdm'deki her Java türü genellikle alttaki grafikte kenar veya köşe sınıfını temsil eder. Modeldeki tüm Kenarlar `kenar çerçeve` arayüzünden genişler ve tüm köşe, `köşe çerçevesi` arayüzünden genişler. GDM'yi oluşturan bireysel sınıflar genellikle çerçeveler olarak adlandırılır.
+Bir grafiğin çeşitli Kenarları ve Noktalarıyla ilişkili nesnelere toplu olarak Grafik Veri Modeli (GDM) adı verilir. Gdm'deki her Java türü genellikle alttaki grafikte kenar veya köşe sınıfını temsil eder. Modeldeki tüm Kenarlar `kenar çerçevesi` arayüzünden genişler ve tüm köşe, `köşe çerçevesi` arayüzünden genişler. GDM'yi oluşturan bireysel sınıflar genellikle çerçeveler olarak adlandırılır.
 
 The methods defined by a frame will represent interactions with the underlying graph via traversals that are relative, using the current edge or vertex as their starting point.
 

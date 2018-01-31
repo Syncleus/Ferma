@@ -2,7 +2,7 @@ Ferma bir Nesne-grafik Modelidir (OGM). Bir Nesne-Grafik Modeli, bir Grafik Veri
 
 Bir grafiğin çeşitli Kenarları ve Noktalarıyla ilişkili nesnelere toplu olarak Grafik Veri Modeli (GDM) adı verilir. Gdm'deki her Java türü genellikle alttaki grafikte kenar veya köşe sınıfını temsil eder. Modeldeki tüm Kenarlar `kenar çerçevesi` arayüzünden genişler ve tüm köşe, `köşe çerçevesi` arayüzünden genişler. GDM'yi oluşturan bireysel sınıflar genellikle çerçeveler olarak adlandırılır.
 
-The methods defined by a frame will represent interactions with the underlying graph via traversals that are relative, using the current edge or vertex as their starting point.
+Bu çerçeveyle tanımlanan yöntemler, geçerli kenar veya köşe noktasını başlangıç noktaları olarak kullanarak, göreli geçişler yoluyla temel alınan grafikle olan etkileşimleri temsil edecektir.
 
 ```java
 public interface Person extends VertexFrame {

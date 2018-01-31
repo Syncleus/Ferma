@@ -228,11 +228,11 @@ BarVertex obtainFoobar();
 
 Geçerli dönüş tipleri: `VertexFrame` veya `Iterator` veya `List` veya `Set`
 
-Bitişik vertex'in bir veya daha fazlasını alır. If the return type is a single `VertexFrame` then only the first instance is returned. If the return type is an `Iterator` then it will iterate over all matching vertex. When using an Iterator it is encouraged to use generics.
+Bitişik vertex'in bir veya daha fazlasını alır. Dönüş türü tek bir `VertexFrame` ise yalnızca ilk örneği döndürür. Dönüş türü bir `Iterator` ise, eşleşen tüm vertex üzerinde yinelenecektir. Bir Iterator kullanırken generics kullanılması için teşvik edilir.
 
-!!! note The Class argument of the method specifes a filter such that only vertex which are of a matching type, or a subtype, to that of the argument will be returned.
+!!! not Yöntemin Sınıf argümanı, yalnızca bir eşleme türünün ya da bir alt türün değişkeninin vertexinin döndürülmesine izin veren bir filtre belirtir.
 
-example:
+örnek:
 
 ```java
 @Adjacency("Foo")
@@ -279,15 +279,15 @@ Set<BarVertex> getFoobar(Class<? extends BarVertex> filter);
 BarVertex obtainFoobar(Class<? extends BarVertex> filter);
 ```
 
-## REMOVE Operation
+## REMOVE İşlemi
 
-Valid method signatures: `( )`, `(VertexFrame)`
+Geçerli yöntem imzaları: `( )`, `(VertexFrame)`
 
-Removes any edges which cause an adjacency, leaving the vertex in place.
+Vertex'i yerinde bırakarak, bir bitişiklik oluşturan kenarları kaldırır.
 
-### Signature: `( )`
+### İmza: `( )`
 
-Valid return types: `void`
+Geçerli dönüş tipleri: `void`
 
 Removes all edges which create any adjacency between the current vertex and any other vertex using the specified label.
 

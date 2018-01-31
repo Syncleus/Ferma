@@ -81,7 +81,7 @@ Belirtilen tüm çağrılardan dönüştürülen tam tip, daima argümanda veya 
 
 Biçimsiz modda, altta yatan grafiğe kodlanmış hiçbir Java tipinde bilgi yoktur. Bu, grafikten bir nesne aldığınızda, Ferma'nın hangi Java türünün olduğunu bilmesinin imkanı yoktur ve kullanıcının türü el ile seçmesi gerektiği anlamına gelir. Frame'den beri belirli bir grafik öğesi için maruz kaldığı davranış ve özellikleri tanımlar bu bazen öğe üzerinde kullanılacak Çerçevenin seçilmesinde ve öğenin belirli bir tür ile bire bir eşleştirilmesi yerine o öğeyle nasıl etkileşime girmeniz gerektiği konusunda yardımcı olabilir. Böyle bir senaryoda, Yazılmayan Mod ideal bir seçim olabilir.
 
-In this mode when framing elements from a traversal the type of the element is determined entierly from the parameters passed to the methods invoked on the Traversable class. The following is an example of how to frame a vertex as a `Person` class from above.
+Bu modda, elemanları bir geçişten çerçevelediğinde elemanın türü, Geçilebilir sınıfında çağrılan yöntemlere geçirilen parametrelere göre belirlenir. Aşağıda, bir köşenin bir `Kişi` sınıfı olarak yukarıdan nasıl çerçeveleneceğine ilişkin bir örnek verilmiştir.
 
 ```Java
 // Open an untyped Framed Graph

@@ -6,7 +6,7 @@ Açıklama argümanları:
 
 `label`- Bitişik düğümleri birbirine bağlayan kenara atanan etiketler.
 
-`direction` - The direction for the edge which creates the adjacency. It can be assigned any of the values from `org.apache.tinkerpop.gremlin.structure.Direction`.
+`yön` - Bitişiklik oluşturan kenar yönü. `org.apache.tinkerpop.gremlin.structure.Direction` değerlerinden herhangi biri atanabilir.
 
 `operation`- Yöntemin gerçekleştireceği süreç. Aşağıdakilerden biri olmalıdır: `GET`, `ADD`, `SET`, `REMOVE`, `AUTO`. Varsayılan değer `AUTO`.
 
@@ -21,15 +21,15 @@ Açıklama argümanları:
 
 Valid method signatures: `( )`, `(VertexFrame)`, `(ClassInitializer)`, `(ClassInitializer, ClassInitializer)`, `(VertexFrame, ClassInitializer)`
 
-Adds a node as an adjacency to the current node, and the returns the newly connected node.
+Geçerli düğüme bitişiklik olarak bir düğüm ekler, ve yeni bağlantılı düğümü döndürür.
 
 ### İmza: `( )`
 
 Geçerli dönüş tipleri: `VertexFrame`
 
-Creates a new vertex without any type information as well as an untyped edge to connect to it. The newly created `VertexFrame` is returned.
+Herhangi bir tür bilgisi olmaksızın yeni bir köşe oluşturur ve ona bağlantı için biçemsiz bir kenar da oluşturur. Yeni oluşturulmuş `VertexFrame` geri döndürülür.
 
-!!! note Since the returned `VertexFrame` is always untyped the return type must be either `VertexFrame` or `TVertex` specifically.
+!!! not Döndükten sonra `VertexFrame` daima türsüz olduğundan dönüş türünün özellikle `VertexFrame` veya `TVertex` olması gerekir.
 
 örnek:
 

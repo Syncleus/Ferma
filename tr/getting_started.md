@@ -1,6 +1,6 @@
-Ferma provides three levels of type resolution: untyped, simple, and annotated. In untyped mode Ferma doesn't handle typing at all, instead the type must be explicitly indicated whenever querying. In simple mode Ferma provides type context encoded as graph element properties which ensures the same type comes out that goes in to a graph. In annotated mode all the features of simple mode are provided as well as enabling the use of annotations on abstract methods to instruct Ferma to dynamically construct byte code to implement the abstract methods at start up.
+Ferma 3 farklı çözünürlük düzeyi sağlar: Türsüz, basit, açıklamalı. In untyped mode Ferma doesn't handle typing at all, instead the type must be explicitly indicated whenever querying. In simple mode Ferma provides type context encoded as graph element properties which ensures the same type comes out that goes in to a graph. In annotated mode all the features of simple mode are provided as well as enabling the use of annotations on abstract methods to instruct Ferma to dynamically construct byte code to implement the abstract methods at start up.
 
-## Dependency
+## Bağımlılıklar
 
 To include Ferma in your project of choice include the following Maven dependency into your build.
 
@@ -12,7 +12,7 @@ To include Ferma in your project of choice include the following Maven dependenc
 </dependency>
 ```
 
-## Untyped Mode Example
+## Türsüz mod örneği
 
 In untyped mode there is no automatic typing. Whatever class is explicitly indicated is the type that will be instantiated when performing queries. Lets start with a simple example domain.
 

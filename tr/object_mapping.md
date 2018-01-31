@@ -57,7 +57,7 @@ Bir çerçeve üzerinde bir geçiş gerçekleştirirken, temel bir grafik ögesi
 this.traverse(v -> v.out("coworker")).toList(Person.class);
 ```
 
-Traversals have several different methods availible that each frame and collect the underlying elements in different ways, those methods, members of the `Traversable` interface, are the following.
+Geçişlerde, her çerçevede mevcut olan birkaç farklı yöntem bulunur ve temel unsurları farklı şekillerde toplamanın yolları vardır, bunlar, `Geçilebilir` arayüzünün üyeleri aşağıda belirtilmiştir.
 
 ```Java
 <N> N next(Class<N> kind);

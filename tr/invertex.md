@@ -2,9 +2,9 @@
 
 İşlem otomatik olduğunda izin verilen önekler: `get`
 
-The `@InVertex` takes no parameters and is used only on get methods that themself take no parameters. It specifies the `VertexFrame` at the head of an edge.
+`@InVertex` parametre almaz ve yalnızca kendilerinin parametre almadığı get yöntemleri için kullanılır. Bir kenarın başındaki `VertexFrame`'i belirtir.
 
-example:
+örnek:
 
 ```java
 @InVertex

@@ -47,7 +47,7 @@ Bir Çerçeve uygulanırken bir sınıfın veya soyut sınıfın daima `SoyutKen
 
 ## Yazarak
 
-Ferma için iki yazım modu vardır ve her biri grafiğe çekilen nesnelerin türünü kullanıcının nasıl belirleyeceğini önemli derecede etkiler; bu modlara **Yazma Modu** ve **Türsüz Mod** denir.
+Ferma için iki yazım modu vardır ve her biri grafiğe çekilen nesnelerin türünü kullanıcının nasıl belirleyeceğini önemli derecede etkiler; bu modlara **Yazma Modu** ve **Yazılmayan Mod** denir.
 
 Bir çerçeve üzerinde bir geçiş gerçekleştirirken, temel bir grafik ögesini veya ögeleri, `KöşeÇerçevesi` veya `KenarÇerçevesi` gibi çerçeveli bir eşgörünüm içine otomatik olarak kapsayan birkaç yöntem bulunur. Bu ya tek bir çerçeve ya da `Yineleyici`, `Alıcı` veya `Liste` tarafından sağlanan bir grup çerçeve olabilir.
 
@@ -79,7 +79,7 @@ Belirtilen tüm çağrılardan dönüştürülen tam tip, daima argümanda veya 
 
 ### Biçimsiz Mod
 
-Biçimsiz modda, altta yatan grafiğe kodlanmış hiçbir Java tipinde bilgi yoktur. Bu, grafikten bir nesne aldığınızda, Ferma'nın hangi Java türünün olduğunu bilmesinin imkanı yoktur ve kullanıcının türü el ile seçmesi gerektiği anlamına gelir. Since a Frame just defines a set of behaviors and properties exposed for a particular graph element it can sometimes be useful to pick which Frame to use to represent an element based on how you need to interact with that element rather than a one to one mapping of element to a specific type. In such a scenario Untyped Mode might be the ideal choice.
+Biçimsiz modda, altta yatan grafiğe kodlanmış hiçbir Java tipinde bilgi yoktur. Bu, grafikten bir nesne aldığınızda, Ferma'nın hangi Java türünün olduğunu bilmesinin imkanı yoktur ve kullanıcının türü el ile seçmesi gerektiği anlamına gelir. Frame'den beri belirli bir grafik öğesi için maruz kaldığı davranış ve özellikleri tanımlar bu bazen öğe üzerinde kullanılacak Çerçevenin seçilmesinde ve öğenin belirli bir tür ile bire bir eşleştirilmesi yerine o öğeyle nasıl etkileşime girmeniz gerektiği konusunda yardımcı olabilir. Böyle bir senaryoda, Yazılmayan Mod ideal bir seçim olabilir.
 
 In this mode when framing elements from a traversal the type of the element is determined entierly from the parameters passed to the methods invoked on the Traversable class. The following is an example of how to frame a vertex as a `Person` class from above.
 

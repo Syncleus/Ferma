@@ -1,4 +1,4 @@
-Ferma bir Nesne-grafik Modelidir (OGM). Bir Nesne-Grafik Modeli, bir Grafik Veritabanı iken Nesne İlişkisel Modeli (ORM) bir İlişkisel Veritabanıdır. Yani, Java Nesnelerini bir grafik veritabanındaki kenarlara ve köşeye eşleştirir. Doğal bir sonuç olarak Java türleri, temel uygulama şema kavramı desteklemiyor olsa bile grafik veritabanı için örtülü bir şema haline gelir.
+Ferma bir Nesne-grafik Modelidir (OGM). Nesne-Grafik Modeli, bir Grafik Veritabanı iken Nesne İlişkisel Modeli (ORM) bir İlişkisel Veritabanıdır. Yani, Java Nesnelerini bir grafik veritabanındaki kenarlara ve köşeye eşleştirir. Doğal bir sonuç olarak Java türleri, temel uygulama şema kavramı desteklemiyor olsa bile grafik veritabanı için örtülü bir şema haline gelir.
 
 Bir grafiğin çeşitli Kenarları ve Noktalarıyla ilişkili nesnelere toplu olarak Grafik Veri Modeli (GDM) adı verilir. Gdm'deki her Java türü genellikle alttaki grafikte kenar veya köşe sınıfını temsil eder. Modeldeki tüm Kenarlar `kenar çerçevesi` arayüzünden genişler ve tüm köşe, `köşe çerçevesi` arayüzünden genişler. GDM'yi oluşturan bireysel sınıflar genellikle çerçeveler olarak adlandırılır.
 
@@ -13,7 +13,7 @@ public interface Person extends VertexFrame {
 
 Bu örnekte; Kişi, grafiğin içinde isimleri belirten özelliği olan bir köşeyi temsil eder ve onlar meslektaşlarını temsil eden aynı türe ait grafikteki diğer köşeyle ilişkilendirilirler.
 
-When implementing a vertex as a concrete class you must instead inherit from `AbstractVertexFrame`.
+Bir köşeyi somut bir sınıf olarak uygularken bunun yerine `SoyutKöşeÇerçevesi` öğesinden devralmanız gerekir.
 
 ```java
 public class Person extends AbstractVertexFrame {
@@ -27,7 +27,7 @@ public class Person extends AbstractVertexFrame {
 }
 ```
 
-It is also possible to do the same with inheritance if you want a class and an interface defined.
+Eğer tanımlanmış bir arayüz ve sınıf istiyorsanız aynı şeyi devralma ile yapmak da mümkündür.
 
 ```java
 public class PersonImpl extends AbstractVertexFrame implements Person {

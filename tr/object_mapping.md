@@ -49,7 +49,7 @@ Bir Çerçeve uygulanırken bir sınıfın veya soyut sınıfın daima `SoyutKen
 
 Ferma için iki yazım modu vardır ve her biri grafiğe çekilen nesnelerin türünü kullanıcının nasıl belirleyeceğini önemli derecede etkiler; bu modlara **Yazma Modu** ve **Türsüz Mod** denir.
 
-When performing a traversal on a frame there are several methods provided which automatically encapsulate the underlying graph element or elements into a framed equivelant such as a `VertexFrame` or an `EdgeFrame`. This may be either a single frame, or a group of frames provided by an `Iterator`, `Set`, or `List`.
+Bir çerçeve üzerinde bir geçiş gerçekleştirirken, temel bir grafik ögesini veya ögeleri, `KöşeÇerçevesi` veya `KenarÇerçevesi` gibi çerçeveli bir eşgörünüm içine otomatik olarak kapsayan birkaç yöntem bulunur. This may be either a single frame, or a group of frames provided by an `Iterator`, `Set`, or `List`.
 
 In the earlier example we used a traversal to find all the coworkers and we used the `toList()` method to frame all the underlying vertex into the `Person` type.
 

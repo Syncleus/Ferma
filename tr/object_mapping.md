@@ -79,7 +79,7 @@ Belirtilen tüm çağrılardan dönüştürülen tam tip, daima argümanda veya 
 
 ### Biçimsiz Mod
 
-Biçimsiz modda, altta yatan grafiğe kodlanmış hiçbir Java tipinde bilgi yoktur. This means when you take an object off the graph there is no way for Ferma to know what Java type it is associated with and the user must select the type manually. Since a Frame just defines a set of behaviors and properties exposed for a particular graph element it can sometimes be useful to pick which Frame to use to represent an element based on how you need to interact with that element rather than a one to one mapping of element to a specific type. In such a scenario Untyped Mode might be the ideal choice.
+Biçimsiz modda, altta yatan grafiğe kodlanmış hiçbir Java tipinde bilgi yoktur. Bu, grafikten bir nesne aldığınızda, Ferma'nın hangi Java türünün olduğunu bilmesinin imkanı yoktur ve kullanıcının türü el ile seçmesi gerektiği anlamına gelir. Since a Frame just defines a set of behaviors and properties exposed for a particular graph element it can sometimes be useful to pick which Frame to use to represent an element based on how you need to interact with that element rather than a one to one mapping of element to a specific type. In such a scenario Untyped Mode might be the ideal choice.
 
 In this mode when framing elements from a traversal the type of the element is determined entierly from the parameters passed to the methods invoked on the Traversable class. The following is an example of how to frame a vertex as a `Person` class from above.
 

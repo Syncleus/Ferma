@@ -100,7 +100,7 @@ assert person.getName().equals("Jeff");
 
 ### Yazma Modu
 
-Yazma modu işleri daha da ileri götürür ve bir çerçeveyle ilgili tür bilgilerinin, temel grafiğin köşe ve kenarlarındaki bir özellik olarak kodlanmasına imkan verir. This behavior is governed by the `PolymorphicTypeResolver` which encodes the type in a property name which defaults to the value of `PolymorphicTypeResolver.TYPE_RESOLUTION_KEY` but can be explicitly set to any string value of the user's choice. When a class is framed the Type Resolution Key is read and the original type is determined, this in turn effects the type used to instantiate the new Frame and may be a specific type which is a subclass of the type requested. For example say we have the following model.
+Yazma modu işleri daha da ileri götürür ve bir çerçeveyle ilgili tür bilgilerinin, temel grafiğin köşe ve kenarlarındaki bir özellik olarak kodlanmasına imkan verir. Bu davranış, `PolimorfikYazıÇözücü.YAZI_ÇÖZÜM_ANAHTARI` varsayım değeri olan bir özellik adı yazan `PalimorfikYazıÇözücü` tarafından yönetilir, ancak kullanıcının seçeceği herhangi bir dize değerine açıkça ayarlanabilir. When a class is framed the Type Resolution Key is read and the original type is determined, this in turn effects the type used to instantiate the new Frame and may be a specific type which is a subclass of the type requested. For example say we have the following model.
 
 ```Java
 public class Person extends AbstractVertexFrame {

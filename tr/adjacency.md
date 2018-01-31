@@ -47,7 +47,7 @@ VertexFrame includeFoobar();
 
 Geçerli dönüş tipleri: `VertexFrame` or `void`
 
-Creates a new edge without any type information and connects it between this vertex the vertex specified as an argument to the method. The frame returned is the same as the frame given in the argument, it is only there for compatability with other add methods. Bu yöntem `void` dönüş tipine de sahip olabilir.
+Herhangi bir tür bilgisi olmaksızın yeni bir kenar oluşturur ve onu, bu vertex'in argüman olarak belirtilen yöntemine bağlar. Döndürülen çerçeve argümanda verilen çerçeveyle aynıdır, yalnızca diğer ekleme yöntemleriyle uyumluluk için vardır. Bu yöntem `void` dönüş tipine de sahip olabilir.
 
 örnek:
 
@@ -71,11 +71,11 @@ BarVertex addFoobar(BarVertex existingVertex);
 void includeFoobar(BarVertex existingVertex);
 ```
 
-### Signature: `(ClassInitializer)`
+### İmza: `(ClassInitializer)`
 
 Geçerli dönüş tipleri: `VertexFrame`
 
-Herhangi bir tür bilgisi olmadan yeni bir kenar oluşturur ve bu köşe ile yeni oluşturulan bir köşe arasına bağlar. The newly created vertex will have a type, as well as be initiated, according to the details specified in the ClassInitializer argument. Java generics can, and should, be used to narrow the return type.
+Herhangi bir tür bilgisi olmadan yeni bir kenar oluşturur ve bu köşe ile yeni oluşturulan bir köşe arasına bağlar. Yeni oluşturulan vertex, ClassInitializer değişkeninde belirtilen ayrıntılara göre başlatılacağı gibi bir türe sahip olacaktır. Java generics dönüş türünü daraltmak için kullanılabilir ve kullanılması gerekir.
 
 örnek:
 
@@ -99,13 +99,13 @@ BarVertex addFoobar(ClassInitializer<? extends BarVertex> vertexInitializer);
 BarVertex includeFoobar(ClassInitializer<? extends BarVertex> vertexInitializer);
 ```
 
-### Signature: `(ClassInitializer, ClassInitializer)`
+### İmza: `(ClassInitializer, ClassInitializer)`
 
-Valid return types: `VertexFrame`
+Geçerli dönüş tipleri: `VertexFrame`
 
-Yeni bir kenar oluşturur ve bunu yeni bir köşeye bağlar. The newly created vertex will have a type, as well as be initiated, according to the details specified in the first ClassInitializer argument. Similarly the newly created edge will hava a type, and be initiated, using the second ClassInitializer argument. Java generics can, and should, be used to narrow the return type.
+Yeni bir kenar oluşturur ve bunu yeni bir köşeye bağlar. Yeni oluşturulan vertex, ilk ClassInitializer değişkeninde belirtilen ayrıntılara göre başlatılacağı gibi bir türe sahip olacaktır. Benzer şekilde yeni oluşturulan kenar bir tür olur ve ikinci ClassInitializer değişkeni kullanılarak başlatılır. Java generics dönüş türünü daraltmak için kullanılabilir ve kullanılması gerekir.
 
-example:
+örnek:
 
 ```java
 @Adjacency("Foo")
@@ -131,13 +131,13 @@ BarVertex includeFoobar(ClassInitializer<? extends BarVertex> vertexInitializer,
                         ClassInitializer<? extends FooEdge> edgeInitializer);
 ```
 
-### Signature: `(VertexFrame, ClassInitializer)`
+### İmza: `(VertexFrame, ClassInitializer)`
 
-Valid return types: `VertexFrame` or `void`
+Geçerli dönüş tipleri: `VertexFrame` veya `void`
 
-Creates a new edge and connects this to an existing vertex. The newly created edge will have a type, as well as be initiated, according to the details specified in the `ClassInitializer` argument. The `VertexFrame` specified in the first argument will simply be returned. A `void` return type is also valid. Java generics can, and should, be used to narrow the return type as well as to restrict the `ClassInitializer`.
+Yeni bir kenar oluşturur ve bunu mevcut bir vertex'e bağlar. Yeni oluşturulan kenar, `ClassInitializer` değişkeninde belirtilen ayrıntılara göre başlatılacağı gibi bir türe sahip olacaktır. İlk değişkende belirtilen `VertexFrame` basitçe geri döndürülür. Bir `void` dönüş tipi de geçerlidir. Java generics, dönüş türünü daraltmanın yanı sıra `ClassInitializer` 'ı kısıtlamak için kullanılabilir ve kullanılması gerekir.
 
-example:
+örnek:
 
 ```java
 @Adjacency("Foo")
@@ -163,21 +163,21 @@ void includeFoobar(BarVertex vertex,
                         ClassInitializer<? extends FooEdge> edgeInitializer);
 ```
 
-## GET Operation
+## GET İşlemi
 
-Valid method signatures: `()`, `(Class)`
+Geçerli yöntem imzaları: `()`, `(Class)`
 
-Get's one or more adjacent vertex from the graph.
+Grafiğin bir veya daha fazla vertex'ini al.
 
-### Signature: `( )`
+### İmza: `( )`
 
-Valid return types: `VertexFrame` or `Iterator` or `List` or `Set`
+Geçerli dönüş tipleri: `VertexFrame` veya `Iterator` veya `List` veya `Set`
 
-Retrieves one or more of the adjacent edges. If the return type is a single Frame then only the first instance is returned. If the return type is an `Iterator` or `List` or `Set` then it will supply all matching vertex. When using an `Iterator` or `List` or `Set` it is encouraged, but not required, to use generics. The returned frames will always be instantiated as the type encoded in the graph if there is one.
+Bitişik kenarlardan bir veya daha fazlasını alır. Dönüş türü tek bir Çerçeve ise, yalnızca ilk örneğini döndürür. Eğer dönüş tipi bir `Iterator` veya `List` veya `Set` ise, eşleşen tüm vertex'i sağlayacaktır. Bir `Iterator` veya `List` veya `Set` kullanırken, generics kullanmak teşvik edilir, ancak gerekli değildir. Döndürülen kareler her zaman, grafikte kodlanmış tür olarak örneği oluşturulur.
 
-!!! note If a type is encoded in the in the graph is a superclass of the returned element then an exception will be thrown. Therefore the return type specifed should always by the same type, or a superclass, of the expected return type. VertexFrame is always a safe return type for this method.
+!!! note Grafikte bir tür kodlanmışsa, döndürülen öğenin bir üst sınıfı olur ve o zaman bir istisna fırlatılır. Bu nedenle, belirtilen dönüş türü her zaman aynı türde veya beklenen dönüş türünün bir üst sınıfıyla oluşturulmalıdır. VertexFrame bu yöntem için her zaman güvenli bir dönüş tipidir.
 
-example:
+örnek:
 
 ```java
 @Adjacency("Foo")
@@ -224,11 +224,11 @@ Set<BarVertex> getFoobar();
 BarVertex obtainFoobar();
 ```
 
-### Signature: `(Class)`
+### İmza: `(Class)`
 
-Valid return types: `VertexFrame` or `Iterator` or `List` or `Set`
+Geçerli dönüş tipleri: `VertexFrame` veya `Iterator` veya `List` veya `Set`
 
-Retrieves one or more of the adjacent vertex. If the return type is a single `VertexFrame` then only the first instance is returned. If the return type is an `Iterator` then it will iterate over all matching vertex. When using an Iterator it is encouraged to use generics.
+Bitişik vertex'in bir veya daha fazlasını alır. If the return type is a single `VertexFrame` then only the first instance is returned. If the return type is an `Iterator` then it will iterate over all matching vertex. When using an Iterator it is encouraged to use generics.
 
 !!! note The Class argument of the method specifes a filter such that only vertex which are of a matching type, or a subtype, to that of the argument will be returned.
 

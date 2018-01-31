@@ -399,11 +399,11 @@ Geçerli dönüş tipleri: `void`
 
 Bu yöntemin argümanı, `Iterable` veya `Iterable`'ın alt sınıfı olmalıdır ve bu da, vertex Çerçeveleri üzerinde yinelenir. Kullanılabilirlik için Iteratorde bir Generic Tip belirtmeniz önerilir. Tüm Java koleksiyonları, `Iterable`'dan miras aldığından, herhangi bir koleksiyon türü de bu yöntemlerin parametresi olarak kullanılabilir.
 
-This method will drop all existing edges with the specified lable then iterate over all the vertex specified in the `Iterable` argument and create new edges to connect to them. The edges in the graph will not encode a type.
+This method will drop all existing edges with the specified lable then iterate over all the vertex specified in the `Iterable` argument and create new edges to connect to them. Grafiğin kenarları bir türe kodlamaz.
 
-!!! warning If any of the vertex specified by this method's argument already has an edge forming an adjacency with this vertex and has matching direction and label attributes then that edge will be removed and recreated as a blank untyped edge with the same label.
+!!! uyarı Bu yöntemin argümanı tarafından belirtilen vertex'in herhangi biri zaten bu köşeyle bir bitişiklik oluşturan bir kenara sahipse ve yön ve etiket özniteliklerine uyuyorsa o kenar kaldırılacak ve aynı etiketle birlikte boş bir başlıksız kenar olarak yeniden oluşturulacaktır.
 
-example:
+örnek:
 
 ```java
 @Adjacency("Foo")

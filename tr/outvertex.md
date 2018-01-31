@@ -2,7 +2,7 @@
 
 İşlem otomatik olduğunda izin verilen önekler: `get`
 
-The `@OutVertex` takes no parameters and is used only on get methods that themself take no parameters. It specifies the `VertexFrame` at the tail of an edge.
+`@OutVertex` parametre almaz ve yalnızca kendilerinin parametre almadığı get yöntemleri için kullanılır. Bir kenarın sonundaki `VertexFrame`'i belirtir.
 
 örnek:
 
@@ -19,7 +19,7 @@ Geçerli yöntem imzaları: `( )`
 
 Geçerli dönüş tipleri: `VertexFrame`.
 
-Get the tail vertex of the edge.
+Kenarın kuyruk vertex'ini al.
 
 örnek:
 

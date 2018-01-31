@@ -339,17 +339,17 @@ Birkaç vertex'e bağlı yeni kenarlar oluşturur ve aynı zamanda mevcut tüm k
 
 !!! warning The set operation methods are equivelant to removing all existing edges of the specified label and direction connected to the current vertex and then call add on all the vertex specified by the method's parameters. Düşen tüm kenarlar üzerinde var olan tüm özellikleri de kaybedeceksiniz.
 
-### Signature: `(VertexFrame)`
+### İmza: `(VertexFrame)`
 
-Valid return types: `void`
+Geçerli dönüş tipleri: `void`
 
-The argument for this method must be a `VertexFrame` or a class or interface which inherits from that class.
+Bu yöntemin değişkeni bir `VertexFrame` olmalıdır veya bir sınıf veya o sınıftan miras alan bir arayüz olmalıdır.
 
-This method will drop all existing edges with the specified label and create a single new edge to the vertex specified. Of course if the direction is set to both then two new edges are created instead, one in each direction. Any newly created edges will not encode a type.
+Bu yöntem, varolan tüm kenarları belirtilen etiketi kullanarak düşürür ve belirtilen vertex'e tek bir yeni kenar oluşturur. Of course if the direction is set to both then two new edges are created instead, one in each direction. Yeni oluşturulan kenarlar bir türe kodlamaz.
 
-!!! warning If the vertex specified in the method's argument already has an edge forming an adjacency with this vertex and has matching direction and label attributes then that edge will be removed and recreated as a blank untyped edge with the same label.
+!!! uyarı Yöntem argümanında belirtilen vertex, bu vertex ile bir bitişiklik oluşturan bir kenara zaten sahipse ve yön ve etiket özniteliklerine uyuyorsa o kenar kaldırılacak ve aynı etiketle boş bir başlıksız kenar olarak yeniden oluşturulacaktır.
 
-example:
+örnek:
 
 ```java
 @Adjacency("Foo")
@@ -366,17 +366,17 @@ void setFoobar(BarVertex vertex);
 void assignFoobar(BarVertex vertex);
 ```
 
-### Signature: `(Iterator)`
+### İmza: `(Iterator)`
 
-Valid return types: `void`
+Geçerli dönüş tipleri: `void`
 
-The argument for this method must be an `Iterator` which iterates over Vertex Frames. It is suggested you specify a Generic Type for the Iterator for usability.
+Bu yöntemin argümanı, Vertex Frames üzerinde yinelenen bir `Iterator` olmalıdır. Kullanılabilirlik için Iterator'de bir Generic Tip belirtmeniz önerilir.
 
-This method will drop all existing edges with the specified lable then iterate over all the vertex specified in the `Iterator` argument and create new edges to connect to them. The edges in the graph will not encode a type.
+Bu yöntem var olan tüm kenarları belirtilen etiketi kullanarak düşürür, ardından `Iterator` değişkeninde belirtilen tüm vertex üzerinde tekrarlar ve onlara bağlanmak için yeni kenarlıklar oluşturur. Grafiğin kenarları bir türe kodlamaz.
 
-!!! warning If any of the vertex specified by this method's argument already has an edge forming an adjacency with this vertex and has matching direction and label attributes then that edge will be removed and recreated as a blank untyped edge with the same label.
+!!! uyarı Bu yöntemin argümanı tarafından belirtilen vertex'in herhangi biri zaten bu köşeyle bir bitişiklik oluşturan bir kenara sahipse ve yön ve etiket özniteliklerine uyuyorsa o kenar kaldırılacak ve aynı etiketle birlikte boş bir başlıksız kenar olarak yeniden oluşturulacaktır.
 
-example:
+örnek:
 
 ```java
 @Adjacency("Foo")
@@ -393,11 +393,11 @@ void setFoobar(Iterator<BarVertexr> vertex);
 <E extends VertexFrame> void includeFoobar(Iterator<? extends E> vertex);
 ```
 
-### Signature: `(Iterable)`
+### İmza: `(Iterable)`
 
-Valid return types: `void`
+Geçerli dönüş tipleri: `void`
 
-The argument for this method must be an `Iterable` or a subclass of `Iterable` which iterates over vertex Frames. It is suggested you specify a Generic Type for the Iterator for usability. Since all Java collections inherit from the `Iterable` interface any collection type can also be used as a parameter to this methods.
+Bu yöntemin argümanı, `Iterable` veya `Iterable`'ın alt sınıfı olmalıdır ve bu da, vertex Çerçeveleri üzerinde yinelenir. It is suggested you specify a Generic Type for the Iterator for usability. Since all Java collections inherit from the `Iterable` interface any collection type can also be used as a parameter to this methods.
 
 This method will drop all existing edges with the specified lable then iterate over all the vertex specified in the `Iterable` argument and create new edges to connect to them. The edges in the graph will not encode a type.
 

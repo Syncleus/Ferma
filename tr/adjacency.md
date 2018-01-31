@@ -289,9 +289,9 @@ Vertex'i yerinde bırakarak, bir bitişiklik oluşturan kenarları kaldırır.
 
 Geçerli dönüş tipleri: `void`
 
-Removes all edges which create any adjacency between the current vertex and any other vertex using the specified label.
+Belirtilen etiketi kullanarak geçerli vertex ile diğer herhangi bir vertex arasında herhangi bir bitişiklik oluşturan tüm kenarları kaldırır.
 
-example:
+örnek:
 
 ```java
 @Adjacency("Foo")
@@ -303,13 +303,13 @@ void removeFoobar();
 void deleteAllFoobar(E vertex);
 ```
 
-### Signature: `(VertexFrame)`
+### İmza: `(VertexFrame)`
 
-Valid return types: `void`
+Geçerli dönüş tipleri: `void`
 
-Removes all edges which create an adjacency between the current vertex and the vertex specified in the methods argument and has the specified label.
+Geçerli vertex ve methods değişkeninde belirtilen vertex arasında bir bitişiklik oluşturan ve belirtilen etikete sahip olan tüm kenarları kaldırır.
 
-example:
+örnek:
 
 ```java
 @Adjacency("Foo")
@@ -331,13 +331,13 @@ void removeFoobar(BarVertex vertex);
 void removeFoobar(BarVertex vertex);
 ```
 
-## SET Operation
+## SET İşlemi
 
-Valid method signatures: `(VertexFrame)`, `(Iterator)`, `(Iterable)`
+Geçerli yöntem imzları: `(VertexFrame)`, `(Iterator)`, `(Iterable)`
 
-Creates new edges connected to several vertex and at the same time removes any existing edges. If the any of the vertex being set are already an adjacency then the edge will still be removed and recreated.
+Birkaç vertex'e bağlı yeni kenarlar oluşturur ve aynı zamanda mevcut tüm kenarları kaldırır. Ayarlanan vertex'in herhangi biri önceden bir bitişikliğe sahipse, kenar yine de kaldırılacak ve yeniden oluşturulacaktır.
 
-!!! warning The set operation methods are equivelant to removing all existing edges of the specified label and direction connected to the current vertex and then call add on all the vertex specified by the method's parameters. You will loose any existing properties set on all dropped edges as well.
+!!! warning The set operation methods are equivelant to removing all existing edges of the specified label and direction connected to the current vertex and then call add on all the vertex specified by the method's parameters. Düşen tüm kenarlar üzerinde var olan tüm özellikleri de kaybedeceksiniz.
 
 ### Signature: `(VertexFrame)`
 

@@ -11,7 +11,7 @@ public interface Person extends VertexFrame {
 }
 ```
 
-In this example Person represents a vertex in the graph with a property indicating their name, and they are associated with other vertex in the graph of the same type that represent their coworkers.
+Bu örnekte; Kişi, grafiğin içinde isimleri belirten özelliği olan bir köşeyi temsil eder ve onlar meslektaşlarını temsil eden aynı türe ait grafikteki diğer köşeyle ilişkilendirilirler.
 
 When implementing a vertex as a concrete class you must instead inherit from `AbstractVertexFrame`.
 

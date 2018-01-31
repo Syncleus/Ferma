@@ -43,7 +43,7 @@ public class PersonImpl extends AbstractVertexFrame implements Person {
 }
 ```
 
-!!! Note When implementing a Frame a class or abstract class must always extend from either `AbstractEdgeFrame` or `AbstractVertexFrame`.
+Bir Çerçeve uygulanırken bir sınıfın veya soyut sınıfın daima `SoyutKenarÇerçevesi` veya`SoyutKöşeÇerçevesi `'nden uzatılması gerekir.
 
 ## Yazarak
 

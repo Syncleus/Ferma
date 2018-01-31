@@ -78,9 +78,9 @@ FooEdge includeFoobar(BarVertex existingVertex);
 
 Geçerli dönüş tipleri: `EdgeFrame`
 
-Herhangi bir tür bilgisi olmaksızın yeni bir kenar oluşturur ve bu vertex ile yeni oluşturulan bir vertex arasına bağlar. The newly created vertex will have a type, as well as be initiated, according to the details specified in the ClassInitializer argument. Java generics can, and should, be used to narrow the return type. The returned object will be the newly created `TEdge`.
+Herhangi bir tür bilgisi olmaksızın yeni bir kenar oluşturur ve bu vertex ile yeni oluşturulan bir vertex arasına bağlar. Yeni oluşturulan vertex, ClassInitializer değişkeninde belirtilen ayrıntılara göre başlatılacağı gibi bir türe sahip olacaktır. Java generics dönüş türünü daraltmak için kullanılabilir ve kullanılması gerekir. Döndürülen nesne yeni oluşturulan `TEdge` olacaktır.
 
-example:
+örnek:
 
 ```java
 @Incidence("Foo")
@@ -102,13 +102,13 @@ FooEdge addFoobar(ClassInitializer<? extends FooEdge> vertexInitializer);
 TEdge includeFoobar(ClassInitializer<? extends BarVertex> vertexInitializer);
 ```
 
-### Signature: `(VertexFrame, ClassInitializer)`
+### İmza: `(VertexFrame, ClassInitializer)`
 
-Valid return types: `EdgeFrame`
+Geçerli dönüş tipleri: `EdgeFrame`
 
-Creates a new edge and connects this to an existing vertex. The newly created edge will have a type, as well as be initiated, according to the details specified in the ClassInitializer argument. Java generics can, and should, be used to narrow the return type. The returned object will be the newly created `EdgeFrame`.
+Yeni bir kenar oluşturur ve bunu mevcut bir vertex'e bağlar. Yeni oluşturulan kenar, ClassInitializer değişkeninde belirtilen ayrıntılara göre başlatılacağı gibi bir türe sahip olacaktır. Java generics dönüş türünü daraltmak için kullanılabilir ve kullanılması gerekir. Döndürülen nesne, yeni oluşturulan `EdgeFrame` olacaktır.
 
-example:
+örnek:
 
 ```java
 @Incidence("Foo")

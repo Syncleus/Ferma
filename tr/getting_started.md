@@ -2,7 +2,7 @@ Ferma 3 farklı çözünürlük düzeyi sağlar: Türsüz, basit, açıklamalı.
 
 ## Bağımlılıklar
 
-To include Ferma in your project of choice include the following Maven dependency into your build.
+Ferma' yı kendi projelerinize dahil etmek için aşağıdaki Maven bağımlılıklarını kodunuza ekleyin.
 
 ```xml
 <dependency>
@@ -46,7 +46,7 @@ public class Knows extends AbstractEdgeFrame {
 }
 ```
 
-And here is how you interact with the framed elements:
+Burada çerçeveli unsurlar ile nasıl etkileşim kurduğunu görebilirsiniz:
 
 ```java
 public void testUntyped() {
@@ -70,7 +70,7 @@ public void testUntyped() {
 }
 ```
 
-## Simple Mode Example
+## Basit mod örneği
 
 In simple mode you must provide concrete classes, no abstract or interfaces allowed, and the class should always extend from a FramedVertex or FramedEdge. Simple mode doesn't provide any annotations either. The purpose of simple mode is to provide type resolution. Basically the type of object you use when adding to the graph is the same type you get out when reading from the graph.
 

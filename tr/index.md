@@ -12,7 +12,7 @@ Annotated classes in Ferma have their abstract methods implemented using code ge
 
 Ferma is designed to easily replace TinkerPop Frames in existing code, as such, the annotations provided by Ferma are a super-set of those provided by TinkerPop Frames.
 
-Ferma is built directly on top of TinkerPop and allows access to all of the internals. This ensures all the TinkerPop features are available to the end-user. The TinkerPop stack provides several tools which can be used to work with the Ferma engine.
+Ferma direkt olarak TinkerPop'un üzerine inşa edilmiş ve tüm iç kısımlara erişim imkânı sağlamaktadır. Bu bütün TinkerPop özelliklerinin son kullanıcı tarafından kullanılmasını sağlar. TinkerPop yığını, Ferma makinesiyle çalışmak için kullanılabilecek çeşitli araçlar sağlar.
 
 - **Gremlin**, a database agnostic query language for Graph Databases.
 - **Gremlin Server**, a server that provides an interface for executing Gremlin on remote machines.

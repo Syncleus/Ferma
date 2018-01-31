@@ -397,7 +397,7 @@ void setFoobar(Iterator<BarVertexr> vertex);
 
 Geçerli dönüş tipleri: `void`
 
-Bu yöntemin argümanı, `Iterable` veya `Iterable`'ın alt sınıfı olmalıdır ve bu da, vertex Çerçeveleri üzerinde yinelenir. It is suggested you specify a Generic Type for the Iterator for usability. Since all Java collections inherit from the `Iterable` interface any collection type can also be used as a parameter to this methods.
+Bu yöntemin argümanı, `Iterable` veya `Iterable`'ın alt sınıfı olmalıdır ve bu da, vertex Çerçeveleri üzerinde yinelenir. Kullanılabilirlik için Iteratorde bir Generic Tip belirtmeniz önerilir. Tüm Java koleksiyonları, `Iterable`'dan miras aldığından, herhangi bir koleksiyon türü de bu yöntemlerin parametresi olarak kullanılabilir.
 
 This method will drop all existing edges with the specified lable then iterate over all the vertex specified in the `Iterable` argument and create new edges to connect to them. The edges in the graph will not encode a type.
 

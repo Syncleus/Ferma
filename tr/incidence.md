@@ -1,14 +1,14 @@
 Çerveler üzerinde geçerli:**Vertex**
 
-Allowed prefixes when operation is AUTO: `add`, `get`, `remove`
+İşlem AUTO olduğunda izin verilen önekler: `add`, `get`, `remove`
 
 Açıklama argümanları:
 
-`label` - The label assigned to the edge which connects the adjacent nodes.
+`label` - Bitişik düğümleri birbirine bağlayan kenara atanan etiket.
 
-`direction` - The direction for the edge which creates the adjacency. It can be assigned any of the values from `org.apache.tinkerpop.gremlin.structure.Direction`.
+`direction` - Bitişiklik oluşturan kenar yönü. `org.apache.tinkerpop.gremlin.structure.Direction` değerlerinden herhangi biri atanabilir.
 
-`operation` - The operation the method will perform. Must be one of the following: `GET`, `ADD`, `SET`, `REMOVE`, `AUTO`. Defaults to `AUTO`.
+`operation` - Yöntemin gerçekleştireceği işlem. Şunlardan biri olmalı: `GET`, `ADD`, `SET`, `REMOVE`, `AUTO`. Varsayılan değer `AUTO`.
 
 örnek:
 
@@ -21,7 +21,7 @@ Açıklama argümanları:
 
 Geçerli yöntem imzaları: `( )`, `(VertexFrame)`, `(ClassInitializer)`, `(VertexFrame, ClassInitializer)`, `(ClassInitializer, ClassInitializer)`
 
-Adds an edge to edge to a node and returns the new `EdgeFrame`.
+Bir düğüme bir kenar ekler ve yeni `EdgeFrame`'i döndürür.
 
 ### İmza: `( )`
 

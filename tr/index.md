@@ -15,10 +15,10 @@ Ferma is designed to easily replace TinkerPop Frames in existing code, as such, 
 Ferma direkt olarak TinkerPop'un üzerine inşa edilmiş ve tüm iç kısımlara erişim imkânı sağlamaktadır. Bu bütün TinkerPop özelliklerinin son kullanıcı tarafından kullanılmasını sağlar. TinkerPop yığını, Ferma makinesiyle çalışmak için kullanılabilecek çeşitli araçlar sağlar.
 
 - **Gremlin**, a database agnostic query language for Graph Databases.
-- **Gremlin Server**, a server that provides an interface for executing Gremlin on remote machines.
-- a data-flow framework for splitting, merging, filtering, and transforming of data
+- **Gremlin Server**, uzaktaki makinelerde Gremlin'i çalıştırmak için bir arabirim sağlayan sunucudur.
+- verilerin bölünmesi, birleştirilmesi, filtrelenmesi ve dönüştürülmesi için bir veri akışı çerçevesidir
 - **Graph Computer**, a framework for running algorithms against a Graph Database.
-- Support for both **OLTP** and **OLAP** engines.
+- **OLTP** ve **OLAP** her iki makine için destek.
 - **TinkerGraph** a Graph Database and the reference implementation for TinkerPop.
 - Native **Gephi** integration for visualizing graphs.
 - Interfaces for most major Graph Compute Engines including **Hadoop M/R**. **Spark**, and **Giraph**.

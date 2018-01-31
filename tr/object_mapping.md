@@ -96,11 +96,11 @@ Person person = fg.traverse(g -> g.V().property("name", "jeff")).nextExplicit(Pe
 assert person.getName().equals("Jeff");
 ```
 
-!!! not: Yazılmayan modda, `Açık` sonekiyle birlikte tüm `Geçiş `yöntemleri sonek olmayan yöntemlerle tamamen aynı davranır. Bu sebepten dolayı, yazılmayan modda çalışırken yalnızca açık yöntemler kullanmanız önerilir. This way if you ever decide to migrate over to typed mode it will not change the behavior of your existing code base and will make the migration process much easier.
+!!! not: Yazılmayan modda, `Açık` sonekiyle birlikte tüm `Geçiş `yöntemleri sonek olmayan yöntemlerle tamamen aynı davranır. Bu sebepten dolayı, yazılmayan modda çalışırken yalnızca açık yöntemler kullanmanız önerilir. Böylece, yazma moduna geçiş yapmayı seçerseniz bu şekilde mevcut kodun temel davranışını değiştirmeyecek ve geçiş işlemini çok daha kolay hale getirecektir.
 
 ### Yazma Modu
 
-Typed mode takes things one step further and allows type information about a frame to be encoded as a property on vertex and edges in the underlying graph. This behavior is governed by the `PolymorphicTypeResolver` which encodes the type in a property name which defaults to the value of `PolymorphicTypeResolver.TYPE_RESOLUTION_KEY` but can be explicitly set to any string value of the user's choice. When a class is framed the Type Resolution Key is read and the original type is determined, this in turn effects the type used to instantiate the new Frame and may be a specific type which is a subclass of the type requested. For example say we have the following model.
+Yazma modu işleri daha da ileri götürür ve bir çerçeveyle ilgili tür bilgilerinin, temel grafiğin köşe ve kenarlarındaki bir özellik olarak kodlanmasına imkan verir. This behavior is governed by the `PolymorphicTypeResolver` which encodes the type in a property name which defaults to the value of `PolymorphicTypeResolver.TYPE_RESOLUTION_KEY` but can be explicitly set to any string value of the user's choice. When a class is framed the Type Resolution Key is read and the original type is determined, this in turn effects the type used to instantiate the new Frame and may be a specific type which is a subclass of the type requested. For example say we have the following model.
 
 ```Java
 public class Person extends AbstractVertexFrame {

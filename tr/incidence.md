@@ -27,9 +27,9 @@ Bir düğüme bir kenar ekler ve yeni `EdgeFrame`'i döndürür.
 
 Geçerli dönüş tipleri: `EdgeFrame`
 
-Creates a new vertex without any type information as well as an untyped edge to connect to it. The newly created `TEdge` is returned.
+Herhangi bir tür bilgisi olmaksızın yeni bir vertex ve ona bağlantı için türsüz bir kenar oluşturur. Yeni oluşturulmuş `TEdge` geri döndürülür.
 
-!!! note Since the returned `VertexFrame` is always untyped the return type must be either `VertexFrame` or `TVertex` specifically.
+!!! not Döndükten sonra `VertexFrame` daima türsüz olduğundan dönüş türünün özellikle `VertexFrame` veya `TVertex` olması gerekiyor.
 
 ```java
 @Incidence("Foo")
@@ -41,13 +41,13 @@ EdgeFrame addFoobar();
 TEdge addFoobar();
 ```
 
-### Signature: `(VertexFrame)`
+### İmza: `(VertexFrame)`
 
-Valid return types: `EdgeFrame`
+Geçerli dönüş tipleri: `EdgeFrame`
 
-Creates a new edge without any type information and connects it between this vertex the vertex specified as an argument to the method. The frame returned is the newly created `TEdge`.
+Herhangi bir tür bilgisi olmaksızın yeni bir kenar oluşturur ve onu, bu vertex'in parametre olarak belirtilen yöntemine bağlar. Döndürülen çerçeve, yeni oluşturulan `TEdge`'dir.
 
-examples:
+örnekler:
 
 ```java
 @Incidence("Foo")
@@ -74,11 +74,11 @@ EdgeFrame addFoobar(BarVertex existingVertex);
 FooEdge includeFoobar(BarVertex existingVertex);
 ```
 
-### Signature: `(ClassInitializer)`
+### İmza: `(ClassInitializer)`
 
-Valid return types: `EdgeFrame`
+Geçerli dönüş tipleri: `EdgeFrame`
 
-Creates a new edge without any type information and connects it between this vertex and a newly created vertex. The newly created vertex will have a type, as well as be initiated, according to the details specified in the ClassInitializer argument. Java generics can, and should, be used to narrow the return type. The returned object will be the newly created `TEdge`.
+Herhangi bir tür bilgisi olmaksızın yeni bir kenar oluşturur ve bu vertex ile yeni oluşturulan bir vertex arasına bağlar. The newly created vertex will have a type, as well as be initiated, according to the details specified in the ClassInitializer argument. Java generics can, and should, be used to narrow the return type. The returned object will be the newly created `TEdge`.
 
 example:
 

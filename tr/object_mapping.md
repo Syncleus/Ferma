@@ -75,7 +75,7 @@ VertexFrame nextOrAdd();
 
 Bu yöntemlerin her biri biraz farklı bir davranışa sahiptir. Ayrıntılı bilgi için, Traversable sınıfı için Ferma Javadocs'a bakın. Ancak, kısaca `sonraki(Sınıf)` yöntemi, eşleşen öğelerden birini dönüştürür ve onu belirtilen türde çerçeveler. Bununla birlikte, herhangi bir köşe bulunmazsa, bir istisna atanır. `sonrakiVeyaVarsayılan` değişkeni, örneğin `` veya `null` olabilecek herhangi bir eşleşme olmadığında varsayılan değeri döndürerek istisnadan kaçınır. Benzer şekilde `sonrakiVeyaEkleme`, geçişte eşleşme oluşturmazsa, temel grafiğe yeni bir köşe ekler. Son olarak, `Çerçeve(Sınıfı)`, `Listeleme(Sınıfı)` ve `Alıcı(Sınıfı)`, geçişi eşleşen tüm öğeleri `Yineleyici`, `Liste` veya `Alıcı` olarak dönüştürür.
 
-The exact type returned from all the aforementioned calls will always be a Class of the type specified in the argument, or a subclass thereof. Oluşturulan sınıfın tam olarak tipi, hangi yazım modunun kullanıldığına bağlı olacaktır.
+Belirtilen tüm çağrılardan dönüştürülen tam tip, daima argümanda veya alt sınıfında belirtilen türden bir Sınıf olacaktır. Oluşturulan sınıfın tam olarak tipi, hangi yazım modunun kullanıldığına bağlı olacaktır.
 
 ### Biçimsiz Mod
 

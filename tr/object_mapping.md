@@ -96,11 +96,11 @@ Person person = fg.traverse(g -> g.V().property("name", "jeff")).nextExplicit(Pe
 assert person.getName().equals("Jeff");
 ```
 
-!!! not: Yazılmayan modda, `Açık` sonekiyle birlikte tüm `Geçiş `yöntemleri sonek olmayan yöntemlerle tamamen aynı davranır. Bu sebepten dolayı, yazılmayan modda çalışırken yalnızca açık yöntemler kullanmanız önerilir. Böylece, yazma moduna geçiş yapmayı seçerseniz bu şekilde mevcut kodun temel davranışını değiştirmeyecek ve geçiş işlemini çok daha kolay hale getirecektir.
+!!! not: Türsüz modda, `Açık` sonekiyle birlikte tüm `Geçiş `yöntemleri sonek olmayan yöntemlerle tamamen aynı davranır. Bu sebepten dolayı, türsüz modda çalışırken yalnızca açık yöntemler kullanmanız önerilir. Böylece, türlü moda geçiş yapmayı seçerseniz bu şekilde mevcut kodun temel davranışını değiştirmeyecek ve geçiş işlemini çok daha kolay hale getirecektir.
 
-### Yazma Modu
+### Türlü Mod
 
-Yazma modu işleri daha da ileri götürür ve bir çerçeveyle ilgili tür bilgilerinin, temel grafiğin köşe ve kenarlarındaki bir özellik olarak kodlanmasına imkan verir. Bu davranış, `PolimorfikTürÇözücü.YAZI_ÇÖZÜM_ANAHTARI` varsayım değeri olan bir özellik adı yazan `PalimorfikTürÇözücü` tarafından yönetilir, ancak kullanıcının seçeceği herhangi bir dize değerine açıkça ayarlanabilir. When a class is framed the Type Resolution Key is read and the original type is determined, this in turn effects the type used to instantiate the new Frame and may be a specific type which is a subclass of the type requested. Örneğin, aşağıdaki modele sahip olduğumuzu söyleriz.
+Türlü mod işleri daha da ileri götürür ve bir çerçeveyle ilgili tür bilgilerinin, temel grafiğin köşe ve kenarlarındaki bir özellik olarak kodlanmasına imkan verir. Bu davranış, `PolimorfikTürÇözücü.YAZI_ÇÖZÜM_ANAHTARI` varsayım değeri olan bir özellik adı yazan `PalimorfikTürÇözücü` tarafından yönetilir, ancak kullanıcının seçeceği herhangi bir dize değerine açıkça ayarlanabilir. Bir sınıf çerçeveli iken, Tür Çözüm Anahtarı okunur ve orijinal türe karar verilir, bu da yeni Çerçeveyi örneklemek için kullanılan türe etki eder ve istenen türden bir alt sınıf olan belirli bir tür olabilir. Örneğin, aşağıdaki modele sahip olduğumuzu söyleriz.
 
 ```Java
 public class Person extends AbstractVertexFrame {

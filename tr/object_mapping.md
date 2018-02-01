@@ -47,7 +47,7 @@ Bir Çerçeve uygulanırken bir sınıfın veya soyut sınıfın daima `SoyutKen
 
 ## Yazarak
 
-Ferma için iki yazım modu vardır ve her biri grafiğe çekilen nesnelerin türünü kullanıcının nasıl belirleyeceğini önemli derecede etkiler; bu modlara **Yazma Modu** ve **Yazılmayan Mod** denir.
+Ferma için iki türleme modu vardır ve her biri grafiğe çekilen nesnelerin türünü kullanıcının nasıl belirleyeceğini önemli derecede etkiler; bu modlara **Türlü Mod** ve **Türsüz Mod** denir.
 
 Bir çerçeve üzerinde bir geçiş gerçekleştirirken, temel bir grafik ögesini veya ögeleri, `KöşeÇerçevesi` veya `KenarÇerçevesi` gibi çerçeveli bir eşgörünüm içine otomatik olarak kapsayan birkaç yöntem bulunur. Bu ya tek bir çerçeve ya da `Yineleyici`, `Alıcı` veya `Liste` tarafından sağlanan bir grup çerçeve olabilir.
 
@@ -100,7 +100,7 @@ assert person.getName().equals("Jeff");
 
 ### Yazma Modu
 
-Yazma modu işleri daha da ileri götürür ve bir çerçeveyle ilgili tür bilgilerinin, temel grafiğin köşe ve kenarlarındaki bir özellik olarak kodlanmasına imkan verir. Bu davranış, `PolimorfikYazıÇözücü.YAZI_ÇÖZÜM_ANAHTARI` varsayım değeri olan bir özellik adı yazan `PalimorfikYazıÇözücü` tarafından yönetilir, ancak kullanıcının seçeceği herhangi bir dize değerine açıkça ayarlanabilir. When a class is framed the Type Resolution Key is read and the original type is determined, this in turn effects the type used to instantiate the new Frame and may be a specific type which is a subclass of the type requested. Örneğin, aşağıdaki modele sahip olduğumuzu söyleriz.
+Yazma modu işleri daha da ileri götürür ve bir çerçeveyle ilgili tür bilgilerinin, temel grafiğin köşe ve kenarlarındaki bir özellik olarak kodlanmasına imkan verir. Bu davranış, `PolimorfikTürÇözücü.YAZI_ÇÖZÜM_ANAHTARI` varsayım değeri olan bir özellik adı yazan `PalimorfikTürÇözücü` tarafından yönetilir, ancak kullanıcının seçeceği herhangi bir dize değerine açıkça ayarlanabilir. When a class is framed the Type Resolution Key is read and the original type is determined, this in turn effects the type used to instantiate the new Frame and may be a specific type which is a subclass of the type requested. Örneğin, aşağıdaki modele sahip olduğumuzu söyleriz.
 
 ```Java
 public class Person extends AbstractVertexFrame {

@@ -1,8 +1,8 @@
 Orada birkaç OGM/ORM seçeneği vardır. For the purposes of this document we will focus only on those that have a stable release, or are close to a stable release. At the time of this writing those are: Tinkerpop Framed and Totorom.
 
-## Benchmarks
+## Kıyaslamalar
 
-We maintain an informal project for benchmarking Ferma against other OGM available, you can find the [source here](https://github.com/Syncleus/Ferma-benchmark). However below is a matrix breakdown of the results. Ham çalıştırma süresini göstermek yerine Ferma ile karşılaştığında her OGM oranını gösteriyoruz. Bu nedenle tablo 1x listeleniyorsa çerçeve Ferma ile aynı yürütme süresine sahip demektir, eğer 2x listeleniyorsa yürütülmesi iki kat daha uzun sürer eğer 0.5x gösteriyorsa yürütmenin yarısı kadar zaman almış demektir. Obviously any value less than 1x indicates the OGM out performed Ferma and any value greater than 1x indicates Ferma had the superior performance tiimes.
+Ferma'yı OGM ile kıyaslamak için gayrı resmi bir proje hazırlıyoruz, [kaynağı burada](https://github.com/Syncleus/Ferma-benchmark) bulabilirsiniz. However below is a matrix breakdown of the results. Ham çalıştırma süresini göstermek yerine Ferma ile karşılaştığında her OGM oranını gösteriyoruz. Bu nedenle tablo 1x listeleniyorsa çerçeve Ferma ile aynı yürütme süresine sahip demektir, eğer 2x listeleniyorsa yürütülmesi iki kat daha uzun sürer eğer 0.5x gösteriyorsa yürütmenin yarısı kadar zaman almış demektir. Obviously any value less than 1x indicates the OGM out performed Ferma and any value greater than 1x indicates Ferma had the superior performance tiimes.
 
 |                                           | **Tinkerpop 2 Blueprints** | **Gremlin Pipeline** | **Tinkerpop3** | **Frames**  | **Totorom** | **Peapod**  |
 | ----------------------------------------- | -------------------------- | -------------------- | -------------- | ----------- | ----------- | ----------- |

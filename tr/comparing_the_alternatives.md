@@ -1,4 +1,4 @@
-Orada birkaç OGM/ORM seçeneği vardır. For the purposes of this document we will focus only on those that have a stable release, or are close to a stable release. At the time of this writing those are: Tinkerpop Framed and Totorom.
+Orada birkaç OGM/ORM seçeneği vardır. Bu belgenin amaçları doğrultusunda yalnızca stabil bir şekilde serbest bırakılanlara ya da stabil bir şekilde serbest bırakılmaya yakın olanlara odaklanacağız. At the time of this writing those are: Tinkerpop Framed and Totorom.
 
 ## Kıyaslamalar
 
@@ -14,7 +14,7 @@ Ferma'yı OGM ile kıyaslamak için gayrı resmi bir proje hazırlıyoruz, [kayn
 
 !!! note These bencharks were performed comparing our v2.x branch. These benchmarks need to be updated to reflect changes in Tinkerpop3 as well as the Ferma v3.x branch.
 
-As can be seen Ferma out performs all the alternative solutions considerably by several orders of magnitude. While results do vary slightly from system to system these results are pretty close to typical. Go ahead, check out the benchmark program and run it for yourself!
+Görüldüğü gibi Ferma dışarıdaki tüm alternatif çözümleri önem derecesine göre sırayla gerçekleştirir. Sonuçlar sistemden sisteme farklılık gösterirken, bu sonuçlar tipik olarak oldukça yakındır. Devam edin, kıyaslama programına bakın ve kendiniz uygulayın!
 
 ## Feature Breakdown
 

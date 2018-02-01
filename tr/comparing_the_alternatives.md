@@ -2,7 +2,7 @@ Orada birkaç OGM/ORM seçeneği vardır. For the purposes of this document we w
 
 ## Kıyaslamalar
 
-Ferma'yı OGM ile kıyaslamak için gayrı resmi bir proje hazırlıyoruz, [kaynağı burada](https://github.com/Syncleus/Ferma-benchmark) bulabilirsiniz. However below is a matrix breakdown of the results. Ham çalıştırma süresini göstermek yerine Ferma ile karşılaştığında her OGM oranını gösteriyoruz. Bu nedenle tablo 1x listeleniyorsa çerçeve Ferma ile aynı yürütme süresine sahip demektir, eğer 2x listeleniyorsa yürütülmesi iki kat daha uzun sürer eğer 0.5x gösteriyorsa yürütmenin yarısı kadar zaman almış demektir. Obviously any value less than 1x indicates the OGM out performed Ferma and any value greater than 1x indicates Ferma had the superior performance tiimes.
+Ferma'yı OGM ile kıyaslamak için gayrı resmi bir proje hazırlıyoruz, [kaynağı burada](https://github.com/Syncleus/Ferma-benchmark) bulabilirsiniz. Ancak aşağıda sonuçların bir matris dökümü bulunmaktadır. Ham çalıştırma süresini göstermek yerine Ferma ile karşılaştığında her OGM oranını gösteriyoruz. Bu nedenle tablo 1x listeleniyorsa çerçeve Ferma ile aynı yürütme süresine sahip demektir, eğer 2x listeleniyorsa yürütülmesi iki kat daha uzun sürer eğer 0.5x gösteriyorsa yürütmenin yarısı kadar zaman almış demektir. Obviously any value less than 1x indicates the OGM out performed Ferma and any value greater than 1x indicates Ferma had the superior performance tiimes.
 
 |                                           | **Tinkerpop 2 Blueprints** | **Gremlin Pipeline** | **Tinkerpop3** | **Frames**  | **Totorom** | **Peapod**  |
 | ----------------------------------------- | -------------------------- | -------------------- | -------------- | ----------- | ----------- | ----------- |

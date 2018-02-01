@@ -122,7 +122,7 @@ public class Programmer extends Person {
 }
 ```
 
-Bu durumda, bir `Programcı` köşesini grafiğe kodlayabiliriz ve gelecekte `KöşeÇerçevesi` veya `Kişi`olarak bu köşeyi almaya ve çerçevelemeye çalışsak bile, örneklenmiş tür hala `Programcı` olacaktır. This allows for a truly polymorphic Graph Data Model that leverages method overriding and class inheritance functiuonality in the model. Örneğin, şu an ki durum Yazma Modun'da mümkündür.
+Bu durumda, bir `Programcı` köşesini grafiğe kodlayabiliriz ve gelecekte `KöşeÇerçevesi` veya `Kişi`olarak bu köşeyi almaya ve çerçevelemeye çalışsak bile, örneklenmiş tür hala `Programcı` olacaktır. Bu, modeldeki yöntemi geçersiz kılan ve sınıfsal devretmeyi güçlendiren gerçekten çok işlevsel bir polimorfik Grafik Veri Modeli sağlar. Örneğin, şu an ki durum Türlü Mod'da mümkündür.
 
 ```Java
 // Open a Framed Graph in Typed Mode
@@ -138,8 +138,7 @@ assert person instanceof Programmer;
 assert person.getFriends().isEmpty();
 ```
 
-`Explicit</O> sonekine sahip yöntemlerin, Yazma Modu için özellikle anlamı vardır. In this mode they bypass the encoded
-typing completely and instantiate the frame as if in Untyped Mode. Aşağıdaki kod parçacığı, aynı modeli kullanarak bir örnek sağlar.</p>
+`Explicit</O> sonekine sahip yöntemlerin, Yazma Modu için özellikle anlamı vardır. Bu modda, kodlanmış türü tamamen atlarlar ve çerçeveyi Türsüz Mod'da olduğu gibi örneklendirirler. Aşağıdaki kod parçacığı, aynı modeli kullanarak bir örnek sağlar.</p>
 
 <pre><code class="Java">// Open typed Framed Graph
 FramedGraph fg = new DelegatingFramedGraph(TinkerGraph.open(), true, false);

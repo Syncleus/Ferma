@@ -122,7 +122,7 @@ public class Programmer extends Person {
 }
 ```
 
-In this case we can encode a `Programmer` vertex into the graph and even if we try to retrieve and frame that vertex as a `VertexFrame` or `Person` in the future the instantiated type will still be `Programmer`. This allows for a truly polymorphic Graph Data Model that leverages method overriding and class inheritance functiuonality in the model. Örneğin, şu an ki durum Yazma Modun'da mümkündür.
+Bu durumda, bir `Programcı` köşesini grafiğe kodlayabiliriz ve gelecekte `KöşeÇerçevesi` veya `Kişi`olarak bu köşeyi almaya ve çerçevelemeye çalışsak bile, örneklenmiş tür hala `Programcı` olacaktır. This allows for a truly polymorphic Graph Data Model that leverages method overriding and class inheritance functiuonality in the model. Örneğin, şu an ki durum Yazma Modun'da mümkündür.
 
 ```Java
 // Open a Framed Graph in Typed Mode

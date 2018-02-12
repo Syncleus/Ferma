@@ -1,6 +1,0 @@
-files:
-  - source: /docs
-    translation: /%two_letters_code%/%original_file_name%
-    languages_mapping:
-      two_letters_code:
-        en: docs

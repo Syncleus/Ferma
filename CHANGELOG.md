@@ -1,6 +1,11 @@
 # Ferma Changelog
 
-## 3.2.2
+## 3.3.0
+
+* Added support for properties with mulitiple values for annotated property getters.
+* An adjacency getter (annotated) will now return null instead of an exception if no elements present.
+* Setters now take null as a valid argument.
+* Fixed a bug that caused exceptions in the case of a vertex property with a cardinality other than single.
 
 ## 3.2.1
 
@@ -25,7 +30,7 @@
   method.
 * Getter methods annotated with the `@Adjacency` annotation can now return a `List` or a `Set` in addition to the usual
   `Iterator` return type.
-* Setter methods annotated with the `@Adjacency` annotation can now accept `Iterable` parameters such as `Collection`, 
+* Setter methods annotated with the `@Adjacency` annotation can now accept `Iterable` parameters such as `Collection`,
   `List`, or `Set` in addition to the usual `Iterator` type.
 * Remove methods annotated with the `@Adjacency` annotation can now have no parameters and they will remove all edges
   matching the specified label and direction.
@@ -50,12 +55,12 @@
 ## 3.1.0
 
 * Added abstraction code for tinkerpop transactions which ease usage of transactions within ferma.
-  The new code provides functional interfaces for transactions and methods which allow 
+  The new code provides functional interfaces for transactions and methods which allow
   access to transactions from nested functions without the need to pass the original transaction object along.
-  Once a transaction has been opened it can be accessed from anywhere within the same thread 
+  Once a transaction has been opened it can be accessed from anywhere within the same thread
   via the `Tx.getActive()` method.
 
-  The `TxFactoryTest` class and the [ferma-orientdb extension](https://github.com/syncleus/ferma-orientdb) 
+  The `TxFactoryTest` class and the [ferma-orientdb extension](https://github.com/syncleus/ferma-orientdb)
   contain examples how these classes and methods can be used.
 
 * Updated the following dependencies

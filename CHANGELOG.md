@@ -1,5 +1,7 @@
 # Ferma Changelog
 
+## 3.3.1
+
 ## 3.3.0
 
 * Added support for properties with mulitiple values for annotated property getters.

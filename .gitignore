@@ -5,4 +5,4 @@ target/
 site
 .idea/
 ferma.iml
-
+.che/

@@ -6,7 +6,7 @@ site_dir: 'target/mkdocs'
 edit_uri: 'edit/master/docs'
 site_description: 'An ORM / OGM for the TinkerPop graph stack.'
 site_author: 'Syncleus'
-copyright: 'Copyright &copy; 2004 - 2017 Syncleus, Inc.'
+copyright: 'Copyright &copy; 2004 - 2018 Syncleus, Inc.'
 site_url: 'http://syncleus.com/Ferma'
 pages:
     - Home: index.md
@@ -24,7 +24,7 @@ pages:
     - Comparing the Alternatives: comparing_the_alternatives.md
     - Glossary: glossary.md
 extra:
-  version: '3.2.1'
+  version: '3.3.0'
   logo: 'images/ferma-logo.svg'
   github:
     download_release: true

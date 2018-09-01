@@ -6,6 +6,14 @@
 * An adjacency getter (annotated) will now return null instead of an exception if no elements present.
 * Setters now take null as a valid argument.
 * Fixed a bug that caused exceptions in the case of a vertex property with a cardinality other than single.
+* Updated the following dependencies
+  * gson 2.8.2 -> 2.8.5
+  * guava 23.0 -> 26.0-jre
+  * byte-buddy 1.7.5 -> 1.8.20
+  * gremlin-core 3.3.0 -> 3.3.3
+  * tinkergraph-gremlin 3.3.0 -> 3.3.3
+  * mockito-all 1.10.19 -> 2.0.2-beta
+
 
 ## 3.2.1
 

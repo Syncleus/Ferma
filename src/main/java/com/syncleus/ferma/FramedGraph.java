@@ -27,7 +27,7 @@ import java.util.function.Function;
 /**
  * The primary class for framing your blueprints graphs.
  */
-public interface FramedGraph {
+public interface FramedGraph extends AutoCloseable {
 
     TypeResolver getTypeResolver();
 

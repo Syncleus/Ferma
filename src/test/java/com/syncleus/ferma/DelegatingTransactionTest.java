@@ -45,7 +45,6 @@ public class DelegatingTransactionTest {
         baseGraph = Mockito.mock(Graph.class, Mockito.RETURNS_MOCKS);
 
         when(gremlinTx.createThreadedTx()).thenReturn(baseGraph);
-        when(framedGraph.getBaseGraph()).thenReturn(baseGraph);
 
         delegatingTx = new DelegatingTransaction(gremlinTx, framedGraph);
     }

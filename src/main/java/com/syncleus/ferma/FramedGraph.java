@@ -51,6 +51,18 @@ public interface FramedGraph extends AutoCloseable {
      * @return The framed vertex.
      */
     <T> T addFramedVertex(ClassInitializer<T> initializer, Object... keyValues);
+
+    /**
+     * Add a vertex to the graph
+     *
+     * @param <T> The type used to frame the element.
+     * @param kind
+     *            The kind of the frame.
+     * @param keyValues
+     *            the recommended object identifier
+     * @return The framed vertex.
+     */
+    <T> T addFramedVertex(Class<T> kind, Object... keyValues);
     
     /**
      * Add a vertex to the graph

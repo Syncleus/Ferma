@@ -325,6 +325,11 @@ public class DelegatingFramedGraph<G extends Graph> implements WrappedFramedGrap
     }
     
     @Override
+    public <T> T addFramedVertex(final Class<T> kind, final Object... keyValues) {
+        return this.addFramedVertex(new DefaultClassInitializer<>(kind), keyValues);
+    }
+    
+    @Override
     public <T> T addFramedVertex(final Class<T> kind) {
         return this.addFramedVertex(new DefaultClassInitializer<>(kind));
     }

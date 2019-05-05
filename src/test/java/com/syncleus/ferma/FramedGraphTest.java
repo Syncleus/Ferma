@@ -28,6 +28,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockitoAnnotations;
 import com.syncleus.ferma.typeresolvers.PolymorphicTypeResolver;
+import org.apache.tinkerpop.gremlin.structure.T;
 
 
 public class FramedGraphTest {
@@ -210,6 +211,52 @@ public class FramedGraphTest {
         Assert.assertEquals(Programmer.class, bryn.getClass());
         Assert.assertEquals(Person.class, julia.getClass());
 
+        Assert.assertNotNull(bryn.getElement().property(PolymorphicTypeResolver.TYPE_RESOLUTION_KEY).value());
+        Assert.assertNotNull(julia.getElement().property(PolymorphicTypeResolver.TYPE_RESOLUTION_KEY).value());
+    }
+
+    @Test
+    public void testKeyValues() {
+        final Graph g = TinkerGraph.open();
+        final FramedGraph fg = new DelegatingFramedGraph(g, true, false);
+
+        final Person p1 = fg.addFramedVertex(Programmer.DEFAULT_INITIALIZER, "key", "value");
+        p1.setName("Bryn");
+
+        final Person p2 = fg.addFramedVertex(Person.DEFAULT_INITIALIZER, T.label, "label");
+        p2.setName("Julia");
+
+        final Person bryn = fg.traverse(
+            input -> input.V().has("key", "value")).next(Person.class);
+        final Person julia = fg.traverse(
+            input -> input.V().hasLabel("label")).next(Person.class);
+
+        Assert.assertEquals(Programmer.class, bryn.getClass());
+        Assert.assertEquals(Person.class, julia.getClass());
+
+        Assert.assertNotNull(bryn.getElement().property(PolymorphicTypeResolver.TYPE_RESOLUTION_KEY).value());
+        Assert.assertNotNull(julia.getElement().property(PolymorphicTypeResolver.TYPE_RESOLUTION_KEY).value());
+    }
+
+    @Test
+    public void testKeyValuesByClass() {
+        final Graph g = TinkerGraph.open();
+        final FramedGraph fg = new DelegatingFramedGraph(g, true, false);
+
+        final Person p1 = fg.addFramedVertex(Programmer.class, "key", "value");
+        p1.setName("Bryn");
+
+        final Person p2 = fg.addFramedVertex(Person.class, T.label, "label");
+        p2.setName("Julia");
+
+        final Person bryn = fg.traverse(
+            input -> input.V().has("key", "value")).next(Person.class);
+        final Person julia = fg.traverse(
+            input -> input.V().hasLabel("label")).next(Person.class);
+
+        Assert.assertEquals(Programmer.class, bryn.getClass());
+        Assert.assertEquals(Person.class, julia.getClass());
+        
         Assert.assertNotNull(bryn.getElement().property(PolymorphicTypeResolver.TYPE_RESOLUTION_KEY).value());
         Assert.assertNotNull(julia.getElement().property(PolymorphicTypeResolver.TYPE_RESOLUTION_KEY).value());
     }

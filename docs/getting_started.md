@@ -12,7 +12,7 @@ To include Ferma in your project of choice include the following Maven dependenc
 <dependency>
     <groupId>com.syncleus.ferma</groupId>
     <artifactId>ferma</artifactId>
-    <version>3.3.0</version>
+    <version>3.3.1</version>
 </dependency>
 ```
 
@@ -88,9 +88,9 @@ Say we extend the Person class with the Programmer class.
 public class Programmer extends Person {
 }
 ```
-    
+
 Using simple mode will save the type of Java class the element was created with for use later:
-    
+
 ```java
 public void testSimpleTyping() {
   Graph graph = TinkerGraph.open();

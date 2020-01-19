@@ -62,6 +62,7 @@ including the following.
 
 Ferma Javadocs:
 [latest](http://www.javadoc.io/doc/com.syncleus.ferma/ferma) -
+[3.3.1](http://www.javadoc.io/doc/com.syncleus.ferma/ferma/3.3.1) -
 [3.3.0](http://www.javadoc.io/doc/com.syncleus.ferma/ferma/3.3.0) -
 [3.2.1](http://www.javadoc.io/doc/com.syncleus.ferma/ferma/3.2.1) -
 [3.2.0](http://www.javadoc.io/doc/com.syncleus.ferma/ferma/3.2.0) -
@@ -86,10 +87,10 @@ Ferma Javadocs:
 
 For support please use
 [Gitter](https://gitter.im/Syncleus/Ferma?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
-or the [official Ferma mailing list](https://groups.google.com/a/syncleus.com/forum/#!forum/ferma-list).
+or the [official Ferma mailing list and Discourse forum](https://discourse.qoto.org/c/PROJ/FERMA).
 
-Please file bugs and feature requests on
-[Github](https://github.com/Syncleus/Ferma/issues).
+Please file bugs and feature requests on [QOTO GitLab](https://git.qoto.org/Ferma/Ferma/issues) a
+reference to some older issues can be found at [Github](https://github.com/Syncleus/Ferma/issues).
 
 Obtaining the Source
 --------------------
@@ -98,5 +99,5 @@ The official source repository for Ferma is located in the Syncleus
 Github repository and can be cloned using the following command.
 
 ```
-git clone https://github.com/Syncleus/Ferma.git
+git clone https://git.qoto.org/Ferma/Ferma.git
 ```

@@ -20,7 +20,7 @@
 
     <name>Ferma</name>
     <description>An ORM for the Tinkerpop3 graph stack.</description>
-    <url>https://github.com/Syncleus/Ferma.git</url>
+    <url>https://git.qoto.org/ferma/Ferma.git</url>
 
     <licenses>
         <license>
@@ -36,9 +36,9 @@
     </organization>
 
     <scm>
-        <connection>scm:git:https://github.com/Syncleus/Ferma</connection>
-        <developerConnection>scm:git:ssh://github.com/Syncleus/Ferma</developerConnection>
-        <url>https://github.com/Syncleus/Ferma.git</url>
+        <connection>scm:git:https://git.qoto.org/ferma/Ferma</connection>
+        <developerConnection>scm:git:ssh://git.qoto.org/ferma/Ferma</developerConnection>
+        <url>https://git.qoto.org/ferma/Ferma.git</url>
     </scm>
 
     <ciManagement>
@@ -48,30 +48,14 @@
 
     <issueManagement>
         <system>GitHub</system>
-        <url>https://github.com/Syncleus/Ferma/issues</url>
+        <url>https://git.qoto.org/ferma/Ferma/issues</url>
     </issueManagement>
 
     <mailingLists>
         <mailingList>
-            <name>Syncleus Announcements</name>
-            <subscribe>syncleus-announce-list+subscribe@syncleus.com</subscribe>
-            <unsubscribe>syncleus-announce-list+unsubscribe@syncleus.com</unsubscribe>
-            <post>syncleus-announce-list@syncleus.com</post>
-            <archive>https://groups.google.com/a/syncleus.com/forum/#!forum/syncleus-announce-list</archive>
-        </mailingList>
-        <mailingList>
-            <name>Syncleus Development</name>
-            <subscribe>syncleus-dev-list+subscribe@syncleus.com</subscribe>
-            <unsubscribe>syncleus-dev-list+unsubscribe@syncleus.com</unsubscribe>
-            <post>syncleus-dev-list@syncleus.com</post>
-            <archive>https://groups.google.com/a/syncleus.com/forum/#!forum/syncleus-dev-list</archive>
-        </mailingList>
-        <mailingList>
             <name>Ferma</name>
-            <subscribe>ferma-list+subscribe@syncleus.com</subscribe>
-            <unsubscribe>ferma-list+unsubscribe@syncleus.com</unsubscribe>
-            <post>ferma-list@syncleus.com</post>
-            <archive>https://groups.google.com/a/syncleus.com/forum/#!forum/ferma-list</archive>
+            <post>lists+ferma@qoto.org</post>
+            <archive>https://discourse.qoto.org/c/PROJ/FERMA</archive>
         </mailingList>
     </mailingLists>
 

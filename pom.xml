@@ -20,7 +20,7 @@
 
     <name>Ferma</name>
     <description>An ORM for the Tinkerpop3 graph stack.</description>
-    <url>https://git.qoto.org/ferma/Ferma.git</url>
+    <url>https://git.qoto.org/Ferma/Ferma.git</url>
 
     <licenses>
         <license>
@@ -36,9 +36,9 @@
     </organization>
 
     <scm>
-        <connection>scm:git:https://git.qoto.org/ferma/Ferma</connection>
-        <developerConnection>scm:git:ssh://git.qoto.org/ferma/Ferma</developerConnection>
-        <url>https://git.qoto.org/ferma/Ferma.git</url>
+        <connection>scm:git:https://git.qoto.org/Ferma/Ferma</connection>
+        <developerConnection>scm:git:ssh://git.qoto.org/Ferma/Ferma</developerConnection>
+        <url>https://git.qoto.org/Ferma/Ferma.git</url>
     </scm>
 
     <ciManagement>
@@ -48,7 +48,7 @@
 
     <issueManagement>
         <system>GitHub</system>
-        <url>https://git.qoto.org/ferma/Ferma/issues</url>
+        <url>https://git.qoto.org/Ferma/Ferma/issues</url>
     </issueManagement>
 
     <mailingLists>

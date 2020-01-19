@@ -2,6 +2,15 @@
 
 ## 3.3.1
 
+* Updated the following dependencies
+  * com.google.code.gson:gson 2.8.5 -> 2.8.6
+  * com.google.guava:guava 26.0-jre -> 28.2-jre
+  * net.bytebuddy:byte-buddy 1.8.20 -> 1.10.6
+  * org.apache.tinkerpop:gremlin-core 3.3.3 -> 3.4.4
+  * org.apache.tinkerpop:tinkergraph-gremlin 3.3.3 -> 3.4.4
+  * org.reflections:reflections 0.9.11 -> 0.9.12
+
+
 ## 3.3.0
 
 * Added support for properties with mulitiple values for annotated property getters.

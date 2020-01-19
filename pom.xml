@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.syncleus</groupId>
         <artifactId>syncleus</artifactId>
-        <version>6</version>
+        <version>7</version>
     </parent>
 
     <groupId>com.syncleus.ferma</groupId>

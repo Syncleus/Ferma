@@ -266,5 +266,5 @@ The official source repository for Ferma is located in the Syncleus Github repos
 following command.
 
 ```bash
-git clone https://github.com/Syncleus/Ferma.git
+git clone https://git.qoto.org/Ferma/Ferma.git
 ```

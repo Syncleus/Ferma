@@ -57,9 +57,9 @@ For documentation refer to our [project page](http://syncleus.com/Ferma) as well
 [latest Javadocs](http://www.javadoc.io/doc/com.syncleus.ferma/ferma).
 
 For support please use [Gitter](https://gitter.im/Syncleus/Ferma?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
-or the [official Ferma mailing list](https://groups.google.com/a/syncleus.com/forum/#!forum/ferma-list).
+or the [official Ferma mailing list and Discourse forum](https://discourse.qoto.org/c/PROJ/FERMA).
 
-Please file bugs and feature requests on [Github](https://github.com/Syncleus/Ferma/issues).
+Please file bugs and feature requests on the [QOTO GitLab](https://git.qoto.org/ferma/Ferma/issues).
 
 ## Dependency
 

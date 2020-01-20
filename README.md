@@ -268,3 +268,25 @@ following command.
 ```bash
 git clone https://git.qoto.org/Ferma/Ferma.git
 ```
+
+## Building
+
+### Documentation
+
+Install dependencies
+
+```bash
+pip install mkdocs mkdocs-material pymdown-extensions
+```
+
+Build documentation
+
+```bash
+mkdocs build
+```
+
+Deploy to Github
+
+```bash
+mkdocs gh-deploy
+```

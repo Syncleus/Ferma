@@ -2,6 +2,10 @@
 
 ## 3.3.2
 
+* Updated the following dependencies
+  * org.reflections:reflections 0.9.12 -> 0.9.11
+
+
 ## 3.3.1
 
 * Updated the following dependencies

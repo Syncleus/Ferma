@@ -2,6 +2,11 @@
 
 ## 3.3.2
 
+* Updated the following dependencies
+  * org.apache.tinkerpop:gremlin-core 3.4.4 -> 3.4.6
+  * org.apache.tinkerpop:tinkergraph-gremlin 3.4.4 -> 3.4.6
+
+
 ## 3.3.1
 
 * Updated the following dependencies

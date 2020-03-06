@@ -11,6 +11,7 @@
 * Evan Thompson
 * Joshua Shinavier <josh@fortytwo.net>
 * Veselin Yordanov <vesko935@gmail.com>
+* Oleksandr Porunov <alexandr.porunov@gmail.com>
 
 ## Special Thanks
 

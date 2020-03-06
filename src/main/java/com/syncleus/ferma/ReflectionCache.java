@@ -16,11 +16,11 @@
 package com.syncleus.ferma;
 
 import com.syncleus.ferma.annotations.GraphElement;
-import org.reflections.Reflections;
-import org.reflections.scanners.SubTypesScanner;
-import org.reflections.scanners.TypeAnnotationsScanner;
-import org.reflections.util.ClasspathHelper;
-import org.reflections.util.ConfigurationBuilder;
+import org.reflections8.Reflections;
+import org.reflections8.scanners.SubTypesScanner;
+import org.reflections8.scanners.TypeAnnotationsScanner;
+import org.reflections8.util.ClasspathHelper;
+import org.reflections8.util.ConfigurationBuilder;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;

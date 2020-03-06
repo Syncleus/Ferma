@@ -5,7 +5,8 @@
 * Updated the following dependencies
   * org.apache.tinkerpop:gremlin-core 3.4.4 -> 3.4.6
   * org.apache.tinkerpop:tinkergraph-gremlin 3.4.4 -> 3.4.6
-
+  * org.reflections:reflections 0.9.12 -> net.oneandone.reflections8:reflections8 0.11.7
+* Removed Guava dependency, moved to Java 8 Stream API
 
 ## 3.3.1
 

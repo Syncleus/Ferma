@@ -15,20 +15,21 @@
  */
 package com.syncleus.ferma;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.function.Consumer;
-import com.google.common.collect.Lists;
 import com.syncleus.ferma.framefactories.FrameFactory;
+import com.syncleus.ferma.typeresolvers.PolymorphicTypeResolver;
 import org.apache.tinkerpop.gremlin.structure.Element;
 import org.apache.tinkerpop.gremlin.structure.Graph;
+import org.apache.tinkerpop.gremlin.structure.T;
 import org.apache.tinkerpop.gremlin.tinkergraph.structure.TinkerGraph;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockitoAnnotations;
-import com.syncleus.ferma.typeresolvers.PolymorphicTypeResolver;
-import org.apache.tinkerpop.gremlin.structure.T;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.function.Consumer;
 
 
 public class FramedGraphTest {
@@ -158,7 +159,9 @@ public class FramedGraphTest {
         final Iterator<? extends Person> persons = fg.traverse(
             input -> fg.getTypeResolver().hasType(input.V(), Person.class)).frameExplicit(Person.class);
 
-        final List<Person> personList = Lists.newArrayList(persons);
+        final List<Person> personList = new ArrayList<>();
+        persons.forEachRemaining(personList::add);
+
         Assert.assertEquals(11, personList.size());
         // Verify that all found persons have indeed been filtered
         persons.forEachRemaining(new Consumer<Person>() {

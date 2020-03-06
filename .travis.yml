@@ -1,7 +1,7 @@
 language: java
 sudo: false
 jdk:
-  - oraclejdk8
+  - openjdk8
 env:
   - CODACY_PROJECT_TOKEN=3b6d38f010804d1f8dd348c674db6ead
 before_install:

@@ -15,14 +15,14 @@
  */
 package com.syncleus.ferma;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+import java.util.*;
 
 /**
  *
@@ -64,8 +64,19 @@ public class ReflectionCacheTest {
     public void testBadConstructorCall() {
         createCache(null);
     }
-    
+
+    @Test
+    public void testTypesAnnotatedWithUnusedAnnotation() {
+        new ReflectionCache(Collections.emptySet()).getTypesAnnotatedWith(UnusedTestAnnotation.class);
+    }
+
     private ReflectionCache createCache(Collection<? extends Class<?>> annotatedTypes) {
         return new ReflectionCache(annotatedTypes);
+    }
+
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target(ElementType.TYPE)
+    public @interface UnusedTestAnnotation {
+
     }
 }

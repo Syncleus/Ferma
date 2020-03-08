@@ -15,23 +15,22 @@
  */
 package com.syncleus.ferma;
 
+import com.google.gson.JsonObject;
+import com.syncleus.ferma.graphtypes.javaclass.JavaAccessModifier;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
 import org.apache.tinkerpop.gremlin.structure.Graph;
+import org.apache.tinkerpop.gremlin.structure.T;
 import org.apache.tinkerpop.gremlin.structure.Vertex;
 import org.apache.tinkerpop.gremlin.structure.VertexProperty;
 import org.apache.tinkerpop.gremlin.tinkergraph.structure.TinkerGraph;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockitoAnnotations;
-import com.google.common.collect.Sets;
-import com.google.gson.JsonObject;
-import com.syncleus.ferma.graphtypes.javaclass.JavaAccessModifier;
-import java.io.IOException;
-import java.util.Iterator;
 
-import org.apache.tinkerpop.gremlin.structure.T;
-import org.junit.After;
+import java.io.IOException;
+import java.util.HashSet;
 
 public class AbstractElementFrameTest {
 
@@ -59,12 +58,12 @@ public class AbstractElementFrameTest {
 
     @Test
     public void testGetId() {
-        Assert.assertEquals((Long) 0L, (Long) p1.getId());
+        Assert.assertEquals((Long) 0L, p1.getId());
     }
 
     @Test
     public void testGetPropertyKeys() {
-        Assert.assertEquals(Sets.newHashSet("name"), p1.getPropertyKeys());
+        Assert.assertEquals(new HashSet<String>(){{add("name");}}, p1.getPropertyKeys());
     }
 
     @Test

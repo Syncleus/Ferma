@@ -15,15 +15,12 @@
  */
 package com.syncleus.ferma;
 
-import java.util.function.Function;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
 import org.apache.tinkerpop.gremlin.structure.Element;
-import java.util.Iterator;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Set;
+
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class DefaultTraversable<PE, E> implements Traversable<PE, E>{
     final private GraphTraversal<PE, E> baseTraversal;
@@ -125,22 +122,12 @@ public class DefaultTraversable<PE, E> implements Traversable<PE, E>{
 
     @Override
     public <N> List<? extends N> next(final int amount, final Class<N> kind) {
-        return Lists.transform((List<Element>) this.baseTraversal.next(amount), new com.google.common.base.Function<Element, N>() {
-            @Override
-            public N apply(final Element input) {
-                return parentGraph.frameElement(input, kind);
-            }
-        });
+        return ((List<Element>) this.baseTraversal.next(amount)).stream().map(input -> parentGraph.frameElement(input, kind)).collect(Collectors.toList());
     }
 
     @Override
     public <N> List<? extends N> nextExplicit(final int amount, final Class<N> kind) {
-        return Lists.transform((List<Element>) this.baseTraversal.next(amount), new com.google.common.base.Function<Element, N>() {
-            @Override
-            public N apply(final Element input) {
-                return parentGraph.frameElementExplicit(input, kind);
-            }
-        });
+        return ((List<Element>) this.baseTraversal.next(amount)).stream().map(input -> parentGraph.frameElementExplicit(input, kind)).collect(Collectors.toList());
     }
 
     @Override
@@ -175,31 +162,21 @@ public class DefaultTraversable<PE, E> implements Traversable<PE, E>{
 
     @Override
     public <N> List<? extends N> toList(final Class<N> kind) {
-        return Lists.transform((List<Element>) this.baseTraversal.toList(), new com.google.common.base.Function<Element, N>() {
-            @Override
-            public N apply(final Element input) {
-                return parentGraph.frameElement(input, kind);
-            }
-        });
+        return ((List<Element>) this.baseTraversal.toList()).stream().map(input -> parentGraph.frameElement(input, kind)).collect(Collectors.toList());
     }
 
     @Override
     public <N> List<? extends N> toListExplicit(final Class<N> kind) {
-        return Lists.transform((List<Element>) this.baseTraversal.toList(), new com.google.common.base.Function<Element, N>() {
-            @Override
-            public N apply(final Element input) {
-                return parentGraph.frameElementExplicit(input, kind);
-            }
-        });
+        return ((List<Element>) this.baseTraversal.toList()).stream().map(input -> parentGraph.frameElementExplicit(input, kind)).collect(Collectors.toList());
     }
 
     @Override
     public <N> Set<? extends N> toSet(final Class<N> kind) {
-        return Sets.newHashSet(toList(kind));
+        return new HashSet<>(toList(kind));
     }
 
     @Override
     public <N> Set<? extends N> toSetExplicit(final Class<N> kind) {
-        return Sets.newHashSet(toListExplicit(kind));
+        return new HashSet<>(toListExplicit(kind));
     }
 }

@@ -15,7 +15,6 @@
  */
 package com.syncleus.ferma.framefactories.annotation;
 
-import java.util.function.Function;
 import com.syncleus.ferma.EdgeFrame;
 import com.syncleus.ferma.annotations.OutVertex;
 import net.bytebuddy.dynamic.DynamicType;
@@ -23,16 +22,11 @@ import net.bytebuddy.implementation.MethodDelegation;
 import net.bytebuddy.implementation.bind.annotation.Origin;
 import net.bytebuddy.implementation.bind.annotation.RuntimeType;
 import net.bytebuddy.implementation.bind.annotation.This;
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
-import java.util.Iterator;
-
 import net.bytebuddy.matcher.ElementMatchers;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
-import org.apache.tinkerpop.gremlin.structure.Edge;
-import org.apache.tinkerpop.gremlin.structure.Element;
 
-import javax.annotation.Nullable;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
 
 /**
  * A method handler that implemented the OutVertex Annotation.

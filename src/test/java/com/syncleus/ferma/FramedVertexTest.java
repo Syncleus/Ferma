@@ -15,23 +15,20 @@
  */
 package com.syncleus.ferma;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import java.util.function.Function;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
 import org.apache.tinkerpop.gremlin.structure.Graph;
 import org.apache.tinkerpop.gremlin.structure.Vertex;
 import org.apache.tinkerpop.gremlin.tinkergraph.structure.TinkerGraph;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockitoAnnotations;
-import com.google.common.collect.Lists;
-import java.io.IOException;
 
-import javax.annotation.Nullable;
-import org.junit.After;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Function;
 
 public class FramedVertexTest {
     private static final Function<GraphTraversal<Vertex, Vertex>, GraphTraversal<?, ?>> OUT_TRAVERSAL = input -> input.out();

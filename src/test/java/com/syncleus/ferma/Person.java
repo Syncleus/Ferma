@@ -15,8 +15,9 @@
  */
 package com.syncleus.ferma;
 
-import com.google.common.collect.Lists;
 import com.syncleus.ferma.annotations.GraphElement;
+
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -49,11 +50,15 @@ public class Person extends AbstractVertexFrame {
     }
 
     public List<? extends Person> getKnowsCollectionVertices() {
-        return Lists.<Person>newArrayList(getKnows());
+        List<Person> list = new ArrayList<>();
+        getKnows().forEachRemaining(list::add);
+        return list;
     }
 
     public List<? extends Person> getKnowsCollectionVerticesExplicit() {
-        return Lists.<Person>newArrayList(getKnowsExplicit());
+        List<Person> list = new ArrayList<>();
+        getKnowsExplicit().forEachRemaining(list::add);
+        return list;
     }
 
     public Person getFirst() {

@@ -23,13 +23,13 @@
  */
 package com.syncleus.ferma;
 
+import java.util.Spliterators;
 import java.util.function.Function;
 import com.syncleus.ferma.framefactories.FrameFactory;
 import com.syncleus.ferma.framefactories.DefaultFrameFactory;
 import com.syncleus.ferma.typeresolvers.UntypedTypeResolver;
 import com.syncleus.ferma.typeresolvers.TypeResolver;
 import com.syncleus.ferma.typeresolvers.PolymorphicTypeResolver;
-import com.google.common.collect.Iterators;
 import com.syncleus.ferma.framefactories.annotation.AnnotationFrameFactory;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
@@ -39,6 +39,7 @@ import org.apache.tinkerpop.gremlin.structure.Graph;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.stream.StreamSupport;
 
 public class DelegatingFramedGraph<G extends Graph> implements WrappedFramedGraph<G>{
 
@@ -264,14 +265,7 @@ public class DelegatingFramedGraph<G extends Graph> implements WrappedFramedGrap
 
     @Override
     public <T> Iterator<? extends T> frame(final Iterator<? extends Element> pipeline, final Class<T> kind) {
-        return Iterators.transform(pipeline, new com.google.common.base.Function<Element, T>() {
-
-            @Override
-            public T apply(final Element input) {
-                return frameElement(input, kind);
-            }
-
-        });
+        return StreamSupport.stream(Spliterators.spliteratorUnknownSize(pipeline, 0), false).map(input -> frameElement(input, kind)).iterator();
     }
 
     @Override
@@ -302,25 +296,16 @@ public class DelegatingFramedGraph<G extends Graph> implements WrappedFramedGrap
 
     @Override
     public <T> Iterator<? extends T> frameExplicit(final Iterator<? extends Element> pipeline, final Class<T> kind) {
-        return Iterators.transform(pipeline, new com.google.common.base.Function<Element, T>() {
-
-            @Override
-            public T apply(final Element input) {
-                return frameElementExplicit(input, kind);
-            }
-
-        });
+        return StreamSupport.stream(Spliterators.spliteratorUnknownSize(pipeline, 0), false).map(input -> frameElementExplicit(input, kind)).iterator();
     }
 
     @Override
     public <T> T addFramedVertex(final ClassInitializer<T> initializer, final Object... keyValues) {
         if( keyValues != null ) {
-            final T framedVertex = frameNewElement(this.getBaseGraph().addVertex(keyValues), initializer);
-            return framedVertex;
+            return frameNewElement(this.getBaseGraph().addVertex(keyValues), initializer);
         }
         else {
-            final T framedVertex = frameNewElement(this.getBaseGraph().addVertex(), initializer);
-            return framedVertex;
+            return frameNewElement(this.getBaseGraph().addVertex(), initializer);
         }
     }
     
@@ -336,8 +321,7 @@ public class DelegatingFramedGraph<G extends Graph> implements WrappedFramedGrap
 
     @Override
     public <T> T addFramedVertexExplicit(final ClassInitializer<T> initializer) {
-        final T framedVertex = frameNewElementExplicit(this.getBaseGraph().addVertex(), initializer);
-        return framedVertex;
+        return frameNewElementExplicit(this.getBaseGraph().addVertex(), initializer);
     }
     
     @Override
@@ -359,8 +343,7 @@ public class DelegatingFramedGraph<G extends Graph> implements WrappedFramedGrap
     @Override
     public <T> T addFramedEdge(final VertexFrame source, final VertexFrame destination, final String label, final ClassInitializer<T> initializer, final Object... keyValues) {
         final Edge baseEdge = source.getElement().addEdge(label, destination.getElement(), keyValues);
-        final T framedEdge = frameNewElement(baseEdge, initializer);
-        return framedEdge;
+        return frameNewElement(baseEdge, initializer);
     }
     
     @Override
@@ -370,8 +353,7 @@ public class DelegatingFramedGraph<G extends Graph> implements WrappedFramedGrap
 
     @Override
     public <T> T addFramedEdgeExplicit(final VertexFrame source, final VertexFrame destination, final String label, final ClassInitializer<T> initializer) {
-        final T framedEdge = frameNewElementExplicit(source.getElement().addEdge(label, destination.getElement()), initializer);
-        return framedEdge;
+        return frameNewElementExplicit(source.getElement().addEdge(label, destination.getElement()), initializer);
     }
     
     @Override

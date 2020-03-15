@@ -1,6 +1,6 @@
 ![](http://syncleus.com/Ferma/images/ferma-logo-text.svg)
 
-[![Build Status](https://travis-ci.org/Syncleus/Ferma.svg?branch=master)](https://travis-ci.org/Syncleus/Ferma)
+[![Build status](http://git.qoto.org/Ferma/Ferma/badges/master/pipeline.svg)](http://git.qoto.org/Ferma/Ferma/-/commits/master)
 [![Coverage](https://codecov.io/gh/Syncleus/Ferma/branch/master/graph/badge.svg)](https://codecov.io/gh/Syncleus/Ferma)
 [![Dependencies](https://www.versioneye.com/user/projects/57e37d4279806f0039830884/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/57e37d4279806f0039830884)
 [![Codacy](https://api.codacy.com/project/badge/Grade/e287e33b94734124ada41efd0ae48652)](https://www.codacy.com/app/freemo/Ferma?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Syncleus/Ferma&amp;utm_campaign=Badge_Grade)

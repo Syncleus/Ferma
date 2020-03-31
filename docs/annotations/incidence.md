@@ -24,7 +24,7 @@ example:
 Valid method signatures: `( )`, `(VertexFrame)`, `(ClassInitializer)`, `(VertexFrame, ClassInitializer)`,
 `(ClassInitializer, ClassInitializer)`
 
-Adds an edge to edge to a node and returns the new `EdgeFrame`.
+Adds an edge to a node and returns the new `EdgeFrame`.
 
 ### Signature: `( )`
 

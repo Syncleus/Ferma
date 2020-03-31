@@ -24,7 +24,7 @@ example:
 Valid method signatures: `( )`, `(VertexFrame)`, `(ClassInitializer)`, `(ClassInitializer, ClassInitializer)`,
 `(VertexFrame, ClassInitializer)`
 
-Adds a node as an adjacency to the current node, and the returns the newly connected node.
+Adds a node as an adjacency to the current node, and returns the newly connected node.
 
 
 ### Signature: `( )`

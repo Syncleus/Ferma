@@ -19,7 +19,6 @@ import com.syncleus.ferma.VertexFrame;
 import com.syncleus.ferma.annotations.Adjacency;
 import com.syncleus.ferma.annotations.Incidence;
 import com.syncleus.ferma.annotations.Property;
-import org.apache.tinkerpop.gremlin.structure.Vertex;
 
 import java.lang.reflect.*;
 import java.util.*;
@@ -174,6 +173,10 @@ public class ReflectionUtility {
 
     public static boolean returnsIterator(final Method method) {
         return Iterator.class.isAssignableFrom(method.getReturnType());
+    }
+
+    public static boolean returnsIterable(final Method method) {
+        return Iterable.class.isAssignableFrom(method.getReturnType());
     }
 
     public static boolean returnsList(final Method method) {

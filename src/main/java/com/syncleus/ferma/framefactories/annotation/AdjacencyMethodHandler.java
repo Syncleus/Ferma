@@ -75,10 +75,10 @@ public class AdjacencyMethodHandler extends AbstractMethodHandler {
             if (arguments == null || arguments.length == 0) {
                 if( ReflectionUtility.returnsIterator(method) )
                     return this.getVertexesIteratorDefault(builder, method, annotation);
-                else if( ReflectionUtility.returnsList(method) )
-                    return this.getVertexesListDefault(builder, method, annotation);
                 else if( ReflectionUtility.returnsSet(method) )
                     return this.getVertexesSetDefault(builder, method, annotation);
+                else if( ReflectionUtility.returnsIterable(method) )
+                    return this.getVertexesListDefault(builder, method, annotation);
 
                 return this.getVertexDefault(builder, method, annotation);
             }

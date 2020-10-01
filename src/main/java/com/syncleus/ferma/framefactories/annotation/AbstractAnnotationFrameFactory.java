@@ -38,11 +38,17 @@ public class AbstractAnnotationFrameFactory implements FrameFactory {
     protected final Map<Class<? extends Annotation>, MethodHandler> methodHandlers = new HashMap<>();
     private final ReflectionCache reflectionCache;
     private final Map<Class, Class> constructedClassCache = new HashMap<>();
+    private final ClassLoader defaultClassLoader;
 
-    protected AbstractAnnotationFrameFactory(final ReflectionCache reflectionCache, Set<MethodHandler> handlers) {
+    protected AbstractAnnotationFrameFactory(final ClassLoader defaultClassLoader, final ReflectionCache reflectionCache, Set<MethodHandler> handlers) {
+        this.defaultClassLoader = defaultClassLoader;
         this.reflectionCache = reflectionCache;
         for(MethodHandler handler : handlers)
             this.methodHandlers.put(handler.getAnnotationType(), handler);
+    }
+
+    protected AbstractAnnotationFrameFactory(final ReflectionCache reflectionCache, Set<MethodHandler> handlers) {
+        this(AnnotationFrameFactory.class.getClassLoader(), reflectionCache, handlers);
     }
 
     private static boolean isAbstract(final Class<?> clazz) {
@@ -108,7 +114,7 @@ public class AbstractAnnotationFrameFactory implements FrameFactory {
                     }
                 }
 
-        constructedClass = classBuilder.make().load(AnnotationFrameFactory.class.getClassLoader(), ClassLoadingStrategy.Default.WRAPPER).getLoaded();
+        constructedClass = classBuilder.make().load(defaultClassLoader, ClassLoadingStrategy.Default.WRAPPER).getLoaded();
         this.constructedClassCache.put(clazz, constructedClass);
         return constructedClass;
     }
